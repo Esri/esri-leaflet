@@ -191,13 +191,3 @@ L.esri.TileLayer = L.TileLayer.extend({
 L.esri.tileLayer = function(key, options){
   return new L.esri.TileLayer(key, options);
 };
-
-L.esri.FeatureLayer = L.FeatureGroup.extend({
-  initialize: function(key, options){
-    L.FeatureGroup.prototype.initialize.call(this, []);
-  }
-});
-
-L.esri.featureLayer = function(url, options){
-  return new L.esri.FeatureLayer(url, options);
-};
