@@ -1,0 +1,19 @@
+.leaflet-container .leaflet-control-attribution  {
+  background-color: transparent;
+  box-shadow: none;
+  text-shadow:0 0 3px black;
+  color: white;
+  font-size: 12px;
+  top: -5px;
+}
+.leaflet-container .leaflet-control-attribution a {
+  background-color: transparent;
+  box-shadow: none;
+  text-shadow:0 0 3px black;
+  color: white;
+}
+.esri-attribution-logo {
+  position: relative;
+  top: 5px;
+  padding-left: 4px;
+}

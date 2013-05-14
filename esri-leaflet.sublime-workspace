@@ -1,0 +1,1060 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"dyna",
+				"dynamicAttribution"
+			],
+			[
+				"con",
+				"config"
+			],
+			[
+				"att",
+				"attributionData"
+			],
+			[
+				"then",
+				"_thens  (variable)"
+			],
+			[
+				"prop",
+				"properties"
+			],
+			[
+				"strin",
+				"stringify"
+			],
+			[
+				"is",
+				"isObject  (function)"
+			],
+			[
+				"to",
+				"toHaveBeenCalledWithArgsLike"
+			],
+			[
+				"au",
+				"authentication"
+			],
+			[
+				"auth",
+				"authenticated"
+			],
+			[
+				"app",
+				"applicationId"
+			],
+			[
+				"call",
+				"callCount"
+			],
+			[
+				"Application",
+				"ApplicationId"
+			],
+			[
+				"App",
+				"application_id"
+			],
+			[
+				"res",
+				"resolve"
+			],
+			[
+				"pr",
+				"protocol"
+			],
+			[
+				"event",
+				"eventName"
+			],
+			[
+				"for",
+				"for	for (…) {…} (Improved Native For-Loop)"
+			],
+			[
+				"re",
+				"redirect-urls"
+			],
+			[
+				"ed",
+				"edit"
+			],
+			[
+				"edit",
+				"editTemplate"
+			],
+			[
+				"cred",
+				"credits"
+			],
+			[
+				"va",
+				"values"
+			],
+			[
+				"usag",
+				"usageHelpers"
+			],
+			[
+				"pro",
+				"processed"
+			],
+			[
+				"usa",
+				"usageHelpers"
+			],
+			[
+				"ced",
+				"creditsUsed"
+			],
+			[
+				"pay",
+				"payPeriod"
+			],
+			[
+				"us",
+				"usageData"
+			],
+			[
+				"usage",
+				"usageData"
+			],
+			[
+				"credit",
+				"creditUsage"
+			],
+			[
+				"credt",
+				"creditsRemaining"
+			],
+			[
+				"first",
+				"firstArray"
+			],
+			[
+				"av",
+				"averagePerDay"
+			],
+			[
+				"push",
+				"push-certificates"
+			],
+			[
+				"o",
+				"oAuthInfo"
+			],
+			[
+				"ret",
+				"retrivedOauthInfo"
+			],
+			[
+				"dom",
+				"domNode"
+			],
+			[
+				"red",
+				"rebuild"
+			],
+			[
+				"place",
+				"placement"
+			],
+			[
+				"Sess",
+				"SessionManager"
+			],
+			[
+				"del",
+				"deleteApp"
+			],
+			[
+				"geo",
+				"geotriggersTemplate"
+			],
+			[
+				"add",
+				"addClass"
+			],
+			[
+				"fin",
+				"final_path"
+			],
+			[
+				"cod",
+				"conditional"
+			],
+			[
+				"curr",
+				"current_language"
+			],
+			[
+				"pos",
+				"pos-r	position: relative;"
+			],
+			[
+				"opt",
+				"options"
+			],
+			[
+				"icon",
+				"icon-graph-pie"
+			],
+			[
+				"background",
+				"background-size"
+			],
+			[
+				"lat",
+				"latitude"
+			],
+			[
+				"Geo",
+				"GeoStore"
+			],
+			[
+				"rtre",
+				"RTree"
+			],
+			[
+				"load",
+				"loadpaths"
+			],
+			[
+				"ser",
+				"serializedTree"
+			],
+			[
+				"font-",
+				"font-size"
+			],
+			[
+				"new",
+				"newZoom"
+			],
+			[
+				"co",
+				"coverageArea"
+			],
+			[
+				"ht",
+				"httpRequest"
+			],
+			[
+				"min",
+				"min_white_space"
+			],
+			[
+				"link",
+				"link_to"
+			],
+			[
+				"fla",
+				"flattenHoles"
+			],
+			[
+				"gra",
+				"graphics"
+			],
+			[
+				"Ter",
+				"terraformer"
+			],
+			[
+				"st",
+				"structure"
+			],
+			[
+				"car",
+				"cardLevels"
+			],
+			[
+				"at",
+				"attack"
+			],
+			[
+				"c",
+				"creature"
+			],
+			[
+				"rea",
+				"relation"
+			],
+			[
+				"stroke",
+				"strokeWidth"
+			],
+			[
+				"rel",
+				"relationships"
+			],
+			[
+				"cir",
+				"circles"
+			],
+			[
+				"circ",
+				"circles"
+			],
+			[
+				"relation",
+				"relation"
+			],
+			[
+				"relat",
+				"relations"
+			],
+			[
+				"get",
+				"getBy"
+			],
+			[
+				"per",
+				"person"
+			],
+			[
+				"po",
+				"points"
+			],
+			[
+				"Rela",
+				"Relation"
+			],
+			[
+				"person",
+				"person2"
+			],
+			[
+				"perso",
+				"person"
+			],
+			[
+				"Rel",
+				"Relationships"
+			],
+			[
+				"peop",
+				"people"
+			],
+			[
+				"circle",
+				"circlePoints"
+			],
+			[
+				"rela",
+				"relationKeys"
+			],
+			[
+				"fo",
+				"for	for (…) {…}"
+			],
+			[
+				"pop",
+				"popped"
+			],
+			[
+				"data",
+				"data"
+			],
+			[
+				"d",
+				"data"
+			],
+			[
+				"giv",
+				"giver"
+			],
+			[
+				"ol",
+				"oldAmount"
+			],
+			[
+				"remoe",
+				"removeRelation"
+			],
+			[
+				"te",
+				"text"
+			],
+			[
+				"an",
+				"amount"
+			],
+			[
+				"rec",
+				"receiver"
+			],
+			[
+				"de",
+				"debt"
+			],
+			[
+				"giver",
+				"giverPath"
+			],
+			[
+				"gi",
+				"giver"
+			],
+			[
+				"por",
+				"portraitEnter"
+			],
+			[
+				"on",
+				"onload"
+			],
+			[
+				"off",
+				"offsetblur"
+			],
+			[
+				"select",
+				"selectAll"
+			],
+			[
+				"google",
+				"google-analytics"
+			],
+			[
+				"stor",
+				"Storage"
+			],
+			[
+				"f",
+				"function"
+			],
+			[
+				"e",
+				"event"
+			],
+			[
+				"Redi",
+				"redirects"
+			],
+			[
+				"owner",
+				"ownerFolder"
+			],
+			[
+				"own",
+				"ownerFolder"
+			],
+			[
+				"item",
+				"itemInfo"
+			],
+			[
+				"ite",
+				"itemInfo"
+			],
+			[
+				"folder",
+				"folderInfo"
+			],
+			[
+				"cani",
+				"candidates"
+			],
+			[
+				"end",
+				"endMarker"
+			],
+			[
+				"start",
+				"startMarker"
+			],
+			[
+				"mark",
+				"markers"
+			],
+			[
+				"feature",
+				"features"
+			],
+			[
+				"solv",
+				"solveResult"
+			],
+			[
+				"rout",
+				"routeParams"
+			],
+			[
+				"user",
+				"userQuery"
+			],
+			[
+				"admi",
+				"adminQuery"
+			],
+			[
+				"resp",
+				"response"
+			],
+			[
+				"dash",
+				"dashboardView"
+			],
+			[
+				"create",
+				"createGraph"
+			],
+			[
+				"or",
+				"orgUrl"
+			],
+			[
+				"fun",
+				"function"
+			],
+			[
+				"redirect",
+				"redirect_uris"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "Build",
+	"command_palette":
+	{
+		"height": 375.0,
+		"selected_items":
+		[
+			[
+				"html",
+				"Set Syntax: HTML"
+			],
+			[
+				"space",
+				"Indentation: Convert to Spaces"
+			],
+			[
+				"json",
+				"Set Syntax: JSON"
+			],
+			[
+				"word",
+				"Word Wrap: Toggle"
+			],
+			[
+				"scss",
+				"Set Syntax: CSS"
+			],
+			[
+				"css",
+				"Set Syntax: CSS"
+			],
+			[
+				"jso",
+				"Set Syntax: JSON"
+			],
+			[
+				"ht",
+				"Set Syntax: HTML"
+			],
+			[
+				"java",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"js",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"wor",
+				"Word Wrap: Toggle"
+			],
+			[
+				"spaces",
+				"Indentation: Convert to Spaces"
+			],
+			[
+				"ja",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"ruy",
+				"Set Syntax: Ruby on Rails"
+			],
+			[
+				"ruby",
+				"Set Syntax: Ruby"
+			],
+			[
+				"pack",
+				"Package Control: Install Package"
+			],
+			[
+				"JAVA",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"word ",
+				"Word Wrap: Toggle"
+			],
+			[
+				"set s html",
+				"Set Syntax: HTML"
+			],
+			[
+				"set s ja",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"set s j",
+				"Set Syntax: JSON"
+			],
+			[
+				"pa",
+				"Package Control: Install Package"
+			],
+			[
+				"set sj",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"set m ",
+				"Set Syntax: Markdown"
+			],
+			[
+				"set s m",
+				"Set Syntax: Makefile"
+			],
+			[
+				"wo",
+				"Word Wrap: Toggle"
+			],
+			[
+				"set s h",
+				"Set Syntax: HTML"
+			],
+			[
+				"mark",
+				"Markdown Preview: preview in Browser"
+			],
+			[
+				"ma",
+				"Markdown Preview: preview in Browser"
+			],
+			[
+				"sy j",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"Package Control: ",
+				"Package Control: Disable Package"
+			],
+			[
+				"syntax y",
+				"Set Syntax: Ruby"
+			],
+			[
+				"The",
+				"Themr: Nexus"
+			],
+			[
+				"them",
+				"Themr: Nexus"
+			],
+			[
+				"the",
+				"Themr: Soda Dark"
+			],
+			[
+				"th",
+				"Themr: Nexus"
+			],
+			[
+				"pac",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 435.0
+	},
+	"console":
+	{
+		"height": 126.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Users/patricklocal/Projects/geoloqi/esri-leaflet/index.html",
+		"/Users/patricklocal/Projects/geoloqi/esri-leaflet/esri-leaflet.js",
+		"/Users/patricklocal/Projects/geoloqi/esri-leaflet/scratch.html",
+		"/Users/patricklocal/Projects/geoloqi/geotriggers-js/samples/index.html",
+		"/Users/patricklocal/Projects/geoloqi/geotriggers-js/spec/GeotriggersSpec.js",
+		"/Users/patricklocal/Projects/geoloqi/geotriggers-js/src/geotriggers.js",
+		"/Users/patricklocal/Projects/geoloqi/dev-site-css/examples/grunt/package.json",
+		"/Users/patricklocal/Projects/geoloqi/dev-site-css/examples/grunt",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/layouts/layout.erb",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/js/demos/directions.js",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/renderers/markdown.rb",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/templates/application-manager/nav.html",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/js/application-manager/main.js",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/js/loqi/SessionManager/main.js",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/localizable/plan-finder.html.erb",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/css/application-manager.css.scss",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/templates/application-manager/edit-components/redirect-urls.html",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/js/application-manager/collections/applications.js",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/js/application-manager/helpers/handlebars.js",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/js/application-manager/views/edit.js",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/templates/application-manager/single.html",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/templates/application-manager/edit-components/info.html",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/js/application-manager/views/single.js",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/js/application-manager/router.js",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/localizable/_partials/_login-bar.erb",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/Gemfile",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/buildscript",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/config.rb",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/css/features.css.scss",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/css/screen.css.scss",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/localizable/_partials/features/_directions.erb",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/localizable/_partials/features/_mapping.erb",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/localizable/_partials/features/_feature-services.erb",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/localizable/_partials/features/_geocoding.erb",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/js/application-manager/models/application.js",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/.git/MERGE_MSG",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/templates/application-manager/new.html",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/js/loqi/Quoin/Collection.js",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/js/application-manager/views/new.js",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/templates/application-manager/edit.html",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/js/application-manager/views/list.js",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/build/js/main.js",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/localizable/pricing.html.erb",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/localizable/usage-summary.html.erb",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/localizable/applications.html.erb",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/css/dashboard.css.scss",
+		"/Users/patricklocal/Projects/geoloqi/dev-site-css/.git/MERGE_MSG",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/js/loqi/Quoin/ListView.js",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/js/libs/nv.d3.js",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/js/loqi/Quoin/View.js",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/js/application-manager/views/dashboard.js",
+		"/Users/patricklocal/Projects/geoloqi/dev-site-css/stylesheets/arcgis/patterns/_layout.scss",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/js/dashboard/dashboard.js",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/js/loqi/Quoin/HandlebarsTemplated.js",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/js/application-manager/helpers/usage.js",
+		"/Users/patricklocal/Projects/scratch/usage-test.js",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/js/loqi/Quoin/Handlebars.js",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/localizable/_authentication.erb",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/templates/application-manager/edit-components/usage.html",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/templates/application-manager/dashboard.html",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/js/application-manager/models/usage.js",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/templates/application-manager/application-dashboard.html",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/templates/application-manager/edit-components/geotriggers-permissions.html",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/arcgis-for-developers.sublime-project",
+		"/Users/patricklocal/Projects/geoloqi/dev-site-css/.gitignore",
+		"/Users/patricklocal/Library/Application Support/Sublime Text 2/Settings/Session.sublime_session",
+		"/Users/patricklocal/Projects/personal/brunch-test/config.coffee",
+		"/Users/patricklocal/Documents/Gemfile",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/templates/application-manager/edit-components/push-certificates.html",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/templates/application-manager/edit-components/delete.html",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/localizable/_partials/_loggin-bar.erb",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/templates/application-manager/edit-components/title-description.html",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/templates/application-manager/form.html",
+		"/Users/patricklocal/Library/Application Support/Sublime Text 2/Packages/SublimeLinter/SublimeLinter.sublime-settings",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/localizable/_header.erb",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/localizable/_partials/_features_nav.erb",
+		"/Users/patricklocal/Projects/geoloqi/terraformer/src/rtree.js",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/localizable/account/_sidebar.erb",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/localizable/account/payment-methods.html.erb",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/css/plans.css.scss",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/localizable/account/modify-plan.html.erb",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/localizable/account/cancel-plan.html.erb",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/localizable/account/plan-status.html.erb",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/localizable/account/profile.html.erb",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/localizable/account/usage-alerts.html.erb",
+		"/Users/patricklocal/Projects/geoloqi/dev-site-css/stylesheets/arcgis/_grid.scss",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/templates/application-manager/list.html",
+		"/Users/patricklocal/Projects/geoloqi/dev-site-css/stylesheets/arcgis/_forms.scss",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/css/documentation.css.scss",
+		"/Users/patricklocal/Projects/geoloqi/api-design-presentation/big.js",
+		"/Users/patricklocal/Projects/personal/write-the-docs-talk/style.css",
+		"/Users/patricklocal/Projects/personal/write-the-docs-talk/index.html",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-middleman/source/css/screen.css.scss",
+		"/Users/patricklocal/Projects/geoloqi/dev-site-css/stylesheets/arcgis/base/_config.scss",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-middleman/source/css/documentation.css.scss",
+		"/Users/patricklocal/Projects/geoloqi/dev-site-css/examples/html_with_compass/Gemfile",
+		"/Users/patricklocal/Projects/geoloqi/dev-site-css/examples/middleman/Gemfile",
+		"/Users/patricklocal/Projects/geoloqi/dev-site-css/examples/sinatra/Gemfile",
+		"/Users/patricklocal/Projects/geoloqi/dev-site-css/css/arcgis.min.css",
+		"/Users/patricklocal/Projects/geoloqi/dev-site-css/examples/html_with_compass/index.html",
+		"/Users/patricklocal/Projects/geoloqi/dev-site-css/examples/static_html/index.html",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-middleman/Gemfile",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-middleman/config.rb",
+		"/Users/patricklocal/Projects/geoloqi/dev-site-css/stylesheets/arcgis/patterns/_navigation-bar.scss",
+		"/Users/patricklocal/Projects/geoloqi/terraformer/spec/specs/rtree-spec.js",
+		"/Users/patricklocal/Projects/geoloqi/terraformer/dist/node/RTree/package.json",
+		"/Users/patricklocal/Projects/geoloqi/terraformer/dist/node/Parsers/WKT/package.json",
+		"/Users/patricklocal/Projects/geoloqi/terraformer/src/Parsers/WKT/wkt.js",
+		"/Users/patricklocal/Projects/geoloqi/terraformer/src/geostore.js",
+		"/Users/patricklocal/Projects/geoloqi/terraformer/src/partials/module-rtree.js",
+		"/Users/patricklocal/Projects/geoloqi/terraformer/src/terraformer.js",
+		"/Users/patricklocal/Projects/geoloqi/terraformer/examples/counties/viewer.js",
+		"/Users/patricklocal/Projects/geoloqi/terraformer/examples/counties/index.html",
+		"/Users/patricklocal/Projects/geoloqi/terraformer/examples/geostore/index.html",
+		"/Users/patricklocal/Projects/geoloqi/terraformer/src/Backends/Memory/MemoryStore.js",
+		"/Users/patricklocal/Projects/geoloqi/terraformer/spec/specs/terraformer-spec.js",
+		"/Users/patricklocal/Projects/geoloqi/terraformer/node_modules/grunt-jasmine-node/node_modules/jasmine-node/lib/jasmine-node/spec-collection.js",
+		"/Users/patricklocal/Projects/geoloqi/terraformer/node_modules/grunt-jasmine-node/node_modules/jasmine-node/lib/jasmine-node/index.js",
+		"/Users/patricklocal/Projects/geoloqi/terraformer/node_modules/grunt-jasmine-node/tasks/jasmine-node-task.js",
+		"/Users/patricklocal/Projects/geoloqi/terraformer/package.json",
+		"/Users/patricklocal/Projects/geoloqi/terraformer/grunt.js",
+		"/Users/patricklocal/Projects/geoloqi/terraformer/spec/SpecRunner.html",
+		"/Users/patricklocal/Projects/geoloqi/terraformer/spec/specs/GeoJSON.js",
+		"/Users/patricklocal/Projects/geoloqi/terraformer/spec/spec/RTree.js",
+		"/Users/patricklocal/Projects/geoloqi/terraformer/spec/spec/WKTSpec.js",
+		"/Users/patricklocal/Projects/geoloqi/terraformer/spec/spec/TerraformerSpec.js",
+		"/Users/patricklocal/Projects/geoloqi/terraformer/dist/node/RTree/test/rtree-test.js",
+		"/Users/patricklocal/Projects/geoloqi/dev-site-css/profiles/production.rb"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 115.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": true,
+		"find_history":
+		[
+			"contains",
+			"defer",
+			"dfd",
+			"var ",
+			"p",
+			"%5D",
+			"%5B",
+			"%20",
+			"it(",
+			"it",
+			"callCoun",
+			"cookie",
+			"edit",
+			"consol",
+			"application",
+			"small",
+			"nv",
+			"graph1data",
+			"_createEvents",
+			"this.addHelper(",
+			"console.log",
+			"this",
+			"registerHelper",
+			"Handlebars.Handlebars.",
+			"Handlebars",
+			"new Date()",
+			"usageData",
+			"log",
+			"this",
+			"data",
+			"console",
+			"averagePerDay",
+			"10",
+			"Math.round(",
+			"firstArray",
+			"creditUsage",
+			"allServices",
+			"firstArray",
+			"tempArray",
+			"creditsUsed",
+			"payPeriod",
+			"totalUsage",
+			"console",
+			"total",
+			"data[arrValue]",
+			"<p class=\"small\"",
+			"column-6",
+			"h3",
+			"-8",
+			"this.get",
+			"set",
+			"get(\"dat",
+			"dash",
+			"http:",
+			"dashboardHandler",
+			"editHandler",
+			"client",
+			"this.get",
+			"editApplicationView",
+			"{",
+			"Current",
+			"organization",
+			"ready =",
+			"ready",
+			"ready = ",
+			"form",
+			"applicationNavView",
+			"form",
+			"h1",
+			"arrow-right",
+			"app-edit",
+			"data-application-manager",
+			"html",
+			"dis",
+			"//",
+			"unloca",
+			"trailing",
+			"var co",
+			"search",
+			"Rectangle",
+			"'/",
+			"/'",
+			"new_path",
+			"binding.pry",
+			"<td>",
+			"monthly",
+			" <br><small>",
+			"class=\"selected\"",
+			"h3",
+			"disabled",
+			" <small>",
+			"<input type=\"radio\" name=\"plan_id\">",
+			"Credits",
+			"div",
+			"type=\"radio\"",
+			"<th>",
+			"<h3>",
+			"<input type=\"radio\" name=\"plan_id\">",
+			"<input type=\"radio\"",
+			"td",
+			"<td>",
+			"td",
+			"dd",
+			"%>",
+			"h3",
+			"text",
+			"label",
+			"modify-plan",
+			"plan-status",
+			"<div class=\"navigation-bar green nav-only\">",
+			"Homepage",
+			"jpg",
+			"$esri-colors-blue-12",
+			"esri-b",
+			"jpg",
+			"remove)",
+			"location",
+			"me",
+			"position.coords.longitude",
+			"position.coords.latitude",
+			"ounds",
+			"calculateBounds",
+			"envelope",
+			"point",
+			"ser",
+			"serial",
+			"spec/",
+			"loadpaths"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 32.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 146.0
+	},
+	"replace":
+	{
+		"height": 0.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"main",
+				"Website/build/js/main.js"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"selected_items":
+		[
+			[
+				"",
+				"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/arcgis-for-developers.sublime-project"
+			]
+		],
+		"width": 380.0
+	},
+	"show_minimap": false,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 246.0,
+	"status_bar_visible": true
+}

@@ -1,0 +1,19 @@
+{
+  "name": "Esri-Leaflet",
+  "version": "0.0.1",
+  "description": "ArcGIS Plugins for Leaflet",
+  "main": "src/esri-leaflet.js",
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-jshint": "~0.4.3",
+    "grunt-contrib-uglify": "~0.2.0",
+    "grunt-contrib-watch": "~0.3.1"
+  },
+  "author": "Patrick Arlt <parlt@esri.com> (http://patrickarlt.com)",
+  "contributors": [
+    "Patrick Arlt <parlt@esri.com> (http://patrickarlt.com)"
+  ],
+  "license": "Apache",
+  "readmeFilename": "README.md",
+  "dependencies": {}
+}
