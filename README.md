@@ -11,16 +11,16 @@ L.esri.tileLayer("Topographic").addTo(map);
 
 ### TileLayer
 
-`L.esri.TileLayer(style, options)` - accepts a sting mapping to a set of Esri tiles. Valid options are `Streets`, `Topographic`, `Oceans`, `NationalGeographic`, `Gray`, `GrayLabels`, `Imagery` or `ImageryLabels`. The options parameter can be any options that you could normally pass to [L.TileLayer]http://leafletjs.com/reference.html#tilelayer.
+`L.esri.TileLayer(tileSet, options)` accepts a string representing an Esri tile set, valid tile sets are `Streets`, `Topographic`, `Oceans`, `NationalGeographic`, `Gray`, `GrayLabels`, `Imagery` or `ImageryLabels`. The options parameter can be any options that you could normally pass to [L.TileLayer](http://leafletjs.com/reference.html#tilelayer).
 
 # Goal
 
-The goal of Esri Leaflet is not to replace the ArcGIS Javascript, but rather to provide small components to allow devleopers to build simple lightweight mapping applicaitons.
+The goal of Esri Leaflet is not to replace the ArcGIS Javascript SDK, but rather to provide small components to allow devleopers to build simple lightweight mapping applicaitons.
 
 # Dependancies
 
-* Terraformer - for converting geometries
-* ArcGIS Node (browser build) - for making API requests
+* [Terraformer](https://github.com/esri/Terraformer) - for converting geometries
+* [ArcGIS Node](https://github.com/ArcGIS/arcgis-node) (browser build) - for making API requests
 
 These are currently included in `/vendor` as submodules they will probally be used once work on things like `L.esri.FeatureLayer` starts.
 
