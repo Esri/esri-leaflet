@@ -40,11 +40,6 @@ module.exports = function(grunt) {
         files: {
           'dist/esri-leaflet.min.js': ['src/**/*.js']
         }
-      },
-      versioned: {
-        files: {
-          'dist/versions/esri-leaflet-<%= pkg.version %>.min.js': ['src/**/*.js']
-        }
       }
     },
     cssmin: {
@@ -57,7 +52,7 @@ module.exports = function(grunt) {
       },
       compress: {
         files: {
-          'dist/esri-leaflet.css': ['src/esri-leaflet.css']
+          'dist/esri-leaflet.min.css': ['src/esri-leaflet.css']
         }
       }
     }
