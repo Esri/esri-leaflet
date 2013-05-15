@@ -1,3 +1,5 @@
+**WORK IN PROGRESS**
+
 # Esri Leaflet
 
 Leaflet wrappers for Esri Services. Currenly only supports loading Esri map tiles.
@@ -16,8 +18,11 @@ L.esri.tileLayer("Topographic").addTo(map);
 The goal of Esri Leaflet is not to replace the ArcGIS Javascript, but rather to provide small components to allow devleopers to build simple lightweight mapping applicaitons.
 
 # Dependancies
+
 * Terraformer - for converting geometries
 * ArcGIS Node (browser build) - for making API requests
+
+These are currently included in `/vendor` as submodules they will probally be used once work on things like `L.esri.FeatureLayer` starts.
 
 # The Future!
 * FeatureLayer
