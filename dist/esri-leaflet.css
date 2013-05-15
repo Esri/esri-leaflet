@@ -1,0 +1,6 @@
+/*! Esri-Leaflet - v0.0.1 - 2013-05-14
+*   Copyright (c) 2013 Environmental Systems Research Institute, Inc.
+*   Apache License*/
+
+
+.leaflet-container .leaflet-control-attribution{background-color:transparent;box-shadow:none;text-shadow:0 0 3px #000;color:#fff;font-size:12px;top:-5px}.leaflet-container .leaflet-control-attribution a{background-color:transparent;box-shadow:none;text-shadow:0 0 3px #000;color:#fff}.esri-attribution-logo{position:relative;top:5px;padding-left:4px}

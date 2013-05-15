@@ -46,14 +46,29 @@ module.exports = function(grunt) {
           'dist/versions/esri-leaflet-<%= pkg.version %>.min.js': ['src/**/*.js']
         }
       }
+    },
+    cssmin: {
+      options: {
+        banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %>\n' +
+        '*   Copyright (c) <%= grunt.template.today("yyyy") %> Environmental Systems Research Institute, Inc.\n' +
+        '*   Apache License' +
+        '*/\n\n',
+        report: 'gzip'
+      },
+      compress: {
+        files: {
+          'dist/esri-leaflet.css': ['src/esri-leaflet.css']
+        }
+      }
     }
   });
 
   grunt.registerTask('default', ['jshint']);
-  grunt.registerTask('build', ['default', 'uglify']);
+  grunt.registerTask('build', ['default', 'uglify', 'cssmin']);
 
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
 
 };
