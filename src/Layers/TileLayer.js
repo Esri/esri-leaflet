@@ -1,82 +1,85 @@
-L.esri = {
-  TILES: {
-    Streets: {
-      urlTemplate: "http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}",
-      attributionUrl: "http://static.arcgis.com/attribution/World_Street_Map?f=json",
-      options: {
-        minZoom: 1,
-        maxZoom: 19,
-        attribution: "<span id='esri-attributions'>Esri</span><img src='http://serverapi.arcgisonline.com/jsapi/arcgis/3.4/js/esri/images/map/logo-med.png' alt='Powered by Esri' class='esri-attribution-logo'>"
-      }
-    },
-    Topographic: {
-      urlTemplate: "http://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}",
-      attributionUrl: "http://static.arcgis.com/attribution/World_Topo_Map?f=json",
-      options: {
-        minZoom: 1,
-        maxZoom: 19,
-        attribution: "<span id='esri-attributions'>Esri</span><img src='http://serverapi.arcgisonline.com/jsapi/arcgis/3.4/js/esri/images/map/logo-med.png' alt='Powered by Esri' class='esri-attribution-logo'>"
-      }
-    },
-    Oceans: {
-      urlTemplate: "http://server.arcgisonline.com/ArcGIS/rest/services/Ocean_Basemap/MapServer/tile/{z}/{y}/{x}",
-      attributionUrl: "http://static.arcgis.com/attribution/Ocean_Basemap?f=json",
-      options: {
-        minZoom: 1,
-        maxZoom: 19,
-        attribution: "<span id='esri-attributions'>Esri</span><img src='http://serverapi.arcgisonline.com/jsapi/arcgis/3.4/js/esri/images/map/logo-med.png' alt='Powered by Esri' class='esri-attribution-logo'>"
-      }
-    },
-    NationalGeographic: {
-      urlTemplate: "http://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}",
-      options: {
-        minZoom: 1,
-        maxZoom: 19,
-        attribution: "<span id='esri-attributions'>Esri</span><img src='http://serverapi.arcgisonline.com/jsapi/arcgis/3.4/js/esri/images/map/logo-med.png' alt='Powered by Esri' class='esri-attribution-logo'>"
-      }
-    },
-    Gray: {
-      urlTemplate: "http://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}",
-      options: {
-        minZoom: 1,
-        maxZoom: 19,
-        attribution: "<span id='esri-attributions'>Copyright: &copy;2013 Esri, DeLorme, NAVTEQ</span><img src='http://serverapi.arcgisonline.com/jsapi/arcgis/3.4/js/esri/images/map/logo-med.png' alt='Powered by Esri' class='esri-attribution-logo'>"
-      }
-    },
-    GrayLabels: {
-      urlTemplate: "http://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}",
-      options: {
-        minZoom: 1,
-        maxZoom: 19
-      }
-    },
-    Imagery: {
-      urlTemplate: "http://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-      options: {
-        minZoom: 1,
-        maxZoom: 19,
-        attribution: "<span id='esri-attributions'>Esri, DigitalGlobe, GeoEye, i-cubed, USDA, USGS, AEX, Getmapping, Aerogrid, IGN, IGP, swisstopo, and the GIS User Community</span><img src='http://serverapi.arcgisonline.com/jsapi/arcgis/3.4/js/esri/images/map/logo-med.png' alt='Powered by Esri' class='esri-attribution-logo'>"
-      }
-    },
-    ImageryLabels: {
-      urlTemplate: "http://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",
-      options: {
-        minZoom: 1,
-        maxZoom: 19
-      }
-    }
-  }
-};
+if(typeof L.esri === "undefined"){
+  L.esri = {};
+}
 
 L.esri.TileLayer = L.TileLayer.extend({
+  statics: {
+    TILES: {
+      Streets: {
+        urlTemplate: "http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}",
+        attributionUrl: "http://static.arcgis.com/attribution/World_Street_Map?f=json",
+        options: {
+          minZoom: 1,
+          maxZoom: 19,
+          attribution: "<span id='esri-attributions'>Esri</span><img src='http://serverapi.arcgisonline.com/jsapi/arcgis/3.4/js/esri/images/map/logo-med.png' alt='Powered by Esri' class='esri-attribution-logo'>"
+        }
+      },
+      Topographic: {
+        urlTemplate: "http://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}",
+        attributionUrl: "http://static.arcgis.com/attribution/World_Topo_Map?f=json",
+        options: {
+          minZoom: 1,
+          maxZoom: 19,
+          attribution: "<span id='esri-attributions'>Esri</span><img src='http://serverapi.arcgisonline.com/jsapi/arcgis/3.4/js/esri/images/map/logo-med.png' alt='Powered by Esri' class='esri-attribution-logo'>"
+        }
+      },
+      Oceans: {
+        urlTemplate: "http://server.arcgisonline.com/ArcGIS/rest/services/Ocean_Basemap/MapServer/tile/{z}/{y}/{x}",
+        attributionUrl: "http://static.arcgis.com/attribution/Ocean_Basemap?f=json",
+        options: {
+          minZoom: 1,
+          maxZoom: 19,
+          attribution: "<span id='esri-attributions'>Esri</span><img src='http://serverapi.arcgisonline.com/jsapi/arcgis/3.4/js/esri/images/map/logo-med.png' alt='Powered by Esri' class='esri-attribution-logo'>"
+        }
+      },
+      NationalGeographic: {
+        urlTemplate: "http://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}",
+        options: {
+          minZoom: 1,
+          maxZoom: 19,
+          attribution: "<span id='esri-attributions'>Esri</span><img src='http://serverapi.arcgisonline.com/jsapi/arcgis/3.4/js/esri/images/map/logo-med.png' alt='Powered by Esri' class='esri-attribution-logo'>"
+        }
+      },
+      Gray: {
+        urlTemplate: "http://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}",
+        options: {
+          minZoom: 1,
+          maxZoom: 19,
+          attribution: "<span id='esri-attributions'>Copyright: &copy;2013 Esri, DeLorme, NAVTEQ</span><img src='http://serverapi.arcgisonline.com/jsapi/arcgis/3.4/js/esri/images/map/logo-med.png' alt='Powered by Esri' class='esri-attribution-logo'>"
+        }
+      },
+      GrayLabels: {
+        urlTemplate: "http://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}",
+        options: {
+          minZoom: 1,
+          maxZoom: 19
+        }
+      },
+      Imagery: {
+        urlTemplate: "http://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+        options: {
+          minZoom: 1,
+          maxZoom: 19,
+          attribution: "<span id='esri-attributions'>Esri, DigitalGlobe, GeoEye, i-cubed, USDA, USGS, AEX, Getmapping, Aerogrid, IGN, IGP, swisstopo, and the GIS User Community</span><img src='http://serverapi.arcgisonline.com/jsapi/arcgis/3.4/js/esri/images/map/logo-med.png' alt='Powered by Esri' class='esri-attribution-logo'>"
+        }
+      },
+      ImageryLabels: {
+        urlTemplate: "http://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",
+        options: {
+          minZoom: 1,
+          maxZoom: 19
+        }
+      }
+    }
+  },
   initialize: function(key, options){
     var config;
 
     // set the config variable with the appropriate config object
     if (typeof key === "object" && key.urlTemplate && key.options){
       config = key;
-    } else if(typeof key === "string" && L.esri.TILES[key]){
-      config = L.esri.TILES[key];
+    } else if(typeof key === "string" && L.esri.TileLayer.TILES[key]){
+      config = L.esri.TileLayer.TILES[key];
     } else {
       throw new Error("L.esri.TileLayer: Invalid parameter. Use one of 'Streets', 'Topographic', 'Oceans', 'NationalGeographic', 'Gray', 'GrayLabels', 'Imagery' or 'ImageryLabels'");
     }
