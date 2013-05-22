@@ -40,11 +40,7 @@ L.esri.FeatureLayer = L.GeoJSON.extend({
     this._layerCache = {};
     this.client = new Esri.ArcGIS();
     this.service = this.client.featureservice({
-      catalog: 'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services',
-      service: 'stops',
-      type: "FeatureServer",
-      layer: "0",
-      format: 'json'
+      url: url
     });
     L.GeoJSON.prototype.initialize.call(this, [], options);
   },
