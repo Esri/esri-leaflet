@@ -4,20 +4,72 @@
 		"selected_items":
 		[
 			[
+				"to",
+				"toEqual"
+			],
+			[
+				"con",
+				"contained"
+			],
+			[
 				"co",
+				"contained"
+			],
+			[
+				"c",
+				"contained"
+			],
+			[
+				"ot",
+				"otherRing"
+			],
+			[
+				"po",
+				"polygon"
+			],
+			[
+				"out",
+				"outputRings"
+			],
+			[
+				"contain",
+				"containedInRings"
+			],
+			[
+				"cor",
 				"coordinates"
 			],
 			[
-				"to",
-				"toBeTruthy"
+				"for",
+				"for	for (…) {…}"
+			],
+			[
+				"Multi",
+				"MultiPolygon"
+			],
+			[
+				"ring",
+				"ringArray"
+			],
+			[
+				"in",
+				"innerRing"
+			],
+			[
+				"re",
+				"resolve"
+			],
+			[
+				"remo",
+				"removedFromIndex"
+			],
+			[
+				"f",
+				"found"
 			],
 			[
 				"mem",
 				"memory_store"
-			],
-			[
-				"con",
-				"convert"
 			],
 			[
 				"Ter",
@@ -126,14 +178,6 @@
 			[
 				"event",
 				"eventName"
-			],
-			[
-				"for",
-				"for	for (…) {…} (Improved Native For-Loop)"
-			],
-			[
-				"re",
-				"redirect-urls"
 			],
 			[
 				"ed",
@@ -320,10 +364,6 @@
 				"attack"
 			],
 			[
-				"c",
-				"creature"
-			],
-			[
 				"rea",
 				"relation"
 			],
@@ -354,10 +394,6 @@
 			[
 				"per",
 				"person"
-			],
-			[
-				"po",
-				"points"
 			],
 			[
 				"Rela",
@@ -464,10 +500,6 @@
 				"Storage"
 			],
 			[
-				"f",
-				"function"
-			],
-			[
 				"e",
 				"event"
 			],
@@ -482,115 +514,11 @@
 			[
 				"own",
 				"ownerFolder"
-			],
-			[
-				"item",
-				"itemInfo"
-			],
-			[
-				"ite",
-				"itemInfo"
-			],
-			[
-				"folder",
-				"folderInfo"
-			],
-			[
-				"cani",
-				"candidates"
-			],
-			[
-				"end",
-				"endMarker"
-			],
-			[
-				"start",
-				"startMarker"
-			],
-			[
-				"mark",
-				"markers"
-			],
-			[
-				"feature",
-				"features"
 			]
 		]
 	},
 	"buffers":
 	[
-		{
-			"file": "/Users/patricklocal/Projects/geoloqi/terraformer/spec/SpecRunner.html",
-			"settings":
-			{
-				"buffer_size": 2249,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/Users/patricklocal/Projects/geoloqi/terraformer/grunt.js",
-			"settings":
-			{
-				"buffer_size": 6548,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/Users/patricklocal/Projects/geoloqi/terraformer/spec/specs/geostore-spec.js",
-			"settings":
-			{
-				"buffer_size": 2049,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/Users/patricklocal/Projects/geoloqi/terraformer/dist/node/RTree/package.json",
-			"settings":
-			{
-				"buffer_size": 355,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/Users/patricklocal/Projects/geoloqi/terraformer/src/partials/module-geostore.js",
-			"settings":
-			{
-				"buffer_size": 1014,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/Users/patricklocal/Projects/geoloqi/terraformer/src/geostore.js",
-			"settings":
-			{
-				"buffer_size": 5933,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/Users/patricklocal/Projects/geoloqi/terraformer/src/Stores/LocalStorage.js",
-			"settings":
-			{
-				"buffer_size": 2684,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/Users/patricklocal/Projects/geoloqi/terraformer/src/Stores/Memory.js",
-			"settings":
-			{
-				"buffer_size": 2051,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/Users/patricklocal/Projects/geoloqi/terraformer/dist/node/GeoStore/index.js",
-			"settings":
-			{
-				"buffer_size": 6938,
-				"line_ending": "Unix"
-			}
-		}
 	],
 	"build_system": "Build",
 	"command_palette":
@@ -598,6 +526,14 @@
 		"height": 375.0,
 		"selected_items":
 		[
+			[
+				"pack",
+				"Package Control: Disable Package"
+			],
+			[
+				"js",
+				"Set Syntax: JavaScript"
+			],
 			[
 				"html",
 				"Set Syntax: HTML"
@@ -635,10 +571,6 @@
 				"Set Syntax: JavaScript"
 			],
 			[
-				"js",
-				"Set Syntax: JavaScript"
-			],
-			[
 				"wor",
 				"Word Wrap: Toggle"
 			],
@@ -657,10 +589,6 @@
 			[
 				"ruby",
 				"Set Syntax: Ruby"
-			],
-			[
-				"pack",
-				"Package Control: Install Package"
 			],
 			[
 				"JAVA",
@@ -747,7 +675,7 @@
 				"Package Control: Install Package"
 			]
 		],
-		"width": 435.0
+		"width": 588.0
 	},
 	"console":
 	{
@@ -764,19 +692,29 @@
 	},
 	"file_history":
 	[
+		"/Users/patricklocal/Projects/geoloqi/terraformer/src/terraformer.js",
+		"/Users/patricklocal/Projects/geoloqi/terraformer/src/Parsers/ArcGIS/arcgis.js",
+		"/Users/patricklocal/Projects/geoloqi/terraformer/spec/specs/arcgis-spec.js",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/.git/MERGE_MSG",
+		"/Users/patricklocal/Projects/geoloqi/arcgis-node/lib/featureservice.js",
+		"/Users/patricklocal/Projects/geoloqi/terraformer/src/geostore.js",
+		"/Users/patricklocal/Projects/geoloqi/terraformer/spec/specs/geostore-spec.js",
+		"/Users/patricklocal/Projects/geoloqi/esri-leaflet/.git/MERGE_MSG",
 		"/Users/patricklocal/Projects/geoloqi/terraformer/dist/node/GeoStore/index.js",
-		"/Users/patricklocal/Projects/geoloqi/terraformer/src/Parsers/ArcGIS/partials/module-source.js",
+		"/Users/patricklocal/Projects/geoloqi/terraformer/dist/node/RTree/package.json",
+		"/Users/patricklocal/Projects/geoloqi/terraformer/grunt.js",
+		"/Users/patricklocal/Projects/geoloqi/terraformer/src/Stores/LocalStorage.js",
 		"/Users/patricklocal/Projects/geoloqi/terraformer/spec/SpecRunner.html",
+		"/Users/patricklocal/Projects/geoloqi/terraformer/src/Stores/Memory.js",
 		"/Users/patricklocal/Projects/geoloqi/terraformer/src/partials/module-geostore.js",
 		"/Users/patricklocal/Projects/geoloqi/terraformer/src/partials/module-rtree.js",
-		"/Users/patricklocal/Projects/geoloqi/terraformer/src/terraformer.js",
-		"/Users/patricklocal/Projects/geoloqi/terraformer/spec/specs/terraformer-spec.js",
+		"/Users/patricklocal/Projects/geoloqi/terraformer/dist/browser/rtree.js",
 		"/Users/patricklocal/Projects/geoloqi/terraformer/src/rtree.js",
-		"/Users/patricklocal/Projects/geoloqi/terraformer/src/geostore.js",
+		"/Users/patricklocal/Projects/geoloqi/terraformer/dist/browser/geostore.js",
+		"/Users/patricklocal/Projects/geoloqi/terraformer/src/Parsers/ArcGIS/partials/module-source.js",
+		"/Users/patricklocal/Projects/geoloqi/terraformer/spec/specs/terraformer-spec.js",
 		"/Users/patricklocal/Projects/geoloqi/terraformer/dist/node/GeoStore/package.json",
 		"/Users/patricklocal/Projects/geoloqi/terraformer/dist/browser/arcgis.js",
-		"/Users/patricklocal/Projects/geoloqi/terraformer/grunt.js",
-		"/Users/patricklocal/Projects/geoloqi/terraformer/src/Parsers/ArcGIS/arcgis.js",
 		"/Users/patricklocal/Projects/geoloqi/terraformer/spec/specs/spatial-reference-spec.js",
 		"/Users/patricklocal/Projects/geoloqi/esri-leaflet/demo/index.html",
 		"/Users/patricklocal/Projects/geoloqi/esri-leaflet/src/Layers/FeatureLayer.js",
@@ -818,7 +756,6 @@
 		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/localizable/_partials/features/_feature-services.erb",
 		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/localizable/_partials/features/_geocoding.erb",
 		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/js/application-manager/models/application.js",
-		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/.git/MERGE_MSG",
 		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/templates/application-manager/new.html",
 		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/js/loqi/Quoin/Collection.js",
 		"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/source/js/application-manager/views/new.js",
@@ -882,20 +819,11 @@
 		"/Users/patricklocal/Projects/geoloqi/dev-site-css/examples/sinatra/Gemfile",
 		"/Users/patricklocal/Projects/geoloqi/dev-site-css/css/arcgis.min.css",
 		"/Users/patricklocal/Projects/geoloqi/dev-site-css/examples/html_with_compass/index.html",
-		"/Users/patricklocal/Projects/geoloqi/dev-site-css/examples/static_html/index.html",
-		"/Users/patricklocal/Projects/geoloqi/arcgis-middleman/Gemfile",
-		"/Users/patricklocal/Projects/geoloqi/arcgis-middleman/config.rb",
-		"/Users/patricklocal/Projects/geoloqi/dev-site-css/stylesheets/arcgis/patterns/_navigation-bar.scss",
-		"/Users/patricklocal/Projects/geoloqi/terraformer/spec/specs/rtree-spec.js",
-		"/Users/patricklocal/Projects/geoloqi/terraformer/dist/node/RTree/package.json",
-		"/Users/patricklocal/Projects/geoloqi/terraformer/dist/node/Parsers/WKT/package.json",
-		"/Users/patricklocal/Projects/geoloqi/terraformer/src/Parsers/WKT/wkt.js",
-		"/Users/patricklocal/Projects/geoloqi/terraformer/examples/counties/viewer.js",
-		"/Users/patricklocal/Projects/geoloqi/terraformer/examples/counties/index.html"
+		"/Users/patricklocal/Projects/geoloqi/dev-site-css/examples/static_html/index.html"
 	],
 	"find":
 	{
-		"height": 35.0
+		"height": 37.0
 	},
 	"find_in_files":
 	{
@@ -909,6 +837,77 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"console.log",
+			"],[",
+			"[[[",
+			"[[",
+			"[-0.000895529938859074,0.0003534070103373519]",
+			"\n          ",
+			"],[",
+			"console.log",
+			"console",
+			",\n        [",
+			"\n        ]",
+			"\n        ],",
+			"\n          ",
+			",\n        ",
+			"console",
+			"],[",
+			"var hole",
+			"],[",
+			"holes",
+			"length",
+			"console.log",
+			"],[",
+			"console.",
+			"console.log",
+			"contianingRing",
+			"ii",
+			"i",
+			"],[",
+			"coordinates2",
+			"coordinates1",
+			"[[",
+			"]]",
+			"]]]",
+			"]]",
+			"[[[",
+			"[[",
+			"],[",
+			"conso",
+			"console.log",
+			"], [",
+			", [",
+			"console.log",
+			"Multi",
+			"//",
+			", [",
+			", ",
+			"convertRingsToPoly",
+			"convertPoly",
+			"type",
+			"input",
+			"return",
+			"findGeometryType",
+			"outputRings",
+			"contains",
+			"multipolygonCoordinates",
+			"array",
+			"flattenHoles",
+			"findGeometryType",
+			"flattenHoles",
+			"console",
+			"console.log",
+			"bind",
+			"remove",
+			"new Deferred",
+			"HEAD",
+			"<<",
+			"<<<<<",
+			"HEAD",
+			".insert",
+			"remove",
+			".then(spy)",
 			"Terraformer",
 			"Washing",
 			"options",
@@ -965,78 +964,7 @@
 			"callCoun",
 			"cookie",
 			"edit",
-			"consol",
-			"application",
-			"small",
-			"nv",
-			"graph1data",
-			"_createEvents",
-			"this.addHelper(",
-			"console.log",
-			"this",
-			"registerHelper",
-			"Handlebars.Handlebars.",
-			"Handlebars",
-			"new Date()",
-			"usageData",
-			"log",
-			"this",
-			"data",
-			"console",
-			"averagePerDay",
-			"10",
-			"Math.round(",
-			"firstArray",
-			"creditUsage",
-			"allServices",
-			"firstArray",
-			"tempArray",
-			"creditsUsed",
-			"payPeriod",
-			"totalUsage",
-			"console",
-			"total",
-			"data[arrValue]",
-			"<p class=\"small\"",
-			"column-6",
-			"h3",
-			"-8",
-			"this.get",
-			"set",
-			"get(\"dat",
-			"dash",
-			"http:",
-			"dashboardHandler",
-			"editHandler",
-			"client",
-			"this.get",
-			"editApplicationView",
-			"{",
-			"Current",
-			"organization",
-			"ready =",
-			"ready",
-			"ready = ",
-			"form",
-			"applicationNavView",
-			"form",
-			"h1",
-			"arrow-right",
-			"app-edit",
-			"data-application-manager",
-			"html",
-			"dis",
-			"//",
-			"unloca",
-			"trailing",
-			"var co",
-			"search",
-			"Rectangle",
-			"'/",
-			"/'",
-			"new_path",
-			"binding.pry",
-			"<td>"
+			"consol"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1054,1069 +982,8 @@
 	"groups":
 	[
 		{
-			"selected": 2,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "/Users/patricklocal/Projects/geoloqi/terraformer/spec/SpecRunner.html",
-					"settings":
-					{
-						"buffer_size": 2249,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1557,
-								1557
-							]
-						],
-						"settings":
-						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110.0
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E501"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": true,
-							"sublimelinter_delay": 2.0,
-							"sublimelinter_disable":
-							[
-								"html"
-							],
-							"sublimelinter_executable_map":
-							{
-								"ruby": "/Users/patricklocal/.rvm/rubies/ruby-1.9.3-p286/bin/ruby"
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": false,
-							"sublimelinter_mark_style": "outline",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/HTML/HTML.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "/Users/patricklocal/Projects/geoloqi/terraformer/grunt.js",
-					"settings":
-					{
-						"buffer_size": 6548,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								6394,
-								6394
-							]
-						],
-						"settings":
-						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110.0
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E501"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": true,
-							"sublimelinter_delay": 2.0,
-							"sublimelinter_disable":
-							[
-								"html"
-							],
-							"sublimelinter_executable_map":
-							{
-								"ruby": "/Users/patricklocal/.rvm/rubies/ruby-1.9.3-p286/bin/ruby"
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": false,
-							"sublimelinter_mark_style": "outline",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 4432.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "/Users/patricklocal/Projects/geoloqi/terraformer/spec/specs/geostore-spec.js",
-					"settings":
-					{
-						"buffer_size": 2049,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2028,
-								2028
-							]
-						],
-						"settings":
-						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110.0
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E501"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": true,
-							"sublimelinter_delay": 2.0,
-							"sublimelinter_disable":
-							[
-								"html"
-							],
-							"sublimelinter_executable_map":
-							{
-								"ruby": "/Users/patricklocal/.rvm/rubies/ruby-1.9.3-p286/bin/ruby"
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": false,
-							"sublimelinter_mark_style": "outline",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 317.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "/Users/patricklocal/Projects/geoloqi/terraformer/dist/node/RTree/package.json",
-					"settings":
-					{
-						"buffer_size": 355,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								303,
-								303
-							]
-						],
-						"settings":
-						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110.0
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E501"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": true,
-							"sublimelinter_delay": 2.0,
-							"sublimelinter_disable":
-							[
-								"html"
-							],
-							"sublimelinter_executable_map":
-							{
-								"ruby": "/Users/patricklocal/.rvm/rubies/ruby-1.9.3-p286/bin/ruby"
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": false,
-							"sublimelinter_mark_style": "outline",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/JavaScript/JSON.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "/Users/patricklocal/Projects/geoloqi/terraformer/src/partials/module-geostore.js",
-					"settings":
-					{
-						"buffer_size": 1014,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								480,
-								480
-							]
-						],
-						"settings":
-						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110.0
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E501"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": true,
-							"sublimelinter_delay": 2.0,
-							"sublimelinter_disable":
-							[
-								"html"
-							],
-							"sublimelinter_executable_map":
-							{
-								"ruby": "/Users/patricklocal/.rvm/rubies/ruby-1.9.3-p286/bin/ruby"
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": false,
-							"sublimelinter_mark_style": "outline",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 312.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "/Users/patricklocal/Projects/geoloqi/terraformer/src/geostore.js",
-					"settings":
-					{
-						"buffer_size": 5933,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1085,
-								1085
-							]
-						],
-						"settings":
-						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110.0
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E501"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": true,
-							"sublimelinter_delay": 2.0,
-							"sublimelinter_disable":
-							[
-								"html"
-							],
-							"sublimelinter_executable_map":
-							{
-								"ruby": "/Users/patricklocal/.rvm/rubies/ruby-1.9.3-p286/bin/ruby"
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": false,
-							"sublimelinter_mark_style": "outline",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "/Users/patricklocal/Projects/geoloqi/terraformer/src/Stores/LocalStorage.js",
-					"settings":
-					{
-						"buffer_size": 2684,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								397,
-								397
-							]
-						],
-						"settings":
-						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110.0
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E501"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": true,
-							"sublimelinter_delay": 2.0,
-							"sublimelinter_disable":
-							[
-								"html"
-							],
-							"sublimelinter_executable_map":
-							{
-								"ruby": "/Users/patricklocal/.rvm/rubies/ruby-1.9.3-p286/bin/ruby"
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": false,
-							"sublimelinter_mark_style": "outline",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"file": "/Users/patricklocal/Projects/geoloqi/terraformer/src/Stores/Memory.js",
-					"settings":
-					{
-						"buffer_size": 2051,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								399,
-								399
-							]
-						],
-						"settings":
-						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110.0
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E501"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": true,
-							"sublimelinter_delay": 2.0,
-							"sublimelinter_disable":
-							[
-								"html"
-							],
-							"sublimelinter_executable_map":
-							{
-								"ruby": "/Users/patricklocal/.rvm/rubies/ruby-1.9.3-p286/bin/ruby"
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": false,
-							"sublimelinter_mark_style": "outline",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 8,
-					"file": "/Users/patricklocal/Projects/geoloqi/terraformer/dist/node/GeoStore/index.js",
-					"settings":
-					{
-						"buffer_size": 6938,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1957,
-								1957
-							]
-						],
-						"settings":
-						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110.0
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E501"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": true,
-							"sublimelinter_delay": 2.0,
-							"sublimelinter_disable":
-							[
-								"html"
-							],
-							"sublimelinter_executable_map":
-							{
-								"ruby": "/Users/patricklocal/.rvm/rubies/ruby-1.9.3-p286/bin/ruby"
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": false,
-							"sublimelinter_mark_style": "outline",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 1225.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				}
 			]
 		}
 	],
@@ -2179,7 +1046,7 @@
 		[
 			[
 				"",
-				"/Users/patricklocal/Projects/geoloqi/arcgis-for-developers/arcgis-for-developers.sublime-project"
+				"/Users/patricklocal/Projects/personal/personal-website/personal-site.sublime-project"
 			]
 		],
 		"width": 380.0
