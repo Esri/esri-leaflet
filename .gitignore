@@ -9,6 +9,7 @@ Icon
 # SublimeText
 /*.sublime-project
 *.sublime-workspace
+*.sublime-project
 
 # SASS
 .sass-cache
