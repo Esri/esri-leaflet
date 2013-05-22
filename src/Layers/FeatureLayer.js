@@ -1,11 +1,13 @@
+/* globals Terraformer:true, L:true, Esri:true */
+
 if(typeof L.esri === "undefined"){
   L.esri = {};
 }
 
 L.esri.Util = {
   extentToBounds: function(extent){
-    var southWest = new L.LatLng(e.xmin, e.ymin),
-        northEast = new L.LatLng(e.xmax, e.ymin);
+    var southWest = new L.LatLng(extent.xmin, extent.ymin),
+        northEast = new L.LatLng(extent.xmax, extent.ymin);
     return new L.LatLngBounds(southWest, northEast);
   },
 
@@ -39,7 +41,7 @@ L.esri.FeatureLayer = L.GeoJSON.extend({
     this.index = new Terraformer.RTree();
     this._layerCache = {};
     this.client = new Esri.ArcGIS();
-    this.service = this.client.featureservice({
+    this.service = this.client.FeatureService({
       url: url
     });
     L.GeoJSON.prototype.initialize.call(this, [], options);
@@ -98,12 +100,6 @@ L.esri.FeatureLayer = L.GeoJSON.extend({
     },this);
     map.on("viewreset moveend", draw);
     draw();
-  },
-  showLayer:function(id){
-    map.addLayer(this._layers[id]);
-  },
-  hideLayer: function(id){
-    map.removeLayer(this._layers[id]);
   },
   getLayerId: function(layer){
     return layer.feature.id;
