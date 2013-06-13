@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ArcGIS Basemaps</title>
+    <link rel="stylesheet" href="../vendor/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="../src/esri-leaflet.css" />
+    <!--[if lte IE 8]>
+        <link rel="stylesheet" href="leaflet.ie.css" />
+    <![endif]-->
+
+    <script src="../vendor/leaflet/dist/leaflet-src.js"></script>
+    <script src="../vendor/terraformer/dist/browser/terraformer.js"></script>
+    <script src="../vendor/terraformer/dist/browser/rtree.js"></script>
+    <script src="../vendor/terraformer/dist/browser/arcgis.js"></script>
+    <script src="../vendor/arcgis-node/browser/arcgis.js"></script>
+
+    <script src="../src/Layers/TileLayer.js"></script>
+    <script src="../src/Layers/FeatureLayer.js"></script>
+
+    <style>
+      html, body, #map {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+      }
+      button {
+        width: 125px;
+      }
+      .buttonList { 
+        list-style-type: none; 
+        list-style-position:inside; 
+        margin:10px; 
+        padding:10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script>
+      var map = L.map('map').setView([45.533915622222, -122.61919973576], 10);
+      //  ArcGIS Online basemaps - Streets, Imagery, ImageryLabels, Topographic, Gray, GrayLabels, NationalGeographic, Oceans...
+      var layer = L.esri.tileLayer("Topographic");
+      var layerLabels;
+      map.addLayer(layer);
+
+      function setBasemap(mapType) {
+        // Add basemap tiles
+        if (layer) {
+          map.removeLayer(layer);
+        }
+        layer = L.esri.tileLayer(mapType);
+        map.addLayer(layer);
+        // Add labels
+        if (layerLabels) {
+          map.removeLayer(layerLabels);
+        }
+        if (mapType == "Gray" || mapType == "Imagery") {
+          layerLabels = L.esri.tileLayer(mapType+"Labels");
+          map.addLayer(layerLabels);
+        }
+      }
+    </script>
+
+    <div class="leaflet-top leaflet-right">
+      <div class="leaflet-control-layers leaflet-control">
+        <ul class="buttonList">
+          <li><button onclick="setBasemap('Streets');">Streets</button></li>
+          <li><button onclick="setBasemap('Imagery');">Imagery</button></li>
+          <li><button onclick="setBasemap('Gray');">Gray</button></li>
+          <li><button onclick="setBasemap('Topographic');">Topographic</button></li>
+          <li><button onclick="setBasemap('NationalGeographic');">National Geographic</button></li>
+          <li><button onclick="setBasemap('Oceans');">Oceans</button></li>
+        </ul>
+      </div>
+    </div>
+
+  </body>
+</html>
