@@ -129,11 +129,11 @@ L.esri.TileLayer = L.TileLayer.extend({
     }
   },
   onRemove: function(){
-    L.TileLayer.prototype.onRemove.call(this);
     if(this.dynamicAttribution){
       this.off("load", this.handleTileUpdates);
       this._map.off("viewreset zoomend dragend", this.handleTileUpdates);
     }
+    L.TileLayer.prototype.onRemove.call(this, map);
   },
   getAttributionData: function(url){
     this.attributionBoundingBoxes = [];
