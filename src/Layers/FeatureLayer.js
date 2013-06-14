@@ -55,36 +55,29 @@ L.esri.FeatureLayer = L.GeoJSON.extend({
     map.off("viewreset moveend", L.Util.bind(this.updateFeatures, this));
   },
   updateFeatures: function(map){
-
     var draw = L.Util.bind(function(){
       var newBounds = map.getBounds();
-      console.time("feature layer update");
-      console.time("searching");
       this.index.search(L.esri.Util.boundsToEnvelope(newBounds)).then(L.Util.bind(function(results){
         this.eachLayer(L.Util.bind(function(layer){
           var id = layer.feature.id;
           if(results.indexOf(id) === -1){
             // remove layer
-            console.log("remove layer");
             this._layerCache[id] = this._layers[id];
             map.removeLayer(this._layers[id]);
           } else {
             // add layer to map
-            console.log("add layer");
             if(this._layerCache[id]){
               this._layerCache[id].addTo(map);
             }
           }
         }, this));
       }, this));
-      console.timeEnd("searching");
       this.service.query({
         geometryType: "esriGeometryEnvelope",
         geometry: JSON.stringify(L.esri.Util.boundsToExtent(newBounds)),
         outSr: 4326
       }, L.Util.bind(function(error, response){
         var idKey = response.objectIdFieldName;
-        console.time("adding data");
         for (var i = response.features.length - 1; i >= 0; i--) {
           var feature = response.features[i];
           var id = feature.attributes[idKey];
@@ -95,8 +88,6 @@ L.esri.FeatureLayer = L.GeoJSON.extend({
             this.addData(geojson);
           }
         }
-        console.timeEnd("adding data");
-        console.timeEnd("feature layer update");
       }, this));
     },this);
 
