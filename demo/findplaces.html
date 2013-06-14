@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ArcGIS Find Places</title>
+    <link rel="stylesheet" href="../vendor/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="../src/esri-leaflet.css" />
+    <!--[if lte IE 8]>
+        <link rel="stylesheet" href="leaflet.ie.css" />
+    <![endif]-->
+
+    <script src="../vendor/leaflet/dist/leaflet-src.js"></script>
+    <script src="../vendor/terraformer/dist/browser/terraformer.js"></script>
+    <script src="../vendor/terraformer/dist/browser/rtree.js"></script>
+    <!--script src="../vendor/terraformer/dist/browser/arcgis.js"></script-->
+    <script src="../vendor/arcgis-node/browser/arcgis.js"></script>
+
+    <script src="../src/Layers/TileLayer.js"></script>
+    <script src="../src/Layers/FeatureLayer.js"></script>
+
+    <style>
+      html, body, #map {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+        font-size: 12px;
+      }
+      .control-container {
+        text-align: center;
+        margin: 5px 10px 10px;
+      }
+      .title {
+        padding: 2px 10px;
+        font-size: 15px;
+        background-color: #b0de5c;
+      }
+      .btn {
+        width: 75px;
+        margin: 5px 5px 0px 5px;
+      }
+      .input {
+        width: 90%;
+        margin: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <div class="leaflet-top leaflet-right">
+      <div class="leaflet-control-layers leaflet-control">
+        <div class="control-container">
+          <div class="title">Find Places</div>
+          <input id="placeInput" class="input" type="text" value="Starbucks" placeholder="Starbucks"/></input>
+          <label><input id="useMapExtent" type="checkbox" checked/>Search in map only</input></label>
+          <button class="btn" id="btnSearch" onclick="findPlaces();">Go</button><button class="btn" id="btnClear" onclick="clearPlaces();">Clear</button>
+        </div>
+      </div>
+    </div>
+    <script>
+      var map = L.map('map').setView([45.533915622222, -122.61919973576], 10);
+      //  ArcGIS Online basemaps - Streets, Imagery, ImageryLabels, Topographic, Gray, GrayLabels, NationalGeographic, Oceans...
+      var layer = L.esri.tileLayer("Streets");
+      var layerPlaces;
+      map.addLayer(layer);
+ 
+      function findPlaces() {
+        // Get the input
+        var searchString = document.getElementById('placeInput').value;
+        var searchFromCenter = map.getCenter();
+        var mapBounds;
+        if (document.getElementById('useMapExtent').checked) {
+          mapBounds = map.getBounds();
+        }
+        // Setup geocode options - See http://resources.arcgis.com/en/help/arcgis-rest-api/
+        var options = {
+          text:searchString,
+          outFields: "Loc_name,Place_addr",
+          bbox: mapBounds ? mapBounds.getWest() + "," + mapBounds.getSouth() + "," + mapBounds.getEast() + "," + mapBounds.getNorth() : "",
+          location: searchFromCenter ? searchFromCenter.lng + "," + searchFromCenter.lat : "",
+          maxLocations: 10
+        }
+        // Use ArcGIS Online geocoder service to find places
+        var ArcGISGeocoder = new Esri.ArcGIS({});
+        ArcGISGeocoder.geocode(options, function (err,result) {
+          if (err) {
+            alert("Sorry, place not found.");
+          } else {
+            // Get places
+            var markers = [];
+            var bnd = new L.LatLngBounds();
+            for (var i = 0; i < result.locations.length; i++) {
+              var place = result.locations[i];
+              console.log(place.name);
+              var pt = new L.LatLng(place.feature.geometry.y, place.feature.geometry.x);
+              bnd = bnd.extend(pt);
+              markers.push(L.marker(pt).bindPopup(place.name + "</br>" + place.feature.attributes.Place_addr));
+            }
+            // Add places to the map
+            if (layerPlaces) {
+              map.removeLayer(layerPlaces);
+            }
+            layerPlaces = L.layerGroup(markers);
+            map.addLayer(layerPlaces);
+            map.fitBounds(bnd);
+          }
+        });
+      }
+
+      function clearPlaces() {
+        if (layerPlaces) {
+          map.removeLayer(layerPlaces);
+        }
+      }
+    </script>
+  </body>
+</html>
