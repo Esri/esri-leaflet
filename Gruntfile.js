@@ -38,7 +38,12 @@ module.exports = function(grunt) {
       },
       dist: {
         files: {
-          'dist/esri-leaflet.min.js': ['src/**/*.js']
+          'dist/esri-leaflet.min.js': ['src/**/*.js'],
+          'dist/esri-leaflet.no-dep.min.js': [
+            'vendor/terraformer/dist/browser/terraformer.js',
+            'vendor/terraformer/dist/browser/rtree.js',
+            'src/**/*.js'
+          ]
         }
       }
     },
