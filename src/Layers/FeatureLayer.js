@@ -37,8 +37,8 @@ L.esri.Util = {
 L.esri.FeatureLayer = L.GeoJSON.extend({
 
   initialize: function(url, options){
-    this._serviceUrl = url;
     this.index = new Terraformer.RTree();
+    this._serviceUrl = url;
     this._layerCache = {};
     this.client = new Esri.ArcGIS();
     this.service = this.client.FeatureService({
@@ -55,6 +55,7 @@ L.esri.FeatureLayer = L.GeoJSON.extend({
     map.off("viewreset moveend", L.Util.bind(this.updateFeatures, this));
   },
   updateFeatures: function(map){
+
     var draw = L.Util.bind(function(){
       var newBounds = map.getBounds();
       console.time("feature layer update");
@@ -98,7 +99,15 @@ L.esri.FeatureLayer = L.GeoJSON.extend({
         console.timeEnd("feature layer update");
       }, this));
     },this);
-    map.on("viewreset moveend", draw);
+
+    var tryDraw = L.Util.bind(function(){
+      clearTimeout(this._delay);
+      this._delay = setTimeout(L.Util.bind(function(){
+        draw();
+      },this), 200);
+    },this);
+
+    map.on("viewreset moveend", tryDraw);
     draw();
   },
   getLayerId: function(layer){
