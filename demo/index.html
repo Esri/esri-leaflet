@@ -1,36 +1,45 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Scratch</title>
-    <link rel="stylesheet" href="../vendor/leaflet/dist/leaflet.css" />
-    <link rel="stylesheet" href="../src/esri-leaflet.css" />
-    <!--[if lte IE 8]>
-        <link rel="stylesheet" href="leaflet.ie.css" />
-    <![endif]-->
-
-    <script src="../vendor/leaflet/dist/leaflet-src.js"></script>
-    <script src="../vendor/terraformer/dist/browser/terraformer.js"></script>
-    <script src="../vendor/terraformer/dist/browser/rtree.js"></script>
-    <script src="../vendor/terraformer/dist/browser/arcgis.js"></script>
-    <script src="../vendor/arcgis-node/browser/arcgis.js"></script>
-
-    <script src="../src/Layers/TileLayer.js"></script>
-    <script src="../src/Layers/FeatureLayer.js"></script>
-
+    <title>Esri-Leaflet</title>
     <style>
-      html, body, #map {
-        width: 100%;
-        height: 100%;
-        margin: 0;
+      body {
+        font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+      }
+      div { 
+        text-align:center; 
+      }
+      ul { 
+        list-style-type: none; 
+        list-style-position:inside; 
+        margin:0; 
+        padding:0;
+      }
+      button { 
+        width: 150px; 
       }
     </style>
   </head>
   <body>
-    <div id="map"></div>
-    <script>
-      map = L.map('map').setView([45.533915622222, -122.61919973576], 16);
-      L.esri.tileLayer("Topographic").addTo(map);
-      L.esri.featureLayer('http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0/').addTo(map);
-    </script>
+    <div>
+      <h1>Esri-Leaflet Plugin</h1>
+      <p>Examples that show you how to build powerful mapping apps with <a href="http://leafletjs.com/">Leaflet</a> and <a href="http://developers.arcgis.com/">ArcGIS Online</a>.</p>
+      <ul>
+        <li><h3>ArcGIS Online Basemaps</h3></li>
+        <li><a href="arcgisbasemap.html"><button>ArcGIS Basemap</button></a></li>
+        <li><a href="arcgisbasemaps.html"><button>All Basemaps</button></a></li>
+        <li><a href="mobile.html"><button>Mobile Map</button></a></li>
+        <li><h3>ArcGIS Online Feature Services</h3></li>
+        <li><a href="arcgisfeatureservice.html"><button>Add Feature Service</button></a></li>
+        <li><a href="featuresymbols.html"><button>Symbolize Features</button></a></li>
+        <li><a href="editfeatures.html"><button>Edit Features</button></a></li>
+        <li><h3>ArcGIS Online Geocode Service</h3></li>
+        <li><a href="findplaces.html"><button>Find Places</button></a></li>
+        <li><a href="reversegeocode.html"><button>Reverse Geocode</button></a></li>
+        <li><h3>ArcGIS Online Geometry Service</h3></li>
+        <li><a href="bufferfeatures.html"><button>Buffer Features</button></a></li>
+        <li><a href="mergefeatures.html"><button>Merge Features</button></a></li>
+      </ul>
+    </div>
   </body>
 </html>
