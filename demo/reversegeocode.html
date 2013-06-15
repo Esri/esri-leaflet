@@ -57,13 +57,13 @@
       var layer = L.esri.tileLayer("Streets");
       map.addLayer(layer);
       var layerAddresses = L.layerGroup();
-      map.addLayer(layerAddresses);      
+      map.addLayer(layerAddresses);
       // ArcGIS Online geocoder service to reverse geocode
-      var ArcGISGeocoder = new Esri.ArcGIS({});
+      var ArcGIS = new Esri.ArcGIS({});
 
       // Click handler
       map.on('click', reverseGeocode);
- 
+
       function reverseGeocode(e) {
         // Setup geocode options - See http://resources.arcgis.com/en/help/arcgis-rest-api/
         var options = {
@@ -72,9 +72,9 @@
           outSR: ""
         }
         // Call geocoder
-        ArcGISGeocoder.reverseGeocode(options, function (err,result) {
+        ArcGIS.geocode.reverse(options, function (err,result) {
           if (!err && result) {
-            // Get address and create marker      
+            // Get address and create marker
             var address = result.address;
             var pt = new L.LatLng(result.location.y, result.location.x);
             var marker = L.marker(pt).bindPopup(address.Address + "</br>" + address.City + ", " + address.Region + ", " + address.Postal);
@@ -89,7 +89,7 @@
 
       function clearAddresses() {
         if (layerAddresses) {
-          layerAddresses.clearLayers();          
+          layerAddresses.clearLayers();
         }
       }
     </script>

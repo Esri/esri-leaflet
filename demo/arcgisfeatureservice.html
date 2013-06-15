@@ -9,19 +9,7 @@
     <![endif]-->
 
     <script src="../vendor/leaflet/dist/leaflet-src.js"></script>
-<<<<<<< HEAD
     <script src="../dist/esri-leaflet.min.js"></script>
-
-=======
-    <script src="../vendor/terraformer/dist/browser/terraformer.js"></script>
-    <script src="../vendor/terraformer/dist/browser/rtree.js"></script>
-    <script src="../vendor/terraformer/dist/browser/arcgis.js"></script>
-    <script src="../vendor/arcgis-node/browser/arcgis.js"></script>
-
-    <script src="../src/Layers/TileLayer.js"></script>
-    <script src="../src/Layers/FeatureLayer.js"></script>
-    
->>>>>>> 287400f561421c40b76048ab43867f71aeb4cc53
     <style>
       html, body, #map {
         width: 100%;
@@ -67,30 +55,18 @@
 
       // Add ArcGIS Online basemap
       L.esri.tileLayer("Topographic").addTo(map);
-<<<<<<< HEAD
 
-      // Add ArcGIS Online feature service
-      var lyr = L.esri.featureLayer('http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0',{});
-
-      // Listen for a Click on one of our markers
-      lyr.on("click", function (e) {
-        e.layer.bindPopup(e.layer.feature.properties.stop_desc);
-      });
-
-      // Add layer to map
-      lyr.addTo(map);
-=======
       var layerFS;
 
       function addFeatureService() {
         // Add ArcGIS Online feature service
         if (!layerFS) {
-          var featureServiceUrl = document.getElementById("endpoint").value; 
+          var featureServiceUrl = document.getElementById("endpoint").value;
           layerFS = L.esri.featureLayer(featureServiceUrl,{});
           layerFS.on("click", function (e) {
             e.layer.bindPopup(e.layer.feature.properties.stop_desc);
           });
-          layerFS.addTo(map);                  
+          layerFS.addTo(map);
         }
       }
 
@@ -100,7 +76,6 @@
           layerFS = null;
         }
       }
->>>>>>> 287400f561421c40b76048ab43867f71aeb4cc53
     </script>
   </body>
 </html>
