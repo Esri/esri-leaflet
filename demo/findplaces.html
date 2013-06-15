@@ -27,9 +27,10 @@
       }
       .control-container {
         text-align: center;
-        margin: 5px 10px 10px;
+        margin: 10px;
       }
       .title {
+        margin: 10px 0 5px 0;
         padding: 2px 10px;
         font-size: 15px;
         background-color: #b0de5c;
@@ -58,10 +59,13 @@
     </div>
     <script>
       var map = L.map('map').setView([45.533915622222, -122.61919973576], 10);
-      //  ArcGIS Online basemaps - Streets, Imagery, ImageryLabels, Topographic, Gray, GrayLabels, NationalGeographic, Oceans...
+      // ArcGIS Online basemap - Streets, Imagery, ImageryLabels, Topographic, Gray, GrayLabels, NationalGeographic, Oceans...
       var layer = L.esri.tileLayer("Streets");
-      var layerPlaces;
       map.addLayer(layer);
+      var layerPlaces = new L.layerGroup();
+      map.addLayer(layerPlaces);
+      // ArcGIS Online geocoder service to find places
+      var ArcGISGeocoder = new Esri.ArcGIS({});
  
       function findPlaces() {
         // Get the input
@@ -79,36 +83,31 @@
           location: searchFromCenter ? searchFromCenter.lng + "," + searchFromCenter.lat : "",
           maxLocations: 10
         }
-        // Use ArcGIS Online geocoder service to find places
-        var ArcGISGeocoder = new Esri.ArcGIS({});
+        // Call geocoder
         ArcGISGeocoder.geocode(options, function (err,result) {
-          if (err) {
-            alert("Sorry, place not found.");
-          } else {
-            // Get places
-            var markers = [];
+          if (!err && result) {
+            // Get places and create markers
             var bnd = new L.LatLngBounds();
             for (var i = 0; i < result.locations.length; i++) {
               var place = result.locations[i];
-              console.log(place.name);
               var pt = new L.LatLng(place.feature.geometry.y, place.feature.geometry.x);
               bnd = bnd.extend(pt);
-              markers.push(L.marker(pt).bindPopup(place.name + "</br>" + place.feature.attributes.Place_addr));
+              // Add to map
+              var marker = L.marker(pt).bindPopup(place.name + "</br>" + place.feature.attributes.Place_addr);
+              layerPlaces.addLayer(marker);
             }
-            // Add places to the map
-            if (layerPlaces) {
-              map.removeLayer(layerPlaces);
-            }
-            layerPlaces = L.layerGroup(markers);
-            map.addLayer(layerPlaces);
+            // Zoom to places
             map.fitBounds(bnd);
+          } else {
+            console.log("Sorry, place not found. " + err.error.message);
+            alert("Sorry, place not found.");
           }
         });
       }
 
       function clearPlaces() {
         if (layerPlaces) {
-          map.removeLayer(layerPlaces);
+          layerPlaces.clearLayers();          
         }
       }
     </script>
