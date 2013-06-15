@@ -9,13 +9,17 @@
     <![endif]-->
 
     <script src="../vendor/leaflet/dist/leaflet-src.js"></script>
-    <script src="../vendor/terraformer/dist/browser/terraformer.js"></script>
+
+<!--    <script src="../vendor/terraformer/dist/browser/terraformer.js"></script>
     <script src="../vendor/terraformer/dist/browser/rtree.js"></script>
     <script src="../vendor/terraformer/dist/browser/arcgis.js"></script>
     <script src="../vendor/arcgis-node/browser/arcgis.js"></script>
 
     <script src="../src/Layers/TileLayer.js"></script>
     <script src="../src/Layers/FeatureLayer.js"></script>
+
+    <script src="../dist/esri-leaflet-no-dependencies.min.js"></script>-->
+    <script src="../dist/esri-leaflet.min.js"></script>
 
     <style>
       html, body, #map {
@@ -32,10 +36,10 @@
       // Add ArcGIS Online basemap
       L.esri.tileLayer("Topographic").addTo(map);
       // Add ArcGIS Online feature service
-      var lyr = L.esri.featureLayer('http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0/',{});
-      lyr.on("click", function (e) {
-        e.layer.bindPopup(e.layer.feature.properties.stop_desc);
-      });
+      var lyr = L.esri.featureLayer('http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0',{});
+      // lyr.on("click", function (e) {
+      //   e.layer.bindPopup(e.layer.feature.properties.stop_desc);
+      // });
       lyr.addTo(map);
     </script>
   </body>
