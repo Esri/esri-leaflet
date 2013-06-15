@@ -7,8 +7,9 @@
     "grunt": "~0.4.1",
     "grunt-contrib-jshint": "~0.4.3",
     "grunt-contrib-uglify": "~0.2.0",
-    "grunt-contrib-watch": "~0.3.1",
-    "grunt-contrib-cssmin": "~0.6.0"
+    "grunt-contrib-watch": "~0.4.4",
+    "grunt-contrib-cssmin": "~0.6.0",
+    "grunt-contrib-concat": "~0.3.0"
   },
   "author": "Patrick Arlt <parlt@esri.com> (http://patrickarlt.com)",
   "contributors": [

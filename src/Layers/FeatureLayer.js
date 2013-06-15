@@ -1,4 +1,4 @@
-/* globals Terraformer:true, L:true, Esri:true */
+/* globals Terraformer:true, L:true, Esri:true, console:true */
 
 if(typeof L.esri === "undefined"){
   L.esri = {};
@@ -6,8 +6,8 @@ if(typeof L.esri === "undefined"){
 
 L.esri.Util = {
   extentToBounds: function(extent){
-    var southWest = new L.LatLng(extent.xmin, extent.ymin),
-        northEast = new L.LatLng(extent.xmax, extent.ymin);
+    var southWest = new L.LatLng(extent.xmin, extent.ymin);
+    var northEast = new L.LatLng(extent.xmax, extent.ymin);
     return new L.LatLngBounds(southWest, northEast);
   },
 
@@ -35,13 +35,12 @@ L.esri.Util = {
 
 //FeatureLayer < GeoJSON < FeatureGroup < LayerGroup
 L.esri.FeatureLayer = L.GeoJSON.extend({
-
   initialize: function(url, options){
-    this._serviceUrl = url;
     this.index = new Terraformer.RTree();
+    this._serviceUrl = url;
     this._layerCache = {};
     this.client = new Esri.ArcGIS();
-    this.service = this.client.FeatureService({
+    this.service = new this.client.FeatureService({
       url: url
     });
     L.GeoJSON.prototype.initialize.call(this, [], options);
@@ -57,33 +56,30 @@ L.esri.FeatureLayer = L.GeoJSON.extend({
   updateFeatures: function(map){
     var draw = L.Util.bind(function(){
       var newBounds = map.getBounds();
-      console.time("feature layer update");
-      console.time("searching");
-      this.index.search(L.esri.Util.boundsToEnvelope(newBounds)).then(L.Util.bind(function(results){
+      var envelope = L.esri.Util.boundsToEnvelope(newBounds);
+
+      this.index.search(envelope).then(L.Util.bind(function(results){
         this.eachLayer(L.Util.bind(function(layer){
           var id = layer.feature.id;
           if(results.indexOf(id) === -1){
             // remove layer
-            console.log("remove layer");
             this._layerCache[id] = this._layers[id];
             map.removeLayer(this._layers[id]);
           } else {
             // add layer to map
-            console.log("add layer");
             if(this._layerCache[id]){
               this._layerCache[id].addTo(map);
             }
           }
         }, this));
       }, this));
-      console.timeEnd("searching");
+
       this.service.query({
         geometryType: "esriGeometryEnvelope",
         geometry: JSON.stringify(L.esri.Util.boundsToExtent(newBounds)),
         outSr: 4326
       }, L.Util.bind(function(error, response){
         var idKey = response.objectIdFieldName;
-        console.time("adding data");
         for (var i = response.features.length - 1; i >= 0; i--) {
           var feature = response.features[i];
           var id = feature.attributes[idKey];
@@ -94,11 +90,18 @@ L.esri.FeatureLayer = L.GeoJSON.extend({
             this.addData(geojson);
           }
         }
-        console.timeEnd("adding data");
-        console.timeEnd("feature layer update");
       }, this));
     },this);
-    map.on("viewreset moveend", draw);
+
+    var tryDraw = L.Util.bind(function(){
+      clearTimeout(this._delay);
+      this._delay = setTimeout(L.Util.bind(function(){
+        draw();
+      },this), 150);
+    },this);
+
+    map.on("viewreset moveend", tryDraw);
+
     draw();
   },
   getLayerId: function(layer){

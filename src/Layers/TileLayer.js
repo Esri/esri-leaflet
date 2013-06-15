@@ -1,3 +1,5 @@
+/* globals L:true, ActiveXObject:true */
+
 if(typeof L.esri === "undefined"){
   L.esri = {};
 }
@@ -11,7 +13,7 @@ L.esri.TileLayer = L.TileLayer.extend({
         options: {
           minZoom: 1,
           maxZoom: 19,
-          attribution: "<span id='esri-attributions'>Esri</span><img src='http://serverapi.arcgisonline.com/jsapi/arcgis/3.4/js/esri/images/map/logo-med.png' alt='Powered by Esri' class='esri-attribution-logo'>"
+          attribution: "<span class='esri-attributions'>Esri</span><img src='http://serverapi.arcgisonline.com/jsapi/arcgis/3.4/js/esri/images/map/logo-med.png' alt='Powered by Esri' class='esri-attribution-logo'>"
         }
       },
       Topographic: {
@@ -20,7 +22,7 @@ L.esri.TileLayer = L.TileLayer.extend({
         options: {
           minZoom: 1,
           maxZoom: 19,
-          attribution: "<span id='esri-attributions'>Esri</span><img src='http://serverapi.arcgisonline.com/jsapi/arcgis/3.4/js/esri/images/map/logo-med.png' alt='Powered by Esri' class='esri-attribution-logo'>"
+          attribution: "<span class='esri-attributions'>Esri</span><img src='http://serverapi.arcgisonline.com/jsapi/arcgis/3.4/js/esri/images/map/logo-med.png' alt='Powered by Esri' class='esri-attribution-logo'>"
         }
       },
       Oceans: {
@@ -29,7 +31,7 @@ L.esri.TileLayer = L.TileLayer.extend({
         options: {
           minZoom: 1,
           maxZoom: 19,
-          attribution: "<span id='esri-attributions'>Esri</span><img src='http://serverapi.arcgisonline.com/jsapi/arcgis/3.4/js/esri/images/map/logo-med.png' alt='Powered by Esri' class='esri-attribution-logo'>"
+          attribution: "<span class='esri-attributions'>Esri</span><img src='http://serverapi.arcgisonline.com/jsapi/arcgis/3.4/js/esri/images/map/logo-med.png' alt='Powered by Esri' class='esri-attribution-logo'>"
         }
       },
       NationalGeographic: {
@@ -37,7 +39,7 @@ L.esri.TileLayer = L.TileLayer.extend({
         options: {
           minZoom: 1,
           maxZoom: 19,
-          attribution: "<span id='esri-attributions'>Esri</span><img src='http://serverapi.arcgisonline.com/jsapi/arcgis/3.4/js/esri/images/map/logo-med.png' alt='Powered by Esri' class='esri-attribution-logo'>"
+          attribution: "<span class='esri-attributions'>Esri</span><img src='http://serverapi.arcgisonline.com/jsapi/arcgis/3.4/js/esri/images/map/logo-med.png' alt='Powered by Esri' class='esri-attribution-logo'>"
         }
       },
       Gray: {
@@ -45,7 +47,7 @@ L.esri.TileLayer = L.TileLayer.extend({
         options: {
           minZoom: 1,
           maxZoom: 19,
-          attribution: "<span id='esri-attributions'>Copyright: &copy;2013 Esri, DeLorme, NAVTEQ</span><img src='http://serverapi.arcgisonline.com/jsapi/arcgis/3.4/js/esri/images/map/logo-med.png' alt='Powered by Esri' class='esri-attribution-logo'>"
+          attribution: "<span class='esri-attributions'>Copyright: &copy;2013 Esri, DeLorme, NAVTEQ</span><img src='http://serverapi.arcgisonline.com/jsapi/arcgis/3.4/js/esri/images/map/logo-med.png' alt='Powered by Esri' class='esri-attribution-logo'>"
         }
       },
       GrayLabels: {
@@ -60,7 +62,7 @@ L.esri.TileLayer = L.TileLayer.extend({
         options: {
           minZoom: 1,
           maxZoom: 19,
-          attribution: "<span id='esri-attributions'>Esri, DigitalGlobe, GeoEye, i-cubed, USDA, USGS, AEX, Getmapping, Aerogrid, IGN, IGP, swisstopo, and the GIS User Community</span><img src='http://serverapi.arcgisonline.com/jsapi/arcgis/3.4/js/esri/images/map/logo-med.png' alt='Powered by Esri' class='esri-attribution-logo'>"
+          attribution: "<span class='esri-attributions'>Esri, DigitalGlobe, GeoEye, i-cubed, USDA, USGS, AEX, Getmapping, Aerogrid, IGN, IGP, swisstopo, and the GIS User Community</span><img src='http://serverapi.arcgisonline.com/jsapi/arcgis/3.4/js/esri/images/map/logo-med.png' alt='Powered by Esri' class='esri-attribution-logo'>"
         }
       },
       ImageryLabels: {
@@ -128,7 +130,7 @@ L.esri.TileLayer = L.TileLayer.extend({
       this._map.on("viewreset zoomend dragend", this.handleTileUpdates);
     }
   },
-  onRemove: function(){
+  onRemove: function(map){
     if(this.dynamicAttribution){
       this.off("load", this.handleTileUpdates);
       this._map.off("viewreset zoomend dragend", this.handleTileUpdates);
@@ -187,7 +189,7 @@ L.esri.TileLayer = L.TileLayer.extend({
         }
       }
     }
-    L.DomUtil.get("esri-attributions").innerHTML = newAttributions.join(", ");
+    this._map._container.getElementsByClassName("esri-attributions")[0].innerHTML = newAttributions.join(", ");
   }
 });
 
