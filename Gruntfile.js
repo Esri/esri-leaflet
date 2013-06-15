@@ -93,7 +93,7 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask('default', ['jshint']);
-  grunt.registerTask('build', ['default', 'concat', 'uglify', 'cssmin']);
+  grunt.registerTask('build', ['default', 'uglify', 'cssmin']);
 
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-jshint');
