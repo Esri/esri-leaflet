@@ -2,7 +2,7 @@
 
 # Esri Leaflet
 
-Leaflet plugin for Esri ArcGIS Online Services. Currenly only supports loading Esri map tiles and feature services.
+Leaflet plugin for Esri ArcGIS Online Services. Currenly only supports loading Esri basemaps and feature services.
 
 ### Try it live [here](http://esri.github.com/esri-leaflet/demo/index.html)
 
@@ -26,10 +26,9 @@ The goal of Esri Leaflet is not to replace the ArcGIS Javascript SDK, but rather
 
 ### Dependencies
 
-* [Terraformer](https://github.com/esri/Terraformer) - for converting geometries
+* [Terraformer](https://github.com/esri/Terraformer) - base library for other dependancies
+* [Terraformer ArcGIS](https://github.com/esri/Terraformer) - for converting geometries
+* [Terraformer RTree](https://github.com/esri/Terraformer) - client side RTree index for optimizations
 * [ArcGIS Node](https://github.com/ArcGIS/arcgis-node) (browser build) - for making API requests
 
-These are currently included in `/vendor` as submodules. They will probably be used once work on things like `L.esri.FeatureLayer` starts.
-
-### The Future!
-* More FeatureLayer functionality
+These are currently included in `/vendor` as submodules.

@@ -15,7 +15,7 @@ Icon
 .sass-cache
 
 #Node
-/node_modules
+node_modules
 
 # Ruby
 *.gem
