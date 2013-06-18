@@ -46,7 +46,7 @@
     <script>
       var map = L.map('map').setView([45.504915622222, -122.6719973576], 12);
       // Add ArcGIS Online basemap - Streets, Imagery, ImageryLabels, Topographic, Gray, GrayLabels, NationalGeographic, Oceans...
-      var layer = L.esri.tileLayer("Streets");
+      var layer = L.esri.basemapLayer("Streets");
       map.addLayer(layer);
       var layerAddresses = L.layerGroup();
       map.addLayer(layerAddresses);

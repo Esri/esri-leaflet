@@ -54,7 +54,7 @@
           map.removeLayer(layerLabels);
         }
         if (mapType == "Gray" || mapType == "Imagery") {
-          layerLabels = L.esri.tileLayer(mapType+"Labels");
+          layerLabels = L.esri.basemapLayer(mapType+"Labels");
           map.addLayer(layerLabels);
         }
       }
