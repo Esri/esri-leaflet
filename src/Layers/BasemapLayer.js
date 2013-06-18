@@ -1,10 +1,6 @@
 /* globals L:true, ActiveXObject:true, Terraformer */
 
-if(typeof L.esri === "undefined"){
-  L.esri = {};
-}
-
-L.esri.TileLayer = L.TileLayer.extend({
+L.esri.BasemapLayer = L.TileLayer.extend({
   statics: {
     TILES: {
       Streets: {
@@ -80,8 +76,8 @@ L.esri.TileLayer = L.TileLayer.extend({
     // set the config variable with the appropriate config object
     if (typeof key === "object" && key.urlTemplate && key.options){
       config = key;
-    } else if(typeof key === "string" && L.esri.TileLayer.TILES[key]){
-      config = L.esri.TileLayer.TILES[key];
+    } else if(typeof key === "string" && L.esri.BasemapLayer.TILES[key]){
+      config = L.esri.BasemapLayer.TILES[key];
     } else {
       throw new Error("L.esri.TileLayer: Invalid parameter. Use one of 'Streets', 'Topographic', 'Oceans', 'NationalGeographic', 'Gray', 'GrayLabels', 'Imagery' or 'ImageryLabels'");
     }
@@ -155,8 +151,6 @@ L.esri.TileLayer = L.TileLayer.extend({
     httpRequest.send(null);
   },
   processAttributionData: function(httpRequest){
-
-
     if (httpRequest.target.readyState === 4 && httpRequest.target.status === 200) {
       this.attributionIndex = new Terraformer.RTree();
       var attributionData = JSON.parse(httpRequest.target.responseText);
@@ -186,30 +180,31 @@ L.esri.TileLayer = L.TileLayer.extend({
   updateMapAttribution: function(){
     var newAttributions = [];
     var searchEnvelope = L.esri.Util.boundsToEnvelope(this.bounds);
+    if(this.attributionIndex){
+      this.attributionIndex.search(searchEnvelope).then(L.Util.bind(function(results){
+        results.sort(function(a,b){
+          if (a.score < b.score){ return -1; }
+          if (a.score > b.score){ return 1; }
+          return 0;
+        });
 
-    this.attributionIndex.search(searchEnvelope).then(L.Util.bind(function(results){
-      results.sort(function(a,b){
-        if (a.score < b.score){ return -1; }
-        if (a.score > b.score){ return 1; }
-        return 0;
-      });
-
-      for (var i = results.length - 1; i >= 0; i--) {
-        var result = results[i];
-        if(this.zoom >= result.minZoom && this.zoom <= result.maxZoom){
-          if(newAttributions.indexOf(result.attribution) === -1){
-            newAttributions.push(result.attribution);
+        for (var i = results.length - 1; i >= 0; i--) {
+          var result = results[i];
+          if(this.zoom >= result.minZoom && this.zoom <= result.maxZoom){
+            if(newAttributions.indexOf(result.attribution) === -1){
+              newAttributions.push(result.attribution);
+            }
           }
         }
-      }
 
-      this.attributionSpan = this._map._container.getElementsByClassName("esri-attributions")[0];
-      this.attributionSpan.innerHTML = newAttributions.join(", ");
-      this.resizeAttribution();
-    }, this));
+        this.attributionSpan = this._map._container.getElementsByClassName("esri-attributions")[0];
+        this.attributionSpan.innerHTML = newAttributions.join(", ");
+        this.resizeAttribution();
+      }, this));
+    }
   }
 });
 
-L.esri.tileLayer = function(key, options){
-  return new L.esri.TileLayer(key, options);
+L.esri.basemapLayer = function(key, options){
+  return new L.esri.BasemapLayer(key, options);
 };

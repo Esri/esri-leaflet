@@ -52,13 +52,13 @@
     <script>
       var map = L.map('map').setView([45.533915622222, -122.61919973576], 10);
       // ArcGIS Online basemap - Streets, Imagery, ImageryLabels, Topographic, Gray, GrayLabels, NationalGeographic, Oceans...
-      var layer = L.esri.tileLayer("Streets");
+      var layer = L.esri.basemapLayer("Streets");
       map.addLayer(layer);
       var layerPlaces = new L.layerGroup();
       map.addLayer(layerPlaces);
       // ArcGIS Online geocoder service to find places
       var ArcGISGeocoder = new Esri.ArcGIS({});
- 
+
       function findPlaces() {
         // Get the input
         var searchString = document.getElementById('placeInput').value;
@@ -99,7 +99,7 @@
 
       function clearPlaces() {
         if (layerPlaces) {
-          layerPlaces.clearLayers();          
+          layerPlaces.clearLayers();
         }
       }
     </script>
