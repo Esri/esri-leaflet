@@ -155,9 +155,10 @@ L.esri.TileLayer = L.TileLayer.extend({
     httpRequest.send(null);
   },
   processAttributionData: function(httpRequest){
-    this.attributionIndex = new Terraformer.RTree();
+
 
     if (httpRequest.target.readyState === 4 && httpRequest.target.status === 200) {
+      this.attributionIndex = new Terraformer.RTree();
       var attributionData = JSON.parse(httpRequest.target.responseText);
 
       for (var c = 0; c < attributionData.contributors.length; c++) {
@@ -187,7 +188,6 @@ L.esri.TileLayer = L.TileLayer.extend({
     var searchEnvelope = L.esri.Util.boundsToEnvelope(this.bounds);
 
     this.attributionIndex.search(searchEnvelope).then(L.Util.bind(function(results){
-      console.time("index attributions");
       results.sort(function(a,b){
         if (a.score < b.score){ return -1; }
         if (a.score > b.score){ return 1; }
@@ -202,7 +202,6 @@ L.esri.TileLayer = L.TileLayer.extend({
           }
         }
       }
-      console.timeEnd("index attributions");
 
       this.attributionSpan = this._map._container.getElementsByClassName("esri-attributions")[0];
       this.attributionSpan.innerHTML = newAttributions.join(", ");
