@@ -35,7 +35,8 @@ module.exports = function(grunt) {
           'vendor/terraformer/dist/browser/terraformer.js',
           'vendor/terraformer/dist/browser/rtree.js',
           'vendor/terraformer/dist/browser/arcgis.js',
-          'src/**/*.js'
+          'src/esri-leaflet.js',
+          'src/Layers/*.js'
         ],
         dest: 'dist/esri-leaflet.js'
       }
@@ -59,7 +60,8 @@ module.exports = function(grunt) {
             'vendor/terraformer/dist/browser/terraformer.js',
             'vendor/terraformer/dist/browser/rtree.js',
             'vendor/terraformer/dist/browser/arcgis.js',
-            'src/**/*.js'
+            'src/esri-leaflet.js',
+            'src/Layers/*.js'
           ],
           'dist/esri-leaflet.unbundled.min.js': [
             'src/**/*.js'
