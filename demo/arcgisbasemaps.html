@@ -38,7 +38,7 @@
     <script>
       var map = L.map('map').setView([45.533915622222, -122.61919973576], 10);
       //  ArcGIS Online basemaps - Streets, Imagery, ImageryLabels, Topographic, Gray, GrayLabels, NationalGeographic, Oceans...
-      var layer = L.esri.tileLayer("Topographic");
+      var layer = L.esri.basemapLayer("Topographic");
       var layerLabels;
       map.addLayer(layer);
 
@@ -47,14 +47,14 @@
         if (layer) {
           map.removeLayer(layer);
         }
-        layer = L.esri.tileLayer(mapType);
+        layer = L.esri.basemapLayer(mapType);
         map.addLayer(layer);
         // Add labels layer
         if (layerLabels) {
           map.removeLayer(layerLabels);
         }
         if (mapType == "Gray" || mapType == "Imagery") {
-          layerLabels = L.esri.tileLayer(mapType+"Labels");
+          layerLabels = L.esri.basemapLayer(mapType+"Labels");
           map.addLayer(layerLabels);
         }
       }

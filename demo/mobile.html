@@ -22,10 +22,10 @@
   <body>
     <div id="map"></div>
     <script>
-    
+
       var map = L.map('map');
-      L.esri.tileLayer("Streets").addTo(map);
-      
+      L.esri.basemapLayer("Streets").addTo(map);
+
       function onLocationFound(e) {
         var radius = e.accuracy / 2;
 
