@@ -1,5 +1,5 @@
-/*! Esri-Leaflet - v0.0.1 - 2013-06-14
+/*! Esri-Leaflet - v0.0.1 - 2013-06-17
 *   Copyright (c) 2013 Environmental Systems Research Institute, Inc.
 *   Apache License*/
 
-.leaflet-container .leaflet-control-attribution{background-color:transparent;box-shadow:none;text-shadow:0 0 3px #000;color:#fff;font-size:12px;top:-5px;max-width:100%}.leaflet-container .leaflet-control-attribution a{background-color:transparent;box-shadow:none;text-shadow:0 0 3px #000;color:#fff}.esri-attribution-logo{position:relative;top:5px;padding-left:4px}.esri-attributions{text-overflow:ellipsis;white-space:nowrap;overflow:hidden;display:inline-block;width:auto}@media only screen and (max-width :1024px){.esri-attributions{width:450px}}@media only screen and (max-width :768px){.esri-attributions{width:250px}}
+.leaflet-container .leaflet-control-attribution{background-color:transparent;box-shadow:none;text-shadow:0 0 3px #000;color:#fff;font-size:12px;top:-5px;text-align:right}.leaflet-container .leaflet-control-attribution a{background-color:transparent;box-shadow:none;text-shadow:0 0 3px #000;color:#fff}.esri-attribution-logo{position:relative;top:5px;padding-left:4px}.esri-attributions{text-overflow:ellipsis;white-space:nowrap;overflow:hidden;display:inline-block;max-width:50%}
