@@ -5,7 +5,7 @@
   color: white;
   font-size: 12px;
   top: -5px;
-  max-width:100%;
+  text-align: right;
 }
 .leaflet-container .leaflet-control-attribution a {
   background-color: transparent;
@@ -25,19 +25,5 @@
   white-space: nowrap;
   overflow: hidden;
   display:inline-block;
-  width: auto;
-}
-
-/* iPads (portrait and landscape) ----------- */
-@media only screen and (max-width : 1024px) {
-  .esri-attributions {
-    width: 450px;
-  }
-}
-
-/* iPads (portrait and landscape) ----------- */
-@media only screen and (max-width : 768px) {
-  .esri-attributions {
-     width: 250px;
-  }
+  max-width: 50%;
 }
