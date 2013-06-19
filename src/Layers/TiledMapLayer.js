@@ -1,4 +1,4 @@
-/* globals L:true */
+/* globals L */
 
 L.esri.TiledMapLayer = L.TileLayer.extend({
   initialize: function(url, options){

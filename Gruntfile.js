@@ -31,7 +31,6 @@ module.exports = function(grunt) {
       },
       dist: {
         src: [
-          'vendor/arcgis-node/browser/arcgis.js',
           'vendor/terraformer/dist/browser/terraformer.js',
           'vendor/terraformer/dist/browser/rtree.js',
           'vendor/terraformer/dist/browser/arcgis.js',
@@ -45,7 +44,7 @@ module.exports = function(grunt) {
       options: {
         wrap: false,
         mangle: {
-          except: ['Esri', 'Terraformer']
+          except: ['Terraformer']
         },
         report: 'gzip',
         banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %>\n' +
@@ -56,7 +55,6 @@ module.exports = function(grunt) {
       dist: {
         files: {
           'dist/esri-leaflet.min.js': [
-            'vendor/arcgis-node/browser/arcgis.js',
             'vendor/terraformer/dist/browser/terraformer.js',
             'vendor/terraformer/dist/browser/rtree.js',
             'vendor/terraformer/dist/browser/arcgis.js',
@@ -64,7 +62,8 @@ module.exports = function(grunt) {
             'src/Layers/*.js'
           ],
           'dist/esri-leaflet.unbundled.min.js': [
-            'src/**/*.js'
+            'src/esri-leaflet.js',
+            'src/Layers/*.js'
           ]
         }
       }
@@ -103,6 +102,5 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-watch');
-
 
 };
