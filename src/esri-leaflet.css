@@ -27,3 +27,7 @@
   display:inline-block;
   max-width: 50%;
 }
+
+.esri-leaflet-hidden {
+  display: none !important;
+}
