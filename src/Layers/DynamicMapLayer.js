@@ -12,9 +12,8 @@ L.esri.DynamicMapLayer = L.ImageOverlay.extend({
     layers: ''
   },
 
-  initialize: function (url, bounds, options) {
+  initialize: function (url, options) {
     this._url = url;
-    this._bounds = L.latLngBounds(bounds);
     this._layerParams = L.Util.extend({}, this.defaultParams);
 
     for (var opt in options) {
@@ -71,6 +70,22 @@ L.esri.DynamicMapLayer = L.ImageOverlay.extend({
     if (map.options.zoomAnimation) {
       map.off('zoomanim', this._animateZoom, this);
     }
+  },
+
+  _animateZoom: function (e) {
+    var map = this._map,
+        image = this._image,
+        scale = map.getZoomScale(e.zoom),
+
+        nw = this._map.getBounds().getNorthWest(),
+        se = this._map.getBounds().getSouthEast(),
+
+        topLeft = map._latLngToNewLayerPoint(nw, e.zoom, e.center),
+        size = map._latLngToNewLayerPoint(se, e.zoom, e.center)._subtract(topLeft),
+        origin = topLeft._add(size._multiplyBy((1 / 2) * (1 - 1 / scale)));
+
+    image.style[L.DomUtil.TRANSFORM] =
+            L.DomUtil.getTranslateString(origin) + ' scale(' + scale + ') ';
   },
 
   _parseLayers: function () {
@@ -222,7 +237,7 @@ L.esri.DynamicMapLayer = L.ImageOverlay.extend({
 
     var topLeft = this._map.latLngToLayerPoint(nw),
         size = this._map.latLngToLayerPoint(se)._subtract(topLeft);
-
+    console.log(this._newImage, topLeft);
     L.DomUtil.setPosition(this._newImage, topLeft);
     this._newImage.style.width = size.x + 'px';
     this._newImage.style.height = size.y + 'px';
