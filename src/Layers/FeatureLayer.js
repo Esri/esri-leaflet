@@ -5,7 +5,6 @@ L.esri.FeatureLayer = L.GeoJSON.extend({
   initialize: function(url, options){
     this.index = new Terraformer.RTree();
     this.url = url;
-    this._layerCache = {};
     L.GeoJSON.prototype.initialize.call(this, [], options);
   },
   onAdd: function(map){
@@ -13,7 +12,8 @@ L.esri.FeatureLayer = L.GeoJSON.extend({
     this.updateFeatures(map);
   },
   onRemove: function(map){
-    this.eachLayer(map.removeLayer, map);
+    //this.eachLayer(map.removeLayer, map);
+    L.LayerGroup.prototype.onRemove.call(this, map);
     map.off("viewreset moveend", L.Util.bind(this.updateFeatures, this));
   },
   updateFeatures: function(map){
@@ -25,46 +25,7 @@ L.esri.FeatureLayer = L.GeoJSON.extend({
         this.eachLayer(L.Util.bind(function(layer){
           var id = layer.feature.id;
           var layerid;
-          if(results.indexOf(id) === -1){
-            // icon
-            if(layer._icon){
-              L.DomUtil.addClass(layer._icon,"esri-leaflet-hidden-feature");
-            }
-
-            // shadow
-            if(layer._shadow){
-              L.DomUtil.addClass(layer._shadow,"esri-leaflet-hidden-feature");
-            }
-
-            // misc layers
-            if(layer._layers){
-              for(layerid in layer._layers){
-                if(layer._layers.hasOwnProperty(layerid)){
-                  L.DomUtil.removeClass(layer._layers[layerid]._container, "esri-leaflet-hidden-feature");
-                }
-              }
-            }
-          } else {
-            // icon
-            if(layer._icon){
-              L.DomUtil.removeClass(layer._icon,"esri-leaflet-hidden-feature");
-            }
-
-            // shadow
-            if(layer._shadow){
-              L.DomUtil.removeClass(layer._shadow,"esri-leaflet-hidden-feature");
-            }
-
-            // misc layers
-            if(layer._layers){
-              for(layerid in layer._layers){
-                if(layer._layers.hasOwnProperty(layerid)){
-                  L.DomUtil.removeClass(layer._layers[layerid]._container, "esri-leaflet-hidden-feature");
-                }
-              }
-            }
-
-          }
+          this._toggleLayerVisibility(layer, results.indexOf(id) === -1);
         }, this));
       }, this));
 
@@ -79,10 +40,12 @@ L.esri.FeatureLayer = L.GeoJSON.extend({
           for (var i = response.features.length - 1; i >= 0; i--) {
             var feature = response.features[i];
             var id = feature.attributes[idKey];
-            var geojson = Terraformer.ArcGIS.parse(feature);
-            geojson.id = id;
-            this.index.insert(geojson,id);
-            this.addData(geojson);
+            if(!this._layers[id]){
+              var geojson = Terraformer.ArcGIS.parse(feature);
+              geojson.id = id;
+              this.index.insert(geojson,id);
+              this.addData(geojson);
+            }
           }
         }
       }, this));
@@ -101,6 +64,29 @@ L.esri.FeatureLayer = L.GeoJSON.extend({
   },
   getLayerId: function(layer){
     return layer.feature.id;
+  },
+  _toggleLayerVisibility: function(layer, hide){
+    var command = (hide) ? "addClass": "removeClass";
+
+    // icon
+    if(layer._icon){
+      L.DomUtil[command](layer._icon,"esri-leaflet-hidden-feature");
+    }
+
+    // shadow
+    if(layer._shadow){
+      L.DomUtil[command](layer._shadow,"esri-leaflet-hidden-feature");
+    }
+
+    // misc layers
+    if(layer._layers){
+      for(var layerid in layer._layers){
+        if(layer._layers.hasOwnProperty(layerid)){
+          L.DomUtil[command](layer._layers[layerid]._container, "esri-leaflet-hidden-feature");
+        }
+      }
+    }
+
   }
 });
 
