@@ -244,7 +244,6 @@ L.esri.DynamicMapLayer = L.ImageOverlay.extend({
 
     var topLeft = this._map.latLngToLayerPoint(nw),
         size = this._map.latLngToLayerPoint(se)._subtract(topLeft);
-    console.log(this._newImage, topLeft);
     L.DomUtil.setPosition(this._newImage, topLeft);
     this._newImage.style.width = size.x + 'px';
     this._newImage.style.height = size.y + 'px';
