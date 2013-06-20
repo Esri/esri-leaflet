@@ -9,7 +9,8 @@ L.esri.DynamicMapLayer = L.ImageOverlay.extend({
     f: 'image',
     bboxSR: 102100,
     imageSR: 102100,
-    layers: ''
+    layers: '',
+    opacity: 1
   },
 
   initialize: function (url, options) {
@@ -84,8 +85,7 @@ L.esri.DynamicMapLayer = L.ImageOverlay.extend({
         size = map._latLngToNewLayerPoint(se, e.zoom, e.center)._subtract(topLeft),
         origin = topLeft._add(size._multiplyBy((1 / 2) * (1 - 1 / scale)));
 
-    image.style[L.DomUtil.TRANSFORM] =
-            L.DomUtil.getTranslateString(origin) + ' scale(' + scale + ') ';
+    image.style[L.DomUtil.TRANSFORM] = L.DomUtil.getTranslateString(origin) + ' scale(' + scale + ') ';
   },
 
   _parseLayers: function () {
@@ -224,6 +224,13 @@ L.esri.DynamicMapLayer = L.ImageOverlay.extend({
     });
   },
 
+  _updateOpacity: function(){
+    L.DomUtil.setOpacity(this._image, this.options.opacity);
+    if(this._newImage){
+      L.DomUtil.setOpacity(this._newImage, this.options.opacity);
+    }
+  },
+
   _zoomUpdate: function (e) {
     //console.log(e);
     //console.log(this._image);
@@ -258,7 +265,7 @@ L.esri.DynamicMapLayer = L.ImageOverlay.extend({
     return;
   },
 
-  identify: function(latLng, callback, options){
+  identify: function(latLng, callback){
     this.attributionBoundingBoxes = [];
     L.esri.get(this._url+"/identify", {
       sr: "4265",
@@ -273,9 +280,7 @@ L.esri.DynamicMapLayer = L.ImageOverlay.extend({
           "wkid":4265
         }
       })
-    }, function(response){
-      console.log(response);
-    });
+    }, callback);
   }
 });
 
