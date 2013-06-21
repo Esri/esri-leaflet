@@ -1,4 +1,5 @@
 demo/scratch.html
+demo/scratch1.html
 
 # Ignore environment variables set on this machine
 .env
