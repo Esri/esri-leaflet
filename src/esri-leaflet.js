@@ -1,6 +1,43 @@
 /* globals Terraformer:true, L:true, Esri:true, console:true */
 
-L.esri = {};
+L.esri = {
+  _callbacks: {},
+  get: function(url, params, callback){
+    var callbackId = "callback_" + (Math.random() * 1e9).toString(36);
+
+    params.f="json";
+    params.callback="L.esri._callbacks['"+callbackId+"']";
+
+    var qs="?";
+
+    for(var param in params){
+      if(params.hasOwnProperty(param)){
+        var key = param;
+        var value = params[param];
+        qs+=encodeURIComponent(key);
+        qs+="=";
+        qs+=encodeURIComponent(value);
+        qs+="&";
+      }
+    }
+
+    qs = qs.substring(0, qs.length - 1);
+
+    var script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src = url + qs;
+    script.id = callbackId;
+
+    L.esri._callbacks[callbackId] = function(response){
+      callback(response);
+      document.body.removeChild(script);
+      delete L.esri._callbacks[callbackId];
+    };
+
+    document.body.appendChild(script);
+
+  }
+};
 
 L.esri.Util = {
   extentToBounds: function(extent){
