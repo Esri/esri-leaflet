@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Feature Service Query</title>
+    <link rel="stylesheet" href="../vendor/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="../src/esri-leaflet.css" />
+    <!--[if lte IE 8]>
+        <link rel="stylesheet" href="leaflet.ie.css" />
+    <![endif]-->
+    <script src="../vendor/leaflet/dist/leaflet-src.js"></script>
+    <script src="../dist/esri-leaflet.min.js"></script>
+    <style>
+      html, body, #map {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+        font-size: 12px;
+      }
+      .control-container {
+        text-align: center;
+        margin: 10px;
+      }
+      .title {
+        margin: 10px 0 5px 0;
+        padding: 2px 10px;
+        font-size: 15px;
+        background-color: #b0de5c;
+      }
+      .btn {
+        width: 100px;
+        margin: 5px 5px 0px 5px;
+      }
+      .textarea {
+        width: 100%;
+        margin: 5px 0 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <div class="leaflet-top leaflet-right">
+      <div class="leaflet-control-layers leaflet-control">
+        <div class="control-container">
+        <div class="title">Feature Service Query</div>
+          <textarea class="textarea" id="endpoint" rows="3" type="text" value="http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0" placeholder="http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0"/>http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0</textarea></br>
+          <button class="btn" id="btnAdd" onclick="getFeatureServiceInfo();">Add</button></br>
+          <div id="serviceInfo" style="display:none">
+            <textarea id="info"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      map = L.map('map').setView([45.533915622222, -122.61919973576], 16);
+
+      // Add ArcGIS Online basemap
+      L.esri.tileLayer("Topographic").addTo(map);
+
+      // Use ArcGIS Online to access feature service
+      var ArcGIS = new Esri.ArcGIS({});
+      
+      function getFeatureServiceInfo(err, results) {
+          var options = {url: "http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0"};
+          var featureService = new ArcGIS.FeatureService(options, function (err, results) {
+          console.log(results);
+
+          document.getElementById("serviceInfo").style.display = "block";
+          var s = "";
+          for(var propertyName in results) {
+              s = s + propertyName;
+          }
+
+          document.getElementById("info").value = s;
+        });
+      }
+
+    
+    </script>
+  </body>
+</html>

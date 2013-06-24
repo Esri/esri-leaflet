@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Feature Service Info</title>
+    <link rel="stylesheet" href="../vendor/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="../src/esri-leaflet.css" />
+    <!--[if lte IE 8]>
+        <link rel="stylesheet" href="leaflet.ie.css" />
+    <![endif]-->
+    <script src="../vendor/leaflet/dist/leaflet-src.js"></script>
+     <!--script src="../dist/esri-leaflet.min.js"></script-->
+    <script src="../src/esri-leaflet.js"></script>
+    <script src="../src/Layers/BasemapLayer.js"></script>
+    <script src="../src/Layers/FeatureLayer.js"></script>
+    <script src="../vendor/arcgis-node/browser/arcgis.js"></script>
+    <script src="../vendor/terraformer/dist/browser/terraformer.js"></script>
+    <script src="../vendor/terraformer/dist/browser/arcgis.js"></script>
+    <script src="../vendor/terraformer/dist/browser/wkt.js"></script>
+    <script src="../vendor/terraformer/dist/browser/rtree.js"></script>
+    <style>
+      html, body, #map {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+        font-size: 12px;
+      }
+      .control-container {
+        text-align: center;
+        margin: 10px;
+      }
+      .title {
+        margin: 10px 0 5px 0;
+        padding: 2px 10px;
+        font-size: 15px;
+        background-color: #b0de5c;
+      }
+      .btn {
+        width: 100px;
+        margin: 5px 5px 0px 5px;
+      }
+      .textarea {
+        width: 100%;
+        margin: 5px 0 0;
+        padding: 0;
+      }
+      .fs-props {
+        list-style-type: none; 
+        list-style-position:inside; 
+        margin:0; 
+        padding:0;
+        width: 250px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <div class="leaflet-top leaflet-right">
+      <div class="leaflet-control-layers leaflet-control">
+        <div class="control-container">
+        <div class="title">Feature Service Info</div>
+          <button class="btn" id="btnAdd" onclick="getFeatureServiceInfo();">Show</button>
+          <button class="btn" id="btnHide" onclick="hideFeatureServiceInfo();">Hide</button></br></br>
+          <div>
+            <ul class="fs-props" id="fsProps"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      map = L.map('map').setView([45.533915622222, -122.61919973576], 16);
+      // Add ArcGIS Online basemap
+      L.esri.basemapLayer("Topographic").addTo(map);
+      // Add ArcGIS feature layer
+      var featureServiceUrl = "http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0";
+      L.esri.featureLayer(featureServiceUrl,{}).addTo(map);
+
+      var ArcGIS = new Esri.ArcGIS({});
+      var propsList = document.getElementById("fsProps");
+      
+      function getFeatureServiceInfo() {
+        // Access feature service to get info
+        var options = {url: featureServiceUrl};
+        var featureService = new ArcGIS.FeatureService(options, function (err, results) {        
+          if (!err && results) {
+            propsList.innerHTML = '';
+            for (var key in results) {
+              var v = getInfo(key,results);
+              addElement(key, v);
+            }                      
+          } else {
+            propsList.innerHTML = "Sorry, feature service not found.";
+          }
+        });
+      }
+
+      function getInfo(key, results) {
+        var v = results[key];
+        switch (key){
+          case "drawingInfo":
+            v = "[labeling: " + v.labelingInfo + ", renderer: " + v.renderer.type + "]";
+            break;
+          case "extent":
+            addElement("spatialReference", v.spatialReference.wkid);
+            v = " [" + v.xmin + ", " + v.ymin + ", " + v.xmax + ", " + v.ymax + "]";
+            break;
+          case "fields":
+              var s = "[";
+              for (var i = 0; i < v.length; i++) {
+                  s = (i > 0 && i < v.length - 1 ? s + ", " + v[i].name : s + v[i].name);
+              }
+              v = s + "]";
+            break;
+          case "indexes":
+            if (v.length > 0) {
+              v = "true";
+            }
+            break;
+          case "templates":
+            if (v.length > 0) {
+              v = "true";
+            }
+            break;
+          default:
+            break;
+        }
+        return v;
+      }
+
+      function addElement(fld, val) {
+        var l = document.createElement("li");            
+        l.innerHTML = "<b>" + fld + "</b>: " + (val == "" ? "--" : val);
+        propsList.appendChild(l,null);
+      }
+
+      function hideFeatureServiceInfo() {
+        propsList.innerHTML = "";
+      }
+    
+    </script>
+  </body>
+</html>
