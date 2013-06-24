@@ -1,9 +1,6 @@
 [submodule "vendor/leaflet"]
 	path = vendor/leaflet
 	url = git://github.com/Leaflet/Leaflet.git
-[submodule "vendor/arcgis-node"]
-	path = vendor/arcgis-node
-	url = git@github.com:ArcGIS/arcgis-node.git
 [submodule "vendor/terraformer"]
 	path = vendor/terraformer
 	url = git@github.com:Esri/Terraformer.git
