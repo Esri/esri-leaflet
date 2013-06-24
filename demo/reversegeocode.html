@@ -7,7 +7,7 @@
     <!--[if lte IE 8]>
         <link rel="stylesheet" href="leaflet.ie.css" />
     <![endif]-->
-    <script src="../vendor/arcgis-node/browser/arcgis.js"></script>
+    <script src="geoservices.js"></script>
     <script src="../vendor/leaflet/dist/leaflet-src.js"></script>
     <script src="../dist/esri-leaflet.min.js"></script>
     <style>
@@ -52,7 +52,7 @@
       var layerAddresses = L.layerGroup();
       map.addLayer(layerAddresses);
       // ArcGIS Online geocoder service to reverse geocode
-      var ArcGIS = new Esri.ArcGIS({});
+      var ArcGIS = new Geoservices.Geoservices({});
 
       // Click handler
       map.on('click', reverseGeocode);
