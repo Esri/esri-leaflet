@@ -1,9 +1,5 @@
 /* globals L:true, ActiveXObject:true, Terraformer */
 
-if(typeof L.esri === "undefined"){
-  L.esri = {};
-}
-
 L.esri.BasemapLayer = L.TileLayer.extend({
   statics: {
     TILES: {
