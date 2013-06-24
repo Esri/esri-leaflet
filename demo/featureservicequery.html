@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>ArcGIS Feature Service</title>
+    <title>Feature Service Query</title>
     <link rel="stylesheet" href="../vendor/leaflet/dist/leaflet.css" />
     <link rel="stylesheet" href="../src/esri-leaflet.css" />
     <!--[if lte IE 8]>
@@ -9,7 +9,6 @@
     <![endif]-->
     <script src="../vendor/leaflet/dist/leaflet-src.js"></script>
     <script src="../dist/esri-leaflet.min.js"></script>
-    
     <style>
       html, body, #map {
         width: 100%;
@@ -44,9 +43,12 @@
     <div class="leaflet-top leaflet-right">
       <div class="leaflet-control-layers leaflet-control">
         <div class="control-container">
-        <div class="title">ArcGIS Feature Service</div>
+        <div class="title">Feature Service Query</div>
           <textarea class="textarea" id="endpoint" rows="3" type="text" value="http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0" placeholder="http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0"/>http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0</textarea></br>
-          <button class="btn" id="btnAdd" onclick="addFeatureService();">Add</button><button class="btn" id="btnClear" onclick="removeFeatureService();">Clear</button>
+          <button class="btn" id="btnAdd" onclick="getFeatureServiceInfo();">Add</button></br>
+          <div id="serviceInfo" style="display:none">
+            <textarea id="info"></textarea>
+          </div>
         </div>
       </div>
     </div>
@@ -54,28 +56,27 @@
       map = L.map('map').setView([45.533915622222, -122.61919973576], 16);
 
       // Add ArcGIS Online basemap
-      L.esri.basemapLayer("Topographic").addTo(map);
+      L.esri.tileLayer("Topographic").addTo(map);
 
-      var layerFS;
+      // Use ArcGIS Online to access feature service
+      var ArcGIS = new Esri.ArcGIS({});
+      
+      function getFeatureServiceInfo(err, results) {
+          var options = {url: "http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0"};
+          var featureService = new ArcGIS.FeatureService(options, function (err, results) {
+          console.log(results);
 
-      function addFeatureService() {
-        // Add ArcGIS Online feature service
-        if (!layerFS) {
-          var featureServiceUrl = document.getElementById("endpoint").value;
-          layerFS = L.esri.featureLayer(featureServiceUrl,{});
-          layerFS.on("click", function (e) {
-            e.layer.bindPopup(e.layer.feature.properties.stop_desc);
-          });
-          layerFS.addTo(map);
-        }
+          document.getElementById("serviceInfo").style.display = "block";
+          var s = "";
+          for(var propertyName in results) {
+              s = s + propertyName;
+          }
+
+          document.getElementById("info").value = s;
+        });
       }
 
-      function removeFeatureService() {
-        if (layerFS) {
-          map.removeLayer(layerFS);
-          layerFS = null;
-        }
-      }
+    
     </script>
   </body>
 </html>

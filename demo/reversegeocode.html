@@ -7,9 +7,10 @@
     <!--[if lte IE 8]>
         <link rel="stylesheet" href="leaflet.ie.css" />
     <![endif]-->
-    <script src="geoservices.js"></script>
     <script src="../vendor/leaflet/dist/leaflet-src.js"></script>
     <script src="../dist/esri-leaflet.min.js"></script>
+    <script src="geoservices.js"></script>
+
     <style>
       html, body, #map {
         width: 100%;
@@ -52,7 +53,7 @@
       var layerAddresses = L.layerGroup();
       map.addLayer(layerAddresses);
       // ArcGIS Online geocoder service to reverse geocode
-      var ArcGIS = new Geoservices.Geoservices({});
+      var ArcGISGeoServices = new Geoservices.Geoservices({});
 
       // Click handler
       map.on('click', reverseGeocode);
@@ -65,7 +66,7 @@
           outSR: ""
         }
         // Call geocoder
-        ArcGIS.geocode.reverse(options, function (err,result) {
+        ArcGISGeoServices.geocode.reverse(options, function (err,result) {
           if (!err && result) {
             // Get address and create marker
             var address = result.address;
