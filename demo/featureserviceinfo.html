@@ -8,15 +8,9 @@
         <link rel="stylesheet" href="leaflet.ie.css" />
     <![endif]-->
     <script src="../vendor/leaflet/dist/leaflet-src.js"></script>
-     <!--script src="../dist/esri-leaflet.min.js"></script-->
-    <script src="../src/esri-leaflet.js"></script>
-    <script src="../src/Layers/BasemapLayer.js"></script>
-    <script src="../src/Layers/FeatureLayer.js"></script>
-    <script src="../vendor/arcgis-node/browser/arcgis.js"></script>
-    <script src="../vendor/terraformer/dist/browser/terraformer.js"></script>
-    <script src="../vendor/terraformer/dist/browser/arcgis.js"></script>
-    <script src="../vendor/terraformer/dist/browser/wkt.js"></script>
-    <script src="../vendor/terraformer/dist/browser/rtree.js"></script>
+    <script src="../dist/esri-leaflet.min.js"></script>
+    <script src="../vendor/geoservices-js/browser/geoservices.js"></script>
+
     <style>
       html, body, #map {
         width: 100%;
@@ -75,13 +69,14 @@
       var featureServiceUrl = "http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0";
       L.esri.featureLayer(featureServiceUrl,{}).addTo(map);
 
-      var ArcGIS = new Esri.ArcGIS({});
+      //var ArcGIS = new Esri.ArcGIS({});
+      var ArcGISGeoServices = new Geoservices.Geoservices({});
       var propsList = document.getElementById("fsProps");
       
       function getFeatureServiceInfo() {
         // Access feature service to get info
         var options = {url: featureServiceUrl};
-        var featureService = new ArcGIS.FeatureService(options, function (err, results) {        
+        var featureService = new ArcGISGeoServices.FeatureService(options, function (err, results) {        
           if (!err && results) {
             propsList.innerHTML = '';
             for (var key in results) {
