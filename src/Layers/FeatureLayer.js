@@ -3,7 +3,12 @@
 L.esri.FeatureLayer = L.GeoJSON.extend({
   initialize: function(url, options){
     this.index = new Terraformer.RTree();
+    //add a trailing slash to the url if the user omitted it
+    if(url[url.length-1] !== "/"){
+      url += "/";
+    }
     this.url = url;
+
     L.GeoJSON.prototype.initialize.call(this, [], options);
   },
   onAdd: function(map){
