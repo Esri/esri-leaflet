@@ -18,7 +18,7 @@ You can quickly access ArcGIS basemaps with the `L.esri.BasemapLayer(key, option
 * Imagery
 * ImageryLabels
 
-The `options` parameter can accept any [options that `L.TileLayer` can accept](http://leafletjs.com/reference.html#tilelayer)
+The `options` parameter can accept the same [options as](http://leafletjs.com/reference.html#tilelayer) `L.TileLayer`.
 
 ```js
 var map = L.map('map').setView([37.75,-122.45], 12);
