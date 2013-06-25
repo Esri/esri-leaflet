@@ -7,9 +7,10 @@
     <!--[if lte IE 8]>
         <link rel="stylesheet" href="leaflet.ie.css" />
     <![endif]-->
-    <script src="geoservices.js"></script>
     <script src="../vendor/leaflet/dist/leaflet-src.js"></script>
     <script src="../dist/esri-leaflet.min.js"></script>
+    <script src="geoservices.js"></script>
+
     <style>
       html, body, #map {
         width: 100%;
@@ -58,7 +59,7 @@
       var layerPlaces = new L.layerGroup();
       map.addLayer(layerPlaces);
       // ArcGIS Online geocoder service to find places
-      var ArcGISGeocoder = new Geoservices.Geoservices({});
+      var ArcGISGeoServices = new Geoservices.Geoservices({});
 
       function findPlaces() {
         // Get the input
@@ -77,7 +78,7 @@
           maxLocations: 10
         }
         // Call geocoder
-        ArcGISGeocoder.geocode(options, function (err,result) {
+        ArcGISGeoServices.geocode(options, function (err,result) {
           if (!err && result) {
             // Get places and create markers
             var bnd = new L.LatLngBounds();
