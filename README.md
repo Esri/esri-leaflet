@@ -6,14 +6,6 @@ The goal of Esri Leaflet is not to replace the ArcGIS Javascript SDK, but rather
 
 **Currently Esri Leaflet is in development but is open to contributions. IT should be thought of a beta or preview.**
 
-### Try it live [here](http://esri.github.com/esri-leaflet/demo/index.html)
-
-```js
-map = L.map("map").setView([37.8065289741725, -122.3631477355957], 12);
-L.esri.tileLayer("Topographic").addTo(map);
-L.esri.featureLayer('http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0/',{}).addTo(map);
-```
-
 ### Basemaps
 You can quickly access ArcGIS basemaps with the `L.esri.BasemapLayer(key, options)` layer. The `key` parameter should be one of the following keys.
 
