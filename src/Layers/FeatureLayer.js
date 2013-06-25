@@ -1,6 +1,5 @@
-/* globals Terraformer:true, L:true, Esri:true, console:true */
+/* globals Terraformer, L */
 
-//FeatureLayer < GeoJSON < FeatureGroup < LayerGroup
 L.esri.FeatureLayer = L.GeoJSON.extend({
   initialize: function(url, options){
     this.index = new Terraformer.RTree();
@@ -12,7 +11,6 @@ L.esri.FeatureLayer = L.GeoJSON.extend({
     this.updateFeatures(map);
   },
   onRemove: function(map){
-    //this.eachLayer(map.removeLayer, map);
     L.LayerGroup.prototype.onRemove.call(this, map);
     map.off("viewreset moveend", L.Util.bind(this.updateFeatures, this));
   },
@@ -29,7 +27,7 @@ L.esri.FeatureLayer = L.GeoJSON.extend({
         }, this));
       }, this));
 
-      L.esri.get(this.url+"/query", {
+      L.esri.get(this.url+"query", {
         geometryType: "esriGeometryEnvelope",
         geometry: JSON.stringify(L.esri.Util.boundsToExtent(newBounds)),
         outFields:"*",

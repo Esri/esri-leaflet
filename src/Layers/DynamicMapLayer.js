@@ -1,6 +1,4 @@
-/* globals Terraformer, L, Esri, console, ActiveXObject, XMLHttpRequest */
-
-// most code taken from https://github.com/sanborn/leaflet-ags/blob/master/src/AGS.Layer.Dynamic.js to prototype with
+/* globals L */
 
 L.esri.DynamicMapLayer = L.ImageOverlay.extend({
   defaultParams: {

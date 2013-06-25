@@ -1,4 +1,4 @@
-/* globals L:true, ActiveXObject:true, Terraformer */
+/* globals L, ActiveXObject */
 
 L.esri.BasemapLayer = L.TileLayer.extend({
   statics: {
@@ -79,7 +79,7 @@ L.esri.BasemapLayer = L.TileLayer.extend({
     } else if(typeof key === "string" && L.esri.BasemapLayer.TILES[key]){
       config = L.esri.BasemapLayer.TILES[key];
     } else {
-      throw new Error("L.esri.TileLayer: Invalid parameter. Use one of 'Streets', 'Topographic', 'Oceans', 'NationalGeographic', 'Gray', 'GrayLabels', 'Imagery' or 'ImageryLabels'");
+      throw new Error("L.esri.BasemapLayer: Invalid parameter. Use one of 'Streets', 'Topographic', 'Oceans', 'NationalGeographic', 'Gray', 'GrayLabels', 'Imagery' or 'ImageryLabels'");
     }
 
     // merge passed options into the config options
@@ -186,14 +186,12 @@ L.esri.BasemapLayer = L.TileLayer.extend({
     for (var i = 0; i < this.attributionBoundingBoxes.length; i++) {
       var attr = this.attributionBoundingBoxes[i];
       if(this.bounds.intersects(attr.bounds) && this.zoom >= attr.minZoom && this.zoom <= attr.maxZoom) {
-      //if(this.bounds.intersects(attr.bounds)) {
         var attribution = this.attributionBoundingBoxes[i].attribution;
         if(newAttributions.indexOf(attribution) === -1){
           newAttributions.push(attribution);
         }
       }
     }
-
     this.getAttributionSpan().innerHTML = newAttributions.join(", ");
     this.resizeAttribution();
   }
