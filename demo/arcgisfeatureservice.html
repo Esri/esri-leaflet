@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>ArcGIS Feature Service</title>
+    <title>ArcGIS Feature Layer</title>
     <link rel="stylesheet" href="../vendor/leaflet/dist/leaflet.css" />
     <link rel="stylesheet" href="../src/esri-leaflet.css" />
     <!--[if lte IE 8]>
@@ -44,9 +44,9 @@
     <div class="leaflet-top leaflet-right">
       <div class="leaflet-control-layers leaflet-control">
         <div class="control-container">
-        <div class="title">ArcGIS Feature Service</div>
+        <div class="title">ArcGIS Feature Layer</div>
           <textarea class="textarea" id="endpoint" rows="3" type="text" value="http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0" placeholder="http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0"/>http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0</textarea></br>
-          <button class="btn" id="btnAdd" onclick="addFeatureService();">Add</button><button class="btn" id="btnClear" onclick="removeFeatureService();">Clear</button>
+          <button class="btn" id="btnAdd" onclick="addFeatureLayer();">Add</button><button class="btn" id="btnClear" onclick="removeFeatureLayer();">Clear</button>
         </div>
       </div>
     </div>
@@ -58,7 +58,7 @@
 
       var layerFS;
 
-      function addFeatureService() {
+      function addFeatureLayer() {
         // Add ArcGIS Online feature service
         if (!layerFS) {
           var featureServiceUrl = document.getElementById("endpoint").value;
@@ -70,7 +70,7 @@
         }
       }
 
-      function removeFeatureService() {
+      function removeFeatureLayer() {
         if (layerFS) {
           map.removeLayer(layerFS);
           layerFS = null;
