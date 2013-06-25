@@ -2,7 +2,7 @@
 
 Leaflet plugin for Esri ArcGIS Online Services. Currenly only supports loading Esri basemaps and feature services as well as map services.
 
-The goal of Esri Leaflet is not to replace the ArcGIS Javascript SDK, but rather to provide small components to allow developers to build simple lightweight mapping applications. It pairs well with [Terraformer]() for converting data and Geoservices.js for making advanced request to ArcGIS services
+The goal of Esri Leaflet is not to replace the ArcGIS Javascript SDK, but rather to provide small components to allow developers to build simple lightweight mapping applications. It pairs well with [Terraformer]() for converting data and [geoservices-js](https://github.com/Esri/geoservices-js) for making advanced request to ArcGIS services.
 
 **Currently Esri Leaflet is in development but is open to contributions. IT should be thought of a beta or preview.**
 
