@@ -122,19 +122,19 @@ L.esri.BasemapLayer = L.TileLayer.extend({
   onAdd: function(map){
     L.TileLayer.prototype.onAdd.call(this, map);
     if(this.dynamicAttribution){
-      this.on("load", this.handleTileUpdates);
-      this._map.on("viewreset zoomend dragend", this.handleTileUpdates);
-      this._map.on("resize", this.resizeAttribution);
+      this.on("load", this.handleTileUpdates, this);
+      this._map.on("viewreset zoomend dragend", this.handleTileUpdates, this);
+      this._map.on("resize", this.resizeAttribution, this);
     }
   },
   resizeAttribution: function(){
-    this.attributionSpan.style.maxWidth = (this._map.getSize().x * 0.75) - 65 + "px";
+    this.getAttributionSpan().style.maxWidth = (this._map.getSize().x * 0.75) - 65 + "px";
   },
   onRemove: function(map){
     if(this.dynamicAttribution){
-      this.off("load", this.handleTileUpdates);
-      this._map.off("viewreset zoomend dragend", this.handleTileUpdates);
-      this._map.off("resize", this.resizeAttribution);
+      this.off("load", this.handleTileUpdates, this);
+      this._map.off("viewreset zoomend dragend", this.handleTileUpdates, this);
+      this._map.off("resize", this.resizeAttribution, this);
     }
     L.TileLayer.prototype.onRemove.call(this, map);
   },
@@ -152,56 +152,50 @@ L.esri.BasemapLayer = L.TileLayer.extend({
   },
   processAttributionData: function(httpRequest){
     if (httpRequest.target.readyState === 4 && httpRequest.target.status === 200) {
-      this.attributionIndex = new Terraformer.RTree();
       var attributionData = JSON.parse(httpRequest.target.responseText);
-
       for (var c = 0; c < attributionData.contributors.length; c++) {
         var contributor = attributionData.contributors[c];
         for (var i = 0; i < contributor.coverageAreas.length; i++) {
           var coverageArea = contributor.coverageAreas[i];
           var southWest = new L.LatLng(coverageArea.bbox[0], coverageArea.bbox[1]);
           var northEast = new L.LatLng(coverageArea.bbox[2], coverageArea.bbox[3]);
-          var bounds = new L.LatLngBounds(southWest, northEast);
-          var envelope = L.esri.Util.boundsToEnvelope(bounds);
-          this.attributionIndex.insert(envelope, {
+          this.attributionBoundingBoxes.push({
             attribution: contributor.attribution,
             score: coverageArea.score,
+            bounds: new L.LatLngBounds(southWest, northEast),
             minZoom: coverageArea.zoomMin,
             maxZoom: coverageArea.zoomMax
           });
         }
       }
-
+      this.attributionBoundingBoxes.sort(function(a,b){
+        if (a.score < b.score){ return -1; }
+        if (a.score > b.score){ return 1; }
+        return 0;
+      });
       if(this.bounds){
         this.updateMapAttribution();
       }
     }
   },
+  getAttributionSpan:function(){
+    return this._map._container.getElementsByClassName("esri-attributions")[0];
+  },
   updateMapAttribution: function(){
     var newAttributions = [];
-    var searchEnvelope = L.esri.Util.boundsToEnvelope(this.bounds);
-    if(this.attributionIndex){
-      this.attributionIndex.search(searchEnvelope).then(L.Util.bind(function(results){
-        results.sort(function(a,b){
-          if (a.score < b.score){ return -1; }
-          if (a.score > b.score){ return 1; }
-          return 0;
-        });
-
-        for (var i = results.length - 1; i >= 0; i--) {
-          var result = results[i];
-          if(this.zoom >= result.minZoom && this.zoom <= result.maxZoom){
-            if(newAttributions.indexOf(result.attribution) === -1){
-              newAttributions.push(result.attribution);
-            }
-          }
+    for (var i = 0; i < this.attributionBoundingBoxes.length; i++) {
+      var attr = this.attributionBoundingBoxes[i];
+      if(this.bounds.intersects(attr.bounds) && this.zoom >= attr.minZoom && this.zoom <= attr.maxZoom) {
+      //if(this.bounds.intersects(attr.bounds)) {
+        var attribution = this.attributionBoundingBoxes[i].attribution;
+        if(newAttributions.indexOf(attribution) === -1){
+          newAttributions.push(attribution);
         }
-
-        this.attributionSpan = this._map._container.getElementsByClassName("esri-attributions")[0];
-        this.attributionSpan.innerHTML = newAttributions.join(", ");
-        this.resizeAttribution();
-      }, this));
+      }
     }
+
+    this.getAttributionSpan().innerHTML = newAttributions.join(", ");
+    this.resizeAttribution();
   }
 });
 
