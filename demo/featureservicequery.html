@@ -9,6 +9,8 @@
     <![endif]-->
     <script src="../vendor/leaflet/dist/leaflet-src.js"></script>
     <script src="../dist/esri-leaflet.min.js"></script>
+    <script src="geoservices.js"></script>
+
     <style>
       html, body, #map {
         width: 100%;
@@ -28,12 +30,12 @@
         background-color: #b0de5c;
       }
       .btn {
-        width: 100px;
+        width: 75px;
         margin: 5px 5px 0px 5px;
       }
-      .textarea {
-        width: 100%;
-        margin: 5px 0 0;
+      .select {
+        width: 95%;
+        margin: 5px 0 5px 0;
         padding: 0;
       }
     </style>
@@ -43,39 +45,111 @@
     <div class="leaflet-top leaflet-right">
       <div class="leaflet-control-layers leaflet-control">
         <div class="control-container">
-        <div class="title">Feature Service Query</div>
-          <textarea class="textarea" id="endpoint" rows="3" type="text" value="http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0" placeholder="http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0"/>http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0</textarea></br>
-          <button class="btn" id="btnAdd" onclick="getFeatureServiceInfo();">Add</button></br>
-          <div id="serviceInfo" style="display:none">
-            <textarea id="info"></textarea>
-          </div>
+          <div class="title">Feature Service Query</div>
+          <select class="select" id="query" onchange="featureServiceQuery();">
+            <option>direction = 'North'</option>
+            <option>direction = 'East'</option>
+            <option>direction = 'South'</option>
+            <option>direction = 'West'</option>
+          </select>  
+          <label><input id="useMapExtent" type="checkbox" checked/>Get new features on pan</input></label>
+          <button class="btn" id="btnQuery" onclick="featureServiceQuery();">Go</button><button class="btn" id="btnClear" onclick="clearFeatures();">Clear</button>
         </div>
       </div>
     </div>
     <script>
+      // Create the map and add layers
       map = L.map('map').setView([45.533915622222, -122.61919973576], 16);
-
       // Add ArcGIS Online basemap
-      L.esri.tileLayer("Topographic").addTo(map);
+      L.esri.basemapLayer("Streets").addTo(map);
+      // Add layer for feature service query features
+      var layerGroup = new L.layerGroup();
+      map.addLayer(layerGroup);
+      // Add new features when user pans map
+      map.on("dragend", featureServiceQuery);
 
-      // Use ArcGIS Online to access feature service
-      var ArcGIS = new Esri.ArcGIS({});
+      // Access ArcGIS Online feature service
+      var ArcGISGeoServices = new Geoservices.Geoservices({});
+      var featureServiceUrl =  "http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0";
       
-      function getFeatureServiceInfo(err, results) {
-          var options = {url: "http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0"};
-          var featureService = new ArcGIS.FeatureService(options, function (err, results) {
-          console.log(results);
-
-          document.getElementById("serviceInfo").style.display = "block";
-          var s = "";
-          for(var propertyName in results) {
-              s = s + propertyName;
+      function featureServiceQuery(refresh) {
+        if (refresh && !document.getElementById('useMapExtent').checked) {
+          return;
+        }
+        var featureService = new ArcGISGeoServices.FeatureService({url:featureServiceUrl}, function (err, results) {
+          if (!err && results) {
+            var queryOptions = document.getElementById("query");
+            var query = queryOptions.options[queryOptions.selectedIndex].text;
+            var queryEnvelope = JSON.stringify(L.esri.Util.boundsToExtent(map.getBounds()));
+            // Build query parameters - See http://resources.arcgis.com/en/help/arcgis-rest-api/#/Query_Feature_Service_Layer/02r3000000r1000000/
+            var params = {
+              f:"json",
+              where: query,
+              geometry: queryEnvelope,
+              geometryType: "esriGeometryEnvelope",
+              spatialRel: "esriSpatialRelIntersects",
+              returnGeometry:true,
+              outSR: 4326,
+              outFields:"*"      
+            };
+            // Query the feature service
+            featureService.query(params, function (err, results) {
+              if (!err && results) {
+                // Add features to map
+                layerGroup.clearLayers();
+                for (var i = 0; i < results.features.length; i++) {
+                  var feature = results.features[i];
+                  // Set symbols and popup
+                  layerGroup.addLayer(L.marker([feature.geometry.y, feature.geometry.x], {icon: getIcon(query)}).bindPopup(feature.attributes.stop_desc));
+                  //layerGroup.addLayer(L.marker([feature.geometry.y, feature.geometry.x]).bindPopup(feature.attributes.stop_desc));
+                }
+              } else {
+                console.log(err);
+              }
+            });
+          } else {
+            console.log(err);
           }
-
-          document.getElementById("info").value = s;
         });
       }
 
+      function clearFeatures() {
+        if (layerGroup) {
+          layerGroup.clearLayers();
+        }
+      }
+
+      function getIcon(queryId) {
+        var icon, anchor, popup;
+        switch (queryId) {
+          case "direction = 'North'":
+            icon = 'images/arrow-north.png';
+            anchor = [18, 0]; 
+            popup = [0,0];
+            break;
+          case "direction = 'East'":
+            icon = 'images/arrow-east.png';
+            anchor = [36, 18];
+            popup = [-18,-18];
+            break;
+          case "direction = 'South'":
+            icon = 'images/arrow-south.png';
+            anchor = [18, -36];
+            popup = [-1,36];
+            break;
+          case "direction = 'West'":
+            icon = 'images/arrow-west.png';
+            anchor = [0, 18];
+            popup = [18,-18];
+            break;
+        }        
+        return L.icon({
+          iconUrl: icon,
+          iconSize:     [37, 36], 
+          iconAnchor:   anchor, 
+          popupAnchor:  popup
+        });
+      }
     
     </script>
   </body>
