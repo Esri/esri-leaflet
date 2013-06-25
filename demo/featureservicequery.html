@@ -52,8 +52,8 @@
             <option>direction = 'South'</option>
             <option>direction = 'West'</option>
           </select>  
-          <label><input id="useMapExtent" type="checkbox" checked/>New features on pan</input></label>
-          <button class="btn" id="btnQuery" onclick="featureServiceQuery(true);">Go</button><button class="btn" id="btnClear" onclick="clearFeatures();">Clear</button>
+          <label><input id="useMapExtent" type="checkbox" checked/>Get new features on pan</input></label>
+          <button class="btn" id="btnQuery" onclick="featureServiceQuery();">Go</button><button class="btn" id="btnClear" onclick="clearFeatures();">Clear</button>
         </div>
       </div>
     </div>
@@ -65,7 +65,7 @@
       // Add layer for feature service query features
       var layerGroup = new L.layerGroup();
       map.addLayer(layerGroup);
-      // Add new features when user pans
+      // Add new features when user pans map
       map.on("dragend", featureServiceQuery);
 
       // Access ArcGIS Online feature service
@@ -73,7 +73,9 @@
       var featureServiceUrl =  "http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0";
       
       function featureServiceQuery(refresh) {
-        //document.getElementById('useMapExtent').checked;
+        if (refresh && !document.getElementById('useMapExtent').checked) {
+          return;
+        }
         var featureService = new ArcGISGeoServices.FeatureService({url:featureServiceUrl}, function (err, results) {
           if (!err && results) {
             var queryOptions = document.getElementById("query");
@@ -97,8 +99,9 @@
                 layerGroup.clearLayers();
                 for (var i = 0; i < results.features.length; i++) {
                   var feature = results.features[i];
-                  //layerGroup.addLayer(L.marker([feature.geometry.y, feature.geometry.x], {icon: getIcon(query)}).bindPopup(feature.attributes.stop_desc));
-                  layerGroup.addLayer(L.marker([feature.geometry.y, feature.geometry.x]).bindPopup(feature.attributes.stop_desc));
+                  // Set symbols and popup
+                  layerGroup.addLayer(L.marker([feature.geometry.y, feature.geometry.x], {icon: getIcon(query)}).bindPopup(feature.attributes.stop_desc));
+                  //layerGroup.addLayer(L.marker([feature.geometry.y, feature.geometry.x]).bindPopup(feature.attributes.stop_desc));
                 }
               } else {
                 console.log(err);
@@ -142,9 +145,9 @@
         }        
         return L.icon({
           iconUrl: icon,
-          iconSize:     [37, 36], // size of the icon
-          iconAnchor:   anchor, // point of the icon which will correspond to marker's location
-          popupAnchor:  popup // point from which the popup should open relative to the iconAnchor
+          iconSize:     [37, 36], 
+          iconAnchor:   anchor, 
+          popupAnchor:  popup
         });
       }
     
