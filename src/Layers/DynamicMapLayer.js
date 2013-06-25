@@ -12,6 +12,11 @@ L.esri.DynamicMapLayer = L.ImageOverlay.extend({
   },
 
   initialize: function (url, options) {
+    //add a trailing slash to the url if the user omitted it
+    if(url[url.length-1] !== "/"){
+      url += "/";
+    }
+
     this._url = url;
     this._layerParams = L.Util.extend({}, this.defaultParams);
 
@@ -184,7 +189,7 @@ L.esri.DynamicMapLayer = L.ImageOverlay.extend({
     this._layerParams.bbox = [sw.x, sw.y, ne.x, ne.y].join(',');
     this._layerParams.size = size.x + ',' + size.y;
 
-    var url = this._url + '/export' + L.Util.getParamString(this._layerParams);
+    var url = this._url + 'export' + L.Util.getParamString(this._layerParams);
 
     if (typeof this.options.token !== 'undefined'){
       url = url + '&token=' + this.options.token;
