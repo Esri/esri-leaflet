@@ -1,12 +1,12 @@
 # Esri Leaflet
 
-Leaflet plugin for Esri ArcGIS Online Services. Currenly only supports loading Esri basemaps and feature services as well as map services.
+Leaflet plugin for [Esri ArcGIS Online Services](http://resources.arcgis.com/en/help/arcgis-rest-api/#/The_ArcGIS_REST_API/02r300000054000000/). Currenly only supports loading Esri basemaps and feature services as well as map services.
 
-The goal of Esri Leaflet is not to replace the ArcGIS Javascript SDK, but rather to provide small components to allow developers to build simple lightweight mapping applications. It pairs well with [Terraformer]() for converting data and [geoservices-js](https://github.com/Esri/geoservices-js) for making advanced request to ArcGIS services.
+The goal of Esri Leaflet is not to replace the [ArcGIS API for JavaScript](https://developers.arcgis.com/en/javascript/), but rather to provide small components to allow developers to build simple lightweight mapping applications. It pairs well with [Terraformer]() for converting data and [geoservices-js](https://github.com/Esri/geoservices-js) for making advanced request to [ArcGIS REST services](http://resources.arcgis.com/en/help/arcgis-rest-api/#/The_ArcGIS_REST_API/02r300000054000000/).
 
 **Currently Esri Leaflet is in development but is open to contributions. IT should be thought of a beta or preview.**
 
-There are [loads of demos](http://esri.github.io/esri-leaflet/demo/) showing difference features of Esri Leaflet as well as how Esri Leaflet might integrate with [geoservices-js](https://github.com/Esri/geoservices-js) and [Terraformer](https://github.com/esri/Terraformer) libraries. [Check out the demos](http://esri.github.io/esri-leaflet/demo/)
+There are [loads of demos](http://esri.github.io/esri-leaflet/demo/) showing the features of Esri Leaflet as well as how it might integrate with [geoservices-js](https://github.com/Esri/geoservices-js) and [Terraformer](https://github.com/esri/Terraformer) libraries. [Check out the demos.](http://esri.github.io/esri-leaflet/demo/)
 
 ### Basemaps
 You can quickly access ArcGIS basemaps with the `L.esri.BasemapLayer(key, options)` layer. The `key` parameter should be one of the following keys.
