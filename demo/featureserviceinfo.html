@@ -35,12 +35,12 @@
       var featureServiceUrl = "http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0";
       L.esri.featureLayer(featureServiceUrl,{}).addTo(map);
 
-      //var ArcGIS = new Esri.ArcGIS({});
+      // Access ArcGIS Online Feature Service - See https://github.com/Esri/geoservices-js
       var ArcGISGeoServices = new Geoservices.Geoservices({});
       var propsList = document.getElementById("fsProps");
 
       function getFeatureServiceInfo() {
-        // Access feature service to get info
+        // Access feature service to get info - See http://resources.arcgis.com/en/help/arcgis-rest-api/
         var options = {url: featureServiceUrl};
         var featureService = new ArcGISGeoServices.FeatureService(options, function (err, results) {
           if (!err && results) {
