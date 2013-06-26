@@ -4,9 +4,30 @@ Leaflet plugin for [Esri ArcGIS Online Services](http://resources.arcgis.com/en/
 
 The goal of Esri Leaflet is not to replace the [ArcGIS API for JavaScript](https://developers.arcgis.com/en/javascript/), but rather to provide small components to allow developers to build simple lightweight mapping applications. It pairs well with [Terraformer]() for converting data and [geoservices-js](https://github.com/Esri/geoservices-js) for making advanced request to [ArcGIS REST services](http://resources.arcgis.com/en/help/arcgis-rest-api/#/The_ArcGIS_REST_API/02r300000054000000/), for example place finding and reverse geocoding.
 
-**Currently Esri Leaflet is in development but is open to contributions. IT should be thought of a beta or preview.**
+**Currently Esri Leaflet is in development but is open to contributions. It should be thought of a beta or preview.**
 
+### Demos
 There are [loads of demos](http://esri.github.io/esri-leaflet/demo/) showing the features of Esri Leaflet as well as how it might integrate with [geoservices-js](https://github.com/Esri/geoservices-js) and [Terraformer](https://github.com/esri/Terraformer) libraries. [Check out the demos.](http://esri.github.io/esri-leaflet/demo/)
+
+```
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ArcGIS Basemap</title>
+    <link rel="stylesheet" href="../vendor/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="../src/esri-leaflet.css" />
+    <script src="../vendor/leaflet/dist/leaflet-src.js"></script>
+    <script src="../dist/esri-leaflet.min.js"></script>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script>
+      var map = L.map('map').setView([45.52751668442124, -122.67175197601318], 15);
+      L.esri.basemapLayer("Topographic").addTo(map);
+    </script>
+  </body>
+</html>
+```
 
 ### Basemaps
 You can quickly access ArcGIS basemaps with the `L.esri.BasemapLayer(key, options)` layer. The `key` parameter should be one of the following keys.
