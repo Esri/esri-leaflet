@@ -11,28 +11,6 @@
     <script src="../vendor/leaflet/dist/leaflet-src.js"></script>
     <script src="../dist/esri-leaflet.min.js"></script>
     <script src="geoservices.js"></script>
-
-    <style>
-      .control-container {
-        text-align: center;
-        margin: 10px;
-      }
-      .title {
-        margin: 10px 0 5px 0;
-        padding: 2px 10px;
-        font-size: 15px;
-        background-color: #b0de5c;
-      }
-      .btn {
-        width: 75px;
-        margin: 5px 5px 0px 5px;
-      }
-      .select {
-        width: 95%;
-        margin: 5px 0 5px 0;
-        padding: 0;
-      }
-    </style>
   </head>
   <body>
     <div id="map"></div>
@@ -66,6 +44,37 @@
       // Access ArcGIS Online feature service
       var ArcGISGeoServices = new Geoservices.Geoservices({});
       var featureServiceUrl =  "http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0";
+
+      var icons = {
+        north: L.icon({
+          iconUrl: 'images/bus-stop-north.png',
+          iconRetinaUrl: 'images/bus-stop-north@2x.png',
+          iconSize: [27, 31],
+          iconAnchor: [13.5, 17.5],
+          popupAnchor: [0, -11],
+        }),
+        south: L.icon({
+          iconUrl: 'images/bus-stop-south.png',
+          iconRetinaUrl: 'images/bus-stop-south@2x.png',
+          iconSize: [27, 31],
+          iconAnchor: [13.5, 13.5],
+          popupAnchor: [0, -11],
+        }),
+        east: L.icon({
+          iconUrl: 'images/bus-stop-east.png',
+          iconRetinaUrl: 'images/bus-stop-east@2x.png',
+          iconSize: [31, 27],
+          iconAnchor: [13.5, 17.5],
+          popupAnchor: [0, -11],
+        }),
+        west: L.icon({
+          iconUrl: 'images/bus-stop-west.png',
+          iconRetinaUrl: 'images/bus-stop-west@2x.png',
+          iconSize: [31, 27],
+          iconAnchor: [17.5, 13.5],
+          popupAnchor: [0, -11],
+        }),
+      }
 
       function featureServiceQuery(refresh) {
         if (refresh && !document.getElementById('useMapExtent').checked) {
@@ -115,35 +124,20 @@
       }
 
       function getIcon(queryId) {
-        var icon, anchor, popup;
         switch (queryId) {
           case "direction = 'North'":
-            icon = 'images/arrow-north.png';
-            anchor = [18, 0];
-            popup = [0,0];
+            return icons.north;
             break;
           case "direction = 'East'":
-            icon = 'images/arrow-east.png';
-            anchor = [36, 18];
-            popup = [-18,-18];
+            return icons.east;
             break;
           case "direction = 'South'":
-            icon = 'images/arrow-south.png';
-            anchor = [18, -36];
-            popup = [-1,36];
+            return icons.south;
             break;
           case "direction = 'West'":
-            icon = 'images/arrow-west.png';
-            anchor = [0, 18];
-            popup = [18,-18];
+            return icons.west;
             break;
         }
-        return L.icon({
-          iconUrl: icon,
-          iconSize:     [37, 36],
-          iconAnchor:   anchor,
-          popupAnchor:  popup
-        });
       }
 
     </script>

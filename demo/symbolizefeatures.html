@@ -10,29 +10,18 @@
     <![endif]-->
     <script src="../vendor/leaflet/dist/leaflet-src.js"></script>
     <script src="../dist/esri-leaflet.min.js"></script>
-
-    <style>
-      #about{
-        width: 400px;
-        position: fixed;
-        right: 20px;
-        top: 20px;
-        z-index: 1;
-        background: white;
-        padding: 1em;
-        box-shadow: 0 3px 14px rgba(0,0,0,0.4);
-        -webkit-border-radius: 4px;
-        border-radius: 4px;
-      }
-    </style>
   </head>
   <body>
-    <div id="about">
-      <h1>Custom Appearance for FeatureLayer</h1>
-      <p>This demo shows how to customize icons and graphics on a FeatureLayer.</p>
-      <p>Each bus stop is symbolzied with a custom icon representing the direction the bus is traveling and a popup.</p>
-    </div>
     <div id="map"></div>
+    <div class="leaflet-top leaflet-right">
+      <div class="leaflet-control-layers leaflet-control">
+        <div class="control-container">
+          <div class="title">Symbolize FeatureLayer</div>
+            <p>This demo shows how to customize icons and graphics on a FeatureLayer.</p>
+            <p>Each bus stop is symbolzied with a custom icon representing the direction the bus is traveling and a popup.</p>
+        </div>
+      </div>
+    </div>
     <script>
       var map = L.map('map').setView([45.52751668442124, -122.67175197601318], 15);
 
