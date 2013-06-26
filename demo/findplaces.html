@@ -11,27 +11,6 @@
     <script src="../vendor/leaflet/dist/leaflet-src.js"></script>
     <script src="../dist/esri-leaflet.min.js"></script>
     <script src="geoservices.js"></script>
-
-    <style>
-      .control-container {
-        text-align: center;
-        margin: 10px;
-      }
-      .title {
-        margin: 10px 0 5px 0;
-        padding: 2px 10px;
-        font-size: 15px;
-        background-color: #b0de5c;
-      }
-      .btn {
-        width: 75px;
-        margin: 5px 5px 0px 5px;
-      }
-      .input {
-        width: 90%;
-        margin: 8px;
-      }
-    </style>
   </head>
   <body>
     <div id="map"></div>
@@ -47,12 +26,12 @@
     </div>
     <script>
       var map = L.map('map').setView([45.52751668442124, -122.67175197601318], 15);
-      // ArcGIS Online basemap - Streets, Imagery, ImageryLabels, Topographic, Gray, GrayLabels, NationalGeographic, Oceans...
+      // Add ArcGIS Online basemap
       var layer = L.esri.basemapLayer("Streets");
       map.addLayer(layer);
       var layerPlaces = new L.layerGroup();
       map.addLayer(layerPlaces);
-      // ArcGIS Online geocoder service to find places
+      // ArcGIS Online geocoder service - See https://github.com/Esri/geoservices-js
       var ArcGISGeoServices = new Geoservices.Geoservices({});
 
       function findPlaces() {
