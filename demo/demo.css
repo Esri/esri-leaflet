@@ -23,3 +23,41 @@ h3 {
   font-size: 16px;
   font-weight: normal;
 }
+/* Container Controls */
+.control-container {
+  text-align: center;
+  margin: 10px;
+  width: 200px;
+}
+.title {
+  margin: 10px 0 5px 0;
+  padding: 2px 10px;
+  font-size: 15px;
+  background-color: #b0de5c;
+}
+.btn {
+  width: 75px;
+  margin: 5px 5px 0px 5px;
+}
+.select {
+  width: 95%;
+  margin: 5px 0 5px 0;
+  padding: 0;
+}
+.textarea {
+  width: 100%;
+  margin: 5px 0 0;
+  padding: 0;
+}
+.input {
+  width: 90%;
+  margin: 8px;
+}
+.fs-props {
+  list-style-type: none;
+  list-style-position:inside;
+  margin:0;
+  padding:0;
+  overflow: scroll;
+  max-height: 400px;
+}
