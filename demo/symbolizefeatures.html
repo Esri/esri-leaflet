@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ArcGIS Feature Layer</title>
+    <link rel="stylesheet" href="../vendor/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="../src/esri-leaflet.css" />
+    <link rel="stylesheet" href="demo.css" />
+    <!--[if lte IE 8]>
+        <link rel="stylesheet" href="leaflet.ie.css" />
+    <![endif]-->
+    <script src="../vendor/leaflet/dist/leaflet-src.js"></script>
+    <script src="../dist/esri-leaflet.min.js"></script>
+
+    <style>
+      #about{
+        width: 400px;
+        position: fixed;
+        right: 20px;
+        top: 20px;
+        z-index: 1;
+        background: white;
+        padding: 1em;
+        box-shadow: 0 3px 14px rgba(0,0,0,0.4);
+        -webkit-border-radius: 4px;
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="about">
+      <h1>Custom Appearance for FeatureLayer</h1>
+      <p>This demo shows how to customize icons and graphics on a FeatureLayer.</p>
+      <p>Each bus stop is symbolzied with a custom icon representing the direction the bus is traveling and a popup.</p>
+    </div>
+    <div id="map"></div>
+    <script>
+      var map = L.map('map').setView([45.52751668442124, -122.67175197601318], 15);
+
+      var icons = {
+        north: L.icon({
+          iconUrl: 'images/bus-stop-north.png',
+          iconRetinaUrl: 'images/bus-stop-north@2x.png',
+          iconSize: [27, 31],
+          iconAnchor: [13.5, 17.5],
+          popupAnchor: [0, -11],
+        }),
+        south: L.icon({
+          iconUrl: 'images/bus-stop-south.png',
+          iconRetinaUrl: 'images/bus-stop-south@2x.png',
+          iconSize: [27, 31],
+          iconAnchor: [13.5, 13.5],
+          popupAnchor: [0, -11],
+        }),
+        east: L.icon({
+          iconUrl: 'images/bus-stop-east.png',
+          iconRetinaUrl: 'images/bus-stop-east@2x.png',
+          iconSize: [31, 27],
+          iconAnchor: [13.5, 17.5],
+          popupAnchor: [0, -11],
+        }),
+        west: L.icon({
+          iconUrl: 'images/bus-stop-west.png',
+          iconRetinaUrl: 'images/bus-stop-west@2x.png',
+          iconSize: [31, 27],
+          iconAnchor: [17.5, 13.5],
+          popupAnchor: [0, -11],
+        }),
+      }
+
+      // Add ArcGIS Online basemap
+      L.esri.basemapLayer("Streets").addTo(map);
+
+      L.esri.featureLayer("http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0", {
+        pointToLayer: function (geojson, latlng) {
+          return L.marker(latlng, {
+            icon: icons[geojson.properties.direction.toLowerCase()]
+          });
+        },
+        onEachFeature: function(geojson, layer){
+          console.log(geojson.properties);
+          layer.bindPopup("<h3>"+geojson.properties.stop_name+"</h3><p>Stop ID: "+geojson.properties.stop_id+"</p><p>"+geojson.properties.stop_desc+"</p>")
+        }
+      }).addTo(map);
+
+    </script>
+  </body>
+</html>

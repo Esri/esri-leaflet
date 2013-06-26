@@ -4,6 +4,7 @@
     <title>ArcGIS Find Address</title>
     <link rel="stylesheet" href="../vendor/leaflet/dist/leaflet.css" />
     <link rel="stylesheet" href="../src/esri-leaflet.css" />
+    <link rel="stylesheet" href="demo.css" />
     <!--[if lte IE 8]>
         <link rel="stylesheet" href="leaflet.ie.css" />
     <![endif]-->
@@ -12,13 +13,6 @@
     <script src="geoservices.js"></script>
 
     <style>
-      html, body, #map {
-        width: 100%;
-        height: 100%;
-        margin: 0;
-        font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
-        font-size: 12px;
-      }
       .control-container {
         text-align: center;
         margin: 10px;
@@ -46,7 +40,7 @@
       </div>
     </div>
     <script>
-      var map = L.map('map').setView([45.504915622222, -122.6719973576], 12);
+      var map = L.map('map').setView([45.52751668442124, -122.67175197601318], 15);
       // Add ArcGIS Online basemap - Streets, Imagery, ImageryLabels, Topographic, Gray, GrayLabels, NationalGeographic, Oceans...
       var layer = L.esri.basemapLayer("Streets");
       map.addLayer(layer);
