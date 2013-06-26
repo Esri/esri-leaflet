@@ -4,20 +4,14 @@
     <title>ArcGIS Feature Layer</title>
     <link rel="stylesheet" href="../vendor/leaflet/dist/leaflet.css" />
     <link rel="stylesheet" href="../src/esri-leaflet.css" />
+    <link rel="stylesheet" href="demo.css" />
     <!--[if lte IE 8]>
         <link rel="stylesheet" href="leaflet.ie.css" />
     <![endif]-->
     <script src="../vendor/leaflet/dist/leaflet-src.js"></script>
     <script src="../dist/esri-leaflet.min.js"></script>
-    
+
     <style>
-      html, body, #map {
-        width: 100%;
-        height: 100%;
-        margin: 0;
-        font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
-        font-size: 12px;
-      }
       .control-container {
         text-align: center;
         margin: 10px;
@@ -51,9 +45,9 @@
       </div>
     </div>
     <script>
-      map = L.map('map').setView([45.533915622222, -122.61919973576], 16);
+      var map = L.map('map').setView([45.52751668442124, -122.67175197601318], 15);
 
-      // Add ArcGIS Online basemap
+      // Add ArcGIS Online Basemap
       L.esri.basemapLayer("Topographic").addTo(map);
 
       var layerFS;
