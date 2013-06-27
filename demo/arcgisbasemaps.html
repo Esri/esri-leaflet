@@ -2,6 +2,7 @@
 <html>
   <head>
     <title>ArcGIS Basemaps</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="../vendor/leaflet/dist/leaflet.css" />
     <link rel="stylesheet" href="../src/esri-leaflet.css" />
     <link rel="stylesheet" href="demo.css" />
@@ -10,22 +11,30 @@
     <![endif]-->
     <script src="../vendor/leaflet/dist/leaflet-src.js"></script>
     <script src="../dist/esri-leaflet.min.js"></script>
-    <style>
-      .btn {
-        width: 125px;
-      }
-    </style>
+    <script src="demo.js"></script>
   </head>
   <body>
     <div id="map"></div>
+    <div class="leaflet-top leaflet-right">
+      <div class="leaflet-control-layers leaflet-control">
+        <div class="title">ArcGIS Basemaps<div class="toggle close" id="toggle" onclick="showControls();"></div></div>
+        <div class="control-container hide" id="controlContainer">
+          <button class="btn wide" onclick="setBasemap('Streets');">Streets</button></br>
+          <button class="btn wide" onclick="setBasemap('Imagery');">Imagery</button></br>
+          <button class="btn wide" onclick="setBasemap('Gray');">Gray</button></br>
+          <button class="btn wide" onclick="setBasemap('Topographic');">Topographic</button></br>
+          <button class="btn wide" onclick="setBasemap('NationalGeographic');">National Geographic</button></br>
+          <button class="btn wide" onclick="setBasemap('Oceans');">Oceans</button>
+        </div>
+      </div>
+    </div>
     <script>
       var map = L.map('map').setView([45.52751668442124, -122.67175197601318], 15);
 
       // Add ArcGIS Online Basemap - See http://resources.arcgis.com/en/help/arcgis-rest-api/
       var layer = L.esri.basemapLayer("Topographic");
-      var layerLabels;
-
       map.addLayer(layer);
+      var layerLabels;
 
       function setBasemap(mapType) {
         // Add basemap tile layer
@@ -44,19 +53,5 @@
         }
       }
     </script>
-    <div class="leaflet-top leaflet-right">
-      <div class="leaflet-control-layers leaflet-control">
-        <div class="control-container">
-          <div class="title">ArcGIS Basemaps</div>
-          <button class="btn" onclick="setBasemap('Streets');">Streets</button></br>
-          <button class="btn" onclick="setBasemap('Imagery');">Imagery</button></br>
-          <button class="btn" onclick="setBasemap('Gray');">Gray</button></br>
-          <button class="btn" onclick="setBasemap('Topographic');">Topographic</button></br>
-          <button class="btn" onclick="setBasemap('NationalGeographic');">National Geographic</button></br>
-          <button class="btn" onclick="setBasemap('Oceans');">Oceans</button>
-        </div>
-      </div>
-    </div>
-
   </body>
 </html>

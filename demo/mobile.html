@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Mobile Map</title>
+    <title>Your Geolocation Map</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="../vendor/leaflet/dist/leaflet.css" />
     <link rel="stylesheet" href="../src/esri-leaflet.css" />
@@ -15,7 +15,6 @@
   <body>
     <div id="map"></div>
     <script>
-
       var map = L.map('map');
       L.esri.basemapLayer("Streets").addTo(map);
 

@@ -2,6 +2,7 @@
 <html>
   <head>
     <title>ArcGIS Feature Layer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="../vendor/leaflet/dist/leaflet.css" />
     <link rel="stylesheet" href="../src/esri-leaflet.css" />
     <link rel="stylesheet" href="demo.css" />
@@ -10,13 +11,14 @@
     <![endif]-->
     <script src="../vendor/leaflet/dist/leaflet-src.js"></script>
     <script src="../dist/esri-leaflet.min.js"></script>
+    <script src="demo.js"></script>
   </head>
   <body>
     <div id="map"></div>
     <div class="leaflet-top leaflet-right">
       <div class="leaflet-control-layers leaflet-control">
-        <div class="control-container">
-        <div class="title">ArcGIS Feature Layer</div>
+        <div class="title">ArcGIS Feature Layer<div class="toggle close" id="toggle" onclick="showControls();"></div></div>
+        <div class="control-container hide" id="controlContainer">
           <textarea class="textarea" id="endpoint" rows="3" type="text" value="http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0" placeholder="http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0"/>http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0</textarea></br>
           <button class="btn" id="btnAdd" onclick="addFeatureLayer();">Add</button><button class="btn" id="btnClear" onclick="removeFeatureLayer();">Clear</button>
         </div>
