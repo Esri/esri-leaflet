@@ -2,14 +2,14 @@
 <html>
   <head>
     <title>Symbolize Line Features</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="../vendor/leaflet/dist/leaflet.css" />
     <link rel="stylesheet" href="../src/esri-leaflet.css" />
     <link rel="stylesheet" href="demo.css" />
-    <!--[if lte IE 8]>
-        <link rel="stylesheet" href="leaflet.ie.css" />
-    <![endif]-->
+    <!--[if lte IE 8]><link rel="stylesheet" href="leaflet.ie.css" /><![endif]-->
     <script src="../vendor/leaflet/dist/leaflet-src.js"></script>
     <script src="../dist/esri-leaflet.min.js"></script>
+    <script src="demo.js"></script>
     <style>
       #legend {
         text-align: left;
@@ -20,10 +20,10 @@
     <div id="map"></div>
     <div class="leaflet-top leaflet-right">
       <div class="leaflet-control-layers leaflet-control">
-        <div class="control-container">
-          <div class="title">Symbolize Line Features</div>
-            <p>Bike Routes</p>
-            <div id="legend"></div>
+        <div class="title">Symbolize Line Features<div class="toggle close" id="toggle" onclick="showControls();"></div></div>
+        <div class="control-container hide" id="controlContainer">
+          <p>Bike Routes</p>
+          <div id="legend"></div>
         </div>
       </div>
     </div>
@@ -93,6 +93,8 @@
           addLegendItem(layer);
         }
       }).addTo(map);
+      
+      showControls();
 
     </script>
   </body>

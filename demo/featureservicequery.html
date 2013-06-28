@@ -2,29 +2,29 @@
 <html>
   <head>
     <title>Feature Service Query</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="../vendor/leaflet/dist/leaflet.css" />
     <link rel="stylesheet" href="../src/esri-leaflet.css" />
     <link rel="stylesheet" href="demo.css" />
-    <!--[if lte IE 8]>
-        <link rel="stylesheet" href="leaflet.ie.css" />
-    <![endif]-->
+    <!--[if lte IE 8]><link rel="stylesheet" href="leaflet.ie.css" /><![endif]-->
     <script src="../vendor/leaflet/dist/leaflet-src.js"></script>
     <script src="../dist/esri-leaflet.min.js"></script>
     <script src="geoservices.js"></script>
+    <script src="demo.js"></script>
   </head>
   <body>
     <div id="map"></div>
     <div class="leaflet-top leaflet-right">
       <div class="leaflet-control-layers leaflet-control">
-        <div class="control-container">
-          <div class="title">Feature Service Query</div>
+        <div class="title">Feature Service Query<div class="toggle close" id="toggle" onclick="showControls();"></div></div>
+        <div class="control-container hide" id="controlContainer">
           <select class="select" id="query" onchange="featureServiceQuery();">
             <option>direction = 'North'</option>
             <option>direction = 'East'</option>
             <option>direction = 'South'</option>
             <option>direction = 'West'</option>
           </select>
-          <label><input id="useMapExtent" type="checkbox" checked/>Get new features on pan</input></label>
+          <label class="label"><input id="useMapExtent" type="checkbox" checked/>Get new features on pan</input></label>
           <button class="btn" id="btnQuery" onclick="featureServiceQuery();">Go</button><button class="btn" id="btnClear" onclick="clearFeatures();">Clear</button>
         </div>
       </div>
@@ -37,6 +37,7 @@
       // Add layer for feature service query features
       var layerGroup = new L.layerGroup();
       map.addLayer(layerGroup);
+
       // Add new features when user pans map
       map.on("dragend", featureServiceQuery);
 
@@ -74,6 +75,9 @@
           popupAnchor: [0, -11],
         }),
       }
+
+      // Query on load
+      featureServiceQuery(true);
 
       function featureServiceQuery(refresh) {
         if (refresh && !document.getElementById('useMapExtent').checked) {
