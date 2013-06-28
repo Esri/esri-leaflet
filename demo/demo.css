@@ -29,21 +29,14 @@ h3 {
   width: 200px;
   font-size: 15px;
   text-align: center;
-  background-color: #b0de5c;
 }
-.toggle {
-  width: 12px;
-  height: 12px;
-  float: right;
-  margin-top: 3px;
+.contract {
+  background:url(images/contract.png) #b0de5c no-repeat 98% 50%;
+  background-size: 14px 14px;
 }
-.open {
-  background:url(images/contract.png) no-repeat right center;
-  background-size: cover;
-}
-.close {
-  background:url(images/expand.png) no-repeat right center;
-  background-size: cover;
+.expand {
+  background:url(images/expand.png) #b0de5c no-repeat 98% 50%;
+  background-size: 14px 14px;
 }
 .control-container {
   display: block;

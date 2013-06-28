@@ -16,7 +16,7 @@
     <div id="map"></div>
     <div class="leaflet-top leaflet-right">
       <div class="leaflet-control-layers leaflet-control">
-        <div class="title">Feature Service Info<div class="toggle open" id="toggle" onclick="showControls();"></div></div>
+        <div class="title contract" id="title" onclick="showControls();">Feature Service Info</div>
         <div class="control-container show" id="controlContainer">
           <div>
             <ul class="fs-props" id="fsProps"></ul>
@@ -29,7 +29,7 @@
 
       // Add ArcGIS Online basemap
       L.esri.basemapLayer("Topographic").addTo(map);
-      
+
       // Add ArcGIS feature layer
       var featureServiceUrl = "http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0";
       L.esri.featureLayer(featureServiceUrl,{}).addTo(map);
