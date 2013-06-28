@@ -1,11 +1,11 @@
 function showControls() {
-  var b = document.getElementById("toggle");
-  var e = document.getElementById("controlContainer"); 
-  if (e .className == "control-container") {
-    b.className = "toggle close"
-    e.className = "control-container hide";
+  var t = document.getElementById("title");
+  var c = document.getElementById("controlContainer"); 
+  if (c .className == "control-container") {
+    t.className = "title expand"
+    c.className = "control-container hide";
   } else {
-    b.className = "toggle open"
-    e.className = "control-container";
+    t.className = "title contract"
+    c.className = "control-container";
   }
 }

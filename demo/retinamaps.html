@@ -15,7 +15,7 @@
     <div id="map"></div>
     <div class="leaflet-top leaflet-right">
       <div class="leaflet-control-layers leaflet-control">
-        <div class="title">ArcGIS Retina Map<div class="toggle close" id="toggle" onclick="showControls();"></div></div>
+        <div class="title contract" id="title" onclick="showControls();">ArcGIS Retina Map</div>
         <div class="control-container hide" id="controlContainer">
           <p>Leaflet supports a <code>detectRetina</code> option on tile layers that will shrink the tile size and load more tiles but give the appearance of higher resolution maps.</p>
           <p>This map is created by stacking the <a href="http://www.arcgis.com/home/webmap/viewer.html?webmap=8b3d38c0819547faa83f7b7aca80bd76">gray basemap</a>, <a href="http://server.arcgisonline.com/ArcGIS/rest/services/Demographics/USA_Median_Household_Income/MapServer">median household income map</a> and the <a href="http://www.arcgis.com/home/webmap/viewer.html?webmap=8b3d38c0819547faa83f7b7aca80bd76">map labels for the gray map</a>. The 2 basemap layers are loaded with <code>detectRetina:true</code> while the labels are not, giving the appearance of a high resolution basemap.</p>
