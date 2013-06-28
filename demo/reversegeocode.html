@@ -6,9 +6,7 @@
     <link rel="stylesheet" href="../vendor/leaflet/dist/leaflet.css" />
     <link rel="stylesheet" href="../src/esri-leaflet.css" />
     <link rel="stylesheet" href="demo.css" />
-    <!--[if lte IE 8]>
-        <link rel="stylesheet" href="leaflet.ie.css" />
-    <![endif]-->
+    <!--[if lte IE 8]><link rel="stylesheet" href="leaflet.ie.css" /><![endif]-->
     <script src="../vendor/leaflet/dist/leaflet-src.js"></script>
     <script src="../dist/esri-leaflet.min.js"></script>
     <script src="geoservices.js"></script>
@@ -18,8 +16,8 @@
     <div id="map"></div>
     <div class="leaflet-top leaflet-right">
       <div class="leaflet-control-layers leaflet-control">
-        <div class="title">Reverse Geocode<div class="toggle close" id="toggle" onclick="showControls();"></div></div>
-        <div class="control-container hide" id="controlContainer">
+        <div class="title">Reverse Geocode<div class="toggle open" id="toggle" onclick="showControls();"></div></div>
+        <div class="control-container show" id="controlContainer">
           <p>Click on the map to reverse geocode.</p>
           <button class="btn" id="btnClear" onclick="clearAddresses();">Clear</button>
         </div>

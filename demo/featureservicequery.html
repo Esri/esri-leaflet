@@ -6,9 +6,7 @@
     <link rel="stylesheet" href="../vendor/leaflet/dist/leaflet.css" />
     <link rel="stylesheet" href="../src/esri-leaflet.css" />
     <link rel="stylesheet" href="demo.css" />
-    <!--[if lte IE 8]>
-        <link rel="stylesheet" href="leaflet.ie.css" />
-    <![endif]-->
+    <!--[if lte IE 8]><link rel="stylesheet" href="leaflet.ie.css" /><![endif]-->
     <script src="../vendor/leaflet/dist/leaflet-src.js"></script>
     <script src="../dist/esri-leaflet.min.js"></script>
     <script src="geoservices.js"></script>
@@ -39,6 +37,7 @@
       // Add layer for feature service query features
       var layerGroup = new L.layerGroup();
       map.addLayer(layerGroup);
+
       // Add new features when user pans map
       map.on("dragend", featureServiceQuery);
 
@@ -76,6 +75,9 @@
           popupAnchor: [0, -11],
         }),
       }
+
+      // Query on load
+      featureServiceQuery(true);
 
       function featureServiceQuery(refresh) {
         if (refresh && !document.getElementById('useMapExtent').checked) {
