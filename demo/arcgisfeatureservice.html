@@ -15,7 +15,7 @@
     <div id="map"></div>
     <div class="leaflet-top leaflet-right">
       <div class="leaflet-control-layers leaflet-control">
-        <div class="title">ArcGIS Feature Layer<div class="toggle close" id="toggle" onclick="showControls();"></div></div>
+        <div class="title expand" id="title" onclick="showControls();">ArcGIS Feature Layer</div>
         <div class="control-container hide" id="controlContainer">
           <textarea class="textarea" id="endpoint" rows="3" type="text" value="http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0" placeholder="http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0"/>http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0</textarea></br>
           <button class="btn" id="btnAdd" onclick="addFeatureLayer();">Add</button><button class="btn" id="btnClear" onclick="removeFeatureLayer();">Clear</button>
@@ -24,7 +24,7 @@
     </div>
     <script>
       var map = L.map('map').setView([45.52751668442124, -122.67175197601318], 15);
-      
+
       // Add ArcGIS Online Basemap
       L.esri.basemapLayer("Topographic").addTo(map);
 

@@ -20,7 +20,7 @@
     <div id="map"></div>
     <div class="leaflet-top leaflet-right">
       <div class="leaflet-control-layers leaflet-control">
-        <div class="title">Symbolize Line Features<div class="toggle close" id="toggle" onclick="showControls();"></div></div>
+        <div class="title contract" id="title" onclick="showControls();">Symbolize Line Features</div>
         <div class="control-container hide" id="controlContainer">
           <p>Bike Routes</p>
           <div id="legend"></div>
@@ -93,7 +93,7 @@
           addLegendItem(layer);
         }
       }).addTo(map);
-      
+
       showControls();
 
     </script>
