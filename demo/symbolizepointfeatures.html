@@ -2,24 +2,24 @@
 <html>
   <head>
     <title>Symbolize Point Features</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="../vendor/leaflet/dist/leaflet.css" />
     <link rel="stylesheet" href="../src/esri-leaflet.css" />
     <link rel="stylesheet" href="demo.css" />
-    <!--[if lte IE 8]>
-        <link rel="stylesheet" href="leaflet.ie.css" />
-    <![endif]-->
+    <!--[if lte IE 8]><link rel="stylesheet" href="leaflet.ie.css" /><![endif]-->
     <script src="../vendor/leaflet/dist/leaflet-src.js"></script>
     <script src="../dist/esri-leaflet.min.js"></script>
+    <script src="demo.js"></script>
   </head>
   <body>
     <div id="map"></div>
     <div class="leaflet-top leaflet-right">
       <div class="leaflet-control-layers leaflet-control">
-        <div class="control-container">
-          <div class="title">Symbolize Point Features</div>
-            <p>This demo shows how to customize icons and graphics on a FeatureLayer.</p>
-            <p>Each bus stop is symbolzied with a custom icon representing the direction the bus is traveling and a popup.</p>
-        </div>
+       <div class="title">Symbolize Point Features<div class="toggle close" id="toggle" onclick="showControls();"></div></div>
+      <div class="control-container hide" id="controlContainer">
+        <p>This demo shows how to customize icons and graphics on a FeatureLayer.</p>
+        <p>Each bus stop is symbolzied with a custom icon representing the direction the bus is traveling and a popup.</p>
+      </div>
       </div>
     </div>
     <script>
@@ -66,7 +66,6 @@
           });
         },
         onEachFeature: function(geojson, layer){
-          console.log(geojson.properties);
           layer.bindPopup("<h3>"+geojson.properties.stop_name+"</h3><p>Stop ID: "+geojson.properties.stop_id+"</p><p>"+geojson.properties.stop_desc+"</p>")
         }
       }).addTo(map);
