@@ -2,57 +2,34 @@
 <html>
   <head>
     <title>Feature Service Query</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="../vendor/leaflet/dist/leaflet.css" />
     <link rel="stylesheet" href="../src/esri-leaflet.css" />
     <link rel="stylesheet" href="demo.css" />
-    <!--[if lte IE 8]>
-        <link rel="stylesheet" href="leaflet.ie.css" />
-    <![endif]-->
+    <!--[if lte IE 8]><link rel="stylesheet" href="leaflet.ie.css" /><![endif]-->
     <script src="../vendor/leaflet/dist/leaflet-src.js"></script>
     <script src="../dist/esri-leaflet.min.js"></script>
     <script src="geoservices.js"></script>
-
-    <style>
-      .control-container {
-        text-align: center;
-        margin: 10px;
-      }
-      .title {
-        margin: 10px 0 5px 0;
-        padding: 2px 10px;
-        font-size: 15px;
-        background-color: #b0de5c;
-      }
-      .btn {
-        width: 75px;
-        margin: 5px 5px 0px 5px;
-      }
-      .select {
-        width: 95%;
-        margin: 5px 0 5px 0;
-        padding: 0;
-      }
-    </style>
+    <script src="demo.js"></script>
   </head>
   <body>
     <div id="map"></div>
     <div class="leaflet-top leaflet-right">
       <div class="leaflet-control-layers leaflet-control">
-        <div class="control-container">
-          <div class="title">Feature Service Query</div>
+        <div class="title expand" id="title" onclick="showControls();">Feature Service Query</div>
+        <div class="control-container hide" id="controlContainer">
           <select class="select" id="query" onchange="featureServiceQuery();">
             <option>direction = 'North'</option>
             <option>direction = 'East'</option>
             <option>direction = 'South'</option>
             <option>direction = 'West'</option>
           </select>
-          <label><input id="useMapExtent" type="checkbox" checked/>Get new features on pan</input></label>
+          <label class="label"><input id="useMapExtent" type="checkbox" checked/>Get new features on pan</input></label>
           <button class="btn" id="btnQuery" onclick="featureServiceQuery();">Go</button><button class="btn" id="btnClear" onclick="clearFeatures();">Clear</button>
         </div>
       </div>
     </div>
     <script>
-      // Create the map and add layers
       var map = L.map('map').setView([45.52751668442124, -122.67175197601318], 15);
 
       // Add ArcGIS Online basemap
@@ -60,12 +37,47 @@
       // Add layer for feature service query features
       var layerGroup = new L.layerGroup();
       map.addLayer(layerGroup);
+
       // Add new features when user pans map
       map.on("dragend", featureServiceQuery);
 
-      // Access ArcGIS Online feature service
+      // Access ArcGIS Online feature service - See https://github.com/Esri/geoservices-js
       var ArcGISGeoServices = new Geoservices.Geoservices({});
       var featureServiceUrl =  "http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0";
+
+      var icons = {
+        north: L.icon({
+          iconUrl: 'images/bus-stop-north.png',
+          iconRetinaUrl: 'images/bus-stop-north@2x.png',
+          iconSize: [27, 31],
+          iconAnchor: [13.5, 17.5],
+          popupAnchor: [0, -11],
+        }),
+        south: L.icon({
+          iconUrl: 'images/bus-stop-south.png',
+          iconRetinaUrl: 'images/bus-stop-south@2x.png',
+          iconSize: [27, 31],
+          iconAnchor: [13.5, 13.5],
+          popupAnchor: [0, -11],
+        }),
+        east: L.icon({
+          iconUrl: 'images/bus-stop-east.png',
+          iconRetinaUrl: 'images/bus-stop-east@2x.png',
+          iconSize: [31, 27],
+          iconAnchor: [13.5, 17.5],
+          popupAnchor: [0, -11],
+        }),
+        west: L.icon({
+          iconUrl: 'images/bus-stop-west.png',
+          iconRetinaUrl: 'images/bus-stop-west@2x.png',
+          iconSize: [31, 27],
+          iconAnchor: [17.5, 13.5],
+          popupAnchor: [0, -11],
+        }),
+      }
+
+      // Query on load
+      featureServiceQuery(true);
 
       function featureServiceQuery(refresh) {
         if (refresh && !document.getElementById('useMapExtent').checked) {
@@ -76,7 +88,7 @@
             var queryOptions = document.getElementById("query");
             var query = queryOptions.options[queryOptions.selectedIndex].text;
             var queryEnvelope = JSON.stringify(L.esri.Util.boundsToExtent(map.getBounds()));
-            // Build query parameters - See http://resources.arcgis.com/en/help/arcgis-rest-api/#/Query_Feature_Service_Layer/02r3000000r1000000/
+            // Build query parameters - See http://resources.arcgis.com/en/help/arcgis-rest-api/
             var params = {
               f:"json",
               where: query,
@@ -96,7 +108,6 @@
                   var feature = results.features[i];
                   // Set symbols and popup
                   layerGroup.addLayer(L.marker([feature.geometry.y, feature.geometry.x], {icon: getIcon(query)}).bindPopup(feature.attributes.stop_desc));
-                  //layerGroup.addLayer(L.marker([feature.geometry.y, feature.geometry.x]).bindPopup(feature.attributes.stop_desc));
                 }
               } else {
                 console.log(err);
@@ -115,35 +126,20 @@
       }
 
       function getIcon(queryId) {
-        var icon, anchor, popup;
         switch (queryId) {
           case "direction = 'North'":
-            icon = 'images/arrow-north.png';
-            anchor = [18, 0];
-            popup = [0,0];
+            return icons.north;
             break;
           case "direction = 'East'":
-            icon = 'images/arrow-east.png';
-            anchor = [36, 18];
-            popup = [-18,-18];
+            return icons.east;
             break;
           case "direction = 'South'":
-            icon = 'images/arrow-south.png';
-            anchor = [18, -36];
-            popup = [-1,36];
+            return icons.south;
             break;
           case "direction = 'West'":
-            icon = 'images/arrow-west.png';
-            anchor = [0, 18];
-            popup = [18,-18];
+            return icons.west;
             break;
         }
-        return L.icon({
-          iconUrl: icon,
-          iconSize:     [37, 36],
-          iconAnchor:   anchor,
-          popupAnchor:  popup
-        });
       }
 
     </script>

@@ -1,38 +1,27 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>ArcGIS Feature Layer</title>
+    <title>Symbolize Point Features</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="../vendor/leaflet/dist/leaflet.css" />
     <link rel="stylesheet" href="../src/esri-leaflet.css" />
     <link rel="stylesheet" href="demo.css" />
-    <!--[if lte IE 8]>
-        <link rel="stylesheet" href="leaflet.ie.css" />
-    <![endif]-->
+    <!--[if lte IE 8]><link rel="stylesheet" href="leaflet.ie.css" /><![endif]-->
     <script src="../vendor/leaflet/dist/leaflet-src.js"></script>
     <script src="../dist/esri-leaflet.min.js"></script>
-
-    <style>
-      #about{
-        width: 400px;
-        position: fixed;
-        right: 20px;
-        top: 20px;
-        z-index: 1;
-        background: white;
-        padding: 1em;
-        box-shadow: 0 3px 14px rgba(0,0,0,0.4);
-        -webkit-border-radius: 4px;
-        border-radius: 4px;
-      }
-    </style>
+    <script src="demo.js"></script>
   </head>
   <body>
-    <div id="about">
-      <h1>Custom Appearance for FeatureLayer</h1>
-      <p>This demo shows how to customize icons and graphics on a FeatureLayer.</p>
-      <p>Each bus stop is symbolzied with a custom icon representing the direction the bus is traveling and a popup.</p>
-    </div>
     <div id="map"></div>
+    <div class="leaflet-top leaflet-right">
+      <div class="leaflet-control-layers leaflet-control">
+      <div class="title contract" id="title" onclick="showControls();">Symbolize Point Features</div>
+      <div class="control-container hide" id="controlContainer">
+        <p>This demo shows how to customize icons and graphics on a FeatureLayer.</p>
+        <p>Each bus stop is symbolzied with a custom icon representing the direction the bus is traveling and a popup.</p>
+      </div>
+      </div>
+    </div>
     <script>
       var map = L.map('map').setView([45.52751668442124, -122.67175197601318], 15);
 
@@ -77,7 +66,6 @@
           });
         },
         onEachFeature: function(geojson, layer){
-          console.log(geojson.properties);
           layer.bindPopup("<h3>"+geojson.properties.stop_name+"</h3><p>Stop ID: "+geojson.properties.stop_id+"</p><p>"+geojson.properties.stop_desc+"</p>")
         }
       }).addTo(map);

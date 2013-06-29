@@ -2,43 +2,21 @@
 <html>
   <head>
     <title>ArcGIS Feature Layer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="../vendor/leaflet/dist/leaflet.css" />
     <link rel="stylesheet" href="../src/esri-leaflet.css" />
     <link rel="stylesheet" href="demo.css" />
-    <!--[if lte IE 8]>
-        <link rel="stylesheet" href="leaflet.ie.css" />
-    <![endif]-->
+    <!--[if lte IE 8]><link rel="stylesheet" href="leaflet.ie.css" /><![endif]-->
     <script src="../vendor/leaflet/dist/leaflet-src.js"></script>
     <script src="../dist/esri-leaflet.min.js"></script>
-
-    <style>
-      .control-container {
-        text-align: center;
-        margin: 10px;
-      }
-      .title {
-        margin: 10px 0 5px 0;
-        padding: 2px 10px;
-        font-size: 15px;
-        background-color: #b0de5c;
-      }
-      .btn {
-        width: 100px;
-        margin: 5px 5px 0px 5px;
-      }
-      .textarea {
-        width: 100%;
-        margin: 5px 0 0;
-        padding: 0;
-      }
-    </style>
+    <script src="demo.js"></script>
   </head>
   <body>
     <div id="map"></div>
     <div class="leaflet-top leaflet-right">
       <div class="leaflet-control-layers leaflet-control">
-        <div class="control-container">
-        <div class="title">ArcGIS Feature Layer</div>
+        <div class="title expand" id="title" onclick="showControls();">ArcGIS Feature Layer</div>
+        <div class="control-container hide" id="controlContainer">
           <textarea class="textarea" id="endpoint" rows="3" type="text" value="http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0" placeholder="http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0"/>http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0</textarea></br>
           <button class="btn" id="btnAdd" onclick="addFeatureLayer();">Add</button><button class="btn" id="btnClear" onclick="removeFeatureLayer();">Clear</button>
         </div>
@@ -51,16 +29,17 @@
       L.esri.basemapLayer("Topographic").addTo(map);
 
       var layerFS;
+      addFeatureLayer();
 
       function addFeatureLayer() {
         // Add ArcGIS Online feature service
         if (!layerFS) {
           var featureServiceUrl = document.getElementById("endpoint").value;
-          layerFS = L.esri.featureLayer(featureServiceUrl,{});
-          layerFS.on("click", function (e) {
-            e.layer.bindPopup(e.layer.feature.properties.stop_desc);
-          });
-          layerFS.addTo(map);
+          layerFS = L.esri.featureLayer(featureServiceUrl, {
+            onEachFeature: function(geojson, layer){
+              layer.bindPopup("<h3>"+geojson.properties.stop_name+"</h3><p>Stop ID: "+geojson.properties.stop_id+"</p><p>"+geojson.properties.stop_desc+"</p>")
+            }
+          }).addTo(map);
         }
       }
 
