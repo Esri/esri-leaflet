@@ -9,7 +9,7 @@ The goal of Esri Leaflet is not to replace the [ArcGIS API for JavaScript](https
 ### Demos
 There are [loads of demos](http://esri.github.io/esri-leaflet/demo/) showing the features of Esri Leaflet as well as how it might integrate with [geoservices-js](https://github.com/Esri/geoservices-js) and [Terraformer](https://github.com/esri/Terraformer) libraries. [Check out the demos.](http://esri.github.io/esri-leaflet/demo/)
 
-```
+```html
 <!DOCTYPE html>
 <html>
   <head>
@@ -30,7 +30,7 @@ There are [loads of demos](http://esri.github.io/esri-leaflet/demo/) showing the
 ```
 
 ### Basemaps
-You can quickly access ArcGIS basemaps with the `L.esri.BasemapLayer(key, options)` layer. The `key` parameter should be one of the following keys.
+You can quickly access ArcGIS base maps with the `L.esri.BasemapLayer(key, options)` layer. The `key` parameter should be one of the following keys.
 
 * Streets
 * Topographic
@@ -108,10 +108,10 @@ L.esri.basemapLayer("GrayLabels", {
 ```
 
 ### Limitations
-* All services that esri leaflet access must be publicly accessible. Support for private services will be included in a future release.
+* All services that Esri Leaflet access must be publicly accessible. Support for private services will be included in a future release.
 * MapServices that you wish to use for `L.esri.TiledMapLayer` must be published in [Web Mercator](http://spatialreference.org/ref/sr-org/6928/).
 * MapServices that you wish to use for `L.esri.DynamicMapLayer` must be published in [Web Mercator](http://spatialreference.org/ref/sr-org/6928/).
-* FeatureServices must be published in [Web Mercator](http://spatialreference.org/ref/sr-org/6928/) or [Geographic](http://spatialreference.org/ref/epsg/4326/) spatial references
+* FeatureServices must be published in [Web Mercator](http://spatialreference.org/ref/sr-org/6928/) or [Geographicc](http://spatialreference.org/ref/epsg/4326/) spatial references
 
 ### Dependencies
 * [Terraformer](https://github.com/esri/Terraformer) - base library for other dependancies
