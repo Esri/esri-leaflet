@@ -140,42 +140,31 @@ L.esri.BasemapLayer = L.TileLayer.extend({
   },
   getAttributionData: function(url){
     this.attributionBoundingBoxes = [];
-    var httpRequest;
-    if (window.XMLHttpRequest) {
-      httpRequest = new XMLHttpRequest();
-    } else if (window.ActiveXObject) {
-      httpRequest = new ActiveXObject("Microsoft.XMLHTTP");
-    }
-    httpRequest.onreadystatechange = L.bind(this.processAttributionData, this);
-    httpRequest.open('GET', url, true);
-    httpRequest.send(null);
+    L.esri.get(url, {}, L.bind(this.processAttributionData, this));
   },
-  processAttributionData: function(httpRequest){
-    if (httpRequest.target.readyState === 4 && httpRequest.target.status === 200) {
-      var attributionData = JSON.parse(httpRequest.target.responseText);
-      for (var c = 0; c < attributionData.contributors.length; c++) {
-        var contributor = attributionData.contributors[c];
-        for (var i = 0; i < contributor.coverageAreas.length; i++) {
-          var coverageArea = contributor.coverageAreas[i];
-          var southWest = new L.LatLng(coverageArea.bbox[0], coverageArea.bbox[1]);
-          var northEast = new L.LatLng(coverageArea.bbox[2], coverageArea.bbox[3]);
-          this.attributionBoundingBoxes.push({
-            attribution: contributor.attribution,
-            score: coverageArea.score,
-            bounds: new L.LatLngBounds(southWest, northEast),
-            minZoom: coverageArea.zoomMin,
-            maxZoom: coverageArea.zoomMax
-          });
-        }
+  processAttributionData: function(attributionData){
+    for (var c = 0; c < attributionData.contributors.length; c++) {
+      var contributor = attributionData.contributors[c];
+      for (var i = 0; i < contributor.coverageAreas.length; i++) {
+        var coverageArea = contributor.coverageAreas[i];
+        var southWest = new L.LatLng(coverageArea.bbox[0], coverageArea.bbox[1]);
+        var northEast = new L.LatLng(coverageArea.bbox[2], coverageArea.bbox[3]);
+        this.attributionBoundingBoxes.push({
+          attribution: contributor.attribution,
+          score: coverageArea.score,
+          bounds: new L.LatLngBounds(southWest, northEast),
+          minZoom: coverageArea.zoomMin,
+          maxZoom: coverageArea.zoomMax
+        });
       }
-      this.attributionBoundingBoxes.sort(function(a,b){
-        if (a.score < b.score){ return -1; }
-        if (a.score > b.score){ return 1; }
-        return 0;
-      });
-      if(this.bounds){
-        this.updateMapAttribution();
-      }
+    }
+    this.attributionBoundingBoxes.sort(function(a,b){
+      if (a.score < b.score){ return -1; }
+      if (a.score > b.score){ return 1; }
+      return 0;
+    });
+    if(this.bounds){
+      this.updateMapAttribution();
     }
   },
   getAttributionSpan:function(){
