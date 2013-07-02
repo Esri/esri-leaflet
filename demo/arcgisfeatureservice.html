@@ -13,13 +13,14 @@
   </head>
   <body>
     <div id="map"></div>
-    <a href="https://github.com/esri/esri-leaflet"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png" alt="Fork me on GitHub"></a>
+    <a href="https://github.com/esri/esri-leaflet"><img style="z-index: 1000; position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png" alt="Fork me on GitHub"></a>
 
     <div class="demo-controls">
       <h1 class="title expand" id="title" onclick="showControls();">ArcGIS Feature Layer</h1>
       <div class="control-container hide" id="controlContainer">
         <textarea class="textarea" id="endpoint" rows="3" type="text" value="http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0" placeholder="http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0"/>http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0</textarea></br>
-        <button class="btn" id="btnAdd" onclick="addFeatureLayer();">Add</button><button class="btn" id="btnClear" onclick="removeFeatureLayer();">Clear</button>
+        <button class="btn" id="btnAdd" onclick="addFeatureLayer();">Add</button>
+        <button class="btn light" id="btnClear" onclick="removeFeatureLayer();">Clear</button>
       </div>
     </div>
 
