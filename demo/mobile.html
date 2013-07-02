@@ -3,17 +3,20 @@
   <head>
     <title>Your Geolocation Map</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link rel="stylesheet" href="../vendor/leaflet/dist/leaflet.css" />
-    <link rel="stylesheet" href="../src/esri-leaflet.css" />
+    <link rel="stylesheet" href="vendor/leaflet/leaflet.css" />
+    <link rel="stylesheet" href="../dist/esri-leaflet.min.css" />
     <link rel="stylesheet" href="demo.css" />
-    <<!--[if lte IE 8]><link rel="stylesheet" href="leaflet.ie.css" /><![endif]-->
-    <script src="../vendor/leaflet/dist/leaflet-src.js"></script>
+    <!--[if lte IE 8]><link rel="stylesheet" href="leaflet.ie.css" /><![endif]-->
+    <script src="vendor/leaflet/leaflet-src.js"></script>
     <script src="../dist/esri-leaflet.min.js"></script>
+    <script src="vendor/geoservices/geoservices.js"></script>
   </head>
   <body>
     <div id="map"></div>
+    <a href="https://github.com/esri/esri-leaflet"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png" alt="Fork me on GitHub"></a>
     <script>
       var map = L.map('map');
+      // ArcGIS Online Basemaps - Streets, Topographic, Gray, Gray Labels, Ocean, NationalGeographic, Imagery, ImageryLabels
       L.esri.basemapLayer("Streets").addTo(map);
 
       function onLocationFound(e) {
