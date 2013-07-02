@@ -71,51 +71,6 @@ function authenticate (username, password, options, callback) {
   this.requestHandler.post(url, data, internalCallback);
 }
 
-function Server (options, callback) {
-  this.options   = options || {};
-  this.url       = this.options.url || "";
-  this.callback  = callback;
-  
-  //this.token = options.token || "";
-
-  // Set up jsonp handler
-  window.Geoservices.Server = {
-    _callback: function (results) {
-      this._internalCallback(results);
-    },
-    _internalCallback: null
-  }
-
-  if (this.options.url && callback){
-    this.get(this.options.url, callback);
-  }
-}
-
-Server.prototype.get = function(options, callback) {
-  if (!options.url) {
-    if (callback) {
-      callback("Invalid URL to server.")
-    } else {
-      console.log("Invalid callback function.")
-    }
-    return;
-  }
-
-  // TODO - support other params
-  
-  // Wire up callback handler
-  window.Geoservices.Server._internalCallback = callback;
-
-  // jsonp call
-  try {
-    var scriptTag = document.createElement('SCRIPT');
-    scriptTag.src = options.url+"?f=json&callback=window.Geoservices.Server._callback"; 
-    document.getElementsByTagName('HEAD')[0].appendChild(scriptTag);
-  } catch (e) {
-    console.log(e);
-  }
-};
-
 function FeatureService (options, callback) {
   this.lastQuery = null;
   this.url       = null;
@@ -453,7 +408,6 @@ function Geoservices (options) {
   this.FeatureService = FeatureService;
   this.authenticate   = authenticate;
   this.requestHandler = { get: get, post: post };
-  this.Server = Server;
 
   var self = this;
 
