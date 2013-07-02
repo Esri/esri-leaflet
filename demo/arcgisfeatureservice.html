@@ -35,13 +35,29 @@
 
       function addFeatureLayer() {
         // Add ArcGIS Online feature service
-        if (!layerFS) {
-          var featureServiceUrl = document.getElementById("endpoint").value;
-          layerFS = L.esri.featureLayer(featureServiceUrl, {
-            onEachFeature: function(geojson, layer){
-              layer.bindPopup("<h3>"+geojson.properties.stop_name+"</h3><p>Stop ID: "+geojson.properties.stop_id+"</p><p>"+geojson.properties.stop_desc+"</p>")
+        var featureServiceUrl = document.getElementById("endpoint").value;
+        if (layerFS) {
+          removeFeatureLayer();
+        } 
+        layerFS = L.esri.featureLayer(featureServiceUrl, {
+          onEachFeature: function(geojson, layer){
+            createPopup(geojson,layer);
+          }
+        }).addTo(map);
+      }
+
+      function createPopup(geojson,layer) {
+        // Show all data
+        if (geojson.properties) {
+          var popupText =  "<div style='overflow:scroll; max-width:250px; max-height:200px;'><center>";
+          for (prop in geojson.properties) {
+            var val = geojson.properties[prop];
+            if (val) {
+              popupText += "<b>" + prop + "</b>: " + val + "<br>";
             }
-          }).addTo(map);
+          }
+          popupText += "</center></div>";
+          layer.bindPopup(popupText);
         }
       }
 
