@@ -14,7 +14,7 @@
   </head>
   <body>
     <div id="map"></div>
-    <a href="https://github.com/esri/esri-leaflet"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png" alt="Fork me on GitHub"></a>
+    <a href="https://github.com/esri/esri-leaflet"><img style="z-index: 1000; position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png" alt="Fork me on GitHub"></a>
     <div class="demo-controls">
       <h1 class="title expand" id="title" onclick="showControls();">Demographic Maps</h1>
       <div class="control-container" id="controlContainer">
@@ -26,21 +26,18 @@
       var map = L.map('map').setView([45.52751668442124, -122.67175197601318], 11);
 
       var baseUrl = "http://services.arcgisonline.com/ArcGIS/rest/services/Demographics";
-      var mapUrl;
 
-      var dynamicLayer, tiledLayer, circle;
+      var tiledLayer, circle;
 
       // Show the data underlying the demographic layer
       var mapClickEventResult;
       map.on("click", function(e){
-        mapClickEventResult = e;
-
         addClickPoint(e.latlng);
 
         // Query the Map Server service
-        dynamicLayer.identify(e.latlng, function(data) {
-          if(data.results.length > 0)
-          {
+        tiledLayer.identify(e.latlng, function(data) {
+          console.log(data);
+          if(data.results && data.results.length > 0) {
             // Add a popup with the demographic information for that polygon
             popupText =  "<div style='overflow:scroll; max-width:250px; max-height:200px;'><center>";
             for (prop in data.results[0].attributes) {
@@ -51,7 +48,7 @@
             }
             popupText += "</center></div>";
 
-            L.popup().setLatLng(mapClickEventResult.latlng).setContent(popupText).openOn(map);
+            L.popup().setLatLng(e.latlng).setContent(popupText).openOn(map);
           }
         });
       });
@@ -68,24 +65,35 @@
           var mapName = mapOptions.options[mapOptions.selectedIndex].text;
           url = baseUrl + "/"+ mapName + "/MapServer";
         }
-        mapUrl = url;
+
         // Add the tiled map service layer
         tiledLayer = tiledLayer ? map.removeLayer(tiledLayer) : null;
-        tiledLayer = L.esri.tiledMapLayer(mapUrl, {opacity: 0.25, zIndex:2, detectRetina: true}).addTo(map);
-        // Get a reference to the dynamic map service layer
-        dynamicLayer = L.esri.dynamicMapLayer(mapUrl, {});
-        dynamicLayer._map = map;
+        tiledLayer = L.esri.tiledMapLayer(url, {
+          opacity: 0.25,
+          zIndex:2,
+          detectRetina: true
+        }).addTo(map);
+
         // Clear map
         cirle = circle ? map.removeLayer(circle) : null;
         map.closePopup();
       }
 
       // Load default map layers
-      L.esri.basemapLayer("Gray", { zIndex:1, detectRetina: true }).addTo(map);
+      L.esri.basemapLayer("Gray", {
+        zIndex:1,
+        detectRetina: true
+      }).addTo(map);
+
+      // add a demo graphic map to get started
       addDemographicMap(baseUrl+"/USA_Tapestry/MapServer");
-      L.esri.basemapLayer("GrayLabels", { zIndex:3,}).addTo(map);
+
+      L.esri.basemapLayer("GrayLabels", {
+        zIndex:3
+      }).addTo(map);
 
       // Get the ArcGIS Service Demographic map services
+      // this just builds the select menu of all available services.
       var ArcGISGeoServices = new Geoservices.Geoservices({});
       var ArcGISGeoserver = new ArcGISGeoServices.Server().get({"url": baseUrl}, function(results){
         var services = results.services;
