@@ -9,21 +9,42 @@ The goal of Esri Leaflet is not to replace the [ArcGIS API for JavaScript](https
 ### Demos
 There are [loads of demos](http://esri.github.io/esri-leaflet/demo/) showing the features of Esri Leaflet as well as how it might integrate with [geoservices-js](https://github.com/Esri/geoservices-js) and [Terraformer](https://github.com/esri/Terraformer) libraries. [Check out the demos.](http://esri.github.io/esri-leaflet/demo/)
 
-```html
+![App](https://raw.github.com/Esri/esri-leaflet/master/esri-leaflet.png)
+
+```
 <!DOCTYPE html>
 <html>
   <head>
-    <title>ArcGIS Basemap</title>
+    <title>Your Geolocation Map</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="../vendor/leaflet/dist/leaflet.css" />
     <link rel="stylesheet" href="../src/esri-leaflet.css" />
+    <link rel="stylesheet" href="demo.css" />
+    <!--[if lte IE 8]><link rel="stylesheet" href="leaflet.ie.css" /><![endif]-->
     <script src="../vendor/leaflet/dist/leaflet-src.js"></script>
     <script src="../dist/esri-leaflet.min.js"></script>
   </head>
   <body>
     <div id="map"></div>
     <script>
-      var map = L.map('map').setView([45.52751668442124, -122.67175197601318], 15);
-      L.esri.basemapLayer("Topographic").addTo(map);
+      var map = L.map('map');
+      // ArcGIS Online Basemaps - Streets, Topographic, Gray, Gray Labels, Ocean, NationalGeographic, Imagery, ImageryLabels
+      L.esri.basemapLayer("Streets").addTo(map);
+
+      function onLocationFound(e) {
+        var radius = e.accuracy / 2;
+        L.marker(e.latlng).addTo(map).bindPopup("You are within " + radius + " meters from this point").openPopup();
+        L.circle(e.latlng, radius).addTo(map);
+      }
+
+      function onLocationError(e) {
+        alert(e.message);
+      }
+
+      map.on('locationfound', onLocationFound);
+      map.on('locationerror', onLocationError);
+
+      map.locate({setView: true, maxZoom: 16});
     </script>
   </body>
 </html>
