@@ -29,6 +29,14 @@ There are [loads of demos](http://esri.github.io/esri-leaflet/demo/) showing the
 </html>
 ```
 
+## Features
+* Access ArcGIS Basemap Services
+* Access ArcGIS Dynamic Map Services
+* Access ArcGIS Tiled Map Services
+* Access ArcGIS Feature Services (query)
+* Access ArcGIS Demographic Map Services
+* Access ArcGIS Geocoding (place finding, reverse and batch)
+
 ### Basemaps
 You can quickly access ArcGIS base maps with the `L.esri.BasemapLayer(key, options)` layer. The `key` parameter should be one of the following keys.
 
@@ -107,7 +115,14 @@ L.esri.basemapLayer("GrayLabels", {
 }).addTo(map);
 ```
 
-### Limitations
+## Instructions
+
+1. git clone https://github.com/Esri/esri-leaflet
+2. cd esri-leaflet
+3. git submodule init
+4. git submodule update
+
+### Requirements
 * All services that Esri Leaflet access must be publicly accessible. Support for private services will be included in a future release.
 * MapServices that you wish to use for `L.esri.TiledMapLayer` must be published in [Web Mercator](http://spatialreference.org/ref/sr-org/6928/).
 * MapServices that you wish to use for `L.esri.DynamicMapLayer` must be published in [Web Mercator](http://spatialreference.org/ref/sr-org/6928/).
@@ -119,3 +134,35 @@ L.esri.basemapLayer("GrayLabels", {
 * [Terraformer RTree](https://github.com/esri/Terraformer) - client side RTree index for optimizations
 
 These are currently included in `/vendor` as submodules.
+
+## Resources
+
+* [ArcGIS Developers](http://developers.arcgis.com)
+* [ArcGIS REST Services](http://resources.arcgis.com/en/help/arcgis-rest-api/)
+* [ArcGIS for JavaScript API Resource Center](http://help.arcgis.com/en/webapi/javascript/arcgis/index.html)
+* [twitter@esri](http://twitter.com/esri)
+
+## Issues
+
+Find a bug or want to request a new feature?  Please let us know by submitting an issue.
+
+## Contributing
+
+Anyone and everyone is welcome to contribute. 
+
+## Licensing
+Copyright 2012 Esri
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+A copy of the license is available in the repository's [license.txt]( https://raw.github.com/Esri/esri-leaflet/master/license.txt) file.
