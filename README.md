@@ -111,10 +111,10 @@ L.esri.basemapLayer("GrayLabels", {
 * All services that Esri Leaflet access must be publicly accessible. Support for private services will be included in a future release.
 * MapServices that you wish to use for `L.esri.TiledMapLayer` must be published in [Web Mercator](http://spatialreference.org/ref/sr-org/6928/).
 * MapServices that you wish to use for `L.esri.DynamicMapLayer` must be published in [Web Mercator](http://spatialreference.org/ref/sr-org/6928/).
-* FeatureServices must be published in [Web Mercator](http://spatialreference.org/ref/sr-org/6928/) or [Geographicc](http://spatialreference.org/ref/epsg/4326/) spatial references
+* FeatureServices must be published in [Web Mercator](http://spatialreference.org/ref/sr-org/6928/) or [Geographic](http://spatialreference.org/ref/epsg/4326/) spatial references
 
 ### Dependencies
-* [Terraformer](https://github.com/esri/Terraformer) - base library for other dependancies
+* [Terraformer](https://github.com/esri/Terraformer) - base library for other dependencies
 * [Terraformer ArcGIS](https://github.com/esri/Terraformer) - for converting geometries
 * [Terraformer RTree](https://github.com/esri/Terraformer) - client side RTree index for optimizations
 
