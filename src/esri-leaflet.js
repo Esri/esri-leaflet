@@ -1,4 +1,4 @@
-/* globals Terraformer:true, L:true, Esri:true, console:true */
+/* globals L */
 
 L.esri = {
   _callbacks: {},
@@ -65,5 +65,26 @@ L.esri.Util = {
       w: Math.abs(extent.xmin - extent.ymax),
       h: Math.abs(extent.ymin - extent.ymax)
     };
+  }
+};
+
+L.esri.Mixins = {
+  identifiableLayer: {
+    identify:function(latLng, callback){
+      L.esri.get(this.serviceUrl+"/identify", {
+        sr: "4265",
+        mapExtent: JSON.stringify(L.esri.Util.boundsToExtent(this._map.getBounds())),
+        tolerance:3,
+        geometryType:"esriGeometryPoint",
+        imageDisplay:"800,600,96",
+        geometry:JSON.stringify({
+          "x":latLng.lng,
+          "y":latLng.lat,
+          "spatialReference":{
+            "wkid":4265
+          }
+        })
+      }, callback);
+    }
   }
 };

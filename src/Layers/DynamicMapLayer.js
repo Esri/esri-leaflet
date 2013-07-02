@@ -1,6 +1,8 @@
 /* globals L */
 
 L.esri.DynamicMapLayer = L.ImageOverlay.extend({
+  includes: L.esri.Mixins.identifiableLayer,
+
   defaultParams: {
     format: 'png8',
     transparent: true,
@@ -18,6 +20,7 @@ L.esri.DynamicMapLayer = L.ImageOverlay.extend({
     }
 
     this._url = url;
+    this.serviceUrl = url;
     this._layerParams = L.Util.extend({}, this.defaultParams);
 
     for (var opt in options) {
@@ -265,24 +268,6 @@ L.esri.DynamicMapLayer = L.ImageOverlay.extend({
 
   _reset: function () {
     return;
-  },
-
-  identify: function(latLng, callback){
-    this.attributionBoundingBoxes = [];
-    L.esri.get(this._url+"/identify", {
-      sr: "4265",
-      mapExtent: JSON.stringify(L.esri.Util.boundsToExtent(this._map.getBounds())),
-      tolerance:3,
-      geometryType:"esriGeometryPoint",
-      imageDisplay:"800,600,96",
-      geometry:JSON.stringify({
-        "x":latLng.lng,
-        "y":latLng.lat,
-        "spatialReference":{
-          "wkid":4265
-        }
-      })
-    }, callback);
   }
 });
 
