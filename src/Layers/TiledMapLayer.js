@@ -1,6 +1,7 @@
 /* globals L */
 
 L.esri.TiledMapLayer = L.TileLayer.extend({
+  includes: L.esri.Mixins.identifiableLayer,
   initialize: function(url, options){
     options = options || {};
 

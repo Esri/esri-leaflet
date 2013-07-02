@@ -67,6 +67,23 @@ input[type=checkbox]{
   width: 75px;
   padding: .5em;
   margin: 0 5px 5px 5px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  background-color: #0078c5;
+  border: none;
+  font-size: 14px;
+  color: white;
+  cursor: pointer;
+}
+.btn:hover {
+  background-color: #003b61;
+}
+.btn.light {
+  background-color: #f1f1f1;
+  color: #444;
+}
+.btn.light:hover {
+  background-color: #919191;
 }
 .wide {
   width: 125px;
@@ -98,7 +115,7 @@ input[type=checkbox]{
 }
 .demo-controls {
   position: absolute;
-  top: 20px;
+  top: 10px;
   left: 50%;
   width: 300px;
   margin-left: -150px;
