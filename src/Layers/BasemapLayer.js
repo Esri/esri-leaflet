@@ -1,4 +1,4 @@
-/* globals L, ActiveXObject */
+/* globals L */
 
 L.esri.BasemapLayer = L.TileLayer.extend({
   statics: {
@@ -124,8 +124,8 @@ L.esri.BasemapLayer = L.TileLayer.extend({
     if(this.dynamicAttribution){
       this.on("load", this.handleTileUpdates, this);
       this._map.on("viewreset zoomend dragend", this.handleTileUpdates, this);
-      this._map.on("resize", this.resizeAttribution, this);
     }
+    this._map.on("resize", this.resizeAttribution, this);
   },
   resizeAttribution: function(){
     this.getAttributionSpan().style.maxWidth = (this._map.getSize().x * 0.75) - 65 + "px";
@@ -134,8 +134,8 @@ L.esri.BasemapLayer = L.TileLayer.extend({
     if(this.dynamicAttribution){
       this.off("load", this.handleTileUpdates, this);
       this._map.off("viewreset zoomend dragend", this.handleTileUpdates, this);
-      this._map.off("resize", this.resizeAttribution, this);
     }
+    this._map.off("resize", this.resizeAttribution, this);
     L.TileLayer.prototype.onRemove.call(this, map);
   },
   getAttributionData: function(url){
