@@ -9,15 +9,18 @@ The goal of Esri Leaflet is not to replace the [ArcGIS API for JavaScript](https
 ### Demos
 There are [loads of demos](http://esri.github.io/esri-leaflet/demo/) showing the features of Esri Leaflet as well as how it might integrate with [geoservices-js](https://github.com/Esri/geoservices-js) and [Terraformer](https://github.com/esri/Terraformer) libraries. [Check out the demos.](http://esri.github.io/esri-leaflet/demo/)
 
+### Quick Example
+Here is a quick example to get you started. Just change the paths to point to the proper libraries and go.
+
 ```html
 <!DOCTYPE html>
 <html>
   <head>
     <title>ArcGIS Basemap</title>
-    <link rel="stylesheet" href="../vendor/leaflet/dist/leaflet.css" />
-    <link rel="stylesheet" href="../src/esri-leaflet.css" />
-    <script src="../vendor/leaflet/dist/leaflet-src.js"></script>
-    <script src="../dist/esri-leaflet.min.js"></script>
+    <link rel="stylesheet" href="/the/path/to/leaflet.css" />
+    <link rel="stylesheet" href="/the/path/to/esri-leaflet.min.css" />
+    <script src="/the/path/to.leaflet.js"></script>
+    <script src="/the/path/to/esri-leaflet.min.js"></script>
   </head>
   <body>
     <div id="map"></div>
@@ -117,5 +120,5 @@ L.esri.basemapLayer("GrayLabels", {
 * [Terraformer](https://github.com/esri/Terraformer) - base library for other dependencies
 * [Terraformer ArcGIS](https://github.com/esri/Terraformer) - for converting geometries
 * [Terraformer RTree](https://github.com/esri/Terraformer) - client side RTree index for optimizations
-
-These are currently included in `/vendor` as submodules.
+s
+These are currently included in `/vendor` as submodules and are built into the `dist/esri-leaflet.min.js` file. If you want a version of Esri Leaflet without the Terraformer dependencies you can use the `dist/esri-leaflet.unbundled.min.js` file and include the Terraformer modules themselves.
