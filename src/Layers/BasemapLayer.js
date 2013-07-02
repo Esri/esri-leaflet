@@ -1,4 +1,4 @@
-/* globals L, ActiveXObject */
+/* globals L */
 
 L.esri.BasemapLayer = L.TileLayer.extend({
   statics: {

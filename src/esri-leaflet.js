@@ -1,4 +1,4 @@
-/* globals Terraformer:true, L:true, Esri:true, console:true */
+/* globals L */
 
 L.esri = {
   _callbacks: {},
