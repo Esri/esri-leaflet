@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Demographic Maps</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="../vendor/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="../src/esri-leaflet.css" />
+    <link rel="stylesheet" href="demo.css" />
+    <!--[if lte IE 8]><link rel="stylesheet" href="leaflet.ie.css" /><![endif]-->
+    <script src="../vendor/leaflet/dist/leaflet-src.js"></script>
+    <script src="../dist/esri-leaflet.min.js"></script>
+    <script src="geoservices.js"></script>
+    <script src="demo.js"></script>
+  </head>
+  <body>
+    <div id="map"></div>
+    <div class="leaflet-top leaflet-right">
+      <div class="leaflet-control-layers leaflet-control">
+        <div class="title expand" id="title" onclick="showControls();">Demographic Maps</div>
+        <div class="control-container" id="controlContainer">
+          <p>This demo illustrates how to use ArcGIS Demographics services to draw tiled map services and execute live feature queries.</p><p>Explore the population change, spending potential, housing value or any other social economics of your neighborhood.</p>
+          <div id="maps"></div>
+        </div>
+      </div>
+    </div>
+    <script>
+      var map = L.map('map').setView([45.52751668442124, -122.67175197601318], 11);
+
+      var baseUrl = "http://services.arcgisonline.com/ArcGIS/rest/services/Demographics";
+      var mapUrl;
+
+      var dynamicLayer, tiledLayer, circle;
+
+      // Show the data underlying the demographic layer
+      var mapClickEventResult;
+      map.on("click", function(e){
+        mapClickEventResult = e;
+
+        addClickPoint(e.latlng);
+
+        // Query the Map Server service
+        dynamicLayer.identify(e.latlng, function(data) {  
+          if(data.results.length > 0)
+          {
+            // Add a popup with the demographic information for that polygon
+            popupText =  "<div style='overflow:scroll; max-width:250px; max-height:200px;'><center>";
+            for (prop in data.results[0].attributes) {
+              var val = data.results[0].attributes[prop];
+              if (val != 'undefined' && val != "0" && prop !="OBJECTID" && prop != "Name") {
+                popupText += "<b>" + prop.replace(" (Esri)",'') + "</b>: " + val + "<br>";
+              }
+            }
+            popupText += "</center></div>";
+
+            L.popup().setLatLng(mapClickEventResult.latlng).setContent(popupText).openOn(map);
+          }
+        });
+      });
+
+      function addClickPoint(latlng) {        
+        cirle = circle ? map.removeLayer(circle) : null;
+        circle = L.circle(latlng, 200).addTo(map);
+      }
+
+      // Add Demographic map service
+      function addDemographicMap(url) {
+        if (!url) {
+          var mapOptions = document.getElementById("mapOptions");
+          var mapName = mapOptions.options[mapOptions.selectedIndex].text;
+          url = baseUrl + "/"+ mapName + "/MapServer";
+        }
+        mapUrl = url;
+        // Add the tiled map service layer
+        tiledLayer = tiledLayer ? map.removeLayer(tiledLayer) : null;
+        tiledLayer = L.esri.tiledMapLayer(mapUrl, {opacity: 0.25, zIndex:2, detectRetina: true}).addTo(map);
+        // Get a reference to the dynamic map service layer
+        dynamicLayer = L.esri.dynamicMapLayer(mapUrl, {});
+        dynamicLayer._map = map;
+        // Clear map
+        cirle = circle ? map.removeLayer(circle) : null;
+        map.closePopup();
+      }
+
+      // Load default map layers
+      L.esri.basemapLayer("Gray", { zIndex:1, detectRetina: true }).addTo(map);
+      addDemographicMap(baseUrl+"/USA_Tapestry/MapServer");
+      L.esri.basemapLayer("GrayLabels", { zIndex:3,}).addTo(map);
+
+      // Get the ArcGIS Service Demographic map services
+      var ArcGISGeoServices = new Geoservices.Geoservices({});
+      var ArcGISGeoserver = new ArcGISGeoServices.Server().get({"url": baseUrl}, function(results){
+        var services = results.services;
+        var shtml = "<select class='select' id='mapOptions' onchange='addDemographicMap()';>";
+        for (var i=0; i<services.length; i++) {
+          if (services[i].type == "MapServer") {
+            var name = services[i].name.replace("Demographics/",'');
+            if (name.indexOf("USA_Tapestry") !== -1)  {
+              shtml += "<option selected>"+name+"</option>";
+            } else {
+              shtml += "<option>"+name+"</option>";
+            }
+          }
+        }
+        shtml += "</select>";
+        document.getElementById("maps").innerHTML = shtml;
+      });
+
+    </script>
+  </body>
+</html>
