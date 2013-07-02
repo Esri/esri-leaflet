@@ -59,6 +59,7 @@ h1 {
 }
 input[type=checkbox]{
   font-size: 24px;
+  margin-bottom: 10px;
 }
 .hide {
   display: none;
