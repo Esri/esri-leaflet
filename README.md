@@ -9,25 +9,26 @@ The goal of Esri Leaflet is not to replace the [ArcGIS API for JavaScript](https
 ### Demos
 There are [loads of demos](http://esri.github.io/esri-leaflet/demo/) showing the features of Esri Leaflet as well as how it might integrate with [geoservices-js](https://github.com/Esri/geoservices-js) and [Terraformer](https://github.com/esri/Terraformer) libraries. [Check out the demos.](http://esri.github.io/esri-leaflet/demo/)
 
+### Quick Example
+Here is a quick example to get you started. Just change the paths to point to the proper libraries and go.
+
 ![App](https://raw.github.com/Esri/esri-leaflet/master/esri-leaflet.png)
 
-```
+```html
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Your Geolocation Map</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link rel="stylesheet" href="../vendor/leaflet/dist/leaflet.css" />
-    <link rel="stylesheet" href="../src/esri-leaflet.css" />
-    <link rel="stylesheet" href="demo.css" />
-    <!--[if lte IE 8]><link rel="stylesheet" href="leaflet.ie.css" /><![endif]-->
-    <script src="../vendor/leaflet/dist/leaflet-src.js"></script>
-    <script src="../dist/esri-leaflet.min.js"></script>
+    <title>ArcGIS Basemap</title>
+    <link rel="stylesheet" href="/the/path/to/leaflet.css" />
+    <link rel="stylesheet" href="/the/path/to/esri-leaflet.min.css" />
+    <script src="/the/path/to.leaflet.js"></script>
+    <script src="/the/path/to/esri-leaflet.min.js"></script>
   </head>
   <body>
     <div id="map"></div>
     <script>
       var map = L.map('map');
+      
       // ArcGIS Online Basemaps - Streets, Topographic, Gray, Gray Labels, Ocean, NationalGeographic, Imagery, ImageryLabels
       L.esri.basemapLayer("Streets").addTo(map);
 
@@ -138,10 +139,10 @@ L.esri.basemapLayer("GrayLabels", {
 
 ## Instructions
 
-1. git clone https://github.com/Esri/esri-leaflet
-2. cd esri-leaflet
-3. git submodule init
-4. git submodule update
+1. `git clone https://github.com/Esri/esri-leaflet`
+2. `cd esri-leaflet`
+3. `git submodule init`
+4. `git submodule update`
 
 ### Requirements
 * All services that Esri Leaflet access must be publicly accessible. Support for private services will be included in a future release.
@@ -154,7 +155,7 @@ L.esri.basemapLayer("GrayLabels", {
 * [Terraformer ArcGIS](https://github.com/esri/Terraformer) - for converting geometries
 * [Terraformer RTree](https://github.com/esri/Terraformer) - client side RTree index for optimizations
 
-These are currently included in `/vendor` as submodules.
+These are currently included in `/vendor` as submodules and are built into the `dist/esri-leaflet.min.js` file. If you want a version of Esri Leaflet without the Terraformer dependencies you can use the `dist/esri-leaflet.unbundled.min.js` file and include the Terraformer modules themselves.
 
 ## Resources
 

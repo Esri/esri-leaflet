@@ -4,6 +4,10 @@
     <title>Esri-Leaflet</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <style>
+      html, body, * {
+        margin: 0;
+        padding: 0;
+      }
       body {
         font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
       }
@@ -16,12 +20,17 @@
         margin:0;
         padding:0;
       }
-      button {
-        width: 175px;
-        margin-bottom: 3px;
+      li {
+        padding: 0.5em 0;
       }
       h1 {
-        background-color: #b0de5c;
+        background-color: #0078c5;
+        color: white;
+        padding: 1em;
+        margin-bottom:1em;
+      }
+      h3 {
+        padding-top: 1em;
       }
       .small-font{
         font-size: 12px;
@@ -29,33 +38,43 @@
     </style>
   </head>
   <body>
+    <a href="https://github.com/esri/esri-leaflet"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png" alt="Fork me on GitHub"></a>
     <div>
-      <h1>Esri-Leaflet Plugin</h1>
+      <h1 class="title">Esri-Leaflet Plugin</h1>
       <p>Examples that show you how to build powerful mapping apps with <a href="http://leafletjs.com/">Leaflet</a> and <a href="http://developers.arcgis.com/">ArcGIS Online</a>.</p>
+      <h3>ArcGIS Online Basemaps</h3>
       <ul>
-        <li><h3>ArcGIS Online Basemaps</h3></li>
-        <li><a href="arcgisbasemap.html"><button>ArcGIS Basemap</button></a></li>
-        <li><a href="arcgisbasemaps.html"><button>All Basemaps</button></a></li>
-        <li><a href="retinamaps.html"><button>Retina Maps</button></a></li>
-        <li><a href="mobile.html"><button>Mobile Geolocation Map</button></a></li>
-        <li><h3>ArcGIS Dynamic Map Service</h3></li>
-        <li><a href="dynamicMapService.html"><button>Map Service Identify</button></a></li>
-        <!--li><a href="dynamicmapservicefilter.html"><button>Map Service Filter</button></a></li-->
-        <li><h3>ArcGIS Demographic Map Services</h3></li>
-        <li><a href="demographicmaps.html"><button>Demographic Maps</button></a></li>
-        <li><h3>ArcGIS Online Feature Services</h3></li>
-        <li><a href="arcgisfeatureservice.html"><button>Add FeatureLayer</button></a></li>
-        <li><a href="featureserviceinfo.html"><button>Feature Service Info</button></a></li>
-        <li><a href="featureservicequery.html"><button>Feature Service Query</button></a></li>
-        <li><a href="symbolizepointfeatures.html"><button>Symbolize Point Features</button></a></li>
-        <li><a href="symbolizelinefeatures.html"><button>Symbolize Line Features</button></a></li>
-        <li><h3>ArcGIS Online Geocode Service</h3></li>
-        <li><a href="findplaces.html"><button>Find Places</button></a></li>
-        <li><a href="reversegeocode.html"><button>Reverse Geocode</button></a></li>
+        <li><a href="arcgisbasemap.html">ArcGIS Basemap</a></li>
+        <li><a href="arcgisbasemaps.html">All Basemaps</a></li>
+        <li><a href="retinamaps.html">Retina Maps</a></li>
+        <li><a href="mobile.html">Mobile Geolocation Map</a></li>
+      </ul>
+      <h3>ArcGIS Dynamic Map Service</h3>
+      <ul>
+        <li><a href="dynamicmapservice.html">Map Service Identify</a></li>
+        <!--li><a href="dynamicmapservicefilter.html">Map Service Filter</a></li-->
+      </ul>
+      </ul>
+      <h3>ArcGIS Demographic Map Services</h3>
+      <ul>
+        <li><a href="demographicmaps.html">Demographic Maps</a></li>
+      </ul>
+      <h3>ArcGIS Online Feature Services</h3>
+      <ul>
+        <li><a href="arcgisfeatureservice.html">Add FeatureLayer</a></li>
+        <li><a href="featureserviceinfo.html">Feature Service Info</a></li>
+        <li><a href="featureservicequery.html">Feature Service Query</a></li>
+        <li><a href="symbolizepointfeatures.html">Symbolize Point Features</a></li>
+        <li><a href="symbolizelinefeatures.html">Symbolize Line Features</a></li>
+      </ul>
+      <h3>ArcGIS Online Geocode Service</h3>
+      <ul>
+        <li><a href="findplaces.html">Find Places</a></li>
+        <li><a href="reversegeocode.html">Reverse Geocode</a></li>
       </ul>
       </br>
-      <p class="small-font">NOTE: Esri-Leaflet has a dependency on <a href="https://github.com/Esri/Terraformer">Terraformer</a> which is bundled in esri-leaflet.min.js.</p>
-      <p class="small-font">Some samples also use <a href="https://github.com/Esri/geoservices-js">geoservices-js</a> to access <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/">ArcGIS Online REST Services</a>.</p>
+      <small class="small-font">NOTE: Esri-Leaflet has a dependency on <a href="https://github.com/Esri/Terraformer">Terraformer</a> which is bundled in esri-leaflet.min.js.</small>
+      <small class="small-font">Some samples also use <a href="https://github.com/Esri/geoservices-js">geoservices-js</a> to access <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/">ArcGIS Online REST Services</a>.</small>
     </div>
   </body>
 </html>

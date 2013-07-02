@@ -3,24 +3,23 @@
   <head>
     <title>Demographic Maps</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link rel="stylesheet" href="../vendor/leaflet/dist/leaflet.css" />
-    <link rel="stylesheet" href="../src/esri-leaflet.css" />
+    <link rel="stylesheet" href="vendor/leaflet/leaflet.css" />
+    <link rel="stylesheet" href="../dist/esri-leaflet.min.css" />
     <link rel="stylesheet" href="demo.css" />
     <!--[if lte IE 8]><link rel="stylesheet" href="leaflet.ie.css" /><![endif]-->
-    <script src="../vendor/leaflet/dist/leaflet-src.js"></script>
+    <script src="vendor/leaflet/leaflet-src.js"></script>
     <script src="../dist/esri-leaflet.min.js"></script>
-    <script src="geoservices.js"></script>
+    <script src="vendor/geoservices/geoservices.js"></script>
     <script src="demo.js"></script>
   </head>
   <body>
     <div id="map"></div>
-    <div class="leaflet-top leaflet-right">
-      <div class="leaflet-control-layers leaflet-control">
-        <div class="title expand" id="title" onclick="showControls();">Demographic Maps</div>
-        <div class="control-container" id="controlContainer">
-          <p>This demo illustrates how to use ArcGIS Demographics services to draw tiled map services and execute live feature queries.</p><p>Explore the population change, spending potential, housing value or any other social economics of your neighborhood.</p>
-          <div id="maps"></div>
-        </div>
+    <a href="https://github.com/esri/esri-leaflet"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png" alt="Fork me on GitHub"></a>
+    <div class="demo-controls">
+      <h1 class="title expand" id="title" onclick="showControls();">Demographic Maps</h1>
+      <div class="control-container" id="controlContainer">
+        <p>This demo illustrates how to use ArcGIS Demographics services to draw tiled map services and execute live feature queries.</p><p>Explore the population change, spending potential, housing value or any other social economics of your neighborhood.</p>
+        <div id="maps"></div>
       </div>
     </div>
     <script>
@@ -39,7 +38,7 @@
         addClickPoint(e.latlng);
 
         // Query the Map Server service
-        dynamicLayer.identify(e.latlng, function(data) {  
+        dynamicLayer.identify(e.latlng, function(data) {
           if(data.results.length > 0)
           {
             // Add a popup with the demographic information for that polygon
@@ -57,7 +56,7 @@
         });
       });
 
-      function addClickPoint(latlng) {        
+      function addClickPoint(latlng) {
         cirle = circle ? map.removeLayer(circle) : null;
         circle = L.circle(latlng, 200).addTo(map);
       }
