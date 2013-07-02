@@ -3,7 +3,7 @@ html, body, #map {
   height: 100%;
   margin: 0;
   font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
-  font-size: 14px;
+  font-size: 16px;
 }
 .leaflet-popup-content-wrapper {
   -webkit-border-radius: 4px;
@@ -23,44 +23,62 @@ h3 {
   font-size: 16px;
   font-weight: normal;
 }
-.title {
-  margin: 10px;
-  padding: 2px 10px;
-  width: 200px;
-  font-size: 15px;
+h1 {
   text-align: center;
+  background-color: #0078c5;
+  color: white;
+  padding: 1em;
+  margin:0;
+  cursor: pointer;
 }
-.contract {
-  background:url(images/contract.png) #b0de5c no-repeat 98% 50%;
+.expand, .contract {
+  background-repeat: no-repeat;
+  background-position: 93% 50%;
   background-size: 14px 14px;
+}
+.expand:hover, .contract:hover {
+  background-color: #003b61;
 }
 .expand {
-  background:url(images/expand.png) #b0de5c no-repeat 98% 50%;
-  background-size: 14px 14px;
+  background-image: url(images/expand.png);
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+}
+.contract {
+  background-image:url(images/contract.png);
+  -webkit-border-radius: 4px 4px 0 0;
+  border-radius: 4px 4px 0 0;
 }
 .control-container {
   display: block;
   text-align: center;
-  margin: 10px 10px 5px 10px;
-  max-width: 220px;
+  padding: 12px;
+}
+.no-padding {
+  padding: 0;
+}
+input[type=checkbox]{
+  font-size: 24px;
 }
 .hide {
   display: none;
 }
 .btn {
   width: 75px;
-  margin: 0px 5px 5px 5px;
+  padding: .5em;
+  margin: 0 5px 5px 5px;
 }
 .wide {
   width: 125px;
 }
-.label {
-  font-size: 12px;
-  margin-bottom: 5px;
-}
 .select {
+  padding: 4px;
+  height: 35px;
+  font-size: 16px;
   width: 95%;
-  margin-bottom: 7px;
+  margin: 1em 0;
+  border-color: gray;
+
 }
 .textarea {
   width: 200px;
@@ -77,4 +95,15 @@ h3 {
   padding:0;
   overflow: scroll;
   max-height: 400px;
+}
+.demo-controls {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  width: 300px;
+  margin-left: -150px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  background: white;
+  box-shadow: 0 3px 14px rgba(0,0,0,0.4);
 }

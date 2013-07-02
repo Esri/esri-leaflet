@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ArcGIS Basemaps</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="vendor/leaflet/leaflet.css" />
+    <link rel="stylesheet" href="../dist/esri-leaflet.min.css" />
+    <link rel="stylesheet" href="demo.css" />
+    <!--[if lte IE 8]><link rel="stylesheet" href="leaflet.ie.css" /><![endif]-->
+    <script src="vendor/leaflet/leaflet-src.js"></script>
+    <script src="../dist/esri-leaflet.min.js"></script>
+    <script src="vendor/geoservices/geoservices.js"></script>
+  </head>
+  <body>
+    <div id="map"> </div>
+    <a href="https://github.com/esri/esri-leaflet"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png" alt="Fork me on GitHub"></a>
+    <script>
+
+      //Initializing the map to start at the east coast
+      var map = L.map('map').setView([42, -74], 5);
+
+      //Add Oceans Basemaps
+      L.esri.basemapLayer("Oceans").addTo(map);
+
+      //ArcGIS Server Dynamic Map Service, Historic Hurricane Tracks
+      dynLayer = L.esri.dynamicMapLayer("http://tmservices1.esri.com/arcgis/rest/services/LiveFeeds/Hurricane_Recent/MapServer", {
+        opacity : 1,
+        layers:[0,1],
+      });
+
+      map.addLayer(dynLayer);
+
+      //Identifying Dynamic Map Service Features
+      map.on("click", function(e) {
+        dynLayer.identify(e.latlng, function(data) {
+          if(data.results.length > 0) {
+            //Popup text should be in html format.  Showing the Storm Name with the type
+            popupText =  "<center><b>" + data.results[0].attributes.STORMNAME + "</b><br>" + data.results[0].attributes.STORMTYPE + "</center>";
+
+            //Add Popup to the map when the mouse was clicked at
+            var popup = L.popup()
+              .setLatLng(e.latlng)
+              .setContent(popupText)
+              .openOn(map);
+          }
+        });
+      });
+     </script>
+  </body>
+</html>
