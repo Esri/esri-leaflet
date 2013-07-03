@@ -35,7 +35,10 @@ module.exports = function(grunt) {
           'vendor/terraformer/dist/browser/rtree.js',
           'vendor/terraformer/dist/browser/arcgis.js',
           'src/esri-leaflet.js',
-          'src/Layers/*.js'
+          'src/Layers/BasemapLayer.js',
+          'src/Layers/FeatureLayer.js',
+          'src/Layers/TiledMapLayer.js',
+          'src/Layers/DynamicMapLayer.js'
         ],
         dest: 'dist/esri-leaflet.js'
       }
@@ -46,6 +49,7 @@ module.exports = function(grunt) {
         mangle: {
           except: ['Terraformer']
         },
+        preserveComments: 'some',
         report: 'gzip',
         banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %>\n' +
         '*   Copyright (c) <%= grunt.template.today("yyyy") %> Environmental Systems Research Institute, Inc.\n' +
@@ -59,11 +63,17 @@ module.exports = function(grunt) {
             'vendor/terraformer/dist/browser/rtree.js',
             'vendor/terraformer/dist/browser/arcgis.js',
             'src/esri-leaflet.js',
-            'src/Layers/*.js'
+            'src/Layers/BasemapLayer.js',
+            'src/Layers/FeatureLayer.js',
+            'src/Layers/TiledMapLayer.js',
+            'src/Layers/DynamicMapLayer.js'
           ],
           'dist/esri-leaflet.unbundled.min.js': [
             'src/esri-leaflet.js',
-            'src/Layers/*.js'
+            'src/Layers/BasemapLayer.js',
+            'src/Layers/FeatureLayer.js',
+            'src/Layers/TiledMapLayer.js',
+            'src/Layers/DynamicMapLayer.js'
           ]
         }
       }
