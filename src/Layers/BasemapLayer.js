@@ -168,20 +168,20 @@ L.esri.BasemapLayer = L.TileLayer.extend({
     }
   },
   getAttributionSpan:function(){
-    return this._map._container.getElementsByClassName("esri-attributions")[0];
+    return this._map._container.querySelectorAll('.esri-attributions')[0];
   },
   updateMapAttribution: function(){
-    var newAttributions = [];
+    var newAttributions = '';
     for (var i = 0; i < this.attributionBoundingBoxes.length; i++) {
       var attr = this.attributionBoundingBoxes[i];
       if(this.bounds.intersects(attr.bounds) && this.zoom >= attr.minZoom && this.zoom <= attr.maxZoom) {
         var attribution = this.attributionBoundingBoxes[i].attribution;
         if(newAttributions.indexOf(attribution) === -1){
-          newAttributions.push(attribution);
+          newAttributions += ', ' + attribution;
         }
       }
     }
-    this.getAttributionSpan().innerHTML = newAttributions.join(", ");
+    this.getAttributionSpan().innerHTML = newAttributions;
     this.resizeAttribution();
   }
 });
