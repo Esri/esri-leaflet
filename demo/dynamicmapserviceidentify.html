@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Dynamic Map Services</title>
+    <title>Dynamic Map Services Identify</title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="vendor/leaflet/leaflet.css" />
     <link rel="stylesheet" href="../dist/esri-leaflet.min.css" />
@@ -16,7 +16,7 @@
     <div class="demo-controls">
       <h1 class="title contract" id="title" onclick="showControls();">Dynamic Map Service</h1>
       <div class="control-container" id="controlContainer">
-        <p>This demo shows using Dynamic Map Services. Click anywhere on the demo to discover features and attributes.</p>
+        <p>Similar to the <a href="dynamicmapservice.html">Dynamic Map Service</a> demo. This demo will only show attribute data for Andrea by filtering the call to the service.</p>
       </div>
     </div>
     <a href="https://github.com/esri/esri-leaflet"><img style="z-index: 1000; position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png" alt="Fork me on GitHub"></a>
@@ -37,8 +37,15 @@
       map.addLayer(dynLayer);
 
       //Identifying Dynamic Map Service Features
+      //Should only be able to identify STORMNAME='ANDREA'
       map.on("click", function(e) {
-        dynLayer.identify(e.latlng, function(data) {
+        dynLayer.identify(e.latlng, {
+          //layerDefs: "0:STORMNAME='ANDREA';1:STORMNAME='ANDREA'"
+          layerDefs: {
+            0: "STORMNAME='ANDREA'",
+            1: "STORMNAME='ANDREA'"
+          }
+        }, function(data) {
           if(data.results.length > 0) {
             //Popup text should be in html format.  Showing the Storm Name with the type
             popupText =  "<center><b>" + data.results[0].attributes.STORMNAME + "</b><br>" + data.results[0].attributes.STORMTYPE + "</center>";
