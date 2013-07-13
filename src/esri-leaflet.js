@@ -1,6 +1,8 @@
 /* globals L */
 
 L.esri = {
+  AttributionStyles:"text-overflow:ellipsis; white-space:nowrap;overflow:hidden; display:inline-block;",
+  LogoStyles:"position:absolute; top:-38px; right:2px;",
   _callbacks: {},
   get: function(url, params, callback){
     var callbackId = "callback_" + (Math.random() * 1e9).toString(36);
@@ -87,7 +89,7 @@ L.esri.Mixins = {
       };
 
       var params;
-      
+
       if (typeof options === 'function' && typeof callback === 'undefined') {
         callback = options;
         params = defaults;
