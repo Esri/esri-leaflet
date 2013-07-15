@@ -69,23 +69,22 @@ L.esri.FeatureLayer = L.GeoJSON.extend({
     return layer.feature.id;
   },
   _toggleLayerVisibility: function(layer, hide){
-    var command = (hide) ? "addClass": "removeClass";
-
+    var style = (hide) ? "none" : "block";
     // icon
     if(layer._icon){
-      L.DomUtil[command](layer._icon,"esri-leaflet-hidden-feature");
+      layer._icon.style.display = style;
     }
 
     // shadow
     if(layer._shadow){
-      L.DomUtil[command](layer._shadow,"esri-leaflet-hidden-feature");
+      layer._shadow.style.display = style;
     }
 
     // misc layers
     if(layer._layers){
       for(var layerid in layer._layers){
         if(layer._layers.hasOwnProperty(layerid)){
-          L.DomUtil[command](layer._layers[layerid]._container, "esri-leaflet-hidden-feature");
+          layer._layers[layerid]._container.style.display = style;
         }
       }
     }
