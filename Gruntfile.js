@@ -85,12 +85,12 @@ module.exports = function(grunt) {
         '*   Apache License' +
         '*/\n',
         report: 'gzip'
-      },
-      compress: {
-        files: {
-          'dist/esri-leaflet.min.css': ['src/esri-leaflet.css']
-        }
       }
+      // compress: {
+      //   files: {
+      //     'dist/esri-leaflet.min.css': ['src/esri-leaflet.css']
+      //   }
+      // }
     },
     watch: {
       src: {
@@ -104,7 +104,7 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask('default', ['jshint']);
-  grunt.registerTask('build', ['default', 'uglify', 'cssmin']);
+  grunt.registerTask('build', ['default', 'uglify']);
 
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-jshint');
