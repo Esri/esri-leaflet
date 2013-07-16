@@ -1,14 +1,14 @@
 /* globals L */
 
 L.esri = {
-  AttributionStyles:"text-overflow:ellipsis; white-space:nowrap;overflow:hidden; display:inline-block;",
+  AttributionStyles:"line-height:9px; text-overflow:ellipsis; white-space:nowrap;overflow:hidden; display:inline-block;",
   LogoStyles:"position:absolute; top:-38px; right:2px;",
-  _callbacks: {},
+  _callback: {},
   get: function(url, params, callback){
-    var callbackId = "callback_" + (Math.random() * 1e9).toString(36);
+    var callbackId = "c"+(Math.random() * 1e9).toString(36).replace(".", "_");
 
     params.f="json";
-    params.callback="L.esri._callbacks['"+callbackId+"']";
+    params.callback="L.esri._callback."+callbackId;
 
     var qs="?";
 
@@ -30,10 +30,10 @@ L.esri = {
     script.src = url + qs;
     script.id = callbackId;
 
-    L.esri._callbacks[callbackId] = function(response){
+    L.esri._callback[callbackId] = function(response){
       callback(response);
       document.body.removeChild(script);
-      delete L.esri._callbacks[callbackId];
+      delete L.esri._callback[callbackId];
     };
 
     document.body.appendChild(script);
