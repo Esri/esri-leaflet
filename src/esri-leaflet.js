@@ -3,12 +3,12 @@
 L.esri = {
   AttributionStyles:"line-height:9px; text-overflow:ellipsis; white-space:nowrap;overflow:hidden; display:inline-block;",
   LogoStyles:"position:absolute; top:-38px; right:2px;",
-  _callbacks: {},
+  _callback: {},
   get: function(url, params, callback){
-    var callbackId = "callback_" + (Math.random() * 1e9).toString(36);
+    var callbackId = (Math.random() * 1e9).toString(36).replace(".", "_");
 
     params.f="json";
-    params.callback="L.esri._callbacks['"+callbackId+"']";
+    params.callback="L.esri._callback."+callbackId;
 
     var qs="?";
 
