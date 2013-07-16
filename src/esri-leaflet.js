@@ -5,7 +5,7 @@ L.esri = {
   LogoStyles:"position:absolute; top:-38px; right:2px;",
   _callback: {},
   get: function(url, params, callback){
-    var callbackId = (Math.random() * 1e9).toString(36).replace(".", "_");
+    var callbackId = "c"+(Math.random() * 1e9).toString(36).replace(".", "_");
 
     params.f="json";
     params.callback="L.esri._callback."+callbackId;
@@ -30,10 +30,10 @@ L.esri = {
     script.src = url + qs;
     script.id = callbackId;
 
-    L.esri._callbacks[callbackId] = function(response){
+    L.esri._callback[callbackId] = function(response){
       callback(response);
       document.body.removeChild(script);
-      delete L.esri._callbacks[callbackId];
+      delete L.esri._callback[callbackId];
     };
 
     document.body.appendChild(script);
