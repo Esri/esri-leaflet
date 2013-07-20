@@ -42,6 +42,16 @@ L.esri = {
 };
 
 L.esri.Util = {
+  indexOf: function(arr, obj, start){
+    start = start || 0;
+    if(arr.indexOf){
+      return arr.indexOf(obj, start);
+    }
+    for (var i = start, j = arr.length; i < j; i++) {
+      if (arr[i] === obj) { return i; }
+    }
+    return -1;
+  },
   extentToBounds: function(extent){
     var southWest = new L.LatLng(extent.xmin, extent.ymin);
     var northEast = new L.LatLng(extent.xmax, extent.ymin);

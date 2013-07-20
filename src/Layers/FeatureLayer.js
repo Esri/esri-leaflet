@@ -28,7 +28,7 @@ L.esri.FeatureLayer = L.GeoJSON.extend({
         this.eachLayer(L.Util.bind(function(layer){
           var id = layer.feature.id;
           var layerid;
-          this._toggleLayerVisibility(layer, results.indexOf(id) === -1);
+          this._toggleLayerVisibility(layer, L.esri.Util.indexOf(results, id) === -1);
         }, this));
       }, this));
 
