@@ -7,7 +7,7 @@ The goal of Esri Leaflet is not to replace the [ArcGIS API for JavaScript](https
 **Currently Esri Leaflet is in development but is open to contributions. It should be thought of as a beta or preview.**
 
 ### Demos
-There are [loads of demos](http://esri.github.io/esri-leaflet/demo/) showing the features of Esri Leaflet as well as how it might integrate with [geoservices-js](https://github.com/Esri/geoservices-js) and [Terraformer](https://github.com/esri/Terraformer) libraries. [Check out the demos.](http://esri.github.io/esri-leaflet/demo/)
+There are [loads of demos](http://esri.github.io/esri-leaflet/) showing the features of Esri Leaflet as well as how it might integrate with [geoservices-js](https://github.com/Esri/geoservices-js) and [Terraformer](https://github.com/esri/Terraformer) libraries. [Check out the demos.](http://esri.github.io/esri-leaflet/)
 
 ### Quick Example
 Here is a quick example to get you started. Just change the paths to point to the proper libraries and go.
