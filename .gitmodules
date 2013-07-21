@@ -3,4 +3,4 @@
 	url = https://github.com/Leaflet/Leaflet.git
 [submodule "vendor/terraformer"]
 	path = vendor/terraformer
-	url = https://github.com/esri/Terraformer.git
+	url = https://github.com/Esri/Terraformer.git
