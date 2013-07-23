@@ -20,8 +20,13 @@ Here is a quick example to get you started. Just change the paths to point to th
   <head>
     <title>ArcGIS Basemap</title>
     <link rel="stylesheet" href="/the/path/to/leaflet.css" />
-    <link rel="stylesheet" href="/the/path/to/esri-leaflet.min.css" />
-    <script src="/the/path/to.leaflet.js"></script>
+    <style>
+	html, body,  #map {
+		width : 100%;
+		height : 100%;        	
+	}
+	</style>
+	<script src="/the/path/to.leaflet.js"></script>
     <script src="/the/path/to/esri-leaflet.min.js"></script>
   </head>
   <body>
