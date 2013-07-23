@@ -29,7 +29,7 @@ Here is a quick example to get you started. Just change the paths to point to th
     <script>
       var map = L.map('map');
       
-      // ArcGIS Online Basemaps - Streets, Topographic, Gray, Gray Labels, Ocean, NationalGeographic, Imagery, ImageryLabels
+      // ArcGIS Online Basemaps - Streets, Topographic, Gray, GrayLabels, Oceans, NationalGeographic, Imagery, ImageryLabels
       L.esri.basemapLayer("Streets").addTo(map);
 
       function onLocationFound(e) {
