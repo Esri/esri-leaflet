@@ -1,76 +1,44 @@
 /* globals Terraformer, L */
 
 L.esri.FeatureLayer = L.GeoJSON.extend({
+  options: {
+    cellSize: 512,
+    debugGrid: false
+  },
   initialize: function(url, options){
+    // create a new index to store existing points
     this.index = new Terraformer.RTree();
+
     //add a trailing slash to the url if the user omitted it
     if(url[url.length-1] !== "/"){
       url += "/";
     }
     this.url = url;
-
+    L.Util.setOptions(this, options);
     L.GeoJSON.prototype.initialize.call(this, [], options);
   },
   onAdd: function(map){
     L.LayerGroup.prototype.onAdd.call(this, map);
-    this.updateFeatures(map);
-    this._update(map);
+    this._map = map;
+    this._setupGrid(map.getBounds());
+
+    map.on("move", this._updateVisibleFeatures, this);
+    map.on("move", this._moveHandler, this);
+    map.on("zoomend", this._zoomHandler, this);
+    map.on("resize", this._resizeHandler, this);
   },
   onRemove: function(map){
     L.LayerGroup.prototype.onRemove.call(this, map);
-    map.off("viewreset moveend", L.Util.bind(this.updateFeatures, this));
-  },
-  updateFeatures: function(map){
-    // var draw = L.Util.bind(function(){
-    //   var newBounds = map.getBounds();
-    //   var envelope = L.esri.Util.boundsToEnvelope(newBounds);
-
-    //   this.index.search(envelope).then(L.Util.bind(function(results){
-    //     this.eachLayer(L.Util.bind(function(layer){
-    //       var id = layer.feature.id;
-    //       var layerid;
-    //       this._toggleLayerVisibility(layer, L.esri.Util.indexOf(results, id) === -1);
-    //     }, this));
-    //   }, this));
-
-    //   L.esri.get(this.url+"query", {
-    //     geometryType: "esriGeometryEnvelope",
-    //     geometry: JSON.stringify(L.esri.Util.boundsToExtent(newBounds)),
-    //     outFields:"*",
-    //     outSr: 4326
-    //   }, L.Util.bind(function(response){
-    //     if(response.objectIdFieldName && response.features.length && !response.error){
-    //       var idKey = response.objectIdFieldName;
-    //       for (var i = response.features.length - 1; i >= 0; i--) {
-    //         var feature = response.features[i];
-    //         var id = feature.attributes[idKey];
-    //         if(!this._layers[id]){
-    //           var geojson = Terraformer.ArcGIS.parse(feature);
-    //           geojson.id = id;
-    //           this.index.insert(geojson,id);
-    //           this.addData(geojson);
-    //         }
-    //       }
-    //     }
-    //   }, this));
-    // },this);
-
-    // var tryDraw = L.Util.bind(function(){
-    //   clearTimeout(this._delay);
-    //   this._delay = setTimeout(L.Util.bind(function(){
-    //     draw();
-    //   },this), 250);
-    // },this);
-
-    // map.on("viewreset moveend", tryDraw);
-
-    // draw();
+    map.off("viewreset moveend", this._updateVisibleFeatures, this);
+    map.off("moveend", this._moveHandler, this);
+    map.off("zoomend", this._zoomHandler, this);
+    map.off("resize", this._resizeHandler, this);
   },
   getLayerId: function(layer){
     return layer.feature.id;
   },
-  _toggleLayerVisibility: function(layer, hide){
-    var style = (hide) ? "none" : "block";
+  _toggleLayerVisibility: function(layer, visible){
+    var style = (visible) ? "block" : "none";
     // icon
     if(layer._icon){
       layer._icon.style.display = style;
@@ -89,68 +57,109 @@ L.esri.FeatureLayer = L.GeoJSON.extend({
         }
       }
     }
+  },
+  _updateVisibleFeatures: function(e){
+    var envelope = L.esri.Util.boundsToEnvelope(e.target.getBounds());
+    this.index.search(envelope).then(L.Util.bind(function(results){
+      this.eachLayer(L.Util.bind(function(layer){
+        var id = layer.feature.id;
+        this._toggleLayerVisibility(layer, L.esri.Util.indexOf(results, id) >= 0);
+      }, this));
+    }, this));
+  },
 
+  _processFeatures: function(response){
+    if(response.objectIdFieldName && response.features.length && !response.error){
+      var idKey = response.objectIdFieldName;
+      for (var i = response.features.length - 1; i >= 0; i--) {
+        var feature = response.features[i];
+        var id = feature.attributes[idKey];
+        if(!this._layers[id]){
+          var geojson = Terraformer.ArcGIS.parse(feature);
+          geojson.id = id;
+          this.index.insert(geojson,id);
+          this.addData(geojson);
+        }
+      }
+    }
   },
-  _setupGrid: function(map){
-    // this._origin = map.project(map.getBounds().getNorthWest());
-    // this._cellSize = 256;
-    // this._mapWidth = map.getSize().x;
-    // this._mapHeight = map.getSize().y;
-    // var rows = Math.ceil(this._mapWidth / this._cellSize)+1;
-    // var cols = Math.ceil(this._mapHeight / this._cellSize)+1;
-    // var cells = [];
-    // for (var i = 1; i <= rows; i++) {
-    //   for (var j = 1; j <= cols; j++) {
-    //     var one = map.unproject(new L.Point(this._origin.x + ((i-1)*this._cellSize), this._origin.y + ((j-1)*this._cellSize)));
-    //     var two = map.unproject(new L.Point(this._origin.x + (i*this._cellSize), this._origin.y + (j*this._cellSize)));
-    //     L.rectangle(new L.LatLngBounds(one,two), {color: "#ff7800", weight: 2}).addTo(map);
-    //   }
-    // }
+  _requestFeaturesInCells: function(bounds){
+    var cells = this._cellsInBounds(bounds);
+    for (var i = 0; i < cells.length; i++) {
+      var cell = cells[i];
+      if(L.esri.Util.indexOf(this._loadedCells, cell.id) === -1){
+        L.esri.get(this.url+"query", {
+          geometryType: "esriGeometryEnvelope",
+          geometry: JSON.stringify(L.esri.Util.boundsToExtent(cell.bounds)),
+          outFields:"*",
+          outSr: 4326
+        }, this._processFeatures, this);
+        this._loadedCells.push(cell.id);
+      }
+    }
   },
-  _update: function (map) {
-    var bounds = map.getPixelBounds();
-    var tileSize = 256;
-    var tileBounds = L.bounds(
-            bounds.min.divideBy(tileSize)._floor(),
-            bounds.max.divideBy(tileSize)._floor());
-
-    this._addTilesFromCenterOut(tileBounds);
+  _moveHandler: function(e){
+    this._requestFeaturesInCells(e.target.getBounds());
   },
-  _addTilesFromCenterOut: function (bounds) {
+  _zoomHandler: function(e){
+    this._setupGrid(e.target.getBounds());
+  },
+  _resizeHandler: function(e) {
+    this._setupSize();
+  },
+  _setupSize: function(){
+    this._rows = Math.ceil(this._map.getSize().x / this._cellSize);
+    this._cols = Math.ceil(this._map.getSize().y / this._cellSize);
+  },
+  _setupGrid: function(bounds){
+    this._origin = this._map.project(bounds.getNorthWest());
+    this._cellSize = this.options.cellSize;
+    this._setupSize();
+    this._loadedCells = [];
+    this._requestFeaturesInCells(bounds);
+  },
+  _cellPoint:function(row, col){
+    var x = this._origin.x + (row*this._cellSize);
+    var y = this._origin.y + (col*this._cellSize);
+    return new L.Point(x, y);
+  },
+  _cellExtent: function(row, col){
+    var swPoint = this._cellPoint(row, col);
+    var nePoint = this._cellPoint(row-1, col-1);
+    var sw = this._map.unproject(swPoint);
+    var ne = this._map.unproject(nePoint);
+    return new L.LatLngBounds(ne, sw);
+  },
+  _cellsInBounds: function(bounds){
+    var offset = this._map.project(bounds.getNorthWest());
     var center = bounds.getCenter();
-    var j, i, point;
-
-    for (j = bounds.min.y; j <= bounds.max.y; j++) {
-      for (i = bounds.min.x; i <= bounds.max.x; i++) {
-        point = new L.Point(i, j);
-        console.log(point);
+    var offsetX = this._origin.x - offset.x;
+    var offsetY = this._origin.y - offset.y;
+    var offsetRows = Math.round(offsetX / this._cellSize);
+    var offsetCols = Math.round(offsetY / this._cellSize);
+    var cells = [];
+    for (var i = 0; i <= this._rows; i++) {
+      for (var j = 0; j <= this._cols; j++) {
+        var row = i-offsetRows;
+        var col = j-offsetCols;
+        var cellBounds = this._cellExtent(row, col);
+        var cellId = row+":"+col;
+        //if(bounds.intersects(cellBounds)){
+        cells.push({
+          id: cellId,
+          bounds: cellBounds,
+          distance:cellBounds.getCenter().distanceTo(center)
+        });
+        //}
       }
     }
 
-    var tilesToLoad = queue.length;
-
-    if (tilesToLoad === 0) { return; }
-
-    // load tiles in order of their distance to center
-    queue.sort(function (a, b) {
-      return a.distanceTo(center) - b.distanceTo(center);
+    cells.sort(function (a, b) {
+      return a.distance - b.distance;
     });
 
-    var fragment = document.createDocumentFragment();
-
-    // if its the first batch of tiles to load
-    if (!this._tilesToLoad) {
-      this.fire('loading');
-    }
-
-    this._tilesToLoad += tilesToLoad;
-
-    for (i = 0; i < tilesToLoad; i++) {
-      this._addTile(queue[i], fragment);
-    }
-
-    this._tileContainer.appendChild(fragment);
-  },
+    return cells;
+  }
 });
 
 L.esri.featureLayer = function(url, options){
