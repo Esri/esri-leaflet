@@ -2,8 +2,7 @@
 
 L.esri.FeatureLayer = L.GeoJSON.extend({
   options: {
-    cellSize: 512,
-    debugGrid: false
+    cellSize: 512
   },
   initialize: function(url, options){
     // create a new index to store existing points
@@ -144,13 +143,11 @@ L.esri.FeatureLayer = L.GeoJSON.extend({
         var col = j-offsetCols;
         var cellBounds = this._cellExtent(row, col);
         var cellId = row+":"+col;
-        //if(bounds.intersects(cellBounds)){
         cells.push({
           id: cellId,
           bounds: cellBounds,
           distance:cellBounds.getCenter().distanceTo(center)
         });
-        //}
       }
     }
 
