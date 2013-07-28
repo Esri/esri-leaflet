@@ -43,7 +43,7 @@ L.esri.BasemapLayer = L.TileLayer.extend({
         options: {
           minZoom: 1,
           maxZoom: 19,
-          attribution: "<span class='esri-attributions' style='"+L.esri.AttributionStyles+"'>Copyright: &copy;2013 Esri, DeLorme, NAVTEQ</span><img src='//serverapi.arcgisonline.com/jsapi/arcgis/3.5/js/esri/images/map/logo-med.png' alt='Powered by Esri' class='esri-attribution-logo' style='"+L.esri.LogoStyles+"'>"
+          attribution: "<span class='esri-attributions' style='"+L.esri.AttributionStyles+"'>Esri, DeLorme, NAVTEQ</span><img src='//serverapi.arcgisonline.com/jsapi/arcgis/3.5/js/esri/images/map/logo-med.png' alt='Powered by Esri' class='esri-attribution-logo' style='"+L.esri.LogoStyles+"'>"
         }
       },
       GrayLabels: {
