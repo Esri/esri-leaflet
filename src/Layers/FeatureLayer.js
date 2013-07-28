@@ -2,7 +2,8 @@
 
 L.esri.FeatureLayer = L.GeoJSON.extend({
   options: {
-    cellSize: 512
+    cellSize: 512,
+    queryWhilePanning: (L.Browser.ie || L.Browser.mobile) ? false : true
   },
   initialize: function(url, options){
     // create a new index to store existing points
@@ -13,25 +14,37 @@ L.esri.FeatureLayer = L.GeoJSON.extend({
   },
   onAdd: function(map){
     L.LayerGroup.prototype.onAdd.call(this, map);
-    this._map = map;
-    this._setupGrid(map.getBounds());
-
-    map.on("move", this._updateVisibleFeatures, this);
-    map.on("move", this._moveHandler, this);
-    map.on("zoomend", this._zoomHandler, this);
-    map.on("resize", this._resizeHandler, this);
+    this._initializeVirtualGrid(map);
   },
   onRemove: function(map){
     L.LayerGroup.prototype.onRemove.call(this, map);
-    map.off("viewreset moveend", this._updateVisibleFeatures, this);
-    map.off("moveend", this._moveHandler, this);
-    map.off("zoomend", this._zoomHandler, this);
-    map.off("resize", this._resizeHandler, this);
+    this._destroyVirtualGrid(map);
   },
-  getLayerId: function(layer){
-    return layer.feature.id;
+  update: function(e){
+    var envelope = L.esri.Util.boundsToEnvelope(e.target.getBounds());
+    this.index.search(envelope).then(L.Util.bind(function(results){
+      this.eachLayer(L.Util.bind(function(layer){
+        var id = layer.feature.id;
+        this.setLayerVisibility(layer, L.esri.Util.indexOf(results, id) >= 0);
+      }, this));
+    }, this));
   },
-  _toggleLayerVisibility: function(layer, visible){
+  render: function(response){
+    if(response.objectIdFieldName && response.features.length && !response.error){
+      var idKey = response.objectIdFieldName;
+      for (var i = response.features.length - 1; i >= 0; i--) {
+        var feature = response.features[i];
+        var id = feature.attributes[idKey];
+        if(!this._layers[id]){
+          var geojson = Terraformer.ArcGIS.parse(feature);
+          geojson.id = id;
+          this.index.insert(geojson,id);
+          this.addData(geojson);
+        }
+      }
+    }
+  },
+  setLayerVisibility: function(layer, visible){
     var style = (visible) ? "block" : "none";
     // icon
     if(layer._icon){
@@ -52,30 +65,21 @@ L.esri.FeatureLayer = L.GeoJSON.extend({
       }
     }
   },
-  _updateVisibleFeatures: function(e){
-    var envelope = L.esri.Util.boundsToEnvelope(e.target.getBounds());
-    this.index.search(envelope).then(L.Util.bind(function(results){
-      this.eachLayer(L.Util.bind(function(layer){
-        var id = layer.feature.id;
-        this._toggleLayerVisibility(layer, L.esri.Util.indexOf(results, id) >= 0);
-      }, this));
-    }, this));
-  },
 
-  _processFeatures: function(response){
-    if(response.objectIdFieldName && response.features.length && !response.error){
-      var idKey = response.objectIdFieldName;
-      for (var i = response.features.length - 1; i >= 0; i--) {
-        var feature = response.features[i];
-        var id = feature.attributes[idKey];
-        if(!this._layers[id]){
-          var geojson = Terraformer.ArcGIS.parse(feature);
-          geojson.id = id;
-          this.index.insert(geojson,id);
-          this.addData(geojson);
-        }
-      }
-    }
+  _initializeVirtualGrid: function(map){
+    this._map = map;
+    var updateEvent = (this.options.queryWhilePanning) ? "move" : "moveend";
+    map.on("zoomend", this._zoomHandler, this);
+    map.on("resize", this._resizeHandler, this);
+    map.on(updateEvent, this.update, this);
+    map.on(updateEvent, this._moveHandler, this);
+    this._resetGrid(map.getBounds());
+  },
+  _destroyVirtualGrid: function(map){
+    map.off("viewreset moveend", this.update, this);
+    map.off("moveend", this._moveHandler, this);
+    map.off("zoomend", this._zoomHandler, this);
+    map.off("resize", this._resizeHandler, this);
   },
   _requestFeaturesInCells: function(bounds){
     var cells = this._cellsInBounds(bounds);
@@ -87,7 +91,7 @@ L.esri.FeatureLayer = L.GeoJSON.extend({
           geometry: JSON.stringify(L.esri.Util.boundsToExtent(cell.bounds)),
           outFields:"*",
           outSr: 4326
-        }, this._processFeatures, this);
+        }, this.render, this);
         this._loadedCells.push(cell.id);
       }
     }
@@ -96,7 +100,7 @@ L.esri.FeatureLayer = L.GeoJSON.extend({
     this._requestFeaturesInCells(e.target.getBounds());
   },
   _zoomHandler: function(e){
-    this._setupGrid(e.target.getBounds());
+    this._resetGrid(e.target.getBounds());
   },
   _resizeHandler: function(e) {
     this._setupSize();
@@ -105,7 +109,7 @@ L.esri.FeatureLayer = L.GeoJSON.extend({
     this._rows = Math.ceil(this._map.getSize().x / this._cellSize);
     this._cols = Math.ceil(this._map.getSize().y / this._cellSize);
   },
-  _setupGrid: function(bounds){
+  _resetGrid: function(bounds){
     this._origin = this._map.project(bounds.getNorthWest());
     this._cellSize = this.options.cellSize;
     this._setupSize();
