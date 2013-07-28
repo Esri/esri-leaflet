@@ -177,7 +177,7 @@ L.esri.Mixins = {
         params = L.Util.extend(defaults, options);
       }
 
-      L.esri.get(this.serviceUrl + '/identify', params, callback);
+      L.esri.get(this._url + '/identify', params, callback);
     },
     parseLayerDefs: function (layerDefs) {
       if (layerDefs instanceof Array) {

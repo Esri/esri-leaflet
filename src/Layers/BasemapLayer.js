@@ -85,13 +85,17 @@ L.esri.BasemapLayer = L.TileLayer.extend({
     // merge passed options into the config options
     var mergedOptions = L.Util.extend(config.options, options);
 
+    // clean up our input url
+    var url = L.esri.Util.cleanUrl(config.urlTemplate);
+
     // call the initialize method on L.TileLayer to set everything up
-    L.TileLayer.prototype.initialize.call(this, config.urlTemplate, L.Util.setOptions(this, mergedOptions));
+    L.TileLayer.prototype.initialize.call(this, url, L.Util.setOptions(this, mergedOptions));
 
     // if this basemap requires dynamic attribution set it up
     if(config.attributionUrl){
+      var attributionUrl =L.esri.Util.cleanUrl(config.attributionUrl);
       this.dynamicAttribution = true;
-      this.getAttributionData(config.attributionUrl);
+      this.getAttributionData(attributionUrl);
     }
   },
   dynamicAttribution: false,
