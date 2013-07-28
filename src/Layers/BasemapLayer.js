@@ -9,7 +9,7 @@ L.esri.BasemapLayer = L.TileLayer.extend({
         options: {
           minZoom: 1,
           maxZoom: 19,
-          attribution: "<span class='esri-attributions' style='"+L.esri.AttributionStyles+"'>Esri</span><img src='//serverapi.arcgisonline.com/jsapi/arcgis/3.5/js/esri/images/map/logo-med.png' alt='Powered by Esri' class='esri-attribution-logo' style='"+L.esri.LogoStyles+"'>"
+          attribution: "<span class='esri-attributions' style='"+L.esri.AttributionStyles+"'>Esri</span><img src='https://serverapi.arcgisonline.com/jsapi/arcgis/3.5/js/esri/images/map/logo-med.png' alt='Powered by Esri' class='esri-attribution-logo' style='"+L.esri.LogoStyles+"'>"
         }
       },
       Topographic: {
@@ -18,7 +18,7 @@ L.esri.BasemapLayer = L.TileLayer.extend({
         options: {
           minZoom: 1,
           maxZoom: 19,
-          attribution: "<span class='esri-attributions' style='"+L.esri.AttributionStyles+"'>Esri</span><img src='//serverapi.arcgisonline.com/jsapi/arcgis/3.5/js/esri/images/map/logo-med.png' alt='Powered by Esri' class='esri-attribution-logo' style='"+L.esri.LogoStyles+"'>"
+          attribution: "<span class='esri-attributions' style='"+L.esri.AttributionStyles+"'>Esri</span><img src='https://serverapi.arcgisonline.com/jsapi/arcgis/3.5/js/esri/images/map/logo-med.png' alt='Powered by Esri' class='esri-attribution-logo' style='"+L.esri.LogoStyles+"'>"
         }
       },
       Oceans: {
@@ -27,7 +27,7 @@ L.esri.BasemapLayer = L.TileLayer.extend({
         options: {
           minZoom: 1,
           maxZoom: 19,
-          attribution: "<span class='esri-attributions' style='"+L.esri.AttributionStyles+"'>Esri</span><img src='//serverapi.arcgisonline.com/jsapi/arcgis/3.5/js/esri/images/map/logo-med.png' alt='Powered by Esri' class='esri-attribution-logo' style='"+L.esri.LogoStyles+"'>"
+          attribution: "<span class='esri-attributions' style='"+L.esri.AttributionStyles+"'>Esri</span><img src='https://serverapi.arcgisonline.com/jsapi/arcgis/3.5/js/esri/images/map/logo-med.png' alt='Powered by Esri' class='esri-attribution-logo' style='"+L.esri.LogoStyles+"'>"
         }
       },
       NationalGeographic: {
@@ -35,7 +35,7 @@ L.esri.BasemapLayer = L.TileLayer.extend({
         options: {
           minZoom: 1,
           maxZoom: 19,
-          attribution: "<span class='esri-attributions' style='"+L.esri.AttributionStyles+"'>Esri</span><img src='//serverapi.arcgisonline.com/jsapi/arcgis/3.5/js/esri/images/map/logo-med.png' alt='Powered by Esri' class='esri-attribution-logo' style='"+L.esri.LogoStyles+"'>"
+          attribution: "<span class='esri-attributions' style='"+L.esri.AttributionStyles+"'>Esri</span><img src='https://serverapi.arcgisonline.com/jsapi/arcgis/3.5/js/esri/images/map/logo-med.png' alt='Powered by Esri' class='esri-attribution-logo' style='"+L.esri.LogoStyles+"'>"
         }
       },
       Gray: {
@@ -43,7 +43,7 @@ L.esri.BasemapLayer = L.TileLayer.extend({
         options: {
           minZoom: 1,
           maxZoom: 19,
-          attribution: "<span class='esri-attributions' style='"+L.esri.AttributionStyles+"'>Copyright: &copy;2013 Esri, DeLorme, NAVTEQ</span><img src='//serverapi.arcgisonline.com/jsapi/arcgis/3.5/js/esri/images/map/logo-med.png' alt='Powered by Esri' class='esri-attribution-logo' style='"+L.esri.LogoStyles+"'>"
+          attribution: "<span class='esri-attributions' style='"+L.esri.AttributionStyles+"'>Copyright: &copy;2013 Esri, DeLorme, NAVTEQ</span><img src='https://serverapi.arcgisonline.com/jsapi/arcgis/3.5/js/esri/images/map/logo-med.png' alt='Powered by Esri' class='esri-attribution-logo' style='"+L.esri.LogoStyles+"'>"
         }
       },
       GrayLabels: {
@@ -58,7 +58,7 @@ L.esri.BasemapLayer = L.TileLayer.extend({
         options: {
           minZoom: 1,
           maxZoom: 19,
-          attribution: "<span class='esri-attributions' style='"+L.esri.AttributionStyles+"'>Esri, DigitalGlobe, GeoEye, i-cubed, USDA, USGS, AEX, Getmapping, Aerogrid, IGN, IGP, swisstopo, and the GIS User Community</span><img src='//serverapi.arcgisonline.com/jsapi/arcgis/3.5/js/esri/images/map/logo-med.png' alt='Powered by Esri' class='esri-attribution-logo' style='"+L.esri.LogoStyles+"'>"
+          attribution: "<span class='esri-attributions' style='"+L.esri.AttributionStyles+"'>Esri, DigitalGlobe, GeoEye, i-cubed, USDA, USGS, AEX, Getmapping, Aerogrid, IGN, IGP, swisstopo, and the GIS User Community</span><img src='https://serverapi.arcgisonline.com/jsapi/arcgis/3.5/js/esri/images/map/logo-med.png' alt='Powered by Esri' class='esri-attribution-logo' style='"+L.esri.LogoStyles+"'>"
         }
       },
       ImageryLabels: {
