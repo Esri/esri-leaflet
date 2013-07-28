@@ -71,6 +71,19 @@ L.esri.get = (L.esri.Support.CORS) ? L.esri.RequestHandlers.CORS : L.esri.Reques
 
 // General utility namespace
 L.esri.Util = {
+  cleanUrl: function(url){
+    //add a trailing slash to the url if the user omitted it
+    if(url[url.length-1] !== "/"){
+      url += "/";
+    }
+
+    // if the user passed a insecure resource to an insecure page rewrite it to https
+    if(url.match.match(/^http:/) && window.location.protocol.match(/^https:/)){
+      url.replace("http:", "https:");
+    }
+
+    return url;
+  },
   // quick and dirty serialization
   serialize: function(params){
     var qs="?";

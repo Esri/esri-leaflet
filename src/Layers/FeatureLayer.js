@@ -7,12 +7,7 @@ L.esri.FeatureLayer = L.GeoJSON.extend({
   initialize: function(url, options){
     // create a new index to store existing points
     this.index = new Terraformer.RTree();
-
-    //add a trailing slash to the url if the user omitted it
-    if(url[url.length-1] !== "/"){
-      url += "/";
-    }
-    this.url = url;
+    this.url = L.esri.Util.cleanUrl(url);
     L.Util.setOptions(this, options);
     L.GeoJSON.prototype.initialize.call(this, [], options);
   },
