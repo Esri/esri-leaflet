@@ -81,23 +81,8 @@ L.esri.FeatureLayer = L.GeoJSON.extend({
     map.off("zoomend", this._zoomHandler, this);
     map.off("resize", this._resizeHandler, this);
   },
-  _requestFeaturesInCells: function(bounds){
-    var cells = this._cellsInBounds(bounds);
-    for (var i = 0; i < cells.length; i++) {
-      var cell = cells[i];
-      if(L.esri.Util.indexOf(this._loadedCells, cell.id) === -1){
-        L.esri.get(this.url+"query", {
-          geometryType: "esriGeometryEnvelope",
-          geometry: JSON.stringify(L.esri.Util.boundsToExtent(cell.bounds)),
-          outFields:"*",
-          outSr: 4326
-        }, this.render, this);
-        this._loadedCells.push(cell.id);
-      }
-    }
-  },
   _moveHandler: function(e){
-    this._requestFeaturesInCells(e.target.getBounds());
+    this._requestFeatures(e.target.getBounds());
   },
   _zoomHandler: function(e){
     this._resetGrid(e.target.getBounds());
@@ -114,19 +99,22 @@ L.esri.FeatureLayer = L.GeoJSON.extend({
     this._cellSize = this.options.cellSize;
     this._setupSize();
     this._loadedCells = [];
-    this._requestFeaturesInCells(bounds);
+    this._requestFeatures(bounds);
   },
-  _cellPoint:function(row, col){
-    var x = this._origin.x + (row*this._cellSize);
-    var y = this._origin.y + (col*this._cellSize);
-    return new L.Point(x, y);
-  },
-  _cellExtent: function(row, col){
-    var swPoint = this._cellPoint(row, col);
-    var nePoint = this._cellPoint(row-1, col-1);
-    var sw = this._map.unproject(swPoint);
-    var ne = this._map.unproject(nePoint);
-    return new L.LatLngBounds(ne, sw);
+  _requestFeatures: function(bounds){
+    var cells = this._cellsInBounds(bounds);
+    for (var i = 0; i < cells.length; i++) {
+      var cell = cells[i];
+      if(L.esri.Util.indexOf(this._loadedCells, cell.id) === -1){
+        L.esri.get(this.url+"query", {
+          geometryType: "esriGeometryEnvelope",
+          geometry: JSON.stringify(L.esri.Util.boundsToExtent(cell.bounds)),
+          outFields:"*",
+          outSr: 4326
+        }, this.render, this);
+        this._loadedCells.push(cell.id);
+      }
+    }
   },
   _cellsInBounds: function(bounds){
     var offset = this._map.project(bounds.getNorthWest());
@@ -155,6 +143,18 @@ L.esri.FeatureLayer = L.GeoJSON.extend({
     });
 
     return cells;
+  },
+  _cellExtent: function(row, col){
+    var swPoint = this._cellPoint(row, col);
+    var nePoint = this._cellPoint(row-1, col-1);
+    var sw = this._map.unproject(swPoint);
+    var ne = this._map.unproject(nePoint);
+    return new L.LatLngBounds(ne, sw);
+  },
+  _cellPoint:function(row, col){
+    var x = this._origin.x + (row*this._cellSize);
+    var y = this._origin.y + (col*this._cellSize);
+    return new L.Point(x, y);
   }
 });
 
