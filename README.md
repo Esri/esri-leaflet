@@ -122,6 +122,18 @@ L.esri.dynamicMapLayer("http://sampleserver1.arcgisonline.com/ArcGIS/rest/servic
 }).addTo(map);
 ```
 
+You can identify features from MapService using `L.esri.DynamicMapLayer.identify(latLng, options, callback)`.
+
+```js
+dynLayer.identify(e.latlng, {
+  sr: '4265', //default is '4326'
+  tolerance: 5, //default is 3
+  imageDisplay: '801,601,97', // default is '800,600,96' (height by width in pixels and DPI)
+} , callback)
+
+```
+Take a look at [this](http://esri.github.io/esri-leaflet/dynamicmapservice.html) sample for a demonstration.
+
 ### TiledMapLayer
 Esri Leaflet can work with tiled map services as well. You can use `L.esri.TiledMapLayer(url, options)` to use tiled map services. The `url` parameter is the url to the MapServer and options is identical to the [options you can pass](http://leafletjs.com/reference.html#tilelayer) to `L.TileLayer`.
 

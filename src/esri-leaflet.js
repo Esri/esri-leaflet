@@ -84,7 +84,7 @@ L.esri.Mixins = {
   identifiableLayer: {
     identify:function(latLng, options, callback){
       var defaults = {
-        sr: '4265',
+        sr: '4326',
         mapExtent: JSON.stringify(L.esri.Util.boundsToExtent(this._map.getBounds())),
         tolerance: 3,
         geometryType: 'esriGeometryPoint',
@@ -93,7 +93,7 @@ L.esri.Mixins = {
           x: latLng.lng,
           y: latLng.lat,
           spatialReference: {
-            wkid: 4265
+            wkid: 4326
           }
         })
       };
