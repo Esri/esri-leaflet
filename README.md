@@ -20,8 +20,13 @@ Here is a quick example to get you started. Just change the paths to point to th
   <head>
     <title>ArcGIS Basemap</title>
     <link rel="stylesheet" href="/the/path/to/leaflet.css" />
-    <link rel="stylesheet" href="/the/path/to/esri-leaflet.min.css" />
-    <script src="/the/path/to.leaflet.js"></script>
+    <style>
+	html, body,  #map {
+		width : 100%;
+		height : 100%;        	
+	}
+	</style>
+	<script src="/the/path/to.leaflet.js"></script>
     <script src="/the/path/to/esri-leaflet.min.js"></script>
   </head>
   <body>
@@ -29,7 +34,7 @@ Here is a quick example to get you started. Just change the paths to point to th
     <script>
       var map = L.map('map');
       
-      // ArcGIS Online Basemaps - Streets, Topographic, Gray, Gray Labels, Ocean, NationalGeographic, Imagery, ImageryLabels
+      // ArcGIS Online Basemaps - Streets, Topographic, Gray, GrayLabels, Oceans, NationalGeographic, Imagery, ImageryLabels
       L.esri.basemapLayer("Streets").addTo(map);
 
       function onLocationFound(e) {
@@ -117,6 +122,18 @@ L.esri.dynamicMapLayer("http://sampleserver1.arcgisonline.com/ArcGIS/rest/servic
 }).addTo(map);
 ```
 
+You can identify features from MapService using `L.esri.DynamicMapLayer.identify(latLng, options, callback)`.
+
+```js
+dynLayer.identify(e.latlng, {
+  sr: '4265', //default is '4326'
+  tolerance: 5, //default is 3
+  imageDisplay: '801,601,97', // default is '800,600,96' (height by width in pixels and DPI)
+} , callback)
+
+```
+Take a look at [this](http://esri.github.io/esri-leaflet/dynamicmapservice.html) sample for a demonstration.
+
 ### TiledMapLayer
 Esri Leaflet can work with tiled map services as well. You can use `L.esri.TiledMapLayer(url, options)` to use tiled map services. The `url` parameter is the url to the MapServer and options is identical to the [options you can pass](http://leafletjs.com/reference.html#tilelayer) to `L.TileLayer`.
 
@@ -147,8 +164,6 @@ L.esri.basemapLayer("GrayLabels", {
 ### Requirements
 * All services that Esri Leaflet access must be publicly accessible. Support for private services will be included in a future release.
 * MapServices that you wish to use for `L.esri.TiledMapLayer` must be published in [Web Mercator](http://spatialreference.org/ref/sr-org/6928/).
-* MapServices that you wish to use for `L.esri.DynamicMapLayer` must be published in [Web Mercator](http://spatialreference.org/ref/sr-org/6928/).
-* FeatureServices must be published in [Web Mercator](http://spatialreference.org/ref/sr-org/6928/) or [Geographic](http://spatialreference.org/ref/epsg/4326/) spatial references
 
 ### Dependencies
 * [Terraformer](https://github.com/esri/Terraformer) - base library for other dependencies
