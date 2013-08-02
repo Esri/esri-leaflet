@@ -12,6 +12,7 @@ Icon
 /*.sublime-project
 *.sublime-workspace
 *.sublime-project
+.idea/*
 
 # SASS
 .sass-cache

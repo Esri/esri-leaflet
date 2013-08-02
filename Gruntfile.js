@@ -100,11 +100,28 @@ module.exports = function(grunt) {
           nospawn: true
         }
       }
-    }
+    },
+    test: {
+        all: {
+            options: {
+                urls: [
+                    'http://localhost:8000/spec/index.html'
+                ]
+            }
+        }
+    },
+    connect: {
+        server: {
+            options: {
+                port: 8000
+            }
+          }
+      }
   });
 
   grunt.registerTask('default', ['jshint']);
   grunt.registerTask('build', ['default', 'uglify']);
+  grunt.registerTask('test', ['connect', 'test']);
 
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-jshint');
@@ -112,5 +129,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-contrib-connect');
+  grunt.loadNpmTasks('grunt-mocha-phantomjs');
 
 };
