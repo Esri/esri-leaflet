@@ -70,6 +70,25 @@ L.esri.get = (L.esri.Support.CORS) ? L.esri.RequestHandlers.CORS : L.esri.Reques
 
 // General utility namespace
 L.esri.Util = {
+  // make it so that passed `function` never gets called
+  // twice within `delay` milliseconds. Used to throttle
+  // `move` events on the layer.
+  // http://remysharp.com/2010/07/21/throttling-function-calls/
+  debounce: function (fn, delay, context) {
+    var timer = null;
+    return function() {
+      var context = this||context, args = arguments;
+      clearTimeout(timer);
+      timer = setTimeout(function () {
+        fn.apply(context, args);
+      }, delay);
+    };
+  },
+  // round a number away from zero used to snap
+  // row/columns away from the origin of the grid
+  roundAwayFromZero: function (num){
+    return (num > 0) ? Math.ceil(num) : Math.floor(num);
+  },
   trim: function(str) {
     return str.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
   },
@@ -145,50 +164,149 @@ L.esri.Util = {
   }
 };
 
-L.esri.Mixins = {
-  identifiableLayer: {
-    identify:function(latLng, options, callback){
-      var defaults = {
-        sr: '4265',
-        mapExtent: JSON.stringify(L.esri.Util.boundsToExtent(this._map.getBounds())),
-        tolerance: 3,
-        geometryType: 'esriGeometryPoint',
-        imageDisplay: '800,600,96',
-        geometry: JSON.stringify({
-          x: latLng.lng,
-          y: latLng.lat,
-          spatialReference: {
-            wkid: 4265
-          }
-        })
-      };
+L.esri.Mixins = {}
 
-      var params;
+L.esri.Mixins.featureGrid = {
+  _initializeFeatureGrid: function(map){
+    this._map = map;
+    this._previousCells = [];
+    this.center = this._map.getCenter();
+    this.origin = this._map.project(this.center);
 
-      if (typeof options === 'function' && typeof callback === 'undefined') {
-        callback = options;
-        params = defaults;
-      } else if (typeof options === 'object') {
-        if (options.layerDefs) {
-          options.layerDefs = this.parseLayerDefs(options.layerDefs);
-        }
-
-        params = L.Util.extend(defaults, options);
+    this._moveHandler = L.esri.Util.debounce(function(e){
+      if(e.type === "zoomend"){
+        this.origin = this._map.project(this.center);
+        this._previousCells = [];
       }
+      this._requestFeatures(e.target.getBounds());
+    }, this.options.debounce, this);
 
-      L.esri.get(this._url + '/identify', params, callback);
-    },
-    parseLayerDefs: function (layerDefs) {
-      if (layerDefs instanceof Array) {
-        //throw 'must be object or string';
-        return '';
-      }
+    map.on("zoomend resize move", this._moveHandler, this);
 
-      if (typeof layerDefs === 'object') {
-        return JSON.stringify(layerDefs);
-      }
-
-      return layerDefs;
+    this._requestFeatures(map.getBounds());
+  },
+  _destroyFeatureGrid: function(map){
+    map.on("zoomend resize move", this._moveHandler, this);
+  },
+  _requestFeatures: function(bounds){
+    var cells = this._cellsWithin(bounds);
+    for (var i = 0; i < cells.length; i++) {
+      var cell = cells[i];
+      L.esri.get(this.url+"query", {
+        geometryType: "esriGeometryEnvelope",
+        geometry: JSON.stringify(L.esri.Util.boundsToExtent(cell.bounds)),
+        outFields:"*",
+        outSr: 4326
+      }, this._render, this);
     }
+  },
+  _cellsWithin: function(mapBounds){
+    var size = this._map.getSize();
+    var offset = this._map.project(this._map.getCenter());
+    var bounds = mapBounds.pad(Math.min(this.options.cellSize/size.x, this.options.cellSize/size.y));
+    var cells = [];
+
+    var topLeftPoint = this._map.project(bounds.getNorthWest());
+    var bottomRightPoint = this._map.project(bounds.getSouthEast());
+
+    var topLeft = topLeftPoint.subtract(offset).divideBy(this.options.cellSize);
+    var bottomRight = bottomRightPoint.subtract(offset).divideBy(this.options.cellSize);
+
+    var offsetRows = Math.round((this.origin.x - offset.x) / this.options.cellSize);
+    var offsetCols = Math.round((this.origin.y - offset.y) / this.options.cellSize);
+
+    var minRow = L.esri.Util.roundAwayFromZero(topLeft.x)-offsetRows;
+    var maxRow = L.esri.Util.roundAwayFromZero(bottomRight.x)-offsetRows;
+    var minCol = L.esri.Util.roundAwayFromZero(topLeft.y)-offsetCols;
+    var maxCol = L.esri.Util.roundAwayFromZero(bottomRight.y)-offsetCols;
+
+    for (var row = minRow; row < maxRow; row++) {
+      for (var col = minCol; col < maxCol; col++) {
+        var cellId = "cell:"+row+":"+col;
+        var duplicate = this._previousCells.indexOf(cellId) >= 0;
+
+        if(!duplicate || !this.options.deduplicate){
+          var cellBounds = this._cellExtent(row, col);
+          var cellCenter = cellBounds.getCenter();
+          var radius = cellCenter.distanceTo(cellBounds.getNorthWest());
+          var distance = cellCenter.distanceTo(this.center);
+          var cell = {
+            row: row,
+            col: col,
+            id: cellId,
+            center: cellCenter,
+            bounds: cellBounds,
+            distance:distance,
+            radius: radius
+          };
+          cells.push(cell);
+          this._previousCells.push(cellId);
+        }
+      }
+    }
+
+    cells.sort(function (a, b) {
+      return a.distance - b.distance;
+    });
+
+    return cells;
+  },
+  _cellExtent: function(row, col){
+    var swPoint = this._cellPoint(row, col);
+    var nePoint = this._cellPoint(row+1, col+1);
+    var sw = this._map.unproject(swPoint);
+    var ne = this._map.unproject(nePoint);
+    return L.latLngBounds(sw, ne);
+  },
+  _cellPoint:function(row, col){
+    var x = this.origin.x + (row*this.options.cellSize);
+    var y = this.origin.y + (col*this.options.cellSize);
+    return [x, y];
+  }
+}
+
+L.esri.Mixins.identifiableLayer = {
+  identify:function(latLng, options, callback){
+    var defaults = {
+      sr: '4265',
+      mapExtent: JSON.stringify(L.esri.Util.boundsToExtent(this._map.getBounds())),
+      tolerance: 3,
+      geometryType: 'esriGeometryPoint',
+      imageDisplay: '800,600,96',
+      geometry: JSON.stringify({
+        x: latLng.lng,
+        y: latLng.lat,
+        spatialReference: {
+          wkid: 4265
+        }
+      })
+    };
+
+    var params;
+
+    if (typeof options === 'function' && typeof callback === 'undefined') {
+      callback = options;
+      params = defaults;
+    } else if (typeof options === 'object') {
+      if (options.layerDefs) {
+        options.layerDefs = this.parseLayerDefs(options.layerDefs);
+      }
+
+      params = L.Util.extend(defaults, options);
+    }
+
+    L.esri.get(this._url + '/identify', params, callback);
+  },
+  parseLayerDefs: function (layerDefs) {
+    if (layerDefs instanceof Array) {
+      //throw 'must be object or string';
+      return '';
+    }
+
+    if (typeof layerDefs === 'object') {
+      return JSON.stringify(layerDefs);
+    }
+
+    return layerDefs;
   }
 };
