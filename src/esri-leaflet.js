@@ -62,7 +62,6 @@ L.esri.RequestHandlers = {
     };
 
     document.body.appendChild(script);
-
   }
 };
 
@@ -71,7 +70,6 @@ L.esri.get = (L.esri.Support.CORS) ? L.esri.RequestHandlers.CORS : L.esri.Reques
 
 // General utility namespace
 L.esri.Util = {
-  // from : http://stackoverflow.com/questions/3000649/trim-spaces-from-start-and-end-of-string
   trim: function(str) {
     return str.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
   },
@@ -81,11 +79,6 @@ L.esri.Util = {
     //add a trailing slash to the url if the user omitted it
     if(url[url.length-1] !== "/"){
       url += "/";
-    }
-
-    // if the user passed a insecure resource to an insecure page rewrite it to https
-    if(url.match(/^http:/) && window.location.protocol.match(/^https:/)){
-      url.replace("http:", "https:");
     }
 
     return url;
