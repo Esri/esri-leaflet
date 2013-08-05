@@ -1,5 +1,3 @@
-/* globals L */
-
 L.esri.BasemapLayer = L.TileLayer.extend({
   statics: {
     TILES: {
@@ -9,7 +7,7 @@ L.esri.BasemapLayer = L.TileLayer.extend({
         options: {
           minZoom: 1,
           maxZoom: 19,
-          attribution: "<span class='esri-attributions' style='"+L.esri.AttributionStyles+"'>Esri</span><img src='//serverapi.arcgisonline.com/jsapi/arcgis/3.5/js/esri/images/map/logo-med.png' alt='Powered by Esri' class='esri-attribution-logo' style='"+L.esri.LogoStyles+"'>"
+          attribution: "<span class='esri-attributions' style='"+L.esri.AttributionStyles+"'>Esri</span><img src='https://serverapi.arcgisonline.com/jsapi/arcgis/3.5/js/esri/images/map/logo-med.png' alt='Powered by Esri' class='esri-attribution-logo' style='"+L.esri.LogoStyles+"'>"
         }
       },
       Topographic: {
@@ -18,7 +16,7 @@ L.esri.BasemapLayer = L.TileLayer.extend({
         options: {
           minZoom: 1,
           maxZoom: 19,
-          attribution: "<span class='esri-attributions' style='"+L.esri.AttributionStyles+"'>Esri</span><img src='//serverapi.arcgisonline.com/jsapi/arcgis/3.5/js/esri/images/map/logo-med.png' alt='Powered by Esri' class='esri-attribution-logo' style='"+L.esri.LogoStyles+"'>"
+          attribution: "<span class='esri-attributions' style='"+L.esri.AttributionStyles+"'>Esri</span><img src='https://serverapi.arcgisonline.com/jsapi/arcgis/3.5/js/esri/images/map/logo-med.png' alt='Powered by Esri' class='esri-attribution-logo' style='"+L.esri.LogoStyles+"'>"
         }
       },
       Oceans: {
@@ -26,31 +24,31 @@ L.esri.BasemapLayer = L.TileLayer.extend({
         attributionUrl: "http://static.arcgis.com/attribution/Ocean_Basemap?f=json",
         options: {
           minZoom: 1,
-          maxZoom: 19,
-          attribution: "<span class='esri-attributions' style='"+L.esri.AttributionStyles+"'>Esri</span><img src='//serverapi.arcgisonline.com/jsapi/arcgis/3.5/js/esri/images/map/logo-med.png' alt='Powered by Esri' class='esri-attribution-logo' style='"+L.esri.LogoStyles+"'>"
+          maxZoom: 16,
+          attribution: "<span class='esri-attributions' style='"+L.esri.AttributionStyles+"'>Esri</span><img src='https://serverapi.arcgisonline.com/jsapi/arcgis/3.5/js/esri/images/map/logo-med.png' alt='Powered by Esri' class='esri-attribution-logo' style='"+L.esri.LogoStyles+"'>"
         }
       },
       NationalGeographic: {
         urlTemplate: "http://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}",
         options: {
           minZoom: 1,
-          maxZoom: 19,
-          attribution: "<span class='esri-attributions' style='"+L.esri.AttributionStyles+"'>Esri</span><img src='//serverapi.arcgisonline.com/jsapi/arcgis/3.5/js/esri/images/map/logo-med.png' alt='Powered by Esri' class='esri-attribution-logo' style='"+L.esri.LogoStyles+"'>"
+          maxZoom: 16,
+          attribution: "<span class='esri-attributions' style='"+L.esri.AttributionStyles+"'>Esri</span><img src='https://serverapi.arcgisonline.com/jsapi/arcgis/3.5/js/esri/images/map/logo-med.png' alt='Powered by Esri' class='esri-attribution-logo' style='"+L.esri.LogoStyles+"'>"
         }
       },
       Gray: {
         urlTemplate: "http://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}",
         options: {
           minZoom: 1,
-          maxZoom: 19,
-          attribution: "<span class='esri-attributions' style='"+L.esri.AttributionStyles+"'>Esri, DeLorme, NAVTEQ</span><img src='//serverapi.arcgisonline.com/jsapi/arcgis/3.5/js/esri/images/map/logo-med.png' alt='Powered by Esri' class='esri-attribution-logo' style='"+L.esri.LogoStyles+"'>"
+          maxZoom: 16,
+          attribution: "<span class='esri-attributions' style='"+L.esri.AttributionStyles+"'>Copyright: &copy;2013 Esri, DeLorme, NAVTEQ</span><img src='https://serverapi.arcgisonline.com/jsapi/arcgis/3.5/js/esri/images/map/logo-med.png' alt='Powered by Esri' class='esri-attribution-logo' style='"+L.esri.LogoStyles+"'>"
         }
       },
       GrayLabels: {
         urlTemplate: "http://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}",
         options: {
           minZoom: 1,
-          maxZoom: 19
+          maxZoom: 16
         }
       },
       Imagery: {
@@ -58,7 +56,7 @@ L.esri.BasemapLayer = L.TileLayer.extend({
         options: {
           minZoom: 1,
           maxZoom: 19,
-          attribution: "<span class='esri-attributions' style='"+L.esri.AttributionStyles+"'>Esri, DigitalGlobe, GeoEye, i-cubed, USDA, USGS, AEX, Getmapping, Aerogrid, IGN, IGP, swisstopo, and the GIS User Community</span><img src='//serverapi.arcgisonline.com/jsapi/arcgis/3.5/js/esri/images/map/logo-med.png' alt='Powered by Esri' class='esri-attribution-logo' style='"+L.esri.LogoStyles+"'>"
+          attribution: "<span class='esri-attributions' style='"+L.esri.AttributionStyles+"'>Esri, DigitalGlobe, GeoEye, i-cubed, USDA, USGS, AEX, Getmapping, Aerogrid, IGN, IGP, swisstopo, and the GIS User Community</span><img src='https://serverapi.arcgisonline.com/jsapi/arcgis/3.5/js/esri/images/map/logo-med.png' alt='Powered by Esri' class='esri-attribution-logo' style='"+L.esri.LogoStyles+"'>"
         }
       },
       ImageryLabels: {
@@ -85,13 +83,17 @@ L.esri.BasemapLayer = L.TileLayer.extend({
     // merge passed options into the config options
     var mergedOptions = L.Util.extend(config.options, options);
 
+    // clean up our input url
+    var url = L.esri.Util.cleanUrl(config.urlTemplate);
+
     // call the initialize method on L.TileLayer to set everything up
-    L.TileLayer.prototype.initialize.call(this, config.urlTemplate, L.Util.setOptions(this, mergedOptions));
+    L.TileLayer.prototype.initialize.call(this, url, L.Util.setOptions(this, mergedOptions));
 
     // if this basemap requires dynamic attribution set it up
     if(config.attributionUrl){
+      var attributionUrl =L.esri.Util.cleanUrl(config.attributionUrl);
       this.dynamicAttribution = true;
-      this.getAttributionData(config.attributionUrl);
+      this.getAttributionData(attributionUrl);
     }
   },
   dynamicAttribution: false,
