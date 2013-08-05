@@ -1,38 +1,13 @@
-# Ignore environment variables set on this machine
-.env
-
 # Mac
 .DS_Store
 Icon
 ._*
 .Spotlight-V100
+
 # SublimeText
 /*.sublime-project
 *.sublime-workspace
 *.sublime-project
 
-# SASS
-.sass-cache
-
 #Node
 node_modules
-
-# Ruby
-*.gem
-*.rbc
-.bundle
-.config
-coverage
-InstalledFiles
-lib/bundler/man
-pkg
-rdoc
-spec/reports
-test/tmp
-test/version_tmp
-tmp
-
-# YARD artifacts
-.yardoc
-_yardoc
-doc/

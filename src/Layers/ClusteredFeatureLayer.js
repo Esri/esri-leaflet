@@ -6,7 +6,7 @@
       cellSize: 512,
       debounce: 100,
       deduplicate: true,
-      pointToLayer: function (geojson, latlng) {
+      createMarker: function (geojson, latlng) {
         return new L.marker(latlng);
       },
       onEachMarker: undefined

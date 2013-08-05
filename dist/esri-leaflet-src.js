@@ -2700,7 +2700,8 @@ L.esri.Mixins.featureGrid = {
   _cellsWithin: function(mapBounds){
     var size = this._map.getSize();
     var offset = this._map.project(this._map.getCenter());
-    var bounds = mapBounds.pad(Math.min(this.options.cellSize/size.x, this.options.cellSize/size.y));
+    //var padding = Math.min(this.options.cellSize/size.x, this.options.cellSize/size.y);
+    var bounds = mapBounds.pad(0.1);
     var cells = [];
 
     var topLeftPoint = this._map.project(bounds.getNorthWest());
