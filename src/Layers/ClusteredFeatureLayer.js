@@ -6,10 +6,10 @@
       cellSize: 512,
       debounce: 100,
       deduplicate: true,
-      marker: function (geojson, latlng) {
+      pointToLayer: function (geojson, latlng) {
         return new L.marker(latlng);
       },
-      eachMarker: undefined
+      onEachMarker: undefined
     },
     initialize: function(url, options){
       L.Util.setOptions(this, options);
@@ -28,7 +28,6 @@
       map.addLayer(this);
       return this;
     },
-
     _render: function(response){
       if(response.objectIdFieldName && response.features.length && !response.error){
         var idKey = response.objectIdFieldName;
@@ -38,10 +37,10 @@
           if(L.esri.Util.indexOf(this._loaded, id) < 0){
             var geojson = Terraformer.ArcGIS.parse(feature);
             geojson.id = id;
-            var marker = this.options.marker(geojson, [geojson.geometry.coordinates[1], geojson.geometry.coordinates[0]]);
+            var marker = this.options.createMarker(geojson, [geojson.geometry.coordinates[1], geojson.geometry.coordinates[0]]);
 
-            if(this.options.eachMarker){
-              this.options.eachMarker(geojson, marker);
+            if(this.options.onEachMarker){
+              this.options.onEachMarker(geojson, marker);
             }
 
             this.cluster.addLayer(marker);
