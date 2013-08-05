@@ -8,22 +8,27 @@
 <body>
 <div id="mocha"></div>
 <script type="text/javascript" src="../node_modules/mocha/mocha.js"></script>
-<script type="text/javascript" src="../node_modules/happen/src/happen.js"></script>
 <script type="text/javascript" src="../node_modules/expect.js/expect.js"></script>
+<script type="text/javascript" src="sinon.js"></script>
 
 <!-- source files -->
 <script type="text/javascript" src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>
 <script type="text/javascript" src="../src/esri-leaflet.js"></script>
 <script type="text/javascript" src="../src/Layers/BasemapLayer.js"></script>
+<script type="text/javascript" src="../src/Layers/DynamicMapLayer.js"></script>
 
 <script>
-    mocha.setup('bdd');
+    mocha.setup({
+        ui: 'bdd',
+        globals: ['_leaflet_resize3']
+    });
     mocha.ignoreLeaks();
 </script>
 
 <!-- spec files -->
 <script type="text/javascript" src="suites/esri-leafletSpec.js"></script>
 <script type="text/javascript" src="suites/Layers/BasemapLayerSpec.js"></script>
+<script type="text/javascript" src="suites/Layers/DynamicMapLayerSpec.js"></script>
 <script>
     (window.mochaPhantomJS || window.mocha).run();
 </script>
