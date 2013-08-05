@@ -1,5 +1,3 @@
-/* globals L */
-
 L.esri.BasemapLayer = L.TileLayer.extend({
   statics: {
     TILES: {
@@ -26,7 +24,7 @@ L.esri.BasemapLayer = L.TileLayer.extend({
         attributionUrl: "http://static.arcgis.com/attribution/Ocean_Basemap?f=json",
         options: {
           minZoom: 1,
-          maxZoom: 19,
+          maxZoom: 16,
           attribution: "<span class='esri-attributions' style='"+L.esri.AttributionStyles+"'>Esri</span><img src='https://serverapi.arcgisonline.com/jsapi/arcgis/3.5/js/esri/images/map/logo-med.png' alt='Powered by Esri' class='esri-attribution-logo' style='"+L.esri.LogoStyles+"'>"
         }
       },
@@ -34,7 +32,7 @@ L.esri.BasemapLayer = L.TileLayer.extend({
         urlTemplate: "http://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}",
         options: {
           minZoom: 1,
-          maxZoom: 19,
+          maxZoom: 16,
           attribution: "<span class='esri-attributions' style='"+L.esri.AttributionStyles+"'>Esri</span><img src='https://serverapi.arcgisonline.com/jsapi/arcgis/3.5/js/esri/images/map/logo-med.png' alt='Powered by Esri' class='esri-attribution-logo' style='"+L.esri.LogoStyles+"'>"
         }
       },
@@ -42,7 +40,7 @@ L.esri.BasemapLayer = L.TileLayer.extend({
         urlTemplate: "http://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}",
         options: {
           minZoom: 1,
-          maxZoom: 19,
+          maxZoom: 16,
           attribution: "<span class='esri-attributions' style='"+L.esri.AttributionStyles+"'>Copyright: &copy;2013 Esri, DeLorme, NAVTEQ</span><img src='https://serverapi.arcgisonline.com/jsapi/arcgis/3.5/js/esri/images/map/logo-med.png' alt='Powered by Esri' class='esri-attribution-logo' style='"+L.esri.LogoStyles+"'>"
         }
       },
@@ -50,7 +48,7 @@ L.esri.BasemapLayer = L.TileLayer.extend({
         urlTemplate: "http://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}",
         options: {
           minZoom: 1,
-          maxZoom: 19
+          maxZoom: 16
         }
       },
       Imagery: {

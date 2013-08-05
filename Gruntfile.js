@@ -27,9 +27,13 @@ module.exports = function(grunt) {
     },
     concat: {
       options: {
-        separator: '\n'
+        separator: '\n',
+        banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %>\n' +
+        '*   Copyright (c) <%= grunt.template.today("yyyy") %> Environmental Systems Research Institute, Inc.\n' +
+        '*   Apache License' +
+        '*/\n'
       },
-      dist: {
+      core: {
         src: [
           'vendor/terraformer/dist/browser/terraformer.js',
           'vendor/terraformer/dist/browser/rtree.js',
@@ -40,7 +44,18 @@ module.exports = function(grunt) {
           'src/Layers/TiledMapLayer.js',
           'src/Layers/DynamicMapLayer.js'
         ],
-        dest: 'dist/esri-leaflet.js'
+        dest: 'dist/esri-leaflet-src.js'
+      },
+      basemaps: {
+        src: [
+          'src/esri-leaflet.js',
+          'src/Layers/BasemapLayer.js'
+        ],
+        dest: 'dist/extras/esri-basemaps-src.js'
+      },
+      cluster: {
+        src: ["src/Layers/ClusteredFeatureLayer.js"],
+        dest: 'dist/extras/clustered-feature-layer-src.js'
       }
     },
     uglify: {
@@ -50,47 +65,21 @@ module.exports = function(grunt) {
           except: ['Terraformer']
         },
         preserveComments: 'some',
-        report: 'gzip',
-        banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %>\n' +
-        '*   Copyright (c) <%= grunt.template.today("yyyy") %> Environmental Systems Research Institute, Inc.\n' +
-        '*   Apache License' +
-        '*/\n'
+        report: 'gzip'
       },
       dist: {
         files: {
-          'dist/esri-leaflet.min.js': [
-            'vendor/terraformer/dist/browser/terraformer.js',
-            'vendor/terraformer/dist/browser/rtree.js',
-            'vendor/terraformer/dist/browser/arcgis.js',
-            'src/esri-leaflet.js',
-            'src/Layers/BasemapLayer.js',
-            'src/Layers/FeatureLayer.js',
-            'src/Layers/TiledMapLayer.js',
-            'src/Layers/DynamicMapLayer.js'
+          'dist/esri-leaflet.js': [
+            "dist/esri-leaflet-src.js"
           ],
-          'dist/esri-leaflet.unbundled.min.js': [
-            'src/esri-leaflet.js',
-            'src/Layers/BasemapLayer.js',
-            'src/Layers/FeatureLayer.js',
-            'src/Layers/TiledMapLayer.js',
-            'src/Layers/DynamicMapLayer.js'
+          'dist/extras/clustered-feature-layer.js': [
+            'dist/extras/clustered-feature-layer-src.js'
+          ],
+          'dist/extras/esri-basemaps.js': [
+            'dist/extras/esri-basemaps-src.js'
           ]
         }
       }
-    },
-    cssmin: {
-      options: {
-        banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %>\n' +
-        '*   Copyright (c) <%= grunt.template.today("yyyy") %> Environmental Systems Research Institute, Inc.\n' +
-        '*   Apache License' +
-        '*/\n',
-        report: 'gzip'
-      }
-      // compress: {
-      //   files: {
-      //     'dist/esri-leaflet.min.css': ['src/esri-leaflet.css']
-      //   }
-      // }
     },
     watch: {
       src: {
@@ -104,13 +93,11 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask('default', ['jshint']);
-  grunt.registerTask('build', ['default', 'uglify']);
+  grunt.registerTask('build', ['default', 'concat', 'uglify']);
 
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-concat');
-  grunt.loadNpmTasks('grunt-contrib-watch');
 
 };
