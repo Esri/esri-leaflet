@@ -1,15 +1,17 @@
 /* globals L:true describe:true it:true expect:true*/
 
 describe('L.esri.DynamicMapLayer', function() {
-    var map;
+    var map,
+        url = 'http://tmservices1.esri.com/arcgis/rest/services/LiveFeeds/Hurricane_Recent/MapServer';
     beforeEach(function () {
         map = L.map(document.createElement('div'));
+        map.setView([37.75,-122.45], 12);
     });
 
     describe('#constructor', function() {
         describe('when a DynamicMapLayer is first created', function() {
             it('has some default parameters', function() {
-                var dynLayer = L.esri.dynamicMapLayer('http://tmservices1.esri.com/arcgis/rest/services/LiveFeeds/Hurricane_Recent/MapServer');
+                var dynLayer = L.esri.dynamicMapLayer(url);
                 var defaultParams = {
                     format: 'png8',
                         transparent: true,
@@ -32,7 +34,7 @@ describe('L.esri.DynamicMapLayer', function() {
                     opacity: 0.5,
                     myname: 'johndoe'
                 };
-                var dynLayer = L.esri.dynamicMapLayer('http://tmservices1.esri.com/arcgis/rest/services/LiveFeeds/Hurricane_Recent/MapServer', defaultParams);
+                var dynLayer = L.esri.dynamicMapLayer(url, defaultParams);
 
                 expect(dynLayer._layerParams.format).to.eql(defaultParams.format);
                 expect(dynLayer._layerParams.myname).to.eql(defaultParams.myname);
@@ -42,7 +44,7 @@ describe('L.esri.DynamicMapLayer', function() {
                     transparent: false,
                     opacity: 0.5
                 };
-                var dynLayer = L.esri.dynamicMapLayer('http://tmservices1.esri.com/arcgis/rest/services/LiveFeeds/Hurricane_Recent/MapServer', defaultParams);
+                var dynLayer = L.esri.dynamicMapLayer(url, defaultParams);
 
                 expect(dynLayer._layerParams.transparent).to.eql(defaultParams.transparent);
                 expect(dynLayer._layerParams.opacity).not.to.eql(defaultParams.opacity);
@@ -54,7 +56,7 @@ describe('L.esri.DynamicMapLayer', function() {
     describe('#onAdd, #onRemove', function() {
         describe('when added to map', function() {
             it('will set map#on method and reset layer', function() {
-                var dynLayer = L.esri.dynamicMapLayer('http://tmservices1.esri.com/arcgis/rest/services/LiveFeeds/Hurricane_Recent/MapServer');
+                var dynLayer = L.esri.dynamicMapLayer(url);
                 map.on = sinon.spy();
                 map._panes = {
                     overlayPane: {
@@ -70,7 +72,7 @@ describe('L.esri.DynamicMapLayer', function() {
         });
         describe('when removed from map', function() {
             it('will call remove functions on map when onRemove called', function() {
-                var dynLayer = L.esri.dynamicMapLayer('http://tmservices1.esri.com/arcgis/rest/services/LiveFeeds/Hurricane_Recent/MapServer');
+                var dynLayer = L.esri.dynamicMapLayer(url);
                 map.addLayer(dynLayer);
                 map.getPanes = sinon.stub().returns({
                     overlayPane: {

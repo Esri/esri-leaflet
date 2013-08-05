@@ -21,6 +21,7 @@
 <script type="text/javascript" src="../src/Layers/BasemapLayer.js"></script>
 <script type="text/javascript" src="../src/Layers/DynamicMapLayer.js"></script>
 <script type="text/javascript" src="../src/Layers/FeatureLayer.js"></script>
+<script type="text/javascript" src="../src/Layers/TiledMapLayer.js"></script>
 
 <script>
     mocha.setup({
@@ -33,7 +34,9 @@
 <!-- spec files -->
 <script type="text/javascript" src="suites/esri-leafletSpec.js"></script>
 <script type="text/javascript" src="suites/Layers/BasemapLayerSpec.js"></script>
+<script type="text/javascript" src="suites/Layers/DynamicMapLayerSpec.js"></script>
 <script type="text/javascript" src="suites/Layers/FeatureLayerSpec.js"></script>
+<script type="text/javascript" src="suites/Layers/TiledMapLayerSpec.js"></script>
 <script>
     (window.mochaPhantomJS || window.mocha).run();
 </script>
