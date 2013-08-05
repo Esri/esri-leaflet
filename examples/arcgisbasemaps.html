@@ -31,7 +31,6 @@
     <div id="map"></div>
     <a href="https://github.com/esri/esri-leaflet"><img style="z-index: 1000; position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png" alt="Fork me on GitHub"></a>
 
-    <!-- Holder for all the demo buttons -->
     <div class="demo-controls">
       <h1 class="title expand" id="title" onclick="showControls();">ArcGIS Basemaps</h1>
       <div class="control-container hide" id="controlContainer">
@@ -47,25 +46,22 @@
     <script>
       var map = L.map('map').setView([45.52751668442124, -122.67175197601318], 15);
 
-      // Add and ArcGIS Online basemap - Streets, Topographic, Gray, Gray Labels, Ocean, NationalGeographic, Imagery, ImageryLabels
-      var layer = L.esri.basemapLayer("Topographic").addTo(map);
+      // Add ArcGIS Online Basemap - See http://resources.arcgis.com/en/help/arcgis-rest-api/
+      var layer = L.esri.basemapLayer("Topographic");
+      map.addLayer(layer);
       var layerLabels;
 
       function setBasemap(mapType) {
-        // If there was a previously set basemap remove it
+        // Add basemap tile layer
         if (layer) {
           map.removeLayer(layer);
         }
-
-        // Add the new basemap
-        layer = L.esri.basemapLayer(mapType).addTo(map);
-
-        // remove the previously set labels layer (if there is one)
+        layer = L.esri.basemapLayer(mapType);
+        map.addLayer(layer);
+        // Add labels layer
         if (layerLabels) {
           map.removeLayer(layerLabels);
         }
-
-        // if this map is gray or imagery add the respective label layer
         if (mapType == "Gray" || mapType == "Imagery") {
           layerLabels = L.esri.basemapLayer(mapType+"Labels");
           map.addLayer(layerLabels);
