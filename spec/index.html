@@ -14,16 +14,16 @@
 <!-- source files -->
 <script type="text/javascript" src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>
 <script type="text/javascript" src="../src/esri-leaflet.js"></script>
+<script type="text/javascript" src="../src/Layers/BasemapLayer.js"></script>
 
 <script>
     mocha.setup('bdd');
     mocha.ignoreLeaks();
-</script>                                                np
+</script>
 
 <!-- spec files -->
-
 <script type="text/javascript" src="suites/esri-leafletSpec.js"></script>
-
+<script type="text/javascript" src="suites/Layers/BasemapLayerSpec.js"></script>
 <script>
     (window.mochaPhantomJS || window.mocha).run();
 </script>

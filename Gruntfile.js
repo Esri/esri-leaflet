@@ -101,7 +101,7 @@ module.exports = function(grunt) {
         }
       }
     },
-    test: {
+      mocha_phantomjs: {
         all: {
             options: {
                 urls: [
@@ -121,7 +121,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('default', ['jshint']);
   grunt.registerTask('build', ['default', 'uglify']);
-  grunt.registerTask('test', ['connect', 'test']);
+  grunt.registerTask('test', ['connect', 'mocha_phantomjs']);
 
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-jshint');

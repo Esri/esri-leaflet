@@ -1,3 +1,5 @@
+/* globals L describe it expect*/
+
 describe('L.esri', function() {
 
     // just to get the party started
