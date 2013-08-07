@@ -1,4 +1,4 @@
-/* globals L:true describe:true it:true expect:true*/
+/* globals L, describe, it, expect, beforeEach*/
 
 describe('L.esri.TiledMapLayer', function () {
 

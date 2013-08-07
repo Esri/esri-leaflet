@@ -15,6 +15,7 @@ describe('L.esri.BasemapLayer', function () {
         for (var i = 0, len = testmaps.length; i < len; i++) {
           var name = testmaps[i];
           expect(L.esri.basemapLayer(name)).to.be.ok();
+          expect(L.esri.basemapLayer(name)._url).to.eql(L.esri.BasemapLayer.TILES[name].urlTemplate);
         }
       });
 

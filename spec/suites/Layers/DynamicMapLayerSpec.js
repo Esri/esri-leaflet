@@ -1,4 +1,4 @@
-/* globals L:true describe:true it:true expect:true*/
+/* globals L, describe, it, expect, beforeEach*/
 
 describe('L.esri.DynamicMapLayer', function () {
   var map,
@@ -30,7 +30,7 @@ describe('L.esri.DynamicMapLayer', function () {
         expect(dynLayer.defaultParams).to.eql(defaultParams);
         expect(setOptionsSpy.calledOnce).to.be.ok();
       });
-      it('can be assigned some default parameters', function () {
+      it('can be assigned some default/non-default parameters', function () {
         var defaultParams = {
           format: 'jpg',
           transparent: true,
@@ -89,7 +89,7 @@ describe('L.esri.DynamicMapLayer', function () {
           offSpy = sandbox.spy(map, 'off');
         map.addLayer(dynLayer);
         dynLayer.onRemove(map);
-        expect(getPanesStub.called).to.be.ok();
+        expect(getPanesStub.calledOnce).to.be.ok();
         expect(offSpy.called).to.be.ok();
       });
     });

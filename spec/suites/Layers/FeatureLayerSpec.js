@@ -18,7 +18,7 @@ describe('L.esri.FeatureLayer', function () {
       it('will have an index defined by Terraformer', function () {
         var rtreeSpy = sandbox.spy(Terraformer, 'RTree'),
           featLayer = L.esri.featureLayer(url);
-        expect(rtreeSpy.called).to.be.ok();
+        expect(rtreeSpy.calledOnce).to.be.ok();
         expect(featLayer.index).to.be.ok();
       });
     });
