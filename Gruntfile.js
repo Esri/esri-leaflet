@@ -78,58 +78,37 @@ module.exports = function(grunt) {
         }
       }
     },
-    cssmin: {
-      options: {
-        banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %>\n' +
-        '*   Copyright (c) <%= grunt.template.today("yyyy") %> Environmental Systems Research Institute, Inc.\n' +
-        '*   Apache License' +
-        '*/\n',
-        report: 'gzip'
-      }
-      // compress: {
-      //   files: {
-      //     'dist/esri-leaflet.min.css': ['src/esri-leaflet.css']
-      //   }
-      // }
-    },
-    watch: {
-      src: {
-        files: ['src/**/*.js'],
-        tasks: ['build'],
-        options: {
-          nospawn: true
+    karma: {
+      single: {
+        configFile: 'karma.conf.js',
+      },
+      watch: {
+        configFile: 'karma.conf.js',
+        autoWatch: true,
+        singleRun: false
+      },
+      coverage: {
+        configFile: 'karma.conf.js',
+        preprocessors:{
+          'src/**/*.js': 'coverage'
+        },
+        coverageReporter: {
+          type : 'html',
+          dir : './coverage/'
         }
       }
-    },
-      mocha_phantomjs: {
-        all: {
-            options: {
-                urls: [
-                    'http://localhost:8000/spec/index.html'
-                ]
-            }
-        }
-    },
-    connect: {
-        server: {
-            options: {
-                port: 8000
-            }
-          }
-      }
+    }
   });
 
   grunt.registerTask('default', ['jshint']);
   grunt.registerTask('build', ['default', 'uglify']);
-  grunt.registerTask('test', ['connect', 'mocha_phantomjs']);
+  grunt.registerTask('test', ['karam:single']);
 
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-concat');
-  grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-contrib-connect');
-  grunt.loadNpmTasks('grunt-mocha-phantomjs');
+  grunt.loadNpmTasks('grunt-karma');
 
 };
