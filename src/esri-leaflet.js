@@ -54,7 +54,7 @@ L.esri.Util = {
   },
   extentToBounds: function(extent){
     var southWest = new L.LatLng(extent.xmin, extent.ymin);
-    var northEast = new L.LatLng(extent.xmax, extent.ymin);
+    var northEast = new L.LatLng(extent.xmax, extent.ymax);
     return new L.LatLngBounds(southWest, northEast);
   },
 
