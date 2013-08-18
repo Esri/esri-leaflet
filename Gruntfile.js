@@ -81,23 +81,36 @@ module.exports = function(grunt) {
         }
       }
     },
-    watch: {
-      src: {
-        files: ['src/**/*.js'],
-        tasks: ['build'],
-        options: {
-          nospawn: true
+    karma: {
+      single: {
+        configFile: 'karma.conf.js',
+      },
+      watch: {
+        configFile: 'karma.conf.js',
+        autoWatch: true,
+        singleRun: false
+      },
+      coverage: {
+        configFile: 'karma.conf.js',
+        preprocessors:{
+          'src/**/*.js': 'coverage'
+        },
+        coverageReporter: {
+          type : 'html',
+          dir : './coverage/'
         }
       }
     }
   });
 
   grunt.registerTask('default', ['jshint']);
-  grunt.registerTask('build', ['default', 'concat', 'uglify']);
+  grunt.registerTask('build', ['karma:coverage', 'default', 'uglify']);
+  grunt.registerTask('test', ['karma:single']);
 
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-karma');
 
 };
