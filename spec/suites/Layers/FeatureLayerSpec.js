@@ -49,7 +49,5 @@ describe('L.esri.FeatureLayer', function () {
         expect(featLayer._previousCells.length).to.equal(4);
       })
     });
-    describe('when a FeatureLayer is removed from the map', function () {
-    });
   });
 });

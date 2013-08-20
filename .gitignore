@@ -12,3 +12,6 @@ Icon
 
 #Node
 node_modules
+
+#Coverage
+coverage

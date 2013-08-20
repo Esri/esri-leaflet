@@ -3,7 +3,7 @@ L.esri.BasemapLayer = L.TileLayer.extend({
     TILES: {
       Streets: {
         urlTemplate: "http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}/",
-        attributionUrl: "http://static.arcgis.com/attribution/World_Street_Map/",
+        attributionUrl: "http://static.arcgis.com/attribution/World_Street_Map?f=json",
         options: {
           minZoom: 1,
           maxZoom: 19,
@@ -12,7 +12,7 @@ L.esri.BasemapLayer = L.TileLayer.extend({
       },
       Topographic: {
         urlTemplate: "http://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}/",
-        attributionUrl: "http://static.arcgis.com/attribution/World_Topo_Map/",
+        attributionUrl: "http://static.arcgis.com/attribution/World_Topo_Map?f=json",
         options: {
           minZoom: 1,
           maxZoom: 19,
@@ -21,7 +21,7 @@ L.esri.BasemapLayer = L.TileLayer.extend({
       },
       Oceans: {
         urlTemplate: "http://server.arcgisonline.com/ArcGIS/rest/services/Ocean_Basemap/MapServer/tile/{z}/{y}/{x}/",
-        attributionUrl: "http://static.arcgis.com/attribution/Ocean_Basemap/",
+        attributionUrl: "http://static.arcgis.com/attribution/Ocean_Basemap?f=json",
         options: {
           minZoom: 1,
           maxZoom: 16,
