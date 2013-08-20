@@ -83,7 +83,7 @@ module.exports = function(grunt) {
     },
     karma: {
       single: {
-        configFile: 'karma.conf.js',
+        configFile: 'karma.conf.js'
       },
       watch: {
         configFile: 'karma.conf.js',
@@ -103,8 +103,8 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.registerTask('default', ['jshint']);
-  grunt.registerTask('build', ['karma:coverage', 'default', 'uglify']);
+  grunt.registerTask('default', ['jshint', "test"]);
+  grunt.registerTask('build', ['jshint', "karma:coverage", 'uglify']);
   grunt.registerTask('test', ['karma:single']);
 
   grunt.loadNpmTasks('grunt-contrib-uglify');
