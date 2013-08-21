@@ -1,4 +1,4 @@
-/*! Esri-Leaflet - v0.0.1 - 2013-08-05
+/*! Esri-Leaflet - v0.0.1 - 2013-08-21
 *   Copyright (c) 2013 Environmental Systems Research Institute, Inc.
 *   Apache License*/
 (function (root, factory) {
@@ -2632,7 +2632,7 @@ L.esri.Util = {
   // convert an extent (ArcGIS) to LatLngBounds (Leaflet)
   extentToBounds: function(extent){
     var southWest = new L.LatLng(extent.xmin, extent.ymin);
-    var northEast = new L.LatLng(extent.xmax, extent.ymin);
+    var northEast = new L.LatLng(extent.xmax, extent.ymax);
     return new L.LatLngBounds(southWest, northEast);
   },
 
@@ -2813,7 +2813,7 @@ L.esri.BasemapLayer = L.TileLayer.extend({
   statics: {
     TILES: {
       Streets: {
-        urlTemplate: "http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}",
+        urlTemplate: "http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}/",
         attributionUrl: "http://static.arcgis.com/attribution/World_Street_Map?f=json",
         options: {
           minZoom: 1,
@@ -2822,7 +2822,7 @@ L.esri.BasemapLayer = L.TileLayer.extend({
         }
       },
       Topographic: {
-        urlTemplate: "http://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}",
+        urlTemplate: "http://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}/",
         attributionUrl: "http://static.arcgis.com/attribution/World_Topo_Map?f=json",
         options: {
           minZoom: 1,
@@ -2831,7 +2831,7 @@ L.esri.BasemapLayer = L.TileLayer.extend({
         }
       },
       Oceans: {
-        urlTemplate: "http://server.arcgisonline.com/ArcGIS/rest/services/Ocean_Basemap/MapServer/tile/{z}/{y}/{x}",
+        urlTemplate: "http://server.arcgisonline.com/ArcGIS/rest/services/Ocean_Basemap/MapServer/tile/{z}/{y}/{x}/",
         attributionUrl: "http://static.arcgis.com/attribution/Ocean_Basemap?f=json",
         options: {
           minZoom: 1,
@@ -2840,7 +2840,7 @@ L.esri.BasemapLayer = L.TileLayer.extend({
         }
       },
       NationalGeographic: {
-        urlTemplate: "http://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}",
+        urlTemplate: "http://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}/",
         options: {
           minZoom: 1,
           maxZoom: 16,
@@ -2848,7 +2848,7 @@ L.esri.BasemapLayer = L.TileLayer.extend({
         }
       },
       Gray: {
-        urlTemplate: "http://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}",
+        urlTemplate: "http://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}/",
         options: {
           minZoom: 1,
           maxZoom: 16,
@@ -2856,14 +2856,14 @@ L.esri.BasemapLayer = L.TileLayer.extend({
         }
       },
       GrayLabels: {
-        urlTemplate: "http://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}",
+        urlTemplate: "http://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}/",
         options: {
           minZoom: 1,
           maxZoom: 16
         }
       },
       Imagery: {
-        urlTemplate: "http://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+        urlTemplate: "http://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}/",
         options: {
           minZoom: 1,
           maxZoom: 19,
@@ -2871,7 +2871,7 @@ L.esri.BasemapLayer = L.TileLayer.extend({
         }
       },
       ImageryLabels: {
-        urlTemplate: "http://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",
+        urlTemplate: "http://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}/",
         options: {
           minZoom: 1,
           maxZoom: 19
@@ -2955,7 +2955,7 @@ L.esri.BasemapLayer = L.TileLayer.extend({
   },
   getAttributionData: function(url){
     this.attributionBoundingBoxes = [];
-    L.esri.get(url, {}, L.bind(this.processAttributionData, this));
+    L.esri.get(url, {}, this.processAttributionData, this);
   },
   processAttributionData: function(attributionData){
     for (var c = 0; c < attributionData.contributors.length; c++) {
@@ -3060,7 +3060,9 @@ L.esri.basemapLayer = function(key, options){
       L.LayerGroup.prototype.onRemove.call(this, map);
       this._destroyFeatureGrid(map);
     },
-
+    getLayerId: function(layer){
+      return layer.feature.id;
+    },
     _update: function(e){
       var envelope = L.esri.Util.boundsToEnvelope(e.target.getBounds());
       this.index.search(envelope).then(L.Util.bind(function(results){
