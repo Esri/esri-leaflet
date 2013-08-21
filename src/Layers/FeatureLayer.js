@@ -47,7 +47,9 @@
       L.LayerGroup.prototype.onRemove.call(this, map);
       this._destroyFeatureGrid(map);
     },
-
+    getLayerId: function(layer){
+      return layer.feature.id;
+    },
     _update: function(e){
       var envelope = L.esri.Util.boundsToEnvelope(e.target.getBounds());
       this.index.search(envelope).then(L.Util.bind(function(results){
