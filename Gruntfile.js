@@ -104,7 +104,7 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask('default', ['jshint', "test"]);
-  grunt.registerTask('build', ['jshint', "karma:coverage", 'uglify']);
+  grunt.registerTask('build', ['jshint', "karma:coverage",'concat', 'uglify']);
   grunt.registerTask('test', ['karma:single']);
 
   grunt.loadNpmTasks('grunt-contrib-uglify');
