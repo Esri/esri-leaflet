@@ -224,7 +224,7 @@ L.esri.Mixins.featureGrid = {
     for (var row = minRow; row < maxRow; row++) {
       for (var col = minCol; col < maxCol; col++) {
         var cellId = "cell:"+row+":"+col;
-        var duplicate = this._previousCells.indexOf(cellId) >= 0;
+        var duplicate = L.esri.Util.indexOf(this._previousCells, cellId) >= 0;
 
         if(!duplicate || !this.options.deduplicate){
           var cellBounds = this._cellExtent(row, col);
