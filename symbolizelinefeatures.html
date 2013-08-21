@@ -3,15 +3,27 @@
   <head>
     <title>Symbolize Line Features</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link rel="stylesheet" href="leaflet/leaflet.css" />
+
+    <!-- Load Leaflet from their CDN -->
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css" />
+    <!--[if lte IE 8]>
+        <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.ie.css" />
+    <![endif]-->
+    <script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>
+
+    <!-- Load a small bit of CSS and Javascript specifcally for these demos -->
     <link rel="stylesheet" href="demo.css" />
-    <!--[if lte IE 8]><link rel="stylesheet" href="leaflet/leaflet.ie.css" /><![endif]-->
-    <script src="leaflet/leaflet-src.js"></script>
-    <script src="esri-leaflet.min.js"></script>
     <script src="demo.js"></script>
+
+    <!-- Load Esri Leaflet -->
+    <script src="lib/esri-leaflet/esri-leaflet.js"></script>
+
+    <!-- Make the map fill the entire page -->
     <style>
-      #legend {
-        text-align: left;
+      html, body, #map {
+        width: 100%;
+        height: 100%;
+        margin: 0;
       }
     </style>
   </head>
@@ -21,7 +33,6 @@
     <div class="demo-controls">
       <h1 class="title" id="title" onclick="showControls();">Symbolize Line Features</h1>
       <div class="control-container hide" id="controlContainer">
-        <p>Bike Routes</p>
         <div id="legend"></div>
       </div>
     </div>
