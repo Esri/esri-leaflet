@@ -5,14 +5,9 @@ L.esri.TiledMapLayer = L.TileLayer.extend({
   initialize: function(url, options){
     options = options || {};
 
-    //add a trailing slash to the url if the user omitted it
-    if(url[url.length-1] !== "/"){
-      url += "/";
-    }
-
     // set the urls
-    this.serviceUrl = url;
-    this.tileUrl = url+"tile/{z}/{y}/{x}";
+    this.serviceUrl = L.esri.Util.cleanUrl(url);
+    this.tileUrl = this.serviceUrl + "tile/{z}/{y}/{x}";
 
     //if this is looking at the AGO tiles subdomain insert the subdomain placeholder
     if(this.tileUrl.match("://tiles.arcgis.com")){

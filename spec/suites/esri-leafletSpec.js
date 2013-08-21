@@ -18,12 +18,10 @@ describe('L.esri', function () {
   });
 
   describe('#get', function () {
-    describe('when the get method is used', function () {
-      it('will append script tags to document', function () {
-        var appendSpy = sandbox.spy(document.body, 'appendChild');
-        L.esri.get(url, { 'name': 'test' }, function () {
-        });
-        expect(appendSpy.calledOnce).to.be.ok();
+    it("should be able to get JSON from a server", function(done){
+      L.esri.get("http://static.arcgis.com/attribution/World_Street_Map", {}, function(response){
+        expect(response.contributors.length).to.be.greaterThan(1);
+        done();
       });
     });
   });
@@ -32,9 +30,9 @@ describe('L.esri', function () {
     describe('when using #indexOf', function () {
       it('will find correct index of object in array', function () {
         var first = { name: '1st' },
-          second = { name: '2nd' },
-          third = { name: '3rd' },
-          arr = [ first, second, third ];
+            second = { name: '2nd' },
+            third = { name: '3rd' },
+            arr = [ first, second, third ];
         expect(L.esri.Util.indexOf(arr, first)).to.eql(0);
         expect(L.esri.Util.indexOf(arr, second)).to.eql(1);
         expect(L.esri.Util.indexOf(arr, third)).to.eql(2);

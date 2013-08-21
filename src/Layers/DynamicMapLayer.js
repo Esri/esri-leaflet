@@ -38,13 +38,7 @@ L.esri.DynamicMapLayer = L.ImageOverlay.extend({
   },
 
   initialize: function (url, options) {
-    //add a trailing slash to the url if the user omitted it
-    if(url[url.length-1] !== "/"){
-      url += "/";
-    }
-
-    this._url = url;
-    this.serviceUrl = url;
+    this._url = L.esri.Util.cleanUrl(url);
     this._layerParams = L.Util.extend({}, this.defaultParams);
 
     for (var opt in options) {
