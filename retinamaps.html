@@ -3,12 +3,29 @@
   <head>
     <title>Retina Options Demo</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link rel="stylesheet" href="leaflet/leaflet.css" />
+
+    <!-- Load Leaflet from their CDN -->
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css" />
+    <!--[if lte IE 8]>
+        <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.ie.css" />
+    <![endif]-->
+    <script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>
+
+    <!-- Load a small bit of CSS and Javascript specifcally for these demos -->
     <link rel="stylesheet" href="demo.css" />
-    <!--[if lte IE 8]><link rel="stylesheet" href="leaflet/leaflet.ie.css" /><![endif]-->
-    <script src="leaflet/leaflet-src.js"></script>
-    <script src="esri-leaflet.min.js"></script>
     <script src="demo.js"></script>
+
+    <!-- Load Esri Leaflet -->
+    <script src="lib/esri-leaflet/esri-leaflet.js"></script>
+
+    <!-- Make the map fill the entire page -->
+    <style>
+      html, body, #map {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+      }
+    </style>
   </head>
   <body>
     <div id="map"></div>
@@ -18,8 +35,8 @@
       <h1 class="title expand" id="title" onclick="showControls();">ArcGIS Retina Map</h1>
       <div class="control-container hide" id="controlContainer">
         <p>Leaflet supports a <code>detectRetina</code> option on tile layers that will shrink the tile size and load more tiles but give the appearance of higher resolution maps.</p>
-        <p>This map is created by stacking the <a href="http://www.arcgis.com/home/webmap/viewer.html?webmap=8b3d38c0819547faa83f7b7aca80bd76">gray basemap</a>, <a href="http://server.arcgisonline.com/ArcGIS/rest/services/Demographics/USA_Median_Household_Income/MapServer">median household income map</a> and the <a href="http://www.arcgis.com/home/webmap/viewer.html?webmap=8b3d38c0819547faa83f7b7aca80bd76">map labels for the gray map</a>. The two basemap layers are loaded with <code>detectRetina:true</code> while the labels are not, giving the appearance of a high resolution basemap.</p>
-        <p>The drawback of this method is that for each normal map tile you are now loading 4. Consuming 4x the bandwidth.</p>
+        <p>This map is created by stacking the <a href="http://www.arcgis.com/home/webmap/viewer.html?webmap=8b3d38c0819547faa83f7b7aca80bd76">gray basemap</a>, <a href="http://server.arcgisonline.com/ArcGIS/rest/services/Demographics/USA_Median_Household_Income/MapServer">median household income map</a> and the <a href="http://www.arcgis.com/home/webmap/viewer.html?webmap=8b3d38c0819547faa83f7b7aca80bd76">map labels for the gray map</a>. The 2 basemap layers are loaded with <code>detectRetina:true</code> while the labels are not, giving the appearance of a high resolution basemap.</p>
+        <p>The draw back of this method is that for each normal map tile you are now loading 4. Comsuming 4x the bandwidth.</p>
       </div>
     </div>
 
