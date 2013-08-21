@@ -8,6 +8,16 @@ Icon
 /*.sublime-project
 *.sublime-workspace
 *.sublime-project
+<<<<<<< HEAD
 
 #Node
 node_modules
+=======
+.idea/*
+
+#Node
+node_modules
+
+#Coverage
+coverage
+>>>>>>> 2745ad157592f77694945897e6c49cdb755011d8
