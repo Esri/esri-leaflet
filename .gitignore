@@ -10,8 +10,11 @@ Icon
 *.sublime-project
 .idea/*
 
-#Node
+# Node
 node_modules
 
-#Coverage
+# Coverage
 coverage
+
+# Debugging Files
+debug.html
