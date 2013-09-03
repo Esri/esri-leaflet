@@ -1,4 +1,4 @@
-/*! Esri-Leaflet - v0.0.1 - 2013-08-21
+/*! Esri-Leaflet - v0.0.1 - 2013-09-03
 *   Copyright (c) 2013 Environmental Systems Research Institute, Inc.
 *   Apache License*/
 /* globals L */
@@ -161,7 +161,7 @@ L.esri.Util = {
     return {
       x: extent.xmin,
       y: extent.ymin,
-      w: Math.abs(extent.xmin - extent.ymax),
+      w: Math.abs(extent.xmin - extent.xmax),
       h: Math.abs(extent.ymin - extent.ymax)
     };
   }
