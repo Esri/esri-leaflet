@@ -18,10 +18,11 @@
       this.cluster = this.options.cluster || new L.MarkerClusterGroup();
     },
     onAdd: function(map){
-      this.options.cluster.addTo(map);
+      this.cluster.addTo(map);
       this._initializeFeatureGrid(map);
     },
     onRemove: function(map){
+      map.removeLayer(this.cluster);
       this._destroyFeatureGrid(map);
     },
     addTo: function (map) {
