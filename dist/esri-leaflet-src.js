@@ -2683,7 +2683,7 @@ L.esri.Mixins.featureGrid = {
     this._requestFeatures(map.getBounds());
   },
   _destroyFeatureGrid: function(map){
-    map.on("zoomend resize move", this._moveHandler, this);
+    map.off("zoomend resize move", this._moveHandler, this);
   },
   _requestFeatures: function(bounds){
     var cells = this._cellsWithin(bounds);
@@ -3392,8 +3392,17 @@ L.esri.DynamicMapLayer = L.ImageOverlay.extend({
     L.DomUtil.setPosition(this._newImage, topLeft);
     this._newImage.style.width = size.x + 'px';
     this._newImage.style.height = size.y + 'px';
-    this._map._panes.overlayPane.appendChild(this._newImage);
+
+    // this._map._panes.overlayPane.appendChild(this._newImage);
+    // this._map._panes.overlayPane.removeChild(this._image);
+
+    if (this._image == null) {
+      this._map._panes.overlayPane.appendChild(this._newImage);
+    } else {
+      this._map._panes.overlayPane.insertBefore(this._newImage,this._image);
+    }
     this._map._panes.overlayPane.removeChild(this._image);
+
     this._image = this._newImage;
     this._newImage = null;
   },

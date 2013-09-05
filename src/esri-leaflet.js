@@ -186,7 +186,7 @@ L.esri.Mixins.featureGrid = {
     this._requestFeatures(map.getBounds());
   },
   _destroyFeatureGrid: function(map){
-    map.on("zoomend resize move", this._moveHandler, this);
+    map.off("zoomend resize move", this._moveHandler, this);
   },
   _requestFeatures: function(bounds){
     var cells = this._cellsWithin(bounds);
