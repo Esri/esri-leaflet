@@ -2655,7 +2655,7 @@ L.esri.Util = {
     return {
       x: extent.xmin,
       y: extent.ymin,
-      w: Math.abs(extent.xmin - extent.ymax),
+      w: Math.abs(extent.xmin - extent.xmax),
       h: Math.abs(extent.ymin - extent.ymax)
     };
   }
