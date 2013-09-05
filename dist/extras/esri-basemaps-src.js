@@ -1,4 +1,4 @@
-/*! Esri-Leaflet - v0.0.1 - 2013-09-03
+/*! Esri-Leaflet - v0.0.1 - 2013-09-05
 *   Copyright (c) 2013 Environmental Systems Research Institute, Inc.
 *   Apache License*/
 /* globals L */
@@ -137,8 +137,8 @@ L.esri.Util = {
 
   // convert an extent (ArcGIS) to LatLngBounds (Leaflet)
   extentToBounds: function(extent){
-    var southWest = new L.LatLng(extent.xmin, extent.ymin);
-    var northEast = new L.LatLng(extent.xmax, extent.ymax);
+    var southWest = new L.LatLng(extent.ymin, extent.xmin);
+    var northEast = new L.LatLng(extent.ymax, extent.xmax);
     return new L.LatLngBounds(southWest, northEast);
   },
 

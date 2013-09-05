@@ -1,4 +1,4 @@
-/*! Esri-Leaflet - v0.0.1 - 2013-09-03
+/*! Esri-Leaflet - v0.0.1 - 2013-09-05
 *   Copyright (c) 2013 Environmental Systems Research Institute, Inc.
 *   Apache License*/
 (function (root, factory) {
@@ -2631,8 +2631,8 @@ L.esri.Util = {
 
   // convert an extent (ArcGIS) to LatLngBounds (Leaflet)
   extentToBounds: function(extent){
-    var southWest = new L.LatLng(extent.xmin, extent.ymin);
-    var northEast = new L.LatLng(extent.xmax, extent.ymax);
+    var southWest = new L.LatLng(extent.ymin, extent.xmin);
+    var northEast = new L.LatLng(extent.ymax, extent.xmax);
     return new L.LatLngBounds(southWest, northEast);
   },
 
@@ -3392,8 +3392,17 @@ L.esri.DynamicMapLayer = L.ImageOverlay.extend({
     L.DomUtil.setPosition(this._newImage, topLeft);
     this._newImage.style.width = size.x + 'px';
     this._newImage.style.height = size.y + 'px';
-    this._map._panes.overlayPane.appendChild(this._newImage);
+
+    // this._map._panes.overlayPane.appendChild(this._newImage);
+    // this._map._panes.overlayPane.removeChild(this._image);
+
+    if (this._image == null) {
+      this._map._panes.overlayPane.appendChild(this._newImage);
+    } else {
+      this._map._panes.overlayPane.insertBefore(this._newImage,this._image);
+    }
     this._map._panes.overlayPane.removeChild(this._image);
+
     this._image = this._newImage;
     this._newImage = null;
   },

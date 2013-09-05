@@ -134,8 +134,8 @@ L.esri.Util = {
 
   // convert an extent (ArcGIS) to LatLngBounds (Leaflet)
   extentToBounds: function(extent){
-    var southWest = new L.LatLng(extent.xmin, extent.ymin);
-    var northEast = new L.LatLng(extent.xmax, extent.ymax);
+    var southWest = new L.LatLng(extent.ymin, extent.xmin);
+    var northEast = new L.LatLng(extent.ymax, extent.xmax);
     return new L.LatLngBounds(southWest, northEast);
   },
 
@@ -186,7 +186,7 @@ L.esri.Mixins.featureGrid = {
     this._requestFeatures(map.getBounds());
   },
   _destroyFeatureGrid: function(map){
-    map.on("zoomend resize move", this._moveHandler, this);
+    map.off("zoomend resize move", this._moveHandler, this);
   },
   _requestFeatures: function(bounds){
     var cells = this._cellsWithin(bounds);
