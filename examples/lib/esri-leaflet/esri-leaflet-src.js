@@ -3188,7 +3188,7 @@ L.esri.TiledMapLayer = L.TileLayer.extend({
       options.subdomains = ["1", "2", "3", "4"];
     }
 
-    L.esri.get(this.url, {}, function(response){
+    L.esri.get(this.serviceUrl, {}, function(response){
       this.fire("metadata", { metadata: response });
     }, this);
 
@@ -3253,6 +3253,10 @@ L.esri.DynamicMapLayer = L.ImageOverlay.extend({
 
     this._parseLayers();
     this._parseLayerDefs();
+
+    L.esri.get(this._url, {}, function(response){
+      this.fire("metadata", { metadata: response });
+    }, this);
 
     L.Util.setOptions(this, options);
   },
