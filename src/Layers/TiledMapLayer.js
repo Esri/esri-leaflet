@@ -15,10 +15,16 @@ L.esri.TiledMapLayer = L.TileLayer.extend({
       options.subdomains = ["1", "2", "3", "4"];
     }
 
+    L.esri.get(this.url, {}, function(response){
+      this.fire("metadata", { metadata: response });
+    }, this);
+
     // init layer by calling TileLayers initialize method
     L.TileLayer.prototype.initialize.call(this, this.tileUrl, options);
   }
 });
+
+L.esri.TiledMapLayer.include(L.Mixin.Events);
 
 L.esri.tiledMapLayer = function(key, options){
   return new L.esri.TiledMapLayer(key, options);

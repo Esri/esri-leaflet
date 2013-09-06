@@ -165,6 +165,7 @@ L.esri.Util = {
 L.esri.Mixins = {};
 
 L.esri.Mixins.featureGrid = {
+  _activeRequests: 0,
   _initializeFeatureGrid: function(map){
     this._map = map;
     this._previousCells = [];
@@ -187,15 +188,55 @@ L.esri.Mixins.featureGrid = {
     map.off("zoomend resize move", this._moveHandler, this);
   },
   _requestFeatures: function(bounds){
+
+    this.fire("view:loading", { bounds: bounds });
+
     var cells = this._cellsWithin(bounds);
+
     for (var i = 0; i < cells.length; i++) {
+
+      // get the cell
       var cell = cells[i];
-      L.esri.get(this.url+"query", {
-        geometryType: "esriGeometryEnvelope",
-        geometry: JSON.stringify(L.esri.Util.boundsToExtent(cell.bounds)),
-        outFields:"*",
-        outSr: 4326
-      }, this._render, this);
+
+      //fire a loading event for this cell
+      this.fire("cell:loading", { cell: cell });
+
+      // incriment the request counter
+      this._activeRequests++;
+
+      // new closeure to wrap the `cell` variable
+      (function(cell, context){
+
+        // make a new request for the features in this cell
+        L.esri.get(context.url+"query", {
+          geometryType: "esriGeometryEnvelope",
+          geometry: JSON.stringify(L.esri.Util.boundsToExtent(cell.bounds)),
+          outFields:"*",
+          outSr: 4326
+        }, function(response){
+
+          //deincriment the request counter
+          this._activeRequests--;
+
+          // fire a loaded event for this cell
+          this.fire("cell:load", {
+            cell: cell,
+            features: response
+          });
+
+          // if there are no more active requests fire a load event for this view
+          if(this._activeRequests <= 0){
+            this.fire("view:load", {
+              bounds: bounds,
+              cells: cells
+            });
+          }
+
+          // call the render method to render features
+          this._render(response);
+        }, context);
+
+      })(cell, this);
     }
   },
   _cellsWithin: function(mapBounds){

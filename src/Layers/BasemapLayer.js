@@ -240,6 +240,8 @@
     }
   });
 
+  L.esri.BasemapLayer.include(L.Mixin.Events);
+
   L.esri.basemapLayer = function(key, options){
     return new L.esri.BasemapLayer(key, options);
   };
