@@ -1,8 +1,6 @@
 /* globals L */
 
 L.esri = {
-  AttributionStyles:"line-height:9px; text-overflow:ellipsis; white-space:nowrap;overflow:hidden; display:inline-block;",
-  LogoStyles:"position:absolute; top:-38px; right:2px;",
   _callback: {}
 };
 
