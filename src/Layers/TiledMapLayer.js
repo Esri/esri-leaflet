@@ -15,6 +15,10 @@ L.esri.TiledMapLayer = L.TileLayer.extend({
       options.subdomains = ["1", "2", "3", "4"];
     }
 
+    L.esri.get(this.serviceUrl, {}, function(response){
+      this.fire("metadata", { metadata: response });
+    }, this);
+
     // init layer by calling TileLayers initialize method
     L.TileLayer.prototype.initialize.call(this, this.tileUrl, options);
   }

@@ -52,6 +52,10 @@ L.esri.DynamicMapLayer = L.ImageOverlay.extend({
     this._parseLayers();
     this._parseLayerDefs();
 
+    L.esri.get(this._url, {}, function(response){
+      this.fire("metadata", { metadata: response });
+    }, this);
+
     L.Util.setOptions(this, options);
   },
 
