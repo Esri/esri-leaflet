@@ -114,7 +114,6 @@
     },
     initialize: function(key, options){
       var config;
-
       // set the config variable with the appropriate config object
       if (typeof key === "object" && key.urlTemplate && key.options){
         config = key;
@@ -135,7 +134,7 @@
 
       // if this basemap requires dynamic attribution set it up
       if(config.attributionUrl){
-        var attributionUrl =L.esri.Util.cleanUrl(config.attributionUrl);
+        var attributionUrl = L.esri.Util.cleanUrl(config.attributionUrl);
         this._dynamicAttribution = true;
         this._getAttributionData(attributionUrl);
       }

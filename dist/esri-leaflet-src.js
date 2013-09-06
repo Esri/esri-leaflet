@@ -2685,10 +2685,11 @@ L.esri.Mixins.featureGrid = {
     map.off("zoomend resize move", this._moveHandler, this);
   },
   _requestFeatures: function(bounds){
-
-    this.fire("loading", { bounds: bounds });
-
     var cells = this._cellsWithin(bounds);
+
+    if(cells) {
+      this.fire("loading", { bounds: bounds });
+    }
 
     for (var i = 0; i < cells.length; i++) {
       this._makeRequest(cells[i], cells, bounds);
@@ -2947,14 +2948,13 @@ L.esri.Mixins.identifiableLayer = {
     },
     initialize: function(key, options){
       var config;
-
       // set the config variable with the appropriate config object
       if (typeof key === "object" && key.urlTemplate && key.options){
         config = key;
       } else if(typeof key === "string" && L.esri.BasemapLayer.TILES[key]){
         config = L.esri.BasemapLayer.TILES[key];
       } else {
-        throw new Error("L.esri.BasemapLayer: Invalid parameter. Use one of 'Streets', 'Topographic', 'Oceans', 'NationalGeographic', 'Gray', 'GrayLabels', 'Imagery' or 'ImageryLabels'");
+        throw new Error("L.esri.BasemapLayer: Invalid parameter. Use one of 'Streets', 'Topographic', 'Oceans', 'NationalGeographic', 'Gray', 'GrayLabels', 'Imagery', 'ImageryLabels', 'ImageryTransportation', 'ImageryAlternateLabels' or 'ShadedRelief'");
       }
 
       // merge passed options into the config options
@@ -2968,7 +2968,7 @@ L.esri.Mixins.identifiableLayer = {
 
       // if this basemap requires dynamic attribution set it up
       if(config.attributionUrl){
-        var attributionUrl =L.esri.Util.cleanUrl(config.attributionUrl);
+        var attributionUrl = L.esri.Util.cleanUrl(config.attributionUrl);
         this._dynamicAttribution = true;
         this._getAttributionData(attributionUrl);
       }
@@ -3072,8 +3072,6 @@ L.esri.Mixins.identifiableLayer = {
       this._resizeAttribution();
     }
   });
-
-  L.esri.BasemapLayer.include(L.Mixin.Events);
 
   L.esri.basemapLayer = function(key, options){
     return new L.esri.BasemapLayer(key, options);
@@ -3198,8 +3196,6 @@ L.esri.TiledMapLayer = L.TileLayer.extend({
     L.TileLayer.prototype.initialize.call(this, this.tileUrl, options);
   }
 });
-
-L.esri.TiledMapLayer.include(L.Mixin.Events);
 
 L.esri.tiledMapLayer = function(key, options){
   return new L.esri.TiledMapLayer(key, options);

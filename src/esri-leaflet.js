@@ -188,10 +188,11 @@ L.esri.Mixins.featureGrid = {
     map.off("zoomend resize move", this._moveHandler, this);
   },
   _requestFeatures: function(bounds){
-
-    this.fire("loading", { bounds: bounds });
-
     var cells = this._cellsWithin(bounds);
+
+    if(cells) {
+      this.fire("loading", { bounds: bounds });
+    }
 
     for (var i = 0; i < cells.length; i++) {
       this._makeRequest(cells[i], cells, bounds);
