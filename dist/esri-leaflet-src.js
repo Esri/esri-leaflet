@@ -1,4 +1,4 @@
-/*! Esri-Leaflet - v0.0.1 - 2013-09-05
+/*! Esri-Leaflet - v0.0.1 - 2013-09-06
 *   Copyright (c) 2013 Environmental Systems Research Institute, Inc.
 *   Apache License*/
 (function (root, factory) {
@@ -2498,8 +2498,6 @@ RTree.Rectangle.make_MBR = function(nodes, rect) {
 /* globals L */
 
 L.esri = {
-  AttributionStyles:"line-height:9px; text-overflow:ellipsis; white-space:nowrap;overflow:hidden; display:inline-block;",
-  LogoStyles:"position:absolute; top:-38px; right:2px;",
   _callback: {}
 };
 
@@ -2664,6 +2662,7 @@ L.esri.Util = {
 L.esri.Mixins = {};
 
 L.esri.Mixins.featureGrid = {
+  _activeRequests: 0,
   _initializeFeatureGrid: function(map){
     this._map = map;
     this._previousCells = [];
@@ -2686,16 +2685,39 @@ L.esri.Mixins.featureGrid = {
     map.off("zoomend resize move", this._moveHandler, this);
   },
   _requestFeatures: function(bounds){
+
+    this.fire("loading", { bounds: bounds });
+
     var cells = this._cellsWithin(bounds);
+
     for (var i = 0; i < cells.length; i++) {
-      var cell = cells[i];
-      L.esri.get(this.url+"query", {
-        geometryType: "esriGeometryEnvelope",
-        geometry: JSON.stringify(L.esri.Util.boundsToExtent(cell.bounds)),
-        outFields:"*",
-        outSr: 4326
-      }, this._render, this);
+      this._makeRequest(cells[i], cells, bounds);
     }
+  },
+  _makeRequest: function(cell, cells, bounds){
+    this._activeRequests++;
+
+    L.esri.get(this.url+"query", {
+      geometryType: "esriGeometryEnvelope",
+      geometry: JSON.stringify(L.esri.Util.boundsToExtent(cell.bounds)),
+      outFields:"*",
+      outSr: 4326
+    }, function(response){
+
+      //deincriment the request counter
+      this._activeRequests--;
+
+      // if there are no more active requests fire a load event for this view
+      if(this._activeRequests <= 0){
+        this.fire("load", {
+          bounds: bounds,
+          cells: cells
+        });
+      }
+
+      // call the render method to render features
+      this._render(response);
+    }, this);
   },
   _cellsWithin: function(mapBounds){
     var size = this._map.getSize();
@@ -2809,208 +2831,255 @@ L.esri.Mixins.identifiableLayer = {
   }
 };
 
-L.esri.BasemapLayer = L.TileLayer.extend({
-  statics: {
-    TILES: {
-      Streets: {
-        urlTemplate: "http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}/",
-        attributionUrl: "http://static.arcgis.com/attribution/World_Street_Map?f=json",
-        options: {
-          minZoom: 1,
-          maxZoom: 19,
-          attribution: "<span class='esri-attributions' style='"+L.esri.AttributionStyles+"'>Esri</span><img src='https://serverapi.arcgisonline.com/jsapi/arcgis/3.5/js/esri/images/map/logo-med.png' alt='Powered by Esri' class='esri-attribution-logo' style='"+L.esri.LogoStyles+"'>"
-        }
-      },
-      Topographic: {
-        urlTemplate: "http://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}/",
-        attributionUrl: "http://static.arcgis.com/attribution/World_Topo_Map?f=json",
-        options: {
-          minZoom: 1,
-          maxZoom: 19,
-          attribution: "<span class='esri-attributions' style='"+L.esri.AttributionStyles+"'>Esri</span><img src='https://serverapi.arcgisonline.com/jsapi/arcgis/3.5/js/esri/images/map/logo-med.png' alt='Powered by Esri' class='esri-attribution-logo' style='"+L.esri.LogoStyles+"'>"
-        }
-      },
-      Oceans: {
-        urlTemplate: "http://server.arcgisonline.com/ArcGIS/rest/services/Ocean_Basemap/MapServer/tile/{z}/{y}/{x}/",
-        attributionUrl: "http://static.arcgis.com/attribution/Ocean_Basemap?f=json",
-        options: {
-          minZoom: 1,
-          maxZoom: 16,
-          attribution: "<span class='esri-attributions' style='"+L.esri.AttributionStyles+"'>Esri</span><img src='https://serverapi.arcgisonline.com/jsapi/arcgis/3.5/js/esri/images/map/logo-med.png' alt='Powered by Esri' class='esri-attribution-logo' style='"+L.esri.LogoStyles+"'>"
-        }
-      },
-      NationalGeographic: {
-        urlTemplate: "http://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}/",
-        options: {
-          minZoom: 1,
-          maxZoom: 16,
-          attribution: "<span class='esri-attributions' style='"+L.esri.AttributionStyles+"'>Esri</span><img src='https://serverapi.arcgisonline.com/jsapi/arcgis/3.5/js/esri/images/map/logo-med.png' alt='Powered by Esri' class='esri-attribution-logo' style='"+L.esri.LogoStyles+"'>"
-        }
-      },
-      Gray: {
-        urlTemplate: "http://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}/",
-        options: {
-          minZoom: 1,
-          maxZoom: 16,
-          attribution: "<span class='esri-attributions' style='"+L.esri.AttributionStyles+"'>Copyright: &copy;2013 Esri, DeLorme, NAVTEQ</span><img src='https://serverapi.arcgisonline.com/jsapi/arcgis/3.5/js/esri/images/map/logo-med.png' alt='Powered by Esri' class='esri-attribution-logo' style='"+L.esri.LogoStyles+"'>"
-        }
-      },
-      GrayLabels: {
-        urlTemplate: "http://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}/",
-        options: {
-          minZoom: 1,
-          maxZoom: 16
-        }
-      },
-      Imagery: {
-        urlTemplate: "http://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}/",
-        options: {
-          minZoom: 1,
-          maxZoom: 19,
-          attribution: "<span class='esri-attributions' style='"+L.esri.AttributionStyles+"'>Esri, DigitalGlobe, GeoEye, i-cubed, USDA, USGS, AEX, Getmapping, Aerogrid, IGN, IGP, swisstopo, and the GIS User Community</span><img src='https://serverapi.arcgisonline.com/jsapi/arcgis/3.5/js/esri/images/map/logo-med.png' alt='Powered by Esri' class='esri-attribution-logo' style='"+L.esri.LogoStyles+"'>"
-        }
-      },
-      ImageryLabels: {
-        urlTemplate: "http://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}/",
-        options: {
-          minZoom: 1,
-          maxZoom: 19
-        }
-      }
-    }
-  },
-  initialize: function(key, options){
-    var config;
+(function(L){
 
-    // set the config variable with the appropriate config object
-    if (typeof key === "object" && key.urlTemplate && key.options){
-      config = key;
-    } else if(typeof key === "string" && L.esri.BasemapLayer.TILES[key]){
-      config = L.esri.BasemapLayer.TILES[key];
-    } else {
-      throw new Error("L.esri.BasemapLayer: Invalid parameter. Use one of 'Streets', 'Topographic', 'Oceans', 'NationalGeographic', 'Gray', 'GrayLabels', 'Imagery' or 'ImageryLabels'");
-    }
+  var tileProtocol = (window.location.protocol !== "https:") ? "http:" : "https:";
+  var attributionStyles = "line-height:9px; text-overflow:ellipsis; white-space:nowrap;overflow:hidden; display:inline-block;";
+  var logoStyles = "position:absolute; top:-38px; right:2px;";
+  var attributionLogo = "<img src='https://serverapi.arcgisonline.com/jsapi/arcgis/3.5/js/esri/images/map/logo-med.png' alt='Powered by Esri' class='esri-attribution-logo' style='"+logoStyles+"'>";
+  var formatTextAttributions = function formatTextAttributions(text){
+    return "<span class='esri-attributions' style='"+attributionStyles+"'>" + text + "</span>";
+  };
 
-    // merge passed options into the config options
-    var mergedOptions = L.Util.extend(config.options, options);
-
-    // clean up our input url
-    var url = L.esri.Util.cleanUrl(config.urlTemplate);
-
-    // call the initialize method on L.TileLayer to set everything up
-    L.TileLayer.prototype.initialize.call(this, url, L.Util.setOptions(this, mergedOptions));
-
-    // if this basemap requires dynamic attribution set it up
-    if(config.attributionUrl){
-      var attributionUrl =L.esri.Util.cleanUrl(config.attributionUrl);
-      this.dynamicAttribution = true;
-      this.getAttributionData(attributionUrl);
-    }
-  },
-  dynamicAttribution: false,
-  bounds: null,
-  zoom: null,
-  handleTileUpdates: function(e){
-    var newBounds;
-    var newZoom;
-
-    if(e.type === "load"){
-      newBounds = this._map.getBounds();
-      newZoom = this._map.getZoom();
-    }
-
-    if(e.type === "viewreset" || e.type === "dragend" || e.type ==="zoomend"){
-      newBounds = e.target.getBounds();
-      newZoom = e.target.getZoom();
-    }
-
-    if(this.attributionBoundingBoxes && newBounds && newZoom){
-      if(!newBounds.equals(this.bounds) || newZoom !== this.zoom){
-        this.bounds = newBounds;
-        this.zoom = newZoom;
-        this.updateMapAttribution();
-      }
-    }
-  },
-  onAdd: function(map){
-    L.TileLayer.prototype.onAdd.call(this, map);
-    if(this.dynamicAttribution){
-      this.on("load", this.handleTileUpdates, this);
-      this._map.on("viewreset zoomend dragend", this.handleTileUpdates, this);
-    }
-    this._map.on("resize", this.resizeAttribution, this);
-  },
-  resizeAttribution: function(){
-    var mapWidth = this._map.getSize().x;
-    this.getAttributionLogo().style.display = (mapWidth < 600) ? "none":"block";
-    this.getAttributionSpan().style.maxWidth =  (mapWidth* 0.75) + "px";
-  },
-  onRemove: function(map){
-    if(this.dynamicAttribution){
-      this.off("load", this.handleTileUpdates, this);
-      this._map.off("viewreset zoomend dragend", this.handleTileUpdates, this);
-    }
-    this._map.off("resize", this.resizeAttribution, this);
-    L.TileLayer.prototype.onRemove.call(this, map);
-  },
-  getAttributionData: function(url){
-    this.attributionBoundingBoxes = [];
-    L.esri.get(url, {}, this.processAttributionData, this);
-  },
-  processAttributionData: function(attributionData){
-    for (var c = 0; c < attributionData.contributors.length; c++) {
-      var contributor = attributionData.contributors[c];
-      for (var i = 0; i < contributor.coverageAreas.length; i++) {
-        var coverageArea = contributor.coverageAreas[i];
-        var southWest = new L.LatLng(coverageArea.bbox[0], coverageArea.bbox[1]);
-        var northEast = new L.LatLng(coverageArea.bbox[2], coverageArea.bbox[3]);
-        this.attributionBoundingBoxes.push({
-          attribution: contributor.attribution,
-          score: coverageArea.score,
-          bounds: new L.LatLngBounds(southWest, northEast),
-          minZoom: coverageArea.zoomMin,
-          maxZoom: coverageArea.zoomMax
-        });
-      }
-    }
-    this.attributionBoundingBoxes.sort(function(a,b){
-      if (a.score < b.score){ return -1; }
-      if (a.score > b.score){ return 1; }
-      return 0;
-    });
-    if(this.bounds){
-      this.updateMapAttribution();
-    }
-  },
-  getAttributionSpan:function(){
-    return this._map._container.querySelectorAll('.esri-attributions')[0];
-  },
-  getAttributionLogo:function(){
-    return this._map._container.querySelectorAll('.esri-attribution-logo')[0];
-  },
-  updateMapAttribution: function(){
-    var newAttributions = '';
-    for (var i = 0; i < this.attributionBoundingBoxes.length; i++) {
-      var attr = this.attributionBoundingBoxes[i];
-      if(this.bounds.intersects(attr.bounds) && this.zoom >= attr.minZoom && this.zoom <= attr.maxZoom) {
-        var attribution = this.attributionBoundingBoxes[i].attribution;
-        if(newAttributions.indexOf(attribution) === -1){
-          if(newAttributions.length > 0){
-            newAttributions += ', ';
+  L.esri.BasemapLayer = L.TileLayer.extend({
+    statics: {
+      TILES: {
+        Streets: {
+          urlTemplate: tileProtocol + "//{s}.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}/",
+          attributionUrl: "https://static.arcgis.com/attribution/World_Street_Map?f=json",
+          options: {
+            minZoom: 1,
+            maxZoom: 19,
+            subdomains: ["server", "services"],
+            attribution: formatTextAttributions("Esri") + attributionLogo
           }
-          newAttributions += attribution;
+        },
+        Topographic: {
+          urlTemplate: tileProtocol + "//{s}.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}/",
+          attributionUrl: "https://static.arcgis.com/attribution/World_Topo_Map?f=json",
+          options: {
+            minZoom: 1,
+            maxZoom: 19,
+            subdomains: ["server", "services"],
+            attribution: formatTextAttributions("Esri") + attributionLogo
+          }
+        },
+        Oceans: {
+          urlTemplate: "https://server.arcgisonline.com/ArcGIS/rest/services/Ocean_Basemap/MapServer/tile/{z}/{y}/{x}/",
+          attributionUrl: "https://static.arcgis.com/attribution/Ocean_Basemap?f=json",
+          options: {
+            minZoom: 1,
+            maxZoom: 16,
+            subdomains: ["server", "services"],
+            attribution: formatTextAttributions("Esri") + attributionLogo
+          }
+        },
+        NationalGeographic: {
+          urlTemplate: "https://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}/",
+          options: {
+            minZoom: 1,
+            maxZoom: 16,
+            subdomains: ["server", "services"],
+            attribution: formatTextAttributions("Esri") + attributionLogo
+          }
+        },
+        Gray: {
+          urlTemplate: tileProtocol + "//{s}.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}/",
+          options: {
+            minZoom: 1,
+            maxZoom: 16,
+            subdomains: ["server", "services"],
+            attribution: formatTextAttributions("Esri, NAVTEQ, DeLorme") + attributionLogo
+          }
+        },
+        GrayLabels: {
+          urlTemplate: tileProtocol + "//{s}.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}/",
+          options: {
+            minZoom: 1,
+            maxZoom: 16,
+            subdomains: ["server", "services"]
+          }
+        },
+        Imagery: {
+          urlTemplate: tileProtocol + "//{s}.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}/",
+          options: {
+            minZoom: 1,
+            maxZoom: 19,
+            subdomains: ["server", "services"],
+            attribution: formatTextAttributions("Esri, DigitalGlobe, GeoEye, i-cubed, USDA, USGS, AEX, Getmapping, Aerogrid, IGN, IGP, swisstopo, and the GIS User Community") + attributionLogo
+          }
+        },
+        ImageryLabels: {
+          urlTemplate: tileProtocol + "//{s}.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}/",
+          options: {
+            minZoom: 1,
+            maxZoom: 19,
+            subdomains: ["server", "services"]
+          }
+        },
+        ImageryTransportation: {
+          urlTemplate: tileProtocol + "//{s}.arcgisonline.com/ArcGIS/rest/services/Reference/World_Transportation/MapServer/tile/{z}/{y}/{x}/",
+          options: {
+            minZoom: 1,
+            maxZoom: 19,
+            subdomains: ["server", "services"]
+          }
+        },
+        ImageryAlternateLabels: {
+          urlTemplate: tileProtocol + "//{s}.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places_Alternate/MapServer/tile/{z}/{y}/{x}/",
+          options: {
+            minZoom: 1,
+            maxZoom: 12,
+            subdomains: ["server", "services"]
+          }
+        },
+        ShadedRelief: {
+          urlTemplate: tileProtocol + "//{s}.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}/",
+          options: {
+            minZoom: 1,
+            maxZoom: 13,
+            subdomains: ["server", "services"],
+            attribution: formatTextAttributions("ESRI, NAVTEQ, DeLorme") + attributionLogo
+          }
+        }
+
+      }
+    },
+    initialize: function(key, options){
+      var config;
+
+      // set the config variable with the appropriate config object
+      if (typeof key === "object" && key.urlTemplate && key.options){
+        config = key;
+      } else if(typeof key === "string" && L.esri.BasemapLayer.TILES[key]){
+        config = L.esri.BasemapLayer.TILES[key];
+      } else {
+        throw new Error("L.esri.BasemapLayer: Invalid parameter. Use one of 'Streets', 'Topographic', 'Oceans', 'NationalGeographic', 'Gray', 'GrayLabels', 'Imagery' or 'ImageryLabels'");
+      }
+
+      // merge passed options into the config options
+      var mergedOptions = L.Util.extend(config.options, options);
+
+      // clean up our input url
+      var url = L.esri.Util.cleanUrl(config.urlTemplate);
+
+      // call the initialize method on L.TileLayer to set everything up
+      L.TileLayer.prototype.initialize.call(this, url, L.Util.setOptions(this, mergedOptions));
+
+      // if this basemap requires dynamic attribution set it up
+      if(config.attributionUrl){
+        var attributionUrl =L.esri.Util.cleanUrl(config.attributionUrl);
+        this._dynamicAttribution = true;
+        this._getAttributionData(attributionUrl);
+      }
+    },
+    _dynamicAttribution: false,
+    bounds: null,
+    zoom: null,
+    onAdd: function(map){
+      L.TileLayer.prototype.onAdd.call(this, map);
+      if(this._dynamicAttribution){
+        this.on("load", this._handleTileUpdates, this);
+        this._map.on("viewreset zoomend dragend", this._handleTileUpdates, this);
+      }
+      this._map.on("resize", this._resizeAttribution, this);
+    },
+    onRemove: function(map){
+      if(this._dynamicAttribution){
+        this.off("load", this._handleTileUpdates, this);
+        this._map.off("viewreset zoomend dragend", this._handleTileUpdates, this);
+      }
+      this._map.off("resize", this._resizeAttribution, this);
+      L.TileLayer.prototype.onRemove.call(this, map);
+    },
+    _handleTileUpdates: function(e){
+      var newBounds;
+      var newZoom;
+
+      if(e.type === "load"){
+        newBounds = this._map.getBounds();
+        newZoom = this._map.getZoom();
+      }
+
+      if(e.type === "viewreset" || e.type === "dragend" || e.type ==="zoomend"){
+        newBounds = e.target.getBounds();
+        newZoom = e.target.getZoom();
+      }
+
+      if(this.attributionBoundingBoxes && newBounds && newZoom){
+        if(!newBounds.equals(this.bounds) || newZoom !== this.zoom){
+          this.bounds = newBounds;
+          this.zoom = newZoom;
+          this._updateMapAttribution();
         }
       }
+    },
+    _resizeAttribution: function(){
+      var mapWidth = this._map.getSize().x;
+      this._getAttributionLogo().style.display = (mapWidth < 600) ? "none":"block";
+      this._getAttributionSpan().style.maxWidth =  (mapWidth* 0.75) + "px";
+    },
+    _getAttributionData: function(url){
+      this.attributionBoundingBoxes = [];
+      L.esri.get(url, {}, this._processAttributionData, this);
+    },
+    _processAttributionData: function(attributionData){
+      for (var c = 0; c < attributionData.contributors.length; c++) {
+        var contributor = attributionData.contributors[c];
+        for (var i = 0; i < contributor.coverageAreas.length; i++) {
+          var coverageArea = contributor.coverageAreas[i];
+          var southWest = new L.LatLng(coverageArea.bbox[0], coverageArea.bbox[1]);
+          var northEast = new L.LatLng(coverageArea.bbox[2], coverageArea.bbox[3]);
+          this.attributionBoundingBoxes.push({
+            attribution: contributor.attribution,
+            score: coverageArea.score,
+            bounds: new L.LatLngBounds(southWest, northEast),
+            minZoom: coverageArea.zoomMin,
+            maxZoom: coverageArea.zoomMax
+          });
+        }
+      }
+      this.attributionBoundingBoxes.sort(function(a,b){
+        if (a.score < b.score){ return -1; }
+        if (a.score > b.score){ return 1; }
+        return 0;
+      });
+      if(this.bounds){
+        this._updateMapAttribution();
+      }
+    },
+    _getAttributionSpan:function(){
+      return this._map._container.querySelectorAll('.esri-attributions')[0];
+    },
+    _getAttributionLogo:function(){
+      return this._map._container.querySelectorAll('.esri-attribution-logo')[0];
+    },
+    _updateMapAttribution: function(){
+      var newAttributions = '';
+      for (var i = 0; i < this.attributionBoundingBoxes.length; i++) {
+        var attr = this.attributionBoundingBoxes[i];
+        if(this.bounds.intersects(attr.bounds) && this.zoom >= attr.minZoom && this.zoom <= attr.maxZoom) {
+          var attribution = this.attributionBoundingBoxes[i].attribution;
+          if(newAttributions.indexOf(attribution) === -1){
+            if(newAttributions.length > 0){
+              newAttributions += ', ';
+            }
+            newAttributions += attribution;
+          }
+        }
+      }
+      this._getAttributionSpan().innerHTML = newAttributions;
+      this._resizeAttribution();
     }
-    this.getAttributionSpan().innerHTML = newAttributions;
-    this.resizeAttribution();
-  }
-});
+  });
 
-L.esri.basemapLayer = function(key, options){
-  return new L.esri.BasemapLayer(key, options);
-};
+  L.esri.BasemapLayer.include(L.Mixin.Events);
 
+  L.esri.basemapLayer = function(key, options){
+    return new L.esri.BasemapLayer(key, options);
+  };
+
+})(L);
 /* globals Terraformer, L */
 (function(L){
 
@@ -3048,6 +3117,11 @@ L.esri.basemapLayer = function(key, options){
       this.index = new Terraformer.RTree();
       this.url = L.esri.Util.cleanUrl(url);
       L.Util.setOptions(this, options);
+
+      L.esri.get(this.url, {}, function(response){
+        this.fire("metadata", { metadata: response });
+      }, this);
+
       L.GeoJSON.prototype.initialize.call(this, [], options);
     },
     onAdd: function(map){
@@ -3083,6 +3157,11 @@ L.esri.basemapLayer = function(key, options){
             geojson.id = id;
             this.index.insert(geojson,id);
             this.addData(geojson);
+            var layer = this._layers[id];
+            this.fire("render", {
+              feature: layer,
+              geojson: geojson
+            });
           }
         }
       }
@@ -3111,10 +3190,16 @@ L.esri.TiledMapLayer = L.TileLayer.extend({
       options.subdomains = ["1", "2", "3", "4"];
     }
 
+    L.esri.get(this.url, {}, function(response){
+      this.fire("metadata", { metadata: response });
+    }, this);
+
     // init layer by calling TileLayers initialize method
     L.TileLayer.prototype.initialize.call(this, this.tileUrl, options);
   }
 });
+
+L.esri.TiledMapLayer.include(L.Mixin.Events);
 
 L.esri.tiledMapLayer = function(key, options){
   return new L.esri.TiledMapLayer(key, options);

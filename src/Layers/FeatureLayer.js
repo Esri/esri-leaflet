@@ -76,7 +76,7 @@
             this.index.insert(geojson,id);
             this.addData(geojson);
             var layer = this._layers[id];
-            this.fire("feature:rendered", {
+            this.fire("render", {
               feature: layer,
               geojson: geojson
             });

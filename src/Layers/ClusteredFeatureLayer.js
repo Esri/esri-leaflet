@@ -51,7 +51,8 @@
 
             this.cluster.addLayer(marker);
             this._loaded.push(id);
-            this.fire("feature:rendered", {
+
+            this.fire("render", {
               feature: marker,
               geojson: geojson
             });

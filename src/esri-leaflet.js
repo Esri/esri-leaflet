@@ -189,55 +189,38 @@ L.esri.Mixins.featureGrid = {
   },
   _requestFeatures: function(bounds){
 
-    this.fire("view:loading", { bounds: bounds });
+    this.fire("loading", { bounds: bounds });
 
     var cells = this._cellsWithin(bounds);
 
     for (var i = 0; i < cells.length; i++) {
-
-      // get the cell
-      var cell = cells[i];
-
-      //fire a loading event for this cell
-      this.fire("cell:loading", { cell: cell });
-
-      // incriment the request counter
-      this._activeRequests++;
-
-      // new closeure to wrap the `cell` variable
-      (function(cell, context){
-
-        // make a new request for the features in this cell
-        L.esri.get(context.url+"query", {
-          geometryType: "esriGeometryEnvelope",
-          geometry: JSON.stringify(L.esri.Util.boundsToExtent(cell.bounds)),
-          outFields:"*",
-          outSr: 4326
-        }, function(response){
-
-          //deincriment the request counter
-          this._activeRequests--;
-
-          // fire a loaded event for this cell
-          this.fire("cell:load", {
-            cell: cell,
-            features: response
-          });
-
-          // if there are no more active requests fire a load event for this view
-          if(this._activeRequests <= 0){
-            this.fire("view:load", {
-              bounds: bounds,
-              cells: cells
-            });
-          }
-
-          // call the render method to render features
-          this._render(response);
-        }, context);
-
-      })(cell, this);
+      this._makeRequest(cells[i], cells, bounds);
     }
+  },
+  _makeRequest: function(cell, cells, bounds){
+    this._activeRequests++;
+
+    L.esri.get(this.url+"query", {
+      geometryType: "esriGeometryEnvelope",
+      geometry: JSON.stringify(L.esri.Util.boundsToExtent(cell.bounds)),
+      outFields:"*",
+      outSr: 4326
+    }, function(response){
+
+      //deincriment the request counter
+      this._activeRequests--;
+
+      // if there are no more active requests fire a load event for this view
+      if(this._activeRequests <= 0){
+        this.fire("load", {
+          bounds: bounds,
+          cells: cells
+        });
+      }
+
+      // call the render method to render features
+      this._render(response);
+    }, this);
   },
   _cellsWithin: function(mapBounds){
     var size = this._map.getSize();
