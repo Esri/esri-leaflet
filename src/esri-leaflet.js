@@ -1,8 +1,6 @@
 /* globals L */
 
 L.esri = {
-  AttributionStyles:"line-height:9px; text-overflow:ellipsis; white-space:nowrap;overflow:hidden; display:inline-block;",
-  LogoStyles:"position:absolute; top:-38px; right:2px;",
   _callback: {}
 };
 
@@ -167,6 +165,7 @@ L.esri.Util = {
 L.esri.Mixins = {};
 
 L.esri.Mixins.featureGrid = {
+  _activeRequests: 0,
   _initializeFeatureGrid: function(map){
     this._map = map;
     this._previousCells = [];
@@ -190,15 +189,39 @@ L.esri.Mixins.featureGrid = {
   },
   _requestFeatures: function(bounds){
     var cells = this._cellsWithin(bounds);
-    for (var i = 0; i < cells.length; i++) {
-      var cell = cells[i];
-      L.esri.get(this.url+"query", {
-        geometryType: "esriGeometryEnvelope",
-        geometry: JSON.stringify(L.esri.Util.boundsToExtent(cell.bounds)),
-        outFields:"*",
-        outSr: 4326
-      }, this._render, this);
+
+    if(cells) {
+      this.fire("loading", { bounds: bounds });
     }
+
+    for (var i = 0; i < cells.length; i++) {
+      this._makeRequest(cells[i], cells, bounds);
+    }
+  },
+  _makeRequest: function(cell, cells, bounds){
+    this._activeRequests++;
+
+    L.esri.get(this.url+"query", {
+      geometryType: "esriGeometryEnvelope",
+      geometry: JSON.stringify(L.esri.Util.boundsToExtent(cell.bounds)),
+      outFields:"*",
+      outSr: 4326
+    }, function(response){
+
+      //deincriment the request counter
+      this._activeRequests--;
+
+      // if there are no more active requests fire a load event for this view
+      if(this._activeRequests <= 0){
+        this.fire("load", {
+          bounds: bounds,
+          cells: cells
+        });
+      }
+
+      // call the render method to render features
+      this._render(response);
+    }, this);
   },
   _cellsWithin: function(mapBounds){
     var size = this._map.getSize();

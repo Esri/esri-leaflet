@@ -35,6 +35,11 @@
       this.index = new Terraformer.RTree();
       this.url = L.esri.Util.cleanUrl(url);
       L.Util.setOptions(this, options);
+
+      L.esri.get(this.url, {}, function(response){
+        this.fire("metadata", { metadata: response });
+      }, this);
+
       L.GeoJSON.prototype.initialize.call(this, [], options);
     },
     onAdd: function(map){
@@ -70,6 +75,11 @@
             geojson.id = id;
             this.index.insert(geojson,id);
             this.addData(geojson);
+            var layer = this._layers[id];
+            this.fire("render", {
+              feature: layer,
+              geojson: geojson
+            });
           }
         }
       }
