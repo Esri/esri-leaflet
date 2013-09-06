@@ -24,8 +24,6 @@ L.esri.TiledMapLayer = L.TileLayer.extend({
   }
 });
 
-L.esri.TiledMapLayer.include(L.Mixin.Events);
-
 L.esri.tiledMapLayer = function(key, options){
   return new L.esri.TiledMapLayer(key, options);
 };
