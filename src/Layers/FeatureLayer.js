@@ -44,11 +44,11 @@
     },
     onAdd: function(map){
       L.LayerGroup.prototype.onAdd.call(this, map);
-      map.on("zoomend resize move", this._update, this);
+      map.on("zoomend resize moveEnd", this._update, this);
       this._initializeFeatureGrid(map);
     },
     onRemove: function(map){
-      map.off("zoomend resize move", this._update, this);
+      map.off("zoomend resize moveEnd", this._update, this);
       L.LayerGroup.prototype.onRemove.call(this, map);
       this._destroyFeatureGrid(map);
     },
@@ -57,7 +57,7 @@
     },
     _update: function(e){
       var envelope = L.esri.Util.boundsToEnvelope(e.target.getBounds());
-      this.index.search(envelope).then(L.Util.bind(function(results){
+      this.index.search(envelope, L.Util.bind(function(error,results){
         this.eachLayer(L.Util.bind(function(layer){
           var id = layer.feature.id;
           setLayerVisibility(layer, L.esri.Util.indexOf(results, id) >= 0);
