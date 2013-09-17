@@ -1,9 +1,0 @@
-[submodule "vendor/terraformer"]
-	path = vendor/terraformer
-	url = https://github.com/Esri/Terraformer.git
-[submodule "vendor/terraformer-arcgis-parser"]
-	path = vendor/terraformer-arcgis-parser
-	url = git@github.com:Esri/terraformer-geostore-rtree.git
-[submodule "vendor/terraformer-geostore-rtree"]
-	path = vendor/terraformer-geostore-rtree
-	url = https://github.com/Esri/terraformer-geostore-rtree
