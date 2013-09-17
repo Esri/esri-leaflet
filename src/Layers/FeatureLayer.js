@@ -44,11 +44,11 @@
     },
     onAdd: function(map){
       L.LayerGroup.prototype.onAdd.call(this, map);
-      map.on("zoomend resize move", this._update, this);
+      map.on("zoomend resize moveEnd", this._update, this);
       this._initializeFeatureGrid(map);
     },
     onRemove: function(map){
-      map.off("zoomend resize move", this._update, this);
+      map.off("zoomend resize moveEnd", this._update, this);
       L.LayerGroup.prototype.onRemove.call(this, map);
       this._destroyFeatureGrid(map);
     },

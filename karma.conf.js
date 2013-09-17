@@ -7,10 +7,10 @@ module.exports = function(config) {
 
     files: [
       'node_modules/expect.js/expect.js',
-      'vendor/leaflet/dist/leaflet-src.js',
-      'vendor/terraformer/dist/browser/terraformer.js',
-      'vendor/terraformer/dist/browser/rtree.js',
-      'vendor/terraformer/dist/browser/arcgis.js',
+      'vendor/Leaflet/dist/leaflet-src.js',
+      'vendor/terraformer/terraformer.js',
+      'vendor/terraformer-arcgis-parser/terraformer-arcgis-parser.js',
+      'vendor/terraformer-geostore-rtree/terraformer-geostore-rtree.js',
       'src/esri-leaflet.js',
       'src/Layers/*.js',
       'spec/**/*.js'

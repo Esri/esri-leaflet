@@ -37,7 +37,7 @@ module.exports = function(grunt) {
         src: [
           'vendor/terraformer/terraformer.js',
           'vendor/terraformer-arcgis-parser/terraformer-arcgis-parser.js',
-          'vendor/terraformer-rtree/dist/terraformer-geostore-rtree.js',
+          'vendor/terraformer-geostore-rtree/terraformer-geostore-rtree.js',
           'src/esri-leaflet.js',
           'src/Layers/BasemapLayer.js',
           'src/Layers/FeatureLayer.js',
