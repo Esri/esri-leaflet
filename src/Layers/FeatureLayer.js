@@ -57,7 +57,7 @@
     },
     _update: function(e){
       var envelope = L.esri.Util.boundsToEnvelope(e.target.getBounds());
-      this.index.search(envelope).then(L.Util.bind(function(results){
+      this.index.search(envelope, L.Util.bind(function(error,results){
         this.eachLayer(L.Util.bind(function(layer){
           var id = layer.feature.id;
           setLayerVisibility(layer, L.esri.Util.indexOf(results, id) >= 0);
