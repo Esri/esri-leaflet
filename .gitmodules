@@ -1,6 +1,15 @@
-[submodule "vendor/leaflet"]
-	path = vendor/leaflet
-	url = https://github.com/Leaflet/Leaflet.git
+[submodule "Leaflet"]
+	path = Leaflet
+	url = git@github.com:Leaflet/Leaflet.git
+[submodule "vendor/Leaflet"]
+	path = vendor/Leaflet
+	url = git@github.com:Leaflet/Leaflet.git
+[submodule "vendor/terraformer-arcgis-parser"]
+	path = vendor/terraformer-arcgis-parser
+	url = git@github.com:Esri/terraformer-arcgis-parser.git
+[submodule "vendor/terraformer-geostore-rtree"]
+	path = vendor/terraformer-geostore-rtree
+	url = git@github.com:Esri/terraformer-geostore-rtree.git
 [submodule "vendor/terraformer"]
 	path = vendor/terraformer
-	url = https://github.com/Esri/Terraformer.git
+	url = git@github.com:Esri/Terraformer.git

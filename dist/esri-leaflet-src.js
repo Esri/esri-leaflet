@@ -1,4 +1,4 @@
-/*! Esri-Leaflet - v0.0.1 - 2013-09-06
+/*! Esri-Leaflet - v0.0.1 - 2013-09-17
 *   Copyright (c) 2013 Environmental Systems Research Institute, Inc.
 *   Apache License*/
 (function (root, factory) {
@@ -6,11 +6,6 @@
   // Node.
   if(typeof module === 'object' && typeof module.exports === 'object') {
     exports = module.exports = factory();
-  }
-
-  // AMD.
-  if(typeof define === 'function' && define.amd) {
-    define(factory);
   }
 
   // Browser Global.
@@ -38,47 +33,6 @@
         }
       };
 
-
-  function Deferred () {
-    this._thens = [];
-  }
-
-  Deferred.prototype = {
-
-    then: function (onResolve, onReject) {
-      this._thens.push({ resolve: onResolve, reject: onReject });
-      return this;
-    },
-
-    resolve: function (val) {
-      this._complete('resolve', val);
-      return this;
-    },
-
-    reject: function (ex) {
-      this._complete('reject', ex);
-      return this;
-    },
-
-    _complete: function (which, arg) {
-      // switch over to sync then()
-      this.then = (which === 'resolve') ?
-        function (resolve, reject) { resolve(arg); } :
-        function (resolve, reject) { reject(arg); };
-      // disallow multiple calls to resolve or reject
-      this.resolve = this.reject =
-        function () { throw new Error('Deferred already completed.'); };
-      // complete all waiting (async) then()s
-      for (var i = 0; i < this._thens.length; i++) {
-        var aThen = this._thens[i];
-        if(aThen[which]) {
-          aThen[which](arg);
-        }
-      }
-      delete this._thens;
-    }
-  };
-
   /*
   Internal: safe warning
   */
@@ -100,20 +54,6 @@
       }
     }
     return destination;
-  }
-
-  /*
-  Internal: Merge two objects together.
-  */
-  function mergeObjects (base, add) {
-    add = add || {};
-
-    var keys = Object.keys(add);
-    for (var i in keys) {
-      base[keys[i]] = add[keys[i]];
-    }
-
-    return base;
   }
 
   /*
@@ -156,6 +96,17 @@
 
   /*
   Internal: Calculate an bounding box from an nested array of positions
+  [
+    [
+      [ [lng, lat],[lng, lat],[lng, lat] ]
+    ]
+    [
+      [lng, lat],[lng, lat],[lng, lat]
+    ]
+    [
+      [lng, lat],[lng, lat],[lng, lat]
+    ]
+  ]
   */
   function calculateBoundsFromNestedArrays (array) {
     var x1 = null, x2 = null, y1 = null, y2 = null;
@@ -200,6 +151,11 @@
 
   /*
   Internal: Calculate a bounding box from an array of arrays of arrays
+  [
+    [ [lng, lat],[lng, lat],[lng, lat] ]
+    [ [lng, lat],[lng, lat],[lng, lat] ]
+    [ [lng, lat],[lng, lat],[lng, lat] ]
+  ]
   */
   function calculateBoundsFromNestedArrayOfArrays (array) {
     var x1 = null, x2 = null, y1 = null, y2 = null;
@@ -247,13 +203,15 @@
 
   /*
   Internal: Calculate a bounding box from an array of positions
+  [
+    [lng, lat],[lng, lat],[lng, lat]
+  ]
   */
   function calculateBoundsFromArray (array) {
     var x1 = null, x2 = null, y1 = null, y2 = null;
 
     for (var i = 0; i < array.length; i++) {
       var lonlat = array[i];
-
       var lon = lonlat[0];
       var lat = lonlat[1];
 
@@ -434,6 +392,19 @@
     }
   }
 
+  /*
+  Internal: used for sorting
+  */
+  function compSort(p1, p2) {
+    if(p1[0] - p2[0] > p1[1] - p2[1]) {
+      return 1;
+    } else if(p1[0] - p2[0] < p1[1] - p2[1]) {
+      return -1;
+    } else {
+      return 0;
+    }
+  }
+
 
   /*
   Internal: used to determine turn
@@ -476,18 +447,8 @@
       return points;
     }
 
-    function comp(p1, p2) {
-      if(p1[0] - p2[0] > p1[1] - p2[1]) {
-        return 1;
-      } else if(p1[0] - p2[0] < p1[1] - p2[1]) {
-        return -1;
-      } else {
-        return 0;
-      }
-    }
-
     // Returns the points on the convex hull of points in CCW order.
-    var hull = [points.sort(comp)[0]];
+    var hull = [points.sort(compSort)[0]];
 
     for(var p = 0; p < hull.length; p++) {
       var q = nextHullPoint(points, hull[p]);
@@ -506,7 +467,7 @@
       if (((coordinates[i][1] <= point[1] && point[1] < coordinates[j][1]) ||
            (coordinates[j][1] <= point[1] && point[1] < coordinates[i][1])) &&
           (point[0] < (coordinates[j][0] - coordinates[i][0]) * (point[1] - coordinates[i][1]) / (coordinates[j][1] - coordinates[i][1]) + coordinates[i][0])) {
-        contains = true;
+        contains = !contains;
       }
     }
     return contains;
@@ -650,6 +611,28 @@
     return true;
   }
 
+  function coordinatesEqual(a, b) {
+    if (a.length !== b.length) {
+      return false;
+    }
+
+    var na = a.slice().sort(compSort);
+    var nb = b.slice().sort(compSort);
+
+    for (var i = 0; i < na.length; i++) {
+      if (na[i].length !== nb[i].length) {
+        return false;
+      }
+      for (var j = 0; j < na.length; j++) {
+        if (na[i][j] !== nb[i][j]) {
+          return false;
+        }
+      }
+    }
+
+    return true;
+  }
+
   /*
   Internal: An array of variables that will be excluded form JSON objects.
   */
@@ -694,124 +677,312 @@
     }
   }
 
-  Primitive.prototype = {
-    toMercator: function(){
-      return toMercator(this);
-    },
-    toGeographic: function(){
-      return toGeographic(this);
-    },
-    envelope: function(){
-      var bounds = calculateBounds(this);
-      return {
-        x: bounds[0],
-        y: bounds[1],
-        w: Math.abs(bounds[0] - bounds[2]),
-        h: Math.abs(bounds[1] - bounds[3])
-      };
-    },
-    bbox: function(){
-      return calculateBounds(this);
-    },
-    convexHull: function(){
-      var coordinates = [ ], i, j;
-      if (this.type === 'Point') {
-        if (this.coordinates && this.coordinates.length > 0) {
-          return [ this.coordinates ];
-        } else {
-          return [ ];
-        }
-      } else if (this.type === 'LineString' || this.type === 'MultiPoint') {
-        if (this.coordinates && this.coordinates.length > 0) {
-          coordinates = this.coordinates;
-        } else {
-          return [ ];
-        }
-      } else if (this.type === 'Polygon' || this.type === 'MultiLineString') {
-        if (this.coordinates && this.coordinates.length > 0) {
-          for (i = 0; i < this.coordinates.length; i++) {
-            coordinates = coordinates.concat(this.coordinates[i]);
-          }
-        } else {
-          return [ ];
-        }
-      } else if (this.type === 'MultiPolygon') {
-        if (this.coordinates && this.coordinates.length > 0) {
-          for (i = 0; i < this.coordinates.length; i++) {
-            for (j = 0; j < this.coordinates[i].length; j++) {
-              coordinates = coordinates.concat(this.coordinates[i][j]);
-            }
-          }
-        } else {
-          return [ ];
+  Primitive.prototype.toMercator = function(){
+    return toMercator(this);
+  };
+
+  Primitive.prototype.toGeographic = function(){
+    return toGeographic(this);
+  };
+
+  Primitive.prototype.envelope = function(){
+    return calculateEnvelope(this);
+  };
+
+  Primitive.prototype.bbox = function(){
+    return calculateBounds(this);
+  };
+
+  Primitive.prototype.convexHull = function(){
+    var coordinates = [ ], i, j;
+    if (this.type === 'Point') {
+      if (this.coordinates && this.coordinates.length > 0) {
+        return [ this.coordinates ];
+      } else {
+        return [ ];
+      }
+    } else if (this.type === 'LineString' || this.type === 'MultiPoint') {
+      if (this.coordinates && this.coordinates.length > 0) {
+        coordinates = this.coordinates;
+      } else {
+        return [ ];
+      }
+    } else if (this.type === 'Polygon' || this.type === 'MultiLineString') {
+      if (this.coordinates && this.coordinates.length > 0) {
+        for (i = 0; i < this.coordinates.length; i++) {
+          coordinates = coordinates.concat(this.coordinates[i]);
         }
       } else {
-        throw new Error("Unable to get convex hull of " + this.type);
+        return [ ];
       }
-
-      return convexHull(coordinates);
-    },
-    toJSON: function(){
-      var obj = {};
-      for (var key in this) {
-        if (this.hasOwnProperty(key) && this[key] && excludeFromJSON.indexOf(key)) {
-          obj[key] = this[key];
+    } else if (this.type === 'MultiPolygon') {
+      if (this.coordinates && this.coordinates.length > 0) {
+        for (i = 0; i < this.coordinates.length; i++) {
+          for (j = 0; j < this.coordinates[i].length; j++) {
+            coordinates = coordinates.concat(this.coordinates[i][j]);
+          }
         }
+      } else {
+        return [ ];
       }
-      obj.bbox = calculateBounds(this);
-      return obj;
-    },
-    intersects: function(primitive) {
-      // if we are passed a feature, use the polygon inside instead
-      if (primitive.type === 'Feature') {
-        primitive = primitive.geometry;
-      }
-
-      if (this.type === 'LineString') {
-        if (primitive.type === 'LineString') {
-          return arrayIntersectsArray(this.coordinates, primitive.coordinates);
-        } else if (primitive.type === 'MultiLineString') {
-          return arrayIntersectsMultiArray(this.coordinates, primitive.coordinates);
-        } else if (primitive.type === 'Polygon') {
-          return arrayIntersectsMultiArray(this.coordinates, closedPolygon(primitive.coordinates));
-        } else if (primitive.type === 'MultiPolygon') {
-          return arrayIntersectsMultiMultiArray(this.coordinates, primitive.coordinates);
-        }
-      } else if (this.type === 'MultiLineString') {
-        if (primitive.type === 'LineString') {
-          return arrayIntersectsMultiArray(primitive.coordinates, this.coordinates);
-        } else if (primitive.type === 'Polygon' || primitive.type === 'MultiLineString') {
-          return multiArrayIntersectsMultiArray(this.coordinates, primitive.coordinates);
-        } else if (primitive.type === 'MultiPolygon') {
-          return multiArrayIntersectsMultiMultiArray(this.coordinates, primitive.coordinates);
-        }
-      } else if (this.type === 'Polygon') {
-        if (primitive.type === 'LineString') {
-          return arrayIntersectsMultiArray(primitive.coordinates, closedPolygon(this.coordinates));
-        } else if (primitive.type === 'MultiLineString') {
-          return multiArrayIntersectsMultiArray(closedPolygon(this.coordinates), primitive.coordinates);
-        } else if (primitive.type === 'Polygon') {
-          return multiArrayIntersectsMultiArray(closedPolygon(this.coordinates), closedPolygon(primitive.coordinates));
-        } else if (primitive.type === 'MultiPolygon') {
-          return multiArrayIntersectsMultiMultiArray(closedPolygon(this.coordinates), primitive.coordinates);
-        }
-      } else if (this.type === 'MultiPolygon') {
-        if (primitive.type === 'LineString') {
-          return arrayIntersectsMultiMultiArray(primitive.coordinates, this.coordinates);
-        } else if (primitive.type === 'Polygon' || primitive.type === 'MultiLineString') {
-          return multiArrayIntersectsMultiMultiArray(closedPolygon(primitive.coordinates), this.coordinates);
-        } else if (primitive.type === 'MultiPolygon') {
-          return multiMultiArrayIntersectsMultiMultiArray(this.coordinates, primitive.coordinates);
-        }
-      } else if (this.type === 'Feature') {
-        // in the case of a Feature, use the internal primitive for intersection
-        var inner = new Primitive(this.geometry);
-        return inner.intersects(primitive);
-      }
-
-      warn("Type " + this.type + " to " + primitive.type + " intersection is not supported by intersects");
-      return false;
+    } else {
+      throw new Error("Unable to get convex hull of " + this.type);
     }
+
+    return convexHull(coordinates);
+  };
+
+  Primitive.prototype.toJSON = function(){
+    var obj = {};
+    for (var key in this) {
+      if (this.hasOwnProperty(key) && excludeFromJSON.indexOf(key) === -1) {
+        obj[key] = this[key];
+      }
+    }
+    obj.bbox = calculateBounds(this);
+    return obj;
+  };
+
+  Primitive.prototype.within = function(primitive) {
+    var coordinates, i, contains;
+
+    // point.within(point) :: equality
+    if (primitive.type === "Point") {
+      if (this.type === "Point") {
+        return pointsEqual(this.coordinates, primitive.coordinates);
+
+      }
+    }
+
+    // point.within(multilinestring)
+    if (primitive.type === "MultiLineString") {
+      if (this.type === "Point") {
+        for (i = 0; i < primitive.coordinates.length; i++) {
+          var linestring = { type: "LineString", coordinates: primitive.coordinates[i] };
+
+          if (this.within(linestring)) {
+            return true;
+          }
+        }
+      }
+    }
+
+    // point.within(linestring), point.within(multipoint)
+    if (primitive.type === "LineString" || primitive.type === "MultiPoint") {
+      if (this.type === "Point") {
+        for (i = 0; i < primitive.coordinates.length; i++) {
+          if (this.coordinates.length !== primitive.coordinates[i].length) {
+            return false;
+          }
+
+          if (pointsEqual(this.coordinates, primitive.coordinates[i])) {
+            return true;
+          }
+        }
+      }
+    }
+
+    if (primitive.type === "Polygon") {
+      // polygon.within(polygon)
+      if (this.type === "Polygon") {
+        // check for equal polygons
+        if (primitive.coordinates.length === this.coordinates.length) {
+          for (i = 0; i < this.coordinates.length; i++) {
+            if (coordinatesEqual(this.coordinates[i], primitive.coordinates[i])) {
+              return true;
+            }
+          }
+        }
+
+        if (this.coordinates.length && polygonContainsPoint(primitive.coordinates, this.coordinates[0][0])) {
+          return !multiArrayIntersectsMultiArray(closedPolygon(this.coordinates), closedPolygon(primitive.coordinates));
+        } else {
+          return false;
+        }
+
+      // point.within(polygon)
+      } else if (this.type === "Point") {
+        return polygonContainsPoint(primitive.coordinates, this.coordinates);
+
+      // linestring/multipoint withing polygon
+      } else if (this.type === "LineString" || this.type === "MultiPoint") {
+        if (!this.coordinates || this.coordinates.length === 0) {
+          return false;
+        }
+
+        for (i = 0; i < this.coordinates.length; i++) {
+          if (polygonContainsPoint(primitive.coordinates, this.coordinates[i]) === false) {
+            return false;
+          }
+        }
+
+        return true;
+
+      // multilinestring.within(polygon)
+      } else if (this.type === "MultiLineString") {
+        for (i = 0; i < this.coordinates.length; i++) {
+          var ls = new LineString(this.coordinates[i]);
+
+          if (ls.within(primitive) === false) {
+            contains++;
+            return false;
+          }
+        }
+
+        return true;
+
+      // multipolygon.within(polygon)
+      } else if (this.type === "MultiPolygon") {
+        for (i = 0; i < this.coordinates.length; i++) {
+          var p1 = new Primitive({ type: "Polygon", coordinates: this.coordinates[i] });
+
+          if (p1.within(primitive) === false) {
+            return false;
+          }
+        }
+
+        return true;
+      }
+
+    }
+
+    if (primitive.type === "MultiPolygon") {
+      // point.within(multipolygon)
+      if (this.type === "Point") {
+        if (primitive.coordinates.length) {
+          for (i = 0; i < primitive.coordinates.length; i++) {
+            coordinates = primitive.coordinates[i];
+            if (polygonContainsPoint(coordinates, this.coordinates) && multiArrayIntersectsMultiArray(this.coordinates, primitive.coordinates) === false) {
+              return true;
+            }
+          }
+        }
+
+        return false;
+      // polygon.within(multipolygon)
+      } else if (this.type === "Polygon") {
+        for (i = 0; i < this.coordinates.length; i++) {
+          if (primitive.coordinates[i].length === this.coordinates.length) {
+            for (j = 0; j < this.coordinates.length; j++) {
+              if (coordinatesEqual(this.coordinates[j], primitive.coordinates[i][j])) {
+                return true;
+              }
+            }
+          }
+        }
+
+        if (multiArrayIntersectsMultiMultiArray(this.coordinates, primitive.coordinates) === false) {
+          if (primitive.coordinates.length) {
+            for (i = 0; i < primitive.coordinates.length; i++) {
+              coordinates = primitive.coordinates[i];
+              if (polygonContainsPoint(coordinates, this.coordinates[0][0]) === false) {
+                contains = false;
+              } else {
+                contains = true;
+              }
+            }
+
+            return contains;
+          }
+        }
+
+      // linestring.within(multipolygon), multipoint.within(multipolygon)
+      } else if (this.type === "LineString" || this.type === "MultiPoint") {
+        for (i = 0; i < primitive.coordinates.length; i++) {
+          var p = { type: "Polygon", coordinates: primitive.coordinates[i] };
+
+          if (this.within(p)) {
+            return true;
+          }
+
+          return false;
+        }
+
+      // multilinestring.within(multipolygon)
+      } else if (this.type === "MultiLineString") {
+        for (i = 0; i < this.coordinates.length; i++) {
+          var lines = new LineString(this.coordinates[i]);
+
+          if (lines.within(primitive) === false) {
+            return false;
+          }
+        }
+
+        return true;
+
+      // multipolygon.within(multipolygon)
+      } else if (this.type === "MultiPolygon") {
+        for (i = 0; i < primitive.coordinates.length; i++) {
+          var mpoly = { type: "Polygon", coordinates: primitive.coordinates[i] };
+
+          if (this.within(mpoly) === false) {
+            return false;
+          }
+        }
+
+        return true;
+      }
+    }
+
+    // default to false
+    return false;
+  };
+
+  Primitive.prototype.intersects = function(primitive) {
+    // if we are passed a feature, use the polygon inside instead
+    if (primitive.type === 'Feature') {
+      primitive = primitive.geometry;
+    }
+
+    var p = new Primitive(primitive);
+    if (this.within(primitive) || p.within(this)) {
+      return true;
+    }
+
+    if (this.type === 'LineString') {
+      if (primitive.type === 'LineString') {
+        return arrayIntersectsArray(this.coordinates, primitive.coordinates);
+      } else if (primitive.type === 'MultiLineString') {
+        return arrayIntersectsMultiArray(this.coordinates, primitive.coordinates);
+      } else if (primitive.type === 'Polygon') {
+        return arrayIntersectsMultiArray(this.coordinates, closedPolygon(primitive.coordinates));
+      } else if (primitive.type === 'MultiPolygon') {
+        return arrayIntersectsMultiMultiArray(this.coordinates, primitive.coordinates);
+      }
+    } else if (this.type === 'MultiLineString') {
+      if (primitive.type === 'LineString') {
+        return arrayIntersectsMultiArray(primitive.coordinates, this.coordinates);
+      } else if (primitive.type === 'Polygon' || primitive.type === 'MultiLineString') {
+        return multiArrayIntersectsMultiArray(this.coordinates, primitive.coordinates);
+      } else if (primitive.type === 'MultiPolygon') {
+        return multiArrayIntersectsMultiMultiArray(this.coordinates, primitive.coordinates);
+      }
+    } else if (this.type === 'Polygon') {
+      if (primitive.type === 'LineString') {
+        return arrayIntersectsMultiArray(primitive.coordinates, closedPolygon(this.coordinates));
+      } else if (primitive.type === 'MultiLineString') {
+        return multiArrayIntersectsMultiArray(closedPolygon(this.coordinates), primitive.coordinates);
+      } else if (primitive.type === 'Polygon') {
+        return multiArrayIntersectsMultiArray(closedPolygon(this.coordinates), closedPolygon(primitive.coordinates));
+      } else if (primitive.type === 'MultiPolygon') {
+        return multiArrayIntersectsMultiMultiArray(closedPolygon(this.coordinates), primitive.coordinates);
+      }
+    } else if (this.type === 'MultiPolygon') {
+      if (primitive.type === 'LineString') {
+        return arrayIntersectsMultiMultiArray(primitive.coordinates, this.coordinates);
+      } else if (primitive.type === 'Polygon' || primitive.type === 'MultiLineString') {
+        return multiArrayIntersectsMultiMultiArray(closedPolygon(primitive.coordinates), this.coordinates);
+      } else if (primitive.type === 'MultiPolygon') {
+        return multiMultiArrayIntersectsMultiMultiArray(this.coordinates, primitive.coordinates);
+      }
+    } else if (this.type === 'Feature') {
+      // in the case of a Feature, use the internal primitive for intersection
+      var inner = new Primitive(this.geometry);
+      return inner.intersects(primitive);
+    }
+
+    warn("Type " + this.type + " to " + primitive.type + " intersection is not supported by intersects");
+    return false;
   };
 
 
@@ -831,7 +1002,7 @@
 
     if(input && input.type === "Point" && input.coordinates){
       extend(this, input);
-    } else if(input && Array.isArray(input)) {
+    } else if(input && Object.prototype.toString.call(input) === "[object Array]") {
       this.coordinates = input;
     } else if(args.length >= 2) {
       this.coordinates = args;
@@ -997,32 +1168,9 @@
     this.coordinates[0].splice(remove, 1);
     return this;
   };
-  Polygon.prototype.contains = function(primitive) {
-    if (primitive.type === "Point") {
-      return polygonContainsPoint(this.coordinates, primitive.coordinates);
-    } else if (primitive.type === "Polygon") {
-      if (primitive.coordinates.length > 0 && primitive.coordinates[0].length > 0) {
-        // naive assertion - contains a point and does not intersect
-        if (polygonContainsPoint(this.coordinates, primitive.coordinates[0][0]) === true &&
-            this.intersects(primitive) === false) {
-          return true;
-        }
-      }
-    } else if (primitive.type === "MultiPolygon") {
-      if (primitive.coordinates.length > 0) {
-        // same naive assertion, but loop through all of the inner polygons
-        for (var i = 0; i < primitive.coordinates.length; i++) {
-          if (primitive.coordinates[i][0].length > 0) {
-            if (polygonContainsPoint(this.coordinates, primitive.coordinates[i][0][0]) === true &&
-                this.intersects({ type: "Polygon", coordinates: primitive.coordinates[i] }) === false) {
-              return true;
-            }
-          }
-        }
-      }
-    }
 
-    return false;
+  Polygon.prototype.close = function() {
+    this.coordinates = closedPolygon(this.coordinates);
   };
 
   /*
@@ -1052,19 +1200,6 @@
     for (var i = 0; i < this.coordinates.length; i++) {
       func.apply(this, [this.coordinates[i], i, this.coordinates ]);
     }
-  };
-  MultiPolygon.prototype.contains = function(primitive) {
-    if (primitive.type !== "Point") {
-      throw new Error("Only points are supported");
-    }
-
-    for (var i = 0; i < this.coordinates.length; i++) {
-      if (polygonContainsPoint(this.coordinates[i], primitive.coordinates)) {
-        return true;
-      }
-    }
-
-    return false;
   };
   MultiPolygon.prototype.get = function(i){
     return new Polygon(this.coordinates[i]);
@@ -1099,27 +1234,6 @@
 
   Feature.prototype = new Primitive();
   Feature.prototype.constructor = Feature;
-  Feature.prototype.contains = function(primitive) {
-    if (primitive.type !== "Point") {
-      throw new Error("Only points are supported");
-    }
-
-    if (!this.geometry.type.match(/Polygon/)) {
-      throw new Error("Only features containing Polygons and MultiPolygons are supported");
-    }
-    if(this.geometry.type === "MultiPolygon"){
-      for (var i = 0; i < this.geometry.coordinates.length; i++) {
-        if (polygonContainsPoint(this.geometry.coordinates[i], primitive.coordinates)) {
-          return true;
-        }
-      }
-    }
-    if(this.geometry.type === "Polygon"){
-      return polygonContainsPoint(this.geometry.coordinates, primitive.coordinates);
-    }
-    return false;
-  };
-
 
   /*
   GeoJSON FeatureCollection Class
@@ -1194,10 +1308,9 @@
     return new Primitive(this.geometries[i]);
   };
 
-  function createCircle(center, rad, interpolate){
+  function createCircle(center, radius, interpolate){
     var mercatorPosition = positionToMercator(center);
     var steps = interpolate || 64;
-    var radius = rad || 250;
     var polygon = {
       type: "Polygon",
       coordinates: [[]]
@@ -1255,12 +1368,6 @@
     }
     return this.properties.steps;
   };
-  Circle.prototype.contains = function(primitive) {
-    if (primitive.type !== "Point") {
-      throw new Error("Only points are supported");
-    }
-    return polygonContainsPoint(this.geometry.coordinates, primitive.coordinates);
-  };
 
   Circle.prototype.toJSON = function() {
     var output = Primitive.prototype.toJSON.call(this);
@@ -1296,12 +1403,310 @@
   exports.Tools.polygonContainsPoint = polygonContainsPoint;
   exports.Tools.arrayIntersectsArray = arrayIntersectsArray;
   exports.Tools.coordinatesContainPoint = coordinatesContainPoint;
+  exports.Tools.coordinatesEqual = coordinatesEqual;
   exports.Tools.convexHull = convexHull;
 
   exports.MercatorCRS = MercatorCRS;
   exports.GeographicCRS = GeographicCRS;
 
-  exports.Deferred = Deferred;
+  return exports;
+}));
+
+/* globals Terraformer */
+(function (root, factory) {
+
+  // Node.
+  if(typeof module === 'object' && typeof module.exports === 'object') {
+    exports = module.exports = factory(require('terraformer'));
+  }
+
+  // Browser Global.
+  if(typeof root.navigator === "object") {
+    if (!root.Terraformer){
+      throw new Error("Terraformer.ArcGIS requires the core Terraformer library. https://github.com/esri/Terraformer");
+    }
+    root.Terraformer.ArcGIS = factory(root.Terraformer);
+  }
+
+}(this, function(Terraformer) {
+  var exports = {};
+
+  // shallow object clone for feature properties and attributes
+  // from http://jsperf.com/cloning-an-object/2
+  function clone(obj) {
+    var target = {};
+    for (var i in obj) {
+      if (obj.hasOwnProperty(i)) {
+        target[i] = obj[i];
+      }
+    }
+    return target;
+  }
+
+  // determine if polygon ring coordinates are clockwise. clockwise signifies outer ring, counter-clockwise an inner ring
+  // or hole. this logic was found at http://stackoverflow.com/questions/1165647/how-to-determine-if-a-list-of-polygon-
+  // points-are-in-clockwise-order
+  function ringIsClockwise(ringToTest) {
+    var total = 0,i = 0;
+    var rLength = ringToTest.length;
+    var pt1 = ringToTest[i];
+    var pt2;
+    for (i; i < rLength - 1; i++) {
+      pt2 = ringToTest[i + 1];
+      total += (pt2[0] - pt1[0]) * (pt2[1] + pt1[1]);
+      pt1 = pt2;
+    }
+    return (total >= 0);
+  }
+
+  // This function flattens holes in polygons to one array of rings
+  //
+  // [
+  //   [ array of outer coordinates ]
+  //   [ hole coordinates ]
+  //   [ hole coordinates ]
+  // ]
+  // becomes
+  // [
+  //   [ array of outer coordinates ]
+  //   [ hole coordinates ]
+  //   [ hole coordinates ]
+  // ]
+  function flattenPolygonRings(poly){
+    var output = [];
+    var polygon = poly.slice(0);
+    var outerRing = polygon.shift().slice(0);
+
+    if(!ringIsClockwise(outerRing)){
+      outerRing.reverse();
+    }
+
+    output.push(outerRing);
+
+    for (var i = 0; i < polygon.length; i++) {
+      var hole = polygon[i].slice(0);
+      if(ringIsClockwise(hole)){
+        hole.reverse();
+      }
+      output.push(hole);
+    }
+
+    return output;
+  }
+
+  // This function flattens holes in multipolygons to one array of polygons
+  // so
+  // [
+  //   [
+  //     [ array of outer coordinates ]
+  //     [ hole coordinates ]
+  //     [ hole coordinates ]
+  //   ],
+  //   [
+  //     [ array of outer coordinates ]
+  //     [ hole coordinates ]
+  //     [ hole coordinates ]
+  //   ],
+  // ]
+  // becomes
+  // [
+  //   [ array of outer coordinates ]
+  //   [ hole coordinates ]
+  //   [ hole coordinates ]
+  //   [ array of outer coordinates ]
+  //   [ hole coordinates ]
+  //   [ hole coordinates ]
+  // ]
+  function flattenMultiPolygonRings(rings){
+    var output = [];
+    for (var i = 0; i < rings.length; i++) {
+      var polygon = flattenPolygonRings(rings[i]);
+      for (var x = polygon.length - 1; x >= 0; x--) {
+        var ring = polygon[x].slice(0);
+        output.push(ring);
+      }
+    }
+    return output;
+  }
+
+  function coordinatesContainCoordinates(outer, inner){
+    var intersects = Terraformer.Tools.arrayIntersectsArray(outer, inner);
+    var contains = Terraformer.Tools.coordinatesContainPoint(outer, inner[0]);
+    if(!intersects && contains){
+      return true;
+    }
+    return false;
+  }
+
+  // do any polygons in this array contain any other polygons in this array?
+  // used for checking for holes in arcgis rings
+  function convertRingsToGeoJSON(rings){
+    var outerRings = [];
+    var holes = [];
+
+    // for each ring
+    for (var r = 0; r < rings.length; r++) {
+      var ring = rings[r].slice(0);
+
+      // is this ring an outer ring? is it clockwise?
+      if(ringIsClockwise(ring)){
+        var polygon = [ ring ];
+        outerRings.push(polygon); // push to outer rings
+      } else {
+        holes.push(ring); // counterclockwise push to holes
+      }
+    }
+
+    // while there are holes left...
+    while(holes.length){
+      // pop a hole off out stack
+      var hole = holes.pop();
+      var matched = false;
+
+      // loop over all outer rings and see if they contain our hole.
+      for (var x = outerRings.length - 1; x >= 0; x--) {
+        var outerRing = outerRings[x][0];
+        if(coordinatesContainCoordinates(outerRing, hole)){
+          // the hole is contained push it into our polygon
+          outerRings[x].push(hole);
+
+          // we matched the hole
+          matched = true;
+
+          // stop checking to see if other outer rings contian this hole
+          break;
+        }
+      }
+
+      // no outer rings contain this hole turn it into and outer ring (reverse it)
+      if(!matched){
+        outerRings.push([ hole.reverse() ]);
+      }
+    }
+
+    if(outerRings.length === 1){
+      return {
+        type: "Polygon",
+        coordinates: outerRings[0]
+      };
+    } else {
+      return {
+        type: "MultiPolygon",
+        coordinates: outerRings
+      };
+    }
+  }
+
+  // ArcGIS -> GeoJSON
+  function parse(arcgis){
+    var geojson = {};
+
+    if(arcgis.x && arcgis.y){
+      geojson.type = "Point";
+      geojson.coordinates = [arcgis.x, arcgis.y];
+    }
+
+    if(arcgis.points){
+      geojson.type = "MultiPoint";
+      geojson.coordinates = arcgis.points.slice(0);
+    }
+
+    if(arcgis.paths) {
+      if(arcgis.paths.length === 1){
+        geojson.type = "LineString";
+        geojson.coordinates = arcgis.paths[0].slice(0);
+      } else {
+        geojson.type = "MultiLineString";
+        geojson.coordinates = arcgis.paths.slice(0);
+      }
+    }
+
+    if(arcgis.rings) {
+      geojson = convertRingsToGeoJSON(arcgis.rings.slice(0));
+    }
+
+    if(arcgis.geometry) {
+      geojson.type = "Feature";
+      geojson.geometry = parse(arcgis.geometry);
+      geojson.properties = clone(arcgis.attributes) || {};
+    }
+
+    var inputSpatialReference = (arcgis.geometry) ? arcgis.geometry.spatialReference : arcgis.spatialReference;
+
+    //convert spatial ref if needed
+    if(inputSpatialReference && inputSpatialReference.wkid === 102100){
+      geojson = Terraformer.toGeographic(geojson);
+    }
+
+    return new Terraformer.Primitive(geojson);
+  }
+
+  // GeoJSON -> ArcGIS
+  function convert(geojson, sr){
+    var spatialReference;
+
+    if(sr){
+      spatialReference = sr;
+    } else if (geojson && geojson.crs === Terraformer.MercatorCRS) {
+      spatialReference = { wkid: 102100 };
+    } else {
+      spatialReference = { wkid: 4326 };
+    }
+
+    var result = {};
+    var i;
+
+    switch(geojson.type){
+    case "Point":
+      result.x = geojson.coordinates[0];
+      result.y = geojson.coordinates[1];
+      result.spatialReference = spatialReference;
+      break;
+    case "MultiPoint":
+      result.points = geojson.coordinates.slice(0);
+      result.spatialReference = spatialReference;
+      break;
+    case "LineString":
+      result.paths = [geojson.coordinates.slice(0)];
+      result.spatialReference = spatialReference;
+      break;
+    case "MultiLineString":
+      result.paths = geojson.coordinates.slice(0);
+      result.spatialReference = spatialReference;
+      break;
+    case "Polygon":
+      result.rings = flattenPolygonRings(geojson.coordinates.slice(0));
+      result.spatialReference = spatialReference;
+      break;
+    case "MultiPolygon":
+      result.rings = flattenMultiPolygonRings(geojson.coordinates.slice(0));
+      result.spatialReference = spatialReference;
+      break;
+    case "Feature":
+      result.geometry = convert(geojson.geometry);
+      result.attributes = clone(geojson.properties);
+      break;
+    case "FeatureCollection":
+      result = [];
+      for (i = 0; i < geojson.features.length; i++){
+        result.push(convert(geojson.features[i]));
+      }
+      break;
+    case "GeometryCollection":
+      result = [];
+      for (i = 0; i < geojson.geometries.length; i++){
+        result.push(convert(geojson.geometries[i]));
+      }
+      break;
+    }
+
+    return result;
+  }
+
+  exports.parse   = parse;
+  exports.convert = convert;
+  exports.toGeoJSON = parse;
+  exports.fromGeoJSON = convert;
 
   return exports;
 }));
@@ -1309,38 +1714,18 @@
 
   // Node.
   if(typeof module === 'object' && typeof module.exports === 'object') {
-    exports = module.exports = factory();
+    exports = module.exports = factory(require("terraformer"));
   }
 
-  // AMD.
-  if(typeof define === 'function' && define.amd) {
-    define(["terraformer/terraformer"],factory);
+  if(typeof root.navigator === "object") {
+    if (!root.Terraformer){
+      throw new Error("Terraformer.RTree requires the core Terraformer library. https://github.com/esri/Terraformer");
+    }
+    root.Terraformer.RTree = factory(root.Terraformer).RTree;
   }
 
-  // Browser Global.
-  if (typeof root.Terraformer === "undefined"){
-    root.Terraformer = {};
-  }
-  root.Terraformer.RTree = factory().RTree;
-
-}(this, function() {
+}(this, function(Terraformer) {
   var exports = { };
-  var Terraformer;
-
-  // Local Reference To Browser Global
-  if(typeof this.navigator === "object") {
-    Terraformer = this.Terraformer;
-  }
-
-  // Setup Node Dependencies
-  if(typeof module === 'object' && typeof module.exports === 'object') {
-    Terraformer = require('terraformer');
-  }
-
-  // Setup AMD Dependencies
-  if(arguments[0] && typeof define === 'function' && define.amd) {
-    Terraformer = arguments[0];
-  }
 
   function isArray(obj) {
     return Object.prototype.toString.call(obj) === '[object Array]';
@@ -1741,6 +2126,42 @@ var RTree = function (width) {
       return return_array;
     };
 
+    var _search_subtree_reverse = function(rect, return_node, return_array, root) {
+      var hit_stack = []; // Contains the elements that overlap
+      if (!RTree.Rectangle.overlap_rectangle(root, rect)) {
+        return return_array;
+      }
+
+      var load_callback = function(local_tree, local_node) {
+          return function(data) {
+            local_tree._attach_data(local_node, data);
+          };
+      };
+
+      hit_stack.push(root.nodes);
+
+      do {
+        var nodes = hit_stack.pop();
+
+        for (var i = nodes.length - 1; i >= 0; i--) {
+          var ltree = nodes[i];
+          if (RTree.Rectangle.overlap_rectangle(ltree, rect)) {
+            if ("nodes" in ltree) { // Not a Leaf
+              hit_stack.push(ltree.nodes);
+            } else if ("leaf" in ltree) { // A Leaf !!
+              if (!return_node) {
+                return_array.push(ltree.leaf);
+              } else {
+                return_array.push(ltree);
+              }
+            }
+          }
+        }
+      } while (hit_stack.length > 0);
+
+      return return_array;
+    };
+
    /* non-recursive internal insert function
     * [] = _insert_subtree(rectangle, object to insert, root to begin insertion at)
     * @private
@@ -1827,16 +2248,7 @@ var RTree = function (width) {
     * @public
     */
     this.serialize = function(callback) {
-      var dfd = new Terraformer.Deferred();
-      if(callback){
-        dfd.then(function(result){
-          callback(null, result);
-        }, function(error){
-          callback(error, null);
-        });
-      }
-      dfd.resolve(_T);
-      return dfd;
+      callback(null, _T);
     };
 
    /* accepts a JSON representation of the tree and inserts it
@@ -1845,7 +2257,6 @@ var RTree = function (width) {
     this.deserialize = function(new_tree, where, callback) {
 
       var args = Array.prototype.slice.call(arguments);
-      var dfd = new Terraformer.Deferred();
 
       switch (args.length) {
       case 1:
@@ -1859,17 +2270,11 @@ var RTree = function (width) {
         break;
       }
 
+      var deserialized = _attach_data(where, new_tree);
+
       if(callback){
-        dfd.then(function(result){
-          callback(null, result);
-        }, function(error){
-          callback(error, null);
-        });
+        callback(null, deserialized);
       }
-
-      dfd.resolve(_attach_data(where, new_tree));
-
-      return dfd;
     };
 
    /* non-recursive search function
@@ -1891,7 +2296,32 @@ var RTree = function (width) {
         rect = shape;
       }
 
-      var dfd = new Terraformer.Deferred();
+      var args = [ rect, false, [ ], _T ];
+
+      if (rect === undefined) {
+        throw "Wrong number of arguments. RT.Search requires at least a bounding rectangle.";
+      }
+
+      var results = _search_subtree.apply(this, args);
+
+      if(callback){
+        callback(null, results);
+      }
+    };
+
+    this.within = function(shape, callback) {
+      var rect;
+      if(shape.type){
+        var b = Terraformer.Tools.calculateBounds(shape);
+        rect = {
+          x: b[0],
+          y: b[1],
+          w: Math.abs(b[0] - b[2]),
+          h: Math.abs(b[1] - b[3])
+        };
+      } else {
+        rect = shape;
+      }
 
       var args = [ rect, false, [ ], _T ];
 
@@ -1899,17 +2329,11 @@ var RTree = function (width) {
         throw "Wrong number of arguments. RT.Search requires at least a bounding rectangle.";
       }
 
+      var search = _search_subtree_reverse.apply(this, args);
+
       if(callback){
-        dfd.then(function(result){
-          callback(null, result);
-        }, function(error){
-          callback(error, null);
-        });
+        callback(null, search);
       }
-
-      dfd.resolve(_search_subtree.apply(this, args));
-
-      return dfd;
     };
 
 
@@ -1918,7 +2342,6 @@ var RTree = function (width) {
     */
     this.remove = function(shape, obj, callback) {
       var args = Array.prototype.slice.call(arguments);
-      var dfd = new Terraformer.Deferred();
 
       // you only passed shape
       if(args.length === 1){
@@ -1930,16 +2353,11 @@ var RTree = function (width) {
       // pop the callback off the args list
       if(args.length === 3){
         callback = args.pop();
-        dfd.then(function(result){
-          callback(null, result);
-        }, function(error){
-          callback(error, null);
-        });
       }
 
       // convert shape (the first arg) to a bbox if its geojson
-      if(args[0].type){
-        var b = Terraformer.Tools.calculateBounds(shape);
+      if(args && args[0] && args[0].type){
+        var b = Terraformer.Tools.calculateBounds(args[0]);
         args[0] = {
           x: b[0],
           y: b[1],
@@ -1958,9 +2376,14 @@ var RTree = function (width) {
           numberdeleted = ret_array.length;
           ret_array = ret_array.concat(_remove_subtree.apply(this, args));
         } while( numberdeleted !==  ret_array.length);
-        return ret_array;
+        if(callback){
+          callback(null, ret_array);
+        }
       } else { // Delete a specific item
-        return(_remove_subtree.apply(this, args));
+        var removal = _remove_subtree.apply(this, args);
+        if(callback){
+          callback(null, removal);
+        }
       }
     };
 
@@ -1981,29 +2404,21 @@ var RTree = function (width) {
         rect = shape;
       }
 
-      var dfd = new Terraformer.Deferred();
-
       if (arguments.length < 2) {
         throw "Wrong number of arguments. RT.Insert requires at least a bounding rectangle or GeoJSON and an object.";
       }
 
-      if(callback){
-        dfd.then(function(result){
-          callback(null, result);
-        }, function(error){
-          callback(error, null);
-        });
-      }
-
-      dfd.resolve(_insert_subtree({
+      var insert = _insert_subtree({
         x: rect.x,
         y: rect.y,
         w: rect.w,
         h: rect.h,
         leaf: obj
-      }, _T));
+      }, _T);
 
-      return dfd;
+      if(callback){
+        callback(null, insert);
+      }
     };
 
    /* non-recursive delete function
@@ -2011,7 +2426,7 @@ var RTree = function (width) {
     */
 
     //End of RTree
-    };
+  };
 
 /* Rectangle - Generic rectangle object - Not yet used */
 RTree.Rectangle = function(ix, iy, iw, ih) { // new Rectangle(bounds) or new Rectangle(x, y, w, h)
@@ -2194,304 +2609,6 @@ RTree.Rectangle.make_MBR = function(nodes, rect) {
 
 
   exports.RTree = RTree;
-
-  return exports;
-}));
-/* globals Terraformer */
-(function (root, factory) {
-
-  // Node.
-  if(typeof module === 'object' && typeof module.exports === 'object') {
-    exports = module.exports = factory();
-  }
-
-  // AMD.
-  if(typeof define === 'function' && define.amd) {
-    define(["terraformer/terraformer"],factory);
-  }
-
-  // Browser Global.
-  if(typeof root.navigator === "object") {
-    if (typeof root.Terraformer === "undefined"){
-      root.Terraformer = {};
-    }
-    root.Terraformer.ArcGIS = factory();
-  }
-
-}(this, function() {
-  var exports = {};
-  var Terraformer;
-
-  // Local Reference To Browser Global
-  if(typeof this.navigator === "object") {
-    Terraformer = this.Terraformer;
-  }
-
-  // Setup Node Dependencies
-  if(typeof module === 'object' && typeof module.exports === 'object') {
-    Terraformer = require('terraformer');
-  }
-
-  // Setup AMD Dependencies
-  if(arguments[0] && typeof define === 'function' && define.amd) {
-    Terraformer = arguments[0];
-  }
-
-  // determine if polygon ring coordinates are clockwise. clockwise signifies outer ring, counter-clockwise an inner ring
-  // or hole. this logic was found at http://stackoverflow.com/questions/1165647/how-to-determine-if-a-list-of-polygon-
-  // points-are-in-clockwise-order
-  function ringIsClockwise(ringToTest) {
-    var total = 0,i = 0;
-    var rLength = ringToTest.length;
-    var pt1 = ringToTest[i];
-    var pt2;
-    for (i; i < rLength - 1; i++) {
-      pt2 = ringToTest[i + 1];
-      total += (pt2[0] - pt1[0]) * (pt2[1] + pt1[1]);
-      pt1 = pt2;
-    }
-    return (total >= 0);
-  }
-
-  // This function flattens holes in polygons to one array of rings
-  //
-  // [
-  //   [ array of outer coordinates ]
-  //   [ hole coordinates ]
-  //   [ hole coordinates ]
-  // ]
-  // becomes
-  // [
-  //   [ array of outer coordinates ]
-  //   [ hole coordinates ]
-  //   [ hole coordinates ]
-  // ]
-  function flattenPolygonRings(polygon){
-    var output = [];
-    var outerRing = polygon.shift();
-
-    if(!ringIsClockwise(outerRing)){
-      outerRing.reverse();
-    }
-
-    output.push(outerRing);
-
-    for (var i = 0; i < polygon.length; i++) {
-      var hole = polygon[i];
-      if(ringIsClockwise(hole)){
-        outerRing.reverse();
-      }
-      output.push(polygon[i]);
-    }
-
-    return output;
-  }
-
-  // This function flattens holes in multipolygons to one array of polygons
-  // so
-  // [
-  //   [
-  //     [ array of outer coordinates ]
-  //     [ hole coordinates ]
-  //     [ hole coordinates ]
-  //   ],
-  //   [
-  //     [ array of outer coordinates ]
-  //     [ hole coordinates ]
-  //     [ hole coordinates ]
-  //   ],
-  // ]
-  // becomes
-  // [
-  //   [ array of outer coordinates ]
-  //   [ hole coordinates ]
-  //   [ hole coordinates ]
-  //   [ array of outer coordinates ]
-  //   [ hole coordinates ]
-  //   [ hole coordinates ]
-  // ]
-  function flattenMultiPolygonRings(rings){
-    var output = [];
-    for (var i = 0; i < rings.length; i++) {
-      var polygon = flattenPolygonRings(rings[i]);
-      for (var x = polygon.length - 1; x >= 0; x--) {
-        var ring = polygon[x];
-        output.push(ring);
-      }
-      output.push();
-    }
-    return output;
-  }
-
-  function coordinatesContainCoordinates(outer, inner){
-    var intersects = Terraformer.Tools.arrayIntersectsArray(outer, inner);
-    var contains = Terraformer.Tools.coordinatesContainPoint(outer, inner[0]);
-    if(!intersects && contains){
-      return true;
-    }
-    return false;
-  }
-
-  // do any polygons in this array contain any other polygons in this array?
-  // used for checking for holes in arcgis rings
-  function convertRingsToGeoJSON(rings){
-    var outerRings = [];
-    var holes = [];
-
-    // for each ring
-    for (var r = 0; r < rings.length; r++) {
-      var ring = rings[r];
-
-      // is this ring an outer ring? is it clockwise?
-      if(ringIsClockwise(ring)){
-        var polygon = [ ring ];
-        outerRings.push(polygon); // push to outer rings
-      } else {
-        holes.push(ring); // counterclockwise push to holes
-      }
-    }
-
-    // while there are holes left...
-    while(holes.length){
-      // pop a hole off out stack
-      var hole = holes.pop();
-      var matched = false;
-
-      // loop over all outer rings and see if they contain our hole.
-      for (var x = outerRings.length - 1; x >= 0; x--) {
-        var outerRing = outerRings[x][0];
-        if(coordinatesContainCoordinates(outerRing, hole)){
-          // the hole is contained push it into our polygon
-          outerRings[x].push(hole);
-
-          // we matched the hole
-          matched = true;
-
-          // stop checking to see if other outer rings contian this hole
-          break;
-        }
-      }
-
-      // no outer rings contain this hole turn it into and outer ring (reverse it)
-      if(!matched){
-        outerRings.push([ hole.reverse() ]);
-      }
-    }
-
-    if(outerRings.length === 1){
-      return {
-        type: "Polygon",
-        coordinates: outerRings[0]
-      };
-    } else {
-      return {
-        type: "MultiPolygon",
-        coordinates: outerRings
-      };
-    }
-  }
-
-  // ArcGIS -> GeoJSON
-  function parse(input){
-    var arcgis = JSON.parse(JSON.stringify(input));
-    var geojson = {};
-
-    if(arcgis.x && arcgis.y){
-      geojson.type = "Point";
-      geojson.coordinates = [arcgis.x, arcgis.y];
-    }
-
-    if(arcgis.points){
-      geojson.type = "MultiPoint";
-      geojson.coordinates = arcgis.points;
-    }
-
-    if(arcgis.paths) {
-      if(arcgis.paths.length === 1){
-        geojson.type = "LineString";
-        geojson.coordinates = arcgis.paths[0];
-      } else {
-        geojson.type = "MultiLineString";
-        geojson.coordinates = arcgis.paths;
-      }
-    }
-
-    if(arcgis.rings) {
-      geojson = convertRingsToGeoJSON(arcgis.rings);
-    }
-
-    if(arcgis.geometry) {
-      geojson.type = "Feature";
-      geojson.geometry = parse(arcgis.geometry);
-      geojson.properties = arcgis.attributes || {};
-    }
-
-    var inputSpatialReference = (arcgis.geometry) ? arcgis.geometry.spatialReference : arcgis.spatialReference;
-
-    //convert spatial ref if needed
-    if(inputSpatialReference && inputSpatialReference.wkid === 102100){
-      geojson = Terraformer.toGeographic(geojson);
-    }
-
-    return new Terraformer.Primitive(geojson);
-  }
-
-  // GeoJSON -> ArcGIS
-  function convert(input){
-    var geojson = JSON.parse(JSON.stringify(input));
-    var spatialReference = { wkid: 4326 };
-    var result = {};
-    var i;
-
-    switch(geojson.type){
-    case "Point":
-      result.x = geojson.coordinates[0];
-      result.y = geojson.coordinates[1];
-      result.spatialReference = spatialReference;
-      break;
-    case "MultiPoint":
-      result.points = geojson.coordinates;
-      result.spatialReference = spatialReference;
-      break;
-    case "LineString":
-      result.paths = [geojson.coordinates];
-      result.spatialReference = spatialReference;
-      break;
-    case "MultiLineString":
-      result.paths = geojson.coordinates;
-      result.spatialReference = spatialReference;
-      break;
-    case "Polygon":
-      result.rings = flattenPolygonRings(geojson.coordinates);
-      result.spatialReference = spatialReference;
-      break;
-    case "MultiPolygon":
-      result.rings = flattenMultiPolygonRings(geojson.coordinates);
-      result.spatialReference = spatialReference;
-      break;
-    case "Feature":
-      result.geometry = convert(geojson.geometry);
-      result.attributes = geojson.properties;
-      break;
-    case "FeatureCollection":
-      result = [];
-      for (i = 0; i < geojson.features.length; i++){
-        result.push(convert(geojson.features[i]));
-      }
-      break;
-    case "GeometryCollection":
-      result = [];
-      for (i = 0; i < geojson.geometries.length; i++){
-        result.push(convert(geojson.geometries[i]));
-      }
-      break;
-    }
-
-    return result;
-  }
-
-  exports.parse   = parse;
-  exports.convert = convert;
 
   return exports;
 }));
@@ -3137,7 +3254,7 @@ L.esri.Mixins.identifiableLayer = {
     },
     _update: function(e){
       var envelope = L.esri.Util.boundsToEnvelope(e.target.getBounds());
-      this.index.search(envelope).then(L.Util.bind(function(results){
+      this.index.search(envelope, L.Util.bind(function(error,results){
         this.eachLayer(L.Util.bind(function(layer){
           var id = layer.feature.id;
           setLayerVisibility(layer, L.esri.Util.indexOf(results, id) >= 0);
