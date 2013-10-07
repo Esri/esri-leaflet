@@ -297,7 +297,7 @@ L.esri.Mixins.identifiableLayer = {
     var defaults = {
       sr: '4265',
       mapExtent: JSON.stringify(L.esri.Util.boundsToExtent(this._map.getBounds())),
-      tolerance: 3,
+      tolerance: 5,
       geometryType: 'esriGeometryPoint',
       imageDisplay: this._map._size.x + ',' + this._map._size.y + ',96',
       geometry: JSON.stringify({
