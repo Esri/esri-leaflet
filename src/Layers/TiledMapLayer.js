@@ -7,7 +7,7 @@ L.esri.TiledMapLayer = L.TileLayer.extend({
 
     // set the urls
     this.serviceUrl = L.esri.Util.cleanUrl(url);
-    this.tileUrl = this.serviceUrl + "tile/{z}/{y}/{x}";
+    this.tileUrl = L.esri.Util.cleanUrl(url) + "tile/{z}/{y}/{x}";
 
     //if this is looking at the AGO tiles subdomain insert the subdomain placeholder
     if(this.tileUrl.match("://tiles.arcgis.com")){
@@ -15,7 +15,7 @@ L.esri.TiledMapLayer = L.TileLayer.extend({
       options.subdomains = ["1", "2", "3", "4"];
     }
 
-    L.esri.get(this.serviceUrl, {}, function(response){
+    L.esri.get(this._url, {}, function(response){
       this.fire("metadata", { metadata: response });
     }, this);
 

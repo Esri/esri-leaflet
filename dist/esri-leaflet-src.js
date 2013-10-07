@@ -1,4 +1,4 @@
-/*! Esri-Leaflet - v0.0.1 - 2013-09-17
+/*! Esri-Leaflet - v0.0.1 - 2013-10-07
 *   Copyright (c) 2013 Environmental Systems Research Institute, Inc.
 *   Apache License*/
 (function (root, factory) {
@@ -2908,9 +2908,9 @@ L.esri.Mixins.identifiableLayer = {
     var defaults = {
       sr: '4265',
       mapExtent: JSON.stringify(L.esri.Util.boundsToExtent(this._map.getBounds())),
-      tolerance: 3,
+      tolerance: 5,
       geometryType: 'esriGeometryPoint',
-      imageDisplay: '800,600,96',
+      imageDisplay: this._map._size.x + ',' + this._map._size.y + ',96',
       geometry: JSON.stringify({
         x: latLng.lng,
         y: latLng.lat,
@@ -2919,6 +2919,10 @@ L.esri.Mixins.identifiableLayer = {
         }
       })
     };
+
+    if(this.options.layers) {
+      defaults.layers = this.options.layers;
+    }
 
     var params;
 
@@ -2933,7 +2937,7 @@ L.esri.Mixins.identifiableLayer = {
       params = L.Util.extend(defaults, options);
     }
 
-    L.esri.get(this._url + '/identify', params, callback);
+    L.esri.get(this.serviceUrl + '/identify', params, callback);
   },
   parseLayerDefs: function (layerDefs) {
     if (layerDefs instanceof Array) {
@@ -3241,11 +3245,11 @@ L.esri.Mixins.identifiableLayer = {
     },
     onAdd: function(map){
       L.LayerGroup.prototype.onAdd.call(this, map);
-      map.on("zoomend resize move", this._update, this);
+      map.on("zoomend resize moveEnd", this._update, this);
       this._initializeFeatureGrid(map);
     },
     onRemove: function(map){
-      map.off("zoomend resize move", this._update, this);
+      map.off("zoomend resize moveEnd", this._update, this);
       L.LayerGroup.prototype.onRemove.call(this, map);
       this._destroyFeatureGrid(map);
     },
@@ -3297,7 +3301,7 @@ L.esri.TiledMapLayer = L.TileLayer.extend({
 
     // set the urls
     this.serviceUrl = L.esri.Util.cleanUrl(url);
-    this.tileUrl = this.serviceUrl + "tile/{z}/{y}/{x}";
+    this.tileUrl = L.esri.Util.cleanUrl(url) + "tile/{z}/{y}/{x}";
 
     //if this is looking at the AGO tiles subdomain insert the subdomain placeholder
     if(this.tileUrl.match("://tiles.arcgis.com")){
@@ -3305,7 +3309,7 @@ L.esri.TiledMapLayer = L.TileLayer.extend({
       options.subdomains = ["1", "2", "3", "4"];
     }
 
-    L.esri.get(this.serviceUrl, {}, function(response){
+    L.esri.get(this._url, {}, function(response){
       this.fire("metadata", { metadata: response });
     }, this);
 
@@ -3357,7 +3361,7 @@ L.esri.DynamicMapLayer = L.ImageOverlay.extend({
   },
 
   initialize: function (url, options) {
-    this._url = L.esri.Util.cleanUrl(url);
+    this.serviceUrl = L.esri.Util.cleanUrl(url);
     this._layerParams = L.Util.extend({}, this.defaultParams);
 
     for (var opt in options) {
@@ -3371,7 +3375,7 @@ L.esri.DynamicMapLayer = L.ImageOverlay.extend({
     this._parseLayers();
     this._parseLayerDefs();
 
-    L.esri.get(this._url, {}, function(response){
+    L.esri.get(this.serviceUrl, {}, function(response){
       this.fire("metadata", { metadata: response });
     }, this);
 
@@ -3381,17 +3385,7 @@ L.esri.DynamicMapLayer = L.ImageOverlay.extend({
   onAdd: function (map) {
     this._map = map;
 
-    if (!this._image) {
-      this._initImage();
-    }
-
-    map._panes.overlayPane.appendChild(this._image);
-
-    map.on({
-      'viewreset': this._reset,
-      'moveend': this._update,
-      'zoomend': this._zoomUpdate
-    }, this);
+    map.on("moveend", this._update, this);
 
     if (map.options.zoomAnimation && L.Browser.any3d) {
       map.on('zoomanim', this._animateZoom, this);
@@ -3403,17 +3397,13 @@ L.esri.DynamicMapLayer = L.ImageOverlay.extend({
       this._layerParams.imageSR = sr;
     }
 
-    this._reset();
-    //this._update();
+    this._update();
   },
 
   onRemove: function (map) {
     map.getPanes().overlayPane.removeChild(this._image);
 
-    map.off({
-      'viewreset': this._reset,
-      'moveend': this._update
-    }, this);
+    map.off("moveend", this._update, this);
 
     if (map.options.zoomAnimation) {
       map.off('zoomanim', this._animateZoom, this);
@@ -3504,26 +3494,6 @@ L.esri.DynamicMapLayer = L.ImageOverlay.extend({
     this._layerParams.layerDefs = defs.join(';');
   },
 
-  _initImage: function () {
-    this._image = L.DomUtil.create('img', 'leaflet-image-layer');
-
-    if (this._map.options.zoomAnimation && L.Browser.any3d) {
-      L.DomUtil.addClass(this._image, 'leaflet-zoom-animated');
-    } else {
-      L.DomUtil.addClass(this._image, 'leaflet-zoom-hide');
-    }
-
-    this._updateOpacity();
-
-    L.Util.extend(this._image, {
-      galleryimg: 'no',
-      onselectstart: L.Util.falseFn,
-      onmousemove: L.Util.falseFn,
-      onload: L.Util.bind(this._onImageLoad, this),
-      src: this._getImageUrl()
-    });
-  },
-
   _getImageUrl: function () {
     var bounds = this._map.getBounds(),
         size = this._map.getSize(),
@@ -3533,7 +3503,7 @@ L.esri.DynamicMapLayer = L.ImageOverlay.extend({
     this._layerParams.bbox = [sw.x, sw.y, ne.x, ne.y].join(',');
     this._layerParams.size = size.x + ',' + size.y;
 
-    var url = this._url + 'export' + L.Util.getParamString(this._layerParams);
+    var url = this.serviceUrl + 'export' + L.Util.getParamString(this._layerParams);
 
     if (typeof this.options.token !== 'undefined'){
       url = url + '&token=' + this.options.token;
@@ -3572,16 +3542,12 @@ L.esri.DynamicMapLayer = L.ImageOverlay.extend({
   },
 
   _updateOpacity: function(){
-    L.DomUtil.setOpacity(this._image, this.options.opacity);
+    if(this._image){
+      L.DomUtil.setOpacity(this._image, this.options.opacity);
+    }
     if(this._newImage){
       L.DomUtil.setOpacity(this._newImage, this.options.opacity);
     }
-  },
-
-  _zoomUpdate: function (e) {
-    //console.log(e);
-    //console.log(this._image);
-    //console.log(this._newImage);
   },
 
   _onNewImageLoad: function () {
@@ -3595,15 +3561,12 @@ L.esri.DynamicMapLayer = L.ImageOverlay.extend({
     this._newImage.style.width = size.x + 'px';
     this._newImage.style.height = size.y + 'px';
 
-    // this._map._panes.overlayPane.appendChild(this._newImage);
-    // this._map._panes.overlayPane.removeChild(this._image);
-
     if (this._image == null) {
       this._map._panes.overlayPane.appendChild(this._newImage);
     } else {
       this._map._panes.overlayPane.insertBefore(this._newImage,this._image);
+      this._map._panes.overlayPane.removeChild(this._image);
     }
-    this._map._panes.overlayPane.removeChild(this._image);
 
     this._image = this._newImage;
     this._newImage = null;
@@ -3611,14 +3574,8 @@ L.esri.DynamicMapLayer = L.ImageOverlay.extend({
 
   _onImageLoad: function () {
     this.fire('load');
-      //if (this._image.style.display == 'none') {
-      //  this._image.style.display = 'block';
-      //}
-  },
-
-  _reset: function () {
-    return;
   }
+
 });
 
 L.esri.dynamicMapLayer = function (url, options) {

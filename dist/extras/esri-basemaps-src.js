@@ -1,4 +1,4 @@
-/*! Esri-Leaflet - v0.0.1 - 2013-09-17
+/*! Esri-Leaflet - v0.0.1 - 2013-10-07
 *   Copyright (c) 2013 Environmental Systems Research Institute, Inc.
 *   Apache License*/
 /* globals L */
@@ -297,9 +297,9 @@ L.esri.Mixins.identifiableLayer = {
     var defaults = {
       sr: '4265',
       mapExtent: JSON.stringify(L.esri.Util.boundsToExtent(this._map.getBounds())),
-      tolerance: 3,
+      tolerance: 5,
       geometryType: 'esriGeometryPoint',
-      imageDisplay: '800,600,96',
+      imageDisplay: this._map._size.x + ',' + this._map._size.y + ',96',
       geometry: JSON.stringify({
         x: latLng.lng,
         y: latLng.lat,
@@ -308,6 +308,10 @@ L.esri.Mixins.identifiableLayer = {
         }
       })
     };
+
+    if(this.options.layers) {
+      defaults.layers = this.options.layers;
+    }
 
     var params;
 
@@ -322,7 +326,7 @@ L.esri.Mixins.identifiableLayer = {
       params = L.Util.extend(defaults, options);
     }
 
-    L.esri.get(this._url + '/identify', params, callback);
+    L.esri.get(this.serviceUrl + '/identify', params, callback);
   },
   parseLayerDefs: function (layerDefs) {
     if (layerDefs instanceof Array) {
