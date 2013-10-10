@@ -247,9 +247,6 @@ L.esri.DynamicMapLayer = L.ImageOverlay.extend({
 
     this._image = this._newImage;
     this._newImage = null;
-  },
-
-  _onImageLoad: function () {
     this.fire('load');
   }
 
