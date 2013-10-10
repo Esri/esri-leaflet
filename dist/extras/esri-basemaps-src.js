@@ -1,4 +1,4 @@
-/*! Esri-Leaflet - v0.0.1 - 2013-10-07
+/*! Esri-Leaflet - v0.0.1 - 2013-10-10
 *   Copyright (c) 2013 Environmental Systems Research Institute, Inc.
 *   Apache License*/
 /* globals L */
