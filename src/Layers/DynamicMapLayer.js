@@ -216,6 +216,8 @@ L.esri.DynamicMapLayer = L.ImageOverlay.extend({
       onload: L.Util.bind(this._onNewImageLoad, this),
       src: this._getImageUrl()
     });
+    
+    this.fire('loading');
   },
 
   _updateOpacity: function(){
