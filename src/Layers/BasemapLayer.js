@@ -13,7 +13,7 @@
       TILES: {
         Streets: {
           urlTemplate: tileProtocol + "//{s}.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}/",
-          attributionUrl: "https://static.arcgis.com/attribution/World_Street_Map?f=json",
+          attributionUrl: "https://static.arcgis.com/attribution/World_Street_Map",
           options: {
             minZoom: 1,
             maxZoom: 19,
@@ -23,7 +23,7 @@
         },
         Topographic: {
           urlTemplate: tileProtocol + "//{s}.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}/",
-          attributionUrl: "https://static.arcgis.com/attribution/World_Topo_Map?f=json",
+          attributionUrl: "https://static.arcgis.com/attribution/World_Topo_Map",
           options: {
             minZoom: 1,
             maxZoom: 19,
@@ -33,7 +33,7 @@
         },
         Oceans: {
           urlTemplate: "https://server.arcgisonline.com/ArcGIS/rest/services/Ocean_Basemap/MapServer/tile/{z}/{y}/{x}/",
-          attributionUrl: "https://static.arcgis.com/attribution/Ocean_Basemap?f=json",
+          attributionUrl: "https://static.arcgis.com/attribution/Ocean_Basemap",
           options: {
             minZoom: 1,
             maxZoom: 16,
@@ -134,7 +134,7 @@
 
       // if this basemap requires dynamic attribution set it up
       if(config.attributionUrl){
-        var attributionUrl = L.esri.Util.cleanUrl(config.attributionUrl);
+        var attributionUrl = config.attributionUrl;
         this._dynamicAttribution = true;
         this._getAttributionData(attributionUrl);
       }
@@ -187,7 +187,7 @@
     },
     _getAttributionData: function(url){
       this.attributionBoundingBoxes = [];
-      L.esri.get(url, {}, this._processAttributionData, this);
+      L.esri.RequestHandlers.JSONP(url, {}, this._processAttributionData, this);
     },
     _processAttributionData: function(attributionData){
       for (var c = 0; c < attributionData.contributors.length; c++) {

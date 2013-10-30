@@ -20,13 +20,14 @@ describe('L.esri.DynamicMapLayer', function () {
         var setOptionsSpy = sandbox.spy(L.Util, 'setOptions'),
           dynLayer = L.esri.dynamicMapLayer(url),
           defaultParams = {
-            format: 'png8',
+            format: 'png24',
             transparent: true,
             f: 'image',
-            bboxSR: 102100,
-            imageSR: 102100,
+            bboxSR: 4326,
+            imageSR: 3857,
             layers: '',
-            opacity: 1
+            opacity: 1,
+            position: 'front'
           };
         expect(dynLayer.defaultParams).to.eql(defaultParams);
         expect(setOptionsSpy.calledOnce).to.be.ok();
@@ -37,17 +38,15 @@ describe('L.esri.DynamicMapLayer', function () {
           format: 'jpg',
           transparent: true,
           f: 'image',
-          bboxSR: 102100,
-          imageSR: 102100,
+          bboxSR: 4326,
+          imageSR: 3857,
           layers: '',
           opacity: 0.5,
-          myname: 'johndoe',
-          token: 'I am a token'
+          myname: 'johndoe'
         };
         var dynLayer = L.esri.dynamicMapLayer(url, defaultParams);
         expect(dynLayer._layerParams.format).to.eql(defaultParams.format);
         expect(dynLayer._layerParams.myname).to.eql(defaultParams.myname);
-        expect(dynLayer._layerParams.token).not.to.be.ok();
       });
 
       it('will not set opacity when transparent parameter is false', function () {

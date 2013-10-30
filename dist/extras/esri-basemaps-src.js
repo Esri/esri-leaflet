@@ -1,4 +1,4 @@
-/*! Esri-Leaflet - v0.0.1 - 2013-10-10
+/*! Esri-Leaflet - v0.0.1 - 2013-10-30
 *   Copyright (c) 2013 Environmental Systems Research Institute, Inc.
 *   Apache License*/
 /* globals L */
@@ -357,7 +357,7 @@ L.esri.Mixins.identifiableLayer = {
       TILES: {
         Streets: {
           urlTemplate: tileProtocol + "//{s}.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}/",
-          attributionUrl: "https://static.arcgis.com/attribution/World_Street_Map?f=json",
+          attributionUrl: "https://static.arcgis.com/attribution/World_Street_Map",
           options: {
             minZoom: 1,
             maxZoom: 19,
@@ -367,7 +367,7 @@ L.esri.Mixins.identifiableLayer = {
         },
         Topographic: {
           urlTemplate: tileProtocol + "//{s}.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}/",
-          attributionUrl: "https://static.arcgis.com/attribution/World_Topo_Map?f=json",
+          attributionUrl: "https://static.arcgis.com/attribution/World_Topo_Map",
           options: {
             minZoom: 1,
             maxZoom: 19,
@@ -377,7 +377,7 @@ L.esri.Mixins.identifiableLayer = {
         },
         Oceans: {
           urlTemplate: "https://server.arcgisonline.com/ArcGIS/rest/services/Ocean_Basemap/MapServer/tile/{z}/{y}/{x}/",
-          attributionUrl: "https://static.arcgis.com/attribution/Ocean_Basemap?f=json",
+          attributionUrl: "https://static.arcgis.com/attribution/Ocean_Basemap",
           options: {
             minZoom: 1,
             maxZoom: 16,
@@ -478,7 +478,7 @@ L.esri.Mixins.identifiableLayer = {
 
       // if this basemap requires dynamic attribution set it up
       if(config.attributionUrl){
-        var attributionUrl = L.esri.Util.cleanUrl(config.attributionUrl);
+        var attributionUrl = config.attributionUrl;
         this._dynamicAttribution = true;
         this._getAttributionData(attributionUrl);
       }
@@ -531,7 +531,7 @@ L.esri.Mixins.identifiableLayer = {
     },
     _getAttributionData: function(url){
       this.attributionBoundingBoxes = [];
-      L.esri.get(url, {}, this._processAttributionData, this);
+      L.esri.RequestHandlers.JSONP(url, {}, this._processAttributionData, this);
     },
     _processAttributionData: function(attributionData){
       for (var c = 0; c < attributionData.contributors.length; c++) {
