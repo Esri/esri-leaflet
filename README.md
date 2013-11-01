@@ -239,12 +239,12 @@ L.esri.clusteredFeatureLayer("http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis
       });
     }
   }),
-  marker: function (geojson, latlng) {
+  createMarker: function (geojson, latlng) {
     return L.marker(latlng, {
       icon: icons[geojson.properties.direction.toLowerCase()]
     });
   },
-  eachMarker: function(geojson, marker) {
+  onEachMarker: function(geojson, marker) {
     marker.bindPopup("<h3>"+geojson.properties.stop_name+"</h3><p>Stop ID: "+geojson.properties.stop_id+"</p><p>"+geojson.properties.stop_desc+"</p>")
   }
 }).addTo(map);

@@ -223,6 +223,8 @@ L.esri.DynamicMapLayer = L.ImageOverlay.extend({
       src: this._getImageUrl(),
       'data-bounds': this._map.getBounds().toBBoxString()
     });
+    
+    this.fire('loading');
   },
 
   _updateOpacity: function(){
