@@ -62,7 +62,9 @@ L.esri.DynamicMapLayer = L.ImageOverlay.extend({
     this._bounds = map.getBounds();
     this._map = map;
 
-    map.on("moveend", this._update, this);
+    this._moveHandler = L.esri.Util.debounce(this._update, 150, this);
+
+    map.on("moveend", this._moveHandler, this);
 
     if (map.options.zoomAnimation && L.Browser.any3d) {
       map.on('zoomanim', this._animateZoom, this);
@@ -93,7 +95,7 @@ L.esri.DynamicMapLayer = L.ImageOverlay.extend({
       this._newImage = null;
     }
 
-    map.off("moveend", L.Util.limitExecByInterval(this._update, 150, this), this);
+    map.off("moveend", this._moveHandler, this);
 
     if (map.options.zoomAnimation) {
       map.off('zoomanim', this._animateZoom, this);
@@ -263,7 +265,9 @@ L.esri.DynamicMapLayer = L.ImageOverlay.extend({
 
       this._image = this._newImage;
       this._newImage = null;
-      this.fire('load');
+      this.fire('load', {
+        bounds: bounds
+      });
     }
   }
 });

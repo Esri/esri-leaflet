@@ -191,7 +191,9 @@ L.esri.Mixins.featureGrid = {
     var cells = this._cellsWithin(bounds);
 
     if(cells) {
-      this.fire("loading", { bounds: bounds });
+      this.fire("loading", {
+        bounds: bounds
+      });
     }
 
     for (var i = 0; i < cells.length; i++) {
@@ -214,8 +216,7 @@ L.esri.Mixins.featureGrid = {
       // if there are no more active requests fire a load event for this view
       if(this._activeRequests <= 0){
         this.fire("load", {
-          bounds: bounds,
-          cells: cells
+          bounds: bounds
         });
       }
 

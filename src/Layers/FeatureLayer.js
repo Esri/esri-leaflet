@@ -72,14 +72,8 @@
           var id = feature.attributes[idKey];
           if(!this._layers[id]){
             var geojson = Terraformer.ArcGIS.parse(feature);
-            geojson.id = id;
-            this.index.insert(geojson,id);
+            this.index.insert(geojson, geojson.id);
             this.addData(geojson);
-            var layer = this._layers[id];
-            this.fire("render", {
-              feature: layer,
-              geojson: geojson
-            });
           }
         }
       }

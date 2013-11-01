@@ -9,7 +9,7 @@ The goal of Esri Leaflet is not to replace the [ArcGIS API for JavaScript](https
 ### Demos
 There are [loads of demos](http://esri.github.io/esri-leaflet/) showing the features of Esri Leaflet as well as how it might integrate with [geoservices-js](https://github.com/Esri/geoservices-js) and [Terraformer](https://github.com/esri/Terraformer) libraries. [Check out the demos.](http://esri.github.io/esri-leaflet/)
 
-### Quick Example
+### Example
 Here is a quick example to get you started. Just change the paths to point to the proper libraries and go.
 
 ![App](https://raw.github.com/Esri/esri-leaflet/master/esri-leaflet.png)
@@ -61,7 +61,12 @@ Here is a quick example to get you started. Just change the paths to point to th
 
 ## Features
 
+
+## Documentation
+
 ### Basemaps
+
+**Extends** `L.TileLayer`
 
 You can quickly access ArcGIS base maps with the `L.esri.BasemapLayer(key, options)` layer. The `key` parameter should be one of the following keys.
 
@@ -70,9 +75,12 @@ You can quickly access ArcGIS base maps with the `L.esri.BasemapLayer(key, optio
 * `Oceans`
 * `NationalGeographic`
 * `Gray`
-* `GrayLabels`
+* `GrayLabels` - Labels to pair with the `Gray` base map
 * `Imagery`
-* `ImageryLabels`
+* `ImageryLabels` - Labels and political boundaries to pair with the `Imagery` basemap
+* `ImageryTransportation` - A street map for pairing with the `Imagery` base map
+* `ShadedRelief`
+* `ShadedReliefLabels` - Labels for pairing with the `ShadedRelief` base map
 
 The `options` parameter can accept the same [options as](http://leafletjs.com/reference.html#tilelayer) `L.TileLayer`.
 
@@ -82,6 +90,8 @@ L.esri.basemapLayer("Topographic").addTo(map);
 ```
 
 ### FeatureLayer
+
+**Extends** `L.GeoJSON`
 
 Esri Leaflet has support for FeatureLayers via `L.esri.FeatureLayer(url, options)`. The `url` parameter is the url to the FeatureLayer you should like to display.
 
@@ -94,6 +104,8 @@ L.esri.featureLayer('http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/ser
 The options parameter can accept anything that `L.GeoJSON` can accept. This means you can apply popups, custom styles and filters. See [Leaflet GeoJSON](http://leafletjs.com/reference.html#geojson) for more information.
 
 ### DynamicMapLayer
+
+**Extends** `L.ImageOverlay`
 
 If you have a MapService you and use `L.esri.DynamicMapLayer(url, options)` to render it over a map. It takes a `url` to a MapService and options.
 
@@ -136,6 +148,8 @@ Take a look at [this](http://esri.github.io/esri-leaflet/dynamicmapservice.html)
 
 ### TiledMapLayer
 
+**Extends** `L.TileLayer`
+
 Esri Leaflet can work with tiled map services as well. You can use `L.esri.TiledMapLayer(url, options)` to use tiled map services. The `url` parameter is the url to the MapServer and options is identical to the [options you can pass](http://leafletjs.com/reference.html#tilelayer) to `L.TileLayer`.
 
 ```js
@@ -157,7 +171,29 @@ L.esri.basemapLayer("GrayLabels", {
 
 ### ClusteredFeatureLayer
 
+**Extends** `L.Class`
+
 `L.esri.ClusteredFeatureLayer` provides integration for Feature Layers with the [Leaflet.markercluster plugin](https://github.com/Leaflet/Leaflet.markercluster). Because of the extra Dependency on Leaflet.markercluster we do not include `L.esri.ClusteredFeatureLayer` in the default build of Esri Leaflet. It lives in /dist/extras/clustered-feature-layer.js. You will also need to include your own copy of the [Leaflet.markercluster plugin](https://github.com/Leaflet/Leaflet.markercluster).
+
+##### Constructor
+Constructor | Description
+--- | ---
+`new L.esri.ClusteredFeatureLayer(url, options)`<br>`L.esri.clusteredFeatureLayer(url, options)` | `url` should be the URL of the feature layer to consume.
+
+##### Options
+
+Option | Type | Default | Description
+--- | --- | --- | ---
+`cluster` | `L.MarkerClusterGroup` | new L.MarkerClusterGroup()  | The instance of `L.MarkerClusterGroup` that points will be added to.
+`createMarker` | `Function` | `null` | A function that will be called with a `GeoJSON representation of the point its latitude and longitude. Should return a `L.Marker` object.
+`onEachMarker` | Function | `null` | This function will be called for every marker before it is added to the cluster. It is called with the GeoJSON representation of the point and the marker 
+
+###### Events
+Event | Data | | Description
+--- | --- | ---
+`loading` | `[FeatureLayerLoading]()` | Fires when new features start loading.
+`load` | `[FeatureLayerLoad]()` | Fires when all features in the current bounds of the map have loaded.
+`metadata` | `[Metadata]()` | After creating a new `L.esri.ClusteredFeatureLayer` a request for data describing the service will be made and passed to the metadata event.
 
 ##### Usage
 
@@ -176,9 +212,7 @@ L.esri.clusteredFeatureLayer(featureLayerUrl, {
   // every marker before it is added to the cluster
   // this is a great place to define custom popups
   // or other behaviors.
-  onEachMarker: function(geojson, marker){
-
-  }
+  onEachMarker: function(geojson, marker){}
 }).addTo(map);
 ```
 
@@ -216,29 +250,46 @@ L.esri.clusteredFeatureLayer("http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis
 }).addTo(map);
 ```
 
+### Events
+
+#### Metadata
+The data included in the `metadata` event will vary depending on type of layer you are adding to the map.
+
+* `DymanicMapLayer` and `TiledMapLayer` will return the [JSON Definition of a Map Service](http://resources.arcgis.com/en/help/arcgis-rest-api/#/Map_Service/02r3000000w2000000/)
+* `FeatureLayer` and `ClusteredFeatureLayer` will return the [JSON Definition of a Feature Layer](http://resources.arcgis.com/en/help/arcgis-rest-api/#/Layer/02r3000000w6000000/)
+
+#### FeatureLayerLoading
+Property | Value | Description
+--- | --- | ---
+`bounds` | [`LatLngBounds`]() | The bounds that features are currently being loaded.
+
+#### FeatureLayerLoad
+Property | Value | Description
+--- | --- | ---
+`bounds` | [`LatLngBounds`]() | The bounds that features where loaded.
+
+### Service URLs
+
 ## Development Instructions
 
-1. `git clone https://github.com/Esri/esri-leaflet`
-2. `cd esri-leaflet`
-3. `git submodule init`
-4. `git submodule update`
+1. [Fork and clone Esri Leaflet](https://help.github.com/articles/fork-a-repo)
+2. `cd` into the `esri-leaflet` folder
+4. Run `git submodule init` and `git submodule update`
+5. Instal the dependancies with `npm install`
+5. The examples in the `/examples` folder should work
+6. Make your changes and create a [pull request](https://help.github.com/articles/creating-a-pull-request)
 
 ## Requirements
 
-* All services that Esri Leaflet accesses must be publicly available. Support for private services will be included in a future release.
-* MapServices that you wish to use for `L.esri.TiledMapLayer` must be published in [Web Mercator](http://spatialreference.org/ref/sr-org/6928/).
 
 ### Dependencies
-
+* [Leaflet](http://leaflet.com) - the core Leaflet library
+* [Leaflet.markercluster](http://leaflet.com) - If you want to use `L.esri.ClusteredFeatureLayer` you will need the Leaflet markercluster plugin
 * [Terraformer](https://github.com/esri/Terraformer) - base library for other dependencies
 * [Terraformer ArcGIS](https://github.com/esri/Terraformer) - for converting geometries
 * [Terraformer RTree](https://github.com/esri/Terraformer) - client side RTree index for optimizations
 
 These are currently included in `/vendor` as submodules and are built into the `dist/esri-leaflet.js` file.
-
-### Custom Builds
-
-It is possible to build a custom version of Esri Leaflet by customizing the Gruntfile. To do this add a new entry to the `concat` and the `uglify` configurations. More detailed directions will be added here later.
 
 ## Resources
 
