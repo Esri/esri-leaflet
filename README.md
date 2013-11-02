@@ -1,13 +1,13 @@
 # Esri Leaflet
 
-Leaflet plugin for [Esri ArcGIS Online Services](http://resources.arcgis.com/en/help/arcgis-rest-api/#/The_ArcGIS_REST_API/02r300000054000000/). Currently only supports loading Esri [basemaps](http://resources.arcgis.com/en/help/arcgis-rest-api/#/Basemaps/02r3000001mt000000/) and [feature services](http://resources.arcgis.com/en/help/arcgis-rest-api/#/Feature_Service/02r3000000z2000000/), as well as [map services](http://resources.arcgis.com/en/help/arcgis-rest-api/#/Map_Service/02r3000000w2000000/).
+Leaflet plugin for [ArcGIS Services](http://developers.arcgis.com). Currently Esri Leaflet supports loading Esri [basemaps](#basemaplayer) and [feature services](#featurelayer), as well as [tiled](#tiledmaplayer) and [dynamic](#dynamicmaplayer) map services.
 
-The goal of Esri Leaflet is not to replace the [ArcGIS API for JavaScript](https://developers.arcgis.com/en/javascript/), but rather to provide small components to allow developers to build simple lightweight mapping applications. It pairs well with [Terraformer](https://github.com/Esri/Terraformer) for converting data and [geoservices-js](https://github.com/Esri/geoservices-js) for making advanced request to [ArcGIS REST services](http://resources.arcgis.com/en/help/arcgis-rest-api/#/The_ArcGIS_REST_API/02r300000054000000/), for example place finding and reverse geocoding.
+The goal of Esri Leaflet is **not*** to replace the [ArcGIS API for JavaScript](https://developers.arcgis.com/en/javascript/), but rather to provide small components to allow developers to build mapping applications with Leaflet. It pairs well with [Terraformer](https://github.com/Esri/Terraformer) for converting data and [geoservices-js](https://github.com/Esri/geoservices-js) for making advanced request to [ArcGIS REST services](http://resources.arcgis.com/en/help/arcgis-rest-api/#/The_ArcGIS_REST_API/02r300000054000000/), for example place finding and reverse geocoding.
 
-**Currently Esri Leaflet is in development but is open to contributions. It should be thought of as a beta or preview.**
+**Currently Esri Leaflet is in development and should be thought of as a beta or preview.**
 
 ### Demos
-There are [loads of demos](http://esri.github.io/esri-leaflet/) showing the features of Esri Leaflet as well as how it might integrate with [geoservices-js](https://github.com/Esri/geoservices-js) and [Terraformer](https://github.com/esri/Terraformer) libraries. [Check out the demos.](http://esri.github.io/esri-leaflet/)
+There are [loads of demos](http://esri.github.io/esri-leaflet/) showing the features of Esri Leaflet, as well as how it might integrate with [geoservices-js](https://github.com/Esri/geoservices-js) and [Terraformer](https://github.com/esri/Terraformer) libraries. [Check out the demos.](http://esri.github.io/esri-leaflet/)
 
 ### Example
 Here is a quick example to get you started. Just change the paths to point to the proper libraries and go.
@@ -59,16 +59,19 @@ Here is a quick example to get you started. Just change the paths to point to th
 </html>
 ```
 
-## Features
-
-
 ## Documentation
 
-### Basemaps
+### BasemapLayer
 
-**Extends** `L.TileLayer`
+**Extends** [`L.TileLayer`](http://leafletjs.com/reference.html#tilelayer)
 
-You can quickly access ArcGIS base maps with the `L.esri.BasemapLayer(key, options)` layer. The `key` parameter should be one of the following keys.
+#### Constructor
+
+Constructor | Description
+--- | ---
+`new L.esri.BasemapLayer(key, options)` or<br>`L.esri.BasemapLayer(key, options)` | `key` type of base map you want to add. The `options` parameter can accept the same [options](http://leafletjs.com/reference.html#tilelayer) as `L.TileLayer`.
+
+**Valid Keys**
 
 * `Streets`
 * `Topographic`
@@ -82,23 +85,54 @@ You can quickly access ArcGIS base maps with the `L.esri.BasemapLayer(key, optio
 * `ShadedRelief`
 * `ShadedReliefLabels` - Labels for pairing with the `ShadedRelief` base map
 
-The `options` parameter can accept the same [options as](http://leafletjs.com/reference.html#tilelayer) `L.TileLayer`.
+#### Methods
+
+`L.esri.BasemapLayer` inherits all methods from [`L.TileLayer`](http://leafletjs.com/reference.html#tilelayer).
+
+#### Events
+
+`L.esri.BasemapLayer`inherits all events from [`L.TileLayer`](http://leafletjs.com/reference.html#tilelayer).
+
+#### Example
 
 ```js
 var map = L.map('map').setView([37.75,-122.45], 12);
+
 L.esri.basemapLayer("Topographic").addTo(map);
 ```
 
 ### FeatureLayer
 
-**Extends** `L.GeoJSON`
+**Extends** [`L.GeoJSON`](http://leafletjs.com/reference.html#imageoverlay)
 
-Esri Leaflet has support for FeatureLayers via `L.esri.FeatureLayer(url, options)`. The `url` parameter is the url to the FeatureLayer you should like to display.
+#### Constructor
+
+Constructor | Description
+--- | ---
+`new L.esri.FeatureLayer(url, options)` or<br>`L.esri.FeatureLayer(url, options)` | The `url` parameter is the url to the FeatureLayer you should like to display. See [service URLs](#service-urls) for more information on how to find these urls.
+
+#### Options
+
+`L.esri.FeatureLayer` also accepts all the options you can pass to [`L.GeoJSON`](http://leafletjs.com/reference.html#geojson).
+
+#### Events
+
+`L.esri.FeatureLayer` also fires all the same events as [`L.GeoJSON`](http://leafletjs.com/reference.html#geojson) in addition to these events.
+
+Event | Data | Description
+--- | --- | ---
+`loading` | `[Loading](#loading-event)` | Fires when new features start loading.
+`load` | `[Load](#load-event)` | Fires when all features in the current bounds of the map have loaded.
+`metadata` | `[Metadata](#metadata-event)` | After creating a new `L.esri.ClusteredFeatureLayer` a request for data describing the service will be made and passed to the metadata event.
+
+#### Example
 
 ```js
-var map = L.map('map').setView([45.52963623111275,-122.67389774322508], 12);
-L.esri.basemapLayer("Topographic").addTo(map);
-L.esri.featureLayer('http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0/');
+var map = L.map('map').setView([45.53,-122.64], 16);
+
+L.esri.basemapLayer("Streets").addTo(map);
+
+L.esri.featureLayer('http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0/').addTo(map);
 ```
 
 The options parameter can accept anything that `L.GeoJSON` can accept. This means you can apply popups, custom styles and filters. See [Leaflet GeoJSON](http://leafletjs.com/reference.html#geojson) for more information.
@@ -107,44 +141,52 @@ The options parameter can accept anything that `L.GeoJSON` can accept. This mean
 
 **Extends** `L.ImageOverlay`
 
-If you have a MapService you and use `L.esri.DynamicMapLayer(url, options)` to render it over a map. It takes a `url` to a MapService and options.
+If you have a MapService you and use `L.esri.DynamicMapLayer(url, options)` to render it on a map
+
+#### Constructor
+Constructor | Description
+--- | ---
+`new L.esri.DynamicMapLayer(url, options)`<br>`L.esri.TiledMapLayer(url, options)` | `url` should be the URL of the feature layer to consume. See [service URLs](#service-urls) for more information on how to find these urls.
+
+#### Options
+
+`L.esri.DynamicMapLayer` also accepts all the options you can pass to [`L.ImageOverlay`](http://leafletjs.com/reference.html#imageoverlay).
+
+Option | Type | Default | Description
+--- | --- | --- | ---
+`format` | `String` | `'png24'` | Output format of the image.
+`transparent` | `Boolean` | `true` | Allow the server to produce transparent images.
+`f` | `String` | `'image'` | Output type
+`bboxSR` | `Integer` | `4326` | Spatial reference of the bounding box to generate the image with. If you don't know what this is don't change it.
+`imageSR` | | `3857` | Spatial reference of the output image. If you don't know what this is don't change it.
+`layers` | `String` or `Array` | `''` | An array of Layer IDs like `[3,4,5]` to show from the service or a string in the format like `[show | hide | include | exclude]:layerId1,layerId2` like `exclude:3,5`.
+`layerDefs` | `String` `Object` | `''` | A string representing a query to run against the service before the image is rendered. This can be a string like `"STATE_NAME='Kansas' and POP2007>25000"` or an object mapping different queries to specific layers `{5:"STATE_NAME='Kansas'", 4:"STATE_NAME='Kansas'}`.
+`opacity` | `Integer` | `1` | Opacity of the layer. Should be a value between 0 and 1.
+`position` | `String` | '"front"` | position of the layer relative to other overlays
+
+#### Methods
+
+Method | Returns |  Description
+--- | --- | ---
+`identify(latlng, options, callback)` | `null`   | Used to identify what features exist in a particular location on a `L.esri.DynamicMapLayer`. The first parameter is a [`L.LatLng`]() object. the second if an object setting various options, and finally a callback that will be called with `error` and `response`.
+ 
+#### Events
+
+`L.esri.DynamicMapLayer` also fires all the same events as [`L.TileLayer`](http://leafletjs.com/reference.html#tilelayer) in addition to these events.
+
+Event | Data | Description
+--- | --- | ---
+`metadata` | `[Metadata](#metadata-event)` | After creating a new `L.esri.ClusteredFeatureLayer` a request for data describing the service will be made and passed to the metadata event.
+
+##### Example
 
 ```js
 var map = L.map('map').setView([ 38.24788726821097,-85.71807861328125], 13 );
-L.esri.basemapLayer("Gray").addTo(map);
 
 L.esri.dynamicMapLayer("http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/PublicSafety/PublicSafetyHazardsandRisks/MapServer", {
   opacity : 0.25
 }).addTo(map);
-
-L.esri.basemapLayer("GrayLabels").addTo(map);
 ```
-
-It is possible to show/hide specific layers and set layer definitions within `options` like so...
-
-```js
-L.esri.dynamicMapLayer("http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Demographics/ESRI_Census_USA/MapServer", {
-  opacity : 0.5,
-  layers:[5,4,3],
-  layerDefs: {
-    5: "STATE_NAME='Kansas'",
-    4: "STATE_NAME='Kansas' and POP2007>25000",
-    3: "STATE_NAME='Kansas' and POP2007>25000"
-  }
-}).addTo(map);
-```
-
-You can identify features from MapService using `L.esri.DynamicMapLayer.identify(latLng, options, callback)`.
-
-```js
-dynLayer.identify(e.latlng, {
-  sr: '4265', //default is '4326'
-  tolerance: 5, //default is 3
-  imageDisplay: '801,601,97', // default is '800,600,96' (height by width in pixels and DPI)
-} , callback)
-
-```
-Take a look at [this](http://esri.github.io/esri-leaflet/dynamicmapservice.html) sample for a demonstration.
 
 ### TiledMapLayer
 
@@ -152,20 +194,32 @@ Take a look at [this](http://esri.github.io/esri-leaflet/dynamicmapservice.html)
 
 Esri Leaflet can work with tiled map services as well. You can use `L.esri.TiledMapLayer(url, options)` to use tiled map services. The `url` parameter is the url to the MapServer and options is identical to the [options you can pass](http://leafletjs.com/reference.html#tilelayer) to `L.TileLayer`.
 
-```js
-var map = L.map('map').setView([ 37.761487048570935, -122.39112854003905], 12 );
+#### Constructor
 
-L.esri.basemapLayer("Gray", {
-  zIndex:1
-}).addTo(map);
+Constructor | Description
+--- | ---
+`new L.esri.TiledMapLayer(url, options)`<br>`L.esri.TiledMapLayer(url, options)` | `url` should be the URL of the feature layer to consume. See [service URLs](#service-urls) for more information on how to find these urls.
+
+#### Options
+
+`L.esri.TiledMapLayer` also accepts all the options you can pass to [`L.TileLayer`](http://leafletjs.com/reference.html#tilelayer-options).
+
+#### Events
+
+`L.esri.TiledMapLayer` also fires all the same events as [`L.TileLayer`](http://leafletjs.com/reference.html#tilelayer) in addition to these events.
+
+Event | Data | Description
+--- | --- | ---
+`metadata` | [`Metadata`](#metadata-event) | After creating a new `L.esri.TiledMapLayer` a request for data describing the service will be made and passed to the metadata event.
+
+#### Example
+
+```js
+var map = L.map('map').setView([37.761487048570935, -122.39112854003905], 12);
 
 L.esri.tiledMapLayer("http://server.arcgisonline.com/ArcGIS/rest/services/Demographics/USA_Median_Household_Income/MapServer", {
   opacity: 0.25,
   zIndex:2
-}).addTo(map);
-
-L.esri.basemapLayer("GrayLabels", {
-  zIndex:3
 }).addTo(map);
 ```
 
@@ -175,66 +229,42 @@ L.esri.basemapLayer("GrayLabels", {
 
 `L.esri.ClusteredFeatureLayer` provides integration for Feature Layers with the [Leaflet.markercluster plugin](https://github.com/Leaflet/Leaflet.markercluster). Because of the extra Dependency on Leaflet.markercluster we do not include `L.esri.ClusteredFeatureLayer` in the default build of Esri Leaflet. It lives in /dist/extras/clustered-feature-layer.js. You will also need to include your own copy of the [Leaflet.markercluster plugin](https://github.com/Leaflet/Leaflet.markercluster).
 
-##### Constructor
+#### Constructor
+
 Constructor | Description
 --- | ---
-`new L.esri.ClusteredFeatureLayer(url, options)`<br>`L.esri.clusteredFeatureLayer(url, options)` | `url` should be the URL of the feature layer to consume.
+`new L.esri.ClusteredFeatureLayer(url, options)`<br>`L.esri.clusteredFeatureLayer(url, options)` | `url` should be the URL of the feature layer to consume. See [service URLs](#service-urls) for more information on how to find these urls.
 
-##### Options
+#### Options
 
 Option | Type | Default | Description
 --- | --- | --- | ---
 `cluster` | `L.MarkerClusterGroup` | new L.MarkerClusterGroup()  | The instance of `L.MarkerClusterGroup` that points will be added to.
-`createMarker` | `Function` | `null` | A function that will be called with a `GeoJSON representation of the point its latitude and longitude. Should return a `L.Marker` object.
+`createMarker` | `Function` | `null` | A function that will be called with a  GeoJSON representation of the point its latitude and longitude. Should return a `L.Marker` object.
 `onEachMarker` | Function | `null` | This function will be called for every marker before it is added to the cluster. It is called with the GeoJSON representation of the point and the marker 
 
-###### Events
-Event | Data | | Description
+#### Events
+
+Event | Data | Description
 --- | --- | ---
-`loading` | `[FeatureLayerLoading]()` | Fires when new features start loading.
-`load` | `[FeatureLayerLoad]()` | Fires when all features in the current bounds of the map have loaded.
-`metadata` | `[Metadata]()` | After creating a new `L.esri.ClusteredFeatureLayer` a request for data describing the service will be made and passed to the metadata event.
-
-##### Usage
-
-```js
-L.esri.clusteredFeatureLayer(featureLayerUrl, {
-
-  // this should be an instance of L.MarkerClusterGroup
-  // https://github.com/Leaflet/Leaflet.markercluster#usage
-  cluster: new L.MarkerClusterGroup(),
-
-  // this function should return a new L.Marker
-  // that will be added to the cluster.
-  createMarker: function(geojson, latlng){},
-
-  // this optional function will be run against 
-  // every marker before it is added to the cluster
-  // this is a great place to define custom popups
-  // or other behaviors.
-  onEachMarker: function(geojson, marker){}
-}).addTo(map);
-```
+`loading` | `[Loading](#loading-event)` | Fires when new features start loading.
+`load` | `[Load](#load-event)` | Fires when all features in the current bounds of the map have loaded.
+`metadata` | `[Metadata](#metadata-event)` | After creating a new `L.esri.ClusteredFeatureLayer` a request for data describing the service will be made and passed to the metadata event.
 
 #### Example
 
 ```js
 L.esri.clusteredFeatureLayer("http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0", {
   cluster: new L.MarkerClusterGroup({
-    spiderfyOnMaxZoom:false,
     disableClusteringAtZoom: 16,
     polygonOptions: {
-      color: "#2d84c8",
-      weight: 4,
-      opacity: 1,
-      fillOpacity: 0.5
+      color: "#2d84c8"
     },
     iconCreateFunction: function(cluster) {
       var count = cluster.getChildCount();
       var digits = (count+"").length;
       return new L.DivIcon({
         html: count,
-        className:"cluster digits-"+digits,
         iconSize: null
       });
     }
@@ -250,25 +280,38 @@ L.esri.clusteredFeatureLayer("http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis
 }).addTo(map);
 ```
 
-### Events
+### Event Objects
 
-#### Metadata
+#### Metadata Event
 The data included in the `metadata` event will vary depending on type of layer you are adding to the map.
 
 * `DymanicMapLayer` and `TiledMapLayer` will return the [JSON Definition of a Map Service](http://resources.arcgis.com/en/help/arcgis-rest-api/#/Map_Service/02r3000000w2000000/)
 * `FeatureLayer` and `ClusteredFeatureLayer` will return the [JSON Definition of a Feature Layer](http://resources.arcgis.com/en/help/arcgis-rest-api/#/Layer/02r3000000w6000000/)
 
-#### FeatureLayerLoading
+#### Loading Event
 Property | Value | Description
 --- | --- | ---
-`bounds` | [`LatLngBounds`]() | The bounds that features are currently being loaded.
+`bounds` | [`LatLngBounds`](http://leafletjs.com/reference.html#latlngbounds) | The bounds that features are currently being loaded.
 
-#### FeatureLayerLoad
+#### Load Event
 Property | Value | Description
 --- | --- | ---
-`bounds` | [`LatLngBounds`]() | The bounds that features where loaded.
+`bounds` | [`LatLngBounds`](http://leafletjs.com/reference.html#latlngbounds) | The bounds that features where loaded.
+
+### Options Objects
+
+#### IdentifyOptions
+
+Option | Type | Default | Description
+--- | --- | --- | ---
+`layers` | `String` or `Array` | `''` | An array of Layer IDs like `[3,4,5]` to show from the service or a string in the format like `[show | hide | include | exclude]:layerId1,layerId2` like `exclude:3,5`.
+`layerDefs` | `String` `Object` | `''` | A string representing a query to run against the service before the identify query is run. This can be a string like `"STATE_NAME='Kansas' and POP2007>25000"` or an object mapping different queries to specific layers `{5:"STATE_NAME='Kansas'", 4:"STATE_NAME='Kansas'}`.
+`tolerance` | `Integer` | 5 | The pixel tolerance with which to buffer features for identifying.
+`imageDisplay` | `String` | `{{mapWidth}},{{mapHeight}},96` |
 
 ### Service URLs
+
+
 
 ## Development Instructions
 
@@ -278,9 +321,6 @@ Property | Value | Description
 5. Instal the dependancies with `npm install`
 5. The examples in the `/examples` folder should work
 6. Make your changes and create a [pull request](https://help.github.com/articles/creating-a-pull-request)
-
-## Requirements
-
 
 ### Dependencies
 * [Leaflet](http://leaflet.com) - the core Leaflet library

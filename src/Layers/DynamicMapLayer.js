@@ -102,6 +102,8 @@ L.esri.DynamicMapLayer = L.ImageOverlay.extend({
     }
   },
 
+  setUrl: function(){},
+
   _animateZoom: function (e) {
     var map = this._map,
         image = this._image,
@@ -205,6 +207,8 @@ L.esri.DynamicMapLayer = L.ImageOverlay.extend({
       return;
     }
 
+    var bounds = this._map.getBounds();
+
     this._newImage = L.DomUtil.create('img', 'leaflet-image-layer');
 
     if (this._map.options.zoomAnimation && L.Browser.any3d) {
@@ -221,10 +225,12 @@ L.esri.DynamicMapLayer = L.ImageOverlay.extend({
       onmousemove: L.Util.falseFn,
       onload: L.Util.bind(this._onNewImageLoad, this),
       src: this._getImageUrl(),
-      'data-bounds': this._map.getBounds().toBBoxString()
+      'data-bounds': bounds.toBBoxString()
     });
-    
-    this.fire('loading');
+
+    this.fire('loading', {
+      bounds: bounds
+    });
   },
 
   _updateOpacity: function(){
