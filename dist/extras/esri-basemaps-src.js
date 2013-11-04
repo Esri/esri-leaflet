@@ -1,4 +1,4 @@
-/*! Esri-Leaflet - v0.0.1 - 2013-10-30
+/*! Esri-Leaflet - v0.0.1 - 2013-11-02
 *   Copyright (c) 2013 Environmental Systems Research Institute, Inc.
 *   Apache License*/
 /* globals L */
@@ -194,7 +194,9 @@ L.esri.Mixins.featureGrid = {
     var cells = this._cellsWithin(bounds);
 
     if(cells) {
-      this.fire("loading", { bounds: bounds });
+      this.fire("loading", {
+        bounds: bounds
+      });
     }
 
     for (var i = 0; i < cells.length; i++) {
@@ -217,8 +219,7 @@ L.esri.Mixins.featureGrid = {
       // if there are no more active requests fire a load event for this view
       if(this._activeRequests <= 0){
         this.fire("load", {
-          bounds: bounds,
-          cells: cells
+          bounds: bounds
         });
       }
 
@@ -436,14 +437,6 @@ L.esri.Mixins.identifiableLayer = {
             subdomains: ["server", "services"]
           }
         },
-        ImageryAlternateLabels: {
-          urlTemplate: tileProtocol + "//{s}.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places_Alternate/MapServer/tile/{z}/{y}/{x}/",
-          options: {
-            minZoom: 1,
-            maxZoom: 12,
-            subdomains: ["server", "services"]
-          }
-        },
         ShadedRelief: {
           urlTemplate: tileProtocol + "//{s}.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}/",
           options: {
@@ -452,8 +445,15 @@ L.esri.Mixins.identifiableLayer = {
             subdomains: ["server", "services"],
             attribution: formatTextAttributions("ESRI, NAVTEQ, DeLorme") + attributionLogo
           }
+        },
+        ShadedReliefLabels: {
+          urlTemplate: tileProtocol + "//{s}.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places_Alternate/MapServer/tile/{z}/{y}/{x}/",
+          options: {
+            minZoom: 1,
+            maxZoom: 12,
+            subdomains: ["server", "services"]
+          }
         }
-
       }
     },
     initialize: function(key, options){

@@ -1,4 +1,4 @@
-/*! Esri-Leaflet - v0.0.1 - 2013-10-30
+/*! Esri-Leaflet - v0.0.1 - 2013-11-02
 *   Copyright (c) 2013 Environmental Systems Research Institute, Inc.
 *   Apache License*/
 (function (root, factory) {
@@ -2805,7 +2805,9 @@ L.esri.Mixins.featureGrid = {
     var cells = this._cellsWithin(bounds);
 
     if(cells) {
-      this.fire("loading", { bounds: bounds });
+      this.fire("loading", {
+        bounds: bounds
+      });
     }
 
     for (var i = 0; i < cells.length; i++) {
@@ -2828,8 +2830,7 @@ L.esri.Mixins.featureGrid = {
       // if there are no more active requests fire a load event for this view
       if(this._activeRequests <= 0){
         this.fire("load", {
-          bounds: bounds,
-          cells: cells
+          bounds: bounds
         });
       }
 
@@ -3047,14 +3048,6 @@ L.esri.Mixins.identifiableLayer = {
             subdomains: ["server", "services"]
           }
         },
-        ImageryAlternateLabels: {
-          urlTemplate: tileProtocol + "//{s}.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places_Alternate/MapServer/tile/{z}/{y}/{x}/",
-          options: {
-            minZoom: 1,
-            maxZoom: 12,
-            subdomains: ["server", "services"]
-          }
-        },
         ShadedRelief: {
           urlTemplate: tileProtocol + "//{s}.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}/",
           options: {
@@ -3063,8 +3056,15 @@ L.esri.Mixins.identifiableLayer = {
             subdomains: ["server", "services"],
             attribution: formatTextAttributions("ESRI, NAVTEQ, DeLorme") + attributionLogo
           }
+        },
+        ShadedReliefLabels: {
+          urlTemplate: tileProtocol + "//{s}.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places_Alternate/MapServer/tile/{z}/{y}/{x}/",
+          options: {
+            minZoom: 1,
+            maxZoom: 12,
+            subdomains: ["server", "services"]
+          }
         }
-
       }
     },
     initialize: function(key, options){
@@ -3274,13 +3274,8 @@ L.esri.Mixins.identifiableLayer = {
           if(!this._layers[id]){
             var geojson = Terraformer.ArcGIS.parse(feature);
             geojson.id = id;
-            this.index.insert(geojson,id);
+            this.index.insert(geojson, geojson.id);
             this.addData(geojson);
-            var layer = this._layers[id];
-            this.fire("render", {
-              feature: layer,
-              geojson: geojson
-            });
           }
         }
       }
@@ -3385,7 +3380,9 @@ L.esri.DynamicMapLayer = L.ImageOverlay.extend({
     this._bounds = map.getBounds();
     this._map = map;
 
-    map.on("moveend", this._update, this);
+    this._moveHandler = L.esri.Util.debounce(this._update, 150, this);
+
+    map.on("moveend", this._moveHandler, this);
 
     if (map.options.zoomAnimation && L.Browser.any3d) {
       map.on('zoomanim', this._animateZoom, this);
@@ -3416,12 +3413,14 @@ L.esri.DynamicMapLayer = L.ImageOverlay.extend({
       this._newImage = null;
     }
 
-    map.off("moveend", L.Util.limitExecByInterval(this._update, 150, this), this);
+    map.off("moveend", this._moveHandler, this);
 
     if (map.options.zoomAnimation) {
       map.off('zoomanim', this._animateZoom, this);
     }
   },
+
+  setUrl: function(){},
 
   _animateZoom: function (e) {
     var map = this._map,
@@ -3526,6 +3525,8 @@ L.esri.DynamicMapLayer = L.ImageOverlay.extend({
       return;
     }
 
+    var bounds = this._map.getBounds();
+
     this._newImage = L.DomUtil.create('img', 'leaflet-image-layer');
 
     if (this._map.options.zoomAnimation && L.Browser.any3d) {
@@ -3542,7 +3543,11 @@ L.esri.DynamicMapLayer = L.ImageOverlay.extend({
       onmousemove: L.Util.falseFn,
       onload: L.Util.bind(this._onNewImageLoad, this),
       src: this._getImageUrl(),
-      'data-bounds': this._map.getBounds().toBBoxString()
+      'data-bounds': bounds.toBBoxString()
+    });
+
+    this.fire('loading', {
+      bounds: bounds
     });
   },
 
@@ -3586,7 +3591,9 @@ L.esri.DynamicMapLayer = L.ImageOverlay.extend({
 
       this._image = this._newImage;
       this._newImage = null;
-      this.fire('load');
+      this.fire('load', {
+        bounds: bounds
+      });
     }
   }
 });
