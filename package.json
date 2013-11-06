@@ -25,7 +25,8 @@
     "karma": "~0.10.1",
     "karma-mocha": "~0.1.0",
     "karma-coverage": "~0.1",
-    "grunt-karma": "~0.6.1"
+    "grunt-karma": "~0.6.1",
+    "grunt-gh-pages": "~0.8.1"
   },
   "author": "Patrick Arlt <parlt@esri.com> (http://patrickarlt.com)",
   "contributors": [
