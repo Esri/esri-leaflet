@@ -77,7 +77,7 @@
               var pt = new L.LatLng(place.feature.geometry.y, place.feature.geometry.x);
               bnd = bnd.extend(pt);
               // Add to map
-              var marker = L.marker(pt).bindPopup(place.name + "</br>" + place.feature.attributes.Place_addr);
+              var marker = L.marker(pt).bindPopup(place.name + "<br>" + place.feature.attributes.Place_addr + "<br>" + place.feature.geometry.y + ", " + place.feature.geometry.x);
               layerPlaces.addLayer(marker);
             }
             // Zoom to places
