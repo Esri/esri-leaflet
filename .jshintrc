@@ -1,6 +1,0 @@
-{
-  globals: {
-    L: true,
-    Terraformer: true
-  }
-}
