@@ -296,6 +296,19 @@ Data | Value | Description
 --- | --- | ---
 `bounds` | [`LatLngBounds`](http://leafletjs.com/reference.html#latlngbounds) | The bounds that features where loaded.
 
+
+**NOTE**: The `load` event will not fire if you add the layer to the map before adding the event listener. You must add the listener first and then add the layer to the map.
+
+```js
+var layer = new L.esri.FeatureLayer(url, options);
+
+layer.on('load', function(e){
+  // do something on load
+});
+
+layer.addTo(map);
+```
+
 ### Options Objects
 
 #### Identify Options
