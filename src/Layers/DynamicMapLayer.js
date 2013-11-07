@@ -62,7 +62,9 @@ L.esri.DynamicMapLayer = L.ImageOverlay.extend({
     this._bounds = map.getBounds();
     this._map = map;
 
-    map.on("moveend", this._update, this);
+    this._moveHandler = L.esri.Util.debounce(this._update, 150, this);
+
+    map.on("moveend", this._moveHandler, this);
 
     if (map.options.zoomAnimation && L.Browser.any3d) {
       map.on('zoomanim', this._animateZoom, this);
@@ -93,12 +95,14 @@ L.esri.DynamicMapLayer = L.ImageOverlay.extend({
       this._newImage = null;
     }
 
-    map.off("moveend", L.Util.limitExecByInterval(this._update, 150, this), this);
+    map.off("moveend", this._moveHandler, this);
 
     if (map.options.zoomAnimation) {
       map.off('zoomanim', this._animateZoom, this);
     }
   },
+
+  setUrl: function(){},
 
   _animateZoom: function (e) {
     var map = this._map,
@@ -203,6 +207,8 @@ L.esri.DynamicMapLayer = L.ImageOverlay.extend({
       return;
     }
 
+    var bounds = this._map.getBounds();
+
     this._newImage = L.DomUtil.create('img', 'leaflet-image-layer');
 
     if (this._map.options.zoomAnimation && L.Browser.any3d) {
@@ -219,10 +225,12 @@ L.esri.DynamicMapLayer = L.ImageOverlay.extend({
       onmousemove: L.Util.falseFn,
       onload: L.Util.bind(this._onNewImageLoad, this),
       src: this._getImageUrl(),
-      'data-bounds': this._map.getBounds().toBBoxString()
+      'data-bounds': bounds.toBBoxString()
     });
-    
-    this.fire('loading');
+
+    this.fire('loading', {
+      bounds: bounds
+    });
   },
 
   _updateOpacity: function(){
@@ -265,7 +273,9 @@ L.esri.DynamicMapLayer = L.ImageOverlay.extend({
 
       this._image = this._newImage;
       this._newImage = null;
-      this.fire('load');
+      this.fire('load', {
+        bounds: bounds
+      });
     }
   }
 });
