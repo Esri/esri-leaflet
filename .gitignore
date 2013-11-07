@@ -16,5 +16,8 @@ node_modules
 # Coverage
 coverage
 
+# Grunt
+.grunt/
+
 # Debugging Files
 debug.html
