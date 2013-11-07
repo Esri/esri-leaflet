@@ -464,7 +464,7 @@ L.esri.Mixins.identifiableLayer = {
       } else if(typeof key === "string" && L.esri.BasemapLayer.TILES[key]){
         config = L.esri.BasemapLayer.TILES[key];
       } else {
-        throw new Error("L.esri.BasemapLayer: Invalid parameter. Use one of 'Streets', 'Topographic', 'Oceans', 'NationalGeographic', 'Gray', 'GrayLabels', 'Imagery', 'ImageryLabels', 'ImageryTransportation', 'ImageryAlternateLabels' or 'ShadedRelief'");
+        throw new Error("L.esri.BasemapLayer: Invalid parameter. Use one of 'Streets', 'Topographic', 'Oceans', 'NationalGeographic', 'Gray', 'GrayLabels', 'Imagery', 'ImageryLabels', 'ImageryTransportation', 'ShadedRelief' or 'ShadedReliefLabels'");
       }
 
       // merge passed options into the config options
