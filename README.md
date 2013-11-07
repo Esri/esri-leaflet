@@ -2,7 +2,7 @@
 
 Leaflet plugin for [ArcGIS Services](http://developers.arcgis.com). Currently Esri Leaflet supports loading Esri [basemaps](#basemaplayer) and [feature services](#featurelayer), as well as [tiled](#tiledmaplayer) and [dynamic](#dynamicmaplayer) map services.
 
-The goal of Esri Leaflet is **not*** to replace the [ArcGIS API for JavaScript](https://developers.arcgis.com/en/javascript/), but rather to provide small components to allow developers to build mapping applications with Leaflet. It pairs well with [Terraformer](https://github.com/Esri/Terraformer) for converting data and [geoservices-js](https://github.com/Esri/geoservices-js) for making advanced request to [ArcGIS REST services](http://resources.arcgis.com/en/help/arcgis-rest-api/#/The_ArcGIS_REST_API/02r300000054000000/), for example place finding and reverse geocoding.
+The goal of Esri Leaflet is **not** to replace the [ArcGIS API for JavaScript](https://developers.arcgis.com/en/javascript/), but rather to provide small components to allow developers to build mapping applications with Leaflet. It pairs well with [Terraformer](https://github.com/Esri/Terraformer) for converting data and [geoservices-js](https://github.com/Esri/geoservices-js) for making advanced request to [ArcGIS REST services](http://resources.arcgis.com/en/help/arcgis-rest-api/#/The_ArcGIS_REST_API/02r300000054000000/), for example place finding and reverse geocoding.
 
 **Currently Esri Leaflet is in development and should be thought of as a beta or preview.**
 
@@ -64,7 +64,7 @@ Here is a quick example to get you started. Just change the paths to point to th
 
 Constructor | Description
 --- | ---
-`new L.esri.BasemapLayer(key, options)` or<br>`L.esri.BasemapLayer(key, options)` | `key` type of base map you want to add. The `options` parameter can accept the same [options](http://leafletjs.com/reference.html#tilelayer) as `L.TileLayer`.
+`new L.esri.BasemapLayer(key, options)`<br>`L.esri.BasemapLayer(key, options)` | `key` type of base map you want to add. The `options` parameter can accept the same [options](http://leafletjs.com/reference.html#tilelayer) as `L.TileLayer`.
 
 **Valid Keys**
 
@@ -104,7 +104,7 @@ L.esri.basemapLayer("Topographic").addTo(map);
 
 Constructor | Description
 --- | ---
-`new L.esri.FeatureLayer(url, options)` or<br>`L.esri.FeatureLayer(url, options)` | The `url` parameter is the url to the FeatureLayer you should like to display. See [service URLs](#service-urls) for more information on how to find these urls.
+`new L.esri.FeatureLayer(url, options)`<br>`L.esri.FeatureLayer(url, options)` | The `url` parameter is the url to the FeatureLayer you should like to display. See [service URLs](#service-urls) for more information on how to find these urls.
 
 #### Options
 
@@ -163,7 +163,7 @@ Option | Type | Default | Description
 
 Method | Returns |  Description
 --- | --- | ---
-`identify(latlng, options, callback)` | `null`   | Used to identify what features exist in a particular location on a `L.esri.DynamicMapLayer`. The first parameter is a [`L.LatLng`]() object. the second if an object setting various options, and finally a callback that will be called with `error` and `response`.
+`identify(latlng, [options](#identify-options), callback)` | `null` | Used to identify what features exist in a particular location on a `L.esri.DynamicMapLayer`. The first parameter is a [`L.LatLng`]() object. the second if an object setting various options, and finally a callback that will be called with `error` and `response`.
  
 #### Events
 
@@ -171,7 +171,7 @@ Method | Returns |  Description
 
 Event | Data | Description
 --- | --- | ---
-`metadata` | `[Metadata](#metadata-event)` | After creating a new `L.esri.ClusteredFeatureLayer` a request for data describing the service will be made and passed to the metadata event.
+`metadata` | [`Metadata`](#metadata-event) | After creating a new `L.esri.DynamicMapLayer` a request for data describing the service will be made and passed to the metadata event.
 
 ##### Example
 
@@ -234,7 +234,7 @@ Constructor | Description
 
 Option | Type | Default | Description
 --- | --- | --- | ---
-`cluster` | `L.MarkerClusterGroup` | new L.MarkerClusterGroup()  | The instance of `L.MarkerClusterGroup` that points will be added to.
+`cluster` | `L.MarkerClusterGroup` | `new L.MarkerClusterGroup()`  | The instance of `L.MarkerClusterGroup` that points will be added to.
 `createMarker` | `Function` | `null` | A function that will be called with a  GeoJSON representation of the point its latitude and longitude. Should return a `L.Marker` object.
 `onEachMarker` | Function | `null` | This function will be called for every marker before it is added to the cluster. It is called with the GeoJSON representation of the point and the marker 
 
@@ -242,9 +242,9 @@ Option | Type | Default | Description
 
 Event | Data | Description
 --- | --- | ---
-`loading` | `[Loading](#loading-event)` | Fires when new features start loading.
-`load` | `[Load](#load-event)` | Fires when all features in the current bounds of the map have loaded.
-`metadata` | `[Metadata](#metadata-event)` | After creating a new `L.esri.ClusteredFeatureLayer` a request for data describing the service will be made and passed to the metadata event.
+`loading` | [`Loading`](#loading-event) | Fires when new features start loading.
+`load` | [`Load`](#load-event) | Fires when all features in the current bounds of the map have loaded.
+`metadata` | [`Metadata`](#metadata-event) | After creating a new `L.esri.ClusteredFeatureLayer` a request for data describing the service will be made and passed to the metadata event.
 
 #### Example
 
@@ -278,24 +278,27 @@ L.esri.clusteredFeatureLayer("http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis
 ### Event Objects
 
 #### Metadata Event
+
 The data included in the `metadata` event will vary depending on type of layer you are adding to the map.
 
 * `DymanicMapLayer` and `TiledMapLayer` will return the [JSON Definition of a Map Service](http://resources.arcgis.com/en/help/arcgis-rest-api/#/Map_Service/02r3000000w2000000/)
 * `FeatureLayer` and `ClusteredFeatureLayer` will return the [JSON Definition of a Feature Layer](http://resources.arcgis.com/en/help/arcgis-rest-api/#/Layer/02r3000000w6000000/)
 
 #### Loading Event
-Property | Value | Description
+
+Data | Value | Description
 --- | --- | ---
 `bounds` | [`LatLngBounds`](http://leafletjs.com/reference.html#latlngbounds) | The bounds that features are currently being loaded.
 
 #### Load Event
-Property | Value | Description
+
+Data | Value | Description
 --- | --- | ---
 `bounds` | [`LatLngBounds`](http://leafletjs.com/reference.html#latlngbounds) | The bounds that features where loaded.
 
 ### Options Objects
 
-#### IdentifyOptions
+#### Identify Options
 
 Option | Type | Default | Description
 --- | --- | --- | ---
