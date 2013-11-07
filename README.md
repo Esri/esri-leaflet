@@ -121,9 +121,9 @@ Constructor | Description
 
 Event | Data | Description
 --- | --- | ---
-`loading` | `[Loading](#loading-event)` | Fires when new features start loading.
-`load` | `[Load](#load-event)` | Fires when all features in the current bounds of the map have loaded.
-`metadata` | `[Metadata](#metadata-event)` | After creating a new `L.esri.ClusteredFeatureLayer` a request for data describing the service will be made and passed to the metadata event.
+`loading` | [`Loading`](#loading-event) | Fires when new features start loading.
+`load` | [`Load`](#load-event) | Fires when all features in the current bounds of the map have loaded.
+`metadata` | [`Metadata`](#metadata-event) | After creating a new `L.esri.ClusteredFeatureLayer` a request for data describing the service will be made and passed to the metadata event.
 
 #### Example
 
