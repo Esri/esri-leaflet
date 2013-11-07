@@ -163,7 +163,7 @@ Option | Type | Default | Description
 
 Method | Returns |  Description
 --- | --- | ---
-`identify(latlng, [options](#identify-options), callback)` | `null` | Used to identify what features exist in a particular location on a `L.esri.DynamicMapLayer`. The first parameter is a [`L.LatLng`]() object. the second if an object setting various options, and finally a callback that will be called with `error` and `response`.
+`identify(latlng, [options](#identify-options), callback)` | `null` | Used to identify what features exist in a particular location on a `L.esri.DynamicMapLayer`. The first parameter is a [`L.LatLng`](http://leafletjs.com/reference.html#latlng) object. the second if an object setting various options, and finally a callback that will be called with `error` and `response`.
  
 #### Events
 
