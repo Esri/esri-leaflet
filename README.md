@@ -18,7 +18,7 @@ Here is a quick example to get you started. Just change the paths to point to th
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Esri Leaflet</title>
+    <title>Esri Leaflet Demo</title>
     <link rel="stylesheet" href="/the/path/to/leaflet.css" />
     <style>
       html, body,  #map {
@@ -35,25 +35,20 @@ Here is a quick example to get you started. Just change the paths to point to th
   <body>
     <div id="map"></div>
     <script>
-      var map = L.map('map');
+      var template = "<h3>{NAME}</h3>{ACRES} Acres<br><small>Property ID: {PROPERTYID}<small>"
+
+      var map = L.map('map').setView([45.528, -122.680], 13);
       
-      // ArcGIS Online Basemaps - Streets, Topographic, Gray, GrayLabels, Oceans, NationalGeographic, Imagery, ImageryLabels
-      L.esri.basemapLayer("Streets").addTo(map);
+      L.esri.basemapLayer("Gray").addTo(map);
 
-      function onLocationFound(e) {
-        var radius = e.accuracy / 2;
-        L.marker(e.latlng).addTo(map).bindPopup("You are within " + radius + " meters from this point").openPopup();
-        L.circle(e.latlng, radius).addTo(map);
-      }
-
-      function onLocationError(e) {
-        alert(e.message);
-      }
-
-      map.on('locationfound', onLocationFound);
-      map.on('locationerror', onLocationError);
-
-      map.locate({setView: true, maxZoom: 16});
+      L.esri.featureLayer("http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Parks_pdx/FeatureServer/0", {
+       style: function (feature) {
+          return { color: "#70ca49", weight: 2 };
+        },
+        onEachFeature: function (feature, layer) {
+          layer.bindPopup(L.Util.template(template, feature.properties));
+        }
+      }).addTo(map);
     </script>
   </body>
 </html>
