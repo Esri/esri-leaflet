@@ -18,6 +18,9 @@
     <!-- Load Esri Leaflet -->
     <script src="lib/esri-leaflet/esri-leaflet.js"></script>
 
+    <!-- Load Esri Leaflet Geocoder -->
+    <script src="lib/esri-leaflet-geocoder/esri-leaflet-geocoder.js"></script>
+
     <!-- Load geoservices.js to handle additional API requests to ArcGIS services -->
     <script src="lib/geoservices/geoservices.js"></script>
 
@@ -86,13 +89,33 @@
       }
 
       function getDirections(startName, endName) {
+        showControls();
+
+        document.getElementById('title').innerHTML = 'Working...';
+
         geocodeAddress(startName, function(err, startLocation){
           geocodeAddress(endName, function(err, endLocation){
             if(startLocation && endLocation) {
 
-              // Get directions here!
-              // access token is available in accessToken
-              
+              L.esri.get("http://route.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World/solve", {
+                token: accessToken,
+                stops: startLocation.lng+","+startLocation.lat+"; "+endLocation.lng+","+endLocation.lat,
+                outputLines: 'esriNAOutputLineTrueShape'
+              }, function(response){
+
+                document.getElementById('title').innerHTML = 'Get Directions';
+
+                console.log(response.directions);
+
+                // make a geojson object representing our route
+                var geojson = Terraformer.ArcGIS.parse(response.routes.features[0].geometry);
+
+                // add the GeoJSON to the map with Leaflet
+                route = L.geoJson(geojson, {});
+                map.fitBounds(route.getBounds());
+                route.addTo(map);
+
+              }, this);
 
             } else {
               alert("Sorry, couldn't geocode your locations");
@@ -102,30 +125,14 @@
       }
 
       function geocodeAddress(name, callback) {
-        // Get the input
-        var searchString = name;
-        var searchFromCenter = map.getCenter();
-        // Setup geocode options - See http://resources.arcgis.com/en/help/arcgis-rest-api/
-        var options = {
-          text:searchString,
-          outFields: "Loc_name,Place_addr",
-          bbox: "",
-          location: searchFromCenter ? searchFromCenter.lng + "," + searchFromCenter.lat : "",
-          maxLocations: 10,
-          token: accessToken
-        }
-        // Call geocoder
-        ArcGISGeoServices.geocode(options, function (err,result) {
-          if (!err && result) {
-            if(result.locations && result.locations.length > 0) {
-              var place = result.locations[0];
-              callback(null, new L.LatLng(place.feature.geometry.y, place.feature.geometry.x));
-            } else {
-              callback("no results", null);
-            }
+        var geocoding = new L.esri.Services.Geocoding();
+
+        geocoding.geocode(name, {}, function(response){
+          if(response && response.locations) {
+            var place = response.locations[0];
+            callback(null, new L.LatLng(place.feature.geometry.y, place.feature.geometry.x));
           } else {
-            console.log("Sorry, place not found. " + err);
-            alert("Sorry, place not found.");
+            callback("no results", null);
           }
         });
       }
