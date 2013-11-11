@@ -23,7 +23,7 @@
       var accessToken;
 
       function startAGOOAuth() {
-        window.open("https://www.arcgis.com/sharing/oauth2/authorize?client_id="+clientID+"&response_type=token&expiration=20160&redirect_uri="+encodeURIComponent(window.location.origin)+"%2Foauth%2Fcallback.html", "oauth-window", "height=400,width=600,menubar=no,location=yes,resizable=yes,scrollbars=yes,status=yes");
+        window.open("https://www.arcgis.com/sharing/oauth2/authorize?client_id="+clientID+"&response_type=token&expiration=20160&redirect_uri=http%3A%2F%2Fesri.github.io%2Fesri-leaflet%2Foauth%2Fcallback.html", "oauth-window", "height=400,width=600,menubar=no,location=yes,resizable=yes,scrollbars=yes,status=yes");
       }
 
       window.oauthCallback = function(token) {
