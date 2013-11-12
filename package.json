@@ -1,6 +1,6 @@
 {
   "name": "Esri-Leaflet",
-  "version": "0.0.1",
+  "version": "0.0.1-rc.2",
   "description": "ArcGIS Plugins for Leaflet",
   "main": "src/esri-leaflet.js",
   "devDependencies": {
