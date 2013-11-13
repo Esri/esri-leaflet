@@ -10,6 +10,9 @@
     <![endif]-->
     <script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet-src.js"></script>
 
+    <!-- Load Esri Leaflet -->
+    <script src="lib/esri-leaflet/esri-leaflet.js"></script>
+
     <!-- Make the map fill the entire page -->
     <style>
       #map {
@@ -33,18 +36,16 @@
 
     <script>
       var map = L.map('map').setView([45.5165, -122.6764], 12);
+      L.esri.basemapLayer("Streets").addTo(map);
       
       var layerPlaces = L.layerGroup();
       map.addLayer(layerPlaces);
-
-      var tiles = L.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
 
       var searchControl = new L.esri.Controls.Geosearch().addTo(map);
 
       searchControl.on("result", function(data){
         // Do stuff with the result
         //console.log("result", data);
-
         // Add to map
         var marker = L.marker(data.latlng).bindPopup(data.text+ "<br>" + data.latlng.y + ", " + data.latlng.x);
         layerPlaces.addLayer(marker);
