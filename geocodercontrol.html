@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Esri Leaflet Geocoder</title>
+
+    <!-- Load Leaflet from their CDN -->
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css" />
+    <!--[if lte IE 8]>
+        <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.ie.css" />
+    <![endif]-->
+    <script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet-src.js"></script>
+
+    <!-- Make the map fill the entire page -->
+    <style>
+      #map {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+      }
+    </style>
+
+    <script src="vendor/esri-leaflet-geocoder/esri-leaflet-geocoder.js"></script>
+    <link rel="stylesheet" href="vendor/esri-leaflet-geocoder/esri-leaflet-geocoder.css" />
+
+  </head>
+  <body>
+
+    <div id="map"></div>
+
+    <a href="https://github.com/Esri/esri-leaflet-geocoder"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png" alt="Fork me on GitHub"></a>
+
+    <script>
+      var map = L.map('map').setView([45.5165, -122.6764], 12);
+      
+      var layerPlaces = L.layerGroup();
+      map.addLayer(layerPlaces);
+
+      var tiles = L.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
+
+      var searchControl = new L.esri.Controls.Geosearch().addTo(map);
+
+      searchControl.on("result", function(data){
+        // Do stuff with the result
+        //console.log("result", data);
+
+        // Add to map
+        var marker = L.marker(data.latlng).bindPopup(data.text+ "<br>" + data.latlng.y + ", " + data.latlng.x);
+        layerPlaces.addLayer(marker);
+      });
+    </script>
+  </body>
+</html>
