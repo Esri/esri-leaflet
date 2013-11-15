@@ -13,26 +13,33 @@
     <!-- Load Esri Leaflet -->
     <script src="lib/esri-leaflet/esri-leaflet.js"></script>
 
+    <!-- Load a small bit of CSS and Javascript specifcally for these demos -->
+    <link rel="stylesheet" href="demo.css" />
+    <script src="demo.js"></script>
+
+    <!-- Load Esri Leaflet Geocoder Control -->
+    <link rel="stylesheet" href="vendor/esri-leaflet-geocoder/esri-leaflet-geocoder.css"/>
+    <script src="vendor/esri-leaflet-geocoder/esri-leaflet-geocoder.js"></script>
+
     <!-- Make the map fill the entire page -->
     <style>
-      #map {
-        position: fixed;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
+        html, body, #map {
+        width: 100%;
+        height: 100%;
+        margin: 0;
       }
     </style>
 
-    <script src="vendor/esri-leaflet-geocoder/esri-leaflet-geocoder.js"></script>
-    <link rel="stylesheet" href="vendor/esri-leaflet-geocoder/esri-leaflet-geocoder.css" />
-
   </head>
   <body>
-
     <div id="map"></div>
-
     <a href="https://github.com/Esri/esri-leaflet"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png" alt="Fork me on GitHub"></a>
+    <div class="demo-controls">
+      <h1 class="title expand" id="title" onclick="showControls();">Geocoder Control</h1>
+      <div class="control-container hide" id="controlContainer">
+        <p>The <a href="https://github.com/Esri/esri-leaflet-geocoder"> esri-leaflet-geocoder </a> is a separate library that you can use to find places and addresses around the world.  Under the hood it uses the <a href="https://developers.arcgis.com/en/features/geocoding/">ArcGIS Geocoding service</a>.</p><p>Learn more about the library <a href="https://github.com/Esri/esri-leaflet-geocoder"> here</a>.</p>
+      </div>
+    </div>
 
     <script>
       var map = L.map('map').setView([45.5165, -122.6764], 12);
@@ -44,12 +51,9 @@
       var searchControl = new L.esri.Controls.Geosearch({zoomToResult: false}).addTo(map);
 
       searchControl.on("result", function(data){
-        // Do stuff with the result
-        //console.log("result", data);
         // Add to map
-        var marker = L.marker(data.latlng).bindPopup(data.text+ "<br>" + data.latlng.y + ", " + data.latlng.x);
+        var marker = L.marker(data.latlng).bindPopup(data.text+ "<br>" + data.latlng.lat.toFixed(5) + ", " + data.latlng.lng.toFixed(5));
         layerPlaces.addLayer(marker);
-
         map.setView(data.latlng, 14);
       });
     </script>
