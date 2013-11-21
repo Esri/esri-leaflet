@@ -199,6 +199,8 @@ Constructor | Description
 
 `L.esri.TiledMapLayer` also accepts all the options you can pass to [`L.TileLayer`](http://leafletjs.com/reference.html#tilelayer-options).
 
+**Your map service must be published in spatial reference 102100 (Web Mercator). Esri Leaflet will not support any other spatial reference for tile layers.**
+
 #### Events
 
 `L.esri.TiledMapLayer` also fires all the same events as [`L.TileLayer`](http://leafletjs.com/reference.html#tilelayer) in addition to these events.
