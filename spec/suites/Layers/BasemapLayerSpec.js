@@ -32,5 +32,4 @@ describe('L.esri.BasemapLayer', function () {
       });
     });
   });
-
 });
