@@ -1,4 +1,4 @@
-/*! Esri-Leaflet - v0.0.1 - 2013-11-07
+/*! Esri-Leaflet - v0.0.1 - 2013-11-21
 *   Copyright (c) 2013 Environmental Systems Research Institute, Inc.
 *   Apache License*/
 (function (root, factory) {
@@ -3304,7 +3304,7 @@ L.esri.TiledMapLayer = L.TileLayer.extend({
       options.subdomains = ["1", "2", "3", "4"];
     }
 
-    L.esri.get(this._url, {}, function(response){
+    L.esri.get(this.serviceUrl, {}, function(response){
       this.fire("metadata", { metadata: response });
     }, this);
 
