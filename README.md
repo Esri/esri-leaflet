@@ -187,9 +187,9 @@ L.esri.dynamicMapLayer("http://sampleserver1.arcgisonline.com/ArcGIS/rest/servic
 
 **Extends** `L.TileLayer`
 
-Esri Leaflet can work with tiled map services as well. You can use `L.esri.TiledMapLayer(url, options)` to use tiled map services. The `url` parameter is the url to the MapServer and options is identical to the [options you can pass](http://leafletjs.com/reference.html#tilelayer) to `L.TileLayer`.
+Esri Leaflet can work with tiled map services as well. You can use `L.esri.TiledMapLayer(url, options)` to use tiled map services. The `url` parameter is the url to the MapServer and options are identical to the [options you can pass](http://leafletjs.com/reference.html#tilelayer) to `L.TileLayer`.
 
-**Your map service must be published in spatial reference 102100 (Web Mercator). Esri Leaflet will not support any other spatial reference for tile layers.**
+**Your map service must be published using the Web Mercator Auxiliary Sphere tiling scheme (WKID 102100/3857) used by Google Maps, Bing Maps and [ArcGIS Online](http://resources.arcgis.com/en/help/arcgisonline-content/index.html#//011q00000002000000). Esri Leaflet will not support any other spatial reference for tile layers.**
 
 #### Constructor
 
