@@ -50,11 +50,20 @@
 
       var searchControl = new L.esri.Controls.Geosearch({zoomToResult: false}).addTo(map);
 
-      searchControl.on("result", function(data){
-        // Add to map
-        var marker = L.marker(data.latlng).bindPopup(data.text+ "<br>" + data.latlng.lat.toFixed(5) + ", " + data.latlng.lng.toFixed(5));
+      function addMarker(data){
+        var marker = L.marker(data.latlng).bindPopup("<b>" + data.name + "</b><br>" + data.address + "<br>"+ data.latlng.lat.toFixed(5) + ", " + data.latlng.lng.toFixed(5));
         layerPlaces.addLayer(marker);
-        map.setView(data.latlng, 14);
+      }
+
+      searchControl.on("results", function(data){
+        // Add places to map
+        layerPlaces.clearLayers();
+        for (var i = data.results.length - 1; i >= 0; i--) {
+          addMarker(data.results[i]);
+        }
+        if (data.results.length) {
+          map.fitBounds(data.bounds);
+        }
       });
     </script>
   </body>
