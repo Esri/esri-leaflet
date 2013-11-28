@@ -98,7 +98,7 @@ L.esri.basemapLayer("Topographic").addTo(map);
 
 ### FeatureLayer
 
-**Extends** [`L.GeoJSON`](http://leafletjs.com/reference.html#imageoverlay)
+**Extends** [`L.GeoJSON`](http://leafletjs.com/reference.html#geojson)
 
 #### Constructor
 
