@@ -24,26 +24,29 @@
  * THE SOFTWARE.
  */
 
-L.esri.DynamicMapLayer = L.ImageOverlay.extend({
+L.esri.DynamicMapLayer = L.Class.extend({
   includes: L.esri.Mixins.identifiableLayer,
 
-  defaultParams: {
+  options: {
+    opacity: 1,
+    position: 'front'
+  },
+
+  _defaultLayerParams: {
     format: 'png24',
     transparent: true,
     f: 'image',
     bboxSR: 4326,
     imageSR: 3857,
-    layers: '',
-    opacity: 1,
-    position: 'front'
+    layers: ''
   },
 
   initialize: function (url, options) {
     this.serviceUrl = L.esri.Util.cleanUrl(url);
-    this._layerParams = L.Util.extend({}, this.defaultParams);
+    this._layerParams = L.Util.extend({}, this._defaultLayerParams);
 
     for (var opt in options) {
-      if (!this.options.hasOwnProperty(opt)) {
+      if (!options.hasOwnProperty(opt) && this._defaultLayerParams.hasOwnProperty(opt)) {
         this._layerParams[opt] = options[opt];
       }
     }
@@ -59,16 +62,10 @@ L.esri.DynamicMapLayer = L.ImageOverlay.extend({
   },
 
   onAdd: function (map) {
-    this._bounds = map.getBounds();
     this._map = map;
-
     this._moveHandler = L.esri.Util.debounce(this._update, 150, this);
 
     map.on("moveend", this._moveHandler, this);
-
-    if (map.options.zoomAnimation && L.Browser.any3d) {
-      map.on('zoomanim', this._animateZoom, this);
-    }
 
     if (map.options.crs && map.options.crs.code) {
       // spatial reference of the map
@@ -85,36 +82,8 @@ L.esri.DynamicMapLayer = L.ImageOverlay.extend({
   },
 
   onRemove: function (map) {
-    if(this._image){
-      map.getPanes().overlayPane.removeChild(this._image);
-      this._image = null;
-    }
-
+    this._map.removeLayer(this._currentImage);
     map.off("moveend", this._moveHandler, this);
-
-    if (map.options.zoomAnimation) {
-      map.off('zoomanim', this._animateZoom, this);
-    }
-  },
-
-  setUrl: function(){},
-
-  _imageQueue: {},
-
-  _animateZoom: function (e) {
-    console.log("animate zoom");
-    var map = this._map,
-        image = this._image,
-        scale = map.getZoomScale(e.zoom),
-        nw = this._bounds.getNorthWest(),
-        se = this._bounds.getSouthEast(),
-
-        topLeft = map._latLngToNewLayerPoint(nw, e.zoom, e.center),
-        size = map._latLngToNewLayerPoint(se, e.zoom, e.center)._subtract(topLeft),
-        origin = topLeft._add(size._multiplyBy((1 / 2) * (1 - 1 / scale)));
-
-    image.style[L.DomUtil.TRANSFORM] =
-            L.DomUtil.getTranslateString(origin) + ' scale(' + scale + ') ';
   },
 
   _parseLayers: function () {
@@ -198,86 +167,57 @@ L.esri.DynamicMapLayer = L.ImageOverlay.extend({
   },
 
   _update: function (e) {
-    console.log("update");
+    if(this._animatingZoom){
+      return;
+    }
+
     if (this._map._panTransition && this._map._panTransition._inProgress) {
       return;
     }
 
     var zoom = this._map.getZoom();
+
     if (zoom > this.options.maxZoom || zoom < this.options.minZoom) {
       return;
     }
 
     var bounds = this._map.getBounds();
 
-    var newImage = L.DomUtil.create('img', 'leaflet-image-layer');
+    var image = new L.ImageOverlay(this._getImageUrl(), bounds, {
+      opacity: 0
+    }).addTo(this._map);
 
-    if (this._map.options.zoomAnimation && L.Browser.any3d) {
-      L.DomUtil.addClass(newImage, 'leaflet-zoom-animated');
-    } else {
-      L.DomUtil.addClass(newImage, 'leaflet-zoom-hide');
-    }
+    image.on('load', function(e){
+      var newImage = e.target;
+      var oldImage = this._currentImage;
 
-    L.Util.extend(newImage, {
-      galleryimg: 'no',
-      onselectstart: L.Util.falseFn,
-      onmousemove: L.Util.falseFn,
-      onload: L.Util.bind(this._onNewImageLoad,this),
-      src: this._getImageUrl(),
-      'data-bounds': bounds.toBBoxString()
-    });
+      if(newImage._bounds.equals(bounds)){
+        this._currentImage = newImage;
 
-    this._imageQueue[bounds.toBBoxString()] = newImage;
+        if(this.options.position === "front"){
+          this._currentImage.bringToFront();
+        } else {
+          this._currentImage.bringToBack();
+        }
+
+        this._currentImage.setOpacity(this.options.opacity);
+
+        if(oldImage){
+          this._map.removeLayer(oldImage);
+        }
+      } else {
+        this._map.removeLayer(newImage);
+      }
+    }, this);
+
 
     this.fire('loading', {
       bounds: bounds
     });
-  },
-
-  _onNewImageLoad: function(e) {
-    console.log("image loaded");
-    if(e.target){
-      var newImage = e.target,
-          bbox = newImage['data-bounds'].split(','),
-          bounds = L.latLngBounds([[bbox[1],bbox[0]], [bbox[3],bbox[2]] ]),
-          nw = L.latLng(bounds._northEast.lat, bounds._southWest.lng),
-          se = L.latLng(bounds._southWest.lat, bounds._northEast.lng),
-          topLeft = this._map.latLngToLayerPoint(nw),
-          size = this._map.latLngToLayerPoint(se)._subtract(topLeft);
-          mapBounds = this._map.getBounds();
-
-      if(bounds.equals(mapBounds)){
-        console.log("replaceing");
-        L.DomUtil.setPosition(newImage, topLeft);
-
-        newImage.style.width = size.x + 'px';
-        newImage.style.height = size.y + 'px';
-
-        if (this._image == null) {
-          if(this.options.position === 'back' && this._map._panes.overlayPane.children.length){
-            this._map._panes.overlayPane.insertBefore(newImage, this._map._panes.overlayPane.children[0]);
-          } else {
-            this._map._panes.overlayPane.appendChild(newImage);
-          }
-        } else {
-          this._map._panes.overlayPane.insertBefore(newImage, this._image);
-          this._map._panes.overlayPane.removeChild(this._image);
-        }
-
-        this._image = newImage;
-        this._bounds = bounds;
-
-        this._updateOpacity();
-
-        this.fire('load', {
-          bounds: bounds
-        });
-      }
-
-      delete this._imageQueue[newImage['data-bounds']];
-    }
   }
 });
+
+L.esri.DynamicMapLayer.include(L.Mixin.Events )
 
 L.esri.dynamicMapLayer = function (url, options) {
   return new L.esri.DynamicMapLayer(url, options);
