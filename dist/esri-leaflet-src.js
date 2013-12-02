@@ -3354,8 +3354,8 @@ L.esri.DynamicMapLayer = L.Class.extend({
     format: 'png24',
     transparent: true,
     f: 'image',
-    bboxSR: 4326,
-    imageSR: 3857,
+    bboxSR: 3875,
+    imageSR: 3875,
     layers: ''
   },
 
@@ -3390,14 +3390,9 @@ L.esri.DynamicMapLayer = L.Class.extend({
     map.on("moveend", this._moveHandler, this);
 
     if (map.options.crs && map.options.crs.code) {
-      // spatial reference of the map
-      var sr = parseInt(map.options.crs.code.split(":")[1], 10);
-
-      // we want to output the image for the same spatial reference as the map
+      var sr = map.options.crs.code.split(":")[1];
+      this._layerParams.bboxSR = sr;
       this._layerParams.imageSR = sr;
-
-      // we pass the bbox in 4326 (lat,lng)
-      this._layerParams.bboxSR = (sr === 3857) ? 4326 : sr;
     }
 
     this._update();
@@ -3500,9 +3495,12 @@ L.esri.DynamicMapLayer = L.Class.extend({
   },
 
   _getImageUrl: function () {
+    var bounds = this._map.getBounds();
     var size = this._map.getSize();
+    var ne = this._map.options.crs.project(bounds._northEast);
+    var sw = this._map.options.crs.project(bounds._southWest);
 
-    this._layerParams.bbox = this._map.getBounds().toBBoxString();
+    this._layerParams.bbox = [sw.x, sw.y, ne.x, ne.y].join(',');
     this._layerParams.size = size.x + ',' + size.y;
 
     var url = this.serviceUrl + 'export' + L.Util.getParamString(this._layerParams);
@@ -3526,7 +3524,8 @@ L.esri.DynamicMapLayer = L.Class.extend({
     }
 
     var bounds = this._map.getBounds();
-
+    bounds._southWest.wrap();
+    bounds._northEast.wrap();
     var image = new L.ImageOverlay(this._getImageUrl(), bounds, {
       opacity: 0
     }).addTo(this._map);
