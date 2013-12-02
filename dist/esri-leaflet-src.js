@@ -1,4 +1,4 @@
-/*! Esri-Leaflet - v0.0.1 - 2013-11-21
+/*! Esri-Leaflet - v0.0.1 - 2013-12-02
 *   Copyright (c) 2013 Environmental Systems Research Institute, Inc.
 *   Apache License*/
 (function (root, factory) {
@@ -3342,26 +3342,29 @@ L.esri.tiledMapLayer = function(key, options){
  * THE SOFTWARE.
  */
 
-L.esri.DynamicMapLayer = L.ImageOverlay.extend({
+L.esri.DynamicMapLayer = L.Class.extend({
   includes: L.esri.Mixins.identifiableLayer,
 
-  defaultParams: {
+  options: {
+    opacity: 1,
+    position: 'front'
+  },
+
+  _defaultLayerParams: {
     format: 'png24',
     transparent: true,
     f: 'image',
     bboxSR: 4326,
     imageSR: 3857,
-    layers: '',
-    opacity: 1,
-    position: 'front'
+    layers: ''
   },
 
   initialize: function (url, options) {
     this.serviceUrl = L.esri.Util.cleanUrl(url);
-    this._layerParams = L.Util.extend({}, this.defaultParams);
+    this._layerParams = L.Util.extend({}, this._defaultLayerParams);
 
     for (var opt in options) {
-      if (!this.options.hasOwnProperty(opt)) {
+      if (options.hasOwnProperty(opt) && this._defaultLayerParams.hasOwnProperty(opt)) {
         this._layerParams[opt] = options[opt];
       }
     }
@@ -3374,19 +3377,17 @@ L.esri.DynamicMapLayer = L.ImageOverlay.extend({
     }, this);
 
     L.Util.setOptions(this, options);
+
+    if(!this._layerParams.transparent) {
+      this.options.opacity = 1;
+    }
   },
 
   onAdd: function (map) {
-    this._bounds = map.getBounds();
     this._map = map;
-
     this._moveHandler = L.esri.Util.debounce(this._update, 150, this);
 
     map.on("moveend", this._moveHandler, this);
-
-    if (map.options.zoomAnimation && L.Browser.any3d) {
-      map.on('zoomanim', this._animateZoom, this);
-    }
 
     if (map.options.crs && map.options.crs.code) {
       // spatial reference of the map
@@ -3403,36 +3404,30 @@ L.esri.DynamicMapLayer = L.ImageOverlay.extend({
   },
 
   onRemove: function (map) {
-    if(this._image){
-      map.getPanes().overlayPane.removeChild(this._image);
-      this._image = null;
-    }
-
-    if(this._newImage){
-      map.getPanes().overlayPane.removeChild(this._newImage);
-      this._newImage = null;
-    }
-
+    this._map.removeLayer(this._currentImage);
     map.off("moveend", this._moveHandler, this);
-
-    if (map.options.zoomAnimation) {
-      map.off('zoomanim', this._animateZoom, this);
-    }
   },
 
-  setUrl: function(){},
+  addTo: function (map) {
+    map.addLayer(this);
+    return this;
+  },
 
-  _animateZoom: function (e) {
-    var map = this._map,
-        image = this._image,
-        scale = map.getZoomScale(e.zoom),
-        nw = this._map.getBounds().getNorthWest(),
-        se = this._map.getBounds().getSouthEast(),
-        topLeft = map._latLngToNewLayerPoint(nw, e.zoom, e.center),
-        size = map._latLngToNewLayerPoint(se, e.zoom, e.center)._subtract(topLeft),
-        origin = topLeft._add(size._multiplyBy((1 / 2) * (1 - 1 / scale)));
+  setOpacity: function(opacity){
+    this.options.opacity = opacity;
+    this._currentImage.setOpacity(opacity);
+  },
 
-    image.style[L.DomUtil.TRANSFORM] = L.DomUtil.getTranslateString(origin) + ' scale(' + scale + ') ';
+  bringToFront: function(){
+    this.options.position = 'front';
+    this._currentImage.bringToFront();
+    return this;
+  },
+
+  bringToBack: function(){
+    this.options.position = 'back';
+    this._currentImage.bringToBack();
+    return this;
   },
 
   _parseLayers: function () {
@@ -3516,87 +3511,57 @@ L.esri.DynamicMapLayer = L.ImageOverlay.extend({
   },
 
   _update: function (e) {
+    if(this._animatingZoom){
+      return;
+    }
+
     if (this._map._panTransition && this._map._panTransition._inProgress) {
       return;
     }
 
     var zoom = this._map.getZoom();
+
     if (zoom > this.options.maxZoom || zoom < this.options.minZoom) {
       return;
     }
 
     var bounds = this._map.getBounds();
 
-    this._newImage = L.DomUtil.create('img', 'leaflet-image-layer');
+    var image = new L.ImageOverlay(this._getImageUrl(), bounds, {
+      opacity: 0
+    }).addTo(this._map);
 
-    if (this._map.options.zoomAnimation && L.Browser.any3d) {
-      L.DomUtil.addClass(this._newImage, 'leaflet-zoom-animated');
-    } else {
-      L.DomUtil.addClass(this._newImage, 'leaflet-zoom-hide');
-    }
+    image.on('load', function(e){
+      var newImage = e.target;
+      var oldImage = this._currentImage;
 
-    this._updateOpacity();
+      if(newImage._bounds.equals(bounds)){
+        this._currentImage = newImage;
 
-    L.Util.extend(this._newImage, {
-      galleryimg: 'no',
-      onselectstart: L.Util.falseFn,
-      onmousemove: L.Util.falseFn,
-      onload: L.Util.bind(this._onNewImageLoad, this),
-      src: this._getImageUrl(),
-      'data-bounds': bounds.toBBoxString()
-    });
+        if(this.options.position === "front"){
+          this._currentImage.bringToFront();
+        } else {
+          this._currentImage.bringToBack();
+        }
+
+        this._currentImage.setOpacity(this.options.opacity);
+
+        if(oldImage){
+          this._map.removeLayer(oldImage);
+        }
+      } else {
+        this._map.removeLayer(newImage);
+      }
+    }, this);
+
 
     this.fire('loading', {
       bounds: bounds
     });
-  },
-
-  _updateOpacity: function(){
-    if(this._image){
-      L.DomUtil.setOpacity(this._image, this.options.opacity);
-    }
-    if(this._newImage){
-      L.DomUtil.setOpacity(this._newImage, this.options.opacity);
-    }
-  },
-
-  _onNewImageLoad: function () {
-    if(this._newImage){
-      var bbox = this._newImage['data-bounds'].split(','),
-          bounds = L.latLngBounds([[bbox[1],bbox[0]], [bbox[3],bbox[2]] ]),
-          nw = L.latLng(bounds._northEast.lat, bounds._southWest.lng),
-          se = L.latLng(bounds._southWest.lat, bounds._northEast.lng),
-          topLeft = this._map.latLngToLayerPoint(nw),
-          size = this._map.latLngToLayerPoint(se)._subtract(topLeft);
-
-      L.DomUtil.setPosition(this._newImage, topLeft);
-
-      this._newImage.style.width = size.x + 'px';
-      this._newImage.style.height = size.y + 'px';
-
-      if(this.options.zindex){
-        this._newImage.style.zIndex = this.options.zindex;
-      }
-
-      if (this._image == null) {
-        if(this.options.position === 'back' && this._map._panes.overlayPane.children.length){
-          this._map._panes.overlayPane.insertBefore(this._newImage,this._map._panes.overlayPane.children[0]);
-        } else {
-          this._map._panes.overlayPane.appendChild(this._newImage);
-        }
-      } else {
-        this._map._panes.overlayPane.insertBefore(this._newImage,this._image);
-        this._map._panes.overlayPane.removeChild(this._image);
-      }
-
-      this._image = this._newImage;
-      this._newImage = null;
-      this.fire('load', {
-        bounds: bounds
-      });
-    }
   }
 });
+
+L.esri.DynamicMapLayer.include(L.Mixin.Events);
 
 L.esri.dynamicMapLayer = function (url, options) {
   return new L.esri.DynamicMapLayer(url, options);
