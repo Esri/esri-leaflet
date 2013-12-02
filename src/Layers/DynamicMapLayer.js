@@ -46,7 +46,7 @@ L.esri.DynamicMapLayer = L.Class.extend({
     this._layerParams = L.Util.extend({}, this._defaultLayerParams);
 
     for (var opt in options) {
-      if (!options.hasOwnProperty(opt) && this._defaultLayerParams.hasOwnProperty(opt)) {
+      if (options.hasOwnProperty(opt) && this._defaultLayerParams.hasOwnProperty(opt)) {
         this._layerParams[opt] = options[opt];
       }
     }
@@ -59,6 +59,10 @@ L.esri.DynamicMapLayer = L.Class.extend({
     }, this);
 
     L.Util.setOptions(this, options);
+
+    if(!this._layerParams.transparent) {
+      this.options.opacity = 1;
+    }
   },
 
   onAdd: function (map) {
@@ -84,6 +88,28 @@ L.esri.DynamicMapLayer = L.Class.extend({
   onRemove: function (map) {
     this._map.removeLayer(this._currentImage);
     map.off("moveend", this._moveHandler, this);
+  },
+
+  addTo: function (map) {
+    map.addLayer(this);
+    return this;
+  },
+
+  setOpacity: function(opacity){
+    this.options.opacity = opacity;
+    this._currentImage.setOpacity(opacity);
+  },
+
+  bringToFront: function(){
+    this.options.position = 'front';
+    this._currentImage.bringToFront();
+    return this;
+  },
+
+  bringToBack: function(){
+    this.options.position = 'back';
+    this._currentImage.bringToBack();
+    return this;
   },
 
   _parseLayers: function () {
@@ -217,7 +243,7 @@ L.esri.DynamicMapLayer = L.Class.extend({
   }
 });
 
-L.esri.DynamicMapLayer.include(L.Mixin.Events )
+L.esri.DynamicMapLayer.include(L.Mixin.Events);
 
 L.esri.dynamicMapLayer = function (url, options) {
   return new L.esri.DynamicMapLayer(url, options);
