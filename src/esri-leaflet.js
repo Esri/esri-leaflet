@@ -207,7 +207,7 @@ L.esri.Mixins.featureGrid = {
       geometryType: "esriGeometryEnvelope",
       geometry: JSON.stringify(L.esri.Util.boundsToExtent(cell.bounds)),
       outFields:"*",
-      outSr: 4326
+      outSR: 4326
     }, function(response){
 
       //deincriment the request counter
@@ -293,7 +293,7 @@ L.esri.Mixins.featureGrid = {
 L.esri.Mixins.identifiableLayer = {
   identify:function(latLng, options, callback){
     var defaults = {
-      sr: '4265',
+      sr: '4326',
       mapExtent: JSON.stringify(L.esri.Util.boundsToExtent(this._map.getBounds())),
       tolerance: 5,
       geometryType: 'esriGeometryPoint',
@@ -302,7 +302,7 @@ L.esri.Mixins.identifiableLayer = {
         x: latLng.lng,
         y: latLng.lat,
         spatialReference: {
-          wkid: 4265
+          wkid: 4326
         }
       })
     };

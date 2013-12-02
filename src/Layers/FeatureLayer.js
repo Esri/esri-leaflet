@@ -64,12 +64,20 @@
         }, this));
       }, this));
     },
-    _render: function(response){
-      if(response.objectIdFieldName && response.features.length && !response.error){
-        var idKey = response.objectIdFieldName;
+    _render: function(response){      
+	  if(response.features.length && !response.error){	    
+		if(!this._objectIdField){
+		  for (var j = 0; j <= response.fields.length - 1; j++) {		  
+		    if(response.fields[j].type == "esriFieldTypeOID") {		      
+			  this._objectIdField = response.fields[j].name;
+			  break
+		    }
+          }
+        }		
         for (var i = response.features.length - 1; i >= 0; i--) {
           var feature = response.features[i];
-          var id = feature.attributes[idKey];
+          var idFieldName = this._objectIdField		  
+		  var id = feature.attributes[idFieldName];
           if(!this._layers[id]){
             var geojson = Terraformer.ArcGIS.parse(feature);
             geojson.id = id;
