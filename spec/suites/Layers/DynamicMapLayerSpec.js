@@ -1,98 +1,105 @@
 /* globals L, describe, it, expect, beforeEach*/
 
 describe('L.esri.DynamicMapLayer', function () {
-  var map,
-    sandbox,
-    url = 'http://tmservices1.esri.com/arcgis/rest/services/LiveFeeds/Hurricane_Recent/MapServer';
+  var map;
+  var sandbox;
+  var container;
+  var url = 'http://tmservices1.esri.com/arcgis/rest/services/LiveFeeds/Hurricane_Recent/MapServer';
+
   beforeEach(function () {
-    map = L.map(document.createElement('div'));
-    map.setView([37.75, -122.45], 12);
+    container = document.createElement('div');
+    container.setAttribute("style","width:500px; height: 500px;");
+    document.body.appendChild(container);
+    map = L.map(container).setView([37.75, -122.45], 12);
     sandbox = sinon.sandbox.create();
   });
+
   afterEach(function () {
     sandbox.restore();
   });
 
-  describe('#constructor', function () {
+  describe('DynamicMapLayer', function () {
+    it('can be assigned some non-default parameters', function () {
+      var layer = L.esri.dynamicMapLayer(url, {
+        format: 'jpg',
+        opacity: 0.5,
+        position: 'back'
+      });
+      expect(layer._layerParams.format).to.eql('jpg');
+      expect(layer.options.opacity).to.eql(0.5);
+      expect(layer.options.position).to.eql('back');
+    });
 
-    describe('when a DynamicMapLayer is first created', function () {
-      it('has some default parameters', function () {
-        var setOptionsSpy = sandbox.spy(L.Util, 'setOptions'),
-          dynLayer = L.esri.dynamicMapLayer(url),
-          defaultParams = {
-            format: 'png24',
-            transparent: true,
-            f: 'image',
-            bboxSR: 4326,
-            imageSR: 3857,
-            layers: '',
-            opacity: 1,
-            position: 'front'
-          };
-        expect(dynLayer.defaultParams).to.eql(defaultParams);
-        expect(setOptionsSpy.calledOnce).to.be.ok();
+    it('will not set opacity when transparent parameter is false', function () {
+      var layer = L.esri.dynamicMapLayer(url, {
+        transparent: false,
+        opacity: 0.5
+      });
+      expect(layer._layerParams.transparent).to.eql(false);
+      expect(layer.options.opacity).to.eql(1);
+    });
+  });
+
+  it("will fire a loading event when it starts loading", function(done){
+    var layer = L.esri.dynamicMapLayer(url).addTo(map);
+    layer.on("loading", function(e){
+      expect(e.bounds).to.be.ok;
+      done();
+    });
+    map.panBy([50,50], {
+      animate: false
+    });
+  });
+
+  it("will fire a load event when it completes loading", function(){
+    var layer = L.esri.dynamicMapLayer(url).addTo(map);
+    layer.on("load", function(e){
+      expect(e.bounds).to.be.ok;
+      done();
+    })
+    map.panBy([50,50], {
+      animate: false
+    });
+  });
+
+  it("will load a new image when the map moves", function(){
+    var layer = L.esri.dynamicMapLayer(url).addTo(map);
+    var originalUrl;
+    // listen for the first image load
+    layer.once("load", function(e){
+      // remember our original image url
+      var originalUrl = layer._currentImage._url;
+
+      // when the next image loads evaluate the tests
+      layer.once("load", function(){
+        expect(originalUrl).not.to.eql(layer._currentImage._url);
+        done();
       });
 
-      it('can be assigned some default/non-default parameters', function () {
-        var defaultParams = {
-          format: 'jpg',
-          transparent: true,
-          f: 'image',
-          bboxSR: 4326,
-          imageSR: 3857,
-          layers: '',
-          opacity: 0.5,
-          myname: 'johndoe'
-        };
-        var dynLayer = L.esri.dynamicMapLayer(url, defaultParams);
-        expect(dynLayer._layerParams.format).to.eql(defaultParams.format);
-        expect(dynLayer._layerParams.myname).to.eql(defaultParams.myname);
-      });
-
-      it('will not set opacity when transparent parameter is false', function () {
-        var defaultParams = {
-          transparent: false,
-          opacity: 0.5
-        };
-        var dynLayer = L.esri.dynamicMapLayer(url, defaultParams);
-
-        expect(dynLayer._layerParams.transparent).to.eql(defaultParams.transparent);
-        expect(dynLayer._layerParams.opacity).not.to.eql(defaultParams.opacity);
-        expect(dynLayer._layerParams.opacity).to.eql(1);
+      //pan the map to trigger the next load
+      map.panBy([50,50], {
+        animate: false
       });
     });
 
   });
 
-  describe('#onAdd, #onRemove', function () {
-
-    describe('when added to map', function () {
-      it('will set map#on method and reset layer', function () {
-        map._panes = { overlayPane: { appendChild: function () {
-        } } };
-        var dynLayer = L.esri.dynamicMapLayer(url),
-            resetSpy = sandbox.spy(dynLayer, '_update');
-        dynLayer.onAdd(map);
-        expect(resetSpy.called).to.be.ok();
-      });
+  it("can be added to a map", function(){
+    var layer = L.esri.dynamicMapLayer(url).addTo(map);
+    layer.on('load', function(){
+      expect(layer._currentImage).to.be.an.instanceof(L.ImageOverlay)
+      expect(layer._currentImage._image._url).to.be.a('string');
+      expect(layer._currentImage.bounds.equals(map.getBounds())).to.be.true;
+      done();
     });
+  });
 
-    describe('when removed from map', function () {
-      it('will call remove functions on map when onRemove called', function () {
-        var dynLayer = L.esri.dynamicMapLayer(url),
-          getPanesStub = sandbox.stub(map, 'getPanes').returns({
-            overlayPane: {
-              removeChild: function () {
-              }
-            }
-          }),
-          offSpy = sandbox.spy(map, 'off');
-        map.addLayer(dynLayer);
-        dynLayer.onRemove(map);
-        expect(getPanesStub.calledOnce).to.be.ok();
-        expect(offSpy.called).to.be.ok();
-      });
+  it("can be removed from a map", function(){
+    var layer = L.esri.dynamicMapLayer(url).addTo(map);
+    layer.on('load', function(){
+      map.removeLayer(layer);
+      expect(map.hasLayer(layer._currentImage)).to.be.false;
+      done();
     });
-
   });
 });
