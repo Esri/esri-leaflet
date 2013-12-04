@@ -1,4 +1,4 @@
-/*! Esri-Leaflet - v0.0.1 - 2013-12-02
+/*! Esri-Leaflet - v0.0.1-rc.2 - 2013-12-04
 *   Copyright (c) 2013 Environmental Systems Research Institute, Inc.
 *   Apache License*/
 /* globals L */
@@ -210,7 +210,7 @@ L.esri.Mixins.featureGrid = {
       geometryType: "esriGeometryEnvelope",
       geometry: JSON.stringify(L.esri.Util.boundsToExtent(cell.bounds)),
       outFields:"*",
-      outSr: 4326
+      outSR: 4326
     }, function(response){
 
       //deincriment the request counter
@@ -296,7 +296,7 @@ L.esri.Mixins.featureGrid = {
 L.esri.Mixins.identifiableLayer = {
   identify:function(latLng, options, callback){
     var defaults = {
-      sr: '4265',
+      sr: '4326',
       mapExtent: JSON.stringify(L.esri.Util.boundsToExtent(this._map.getBounds())),
       tolerance: 5,
       geometryType: 'esriGeometryPoint',
@@ -305,7 +305,7 @@ L.esri.Mixins.identifiableLayer = {
         x: latLng.lng,
         y: latLng.lat,
         spatialReference: {
-          wkid: 4265
+          wkid: 4326
         }
       })
     };
