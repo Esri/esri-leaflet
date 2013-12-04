@@ -5,9 +5,9 @@
   "ignore": [
     "**/.*",
     "node_modules",
-    "components"
-    "examples"
-    "spec"
+    "components",
+    "examples",
+    "spec",
     "vendor"
   ]
 }
