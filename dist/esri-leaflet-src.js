@@ -1,4 +1,4 @@
-/*! Esri-Leaflet - v0.0.1 - 2013-12-02
+/*! Esri-Leaflet - v0.0.1-rc.2 - 2013-12-04
 *   Copyright (c) 2013 Environmental Systems Research Institute, Inc.
 *   Apache License*/
 (function (root, factory) {
@@ -2821,7 +2821,7 @@ L.esri.Mixins.featureGrid = {
       geometryType: "esriGeometryEnvelope",
       geometry: JSON.stringify(L.esri.Util.boundsToExtent(cell.bounds)),
       outFields:"*",
-      outSr: 4326
+      outSR: 4326
     }, function(response){
 
       //deincriment the request counter
@@ -2907,7 +2907,7 @@ L.esri.Mixins.featureGrid = {
 L.esri.Mixins.identifiableLayer = {
   identify:function(latLng, options, callback){
     var defaults = {
-      sr: '4265',
+      sr: '4326',
       mapExtent: JSON.stringify(L.esri.Util.boundsToExtent(this._map.getBounds())),
       tolerance: 5,
       geometryType: 'esriGeometryPoint',
@@ -2916,7 +2916,7 @@ L.esri.Mixins.identifiableLayer = {
         x: latLng.lng,
         y: latLng.lat,
         spatialReference: {
-          wkid: 4265
+          wkid: 4326
         }
       })
     };
@@ -3245,11 +3245,11 @@ L.esri.Mixins.identifiableLayer = {
     },
     onAdd: function(map){
       L.LayerGroup.prototype.onAdd.call(this, map);
-      map.on("zoomend resize moveEnd", this._update, this);
+      map.on("zoomend resize moveend", this._update, this);
       this._initializeFeatureGrid(map);
     },
     onRemove: function(map){
-      map.off("zoomend resize moveEnd", this._update, this);
+      map.off("zoomend resize moveend", this._update, this);
       L.LayerGroup.prototype.onRemove.call(this, map);
       this._destroyFeatureGrid(map);
     },
@@ -3266,11 +3266,19 @@ L.esri.Mixins.identifiableLayer = {
       }, this));
     },
     _render: function(response){
-      if(response.objectIdFieldName && response.features.length && !response.error){
-        var idKey = response.objectIdFieldName;
+      if(response.features.length && !response.error){
+        if(!this._objectIdField){
+          for (var j = 0; j <= response.fields.length - 1; j++) {
+            if(response.fields[j].type === "esriFieldTypeOID") {
+              this._objectIdField = response.fields[j].name;
+              break;
+            }
+          }
+        }
         for (var i = response.features.length - 1; i >= 0; i--) {
           var feature = response.features[i];
-          var id = feature.attributes[idKey];
+          var idFieldName = this._objectIdField;
+          var id = feature.attributes[idFieldName];
           if(!this._layers[id]){
             var geojson = Terraformer.ArcGIS.parse(feature);
             geojson.id = id;
@@ -3287,6 +3295,7 @@ L.esri.Mixins.identifiableLayer = {
   };
 
 })(L);
+
 /* globals L */
 
 L.esri.TiledMapLayer = L.TileLayer.extend({
