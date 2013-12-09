@@ -65,7 +65,7 @@
       }, this));
     },
     _render: function(response){
-      if(response.features.length && !response.error){
+      if(response.features && response.features.length && !response.error){
         if(!this._objectIdField){
           for (var j = 0; j <= response.fields.length - 1; j++) {
             if(response.fields[j].type === "esriFieldTypeOID") {
