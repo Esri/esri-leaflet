@@ -1,4 +1,4 @@
-/*! Esri-Leaflet - v0.0.1-rc.2 - 2013-12-04
+/*! Esri-Leaflet - v0.0.1-rc.2 - 2013-12-09
 *   Copyright (c) 2013 Environmental Systems Research Institute, Inc.
 *   Apache License*/
 /* globals L */
@@ -210,7 +210,8 @@ L.esri.Mixins.featureGrid = {
       geometryType: "esriGeometryEnvelope",
       geometry: JSON.stringify(L.esri.Util.boundsToExtent(cell.bounds)),
       outFields:"*",
-      outSR: 4326
+      outSR: 4326,
+      inSR: 4326
     }, function(response){
 
       //deincriment the request counter
