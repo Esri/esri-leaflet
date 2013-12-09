@@ -207,7 +207,8 @@ L.esri.Mixins.featureGrid = {
       geometryType: "esriGeometryEnvelope",
       geometry: JSON.stringify(L.esri.Util.boundsToExtent(cell.bounds)),
       outFields:"*",
-      outSR: 4326
+      outSR: 4326,
+      inSR: 4326
     }, function(response){
 
       //deincriment the request counter
