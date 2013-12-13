@@ -191,7 +191,9 @@ L.esri.Mixins.featureGrid = {
     var cells = this._cellsWithin(bounds);
 
     if(cells) {
-      this.fire("loading", { bounds: bounds });
+      this.fire("loading", {
+        bounds: bounds
+      });
     }
 
     for (var i = 0; i < cells.length; i++) {
@@ -205,7 +207,8 @@ L.esri.Mixins.featureGrid = {
       geometryType: "esriGeometryEnvelope",
       geometry: JSON.stringify(L.esri.Util.boundsToExtent(cell.bounds)),
       outFields:"*",
-      outSr: 4326
+      outSR: 4326,
+      inSR: 4326
     }, function(response){
 
       //deincriment the request counter
@@ -214,8 +217,7 @@ L.esri.Mixins.featureGrid = {
       // if there are no more active requests fire a load event for this view
       if(this._activeRequests <= 0){
         this.fire("load", {
-          bounds: bounds,
-          cells: cells
+          bounds: bounds
         });
       }
 
@@ -292,7 +294,7 @@ L.esri.Mixins.featureGrid = {
 L.esri.Mixins.identifiableLayer = {
   identify:function(latLng, options, callback){
     var defaults = {
-      sr: '4265',
+      sr: '4326',
       mapExtent: JSON.stringify(L.esri.Util.boundsToExtent(this._map.getBounds())),
       tolerance: 5,
       geometryType: 'esriGeometryPoint',
@@ -301,7 +303,7 @@ L.esri.Mixins.identifiableLayer = {
         x: latLng.lng,
         y: latLng.lat,
         spatialReference: {
-          wkid: 4265
+          wkid: 4326
         }
       })
     };

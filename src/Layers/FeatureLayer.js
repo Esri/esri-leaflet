@@ -44,11 +44,11 @@
     },
     onAdd: function(map){
       L.LayerGroup.prototype.onAdd.call(this, map);
-      map.on("zoomend resize moveEnd", this._update, this);
+      map.on("zoomend resize moveend", this._update, this);
       this._initializeFeatureGrid(map);
     },
     onRemove: function(map){
-      map.off("zoomend resize moveEnd", this._update, this);
+      map.off("zoomend resize moveend", this._update, this);
       L.LayerGroup.prototype.onRemove.call(this, map);
       this._destroyFeatureGrid(map);
     },
@@ -65,21 +65,24 @@
       }, this));
     },
     _render: function(response){
-      if(response.objectIdFieldName && response.features.length && !response.error){
-        var idKey = response.objectIdFieldName;
+      if(response.features && response.features.length && !response.error){
+        if(!this._objectIdField){
+          for (var j = 0; j <= response.fields.length - 1; j++) {
+            if(response.fields[j].type === "esriFieldTypeOID") {
+              this._objectIdField = response.fields[j].name;
+              break;
+            }
+          }
+        }
         for (var i = response.features.length - 1; i >= 0; i--) {
           var feature = response.features[i];
-          var id = feature.attributes[idKey];
+          var idFieldName = this._objectIdField;
+          var id = feature.attributes[idFieldName];
           if(!this._layers[id]){
             var geojson = Terraformer.ArcGIS.parse(feature);
             geojson.id = id;
-            this.index.insert(geojson,id);
+            this.index.insert(geojson, geojson.id);
             this.addData(geojson);
-            var layer = this._layers[id];
-            this.fire("render", {
-              feature: layer,
-              geojson: geojson
-            });
           }
         }
       }

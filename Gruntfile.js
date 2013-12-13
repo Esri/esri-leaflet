@@ -109,6 +109,15 @@ module.exports = function(grunt) {
           keepalive: true
         }
       }
+    },
+    'gh-pages': {
+      options: {
+        base: 'examples',
+        message: 'update gh-pages',
+        repo: 'git@github.com:Esri/esri-leaflet.git',
+        push: false // cd into `.grunt/grunt-gh-pages/gh-pages/src` to push
+      },
+      src: ['**']
     }
   });
 
@@ -122,6 +131,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-karma');
-
+  grunt.loadNpmTasks('grunt-gh-pages');
 
 };
