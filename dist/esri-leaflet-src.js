@@ -1,4 +1,4 @@
-/*! Esri-Leaflet - v0.0.1-rc.2 - 2013-12-09
+/*! Esri-Leaflet - v0.0.1-rc.2 - 2013-12-13
 *   Copyright (c) 2013 Environmental Systems Research Institute, Inc.
 *   Apache License*/
 (function (root, factory) {
@@ -2776,8 +2776,8 @@ L.esri.Util = {
   }
 };
 
+// create object to accept L.esri.Mixins
 L.esri.Mixins = {};
-
 L.esri.Mixins.featureGrid = {
   _activeRequests: 0,
   _initializeFeatureGrid: function(map){
@@ -2954,7 +2954,6 @@ L.esri.Mixins.identifiableLayer = {
     return layerDefs;
   }
 };
-
 (function(L){
 
   var tileProtocol = (window.location.protocol !== "https:") ? "http:" : "https:";
