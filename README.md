@@ -19,17 +19,15 @@ Here is a quick example to get you started. Just change the paths to point to th
 <html>
   <head>
     <title>Esri Leaflet Demo</title>
-    <link rel="stylesheet" href="/the/path/to/leaflet.css" />
+    <link rel="stylesheet" href="/the/path/to/leaflet.css">
+    <!--[if lte IE 8]><link rel="stylesheet" href="/the/path/to/leaflet.ie.css"><![endif]-->
     <style>
       html, body,  #map {
         width : 100%;
         height : 100%;
       }
     </style>
-    <script src="/the/path/to.leaflet.js"></script>
-    <script src="/the/path/to/esri-leaflet.min.js"></script>
-    <!--[if lte IE 8]><link rel="stylesheet" href="/the/path/to/leaflet.ie.css" /><![endif]-->
-    <script src="/the/path/to.leaflet.js"></script>
+    <script src="/the/path/to/leaflet.js"></script>
     <script src="/the/path/to/esri-leaflet.js"></script>
   </head>
   <body>
