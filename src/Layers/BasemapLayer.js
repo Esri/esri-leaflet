@@ -233,8 +233,11 @@
           }
         }
       }
-      this._getAttributionSpan().innerHTML = newAttributions;
-      this._resizeAttribution();
+      if (this._getAttributionSpan())
+      {
+          this._getAttributionSpan().innerHTML = newAttributions;
+          this._resizeAttribution();
+      }
     }
   });
 
