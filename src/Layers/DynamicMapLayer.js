@@ -185,6 +185,10 @@ L.esri.DynamicMapLayer = L.Class.extend({
     this._layerParams.bbox = [sw.x, sw.y, ne.x, ne.y].join(',');
     this._layerParams.size = size.x + ',' + size.y;
 
+    if(this.options.token) {
+      this._layerParams.token = this.options.token;
+    }
+
     var url = this.serviceUrl + 'export' + L.Util.getParamString(this._layerParams);
 
     return url;
