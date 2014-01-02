@@ -220,6 +220,8 @@
       return this._map._container.querySelectorAll('.esri-attribution-logo')[0];
     },
     _updateMapAttribution: function(){
+      if (!this._getAttributionSpan())
+	  return;  // if attribution panel doesn't exist, return
       var newAttributions = '';
       for (var i = 0; i < this.attributionBoundingBoxes.length; i++) {
         var attr = this.attributionBoundingBoxes[i];
@@ -233,11 +235,8 @@
           }
         }
       }
-      if (this._getAttributionSpan())
-      {
-          this._getAttributionSpan().innerHTML = newAttributions;
-          this._resizeAttribution();
-      }
+      this._getAttributionSpan().innerHTML = newAttributions;
+      this._resizeAttribution();
     }
   });
 
