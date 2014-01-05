@@ -54,15 +54,53 @@ L.esri.DynamicMapLayer = L.Class.extend({
     this._parseLayers();
     this._parseLayerDefs();
 
-    L.esri.get(this.serviceUrl, {}, function(response){
-      this.fire("metadata", { metadata: response });
-    }, this);
 
     L.Util.setOptions(this, options);
 
     if(!this._layerParams.transparent) {
       this.options.opacity = 1;
     }
+
+    this._getMetadata();
+
+  },
+
+  _getMetadata: function(){
+   var requestOptions = {};
+
+    if(this.options.token){
+      requestOptions.token = this.options.token;
+    }
+
+    L.esri.get(this.serviceUrl, requestOptions, function(response){
+      // if there is a invalid token error...
+      if(response.error && (response.error.code === 499 || response.error.code === 498)) {
+
+        // if we have already asked for authentication
+        if(!this._authenticating){
+
+          // ask for authentication
+          this._authenticating = true;
+
+          // ask for authentication. developer should fire the retry() method with the new token
+          this.fire('authenticationrequired', {
+            retry: L.Util.bind(function(token){
+              // set the new token
+              this.options.token = token;
+
+              // get metadata again
+              this._getMetadata();
+
+              // reload the image so it shows up with the new token
+              this._update();
+            }, this)
+          });
+        }
+      } else {
+        this.fire("metadata", { metadata: response });
+      }
+
+    }, this);
   },
 
   onAdd: function (map) {
@@ -184,6 +222,10 @@ L.esri.DynamicMapLayer = L.Class.extend({
 
     this._layerParams.bbox = [sw.x, sw.y, ne.x, ne.y].join(',');
     this._layerParams.size = size.x + ',' + size.y;
+
+    if(this.options.token) {
+      this._layerParams.token = this.options.token;
+    }
 
     var url = this.serviceUrl + 'export' + L.Util.getParamString(this._layerParams);
 

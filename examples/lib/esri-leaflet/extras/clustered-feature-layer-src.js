@@ -1,5 +1,5 @@
-/*! Esri-Leaflet - v0.0.1 - 2013-09-17
-*   Copyright (c) 2013 Environmental Systems Research Institute, Inc.
+/*! Esri-Leaflet - v0.0.1-rc.2 - 2014-01-05
+*   Copyright (c) 2014 Environmental Systems Research Institute, Inc.
 *   Apache License*/
 /* globals Terraformer, L */
 (function(L, Terraformer){
@@ -38,8 +38,17 @@
       return this;
     },
     _render: function(response){
-      if(response.objectIdFieldName && response.features.length && !response.error){
+      if(response.features && response.features.length && !response.error){
         var idKey = response.objectIdFieldName;
+        if(!idKey){
+          for (var j = 0; j <= response.fields.length - 1; j++) {
+            if(response.fields[j].type === "esriFieldTypeOID") {
+              idKey = response.fields[j].name;
+              break;
+            }
+          }
+        }
+
         for (var i = response.features.length - 1; i >= 0; i--) {
           var feature = response.features[i];
           var id = feature.attributes[idKey];
@@ -54,11 +63,6 @@
 
             this.cluster.addLayer(marker);
             this._loaded.push(id);
-
-            this.fire("render", {
-              feature: marker,
-              geojson: geojson
-            });
           }
         }
       }

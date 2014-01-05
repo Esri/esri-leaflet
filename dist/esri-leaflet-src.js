@@ -1,4 +1,4 @@
-/*! Esri-Leaflet - v0.0.1-rc.2 - 2014-01-02
+/*! Esri-Leaflet - v0.0.1-rc.2 - 2014-01-05
 *   Copyright (c) 2014 Environmental Systems Research Institute, Inc.
 *   Apache License*/
 (function (root, factory) {
@@ -2802,13 +2802,11 @@ L.esri.Mixins.featureGrid = {
   },
   _requestFeatures: function(bounds){
     var cells = this._cellsWithin(bounds);
-
     if(cells) {
       this.fire("loading", {
         bounds: bounds
       });
     }
-
     for (var i = 0; i < cells.length; i++) {
       this._makeRequest(cells[i], cells, bounds);
     }
@@ -2816,14 +2814,19 @@ L.esri.Mixins.featureGrid = {
   _makeRequest: function(cell, cells, bounds){
     this._activeRequests++;
 
-    L.esri.get(this.url+"query", {
+    var requestOptions = {
       geometryType: "esriGeometryEnvelope",
       geometry: JSON.stringify(L.esri.Util.boundsToExtent(cell.bounds)),
       outFields:"*",
       outSR: 4326,
       inSR: 4326
-    }, function(response){
+    };
 
+    if(this.options.token){
+      requestOptions.token = this.options.token;
+    }
+
+    L.esri.get(this.url+"query", requestOptions, function(response){
       //deincriment the request counter
       this._activeRequests--;
 
@@ -2834,8 +2837,36 @@ L.esri.Mixins.featureGrid = {
         });
       }
 
-      // call the render method to render features
-      this._render(response);
+      // if there is a invalid token error...
+      if(response.error && (response.error.code === 499 || response.error.code === 498)) {
+
+        // if we have already asked for authentication
+        if(!this._authenticating){
+
+          // ask for authentication
+          this._authenticating = true;
+
+          // ask for authentication. developer should fire the retry() method with the new token
+          this.fire('authenticationrequired', {
+            retry: L.Util.bind(function(token){
+              // we are no longer authenticating
+              this._authenticating = false;
+
+              // set the new token
+              this.options.token = token;
+
+              // clear the previously loaded cells, since they failed to load successfully
+              this._previousCells = [];
+
+              // request the features in the current map view again
+              this._requestFeatures(this._map.getBounds());
+            }, this)
+          });
+        }
+      } else {
+        // call the render method to render features
+        this._render(response);
+      }
     }, this);
   },
   _cellsWithin: function(mapBounds){
@@ -2968,7 +2999,7 @@ L.esri.Mixins.identifiableLayer = {
     statics: {
       TILES: {
         Streets: {
-          urlTemplate: tileProtocol + "//{s}.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}/",
+          urlTemplate: tileProtocol + "//{s}.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}",
           attributionUrl: "https://static.arcgis.com/attribution/World_Street_Map",
           options: {
             minZoom: 1,
@@ -2978,7 +3009,7 @@ L.esri.Mixins.identifiableLayer = {
           }
         },
         Topographic: {
-          urlTemplate: tileProtocol + "//{s}.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}/",
+          urlTemplate: tileProtocol + "//{s}.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}",
           attributionUrl: "https://static.arcgis.com/attribution/World_Topo_Map",
           options: {
             minZoom: 1,
@@ -2988,7 +3019,7 @@ L.esri.Mixins.identifiableLayer = {
           }
         },
         Oceans: {
-          urlTemplate: "https://server.arcgisonline.com/ArcGIS/rest/services/Ocean_Basemap/MapServer/tile/{z}/{y}/{x}/",
+          urlTemplate: tileProtocol + "//server.arcgisonline.com/ArcGIS/rest/services/Ocean_Basemap/MapServer/tile/{z}/{y}/{x}",
           attributionUrl: "https://static.arcgis.com/attribution/Ocean_Basemap",
           options: {
             minZoom: 1,
@@ -2998,7 +3029,7 @@ L.esri.Mixins.identifiableLayer = {
           }
         },
         NationalGeographic: {
-          urlTemplate: "https://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}/",
+          urlTemplate: "https://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}",
           options: {
             minZoom: 1,
             maxZoom: 16,
@@ -3006,8 +3037,25 @@ L.esri.Mixins.identifiableLayer = {
             attribution: formatTextAttributions("Esri") + attributionLogo
           }
         },
+        DarkGray: {
+          urlTemplate: tileProtocol + "//tiles{s}.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/World_Dark_Gray_Base_Beta/MapServer/tile/{z}/{y}/{x}",
+          options: {
+            minZoom: 1,
+            maxZoom: 10,
+            subdomains: [1, 2],
+            attribution: formatTextAttributions("Esri, DeLorme, HERE") + attributionLogo
+          }
+        },
+        DarkGrayLabels: {
+          urlTemplate: tileProtocol + "//tiles{s}.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/World_Dark_Gray_Reference_Beta/MapServer/tile/{z}/{y}/{x}",
+          options: {
+            minZoom: 1,
+            maxZoom: 10,
+            subdomains: [1, 2]
+          }
+        },
         Gray: {
-          urlTemplate: tileProtocol + "//{s}.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}/",
+          urlTemplate: tileProtocol + "//{s}.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}",
           options: {
             minZoom: 1,
             maxZoom: 16,
@@ -3016,7 +3064,7 @@ L.esri.Mixins.identifiableLayer = {
           }
         },
         GrayLabels: {
-          urlTemplate: tileProtocol + "//{s}.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}/",
+          urlTemplate: tileProtocol + "//{s}.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}",
           options: {
             minZoom: 1,
             maxZoom: 16,
@@ -3024,7 +3072,7 @@ L.esri.Mixins.identifiableLayer = {
           }
         },
         Imagery: {
-          urlTemplate: tileProtocol + "//{s}.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}/",
+          urlTemplate: tileProtocol + "//{s}.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
           options: {
             minZoom: 1,
             maxZoom: 19,
@@ -3033,7 +3081,7 @@ L.esri.Mixins.identifiableLayer = {
           }
         },
         ImageryLabels: {
-          urlTemplate: tileProtocol + "//{s}.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}/",
+          urlTemplate: tileProtocol + "//{s}.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",
           options: {
             minZoom: 1,
             maxZoom: 19,
@@ -3041,7 +3089,7 @@ L.esri.Mixins.identifiableLayer = {
           }
         },
         ImageryTransportation: {
-          urlTemplate: tileProtocol + "//{s}.arcgisonline.com/ArcGIS/rest/services/Reference/World_Transportation/MapServer/tile/{z}/{y}/{x}/",
+          urlTemplate: tileProtocol + "//{s}.arcgisonline.com/ArcGIS/rest/services/Reference/World_Transportation/MapServer/tile/{z}/{y}/{x}",
           options: {
             minZoom: 1,
             maxZoom: 19,
@@ -3049,7 +3097,7 @@ L.esri.Mixins.identifiableLayer = {
           }
         },
         ShadedRelief: {
-          urlTemplate: tileProtocol + "//{s}.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}/",
+          urlTemplate: tileProtocol + "//{s}.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}",
           options: {
             minZoom: 1,
             maxZoom: 13,
@@ -3058,7 +3106,7 @@ L.esri.Mixins.identifiableLayer = {
           }
         },
         ShadedReliefLabels: {
-          urlTemplate: tileProtocol + "//{s}.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places_Alternate/MapServer/tile/{z}/{y}/{x}/",
+          urlTemplate: tileProtocol + "//{s}.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places_Alternate/MapServer/tile/{z}/{y}/{x}",
           options: {
             minZoom: 1,
             maxZoom: 12,
@@ -3075,17 +3123,14 @@ L.esri.Mixins.identifiableLayer = {
       } else if(typeof key === "string" && L.esri.BasemapLayer.TILES[key]){
         config = L.esri.BasemapLayer.TILES[key];
       } else {
-        throw new Error("L.esri.BasemapLayer: Invalid parameter. Use one of 'Streets', 'Topographic', 'Oceans', 'NationalGeographic', 'Gray', 'GrayLabels', 'Imagery', 'ImageryLabels', 'ImageryTransportation', 'ShadedRelief' or 'ShadedReliefLabels'");
+        throw new Error("L.esri.BasemapLayer: Invalid parameter. Use one of 'Streets', 'Topographic', 'Oceans', 'NationalGeographic', 'Gray', 'GrayLabels', 'DarkGray', 'DarkGrayLabels', 'Imagery', 'ImageryLabels', 'ImageryTransportation', 'ShadedRelief' or 'ShadedReliefLabels'");
       }
 
       // merge passed options into the config options
       var mergedOptions = L.Util.extend(config.options, options);
 
-      // clean up our input url
-      var url = L.esri.Util.cleanUrl(config.urlTemplate);
-
       // call the initialize method on L.TileLayer to set everything up
-      L.TileLayer.prototype.initialize.call(this, url, L.Util.setOptions(this, mergedOptions));
+      L.TileLayer.prototype.initialize.call(this, config.urlTemplate, L.Util.setOptions(this, mergedOptions));
 
       // if this basemap requires dynamic attribution set it up
       if(config.attributionUrl){
@@ -3265,15 +3310,22 @@ L.esri.Mixins.identifiableLayer = {
         }, this));
       }, this));
     },
+    _setObjectIdField: function(response){
+      if(response.objectIdFieldName){
+        this._objectIdField = response.objectIdFieldName;
+      } else {
+        for (var j = 0; j <= response.fields.length - 1; j++) {
+          if(response.fields[j].type === "esriFieldTypeOID") {
+            this._objectIdField = response.fields[j].name;
+            break;
+          }
+        }
+      }
+    },
     _render: function(response){
       if(response.features && response.features.length && !response.error){
         if(!this._objectIdField){
-          for (var j = 0; j <= response.fields.length - 1; j++) {
-            if(response.fields[j].type === "esriFieldTypeOID") {
-              this._objectIdField = response.fields[j].name;
-              break;
-            }
-          }
+          this._setObjectIdField(response);
         }
         for (var i = response.features.length - 1; i >= 0; i--) {
           var feature = response.features[i];
@@ -3381,15 +3433,53 @@ L.esri.DynamicMapLayer = L.Class.extend({
     this._parseLayers();
     this._parseLayerDefs();
 
-    L.esri.get(this.serviceUrl, {}, function(response){
-      this.fire("metadata", { metadata: response });
-    }, this);
 
     L.Util.setOptions(this, options);
 
     if(!this._layerParams.transparent) {
       this.options.opacity = 1;
     }
+
+    this._getMetadata();
+
+  },
+
+  _getMetadata: function(){
+   var requestOptions = {};
+
+    if(this.options.token){
+      requestOptions.token = this.options.token;
+    }
+
+    L.esri.get(this.serviceUrl, requestOptions, function(response){
+      // if there is a invalid token error...
+      if(response.error && (response.error.code === 499 || response.error.code === 498)) {
+
+        // if we have already asked for authentication
+        if(!this._authenticating){
+
+          // ask for authentication
+          this._authenticating = true;
+
+          // ask for authentication. developer should fire the retry() method with the new token
+          this.fire('authenticationrequired', {
+            retry: L.Util.bind(function(token){
+              // set the new token
+              this.options.token = token;
+
+              // get metadata again
+              this._getMetadata();
+
+              // reload the image so it shows up with the new token
+              this._update();
+            }, this)
+          });
+        }
+      } else {
+        this.fire("metadata", { metadata: response });
+      }
+
+    }, this);
   },
 
   onAdd: function (map) {
@@ -3511,6 +3601,10 @@ L.esri.DynamicMapLayer = L.Class.extend({
 
     this._layerParams.bbox = [sw.x, sw.y, ne.x, ne.y].join(',');
     this._layerParams.size = size.x + ',' + size.y;
+
+    if(this.options.token) {
+      this._layerParams.token = this.options.token;
+    }
 
     var url = this.serviceUrl + 'export' + L.Util.getParamString(this._layerParams);
 
