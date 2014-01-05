@@ -113,9 +113,7 @@ module.exports = function(grunt) {
     'gh-pages': {
       options: {
         base: 'examples',
-        message: 'update gh-pages',
-        repo: 'git@github.com:Esri/esri-leaflet.git',
-        push: false // cd into `.grunt/grunt-gh-pages/gh-pages/src` to push
+        repo: 'git@github.com:Esri/esri-leaflet.git'
       },
       src: ['**']
     }

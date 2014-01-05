@@ -72,6 +72,8 @@ Constructor | Description
 * `NationalGeographic`
 * `Gray`
 * `GrayLabels` - Labels to pair with the `Gray` base map
+* `DarkGray`
+* `DarkGrayLabels` - Labels to pair with the `DarkGray` base map
 * `Imagery`
 * `ImageryLabels` - Labels and political boundaries to pair with the `Imagery` basemap
 * `ImageryTransportation` - A street map for pairing with the `Imagery` base map
@@ -108,6 +110,10 @@ Constructor | Description
 
 `L.esri.FeatureLayer` also accepts all the options you can pass to [`L.GeoJSON`](http://leafletjs.com/reference.html#geojson).
 
+Option | Type | Default | Description
+--- | --- | --- | ---
+`token` | `String` | `null` | If you pass a token in your options it will included in all requests to the service. See [working with authenticated services](#working-with-authenticated-services) for more information.
+
 #### Events
 
 `L.esri.FeatureLayer` also fires all the same events as [`L.GeoJSON`](http://leafletjs.com/reference.html#geojson) in addition to these events.
@@ -117,6 +123,7 @@ Event | Data | Description
 `loading` | [`Loading`](#loading-event) | Fires when new features start loading.
 `load` | [`Load`](#load-event) | Fires when all features in the current bounds of the map have loaded.
 `metadata` | [`Metadata`](#metadata-event) | After creating a new `L.esri.ClusteredFeatureLayer` a request for data describing the service will be made and passed to the metadata event.
+`authenticationrequired` | [`Authentication`](#authentication-event) | This will be fired when a request to a service fails and requires authentication. See [working with authenticated services](#working-with-authenticated-services) for more information.
 
 #### Example
 
@@ -156,6 +163,7 @@ Option | Type | Default | Description
 `layerDefs` | `String` `Object` | `''` | A string representing a query to run against the service before the image is rendered. This can be a string like `"STATE_NAME='Kansas' and POP2007>25000"` or an object mapping different queries to specific layers `{5:"STATE_NAME='Kansas'", 4:"STATE_NAME='Kansas'}`.
 `opacity` | `Integer` | `1` | Opacity of the layer. Should be a value between 0 and 1.
 `position` | `String` | '"front"` | position of the layer relative to other overlays
+`token` | `String` | `null` | If you pass a token in your options it will included in all requests to the service. See [working with authenticated services](#working-with-authenticated-services) for more information.
 
 #### Methods
 
@@ -170,6 +178,7 @@ Method | Returns |  Description
 Event | Data | Description
 --- | --- | ---
 `metadata` | [`Metadata`](#metadata-event) | After creating a new `L.esri.DynamicMapLayer` a request for data describing the service will be made and passed to the metadata event.
+`authenticationrequired` | [`Authentication`](#authentication-event) | This will be fired when a request to a service fails and requires authentication. See [working with authenticated services](#working-with-authenticated-services) for more information.
 
 ##### Example
 
@@ -297,7 +306,7 @@ Data | Value | Description
 `bounds` | [`LatLngBounds`](http://leafletjs.com/reference.html#latlngbounds) | The bounds that features where loaded.
 
 
-**NOTE**: The `load` event will not fire if you add the layer to the map before adding the event listener. You must add the listener first and then add the layer to the map.
+**NOTE**: The `load` event will not fire if you add the layer to the map before adding the event listener. You must add the listener first and then add the layer to the map as follows.
 
 ```js
 var layer = new L.esri.FeatureLayer(url, options);
@@ -308,6 +317,12 @@ layer.on('load', function(e){
 
 layer.addTo(map);
 ```
+
+#### Authentication Event
+
+Data | Value | Description
+--- | --- | ---
+`retry` | `Function` | Pass an access token to this method to retry the failed request and update the `token` parameter for the layer. See [working with authenticated services](#working-with-authenticated-services) for more information.
 
 ### Options Objects
 
@@ -323,6 +338,20 @@ Option | Type | Default | Description
 ### Service URLs
 
 Coming Soon!
+
+### Working With Authenticated Services
+
+Esri Leaflet supports access private services on ArcGIS Online and ArcGIS Server services that require authentication.
+
+Handing authentication in Esri Leaflet is flexible and lightweight but makes serveral assumptions.
+
+1. You (the developer) will handler obtaining and persisting access tokens.
+2. Esri Leaflet will use your tokens so access services.
+3. Esri Leaflet will notify you when it recives an error while using your token and prompt you for a new one.
+
+An example of authenticating with a username/password to an ArcGIS Service instance can be found [here](http://esri.github.io/esri-leaflet/privatemapservice.html).
+
+An example of using Oauth 2 to access a private feature service on ArcGIS Online can be found [here](http://esri.github.io/esri-leaflet/privatefeaturelayer.html).
 
 ## Development Instructions
 
