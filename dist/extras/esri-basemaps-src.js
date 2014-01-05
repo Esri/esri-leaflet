@@ -47,7 +47,7 @@ L.esri.RequestHandlers = {
     params.f="json";
     params.callback="L.esri._callback."+callbackId;
 
-    var script = document.createElement('script');
+    var script = L.DomUtil.create('script', null, document.body);
     script.type = 'text/javascript';
     script.src = url + L.esri.Util.serialize(params);
     script.id = callbackId;
@@ -62,7 +62,6 @@ L.esri.RequestHandlers = {
       delete L.esri._callback[callbackId];
     };
 
-    document.body.appendChild(script);
   }
 };
 
