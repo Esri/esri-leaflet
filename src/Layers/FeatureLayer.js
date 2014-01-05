@@ -64,15 +64,22 @@
         }, this));
       }, this));
     },
+    _setObjectIdField: function(response){
+      if(response.objectIdFieldName){
+        this._objectIdField = response.objectIdFieldName;
+      } else {
+        for (var j = 0; j <= response.fields.length - 1; j++) {
+          if(response.fields[j].type === "esriFieldTypeOID") {
+            this._objectIdField = response.fields[j].name;
+            break;
+          }
+        }
+      }
+    },
     _render: function(response){
       if(response.features && response.features.length && !response.error){
         if(!this._objectIdField){
-          for (var j = 0; j <= response.fields.length - 1; j++) {
-            if(response.fields[j].type === "esriFieldTypeOID") {
-              this._objectIdField = response.fields[j].name;
-              break;
-            }
-          }
+          this._setObjectIdField(response);
         }
         for (var i = response.features.length - 1; i >= 0; i--) {
           var feature = response.features[i];
