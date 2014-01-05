@@ -64,7 +64,7 @@
           options: {
             minZoom: 1,
             maxZoom: 10,
-            subdomains: [1, 2],
+            subdomains: [1, 2]
           }
         },
         Gray: {
