@@ -156,6 +156,10 @@
     bounds: null,
     zoom: null,
     onAdd: function(map){
+      if(!map.attributionControl && console){
+        console.warn("L.esri.BasemapLayer requires attribution. Please set attributionControl to true on your map");
+        return;
+      }
       L.TileLayer.prototype.onAdd.call(this, map);
       if(this._dynamicAttribution){
         this.on("load", this._handleTileUpdates, this);
