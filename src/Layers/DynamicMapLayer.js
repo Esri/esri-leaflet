@@ -69,7 +69,7 @@ L.esri.DynamicMapLayer = L.Class.extend({
    var requestOptions = {};
 
     if(this.options.token){
-      requestOptions.token = this.options.token
+      requestOptions.token = this.options.token;
     }
 
     L.esri.get(this.serviceUrl, requestOptions, function(response){

@@ -1,5 +1,5 @@
-/*! Esri-Leaflet - v0.0.1-rc.2 - 2013-12-09
-*   Copyright (c) 2013 Environmental Systems Research Institute, Inc.
+/*! Esri-Leaflet - v0.0.1-rc.2 - 2014-01-05
+*   Copyright (c) 2014 Environmental Systems Research Institute, Inc.
 *   Apache License*/
 (function (root, factory) {
 
@@ -2803,13 +2803,11 @@ L.esri.Mixins.featureGrid = {
   },
   _requestFeatures: function(bounds){
     var cells = this._cellsWithin(bounds);
-
     if(cells) {
       this.fire("loading", {
         bounds: bounds
       });
     }
-
     for (var i = 0; i < cells.length; i++) {
       this._makeRequest(cells[i], cells, bounds);
     }
@@ -2817,14 +2815,19 @@ L.esri.Mixins.featureGrid = {
   _makeRequest: function(cell, cells, bounds){
     this._activeRequests++;
 
-    L.esri.get(this.url+"query", {
+    var requestOptions = {
       geometryType: "esriGeometryEnvelope",
       geometry: JSON.stringify(L.esri.Util.boundsToExtent(cell.bounds)),
       outFields:"*",
       outSR: 4326,
       inSR: 4326
-    }, function(response){
+    };
 
+    if(this.options.token){
+      requestOptions.token = this.options.token;
+    }
+
+    L.esri.get(this.url+"query", requestOptions, function(response){
       //deincriment the request counter
       this._activeRequests--;
 
@@ -2835,8 +2838,36 @@ L.esri.Mixins.featureGrid = {
         });
       }
 
-      // call the render method to render features
-      this._render(response);
+      // if there is a invalid token error...
+      if(response.error && (response.error.code === 499 || response.error.code === 498)) {
+
+        // if we have already asked for authentication
+        if(!this._authenticating){
+
+          // ask for authentication
+          this._authenticating = true;
+
+          // ask for authentication. developer should fire the retry() method with the new token
+          this.fire('authenticationrequired', {
+            retry: L.Util.bind(function(token){
+              // we are no longer authenticating
+              this._authenticating = false;
+
+              // set the new token
+              this.options.token = token;
+
+              // clear the previously loaded cells, since they failed to load successfully
+              this._previousCells = [];
+
+              // request the features in the current map view again
+              this._requestFeatures(this._map.getBounds());
+            }, this)
+          });
+        }
+      } else {
+        // call the render method to render features
+        this._render(response);
+      }
     }, this);
   },
   _cellsWithin: function(mapBounds){
@@ -3266,15 +3297,22 @@ L.esri.Mixins.identifiableLayer = {
         }, this));
       }, this));
     },
+    _setObjectIdField: function(response){
+      if(response.objectIdFieldName){
+        this._objectIdField = response.objectIdFieldName;
+      } else {
+        for (var j = 0; j <= response.fields.length - 1; j++) {
+          if(response.fields[j].type === "esriFieldTypeOID") {
+            this._objectIdField = response.fields[j].name;
+            break;
+          }
+        }
+      }
+    },
     _render: function(response){
       if(response.features && response.features.length && !response.error){
         if(!this._objectIdField){
-          for (var j = 0; j <= response.fields.length - 1; j++) {
-            if(response.fields[j].type === "esriFieldTypeOID") {
-              this._objectIdField = response.fields[j].name;
-              break;
-            }
-          }
+          this._setObjectIdField(response);
         }
         for (var i = response.features.length - 1; i >= 0; i--) {
           var feature = response.features[i];
@@ -3382,15 +3420,53 @@ L.esri.DynamicMapLayer = L.Class.extend({
     this._parseLayers();
     this._parseLayerDefs();
 
-    L.esri.get(this.serviceUrl, {}, function(response){
-      this.fire("metadata", { metadata: response });
-    }, this);
 
     L.Util.setOptions(this, options);
 
     if(!this._layerParams.transparent) {
       this.options.opacity = 1;
     }
+
+    this._getMetadata();
+
+  },
+
+  _getMetadata: function(){
+   var requestOptions = {};
+
+    if(this.options.token){
+      requestOptions.token = this.options.token;
+    }
+
+    L.esri.get(this.serviceUrl, requestOptions, function(response){
+      // if there is a invalid token error...
+      if(response.error && (response.error.code === 499 || response.error.code === 498)) {
+
+        // if we have already asked for authentication
+        if(!this._authenticating){
+
+          // ask for authentication
+          this._authenticating = true;
+
+          // ask for authentication. developer should fire the retry() method with the new token
+          this.fire('authenticationrequired', {
+            retry: L.Util.bind(function(token){
+              // set the new token
+              this.options.token = token;
+
+              // get metadata again
+              this._getMetadata();
+
+              // reload the image so it shows up with the new token
+              this._update();
+            }, this)
+          });
+        }
+      } else {
+        this.fire("metadata", { metadata: response });
+      }
+
+    }, this);
   },
 
   onAdd: function (map) {
@@ -3512,6 +3588,10 @@ L.esri.DynamicMapLayer = L.Class.extend({
 
     this._layerParams.bbox = [sw.x, sw.y, ne.x, ne.y].join(',');
     this._layerParams.size = size.x + ',' + size.y;
+
+    if(this.options.token) {
+      this._layerParams.token = this.options.token;
+    }
 
     var url = this.serviceUrl + 'export' + L.Util.getParamString(this._layerParams);
 

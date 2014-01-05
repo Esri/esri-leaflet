@@ -79,7 +79,7 @@
     _render: function(response){
       if(response.features && response.features.length && !response.error){
         if(!this._objectIdField){
-          this._setObjectIdField();
+          this._setObjectIdField(response);
         }
         for (var i = response.features.length - 1; i >= 0; i--) {
           var feature = response.features[i];
