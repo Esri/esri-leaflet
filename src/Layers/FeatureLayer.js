@@ -1,4 +1,4 @@
-/* globals Terraformer, L */
+  /* globals Terraformer, L */
 (function(L){
 
   // toggles the visibility of a layer. Used to
@@ -36,7 +36,13 @@
       this.url = L.esri.Util.cleanUrl(url);
       L.Util.setOptions(this, options);
 
-      L.esri.get(this.url, {}, function(response){
+      var requestOptions = {};
+
+      if(this.options.token){
+        requestOptions.token = this.options.token;
+      }
+
+      L.esri.get(this.url, requestOptions, function(response){
         this.fire("metadata", { metadata: response });
       }, this);
 
