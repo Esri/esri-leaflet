@@ -18,9 +18,9 @@ module.exports = function(grunt) {
         browser: true,
         globals: {
           XMLHttpRequest: true,
-          ActiveXObject: true,
           module: true,
-          L:true
+          L: true,
+          console: true
         }
       },
       all: ['Gruntfile.js', 'src/**/*.js']
