@@ -246,6 +246,7 @@ Option | Type | Default | Description
 `cluster` | `L.MarkerClusterGroup` | `new L.MarkerClusterGroup()`  | The instance of `L.MarkerClusterGroup` that points will be added to.
 `createMarker` | `Function` | `null` | A function that will be called with a  GeoJSON representation of the point its latitude and longitude. Should return a `L.Marker` object.
 `onEachMarker` | Function | `null` | This function will be called for every marker before it is added to the cluster. It is called with the GeoJSON representation of the point and the marker 
+`token` | `String` | `null` | If you pass a token in your options it will included in all requests to the service. See [working with authenticated services](#working-with-authenticated-services) for more information.
 
 #### Events
 
@@ -254,6 +255,7 @@ Event | Data | Description
 `loading` | [`Loading`](#loading-event) | Fires when new features start loading.
 `load` | [`Load`](#load-event) | Fires when all features in the current bounds of the map have loaded.
 `metadata` | [`Metadata`](#metadata-event) | After creating a new `L.esri.ClusteredFeatureLayer` a request for data describing the service will be made and passed to the metadata event.
+`authenticationrequired` | [`Authentication`](#authentication-event) | This will be fired when a request to a service fails and requires authentication. See [working with authenticated services](#working-with-authenticated-services) for more information.
 
 #### Example
 
