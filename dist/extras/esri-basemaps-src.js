@@ -1,4 +1,4 @@
-/*! Esri-Leaflet - v0.0.1-rc.2 - 2014-01-05
+/*! Esri-Leaflet - v0.0.1-beta.3 - 2014-01-05
 *   Copyright (c) 2014 Environmental Systems Research Institute, Inc.
 *   Apache License*/
 /* globals L */
@@ -532,6 +532,10 @@ L.esri.Mixins.identifiableLayer = {
     bounds: null,
     zoom: null,
     onAdd: function(map){
+      if(!map.attributionControl && console){
+        console.warn("L.esri.BasemapLayer requires attribution. Please set attributionControl to true on your map");
+        return;
+      }
       L.TileLayer.prototype.onAdd.call(this, map);
       if(this._dynamicAttribution){
         this.on("load", this._handleTileUpdates, this);
