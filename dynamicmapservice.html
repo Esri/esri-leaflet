@@ -45,7 +45,7 @@
       L.esri.basemapLayer("Oceans").addTo(map);
 
       //ArcGIS Server Dynamic Map Service, Historic Hurricane Tracks
-      dynLayer = L.esri.dynamicMapLayer("http://tmservices1.esri.com/arcgis/rest/services/LiveFeeds/Hurricane_Recent/MapServer", {
+      dynLayer = L.esri.dynamicMapLayer("http://sampleserver6.arcgisonline.com/arcgis/rest/services/Hurricanes/MapServer/", {
         opacity : 1,
         layers: [0,1]
       });
