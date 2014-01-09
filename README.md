@@ -292,7 +292,7 @@ L.esri.clusteredFeatureLayer("http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis
 
 The data included in the `metadata` event will vary depending on type of layer you are adding to the map.
 
-* `DymanicMapLayer` and `TiledMapLayer` will return the [JSON Definition of a Map Service](http://resources.arcgis.com/en/help/arcgis-rest-api/#/Map_Service/02r3000000w2000000/)
+* `DynamicMapLayer` and `TiledMapLayer` will return the [JSON Definition of a Map Service](http://resources.arcgis.com/en/help/arcgis-rest-api/#/Map_Service/02r3000000w2000000/)
 * `FeatureLayer` and `ClusteredFeatureLayer` will return the [JSON Definition of a Feature Layer](http://resources.arcgis.com/en/help/arcgis-rest-api/#/Layer/02r3000000w6000000/)
 
 #### Loading Event

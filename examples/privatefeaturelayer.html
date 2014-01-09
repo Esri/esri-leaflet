@@ -27,7 +27,7 @@
   <body>
     <div id="map"></div>
     <script>
-      var clientID = 's5R3ZF4K3GILBqsI',
+      var clientID = 'FxeCTSwkrA9yqVGS',
           accessToken,
           callbacks = [];
 
@@ -37,7 +37,7 @@
           callback(accessToken);
         } else {
           callbacks.push(callback);
-          window.open("https://www.arcgis.com/sharing/oauth2/authorize?client_id="+clientID+"&response_type=token&expiration=20160&redirect_uri=http%3A%2F%2Fesri-leaflet.dev%2Fexamples%2Foauth%2Fcallback.html", "oauth-window", "height=400,width=600,menubar=no,location=yes,resizable=yes,scrollbars=yes,status=yes");
+          window.open("https://www.arcgis.com/sharing/oauth2/authorize?client_id="+clientID+"&response_type=token&expiration=20160&redirect_uri=http%3A%2F%2Fesri.github.io%2Fesri-leaflet%2Foauth%2Fcallback.html", "oauth-window", "height=400,width=600,menubar=no,location=yes,resizable=yes,scrollbars=yes,status=yes");
         }
       }
 
