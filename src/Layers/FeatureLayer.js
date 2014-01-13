@@ -32,7 +32,7 @@
       deduplicate: true
     },
     initialize: function(url, options){
-      this.index = new Terraformer.RTree();
+      this.index = L.esri._rbush();
       this.url = L.esri.Util.cleanUrl(url);
       L.Util.setOptions(this, options);
 
@@ -62,13 +62,18 @@
       return layer.feature.id;
     },
     _update: function(e){
+      console.time("update");
       var envelope = L.esri.Util.boundsToEnvelope(e.target.getBounds());
-      this.index.search(envelope, L.Util.bind(function(error,results){
-        this.eachLayer(L.Util.bind(function(layer){
-          var id = layer.feature.id;
-          setLayerVisibility(layer, L.esri.Util.indexOf(results, id) >= 0);
-        }, this));
+      var results = this.index.search(e.target.getBounds().toBBoxString().split(','));
+      var ids = [];
+      for (var i = 0; i < results.length; i++) {
+        ids.push(results[i][4]);
+      };
+      this.eachLayer(L.Util.bind(function(layer){
+        var id = layer.feature.id;
+        setLayerVisibility(layer, L.esri.Util.indexOf(ids, id) >= 0);
       }, this));
+      console.timeEnd("update");
     },
     _setObjectIdField: function(response){
       if(response.objectIdFieldName){
@@ -87,17 +92,23 @@
         if(!this._objectIdField){
           this._setObjectIdField(response);
         }
+        console.time("loadFeatures");
+        var bounds = [];
         for (var i = response.features.length - 1; i >= 0; i--) {
           var feature = response.features[i];
-          var idFieldName = this._objectIdField;
-          var id = feature.attributes[idFieldName];
+          var id = feature.attributes[this._objectIdField];
           if(!this._layers[id]){
-            var geojson = Terraformer.ArcGIS.parse(feature);
-            geojson.id = id;
-            this.index.insert(geojson, geojson.id);
+            var geojson = L.esri.Util.arcgisToGeojson(feature, {
+              idAttribute: this._objectIdField
+            });
+            var bbox = L.esri.Util.geojsonBounds(geojson);
+            bbox.push(geojson.id);
+            bounds.push(bbox);
             this.addData(geojson);
           }
         }
+        this.index.load(bounds);
+        console.timeEnd("loadFeatures");
       }
     }
   });
