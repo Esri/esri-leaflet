@@ -37,7 +37,7 @@ module.exports = function(grunt) {
         src: [
           'src/EsriLeaflet.js',
           'src/Utils.js',
-          'src/rbush.js'
+          'src/rbush.js',
           'src/Layers/BasemapLayer.js',
           'src/Layers/FeatureLayer.js',
           'src/Layers/TiledMapLayer.js',
