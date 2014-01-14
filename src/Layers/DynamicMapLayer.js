@@ -119,7 +119,7 @@ L.esri.DynamicMapLayer = L.Class.extend({
   },
 
   onRemove: function (map) {
-    this._map.removeLayer(this._currentImage);
+    if (this._currentImage) { this._map.removeLayer(this._currentImage); }
     map.off("moveend", this._moveHandler, this);
   },
 
