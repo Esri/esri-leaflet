@@ -262,6 +262,45 @@
     return [x1, y1, x2, y2];
   }
 
+  // This function ensures that rings are oriented in the right directions
+  // outer rings are clockwise, holes are counterclockwise
+  // used for converting GeoJSON Polygons to ArcGIS Polygons
+  function orientRings(poly){
+    var output = [];
+    var polygon = poly.slice(0);
+    var outerRing = polygon.shift().slice(0);
+
+    if(!ringIsClockwise(outerRing)){
+      outerRing.reverse();
+    }
+
+    output.push(outerRing);
+
+    for (var i = 0; i < polygon.length; i++) {
+      var hole = polygon[i].slice(0);
+      if(ringIsClockwise(hole)){
+        hole.reverse();
+      }
+      output.push(hole);
+    }
+
+    return output;
+  }
+
+  // This function flattens holes in multipolygons to one array of polygons
+  // used for converting GeoJSON Polygons to ArcGIS Polygons
+  function flattenMultiPolygonRings(rings){
+    var output = [];
+    for (var i = 0; i < rings.length; i++) {
+      var polygon = orientRings(rings[i]);
+      for (var x = polygon.length - 1; x >= 0; x--) {
+        var ring = polygon[x].slice(0);
+        output.push(ring);
+      }
+    }
+    return output;
+  }
+
   // General utility namespace
   L.esri.Util = {
     // make it so that passed `function` never gets called
@@ -394,7 +433,7 @@
         geojson.geometry = (arcgis.geometry) ? L.esri.Util.arcgisToGeojson(arcgis.geometry) : null;
         geojson.properties = (arcgis.attributes) ? clone(arcgis.attributes) : null;
         if(arcgis.attributes) {
-          geojson.id =  arcgis.attributes[options.idAttribute] || arcgis.attributes.OBJECTID || arcgis.attributes.FID
+          geojson.id =  arcgis.attributes[options.idAttribute] || arcgis.attributes.OBJECTID || arcgis.attributes.FID;
         }
       }
 
@@ -444,13 +483,13 @@
       case "FeatureCollection":
         result = [];
         for (i = 0; i < geojson.features.length; i++){
-          result.push(convert(geojson.features[i], options));
+          result.push(L.esri.Util.geojsonToArcGIS(geojson.features[i], options));
         }
         break;
       case "GeometryCollection":
         result = [];
         for (i = 0; i < geojson.geometries.length; i++){
-          result.push(convert(geojson.geometries[i], options));
+          result.push(L.esri.Util.geojsonToArcGIS(geojson.geometries[i], options));
         }
         break;
       }

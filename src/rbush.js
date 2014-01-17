@@ -1,18 +1,32 @@
 /*
- (c) 2013, Vladimir Agafonkin
- RBush, a JavaScript library for high-performance 2D spatial indexing of points and rectangles.
- https://github.com/mourner/rbush
+(c) 2013, Vladimir Agafonkin
+RBush, a JavaScript library for high-performance 2D spatial indexing of points and rectangles.
+https://github.com/mourner/rbush
+
+Copyright (c) 2013 Vladimir Agafonkin
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
 */
 
-/*
-Lightly modified for Esri Leaflet by Patrick Arlt
- */
+// Lightly modified for Esri Leaflet by Patrick Arlt to not conflict with the global rbush namespace.
 
 (function (L) { 'use strict';
-
-if(window.rbush){
-    var oldRbush = window.rbush;
-}
 
 function rbush(maxEntries, format) {
 
@@ -535,22 +549,6 @@ rbush.prototype = {
     }
 };
 
-if (typeof define === 'function' && define.amd) {
-    define(function() {
-        return rbush;
-    });
-} else if (typeof module !== 'undefined') {
-    module.exports = rbush;
-} else if (typeof self !== 'undefined') {
-    self.rbush = rbush;
-} else {
-    window.rbush = rbush;
-}
-
-L.esri._rbush = window.rbush;
-
-if(oldRbush){
-    window.rbush = oldRbush;
-}
+L.esri._rbush = rbush;
 
 })(L);

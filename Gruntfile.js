@@ -23,7 +23,12 @@ module.exports = function(grunt) {
           console: true
         }
       },
-      all: ['Gruntfile.js', 'src/**/*.js']
+      all: {
+        src: [
+          'Gruntfile.js',
+          'src/**/*.js'
+        ]
+      }
     },
     concat: {
       options: {
@@ -36,8 +41,8 @@ module.exports = function(grunt) {
       core: {
         src: [
           'src/EsriLeaflet.js',
-          'src/Utils.js',
-          'src/rbush.js',
+          'src/Util.js',
+          'src/RBush.js',
           'src/Layers/BasemapLayer.js',
           'src/Layers/FeatureLayer.js',
           'src/Layers/TiledMapLayer.js',

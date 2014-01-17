@@ -68,7 +68,7 @@
       var ids = [];
       for (var i = 0; i < results.length; i++) {
         ids.push(results[i][4]);
-      };
+      }
       this.eachLayer(L.Util.bind(function(layer){
         var id = layer.feature.id;
         setLayerVisibility(layer, L.esri.Util.indexOf(ids, id) >= 0);
