@@ -92,7 +92,7 @@ L.esri.Mixins.featureGrid = {
   },
   _requestFeatures: function(bounds){
     var cells = this._cellsWithin(bounds);
-    if(cells) {
+    if(cells && cells.length > 0) {
       this.fire("loading", {
         bounds: bounds
       });
