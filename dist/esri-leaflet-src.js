@@ -95,7 +95,7 @@ L.esri.Mixins.featureGrid = {
   },
   _requestFeatures: function(bounds){
     var cells = this._cellsWithin(bounds);
-    if(cells) {
+    if(cells && cells.length > 0) {
       this.fire("loading", {
         bounds: bounds
       });
@@ -1676,12 +1676,13 @@ L.esri._rbush = rbush;
       L.GeoJSON.prototype.initialize.call(this, [], options);
     },
     onAdd: function(map){
+      this._updateHandler = L.esri.Util.debounce(this._update, this.options.debounce);
       L.LayerGroup.prototype.onAdd.call(this, map);
-      map.on("zoomend resize moveend", this._update, this);
+      map.on("zoomend resize moveend", this._updateHandler, this);
       this._initializeFeatureGrid(map);
     },
     onRemove: function(map){
-      map.off("zoomend resize moveend", this._update, this);
+      map.off("zoomend resize moveend", this._updateHandler, this);
       L.LayerGroup.prototype.onRemove.call(this, map);
       this._destroyFeatureGrid(map);
     },
@@ -1717,7 +1718,6 @@ L.esri._rbush = rbush;
         if(!this._objectIdField){
           this._setObjectIdField(response);
         }
-        console.time("loadFeatures");
         var bounds = [];
         for (var i = response.features.length - 1; i >= 0; i--) {
           var feature = response.features[i];
@@ -1733,7 +1733,6 @@ L.esri._rbush = rbush;
           }
         }
         this.index.load(bounds);
-        console.timeEnd("loadFeatures");
       }
     }
   });
@@ -1894,7 +1893,7 @@ L.esri.DynamicMapLayer = L.Class.extend({
   },
 
   onRemove: function (map) {
-    this._map.removeLayer(this._currentImage);
+    if (this._currentImage) { this._map.removeLayer(this._currentImage); }
     map.off("moveend", this._moveHandler, this);
   },
 
