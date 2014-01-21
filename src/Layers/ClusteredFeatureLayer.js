@@ -56,7 +56,7 @@
           var feature = response.features[i];
           var id = feature.attributes[idKey];
           if(L.esri.Util.indexOf(this._loaded, id) < 0){
-            var geojson = L.esri.Util.arcgisToGeoJSON(feature);
+            var geojson = L.esri.Util.arcgisToGeojson(feature);
             geojson.id = id;
             var marker = this.options.createMarker(geojson, [geojson.geometry.coordinates[1], geojson.geometry.coordinates[0]]);
 

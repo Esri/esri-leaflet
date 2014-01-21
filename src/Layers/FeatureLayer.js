@@ -49,12 +49,13 @@
       L.GeoJSON.prototype.initialize.call(this, [], options);
     },
     onAdd: function(map){
+      this._updateHandler = L.esri.Util.debounce(this._update, this.options.debounce);
       L.LayerGroup.prototype.onAdd.call(this, map);
-      map.on("zoomend resize moveend", this._update, this);
+      map.on("zoomend resize moveend", this._updateHandler, this);
       this._initializeFeatureGrid(map);
     },
     onRemove: function(map){
-      map.off("zoomend resize moveend", this._update, this);
+      map.off("zoomend resize moveend", this._updateHandler, this);
       L.LayerGroup.prototype.onRemove.call(this, map);
       this._destroyFeatureGrid(map);
     },
@@ -62,7 +63,6 @@
       return layer.feature.id;
     },
     _update: function(e){
-      console.time("update");
       var envelope = L.esri.Util.boundsToEnvelope(e.target.getBounds());
       var results = this.index.search(e.target.getBounds().toBBoxString().split(','));
       var ids = [];
@@ -73,7 +73,6 @@
         var id = layer.feature.id;
         setLayerVisibility(layer, L.esri.Util.indexOf(ids, id) >= 0);
       }, this));
-      console.timeEnd("update");
     },
     _setObjectIdField: function(response){
       if(response.objectIdFieldName){
@@ -92,7 +91,6 @@
         if(!this._objectIdField){
           this._setObjectIdField(response);
         }
-        console.time("loadFeatures");
         var bounds = [];
         for (var i = response.features.length - 1; i >= 0; i--) {
           var feature = response.features[i];
@@ -108,7 +106,6 @@
           }
         }
         this.index.load(bounds);
-        console.timeEnd("loadFeatures");
       }
     }
   });

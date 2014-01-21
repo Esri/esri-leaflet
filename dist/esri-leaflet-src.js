@@ -1,4 +1,4 @@
-/*! Esri-Leaflet - v0.0.1-beta.3 - 2014-01-13
+/*! Esri-Leaflet - v0.0.1-beta.3 - 2014-01-20
 *   Copyright (c) 2014 Environmental Systems Research Institute, Inc.
 *   Apache License*/
 /* globals L */
@@ -542,6 +542,45 @@ L.esri.Mixins.identifiableLayer = {
     return [x1, y1, x2, y2];
   }
 
+  // This function ensures that rings are oriented in the right directions
+  // outer rings are clockwise, holes are counterclockwise
+  // used for converting GeoJSON Polygons to ArcGIS Polygons
+  function orientRings(poly){
+    var output = [];
+    var polygon = poly.slice(0);
+    var outerRing = polygon.shift().slice(0);
+
+    if(!ringIsClockwise(outerRing)){
+      outerRing.reverse();
+    }
+
+    output.push(outerRing);
+
+    for (var i = 0; i < polygon.length; i++) {
+      var hole = polygon[i].slice(0);
+      if(ringIsClockwise(hole)){
+        hole.reverse();
+      }
+      output.push(hole);
+    }
+
+    return output;
+  }
+
+  // This function flattens holes in multipolygons to one array of polygons
+  // used for converting GeoJSON Polygons to ArcGIS Polygons
+  function flattenMultiPolygonRings(rings){
+    var output = [];
+    for (var i = 0; i < rings.length; i++) {
+      var polygon = orientRings(rings[i]);
+      for (var x = polygon.length - 1; x >= 0; x--) {
+        var ring = polygon[x].slice(0);
+        output.push(ring);
+      }
+    }
+    return output;
+  }
+
   // General utility namespace
   L.esri.Util = {
     // make it so that passed `function` never gets called
@@ -674,7 +713,7 @@ L.esri.Mixins.identifiableLayer = {
         geojson.geometry = (arcgis.geometry) ? L.esri.Util.arcgisToGeojson(arcgis.geometry) : null;
         geojson.properties = (arcgis.attributes) ? clone(arcgis.attributes) : null;
         if(arcgis.attributes) {
-          geojson.id =  arcgis.attributes[options.idAttribute] || arcgis.attributes.OBJECTID || arcgis.attributes.FID
+          geojson.id =  arcgis.attributes[options.idAttribute] || arcgis.attributes.OBJECTID || arcgis.attributes.FID;
         }
       }
 
@@ -724,13 +763,13 @@ L.esri.Mixins.identifiableLayer = {
       case "FeatureCollection":
         result = [];
         for (i = 0; i < geojson.features.length; i++){
-          result.push(convert(geojson.features[i], options));
+          result.push(L.esri.Util.geojsonToArcGIS(geojson.features[i], options));
         }
         break;
       case "GeometryCollection":
         result = [];
         for (i = 0; i < geojson.geometries.length; i++){
-          result.push(convert(geojson.geometries[i], options));
+          result.push(L.esri.Util.geojsonToArcGIS(geojson.geometries[i], options));
         }
         break;
       }
@@ -770,20 +809,34 @@ L.esri.Mixins.identifiableLayer = {
   };
 })(L);
 /*
- (c) 2013, Vladimir Agafonkin
- RBush, a JavaScript library for high-performance 2D spatial indexing of points and rectangles.
- https://github.com/mourner/rbush
+(c) 2013, Vladimir Agafonkin
+RBush, a JavaScript library for high-performance 2D spatial indexing of points and rectangles.
+https://github.com/mourner/rbush
+
+Copyright (c) 2013 Vladimir Agafonkin
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
 */
 
-/*
-Lightly modified for Esri Leaflet by Patrick Arlt
- */
+// Lightly modified for Esri Leaflet by Patrick Arlt to not conflict with the global rbush namespace.
 
 (function (L) { 'use strict';
-
-if(window.rbush){
-    var oldRbush = window.rbush;
-}
 
 function rbush(maxEntries, format) {
 
@@ -1306,23 +1359,7 @@ rbush.prototype = {
     }
 };
 
-if (typeof define === 'function' && define.amd) {
-    define(function() {
-        return rbush;
-    });
-} else if (typeof module !== 'undefined') {
-    module.exports = rbush;
-} else if (typeof self !== 'undefined') {
-    self.rbush = rbush;
-} else {
-    window.rbush = rbush;
-}
-
-L.esri._rbush = window.rbush;
-
-if(oldRbush){
-    window.rbush = oldRbush;
-}
+L.esri._rbush = rbush;
 
 })(L);
 (function(L){
@@ -1652,18 +1689,16 @@ if(oldRbush){
       return layer.feature.id;
     },
     _update: function(e){
-      console.time("update");
       var envelope = L.esri.Util.boundsToEnvelope(e.target.getBounds());
       var results = this.index.search(e.target.getBounds().toBBoxString().split(','));
       var ids = [];
       for (var i = 0; i < results.length; i++) {
         ids.push(results[i][4]);
-      };
+      }
       this.eachLayer(L.Util.bind(function(layer){
         var id = layer.feature.id;
         setLayerVisibility(layer, L.esri.Util.indexOf(ids, id) >= 0);
       }, this));
-      console.timeEnd("update");
     },
     _setObjectIdField: function(response){
       if(response.objectIdFieldName){
