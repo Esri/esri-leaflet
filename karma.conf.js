@@ -7,7 +7,7 @@ module.exports = function(config) {
 
     files: [
       'node_modules/expect.js/expect.js',
-      'vendor/leaflet-0.7.1/leaflet-src.js',
+      'http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js',
       'src/EsriLeaflet.js',
       'src/Util.js',
       'src/RBush.js',

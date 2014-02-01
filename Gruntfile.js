@@ -52,7 +52,7 @@ module.exports = function(grunt) {
       },
       basemaps: {
         src: [
-          'src/esri-leaflet.js',
+          'src/EsriLeaflet.js',
           'src/Layers/BasemapLayer.js'
         ],
         dest: 'dist/extras/esri-basemaps-src.js'
@@ -66,7 +66,7 @@ module.exports = function(grunt) {
       options: {
         wrap: false,
         mangle: {
-          except: ['Terraformer']
+          except: ['L']
         },
         preserveComments: 'some',
         report: 'gzip'
