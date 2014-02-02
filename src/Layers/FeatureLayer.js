@@ -42,6 +42,10 @@
         requestOptions.token = this.options.token;
       }
 
+      if(this.options.where){
+        requestOptions.where = this.options.where;
+      }
+
       L.esri.get(this.url, requestOptions, function(response){
         this.fire("metadata", { metadata: response });
       }, this);

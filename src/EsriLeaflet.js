@@ -116,6 +116,10 @@ L.esri.Mixins.featureGrid = {
       requestOptions.token = this.options.token;
     }
 
+    if(this.options.where){
+      requestOptions.where = this.options.where;
+    }    
+
     L.esri.get(this.url+"query", requestOptions, function(response){
       //deincriment the request counter
       this._activeRequests--;
