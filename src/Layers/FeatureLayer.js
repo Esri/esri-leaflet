@@ -29,7 +29,9 @@
     options: {
       cellSize: 512,
       debounce: 100,
-      deduplicate: true
+      deduplicate: true,
+      where: "1=1",
+      fields: ["*"]
     },
     initialize: function(url, options){
       this.index = L.esri._rbush();
@@ -40,10 +42,6 @@
 
       if(this.options.token){
         requestOptions.token = this.options.token;
-      }
-
-      if(this.options.where){
-        requestOptions.where = this.options.where;
       }
 
       L.esri.get(this.url, requestOptions, function(response){
@@ -65,6 +63,28 @@
     },
     getLayerId: function(layer){
       return layer.feature.id;
+    },
+    getWhere: function(){
+      return this.options.where;
+    },
+    setWhere: function(where){
+      this.options.where = where;
+      this.refresh();
+      return this;
+    },
+    getFields: function(){
+      return this.options.fields;
+    },
+    setFields: function(fields){
+      this.options.fields = fields;
+      this.refresh();
+      return this;
+    },
+    refresh: function(){
+      this.clearLayers();
+      this._loaded = [];
+      this._previousCells = [];
+      this._requestFeatures(this._map.getBounds());
     },
     _update: function(e){
       var envelope = L.esri.Util.boundsToEnvelope(e.target.getBounds());
