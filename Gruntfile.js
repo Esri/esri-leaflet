@@ -23,7 +23,12 @@ module.exports = function(grunt) {
           console: true
         }
       },
-      all: ['Gruntfile.js', 'src/**/*.js']
+      all: {
+        src: [
+          'Gruntfile.js',
+          'src/**/*.js'
+        ]
+      }
     },
     concat: {
       options: {
@@ -35,10 +40,9 @@ module.exports = function(grunt) {
       },
       core: {
         src: [
-          'vendor/terraformer/terraformer.js',
-          'vendor/terraformer-arcgis-parser/terraformer-arcgis-parser.js',
-          'vendor/terraformer-geostore-rtree/terraformer-geostore-rtree.js',
-          'src/esri-leaflet.js',
+          'src/EsriLeaflet.js',
+          'src/Util.js',
+          'src/RBush.js',
           'src/Layers/BasemapLayer.js',
           'src/Layers/FeatureLayer.js',
           'src/Layers/TiledMapLayer.js',
@@ -48,7 +52,7 @@ module.exports = function(grunt) {
       },
       basemaps: {
         src: [
-          'src/esri-leaflet.js',
+          'src/EsriLeaflet.js',
           'src/Layers/BasemapLayer.js'
         ],
         dest: 'dist/extras/esri-basemaps-src.js'
@@ -62,7 +66,7 @@ module.exports = function(grunt) {
       options: {
         wrap: false,
         mangle: {
-          except: ['Terraformer']
+          except: ['L']
         },
         preserveComments: 'some',
         report: 'gzip'

@@ -29,10 +29,10 @@ describe('L.esri.FeatureLayer', function () {
 
   describe('#constructor', function () {
     describe('when a FeatureLayer is first created', function () {
-      it('will have an index defined by Terraformer', function () {
-        var rtreeSpy = sandbox.spy(Terraformer, 'RTree'),
+      it('will have an spatial index (rbush)', function () {
+        var rbush = sandbox.spy(L.esri, '_rbush'),
             featLayer = L.esri.featureLayer(url);
-        expect(rtreeSpy.calledOnce).to.be.ok();
+        expect(rbush.calledOnce).to.be.ok();
         expect(featLayer.index).to.be.ok();
       });
     });
@@ -41,8 +41,7 @@ describe('L.esri.FeatureLayer', function () {
   describe('#onAdd, #onRemove, #updateFeatures', function () {
     describe('when a FeatureLayer is added to the map', function () {
       it('should generate a feature grid with 4 cells', function(){
-        var rtreeSpy = sandbox.spy(Terraformer, 'RTree'),
-            featLayer = L.esri.featureLayer(url);
+        var featLayer = L.esri.featureLayer(url);
 
         featLayer.addTo(map);
 

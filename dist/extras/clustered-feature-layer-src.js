@@ -1,7 +1,7 @@
-/*! Esri-Leaflet - v0.0.1-beta.3 - 2014-01-05
+/*! Esri-Leaflet - v0.0.1-beta.3 - 2014-02-01
 *   Copyright (c) 2014 Environmental Systems Research Institute, Inc.
 *   Apache License*/
-/* globals Terraformer, L */
+/* globals L */
 (function(L, Terraformer){
   L.esri.ClusteredFeatureLayer = L.Class.extend({
     includes: L.esri.Mixins.featureGrid,
@@ -59,7 +59,7 @@
           var feature = response.features[i];
           var id = feature.attributes[idKey];
           if(L.esri.Util.indexOf(this._loaded, id) < 0){
-            var geojson = Terraformer.ArcGIS.parse(feature);
+            var geojson = L.esri.Util.arcgisToGeojson(feature);
             geojson.id = id;
             var marker = this.options.createMarker(geojson, [geojson.geometry.coordinates[1], geojson.geometry.coordinates[0]]);
 
@@ -80,4 +80,4 @@
   L.esri.clusteredFeatureLayer = function(url, options){
     return new L.esri.ClusteredFeatureLayer(url, options);
   };
-})(L, Terraformer);
+})(L);

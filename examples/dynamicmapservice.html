@@ -57,7 +57,7 @@
         dynLayer.identify(e.latlng, function(data) {
           if(data.results.length > 0) {
             //Popup text should be in html format.  Showing the Storm Name with the type
-            popupText =  "<center><b>" + data.results[0].attributes.STORMNAME + "</b><br>" + data.results[0].attributes.STORMTYPE + "</center>";
+            popupText =  "<b>" + (data.results[0].attributes.EVENTID || data.results[0].attributes.NAME) + "<b>";
 
             //Add Popup to the map when the mouse was clicked at
             var popup = L.popup()
