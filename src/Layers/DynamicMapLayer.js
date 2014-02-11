@@ -144,6 +144,18 @@ L.esri.DynamicMapLayer = L.Class.extend({
     this._currentImage.bringToBack();
     return this;
   },
+  
+  setZIndex: function (zIndex) {
+	this.options.zIndex = zIndex;
+	this._updateZIndex();
+	return this;
+  },
+  
+  _updateZIndex: function () {
+	if (this._currentImage && this._currentImage._image && this.options.zIndex !== undefined) {
+		this._currentImage._image.style.zIndex = this.options.zIndex;
+	}
+  },
 
   _parseLayers: function () {
     if (typeof this._layerParams.layers === 'undefined') {
@@ -271,6 +283,10 @@ L.esri.DynamicMapLayer = L.Class.extend({
 
         if(oldImage){
           this._map.removeLayer(oldImage);
+        }
+        
+        if(this.options.zIndex !== undefined && this.options.zIndex !== null) {
+			this._updateZIndex();
         }
       } else {
         this._map.removeLayer(newImage);
