@@ -21,3 +21,6 @@ coverage
 
 # Debugging Files
 debug.html
+
+# Project Files
+.project
