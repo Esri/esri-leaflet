@@ -35,7 +35,7 @@ L.esri.RequestHandlers = {
       }
     };
 
-    httpRequest.open('GET', url + L.esri.Util.serialize(params), true);
+    httpRequest.open('GET', url + '?' + L.esri.Util.serialize(params), true);
     httpRequest.send(null);
   },
   JSONP: function(url, params, callback, context){
@@ -44,9 +44,9 @@ L.esri.RequestHandlers = {
     params.f="json";
     params.callback="L.esri._callback."+callbackId;
 
-    var script = document.createElement('script');
+    var script = L.DomUtil.create('script', null, document.body);
     script.type = 'text/javascript';
-    script.src = url + L.esri.Util.serialize(params);
+    script.src = url + '?' +  L.esri.Util.serialize(params);
     script.id = callbackId;
 
     L.esri._callback[callbackId] = function(response){
@@ -59,108 +59,11 @@ L.esri.RequestHandlers = {
       delete L.esri._callback[callbackId];
     };
 
-    document.body.appendChild(script);
   }
 };
 
 // Choose the correct AJAX handler depending on CORS support
 L.esri.get = (L.esri.Support.CORS) ? L.esri.RequestHandlers.CORS : L.esri.RequestHandlers.JSONP;
-
-// General utility namespace
-L.esri.Util = {
-  // make it so that passed `function` never gets called
-  // twice within `delay` milliseconds. Used to throttle
-  // `move` events on the layer.
-  // http://remysharp.com/2010/07/21/throttling-function-calls/
-  debounce: function (fn, delay, context) {
-    var timer = null;
-    return function() {
-      var context = this||context, args = arguments;
-      clearTimeout(timer);
-      timer = setTimeout(function () {
-        fn.apply(context, args);
-      }, delay);
-    };
-  },
-  // round a number away from zero used to snap
-  // row/columns away from the origin of the grid
-  roundAwayFromZero: function (num){
-    return (num > 0) ? Math.ceil(num) : Math.floor(num);
-  },
-  trim: function(str) {
-    return str.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
-  },
-  cleanUrl: function(url){
-    url = L.esri.Util.trim(url);
-
-    //add a trailing slash to the url if the user omitted it
-    if(url[url.length-1] !== "/"){
-      url += "/";
-    }
-
-    return url;
-  },
-  // quick and dirty serialization
-  serialize: function(params){
-    var qs="?";
-
-    for(var param in params){
-      if(params.hasOwnProperty(param)){
-        var key = param;
-        var value = params[param];
-        qs+=encodeURIComponent(key);
-        qs+="=";
-        qs+=encodeURIComponent(value);
-        qs+="&";
-      }
-    }
-
-    return qs.substring(0, qs.length - 1);
-  },
-
-  // index of polyfill, needed for IE 8
-  indexOf: function(arr, obj, start){
-    start = start || 0;
-    if(arr.indexOf){
-      return arr.indexOf(obj, start);
-    }
-    for (var i = start, j = arr.length; i < j; i++) {
-      if (arr[i] === obj) { return i; }
-    }
-    return -1;
-  },
-
-  // convert an extent (ArcGIS) to LatLngBounds (Leaflet)
-  extentToBounds: function(extent){
-    var southWest = new L.LatLng(extent.ymin, extent.xmin);
-    var northEast = new L.LatLng(extent.ymax, extent.xmax);
-    return new L.LatLngBounds(southWest, northEast);
-  },
-
-  // convert an LatLngBounds (Leaflet) to extent (ArcGIS)
-  boundsToExtent: function(bounds) {
-    return {
-      "xmin": bounds.getSouthWest().lng,
-      "ymin": bounds.getSouthWest().lat,
-      "xmax": bounds.getNorthEast().lng,
-      "ymax": bounds.getNorthEast().lat,
-      "spatialReference": {
-        "wkid" : 4326
-      }
-    };
-  },
-
-  // convert a LatLngBounds (Leaflet) to a Envelope (Terraformer.Rtree)
-  boundsToEnvelope: function(bounds){
-    var extent = L.esri.Util.boundsToExtent(bounds);
-    return {
-      x: extent.xmin,
-      y: extent.ymin,
-      w: Math.abs(extent.xmin - extent.xmax),
-      h: Math.abs(extent.ymin - extent.ymax)
-    };
-  }
-};
 
 L.esri.Mixins = {};
 
@@ -189,13 +92,11 @@ L.esri.Mixins.featureGrid = {
   },
   _requestFeatures: function(bounds){
     var cells = this._cellsWithin(bounds);
-
-    if(cells) {
+    if(cells && cells.length > 0) {
       this.fire("loading", {
         bounds: bounds
       });
     }
-
     for (var i = 0; i < cells.length; i++) {
       this._makeRequest(cells[i], cells, bounds);
     }
@@ -203,14 +104,20 @@ L.esri.Mixins.featureGrid = {
   _makeRequest: function(cell, cells, bounds){
     this._activeRequests++;
 
-    L.esri.get(this.url+"query", {
+    var requestOptions = {
       geometryType: "esriGeometryEnvelope",
       geometry: JSON.stringify(L.esri.Util.boundsToExtent(cell.bounds)),
-      outFields:"*",
+      outFields: this.options.fields.join(","),
       outSR: 4326,
-      inSR: 4326
-    }, function(response){
+      inSR: 4326,
+      where: this.options.where
+    };
 
+    if(this.options.token){
+      requestOptions.token = this.options.token;
+    }
+
+    L.esri.get(this.url+"query", requestOptions, function(response){
       //deincriment the request counter
       this._activeRequests--;
 
@@ -221,8 +128,36 @@ L.esri.Mixins.featureGrid = {
         });
       }
 
-      // call the render method to render features
-      this._render(response);
+      // if there is a invalid token error...
+      if(response.error && (response.error.code === 499 || response.error.code === 498)) {
+
+        // if we have already asked for authentication
+        if(!this._authenticating){
+
+          // ask for authentication
+          this._authenticating = true;
+
+          // ask for authentication. developer should fire the retry() method with the new token
+          this.fire('authenticationrequired', {
+            retry: L.Util.bind(function(token){
+              // we are no longer authenticating
+              this._authenticating = false;
+
+              // set the new token
+              this.options.token = token;
+
+              // clear the previously loaded cells, since they failed to load successfully
+              this._previousCells = [];
+
+              // request the features in the current map view again
+              this._requestFeatures(this._map.getBounds());
+            }, this)
+          });
+        }
+      } else {
+        // call the render method to render features
+        this._render(response);
+      }
     }, this);
   },
   _cellsWithin: function(mapBounds){

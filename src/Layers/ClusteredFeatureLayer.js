@@ -1,4 +1,4 @@
-/* globals Terraformer, L */
+/* globals L */
 (function(L, Terraformer){
   L.esri.ClusteredFeatureLayer = L.Class.extend({
     includes: L.esri.Mixins.featureGrid,
@@ -6,16 +6,24 @@
       cellSize: 512,
       debounce: 100,
       deduplicate: true,
+      where: "1=1",
+      fields: ["*"],
       createMarker: function (geojson, latlng) {
         return new L.marker(latlng);
       },
       onEachMarker: undefined
     },
     initialize: function(url, options){
-      L.Util.setOptions(this, options);
       this.url = L.esri.Util.cleanUrl(url);
+      L.Util.setOptions(this, options);
 
-      L.esri.get(this.url, {}, function(response){
+      var requestOptions = {};
+
+      if(this.options.token){
+        requestOptions.token = this.options.token;
+      }
+
+      L.esri.get(this.url, requestOptions, function(response){
         this.fire("metadata", { metadata: response });
       }, this);
 
@@ -34,23 +42,51 @@
       map.addLayer(this);
       return this;
     },
-    _render: function(response){
-      if(response.features && response.features.length && !response.error){
-        var idKey = response.objectIdFieldName;
-        if(!idKey){
-          for (var j = 0; j <= response.fields.length - 1; j++) {
-            if(response.fields[j].type === "esriFieldTypeOID") {
-              idKey = response.fields[j].name;
-              break;
-            }
+    getWhere: function(){
+      return this.options.where;
+    },
+    setWhere: function(where){
+      this.options.where = where;
+      this.refresh();
+      return this;
+    },
+    getFields: function(){
+      return this.options.fields;
+    },
+    setFields: function(fields){
+      this.options.fields = fields;
+      this.refresh();
+      return this;
+    },
+    refresh: function(){
+      this.cluster.clearLayers();
+      this._loaded = [];
+      this._previousCells = [];
+      this._requestFeatures(this._map.getBounds());
+    },
+    _setObjectIdField: function(response){
+      if(response.objectIdFieldName){
+        this._objectIdField = response.objectIdFieldName;
+      } else {
+        for (var j = 0; j <= response.fields.length - 1; j++) {
+          if(response.fields[j].type === "esriFieldTypeOID") {
+            this._objectIdField = response.fields[j].name;
+            break;
           }
         }
-
+      }
+    },
+    _render: function(response){
+      if(response.features && response.features.length && !response.error){
+        if(!this._objectIdField){
+          this._setObjectIdField(response);
+        }
+        var markers = [];
         for (var i = response.features.length - 1; i >= 0; i--) {
           var feature = response.features[i];
-          var id = feature.attributes[idKey];
+          var id = feature.attributes[this._objectIdField];
           if(L.esri.Util.indexOf(this._loaded, id) < 0){
-            var geojson = Terraformer.ArcGIS.parse(feature);
+            var geojson = L.esri.Util.arcgisToGeojson(feature);
             geojson.id = id;
             var marker = this.options.createMarker(geojson, [geojson.geometry.coordinates[1], geojson.geometry.coordinates[0]]);
 
@@ -58,10 +94,11 @@
               this.options.onEachMarker(geojson, marker);
             }
 
-            this.cluster.addLayer(marker);
+            markers.push(marker);
             this._loaded.push(id);
           }
         }
+        this.cluster.addLayers(markers);
       }
     }
   });
@@ -71,4 +108,4 @@
   L.esri.clusteredFeatureLayer = function(url, options){
     return new L.esri.ClusteredFeatureLayer(url, options);
   };
-})(L, Terraformer);
+})(L);

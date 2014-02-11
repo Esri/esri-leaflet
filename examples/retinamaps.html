@@ -41,21 +41,21 @@
     </div>
 
     <script>
-      var map = L.map('map').setView([40.711873951908125, -74.06158447265624], 11 );
+      var map = L.map('map').setView([40.711873951908125, -74.06158447265624], 9);
 
-      L.esri.basemapLayer("Gray", {
-        zIndex:1,
+      L.esri.basemapLayer("DarkGray", {
+        zIndex: 1,
         detectRetina: true
       }).addTo(map);
 
       L.esri.tiledMapLayer("http://server.arcgisonline.com/ArcGIS/rest/services/Demographics/USA_Median_Household_Income/MapServer", {
         opacity: 0.25,
-        zIndex:2,
+        zIndex: 2,
         detectRetina: true
       }).addTo(map);
 
-      L.esri.basemapLayer("GrayLabels", {
-        zIndex:3,
+      L.esri.basemapLayer("DarkGrayLabels", {
+        zIndex: 3,
       }).addTo(map);
     </script>
   </body>
