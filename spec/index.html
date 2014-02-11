@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title>Spec Runner</title>
     <link rel="stylesheet" type="text/css" href="../node_modules/mocha/mocha.css">
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
 </head>
 <body>
 <div id="mocha"></div>
@@ -11,13 +12,13 @@
 <script type="text/javascript" src="../node_modules/expect.js/expect.js"></script>
 <script type="text/javascript" src="sinon.js"></script>
 
-<!-- source files -->
-<script type="text/javascript" src="../vendor/leaflet/dist/leaflet.js"></script>
-<script type="text/javascript" src="../vendor/terraformer/dist/browser/terraformer.js"></script>
-<script type="text/javascript" src="../vendor/terraformer/dist/browser/arcgis.js"></script>
-<script type="text/javascript" src="../vendor/terraformer/dist/browser/rtree.js"></script>
+<!-- leaflet -->
+<script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
 
-<script type="text/javascript" src="../src/esri-leaflet.js"></script>
+<!-- source -->
+<script type="text/javascript" src="../src/EsriLeaflet.js"></script>
+<script type="text/javascript" src="../src/Util.js"></script>
+<script type="text/javascript" src="../src/RBush.js"></script>
 <script type="text/javascript" src="../src/Layers/BasemapLayer.js"></script>
 <script type="text/javascript" src="../src/Layers/DynamicMapLayer.js"></script>
 <script type="text/javascript" src="../src/Layers/FeatureLayer.js"></script>

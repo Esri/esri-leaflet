@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Dynamic Map Services</title>
+    <title>Tiled Map Services</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <!-- Load Leaflet from their CDN -->
@@ -30,43 +30,19 @@
   <body>
     <div id="map"> </div>
     <div class="demo-controls">
-      <h1 class="title contract" id="title" onclick="showControls();">Dynamic Map Service</h1>
+      <h1 class="title contract" id="title" onclick="showControls();">Tiled Map Service</h1>
       <div class="control-container" id="controlContainer">
-        <p>This demo shows using Dynamic Map Services. Click anywhere on the demo to discover features and attributes.</p>
+        <p>This demo shows how to load an ArcGIS</br>Tiled Map Service.</p>
       </div>
     </div>
     <a href="https://github.com/esri/esri-leaflet"><img style="z-index: 1000; position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png" alt="Fork me on GitHub"></a>
     <script>
 
-      //Initializing the map to start at the east coast
-      var map = L.map('map').setView([42, -74], 5);
+      //Initializing the map to open on Cape Bretonstart at the east coast
+      var map = L.map('map').setView([46.3, -60.7], 9);
 
-      //Add Oceans Basemaps
-      L.esri.basemapLayer("Oceans").addTo(map);
-
-      //ArcGIS Server Dynamic Map Service, Historic Hurricane Tracks
-      dynLayer = L.esri.dynamicMapLayer("http://sampleserver6.arcgisonline.com/arcgis/rest/services/Hurricanes/MapServer/", {
-        opacity : 1,
-        layers: [0,1]
-      });
-
-      map.addLayer(dynLayer);
-
-      //Identifying Dynamic Map Service Features
-      map.on("click", function(e) {
-        dynLayer.identify(e.latlng, function(data) {
-          if(data.results.length > 0) {
-            //Popup text should be in html format.  Showing the Storm Name with the type
-            popupText =  "<b>" + (data.results[0].attributes.EVENTID || data.results[0].attributes.NAME) + "<b>";
-
-            //Add Popup to the map when the mouse was clicked at
-            var popup = L.popup()
-              .setLatLng(e.latlng)
-              .setContent(popupText)
-              .openOn(map);
-          }
-        });
-      });
+      //Add your own ArcGIS Server tiled map service layer
+      var charts = new L.esri.TiledMapLayer("http://services.arcgisonline.com/ArcGIS/rest/services/Specialty/World_Navigation_Charts/MapServer").addTo(map);      
      </script>
   </body>
 </html>
