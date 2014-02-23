@@ -107,18 +107,15 @@ L.esri.Mixins.featureGrid = {
     var requestOptions = {
       geometryType: "esriGeometryEnvelope",
       geometry: JSON.stringify(L.esri.Util.boundsToExtent(cell.bounds)),
-      outFields:"*",
+      outFields: this.options.fields.join(","),
       outSR: 4326,
-      inSR: 4326
+      inSR: 4326,
+      where: this.options.where
     };
 
     if(this.options.token){
       requestOptions.token = this.options.token;
     }
-
-    if(this.options.where){
-      requestOptions.where = this.options.where;
-    }    
 
     L.esri.get(this.url+"query", requestOptions, function(response){
       //deincriment the request counter

@@ -38,7 +38,8 @@ L.esri.DynamicMapLayer = L.Class.extend({
     f: 'image',
     bboxSR: 3875,
     imageSR: 3875,
-    layers: ''
+    layers: '',
+    layerDefs: ''
   },
 
   initialize: function (url, options) {
