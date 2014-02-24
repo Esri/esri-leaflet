@@ -7,7 +7,7 @@
       debounce: 100,
       deduplicate: true,
       where: "1=1",
-      fields: ["*"],
+      fields: ["*"]
     },
     initialize: function(url, options){
       this.url = L.esri.Util.cleanUrl(url);

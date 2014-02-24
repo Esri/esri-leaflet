@@ -1,18 +1,16 @@
-/*! Esri-Leaflet - v0.0.1-beta.3 - 2014-02-01
+/*! Esri-Leaflet - v0.0.1-beta.4 - 2014-02-24
 *   Copyright (c) 2014 Environmental Systems Research Institute, Inc.
 *   Apache License*/
 /* globals L */
 (function(L, Terraformer){
-  L.esri.ClusteredFeatureLayer = L.Class.extend({
+  L.esri.HeatMapFeatureLayer = L.Class.extend({
     includes: L.esri.Mixins.featureGrid,
     options: {
       cellSize: 512,
       debounce: 100,
       deduplicate: true,
-      createMarker: function (geojson, latlng) {
-        return new L.marker(latlng);
-      },
-      onEachMarker: undefined
+      where: "1=1",
+      fields: ["*"]
     },
     initialize: function(url, options){
       this.url = L.esri.Util.cleanUrl(url);
@@ -29,23 +27,46 @@
       }, this);
 
       this._loaded = [];
-      this.cluster = this.options.cluster || new L.MarkerClusterGroup();
+      this.heat = new L.heatLayer([], this.options);
     },
     onAdd: function(map){
-      this.cluster.addTo(map);
+      this.heat.addTo(map);
       this._initializeFeatureGrid(map);
     },
     onRemove: function(map){
-      map.removeLayer(this.cluster);
+      map.removeLayer(this.heat);
       this._destroyFeatureGrid(map);
     },
     addTo: function (map) {
       map.addLayer(this);
       return this;
     },
+    getWhere: function(){
+      return this.options.where;
+    },
+    setWhere: function(where){
+      this.options.where = where;
+      this.refresh();
+      return this;
+    },
+    getFields: function(){
+      return this.options.fields;
+    },
+    setFields: function(fields){
+      this.options.fields = fields;
+      this.refresh();
+      return this;
+    },
+    refresh: function(){
+      this.heat._latlngs = [];
+      this._loaded = [];
+      this._previousCells = [];
+      this._requestFeatures(this._map.getBounds());
+    },
     _render: function(response){
       if(response.features && response.features.length && !response.error){
         var idKey = response.objectIdFieldName;
+        var latlngs = [];
         if(!idKey){
           for (var j = 0; j <= response.fields.length - 1; j++) {
             if(response.fields[j].type === "esriFieldTypeOID") {
@@ -59,25 +80,21 @@
           var feature = response.features[i];
           var id = feature.attributes[idKey];
           if(L.esri.Util.indexOf(this._loaded, id) < 0){
-            var geojson = L.esri.Util.arcgisToGeojson(feature);
-            geojson.id = id;
-            var marker = this.options.createMarker(geojson, [geojson.geometry.coordinates[1], geojson.geometry.coordinates[0]]);
-
-            if(this.options.onEachMarker){
-              this.options.onEachMarker(geojson, marker);
-            }
-
-            this.cluster.addLayer(marker);
+            latlngs.push(L.latLng([feature.geometry.y, feature.geometry.x]));
             this._loaded.push(id);
           }
         }
+
+        this.heat._latlngs = this.heat._latlngs.concat(latlngs);
+        this.heat.redraw();
+
       }
     }
   });
 
-  L.esri.ClusteredFeatureLayer.include(L.Mixin.Events);
+  L.esri.HeatMapFeatureLayer.include(L.Mixin.Events);
 
-  L.esri.clusteredFeatureLayer = function(url, options){
-    return new L.esri.ClusteredFeatureLayer(url, options);
+  L.esri.heatMapFeatureLayer = function(url, options){
+    return new L.esri.HeatMapFeatureLayer(url, options);
   };
 })(L);

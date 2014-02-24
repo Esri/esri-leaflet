@@ -1,4 +1,4 @@
-/*! Esri-Leaflet - v0.0.1-beta.3 - 2014-02-01
+/*! Esri-Leaflet - v0.0.1-beta.4 - 2014-02-24
 *   Copyright (c) 2014 Environmental Systems Research Institute, Inc.
 *   Apache License*/
 /* globals L */
@@ -110,9 +110,10 @@ L.esri.Mixins.featureGrid = {
     var requestOptions = {
       geometryType: "esriGeometryEnvelope",
       geometry: JSON.stringify(L.esri.Util.boundsToExtent(cell.bounds)),
-      outFields:"*",
+      outFields: this.options.fields.join(","),
       outSR: 4326,
-      inSR: 4326
+      inSR: 4326,
+      where: this.options.where
     };
 
     if(this.options.token){
@@ -1656,7 +1657,9 @@ L.esri._rbush = rbush;
     options: {
       cellSize: 512,
       debounce: 100,
-      deduplicate: true
+      deduplicate: true,
+      where: "1=1",
+      fields: ["*"]
     },
     initialize: function(url, options){
       this.index = L.esri._rbush();
@@ -1688,6 +1691,28 @@ L.esri._rbush = rbush;
     },
     getLayerId: function(layer){
       return layer.feature.id;
+    },
+    getWhere: function(){
+      return this.options.where;
+    },
+    setWhere: function(where){
+      this.options.where = where;
+      this.refresh();
+      return this;
+    },
+    getFields: function(){
+      return this.options.fields;
+    },
+    setFields: function(fields){
+      this.options.fields = fields;
+      this.refresh();
+      return this;
+    },
+    refresh: function(){
+      this.clearLayers();
+      this._loaded = [];
+      this._previousCells = [];
+      this._requestFeatures(this._map.getBounds());
     },
     _update: function(e){
       var envelope = L.esri.Util.boundsToEnvelope(e.target.getBounds());
@@ -1812,7 +1837,8 @@ L.esri.DynamicMapLayer = L.Class.extend({
     f: 'image',
     bboxSR: 3875,
     imageSR: 3875,
-    layers: ''
+    layers: '',
+    layerDefs: ''
   },
 
   initialize: function (url, options) {
