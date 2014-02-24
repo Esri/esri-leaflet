@@ -5,7 +5,9 @@
     options: {
       cellSize: 512,
       debounce: 100,
-      deduplicate: true
+      deduplicate: true,
+      where: "1=1",
+      fields: ["*"],
     },
     initialize: function(url, options){
       this.url = L.esri.Util.cleanUrl(url);
@@ -35,6 +37,28 @@
     addTo: function (map) {
       map.addLayer(this);
       return this;
+    },
+    getWhere: function(){
+      return this.options.where;
+    },
+    setWhere: function(where){
+      this.options.where = where;
+      this.refresh();
+      return this;
+    },
+    getFields: function(){
+      return this.options.fields;
+    },
+    setFields: function(fields){
+      this.options.fields = fields;
+      this.refresh();
+      return this;
+    },
+    refresh: function(){
+      this.heat._latlngs = [];
+      this._loaded = [];
+      this._previousCells = [];
+      this._requestFeatures(this._map.getBounds());
     },
     _render: function(response){
       if(response.features && response.features.length && !response.error){
