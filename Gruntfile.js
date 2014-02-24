@@ -60,6 +60,10 @@ module.exports = function(grunt) {
       cluster: {
         src: ["src/Layers/ClusteredFeatureLayer.js"],
         dest: 'dist/extras/clustered-feature-layer-src.js'
+      },
+      heat: {
+        src: ["src/Layers/HeatMapFeatureLayer.js"],
+        dest: 'dist/extras/heatmap-feature-layer-src.js'
       }
     },
     uglify: {
@@ -76,11 +80,14 @@ module.exports = function(grunt) {
           'dist/esri-leaflet.js': [
             "dist/esri-leaflet-src.js"
           ],
+          'dist/extras/esri-basemaps.js': [
+            'dist/extras/esri-basemaps-src.js'
+          ],
           'dist/extras/clustered-feature-layer.js': [
             'dist/extras/clustered-feature-layer-src.js'
           ],
-          'dist/extras/esri-basemaps.js': [
-            'dist/extras/esri-basemaps-src.js'
+          'dist/extras/heatmap-feature-layer.js': [
+            'dist/extras/heatmap-feature-layer-src.js'
           ]
         }
       }

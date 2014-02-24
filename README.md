@@ -2,7 +2,7 @@
 
 Leaflet plugin for [ArcGIS Services](http://developers.arcgis.com). Currently Esri Leaflet supports loading Esri [basemaps](#basemaplayer) and [feature services](#featurelayer), as well as [tiled](#tiledmaplayer) and [dynamic](#dynamicmaplayer) map services.
 
-The goal of Esri Leaflet is **not** to replace the [ArcGIS API for JavaScript](https://developers.arcgis.com/en/javascript/), but rather to provide small components to allow developers to build mapping applications with Leaflet. It pairs well with [Terraformer](https://github.com/Esri/Terraformer) for converting data and [geoservices-js](https://github.com/Esri/geoservices-js) for making advanced request to [ArcGIS REST services](http://resources.arcgis.com/en/help/arcgis-rest-api/#/The_ArcGIS_REST_API/02r300000054000000/), for example place finding and reverse geocoding.
+The goal of Esri Leaflet is **not** to replace the [ArcGIS API for JavaScript](https://developers.arcgis.com/en/javascript/), but rather to provide small components to allow developers to build mapping applications with Leaflet.
 
 **Currently Esri Leaflet is in development and should be thought of as a beta or preview.**
 
@@ -112,6 +112,8 @@ Constructor | Description
 
 Option | Type | Default | Description
 --- | --- | --- | ---
+`where` | `String` | `"1=1"` | A server side expression that will be evaluated to filter features. By default this will include all features in a service.
+`fields` | `Array` | `["*"]` | An array of metadata names to pull from the service. Includes all fields by default.
 `token` | `String` | `null` | If you pass a token in your options it will included in all requests to the service. See [working with authenticated services](#working-with-authenticated-services) for more information.
 
 #### Events
@@ -246,6 +248,8 @@ Option | Type | Default | Description
 `cluster` | `L.MarkerClusterGroup` | `new L.MarkerClusterGroup()`  | The instance of `L.MarkerClusterGroup` that points will be added to.
 `createMarker` | `Function` | `null` | A function that will be called with a  GeoJSON representation of the point its latitude and longitude. Should return a `L.Marker` object.
 `onEachMarker` | Function | `null` | This function will be called for every marker before it is added to the cluster. It is called with the GeoJSON representation of the point and the marker 
+`where` | `String` | `"1=1"` | A server side expression that will be evaluated to filter features. By default this will include all features in a service.
+`fields` | `Array` | `["*"]` | An array of metadata names to pull from the service. Includes all fields by default.
 `token` | `String` | `null` | If you pass a token in your options it will included in all requests to the service. See [working with authenticated services](#working-with-authenticated-services) for more information.
 
 #### Events
@@ -282,6 +286,50 @@ L.esri.clusteredFeatureLayer("http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis
   },
   onEachMarker: function(geojson, marker) {
     marker.bindPopup("<h3>"+geojson.properties.stop_name+"</h3><p>Stop ID: "+geojson.properties.stop_id+"</p><p>"+geojson.properties.stop_desc+"</p>")
+  }
+}).addTo(map);
+```
+
+### HeatMapFeatureLayer
+
+**Extends** `L.Class`
+
+`L.esri.HeatMapFeatureLayer` provides integration for Feature Layers with the [Leaflet.heat plugin](https://github.com/Leaflet/Leaflet.heat). Because of the extra Dependency on Leaflet.heat we do not include `L.esri.HeatMapFeatureLayer` in the default build of Esri Leaflet. It lives in /dist/extras/heatmap-feature-layer.js. You will also need to include your own copy of the [Leaflet.heat plugin](https://github.com/Leaflet/Leaflet.heat).
+
+#### Constructor
+
+Constructor | Description
+--- | ---
+`new L.esri.HeatMapFeatureLayer(url, options)`<br>`L.esri.heatMapFeatureLayer(url, options)` | `url` should be the URL of the feature layer to consume. See [service URLs](#service-urls) for more information on how to find these urls.
+
+#### Options
+
+`HeatMapFeatureLayer` will also accept any options that can be passed to [Leaflet.heat](https://github.com/Leaflet/Leaflet.heat#lheatlayerlatlngs-options) to customize the appearance of the heatmap.
+
+Option | Type | Default | Description
+--- | --- | --- | ---
+`where` | `String` | `"1=1"` | A server side expression that will be evaluated to filter features. By default this will include all features in a service.
+`fields` | `Array` | `["*"]` | An array of metadata names to pull from the service. Includes all fields by default.
+`token` | `String` | `null` | If you pass a token in your options it will included in all requests to the service. See [working with authenticated services](#working-with-authenticated-services) for more information.
+
+#### Events
+
+Event | Data | Description
+--- | --- | ---
+`loading` | [`Loading`](#loading-event) | Fires when new features start loading.
+`load` | [`Load`](#load-event) | Fires when all features in the current bounds of the map have loaded.
+`metadata` | [`Metadata`](#metadata-event) | After creating a new `L.esri.ClusteredFeatureLayer` a request for data describing the service will be made and passed to the metadata event.
+`authenticationrequired` | [`Authentication`](#authentication-event) | This will be fired when a request to a service fails and requires authentication. See [working with authenticated services](#working-with-authenticated-services) for more information.
+
+#### Example
+
+```js
+var heat = new L.esri.HeatMapFeatureLayer("http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Graffiti_Locations3/FeatureServer/0", {
+  radius: 12,
+  gradient: {
+    0.4: "#ffeda0",
+    0.65: "#feb24c",
+    1: "#f03b20"
   }
 }).addTo(map);
 ```
@@ -347,8 +395,8 @@ Esri Leaflet supports access private services on ArcGIS Online and ArcGIS Server
 
 Handing authentication in Esri Leaflet is flexible and lightweight but makes serveral assumptions.
 
-1. You (the developer) will handler obtaining and persisting access tokens.
-2. Esri Leaflet will use your tokens so access services.
+1. You (the developer) will handle obtaining and persisting tokens.
+2. Esri Leaflet will use your tokens to access services.
 3. Esri Leaflet will notify you when it recives an error while using your token and prompt you for a new one.
 
 An example of authenticating with a username/password to an ArcGIS Service instance can be found [here](http://esri.github.io/esri-leaflet/privatemapservice.html).
@@ -359,25 +407,18 @@ An example of using Oauth 2 to access a private feature service on ArcGIS Online
 
 1. [Fork and clone Esri Leaflet](https://help.github.com/articles/fork-a-repo)
 2. `cd` into the `esri-leaflet` folder
-4. Run `git submodule init` and `git submodule update`
-5. Instal the dependancies with `npm install`
+5. Install the dependancies with `npm install`
 5. The examples in the `/examples` folder should work
 6. Make your changes and create a [pull request](https://help.github.com/articles/creating-a-pull-request)
 
 ### Dependencies
 * [Leaflet](http://leaflet.com) - the core Leaflet library
 * [Leaflet.markercluster](http://leaflet.com) - If you want to use `L.esri.ClusteredFeatureLayer` you will need the Leaflet markercluster plugin
-* [Terraformer](https://github.com/esri/Terraformer) - base library for other dependencies
-* [Terraformer ArcGIS](https://github.com/esri/Terraformer) - for converting geometries
-* [Terraformer RTree](https://github.com/esri/Terraformer) - client side RTree index for optimizations
-
-These are currently included in `/vendor` as submodules and are built into the `dist/esri-leaflet.js` file.
 
 ## Resources
 
 * [ArcGIS for Developers](http://developers.arcgis.com)
 * [ArcGIS REST Services](http://resources.arcgis.com/en/help/arcgis-rest-api/)
-* [ArcGIS for JavaScript API Resource Center](http://help.arcgis.com/en/webapi/javascript/arcgis/index.html)
 * [twitter@esri](http://twitter.com/esri)
 
 ## Issues
