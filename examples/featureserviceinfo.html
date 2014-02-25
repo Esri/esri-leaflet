@@ -15,9 +15,6 @@
     <!-- Load Esri Leaflet -->
     <script src="lib/esri-leaflet/esri-leaflet.js"></script>
 
-    <!-- Load geoservices.js to handle additional API requests to ArcGIS services -->
-    <script src="lib/geoservices/geoservices.js"></script>
-
     <!-- Make the map fill the entire page -->
     <style>
       html, body, #map {
@@ -45,30 +42,16 @@
       L.esri.basemapLayer("Topographic").addTo(map);
 
       // Add ArcGIS feature layer
-      var featureServiceUrl = "http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0";
-      L.esri.featureLayer(featureServiceUrl,{}).addTo(map);
+      var featureLayer = L.esri.featureLayer("http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0").addTo(map);
 
-      // Access ArcGIS Online Feature Service - See https://github.com/Esri/geoservices-js
-      var ArcGISGeoServices = new Geoservices.Geoservices({});
-      var propsList = document.getElementById("fsProps");
-
-      getFeatureServiceInfo();
-
-      function getFeatureServiceInfo() {
-        // Access feature service to get info - See http://resources.arcgis.com/en/help/arcgis-rest-api/
-        var options = {url: featureServiceUrl};
-        var featureService = new ArcGISGeoServices.FeatureService(options, function (err, results) {
-          if (!err && results) {
-            propsList.innerHTML = '';
-            for (var key in results) {
-              var v = getInfo(key,results);
-              addElement(key, v);
-            }
-          } else {
-            propsList.innerHTML = "Sorry, feature service not found.";
-          }
-        });
-      }
+      featureLayer.on('metadata', function(e){
+        var propsList = document.getElementById("fsProps");
+        propsList.innerHTML = '';
+        for (var key in e.metadata) {
+          var v = getInfo(key,results);
+          addElement(key, v);
+        }
+      });
 
       function getInfo(key, results) {
         var v = results[key];

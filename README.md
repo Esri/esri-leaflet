@@ -88,6 +88,10 @@ Constructor | Description
 
 `L.esri.BasemapLayer`inherits all events from [`L.TileLayer`](http://leafletjs.com/reference.html#tilelayer).
 
+Event | Data | Description
+--- | --- | ---
+`metadata` | [`Metadata`](#metadata-event) | After creating a new `L.esri.ClusteredFeatureLayer` a request for data describing the service will be made and passed to the metadata event.
+
 #### Example
 
 ```js
@@ -340,8 +344,15 @@ var heat = new L.esri.HeatMapFeatureLayer("http://services.arcgis.com/rOo16HdIMe
 
 The data included in the `metadata` event will vary depending on type of layer you are adding to the map.
 
+Data | Value | Description
+--- | --- | ---
+`bounds` | [`LatLngBounds`](http://leafletjs.com/reference.html#latlngbounds) | The bounds that features are currently being loaded.
+`metadata` | `Object` | The JSON metadata for the service. See below.
+
 * `DynamicMapLayer` and `TiledMapLayer` will return the [JSON Definition of a Map Service](http://resources.arcgis.com/en/help/arcgis-rest-api/#/Map_Service/02r3000000w2000000/)
-* `FeatureLayer` and `ClusteredFeatureLayer` will return the [JSON Definition of a Feature Layer](http://resources.arcgis.com/en/help/arcgis-rest-api/#/Layer/02r3000000w6000000/)
+* `FeatureLayer`, `ClusteredFeatureLayer` and `HeatMapFeatureLayer` will return the [JSON Definition of a Feature Layer](http://resources.arcgis.com/en/help/arcgis-rest-api/#/Layer/02r3000000w6000000/)
+
+**Note**: the bounds property will be `false` if the service in a spatial reference other then 4326, 3857 or 102100.
 
 #### Loading Event
 

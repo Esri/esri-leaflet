@@ -11,17 +11,10 @@
     },
     initialize: function(url, options){
       this.url = L.esri.Util.cleanUrl(url);
+
       L.Util.setOptions(this, options);
 
-      var requestOptions = {};
-
-      if(this.options.token){
-        requestOptions.token = this.options.token;
-      }
-
-      L.esri.get(this.url, requestOptions, function(response){
-        this.fire("metadata", { metadata: response });
-      }, this);
+      this._getMetadata();
 
       this._loaded = [];
       this.heat = new L.heatLayer([], this.options);
@@ -90,6 +83,7 @@
   });
 
   L.esri.HeatMapFeatureLayer.include(L.Mixin.Events);
+  L.esri.HeatMapFeatureLayer.include(L.esri.Mixins.metadata);
 
   L.esri.heatMapFeatureLayer = function(url, options){
     return new L.esri.HeatMapFeatureLayer(url, options);
