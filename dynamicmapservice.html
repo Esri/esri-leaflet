@@ -5,11 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <!-- Load Leaflet from their CDN -->
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css" />
-    <!--[if lte IE 8]>
-        <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.ie.css" />
-    <![endif]-->
-    <script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
 
     <!-- Load a small bit of CSS and Javascript specifcally for these demos -->
     <link rel="stylesheet" href="demo.css" />
@@ -57,7 +54,7 @@
         dynLayer.identify(e.latlng, function(data) {
           if(data.results.length > 0) {
             //Popup text should be in html format.  Showing the Storm Name with the type
-            popupText =  "<center><b>" + data.results[0].attributes.STORMNAME + "</b><br>" + data.results[0].attributes.STORMTYPE + "</center>";
+            popupText =  "<b>" + (data.results[0].attributes.EVENTID || data.results[0].attributes.NAME) + "<b>";
 
             //Add Popup to the map when the mouse was clicked at
             var popup = L.popup()

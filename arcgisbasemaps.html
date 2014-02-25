@@ -5,11 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <!-- Load Leaflet from their CDN -->
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css" />
-    <!--[if lte IE 8]>
-        <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.ie.css" />
-    <![endif]-->
-    <script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
 
     <!-- Load a small bit of CSS and Javascript specifcally for these demos -->
     <link rel="stylesheet" href="demo.css" />
@@ -40,7 +37,8 @@
         <button class="btn wide" onclick="setBasemap('DarkGray');">Dark Gray</button></br>
         <button class="btn wide" onclick="setBasemap('Topographic');">Topographic</button></br>
         <button class="btn wide" onclick="setBasemap('NationalGeographic');">National Geographic</button></br>
-        <button class="btn wide" onclick="setBasemap('Oceans');">Oceans</button>
+        <button class="btn wide" onclick="setBasemap('Oceans');">Oceans</button><br>
+        <button class="btn wide" onclick="setBasemap('Terrain');">Terrain</button>
       </div>
     </div>
 
@@ -63,7 +61,7 @@
         if (layerLabels) {
           map.removeLayer(layerLabels);
         }
-        if (mapType == "Gray" || mapType == "DarkGray" || mapType == "Imagery") {
+        if (mapType == "Gray" || mapType == "DarkGray" || mapType == "Imagery" || mapType == "Terrain") {
           layerLabels = L.esri.basemapLayer(mapType+"Labels");
           map.addLayer(layerLabels);
         }
