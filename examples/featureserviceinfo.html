@@ -22,6 +22,16 @@
         height: 100%;
         margin: 0;
       }
+
+      .control-container {
+        padding: 0;
+        text-align: left;
+      }
+
+      .fs-props {
+        padding: 10px;
+        overflow-x: hidden;
+      }
     </style>
   </head>
   <body>
@@ -30,9 +40,7 @@
     <div class="demo-controls">
       <h1 class="title contract" id="title" onclick="showControls();">Feature Service Info</h1>
       <div class="control-container" id="controlContainer">
-        <div>
           <ul class="fs-props" id="fsProps"></ul>
-        </div>
       </div>
     </div>
     <script>
@@ -44,11 +52,13 @@
       // Add ArcGIS feature layer
       var featureLayer = L.esri.featureLayer("http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0").addTo(map);
 
+      // reference to the properties
+      var propsList = document.getElementById("fsProps");
+
       featureLayer.on('metadata', function(e){
-        var propsList = document.getElementById("fsProps");
         propsList.innerHTML = '';
         for (var key in e.metadata) {
-          var v = getInfo(key,results);
+          var v = getInfo(key, e.metadata);
           addElement(key, v);
         }
       });
