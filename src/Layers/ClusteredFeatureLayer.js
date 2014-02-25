@@ -15,17 +15,10 @@
     },
     initialize: function(url, options){
       this.url = L.esri.Util.cleanUrl(url);
+
       L.Util.setOptions(this, options);
 
-      var requestOptions = {};
-
-      if(this.options.token){
-        requestOptions.token = this.options.token;
-      }
-
-      L.esri.get(this.url, requestOptions, function(response){
-        this.fire("metadata", { metadata: response });
-      }, this);
+      this._getMetadata();
 
       this._loaded = [];
       this.cluster = this.options.cluster || new L.MarkerClusterGroup();
@@ -104,6 +97,7 @@
   });
 
   L.esri.ClusteredFeatureLayer.include(L.Mixin.Events);
+  L.esri.ClusteredFeatureLayer.include(L.esri.Mixins.metadata);
 
   L.esri.clusteredFeatureLayer = function(url, options){
     return new L.esri.ClusteredFeatureLayer(url, options);

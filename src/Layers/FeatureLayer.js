@@ -38,15 +38,9 @@
       this.url = L.esri.Util.cleanUrl(url);
       L.Util.setOptions(this, options);
 
-      var requestOptions = {};
+      L.Util.setOptions(this, options);
 
-      if(this.options.token){
-        requestOptions.token = this.options.token;
-      }
-
-      L.esri.get(this.url, requestOptions, function(response){
-        this.fire("metadata", { metadata: response });
-      }, this);
+      this._getMetadata();
 
       L.GeoJSON.prototype.initialize.call(this, [], options);
     },
@@ -133,6 +127,8 @@
       }
     }
   });
+
+  L.esri.FeatureLayer.include(L.esri.Mixins.metadata);
 
   L.esri.featureLayer = function(url, options){
     return new L.esri.FeatureLayer(url, options);

@@ -370,9 +370,15 @@
 
     // convert an extent (ArcGIS) to LatLngBounds (Leaflet)
     extentToBounds: function(extent){
-      var southWest = new L.LatLng(extent.ymin, extent.xmin);
-      var northEast = new L.LatLng(extent.ymax, extent.xmax);
-      return new L.LatLngBounds(southWest, northEast);
+      var sw = new L.LatLng(extent.ymin, extent.xmin);
+      var ne = new L.LatLng(extent.ymax, extent.xmax);
+      return new L.LatLngBounds(sw, ne);
+    },
+
+    mercatorExtentToBounds: function(extent, map){
+      var sw = map.unproject(L.point([extent.ymin, extent.xmin]));
+      var ne = map.unproject(L.point([extent.ymax, extent.xmax]));
+      return new L.LatLngBounds(sw, ne);
     },
 
     // convert an LatLngBounds (Leaflet) to extent (ArcGIS)

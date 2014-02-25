@@ -275,3 +275,56 @@ L.esri.Mixins.identifiableLayer = {
     return layerDefs;
   }
 };
+
+L.esri.Mixins.metadata = {
+  _getMetadata: function(){
+   var requestOptions = {};
+
+    if(this.options.token){
+      requestOptions.token = this.options.token;
+    }
+
+    L.esri.get(this.url, requestOptions, function(response){
+      // if there is a invalid token error...
+      if(response.error && (response.error.code === 499 || response.error.code === 498)) {
+
+        // if we have already asked for authentication
+        if(!this._authenticating){
+
+          // ask for authentication
+          this._authenticating = true;
+
+          // ask for authentication. developer should fire the retry() method with the new token
+          this.fire('authenticationrequired', {
+            retry: L.Util.bind(function(token){
+              // set the new token
+              this.options.token = token;
+
+              // get metadata again
+              this._getMetadata();
+
+              // reload the image so it shows up with the new token
+              this._update();
+            }, this)
+          });
+        }
+      } else {
+        var extent = response.extent || response.initialExtent || response.fullExtent;
+        var payload = {
+          metadata: response
+        };
+
+        if(extent && this._map){
+          if(this._map && (extent.spatialReference.wkid === 102100 || extent.spatialReference.wkid === 3857)) {
+            payload.bounds = L.esri.Util.mercatorExtentToBounds(extent, this._map);
+          } else if(extent.spatialReference.wkid === 4326) {
+            payload.bounds = L.esri.Util.extentToBounds(extent);
+          }
+        }
+
+        this.fire("metadata", payload);
+      }
+
+    }, this);
+  }
+};

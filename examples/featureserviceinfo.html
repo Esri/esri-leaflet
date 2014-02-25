@@ -5,11 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <!-- Load Leaflet from their CDN -->
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css" />
-    <!--[if lte IE 8]>
-        <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.ie.css" />
-    <![endif]-->
-    <script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
 
     <!-- Load a small bit of CSS and Javascript specifcally for these demos -->
     <link rel="stylesheet" href="demo.css" />
@@ -18,15 +15,22 @@
     <!-- Load Esri Leaflet -->
     <script src="lib/esri-leaflet/esri-leaflet.js"></script>
 
-    <!-- Load geoservices.js to handle additional API requests to ArcGIS services -->
-    <script src="lib/geoservices/geoservices.js"></script>
-
     <!-- Make the map fill the entire page -->
     <style>
       html, body, #map {
         width: 100%;
         height: 100%;
         margin: 0;
+      }
+
+      .control-container {
+        padding: 0;
+        text-align: left;
+      }
+
+      .fs-props {
+        padding: 10px;
+        overflow-x: hidden;
       }
     </style>
   </head>
@@ -36,9 +40,7 @@
     <div class="demo-controls">
       <h1 class="title contract" id="title" onclick="showControls();">Feature Service Info</h1>
       <div class="control-container" id="controlContainer">
-        <div>
           <ul class="fs-props" id="fsProps"></ul>
-        </div>
       </div>
     </div>
     <script>
@@ -48,30 +50,18 @@
       L.esri.basemapLayer("Topographic").addTo(map);
 
       // Add ArcGIS feature layer
-      var featureServiceUrl = "http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0";
-      L.esri.featureLayer(featureServiceUrl,{}).addTo(map);
+      var featureLayer = L.esri.featureLayer("http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0").addTo(map);
 
-      // Access ArcGIS Online Feature Service - See https://github.com/Esri/geoservices-js
-      var ArcGISGeoServices = new Geoservices.Geoservices({});
+      // reference to the properties
       var propsList = document.getElementById("fsProps");
 
-      getFeatureServiceInfo();
-
-      function getFeatureServiceInfo() {
-        // Access feature service to get info - See http://resources.arcgis.com/en/help/arcgis-rest-api/
-        var options = {url: featureServiceUrl};
-        var featureService = new ArcGISGeoServices.FeatureService(options, function (err, results) {
-          if (!err && results) {
-            propsList.innerHTML = '';
-            for (var key in results) {
-              var v = getInfo(key,results);
-              addElement(key, v);
-            }
-          } else {
-            propsList.innerHTML = "Sorry, feature service not found.";
-          }
-        });
-      }
+      featureLayer.on('metadata', function(e){
+        propsList.innerHTML = '';
+        for (var key in e.metadata) {
+          var v = getInfo(key, e.metadata);
+          addElement(key, v);
+        }
+      });
 
       function getInfo(key, results) {
         var v = results[key];

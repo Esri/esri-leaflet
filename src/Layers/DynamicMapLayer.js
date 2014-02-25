@@ -43,7 +43,7 @@ L.esri.DynamicMapLayer = L.Class.extend({
   },
 
   initialize: function (url, options) {
-    this.serviceUrl = L.esri.Util.cleanUrl(url);
+    this.url = L.esri.Util.cleanUrl(url);
     this._layerParams = L.Util.extend({}, this._defaultLayerParams);
 
     for (var opt in options) {
@@ -55,53 +55,13 @@ L.esri.DynamicMapLayer = L.Class.extend({
     this._parseLayers();
     this._parseLayerDefs();
 
-
     L.Util.setOptions(this, options);
+
+    this._getMetadata();
 
     if(!this._layerParams.transparent) {
       this.options.opacity = 1;
     }
-
-    this._getMetadata();
-
-  },
-
-  _getMetadata: function(){
-   var requestOptions = {};
-
-    if(this.options.token){
-      requestOptions.token = this.options.token;
-    }
-
-    L.esri.get(this.serviceUrl, requestOptions, function(response){
-      // if there is a invalid token error...
-      if(response.error && (response.error.code === 499 || response.error.code === 498)) {
-
-        // if we have already asked for authentication
-        if(!this._authenticating){
-
-          // ask for authentication
-          this._authenticating = true;
-
-          // ask for authentication. developer should fire the retry() method with the new token
-          this.fire('authenticationrequired', {
-            retry: L.Util.bind(function(token){
-              // set the new token
-              this.options.token = token;
-
-              // get metadata again
-              this._getMetadata();
-
-              // reload the image so it shows up with the new token
-              this._update();
-            }, this)
-          });
-        }
-      } else {
-        this.fire("metadata", { metadata: response });
-      }
-
-    }, this);
   },
 
   onAdd: function (map) {
@@ -228,7 +188,7 @@ L.esri.DynamicMapLayer = L.Class.extend({
       this._layerParams.token = this.options.token;
     }
 
-    var url = this.serviceUrl + 'export' + L.Util.getParamString(this._layerParams);
+    var url = this.url + 'export' + L.Util.getParamString(this._layerParams);
 
     return url;
   },
@@ -286,6 +246,7 @@ L.esri.DynamicMapLayer = L.Class.extend({
 });
 
 L.esri.DynamicMapLayer.include(L.Mixin.Events);
+L.esri.DynamicMapLayer.include(L.esri.Mixins.metadata);
 
 L.esri.dynamicMapLayer = function (url, options) {
   return new L.esri.DynamicMapLayer(url, options);
