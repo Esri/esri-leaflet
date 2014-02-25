@@ -38,6 +38,7 @@
         <button class="btn wide" onclick="setBasemap('Topographic');">Topographic</button></br>
         <button class="btn wide" onclick="setBasemap('NationalGeographic');">National Geographic</button></br>
         <button class="btn wide" onclick="setBasemap('Oceans');">Oceans</button>
+        <button class="btn wide" onclick="setBasemap('Terrain');">Oceans</button>
       </div>
     </div>
 
@@ -60,7 +61,7 @@
         if (layerLabels) {
           map.removeLayer(layerLabels);
         }
-        if (mapType == "Gray" || mapType == "DarkGray" || mapType == "Imagery") {
+        if (mapType == "Gray" || mapType == "DarkGray" || mapType == "Imagery" || mapType == "Terrain") {
           layerLabels = L.esri.basemapLayer(mapType+"Labels");
           map.addLayer(layerLabels);
         }

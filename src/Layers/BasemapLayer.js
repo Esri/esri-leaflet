@@ -125,6 +125,23 @@
             maxZoom: 12,
             subdomains: ["server", "services"]
           }
+        },
+        Terrain: {
+          urlTemplate: tileProtocol + "//{s}.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/{z}/{y}/{x}",
+          options: {
+            minZoom: 1,
+            maxZoom: 13,
+            subdomains: ["server", "services"],
+            attribution: formatTextAttributions("Esri, USGS, NOAA") + attributionLogo
+          }
+        },
+        TerrainLabels: {
+          urlTemplate: tileProtocol + "//{s}.arcgisonline.com/ArcGIS/rest/services/Reference/World_Reference_Overlay/MapServer/tile/{z}/{y}/{x}",
+          options: {
+            minZoom: 1,
+            maxZoom: 13,
+            subdomains: ["server", "services"]
+          }
         }
       }
     },
