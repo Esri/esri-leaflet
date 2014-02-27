@@ -152,7 +152,7 @@ If you have a MapService you and use `L.esri.DynamicMapLayer(url, options)` to r
 #### Constructor
 Constructor | Description
 --- | ---
-`new L.esri.DynamicMapLayer(url, options)`<br>`L.esri.TiledMapLayer(url, options)` | `url` should be the URL of the feature layer to consume. See [service URLs](#service-urls) for more information on how to find these urls.
+`new L.esri.DynamicMapLayer(url, options)`<br>`L.esri.DynamicMapLayer(url, options)` | `url` should be the URL of the feature layer to consume. See [service URLs](#service-urls) for more information on how to find these urls.
 
 #### Options
 
