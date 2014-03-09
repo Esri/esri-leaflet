@@ -1,4 +1,4 @@
-/*! Esri-Leaflet - v0.0.1-beta.4 - 2014-02-24
+/*! Esri-Leaflet - v0.0.1-beta.4 - 2014-03-09
 *   Copyright (c) 2014 Environmental Systems Research Institute, Inc.
 *   Apache License*/
 /* globals L */
@@ -263,7 +263,7 @@ L.esri.Mixins.identifiableLayer = {
       params = L.Util.extend(defaults, options);
     }
 
-    L.esri.get(this.serviceUrl + '/identify', params, callback);
+    L.esri.get(this.url + '/identify', params, callback);
   },
   parseLayerDefs: function (layerDefs) {
     if (layerDefs instanceof Array) {
