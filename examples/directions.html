@@ -14,6 +14,7 @@
 
     <!-- Load Esri Leaflet -->
     <script src="lib/esri-leaflet/esri-leaflet.js"></script>
+    <script src="lib/esri-leaflet-geocoder/esri-leaflet-geocoder.js"></script>
 
     <!-- Load geoservices.js to handle additional API requests to ArcGIS services -->
     <script src="lib/geoservices/geoservices.js"></script>
@@ -103,7 +104,10 @@
 
                 document.getElementById('title').innerHTML = 'Get Directions';
 
-                console.log(response.directions);
+                // console.log(response.directions);
+
+                layerPlaces.addLayer(L.marker(startLocation));
+                layerPlaces.addLayer(L.marker(endLocation));
 
                 // make a geojson object representing our route
                 var geojson = Terraformer.ArcGIS.parse(response.routes.features[0].geometry);
@@ -124,7 +128,6 @@
 
       function geocodeAddress(name, callback) {
         var geocoding = new L.esri.Services.Geocoding();
-
         geocoding.geocode(name, {}, function(response){
           if(response && response.locations) {
             var place = response.locations[0];
