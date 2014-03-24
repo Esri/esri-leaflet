@@ -1,0 +1,72 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>UTM Zone 12 Basemap</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <!-- Load Leaflet from their CDN -->
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
+
+    <!-- Load Esri Leaflet -->
+    <script src="lib/esri-leaflet/esri-leaflet.js"></script>
+
+    <!-- Load proj4js and associated leaflet plugin -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/proj4js/2.0.0/proj4.js"></script>
+    <script src="lib/proj4leaflet/proj4leaflet.js"></script>
+
+    <!-- Make the map fill the entire page -->
+    <style>
+      html, body, #map {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <a href="https://github.com/esri/esri-leaflet"><img style="z-index: 1000; position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png" alt="Fork me on GitHub"></a>
+    <script>
+      // create new Proj4Leaflet CRS
+      var crs = new L.Proj.CRS('EPSG:26912', 
+        '+proj=utm +zone=12 +ellps=GRS80 +datum=NAD83 +units=m +no_defs',
+        {
+          transformation: new L.Transformation(1, 5120900, -1, 9998100),
+          resolutions: [4891.96999883583,
+                        2445.98499994708,
+                        1222.99250010583,
+                        611.496250052917,
+                        305.748124894166,
+                        152.8740625,
+                        76.4370312632292,
+                        38.2185156316146,
+                        19.1092578131615,
+                        9.55462890525781,
+                        4.77731445262891,
+                        2.38865722657904,
+                        1.19432861315723,
+                        0.597164306578613,
+                        0.298582153289307]
+        }
+      );
+
+      // pass crs into map constructor
+      var map = new L.Map('map', {
+        crs: crs
+      });
+
+      // create new TiledMapLayer from esri-leaflet
+      var url = 'http://mapserv.utah.gov/arcgis/rest/services/BaseMaps/Terrain/MapServer';
+      var tLayer = new L.esri.TiledMapLayer(url, {
+        maxZoom: 14,
+        minZoom: 0,
+        continuousWorld: true
+      });
+
+      // set map view and add layer
+      map.setView([40.381, -111.859], 5).addLayer(tLayer);
+    </script>
+  </body>
+</html>
