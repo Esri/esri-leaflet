@@ -79,6 +79,7 @@
         GrayLabels: {
           urlTemplate: tileProtocol + "//{s}.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}",
           options: {
+            pane: "EsriLabelPane",
             minZoom: 1,
             maxZoom: 16,
             subdomains: ["server", "services"]
@@ -172,16 +173,33 @@
     _dynamicAttribution: false,
     bounds: null,
     zoom: null,
+    _initPane: function(){
+      if(!map.getPane(this.options.pane)){
+        var pane = map.createPane(this.options.pane);
+        pane.set
+        pane.style.pointerEvents = "none";
+        pane.style.zIndex = 9;
+      }
+    },
     onAdd: function(map){
+      if(this.options.pane && L.esri.Support.pointerEvents){
+        this._initPane();
+      } else {
+        this.option.pane = tilePane;
+      }
+
       if(!map.attributionControl && console){
         console.warn("L.esri.BasemapLayer requires attribution. Please set attributionControl to true on your map");
         return;
       }
+
       L.TileLayer.prototype.onAdd.call(this, map);
+
       if(this._dynamicAttribution){
         this.on("load", this._handleTileUpdates, this);
         this._map.on("viewreset zoomend dragend", this._handleTileUpdates, this);
       }
+
       this._map.on("resize", this._resizeAttribution, this);
     },
     onRemove: function(map){
