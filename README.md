@@ -33,18 +33,18 @@ Here is a quick example to get you started. Just change the paths to point to th
   <body>
     <div id="map"></div>
     <script>
-      var template = "<h3>{NAME}</h3>{ACRES} Acres<br><small>Property ID: {PROPERTYID}<small>"
+      var popupTemplate = "<h3>{NAME}</h3>{ACRES} Acres<br><small>Property ID: {PROPERTYID}<small>"
 
       var map = L.map('map').setView([45.528, -122.680], 13);
-      
+
       L.esri.basemapLayer("Gray").addTo(map);
 
-      L.esri.featureLayer("http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Parks_pdx/FeatureServer/0", {
+      var parks = new L.esri.FeatureLayer("http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Portland_Parks/FeatureServer/0", {
        style: function (feature) {
           return { color: "#70ca49", weight: 2 };
         },
         onEachFeature: function (feature, layer) {
-          layer.bindPopup(L.Util.template(template, feature.properties));
+          layer.bindPopup(L.Util.template(popupTemplate, feature.properties));
         }
       }).addTo(map);
     </script>
