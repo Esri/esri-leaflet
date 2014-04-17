@@ -61,16 +61,16 @@ L.esri.ClusteredFeatureLayer = L.esri.FeatureManager.extend({
   addLayers: function(ids){
     var layersToAdd = [];
     for (var i = ids.length - 1; i >= 0; i--) {
-      var layer = this_layers[ids[i]];
+      var layer = this._layers[ids[i]];
       layersToAdd.push(layer);
     }
-    this._cluster.addLayers(layersToRemove);
+    this._cluster.addLayers(layersToAdd);
   },
 
   removeLayers: function(ids){
     var layersToRemove = [];
     for (var i = ids.length - 1; i >= 0; i--) {
-      var layer = this_layers[ids[i]];
+      var layer = this._layers[ids[i]];
       layersToRemove.push(layer);
     }
     this._cluster.removeLayers(layersToRemove);

@@ -33,6 +33,7 @@
         this.timeIndex = new TemporalIndex();
       }
 
+      this._currentSnapshot = []; // cache of what layers should be active
       this._activeRequests = 0;
     },
 
@@ -71,40 +72,43 @@
         //deincriment the request counter
         this._activeRequests--;
 
+        if(!this._getObjectIdField()){
+          this._setObjectIdField(response);
+        }
+
+        var features = [];
+
+        for (var i = response.features.length - 1; i >= 0; i--) {
+          features.push(L.esri.Util.arcgisToGeojson(response.features[i], {
+            idAttribute: this._getObjectIdField()
+          }));
+        };
+
+        this._addFeatures(features);
+
+        if(callback){
+          callback.call(this, features);
+        }
+
         // if there are no more active requests fire a load event for this view
         if(this._activeRequests <= 0){
           this.fire("load", {
             bounds: bounds
           });
         }
-
-        if(!this._getObjectIdField()){
-          this._setObjectIdField(response);
-        }
-
-        this._addFeatures(response.features);
-
-        if(callback){
-          callback(response);
-        }
       }, this);
     },
 
     _addFeatures: function(features){
-      var  geojson = [];
-      var idAttribute =  this._getObjectIdField();
-      if(features){
-        for (var i = features.length - 1; i >= 0; i--) {
-          var feature = L.esri.Util.arcgisToGeojson(features[i], { idAttribute: idAttribute });
-          geojson.push(feature);
-        };
-      }
+      for (var i = features.length - 1; i >= 0; i--) {
+        this._currentSnapshot.push(features[i].id);
+      };
 
       if(this._timeEnabled){
-        this._buildTimeIndexes(geojson);
+        this._buildTimeIndexes(features);
       }
 
-      this.createLayers(geojson);
+      this.createLayers(features);
     },
 
     _buildQueryParams: function(bounds){
@@ -134,10 +138,33 @@
      * Where Methods
      */
 
-    setWhere: function(where){
-      // @TODO
-      this.options.where = where;
-      this._update();
+    setWhere: function(where, callback){
+      this.options.where = (where && where.length) ? where : '1=1';
+      var oldSnapshot = [];
+
+      for (var i = this._currentSnapshot.length - 1; i >= 0; i--) {
+        oldSnapshot.push(this._currentSnapshot[i]);
+      };
+
+      this._requestFeatures(this._map.getBounds(), function(geojson){
+        // at this point all layers (both meeting the query and not should be on the map)
+        var newShapshot = [];
+
+        for (var i = geojson.length - 1; i >= 0; i--) {
+          newShapshot.push(geojson[i].id);
+        };
+
+        var states = this._diffLayerState(oldSnapshot, newShapshot);
+
+        this._currentSnapshot = states.newFeatures;
+
+        this.removeLayers(states.oldFeatures);
+        this.addLayers(states.newFeatures);
+
+        if(callback) {
+          callback.call(this);
+        }
+      });
     },
 
     getWhere: function(){
@@ -168,11 +195,8 @@
       }
     },
 
-    _filterExistingFeatures: function (oldFrom, oldTo, newFrom, newTo) {
-      var oldFeatures = this._getFeaturesInTimeRange(oldFrom, oldTo);
-      var newFeatures = this._getFeaturesInTimeRange(newFrom, newTo);
-
-      var featuresToRemove = [];
+    _diffLayerState: function(oldFeatures, newFeatures){
+       var featuresToRemove = [];
 
       for (var i = oldFeatures.length - 1; i >= 0; i--) {
         var idx = newFeatures.indexOf(oldFeatures[i]);
@@ -186,8 +210,22 @@
         newFeatures.splice(featuresToRemove[i], 1);
       };
 
-      this.removeLayers(oldFeatures);
-      this.addLayers(newFeatures);
+      return {
+        oldFeatures: oldFeatures,
+        newFeatures: newFeatures
+      }
+    },
+
+    _filterExistingFeatures: function (oldFrom, oldTo, newFrom, newTo) {
+      var oldFeatures = this._getFeaturesInTimeRange(oldFrom, oldTo);
+      var newFeatures = this._getFeaturesInTimeRange(newFrom, newTo);
+
+      var states = this._diffLayerState(oldFeatures, newFeatures);
+
+      this._currentSnapshot = states.newFeatures;
+
+      this.removeLayers(state.oldFeatures);
+      this.addLayers(state.newFeatures);
     },
 
 
