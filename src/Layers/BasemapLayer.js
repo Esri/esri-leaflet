@@ -1,12 +1,6 @@
 (function(L){
 
   var tileProtocol = (window.location.protocol !== "https:") ? "http:" : "https:";
-  var attributionStyles = "line-height:9px; text-overflow:ellipsis; white-space:nowrap;overflow:hidden; display:inline-block;";
-  var logoStyles = "position:absolute; top:-38px; right:2px;";
-  var attributionLogo = "<img src='https://serverapi.arcgisonline.com/jsapi/arcgis/3.5/js/esri/images/map/logo-med.png' alt='Powered by Esri' class='esri-attribution-logo' style='"+logoStyles+"'>";
-  var formatTextAttributions = function formatTextAttributions(text){
-    return "<span class='esri-attributions' style='"+attributionStyles+"'>" + text + "</span>";
-  };
 
   L.esri.BasemapLayer = L.TileLayer.extend({
     statics: {
@@ -18,7 +12,7 @@
             minZoom: 1,
             maxZoom: 19,
             subdomains: ["server", "services"],
-            attribution: formatTextAttributions("Esri") + attributionLogo
+            attribution: "Esri"
           }
         },
         Topographic: {
@@ -28,43 +22,53 @@
             minZoom: 1,
             maxZoom: 19,
             subdomains: ["server", "services"],
-            attribution: formatTextAttributions("Esri") + attributionLogo
+            attribution: "Esri"
           }
         },
         Oceans: {
-          urlTemplate: tileProtocol + "//server.arcgisonline.com/ArcGIS/rest/services/Ocean_Basemap/MapServer/tile/{z}/{y}/{x}",
+          urlTemplate: tileProtocol + "//{s}.arcgisonline.com/arcgis/rest/services/Ocean/World_Ocean_Base/MapServer/tile/{z}/{y}/{x}",
           attributionUrl: "https://static.arcgis.com/attribution/Ocean_Basemap",
           options: {
             minZoom: 1,
             maxZoom: 16,
             subdomains: ["server", "services"],
-            attribution: formatTextAttributions("Esri") + attributionLogo
+            attribution: "Esri"
+          }
+        },
+        OceansLabels: {
+          urlTemplate: tileProtocol + "//{s}.arcgisonline.com/arcgis/rest/services/Ocean/World_Ocean_Reference/MapServer/tile/{z}/{y}/{x}",
+          options: {
+            pane: "esri-label",
+            minZoom: 1,
+            maxZoom: 16,
+            subdomains: ["server", "services"]
           }
         },
         NationalGeographic: {
-          urlTemplate: "https://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}",
+          urlTemplate: tileProtocol + "//{s}.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}",
           options: {
             minZoom: 1,
             maxZoom: 16,
             subdomains: ["server", "services"],
-            attribution: formatTextAttributions("Esri") + attributionLogo
+            attribution: "Esri"
           }
         },
         DarkGray: {
-          urlTemplate: tileProtocol + "//tiles{s}.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/World_Dark_Gray_Base_Beta/MapServer/tile/{z}/{y}/{x}",
+          urlTemplate: tileProtocol + "//{s}.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/World_Dark_Gray_Base_Beta/MapServer/tile/{z}/{y}/{x}",
           options: {
             minZoom: 1,
             maxZoom: 10,
-            subdomains: [1, 2],
-            attribution: formatTextAttributions("Esri, DeLorme, HERE") + attributionLogo
+            subdomains: ["server", "services"],
+            attribution: "Esri, DeLorme, HERE"
           }
         },
         DarkGrayLabels: {
-          urlTemplate: tileProtocol + "//tiles{s}.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/World_Dark_Gray_Reference_Beta/MapServer/tile/{z}/{y}/{x}",
+          urlTemplate: tileProtocol + "//{s}.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/World_Dark_Gray_Reference_Beta/MapServer/tile/{z}/{y}/{x}",
           options: {
+            pane: "esri-label",
             minZoom: 1,
             maxZoom: 10,
-            subdomains: [1, 2]
+            subdomains: ["server", "services"],
           }
         },
         Gray: {
@@ -73,13 +77,13 @@
             minZoom: 1,
             maxZoom: 16,
             subdomains: ["server", "services"],
-            attribution: formatTextAttributions("Esri, NAVTEQ, DeLorme") + attributionLogo
+            attribution: "Esri, NAVTEQ, DeLorme"
           }
         },
         GrayLabels: {
           urlTemplate: tileProtocol + "//{s}.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}",
           options: {
-            pane: "EsriLabelPane",
+            pane: "esri-label",
             minZoom: 1,
             maxZoom: 16,
             subdomains: ["server", "services"]
@@ -91,12 +95,13 @@
             minZoom: 1,
             maxZoom: 19,
             subdomains: ["server", "services"],
-            attribution: formatTextAttributions("Esri, DigitalGlobe, GeoEye, i-cubed, USDA, USGS, AEX, Getmapping, Aerogrid, IGN, IGP, swisstopo, and the GIS User Community") + attributionLogo
+            attribution: "Esri, DigitalGlobe, GeoEye, i-cubed, USDA, USGS, AEX, Getmapping, Aerogrid, IGN, IGP, swisstopo, and the GIS User Community"
           }
         },
         ImageryLabels: {
           urlTemplate: tileProtocol + "//{s}.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",
           options: {
+            pane: "esri-label",
             minZoom: 1,
             maxZoom: 19,
             subdomains: ["server", "services"]
@@ -104,6 +109,7 @@
         },
         ImageryTransportation: {
           urlTemplate: tileProtocol + "//{s}.arcgisonline.com/ArcGIS/rest/services/Reference/World_Transportation/MapServer/tile/{z}/{y}/{x}",
+          pane: "esri-label",
           options: {
             minZoom: 1,
             maxZoom: 19,
@@ -116,11 +122,12 @@
             minZoom: 1,
             maxZoom: 13,
             subdomains: ["server", "services"],
-            attribution: formatTextAttributions("ESRI, NAVTEQ, DeLorme") + attributionLogo
+            attribution: "ESRI, NAVTEQ, DeLorme"
           }
         },
         ShadedReliefLabels: {
           urlTemplate: tileProtocol + "//{s}.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places_Alternate/MapServer/tile/{z}/{y}/{x}",
+          pane: "esri-label",
           options: {
             minZoom: 1,
             maxZoom: 12,
@@ -133,12 +140,13 @@
             minZoom: 1,
             maxZoom: 13,
             subdomains: ["server", "services"],
-            attribution: formatTextAttributions("Esri, USGS, NOAA") + attributionLogo
+            attribution: "Esri, USGS, NOAA"
           }
         },
         TerrainLabels: {
           urlTemplate: tileProtocol + "//{s}.arcgisonline.com/ArcGIS/rest/services/Reference/World_Reference_Overlay/MapServer/tile/{z}/{y}/{x}",
           options: {
+            pane: "esri-label",
             minZoom: 1,
             maxZoom: 13,
             subdomains: ["server", "services"]
@@ -154,7 +162,7 @@
       } else if(typeof key === "string" && L.esri.BasemapLayer.TILES[key]){
         config = L.esri.BasemapLayer.TILES[key];
       } else {
-        throw new Error("L.esri.BasemapLayer: Invalid parameter. Use one of 'Streets', 'Topographic', 'Oceans', 'NationalGeographic', 'Gray', 'GrayLabels', 'DarkGray', 'DarkGrayLabels', 'Imagery', 'ImageryLabels', 'ImageryTransportation', 'ShadedRelief' or 'ShadedReliefLabels'");
+        throw new Error("L.esri.BasemapLayer: Invalid parameter. Use one of 'Streets', 'Topographic', 'Oceans', 'OceansLabels', 'NationalGeographic', 'Gray', 'GrayLabels', 'DarkGray', 'DarkGrayLabels', 'Imagery', 'ImageryLabels', 'ImageryTransportation', 'ShadedRelief', 'ShadedReliefLabels', 'Terrain' or 'TerrainLabels'");
       }
 
       // merge passed options into the config options
@@ -178,7 +186,7 @@
         var pane = map.createPane(this.options.pane);
         pane.set
         pane.style.pointerEvents = "none";
-        pane.style.zIndex = 9;
+        pane.style.zIndex = 5;
       }
     },
     onAdd: function(map){
@@ -188,19 +196,15 @@
         this.option.pane = tilePane;
       }
 
-      if(!map.attributionControl && console){
-        console.warn("L.esri.BasemapLayer requires attribution. Please set attributionControl to true on your map");
-        return;
-      }
-
       L.TileLayer.prototype.onAdd.call(this, map);
 
-      if(this._dynamicAttribution){
+      if(this._dynamicAttribution && map.attributionControl){
         this.on("load", this._handleTileUpdates, this);
         this._map.on("viewreset zoomend dragend", this._handleTileUpdates, this);
       }
-
-      this._map.on("resize", this._resizeAttribution, this);
+      if(map.attributionControl) {
+        this._map.on("resize", this._resizeAttribution, this);
+      }
     },
     onRemove: function(map){
       if(this._dynamicAttribution){
@@ -232,9 +236,11 @@
         }
       }
     },
+    getAttribution:function(){
+      return (this.options.attribution) ? "<span class='esri-attributions' style='line-height:9px; text-overflow:ellipsis; white-space:nowrap;overflow:hidden; display:inline-block;'>" + this.options.attribution + "</span>" : false;
+    },
     _resizeAttribution: function(){
       var mapWidth = this._map.getSize().x;
-      this._getAttributionLogo().style.display = (mapWidth < 600) ? "none":"block";
       this._getAttributionSpan().style.maxWidth =  (mapWidth* 0.75) + "px";
     },
     _getAttributionData: function(url){
@@ -268,9 +274,6 @@
     },
     _getAttributionSpan:function(){
       return this._map._container.querySelectorAll('.esri-attributions')[0];
-    },
-    _getAttributionLogo:function(){
-      return this._map._container.querySelectorAll('.esri-attribution-logo')[0];
     },
     _updateMapAttribution: function(){
       var newAttributions = '';

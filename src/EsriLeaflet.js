@@ -6,8 +6,8 @@ L.esri = {
 
 // Namespace for various support variables we need to track
 L.esri.Support = {
-  // from: https://github.com/Modernizr/Modernizr/blob/master/feature-detects/cors.js#L20
-  CORS: !!(window.XMLHttpRequest && 'withCredentials' in new XMLHttpRequest())
+  CORS: !!(window.XMLHttpRequest && 'withCredentials' in new XMLHttpRequest()),
+  pointerEvents: document.documentElement.style.pointerEvents === ''
 };
 
 // AJAX handlers for CORS (modern browsers) or JSONP (older browsers)
