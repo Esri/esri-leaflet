@@ -24,12 +24,13 @@
  * THE SOFTWARE.
  */
 
-L.esri.DynamicMapLayer = L.Class.extend({
+L.esri.DynamicMapLayer = L.Layer.extend({
   includes: L.esri.Mixins.identifiableLayer,
 
   options: {
     opacity: 1,
-    position: 'front'
+    position: 'front',
+    updateInterval: 150
   },
 
   _defaultLayerParams: {
@@ -65,10 +66,7 @@ L.esri.DynamicMapLayer = L.Class.extend({
   },
 
   onAdd: function (map) {
-    this._map = map;
-    this._moveHandler = L.esri.Util.debounce(this._update, 150, this);
-
-    map.on("moveend", this._moveHandler, this);
+    this._update = L.Util.throttle(this._update, this.options.updateInterval, this);
 
     if (map.options.crs && map.options.crs.code) {
       var sr = map.options.crs.code.split(":")[1];
@@ -80,13 +78,17 @@ L.esri.DynamicMapLayer = L.Class.extend({
   },
 
   onRemove: function (map) {
-    if (this._currentImage) { this._map.removeLayer(this._currentImage); }
-    map.off("moveend", this._moveHandler, this);
+    if (this._currentImage) {
+      this._map.removeLayer(this._currentImage);
+    }
   },
 
-  addTo: function (map) {
-    map.addLayer(this);
-    return this;
+  getEvents: function(){
+    var events = {
+      moveend: this._update
+    };
+
+    return events;
   },
 
   setOpacity: function(opacity){
@@ -211,6 +213,7 @@ L.esri.DynamicMapLayer = L.Class.extend({
     var bounds = this._map.getBounds();
     bounds._southWest.wrap();
     bounds._northEast.wrap();
+
     var image = new L.ImageOverlay(this._getImageUrl(), bounds, {
       opacity: 0
     }).addTo(this._map);
@@ -237,7 +240,6 @@ L.esri.DynamicMapLayer = L.Class.extend({
         this._map.removeLayer(newImage);
       }
     }, this);
-
 
     this.fire('loading', {
       bounds: bounds

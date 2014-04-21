@@ -176,7 +176,7 @@ L.esri.FeatureLayer = L.esri.FeatureManager.extend({
       layers.push(this._layers[ids[i]]);
     }
     return layers;
-  },
+  }
 
 });
 

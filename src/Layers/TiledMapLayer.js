@@ -24,7 +24,7 @@ L.esri.TiledMapLayer = L.TileLayer.extend({
   }
 });
 
-L.esri.TiledMapLayer.include(L.esri.Mixins.metadata);
+L.esri.TiledMapLayer.include(L.esri.Mixins._getMetadata);
 
 L.esri.tiledMapLayer = function(key, options){
   return new L.esri.TiledMapLayer(key, options);
