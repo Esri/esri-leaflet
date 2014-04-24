@@ -13,7 +13,7 @@
       to: false,
       timeField: false,
       timeFilterMode: "server",
-      smoothFactor: 0
+      simplifyFactor: 0
     },
 
     /**
@@ -78,11 +78,13 @@
 
         var features = [];
 
-        for (var i = response.features.length - 1; i >= 0; i--) {
-          features.push(L.esri.Util.arcgisToGeojson(response.features[i], {
-            idAttribute: this._getObjectIdField()
-          }));
-        };
+        if(response.features){
+          for (var i = response.features.length - 1; i >= 0; i--) {
+            features.push(L.esri.Util.arcgisToGeojson(response.features[i], {
+              idAttribute: this._getObjectIdField()
+            }));
+          };
+        }
 
         this._addFeatures(features);
 
@@ -123,7 +125,7 @@
         where: this.options.where
       };
 
-      if(this.options.smoothFactor){
+      if(this.options.simplifyFactor){
         requestParams.maxAllowableOffset = this._getMaxAllowableOffset();
       }
 
@@ -301,7 +303,7 @@
       var mapWidth = Math.abs(this._map.getBounds().getWest() - this._map.getBounds().getEast());
       var mapWidthPx = this._map.getSize().y;
 
-      return (mapWidth / mapWidthPx) * (1 - this.options.smoothFactor)
+      return (mapWidth / mapWidthPx) * (1 - this.options.simplifyFactor)
     },
 
 

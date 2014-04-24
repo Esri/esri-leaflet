@@ -55,6 +55,11 @@ L.esri.FeatureLayer = L.esri.FeatureManager.extend({
         // bubble events from layers to this
         newLayer.addEventParent(this);
 
+        // bind a popup if we have one
+        if(this._popup){
+          newLayer.bindPopup(this._popup(newLayer.feature, newLayer));
+        }
+
         // cache the layer
         this._layers[newLayer.feature.id] = newLayer;
 
@@ -138,15 +143,19 @@ L.esri.FeatureLayer = L.esri.FeatureManager.extend({
    */
 
   bindPopup: function (fn, options) {
-    // @TODO
+    this._popup = fn;
+    for (i in this._layers) {
+      var layer = this._layers[i];
+      var popupContent = this._popup(layer.feature, layer);
+      layer.bindPopup(popupContent, options);
+    }
   },
 
-  unBindPopup: function (fn, options) {
-    // @TODO
-  },
-
-  openPopup: function (id, opt) {
-    // @TODO
+  unbindPopup: function () {
+    this._popup =  false;
+    for (i in this._layers) {
+      this._layers[i].unbindPopup();
+    }
   },
 
   /**
@@ -154,11 +163,14 @@ L.esri.FeatureLayer = L.esri.FeatureManager.extend({
    */
 
   eachFeature: function (fn) {
-    // @TODO
+    for (var i in this._layers) {
+      method.call(context, this._layers[i]);
+    }
+    return this;
   },
 
   getFeature: function (id) {
-    // @TODO
+    return this._layers[id];
   },
 
   /**

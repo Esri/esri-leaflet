@@ -14,7 +14,7 @@ L.esri.HeatMapFeatureLayer = L.esri.FeatureManager.extend({
     this._cache = {};
     this._active = {};
 
-    this._heat = new L.heatLayer([], options);
+    this.heat = new L.heatLayer([], options);
   },
 
   /**
@@ -23,12 +23,12 @@ L.esri.HeatMapFeatureLayer = L.esri.FeatureManager.extend({
 
   onAdd: function(){
     L.esri.FeatureManager.prototype.onAdd.call(this);
-    this._map.addLayer(this._heat);
+    this._map.addLayer(this.heat);
   },
 
   onRemove: function(){
     L.esri.FeatureManager.prototype.onRemove.call(this);
-    this._map.removeLayer(this._heat);
+    this._map.removeLayer(this.heat);
   },
 
   /**
@@ -47,11 +47,11 @@ L.esri.HeatMapFeatureLayer = L.esri.FeatureManager.extend({
       // add the layer if it is within the time bounds or our layer is not time enabled
       if(!this._active[id] && (!this._timeEnabled || (this._timeEnabled && this._featureWithinTimeRange(geojson)))){
         this._active[id] = latlng;
-        this._heat._latlngs.push(latlng);
+        this.heat._latlngs.push(latlng);
       }
     }
 
-    this._heat.redraw();
+    this.heat.redraw();
   },
 
   addLayers: function(ids){
@@ -59,11 +59,11 @@ L.esri.HeatMapFeatureLayer = L.esri.FeatureManager.extend({
       var id = ids[i];
       if(!this._active[id]){
         var latlng = this._cache[id];
-        this._heat._latlngs.push(latlng);
+        this.heat._latlngs.push(latlng);
         this._active[id] = latlng;
       }
     }
-    this._heat.redraw();
+    this.heat.redraw();
   },
 
   removeLayers: function(ids){
@@ -79,7 +79,7 @@ L.esri.HeatMapFeatureLayer = L.esri.FeatureManager.extend({
       newLatLngs.push(this._active[id]);
     }
 
-    this._heat.setLatLngs(newLatLngs);
+    this.heat.setLatLngs(newLatLngs);
   }
 
 });

@@ -11,6 +11,7 @@
           options: {
             minZoom: 1,
             maxZoom: 19,
+            hideLogo: false,
             subdomains: ["server", "services"],
             attribution: "Esri"
           }
@@ -21,6 +22,7 @@
           options: {
             minZoom: 1,
             maxZoom: 19,
+            hideLogo: false,
             subdomains: ["server", "services"],
             attribution: "Esri"
           }
@@ -31,6 +33,7 @@
           options: {
             minZoom: 1,
             maxZoom: 16,
+            hideLogo: false,
             subdomains: ["server", "services"],
             attribution: "Esri"
           }
@@ -41,6 +44,7 @@
             pane: "esri-label",
             minZoom: 1,
             maxZoom: 16,
+            hideLogo: false,
             subdomains: ["server", "services"]
           }
         },
@@ -49,6 +53,7 @@
           options: {
             minZoom: 1,
             maxZoom: 16,
+            hideLogo: false,
             subdomains: ["server", "services"],
             attribution: "Esri"
           }
@@ -58,6 +63,7 @@
           options: {
             minZoom: 1,
             maxZoom: 10,
+            hideLogo: false,
             subdomains: ["server", "services"],
             attribution: "Esri, DeLorme, HERE"
           }
@@ -68,6 +74,7 @@
             pane: "esri-label",
             minZoom: 1,
             maxZoom: 10,
+            hideLogo: false,
             subdomains: ["server", "services"],
           }
         },
@@ -76,6 +83,7 @@
           options: {
             minZoom: 1,
             maxZoom: 16,
+            hideLogo: false,
             subdomains: ["server", "services"],
             attribution: "Esri, NAVTEQ, DeLorme"
           }
@@ -86,6 +94,7 @@
             pane: "esri-label",
             minZoom: 1,
             maxZoom: 16,
+            hideLogo: false,
             subdomains: ["server", "services"]
           }
         },
@@ -94,6 +103,7 @@
           options: {
             minZoom: 1,
             maxZoom: 19,
+            hideLogo: false,
             subdomains: ["server", "services"],
             attribution: "Esri, DigitalGlobe, GeoEye, i-cubed, USDA, USGS, AEX, Getmapping, Aerogrid, IGN, IGP, swisstopo, and the GIS User Community"
           }
@@ -104,6 +114,7 @@
             pane: "esri-label",
             minZoom: 1,
             maxZoom: 19,
+            hideLogo: false,
             subdomains: ["server", "services"]
           }
         },
@@ -113,6 +124,7 @@
           options: {
             minZoom: 1,
             maxZoom: 19,
+            hideLogo: false,
             subdomains: ["server", "services"]
           }
         },
@@ -121,6 +133,7 @@
           options: {
             minZoom: 1,
             maxZoom: 13,
+            hideLogo: false,
             subdomains: ["server", "services"],
             attribution: "ESRI, NAVTEQ, DeLorme"
           }
@@ -131,6 +144,7 @@
           options: {
             minZoom: 1,
             maxZoom: 12,
+            hideLogo: false,
             subdomains: ["server", "services"]
           }
         },
@@ -139,6 +153,7 @@
           options: {
             minZoom: 1,
             maxZoom: 13,
+            hideLogo: false,
             subdomains: ["server", "services"],
             attribution: "Esri, USGS, NOAA"
           }
@@ -149,6 +164,7 @@
             pane: "esri-label",
             minZoom: 1,
             maxZoom: 13,
+            hideLogo: false,
             subdomains: ["server", "services"]
           }
         }
@@ -192,7 +208,9 @@
       map.off("moveend", this._updateMapAttribution, this);
     },
     getAttribution:function(){
-      return (this.options.attribution) ? "<span class='esri-attributions' style='line-height:14px; vertical-align: -3px; text-overflow:ellipsis; white-space:nowrap; overflow:hidden; display:inline-block;'>" + this.options.attribution + "</span>" : false;
+      var logo = (this.options.hideLogo) ?  "" : "<a href='https://developers.arcgis.com'><img src='http://js.arcgis.com/3.9/js/esri/images/map/logo-med.png' style='position:absolute; top:-38px; right:2px;'></a>";
+      var attribution = "<span class='esri-attributions' style='line-height:14px; vertical-align: -3px; text-overflow:ellipsis; white-space:nowrap; overflow:hidden; display:inline-block;'>" + this.options.attribution + "</span>" + logo;
+      return (this.options.attribution) ?  attribution : false;
     },
     _initPane: function(){
       if(!map.getPane(this.options.pane)){
