@@ -7,12 +7,12 @@
      */
 
     options: {
-      where: "1=1",
-      fields: ["*"],
+      where: '1=1',
+      fields: ['*'],
       from: false,
       to: false,
       timeField: false,
-      timeFilterMode: "server",
+      timeFilterMode: 'server',
       simplifyFactor: 0
     },
 
@@ -63,12 +63,12 @@
 
       // our first active request fires loading
       if(this._activeRequests === 1){
-        this.fire("loading", {
+        this.fire('loading', {
           bounds: bounds
         });
       }
 
-      L.esri.get(this.url + "query", this._buildQueryParams(bounds), function(response){
+      L.esri.get(this.url + 'query', this._buildQueryParams(bounds), function(response){
         //deincriment the request counter
         this._activeRequests--;
 
@@ -83,7 +83,7 @@
             features.push(L.esri.Util.arcgisToGeojson(response.features[i], {
               idAttribute: this._getObjectIdField()
             }));
-          };
+          }
         }
 
         this._addFeatures(features);
@@ -94,7 +94,7 @@
 
         // if there are no more active requests fire a load event for this view
         if(this._activeRequests <= 0){
-          this.fire("load", {
+          this.fire('load', {
             bounds: bounds
           });
         }
@@ -104,7 +104,7 @@
     _addFeatures: function(features){
       for (var i = features.length - 1; i >= 0; i--) {
         this._currentSnapshot.push(features[i].id);
-      };
+      }
 
       if(this._timeEnabled){
         this._buildTimeIndexes(features);
@@ -116,10 +116,10 @@
     _buildQueryParams: function(bounds){
       var requestParams = {
         returnGeometry: true,
-        spatialRel: "esriSpatialRelIntersects",
-        geometryType: "esriGeometryEnvelope",
+        spatialRel: 'esriSpatialRelIntersects',
+        geometryType: 'esriGeometryEnvelope',
         geometry: JSON.stringify(L.esri.Util.boundsToExtent(bounds)),
-        outFields: this.options.fields.join(","),
+        outFields: this.options.fields.join(','),
         outSR: 4326,
         inSR: 4326,
         where: this.options.where
@@ -129,8 +129,8 @@
         requestParams.maxAllowableOffset = this._getMaxAllowableOffset();
       }
 
-      if(this.options.timeFilterMode === "server" && this.options.from && this.options.to){
-        requestParams.time = this.options.from.valueOf() +","+this.options.to.valueOf();
+      if(this.options.timeFilterMode === 'server' && this.options.from && this.options.to){
+        requestParams.time = this.options.from.valueOf() +','+this.options.to.valueOf();
       }
 
       return requestParams;
@@ -146,7 +146,7 @@
 
       for (var i = this._currentSnapshot.length - 1; i >= 0; i--) {
         oldSnapshot.push(this._currentSnapshot[i]);
-      };
+      }
 
       this._requestFeatures(this._map.getBounds(), function(geojson){
         // at this point all layers (both meeting the query and not should be on the map)
@@ -154,7 +154,7 @@
 
         for (var i = geojson.length - 1; i >= 0; i--) {
           newShapshot.push(geojson[i].id);
-        };
+        }
 
         var states = this._diffLayerState(oldSnapshot, newShapshot);
 
@@ -190,7 +190,7 @@
 
       this._filterExistingFeatures(oldFrom, oldTo, from, to);
 
-      if(this.options.timeFilterMode === "server") {
+      if(this.options.timeFilterMode === 'server') {
         this._requestFeatures(this._map.getBounds(), L.Util.bind(function(){
           this._filterExistingFeatures(oldFrom, oldTo, from, to);
         }, this));
@@ -205,26 +205,26 @@
         if (idx >= 0) {
           featuresToRemove.push(idx);
         }
-      };
+      }
 
-      for (var i = featuresToRemove.length - 1; i >= 0; i--) {
+      for (i = featuresToRemove.length - 1; i >= 0; i--) {
         oldFeatures.splice(featuresToRemove[i], 1);
         newFeatures.splice(featuresToRemove[i], 1);
-      };
+      }
 
       return {
         oldFeatures: oldFeatures,
         newFeatures: newFeatures
-      }
+      };
     },
 
     _filterExistingFeatures: function (oldFrom, oldTo, newFrom, newTo) {
       var oldFeatures = this._getFeaturesInTimeRange(oldFrom, oldTo);
       var newFeatures = this._getFeaturesInTimeRange(newFrom, newTo);
 
-      var states = this._diffLayerState(oldFeatures, newFeatures);
+      var state = this._diffLayerState(oldFeatures, newFeatures);
 
-      this._currentSnapshot = states.newFeatures;
+      this._currentSnapshot = state.newFeatures;
 
       this.removeLayers(state.oldFeatures);
       this.addLayers(state.newFeatures);
@@ -238,14 +238,14 @@
       if(this.options.timeField.start && this.options.timeField.end){
         var startTimes = this.timeIndex.between(start, end, this.options.timeField.start);
         var endTimes = this.timeIndex.between(start, end, this.options.timeField.end);
-        search = startTimes.concat.endTimes;
+        search = startTimes.concat(endTimes);
       } else {
-        var search = this.timeIndex.between(start, end, this.options.timeField);
+        search = this.timeIndex.between(start, end, this.options.timeField);
       }
 
       for (var i = search.length - 1; i >= 0; i--) {
         ids.push(search[i].id);
-      };
+      }
 
       return ids;
     },
@@ -255,7 +255,7 @@
 
       for (var i = geojson.length - 1; i >= 0; i--) {
         timeEntries.push(this._createTimeEntry(geojson[i]));
-      };
+      }
 
       this.timeIndex.add(timeEntries);
     },
@@ -283,7 +283,7 @@
       var from = this.options.from.valueOf();
       var to = this.options.to.valueOf();
 
-      if(typeof this.options.timeField === "string"){
+      if(typeof this.options.timeField === 'string'){
         var date = feature.properties[this.options.timeField];
         return (date > from) && (date < to);
       }
@@ -303,7 +303,7 @@
       var mapWidth = Math.abs(this._map.getBounds().getWest() - this._map.getBounds().getEast());
       var mapWidthPx = this._map.getSize().y;
 
-      return (mapWidth / mapWidthPx) * (1 - this.options.simplifyFactor)
+      return (mapWidth / mapWidthPx) * (1 - this.options.simplifyFactor);
     },
 
 
@@ -313,7 +313,7 @@
       } else {
         if(response.fields){
           for (var j = 0; j <= response.fields.length - 1; j++) {
-            if(response.fields[j].type === "esriFieldTypeOID") {
+            if(response.fields[j].type === 'esriFieldTypeOID') {
               this._objectIdField = response.fields[j].name;
               break;
             }
@@ -322,14 +322,14 @@
       }
     },
 
-    _getObjectIdField: function(response){
+    _getObjectIdField: function(){
       return this._objectIdField;
     }
   });
 
   L.esri.featureManager = function(options){
     return new L.esri.FeatureManager(options);
-  }
+  };
 
   /**
    * Temporal Binary Search Index
@@ -337,7 +337,6 @@
 
   function TemporalIndex(values) {
     this.values = values || [];
-    this.lastKey;
   }
 
   TemporalIndex.prototype._query = function(key, query){
@@ -352,7 +351,7 @@
     var resultIndex;
 
     while (minIndex <= maxIndex) {
-      resultIndex = currentIndex = (minIndex + maxIndex) / 2 | 0;
+      resultIndex = currentIndex = (minIndex + maxIndex) / 2 || 0;
       currentElement = this.values[currentIndex];
 
       if (currentElement[key] < query) {
@@ -365,15 +364,15 @@
     }
 
     return Math.abs(maxIndex);
-  }
+  };
 
   TemporalIndex.prototype.query = function(key, query){
     this.sortOn(key);
     return this._query(key, query);
-  }
+  };
 
   TemporalIndex.prototype.sortOn = function(key){
-    if(this.lastKey != key){
+    if(this.lastKey !== key){
       this.lastKey = key;
       this.values.sort(function(a, b) {
         return a[key] - b[key];
@@ -388,10 +387,10 @@
     var endIndex = this._query(key, end);
 
     return this.values.slice(startIndex, endIndex);
-  }
+  };
 
   TemporalIndex.prototype.add = function(values){
     this.values  = this.values.concat(values);
-  }
+  };
 
 }(L));

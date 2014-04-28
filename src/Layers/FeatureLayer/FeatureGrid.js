@@ -226,7 +226,7 @@ L.esri.FeatureGrid = L.Layer.extend({
         this.cellEnter(cell.bounds, coords);
       }
 
-      this.fire("cellenter", {
+      this.fire('cellenter', {
         bounds: cell.bounds,
         coords: coords
       });
@@ -248,7 +248,7 @@ L.esri.FeatureGrid = L.Layer.extend({
         this.createCell(cell.bounds, coords);
       }
 
-      this.fire("cellcreate", {
+      this.fire('cellcreate', {
         bounds: cell.bounds,
         coords: coords
       });

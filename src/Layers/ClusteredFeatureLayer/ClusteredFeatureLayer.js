@@ -121,7 +121,7 @@ L.esri.ClusteredFeatureLayer = L.esri.FeatureManager.extend({
 
   bindPopup: function (fn, options) {
     this._popup = fn;
-    for (i in this._layers) {
+    for (var i in this._layers) {
       var layer = this._layers[i];
       var popupContent = this._popup(layer.feature, layer);
       layer.bindPopup(popupContent, options);
@@ -130,7 +130,7 @@ L.esri.ClusteredFeatureLayer = L.esri.FeatureManager.extend({
 
   unbindPopup: function () {
     this._popup =  false;
-    for (i in this._layers) {
+    for (var i in this._layers) {
       this._layers[i].unbindPopup();
     }
   },
@@ -139,9 +139,9 @@ L.esri.ClusteredFeatureLayer = L.esri.FeatureManager.extend({
    * Utility Methods
    */
 
-  eachFeature: function (fn) {
+  eachFeature: function (fn, context) {
     for (var i in this._layers) {
-      method.call(context, this._layers[i]);
+      fn.call(context, this._layers[i]);
     }
     return this;
   },

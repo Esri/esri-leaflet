@@ -4,25 +4,6 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     jshint: {
-      options: {
-        curly: true,
-        eqeqeq: true,
-        immed: true,
-        latedef: true,
-        newcap: true,
-        noarg: true,
-        sub: true,
-        undef:  true,
-        boss: true,
-        eqnull: true,
-        browser: true,
-        globals: {
-          XMLHttpRequest: true,
-          module: true,
-          L: true,
-          console: true
-        }
-      },
       all: {
         src: [
           'Gruntfile.js',
@@ -58,11 +39,11 @@ module.exports = function(grunt) {
         dest: 'dist/extras/esri-basemaps-src.js'
       },
       cluster: {
-        src: ["src/Layers/ClusteredFeatureLayer.js"],
+        src: ['src/Layers/ClusteredFeatureLayer.js'],
         dest: 'dist/extras/clustered-feature-layer-src.js'
       },
       heat: {
-        src: ["src/Layers/HeatMapFeatureLayer.js"],
+        src: ['src/Layers/HeatMapFeatureLayer.js'],
         dest: 'dist/extras/heatmap-feature-layer-src.js'
       }
     },
@@ -78,7 +59,7 @@ module.exports = function(grunt) {
       dist: {
         files: {
           'dist/esri-leaflet.js': [
-            "dist/esri-leaflet-src.js"
+            'dist/esri-leaflet-src.js'
           ],
           'dist/extras/esri-basemaps.js': [
             'dist/extras/esri-basemaps-src.js'
@@ -130,8 +111,8 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.registerTask('default', ['jshint', "test"]);
-  grunt.registerTask('build', ['jshint', "karma:coverage",'concat', 'uglify']);
+  grunt.registerTask('default', ['jshint', 'test']);
+  grunt.registerTask('build', ['jshint', 'karma:coverage','concat', 'uglify']);
   grunt.registerTask('test', ['karma:single']);
 
   grunt.loadNpmTasks('grunt-contrib-uglify');

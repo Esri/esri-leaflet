@@ -12,10 +12,10 @@ L.esri.Support = {
 
 // AJAX handlers for CORS (modern browsers) or JSONP (older browsers)
 L.esri.RequestHandlers = {
-  CORS: function(url, params, callback, context){
+  CORS: function (url, params, callback, context) {
     var httpRequest = new XMLHttpRequest();
 
-    params.f="json";
+    params.f = 'json';
 
     httpRequest.onreadystatechange = function(){
       var response;
@@ -24,10 +24,10 @@ L.esri.RequestHandlers = {
           response = JSON.parse(httpRequest.responseText);
         } catch(e) {
           response = {
-            error: "Could not parse response as JSON."
+            error: 'Could not parse response as JSON.'
           };
         }
-        if(context){
+        if(context) {
           callback.call(context, response);
         } else {
           callback(response);
@@ -39,10 +39,10 @@ L.esri.RequestHandlers = {
     httpRequest.send(null);
   },
   JSONP: function(url, params, callback, context){
-    var callbackId = "c"+(Math.random() * 1e9).toString(36).replace(".", "_");
+    var callbackId = 'c'+(Math.random() * 1e9).toString(36).replace('.', '_');
 
-    params.f="json";
-    params.callback="L.esri._callback."+callbackId;
+    params.f='json';
+    params.callback='L.esri._callback.'+callbackId;
 
     var script = L.DomUtil.create('script', null, document.body);
     script.type = 'text/javascript';
@@ -130,7 +130,7 @@ L.esri.Mixins.metadata = {
       if(response.error && (response.error.code === 499 || response.error.code === 498)) {
 
         // if we have already asked for authentication
-        if(!this._authenticating){
+        if(!this._authenticating) {
 
           // ask for authentication
           this._authenticating = true;
@@ -155,7 +155,7 @@ L.esri.Mixins.metadata = {
           metadata: response
         };
 
-        if(extent && this._map){
+        if(extent && this._map) {
           if(this._map && (extent.spatialReference.wkid === 102100 || extent.spatialReference.wkid === 3857)) {
             payload.bounds = L.esri.Util.mercatorExtentToBounds(extent, this._map);
           } else if(extent.spatialReference.wkid === 4326) {
@@ -163,7 +163,7 @@ L.esri.Mixins.metadata = {
           }
         }
 
-        this.fire("metadata", payload);
+        this.fire('metadata', payload);
       }
 
     }, this);

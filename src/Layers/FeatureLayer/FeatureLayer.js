@@ -24,23 +24,24 @@ L.esri.FeatureLayer = L.esri.FeatureManager.extend({
     for (var i = features.length - 1; i >= 0; i--) {
       var geojson = features[i];
       var layer = this._layers[geojson.id];
+      var newLayer;
 
       if(layer && !this._map.hasLayer(layer)){
         this._map.addLayer(layer);
       }
 
       if (layer && layer.setLatLngs) {
-        var newLayer = L.GeoJSON.geometryToLayer(geojson, this.options);
+        newLayer = L.GeoJSON.geometryToLayer(geojson, this.options);
         layer.setLatLngs(newLayer.getLatLngs());
       }
 
       if (layer && layer.setLatLng) {
-        var newLayer = L.GeoJSON.geometryToLayer(geojson, this.options);
+        newLayer = L.GeoJSON.geometryToLayer(geojson, this.options);
         layer.setLatLng(newLayer.getLatLng());
       }
 
       if(!layer){
-        var newLayer = L.GeoJSON.geometryToLayer(geojson, this.options);
+        newLayer = L.GeoJSON.geometryToLayer(geojson, this.options);
         newLayer.feature = L.GeoJSON.asFeature(geojson);
 
         // get bounds and add bbox
@@ -68,7 +69,7 @@ L.esri.FeatureLayer = L.esri.FeatureManager.extend({
           this._map.addLayer(newLayer);
         }
       }
-    };
+    }
 
     // load the indexes
     this.index.load(bounds);
@@ -79,7 +80,7 @@ L.esri.FeatureLayer = L.esri.FeatureManager.extend({
     for (var i = layers.length - 1; i >= 0; i--) {
       var layer = layers[i];
       layer.addTo(this._map);
-    };
+    }
   },
 
   cellLeave: function(bounds){
@@ -92,7 +93,7 @@ L.esri.FeatureLayer = L.esri.FeatureManager.extend({
       if(layer.getLatLng && !bounds.contains(layer.getLatLng())){
         layer.removeFrom(this._map);
       }
-    };
+    }
   },
 
   addLayers: function(ids){
@@ -101,7 +102,7 @@ L.esri.FeatureLayer = L.esri.FeatureManager.extend({
       if(layer){
         layer.addTo(this._map);
       }
-    };
+    }
   },
 
   removeLayers: function(ids){
@@ -110,7 +111,7 @@ L.esri.FeatureLayer = L.esri.FeatureManager.extend({
       if(layer){
         layer.removeFrom(this._map);
       }
-    };
+    }
   },
 
   /**
@@ -144,7 +145,7 @@ L.esri.FeatureLayer = L.esri.FeatureManager.extend({
 
   bindPopup: function (fn, options) {
     this._popup = fn;
-    for (i in this._layers) {
+    for (var i in this._layers) {
       var layer = this._layers[i];
       var popupContent = this._popup(layer.feature, layer);
       layer.bindPopup(popupContent, options);
@@ -153,7 +154,7 @@ L.esri.FeatureLayer = L.esri.FeatureManager.extend({
 
   unbindPopup: function () {
     this._popup =  false;
-    for (i in this._layers) {
+    for (var i in this._layers) {
       this._layers[i].unbindPopup();
     }
   },
@@ -162,9 +163,9 @@ L.esri.FeatureLayer = L.esri.FeatureManager.extend({
    * Utility Methods
    */
 
-  eachFeature: function (fn) {
+  eachFeature: function (fn, context) {
     for (var i in this._layers) {
-      method.call(context, this._layers[i]);
+      fn.call(context, this._layers[i]);
     }
     return this;
   },
@@ -181,12 +182,16 @@ L.esri.FeatureLayer = L.esri.FeatureManager.extend({
     var results = this.index.search(bounds.toBBoxString().split(','));
     var ids = [];
     var layers = [];
-    for (var i = 0; i < results.length; i++) {
+    var i;
+
+    for (i = results.length - 1; i >= 0; i--) {
       ids.push(results[i][4]);
     }
-    for (var i = ids.length - 1; i >= 0; i--) {
+
+    for (i = ids.length - 1; i >= 0; i--) {
       layers.push(this._layers[ids[i]]);
     }
+
     return layers;
   }
 

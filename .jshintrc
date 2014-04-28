@@ -1,6 +1,24 @@
 {
-  globals: {
-    L: true,
-    Terraformer: true
-  }
+  "maxparams": 5,
+  "maxdepth": 5,
+  "bitwise": true,
+  "camelcase": true,
+  "curly": true,
+  "eqeqeq": true,
+  "freeze":true,
+  "immed": true,
+  "latedef": true,
+  "newcap": true,
+  "noempty": true,
+  "nonbsp": true,
+  "nonew": true,
+  "quotmark": true,
+  "undef": true,
+  "unused": true,
+  "trailing": true,
+  "boss": false,
+  "funcscope": false,
+  "browser": true,
+  "predef": ["L", "XMLHttpRequest", "module"],
+  "indent": 2
 }

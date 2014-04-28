@@ -36,8 +36,6 @@ L.esri.HeatMapFeatureLayer = L.esri.FeatureManager.extend({
    */
 
   createLayers: function(features){
-    var latlngs = [];
-
     for (var i = features.length - 1; i >= 0; i--) {
       var geojson = features[i];
       var id = geojson.id;
@@ -75,8 +73,8 @@ L.esri.HeatMapFeatureLayer = L.esri.FeatureManager.extend({
       }
     }
 
-    for (id in this._active){
-      newLatLngs.push(this._active[id]);
+    for (var latlng in this._active){
+      newLatLngs.push(this._active[latlng]);
     }
 
     this.heat.setLatLngs(newLatLngs);

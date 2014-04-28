@@ -1,36 +1,14 @@
 /* globals L */
 
-/*!
- * The MIT License (MIT)
- *
- * Copyright (c) 2013 Sanborn Map Company, Inc.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
-
 L.esri.DynamicMapLayer = L.Layer.extend({
   includes: L.esri.Mixins.identifiableLayer,
 
   options: {
     opacity: 1,
     position: 'front',
-    updateInterval: 150
+    updateInterval: 150,
+    layers: [],
+    layerDefs: false
   },
 
   _defaultLayerParams: {
@@ -38,30 +16,21 @@ L.esri.DynamicMapLayer = L.Layer.extend({
     transparent: true,
     f: 'image',
     bboxSR: 3875,
-    imageSR: 3875,
-    layers: '',
-    layerDefs: ''
+    imageSR: 3875
   },
 
   initialize: function (url, options) {
     this.url = L.esri.Util.cleanUrl(url);
     this._layerParams = L.Util.extend({}, this._defaultLayerParams);
 
-    for (var opt in options) {
-      if (options.hasOwnProperty(opt) && this._defaultLayerParams.hasOwnProperty(opt)) {
-        this._layerParams[opt] = options[opt];
-      }
-    }
-
-    this._parseLayers();
-    this._parseLayerDefs();
-
     L.Util.setOptions(this, options);
 
-    this._getMetadata();
+    if(this.options.layers.length) {
+      this._layerParams.layers = 'show:' + this.options.layers.join(',');
+    }
 
-    if(!this._layerParams.transparent) {
-      this.options.opacity = 1;
+    if(this.options.layerDefs) {
+      this._layerParams.layerDefs = JSON.stringify(this.options.layerDefs);
     }
   },
 
@@ -69,7 +38,7 @@ L.esri.DynamicMapLayer = L.Layer.extend({
     this._update = L.Util.throttle(this._update, this.options.updateInterval, this);
 
     if (map.options.crs && map.options.crs.code) {
-      var sr = map.options.crs.code.split(":")[1];
+      var sr = map.options.crs.code.split(':')[1];
       this._layerParams.bboxSR = sr;
       this._layerParams.imageSR = sr;
     }
@@ -77,7 +46,7 @@ L.esri.DynamicMapLayer = L.Layer.extend({
     this._update();
   },
 
-  onRemove: function (map) {
+  onRemove: function () {
     if (this._currentImage) {
       this._map.removeLayer(this._currentImage);
     }
@@ -108,73 +77,45 @@ L.esri.DynamicMapLayer = L.Layer.extend({
     return this;
   },
 
-  _parseLayers: function () {
-    if (typeof this._layerParams.layers === 'undefined') {
-      delete this._layerParams.layerOption;
-      return;
-    }
+  bindPopup: function(fn, options){
+    this._popupIdentifyParams = (options) ? options.params : {};
+    this._shouldRenderPopup = false;
+    this._lastClick = false;
+    this._popup = L.popup((options) ? options.popup : {});
+    this._popupFunction = fn;
+    this._map.on('click', this._getPopupData, this);
+    this._map.on('dblclick', this._resetPopupState, this);
+  },
 
-    var action = this._layerParams.layerOption || null,
-        layers = this._layerParams.layers || null,
-        verb = 'show',
-        verbs = ['show', 'hide', 'include', 'exclude'];
+  unbindPopup: function(){
+    this._map.closePopup(this._popup);
+    this._map.off('click', this._getPopupData, this);
+    this._map.off('dblclick', this._resetPopupState, this);
+    this._popup = false;
+  },
 
-    delete this._layerParams.layerOption;
+  _getPopupData: function(e){
+    this.identify(e.latlng, this._popupIdentifyParams, L.Util.bind(function(data) {
+      setTimeout(L.Util.bind(function(){
+        this._renderPopup(e.latlng, data);
+      }, this), 300);
+    }, this));
 
-    if (!action) {
-      if (layers instanceof Array) {
-        this._layerParams.layers = verb + ':' + layers.join(',');
-      } else if (typeof layers === 'string') {
-        var match = layers.match(':');
+    // set the flags to show the popup
+    this._shouldRenderPopup = true;
+    this._lastClick = e.latlng;
+  },
 
-        if (match) {
-          layers = layers.split(match[0]);
-          if (Number(layers[1].split(',')[0])) {
-            if (verbs.indexOf(layers[0]) !== -1) {
-              verb = layers[0];
-            }
-
-            layers = layers[1];
-          }
-        }
-        this._layerParams.layers = verb + ':' + layers;
-      }
-    } else {
-      if (verbs.indexOf(action) !== -1) {
-        verb = action;
-      }
-
-      this._layerParams.layers = verb + ':' + layers;
+  _renderPopup: function(latlng, data){
+    if(this._shouldRenderPopup && this._lastClick.equals(latlng)){
+      //add the popup to the map where the mouse was clicked at
+      this._popup.setLatLng(latlng).setContent(this._popupFunction(data)).openOn(this._map);
     }
   },
 
-  _parseLayerDefs: function () {
-    if (typeof this._layerParams.layerDefs === 'undefined') {
-      return;
-    }
-
-    var layerDefs = this._layerParams.layerDefs;
-
-    var defs = [];
-
-    if (layerDefs instanceof Array) {
-      var len = layerDefs.length;
-      for (var i = 0; i < len; i++) {
-        if (layerDefs[i]) {
-          defs.push(i + ':' + layerDefs[i]);
-        }
-      }
-    } else if (typeof layerDefs === 'object') {
-      for (var layer in layerDefs) {
-        if(layerDefs.hasOwnProperty(layer)){
-          defs.push(layer + ':' + layerDefs[layer]);
-        }
-      }
-    } else {
-      delete this._layerParams.layerDefs;
-      return;
-    }
-    this._layerParams.layerDefs = defs.join(';');
+  _resetPopupState: function(e){
+    this._shouldRenderPopup = false;
+    this._lastClick = e.latlng;
   },
 
   _getImageUrl: function () {
@@ -195,7 +136,7 @@ L.esri.DynamicMapLayer = L.Layer.extend({
     return url;
   },
 
-  _update: function (e) {
+  _update: function () {
     if(this._animatingZoom){
       return;
     }
@@ -218,6 +159,8 @@ L.esri.DynamicMapLayer = L.Layer.extend({
       opacity: 0
     }).addTo(this._map);
 
+    this._loading = true;
+
     image.on('load', function(e){
       var newImage = e.target;
       var oldImage = this._currentImage;
@@ -225,7 +168,7 @@ L.esri.DynamicMapLayer = L.Layer.extend({
       if(newImage._bounds.equals(bounds)){
         this._currentImage = newImage;
 
-        if(this.options.position === "front"){
+        if(this.options.position === 'front'){
           this._currentImage.bringToFront();
         } else {
           this._currentImage.bringToBack();
@@ -236,19 +179,25 @@ L.esri.DynamicMapLayer = L.Layer.extend({
         if(oldImage){
           this._map.removeLayer(oldImage);
         }
+
+        this.fire('load', {
+          bounds: bounds
+        });
+
+        this._loading = false;
+
       } else {
         this._map.removeLayer(newImage);
       }
     }, this);
 
-    this.fire('loading', {
-      bounds: bounds
-    });
+    if(!this._loading){
+      this.fire('loading', {
+        bounds: bounds
+      });
+    }
   }
 });
-
-L.esri.DynamicMapLayer.include(L.Mixin.Events);
-L.esri.DynamicMapLayer.include(L.esri.Mixins.metadata);
 
 L.esri.dynamicMapLayer = function (url, options) {
   return new L.esri.DynamicMapLayer(url, options);

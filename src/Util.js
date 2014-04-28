@@ -130,12 +130,12 @@
 
     if(outerRings.length === 1){
       return {
-        type: "Polygon",
+        type: 'Polygon',
         coordinates: outerRings[0]
       };
     } else {
       return {
-        type: "MultiPolygon",
+        type: 'MultiPolygon',
         coordinates: outerRings
       };
     }
@@ -332,24 +332,24 @@
       url = L.esri.Util.trim(url);
 
       //add a trailing slash to the url if the user omitted it
-      if(url[url.length-1] !== "/"){
-        url += "/";
+      if(url[url.length-1] !== '/'){
+        url += '/';
       }
 
       return url;
     },
     // quick and dirty param serialization
     serialize: function(params){
-      var qs="";
+      var qs='';
 
       for(var param in params){
         if(params.hasOwnProperty(param)){
           var key = param;
           var value = params[param];
           qs+=encodeURIComponent(key);
-          qs+="=";
+          qs+='=';
           qs+=encodeURIComponent(value);
-          qs+="&";
+          qs+='&';
         }
       }
 
@@ -384,12 +384,12 @@
     // convert an LatLngBounds (Leaflet) to extent (ArcGIS)
     boundsToExtent: function(bounds) {
       return {
-        "xmin": bounds.getSouthWest().lng,
-        "ymin": bounds.getSouthWest().lat,
-        "xmax": bounds.getNorthEast().lng,
-        "ymax": bounds.getNorthEast().lat,
-        "spatialReference": {
-          "wkid" : 4326
+        'xmin': bounds.getSouthWest().lng,
+        'ymin': bounds.getSouthWest().lat,
+        'xmax': bounds.getNorthEast().lng,
+        'ymax': bounds.getNorthEast().lat,
+        'spatialReference': {
+          'wkid' : 4326
         }
       };
     },
@@ -411,21 +411,21 @@
       options.idAttribute = options.idAttribute || undefined;
 
       if(arcgis.x && arcgis.y){
-        geojson.type = "Point";
+        geojson.type = 'Point';
         geojson.coordinates = [arcgis.x, arcgis.y];
       }
 
       if(arcgis.points){
-        geojson.type = "MultiPoint";
+        geojson.type = 'MultiPoint';
         geojson.coordinates = arcgis.points.slice(0);
       }
 
       if(arcgis.paths) {
         if(arcgis.paths.length === 1){
-          geojson.type = "LineString";
+          geojson.type = 'LineString';
           geojson.coordinates = arcgis.paths[0].slice(0);
         } else {
-          geojson.type = "MultiLineString";
+          geojson.type = 'MultiLineString';
           geojson.coordinates = arcgis.paths.slice(0);
         }
       }
@@ -435,7 +435,7 @@
       }
 
       if(arcgis.geometry || arcgis.attributes) {
-        geojson.type = "Feature";
+        geojson.type = 'Feature';
         geojson.geometry = (arcgis.geometry) ? L.esri.Util.arcgisToGeojson(arcgis.geometry) : null;
         geojson.properties = (arcgis.attributes) ? clone(arcgis.attributes) : null;
         if(arcgis.attributes) {
@@ -448,51 +448,51 @@
 
     // GeoJSON -> ArcGIS
     geojsonToArcGIS: function(geojson, options){
-      var idAttribute = (options && options.idAttribute) ? options.idAttribute : "OBJECTID";
+      var idAttribute = (options && options.idAttribute) ? options.idAttribute : 'OBJECTID';
       var spatialReference = (options && options.sr) ? { wkid: options.sr } : { wkid: 4326 };
       var result = {};
       var i;
 
       switch(geojson.type){
-      case "Point":
+      case 'Point':
         result.x = geojson.coordinates[0];
         result.y = geojson.coordinates[1];
         result.spatialReference = spatialReference;
         break;
-      case "MultiPoint":
+      case 'MultiPoint':
         result.points = geojson.coordinates.slice(0);
         result.spatialReference = spatialReference;
         break;
-      case "LineString":
+      case 'LineString':
         result.paths = [geojson.coordinates.slice(0)];
         result.spatialReference = spatialReference;
         break;
-      case "MultiLineString":
+      case 'MultiLineString':
         result.paths = geojson.coordinates.slice(0);
         result.spatialReference = spatialReference;
         break;
-      case "Polygon":
+      case 'Polygon':
         result.rings = orientRings(geojson.coordinates.slice(0));
         result.spatialReference = spatialReference;
         break;
-      case "MultiPolygon":
+      case 'MultiPolygon':
         result.rings = flattenMultiPolygonRings(geojson.coordinates.slice(0));
         result.spatialReference = spatialReference;
         break;
-      case "Feature":
+      case 'Feature':
         if(geojson.geometry) {
           result.geometry = L.esri.Util.geojsonToArcGIS(geojson.geometry, options);
         }
         result.attributes = (geojson.properties) ? L.esri.Util.clone(geojson.properties) : {};
         result.attributes[idAttribute] = geojson.id;
         break;
-      case "FeatureCollection":
+      case 'FeatureCollection':
         result = [];
         for (i = 0; i < geojson.features.length; i++){
           result.push(L.esri.Util.geojsonToArcGIS(geojson.features[i], options));
         }
         break;
-      case "GeometryCollection":
+      case 'GeometryCollection':
         result = [];
         for (i = 0; i < geojson.geometries.length; i++){
           result.push(L.esri.Util.geojsonToArcGIS(geojson.geometries[i], options));
@@ -527,7 +527,7 @@
             return geojson.geometry? L.esri.Util.geojsonBounds(geojson.geometry) : null;
 
           default:
-            throw new Error("Unknown type: " + geojson.type);
+            throw new Error('Unknown type: ' + geojson.type);
         }
       }
       return null;
