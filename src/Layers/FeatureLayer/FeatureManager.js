@@ -35,6 +35,7 @@
         this.timeIndex = new TemporalIndex();
       }
 
+      this._cache = {};
       this._currentSnapshot = []; // cache of what layers should be active
       this._activeRequests = 0;
     },
@@ -55,11 +56,11 @@
      * Feature Managment
      */
 
-    createCell: function(bounds){
-      this._requestFeatures(bounds);
+    createCell: function(bounds, coords){
+      this._requestFeatures(bounds, coords);
     },
 
-    _requestFeatures: function(bounds, callback){
+    _requestFeatures: function(bounds, coords, callback){
       this._activeRequests++;
 
       // our first active request fires loading
@@ -74,7 +75,7 @@
         this._activeRequests--;
 
         if(response.features.length){
-          this._addFeatures(response.features);
+          this._addFeatures(response.features, coords);
         }
 
         if(callback){
@@ -90,9 +91,13 @@
       }, this);
     },
 
-    _addFeatures: function(features){
+    _addFeatures: function(features, coords){
+      this._cache[coords] = this._cache[coords] || [];
+
       for (var i = features.length - 1; i >= 0; i--) {
-        this._currentSnapshot.push(features[i].id);
+        var id = features[i].id;
+        this._cache[coords].push(id);
+        this._currentSnapshot.push(id);
       }
 
       if(this._timeEnabled){
@@ -123,30 +128,39 @@
     setWhere: function(where, callback){
       this.options.where = (where && where.length) ? where : '1=1';
       var oldSnapshot = [];
+      var newShapshot = [];
+      var pendingRequests = this._activeCells.length;
+      var requestCallback = L.Util.bind(function(features){
+        for (var i = features.length - 1; i >= 0; i--) {
+          newShapshot.push(features[i].id);
+        }
+
+        pendingRequests--;
+
+        if(pendingRequests <= 0){
+          var states = this._diffLayerState(oldSnapshot, newShapshot);
+
+          this._currentSnapshot = states.newFeatures;
+
+          this.removeLayers(states.oldFeatures);
+          this.addLayers(states.newFeatures);
+
+          if(callback) {
+            callback.call(this);
+          }
+        }
+      }, this);
 
       for (var i = this._currentSnapshot.length - 1; i >= 0; i--) {
         oldSnapshot.push(this._currentSnapshot[i]);
       }
 
-      this._requestFeatures(this._map.getBounds(), function(geojson){
-        // at this point all layers (both meeting the query and not should be on the map)
-        var newShapshot = [];
-
-        for (var i = geojson.length - 1; i >= 0; i--) {
-          newShapshot.push(geojson[i].id);
-        }
-
-        var states = this._diffLayerState(oldSnapshot, newShapshot);
-
-        this._currentSnapshot = states.newFeatures;
-
-        this.removeLayers(states.oldFeatures);
-        this.addLayers(states.newFeatures);
-
-        if(callback) {
-          callback.call(this);
-        }
-      });
+      for (var x = this._activeCells.length - 1; x >= 0; x--) {
+        var key = this._activeCells[i];
+        var coords = this._keyToCellCoords(key);
+        var bounds = this._cellCoordsToBounds(coords);
+        this._requestFeatures(bounds, key, requestCallback);
+      }
     },
 
     getWhere: function(){
@@ -164,6 +178,9 @@
     setTimeRange: function(from, to){
       var oldFrom = this.options.from;
       var oldTo = this.options.to;
+      var callback = L.Util.bind(function(){
+        this._filterExistingFeatures(oldFrom, oldTo, from, to);
+      }, this);
 
       this.options.from = from;
       this.options.to = to;
@@ -171,9 +188,12 @@
       this._filterExistingFeatures(oldFrom, oldTo, from, to);
 
       if(this.options.timeFilterMode === 'server') {
-        this._requestFeatures(this._map.getBounds(), L.Util.bind(function(){
-          this._filterExistingFeatures(oldFrom, oldTo, from, to);
-        }, this));
+        for (var i = this._activeCells.length - 1; i >= 0; i--) {
+          var key = this._activeCells[i];
+          var coords = this._keyToCellCoords(key);
+          var bounds = this._cellCoordsToBounds(coords);
+          this._requestFeatures(bounds, key, callback);
+        }
       }
     },
 

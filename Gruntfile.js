@@ -24,11 +24,12 @@ module.exports = function(grunt) {
           'src/EsriLeaflet.js',
           'src/Util.js',
           'src/Request.js',
-          'src/rbush.js',
           'src/Services/**/*.js',
-          'src/Layers/FeatureGrid.js',
-          'src/Layers/FeatureManager.js',
-          'src/Layers/FeatureLayer.js'
+          'src/Layers/DynamicMapLayer',
+          'src/Layers/TiledMapLayer',
+          'src/Layers/FeatureLayer/FeatureGrid.js',
+          'src/Layers/FeatureLayer/FeatureManager.js',
+          'src/Layers/FeatureLayer/FeatureLayer.js'
         ],
         dest: 'dist/esri-leaflet-src.js'
       },
@@ -40,6 +41,33 @@ module.exports = function(grunt) {
           'src/Layers/BasemapLayer.js'
         ],
         dest: 'dist/extras/esri-basemaps-src.js'
+      },
+      mapservice: {
+        src: [
+          'src/EsriLeaflet.js',
+          'src/Util.js',
+          'src/Request.js',
+          'src/Services/MapService.js',
+          'src/Services/Identify.js',
+          'src/Services/Query.js',
+          'src/Layers/DynamicMapLayer',
+          'src/Layers/TiledMapLayer'
+        ],
+        dest: 'dist/compact/esri-map-service-src.js'
+      },
+      featureservice: {
+        src: [
+          'src/EsriLeaflet.js',
+          'src/Util.js',
+          'src/Request.js',
+          'src/Services/FeatureService.js',
+          'src/Services/FeatureLayer.js',
+          'src/Services/Query.js',
+          'src/Layers/FeatureLayer/FeatureGrid.js',
+          'src/Layers/FeatureLayer/FeatureManager.js',
+          'src/Layers/FeatureLayer/FeatureLayer.js'
+        ],
+        dest: 'dist/compact/esri-feature-service-src.js'
       },
       cluster: {
         src: ['src/Layers/ClusteredFeatureLayer/ClusteredFeatureLayer.js'],
@@ -70,8 +98,11 @@ module.exports = function(grunt) {
           'dist/extras/clustered-feature-layer.js': [
             'dist/extras/clustered-feature-layer-src.js'
           ],
-          'dist/extras/heatmap-feature-layer.js': [
-            'dist/extras/heatmap-feature-layer-src.js'
+          'dist/compact/esri-map-service.js': [
+            'dist/compact/esri-map-service-src.js'
+          ],
+          'dist/compact/esri-feature-service.js': [
+            'dist/compact/esri-feature-service-src.js'
           ]
         }
       }

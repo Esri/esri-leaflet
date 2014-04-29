@@ -7,7 +7,7 @@ L.esri.FeatureLayer = L.esri.FeatureManager.extend({
   initialize: function (url, options) {
     L.esri.FeatureManager.prototype.initialize.call(this, url, options);
 
-    this.index = L.esri._rbush();
+    //this.index = L.esri._rbush();
 
     options = L.setOptions(this, options);
 
@@ -39,9 +39,9 @@ L.esri.FeatureLayer = L.esri.FeatureManager.extend({
         newLayer.feature = L.GeoJSON.asFeature(geojson);
 
         // get bounds and add bbox
-        var bbox = L.esri.Util.geojsonBounds(newLayer.feature);
-        bbox.push(newLayer.feature.id);
-        bounds.push(bbox);
+        // var bbox = L.esri.Util.geojsonBounds(newLayer.feature);
+        // bbox.push(newLayer.feature.id);
+        // bounds.push(bbox);
 
         // style the layer
         newLayer.defaultOptions = newLayer.options;
@@ -66,26 +66,33 @@ L.esri.FeatureLayer = L.esri.FeatureManager.extend({
     }
 
     // load the indexes
-    this.index.load(bounds);
+    //this.index.load(bounds);
   },
 
-  cellEnter: function(bounds){
-    var layers = this._featuresWithinBounds(bounds);
-    for (var i = layers.length - 1; i >= 0; i--) {
-      var layer = layers[i];
-      layer.addTo(this._map);
+  cellEnter: function(bounds, coords){
+    console.log('cellEnter');
+    var key = this._cellCoordsToKey(coords);
+    var layers = this._cache[key];
+    if(layers){
+      for (var i = layers.length - 1; i >= 0; i--) {
+        var layer = layers[i];
+        if(!this._map.hasLayer(layer)){
+          this._map.addLayer(layer);
+        }
+      }
     }
   },
 
-  cellLeave: function(bounds){
-    var layers = this._featuresWithinBounds(bounds);
-    for (var i = layers.length - 1; i >= 0; i--) {
-      var layer = layers[i];
-      if(layer.getBounds && !(bounds.contains(layer.getBounds()) || bounds.intersects(layer.getBounds()))) {
-        layer.removeFrom(this._map);
-      }
-      if(layer.getLatLng && !bounds.contains(layer.getLatLng())){
-        layer.removeFrom(this._map);
+  cellLeave: function(bounds, coords){
+    console.log('cellLeave');
+    var key = this._cellCoordsToKey(coords);
+    var layers = this._cache[key];
+    if(layers){
+      for (var i = layers.length - 1; i >= 0; i--) {
+        var layer = layers[i];
+        if(this._map.hasLayer(layer)){
+          this._map.removeLayer(layer);
+        }
       }
     }
   },
