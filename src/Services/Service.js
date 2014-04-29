@@ -41,12 +41,6 @@ L.esri.Service = L.Evented.extend({
   _createServiceCallback: function(method, path, params, callback, context){
     var request = [method, path, params, callback, context];
 
-    function authenticate (token) {
-      this._authenticating = false;
-      this.options.token = token;
-      this._runQueue();
-    }
-
     return L.Util.bind(function(error, response){
       if (error && (error.code === 499 || error.code === 498)) {
         this._authenticating = true;
@@ -54,7 +48,11 @@ L.esri.Service = L.Evented.extend({
         this._requestQueue.push(request);
 
         this.fire('authenticationrequired', {
-          authenticate: authenticate
+          authenticate: L.Util.bind(function (token) {
+            this._authenticating = false;
+            this.options.token = token;
+            this._runQueue();
+          }, this)
         });
       } else {
         if(context){
