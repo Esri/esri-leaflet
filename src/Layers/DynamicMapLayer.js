@@ -1,8 +1,6 @@
 /* globals L */
 
 L.esri.DynamicMapLayer = L.Layer.extend({
-  includes: L.esri.Mixins.identifiableLayer,
-
   options: {
     opacity: 1,
     position: 'front',
@@ -22,6 +20,7 @@ L.esri.DynamicMapLayer = L.Layer.extend({
   initialize: function (url, options) {
     this.url = L.esri.Util.cleanUrl(url);
     this._layerParams = L.Util.extend({}, this._defaultLayerParams);
+    this._service = new L.esri.Services.MapService(this.url);
 
     L.Util.setOptions(this, options);
 
@@ -94,12 +93,22 @@ L.esri.DynamicMapLayer = L.Layer.extend({
     this._popup = false;
   },
 
+  identify: function(){
+    return this._service.identify();
+  },
+
   _getPopupData: function(e){
-    this.identify(e.latlng, this._popupIdentifyParams, L.Util.bind(function(data) {
+    var callback = L.Util.bind(function(data) {
       setTimeout(L.Util.bind(function(){
         this._renderPopup(e.latlng, data);
       }, this), 300);
-    }, this));
+    }, this);
+
+    this.identify()
+        .at(e.latlng, this._map.getBounds(), 5)
+        .layers('visible:' + this._options.layers.join(','))
+        .size(this._map.getSize().x, this._map.getSize().y)
+        .run(callback);
 
     // set the flags to show the popup
     this._shouldRenderPopup = true;

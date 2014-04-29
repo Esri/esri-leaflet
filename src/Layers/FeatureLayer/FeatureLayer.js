@@ -1,4 +1,3 @@
-
 L.esri.FeatureLayer = L.esri.FeatureManager.extend({
 
   /**
@@ -33,11 +32,6 @@ L.esri.FeatureLayer = L.esri.FeatureManager.extend({
       if (layer && layer.setLatLngs) {
         newLayer = L.GeoJSON.geometryToLayer(geojson, this.options);
         layer.setLatLngs(newLayer.getLatLngs());
-      }
-
-      if (layer && layer.setLatLng) {
-        newLayer = L.GeoJSON.geometryToLayer(geojson, this.options);
-        layer.setLatLng(newLayer.getLatLng());
       }
 
       if(!layer){

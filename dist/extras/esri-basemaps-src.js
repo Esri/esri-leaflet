@@ -1,608 +1,953 @@
-/*! Esri-Leaflet - v0.0.1-beta.4 - 2014-03-09
+/*! Esri-Leaflet - v0.0.1-beta.4 - 2014-04-29
 *   Copyright (c) 2014 Environmental Systems Research Institute, Inc.
 *   Apache License*/
-/* globals L */
-
 L.esri = {
-  _callback: {}
-};
-
-// Namespace for various support variables we need to track
-L.esri.Support = {
-  // from: https://github.com/Modernizr/Modernizr/blob/master/feature-detects/cors.js#L20
-  CORS: !!(window.XMLHttpRequest && 'withCredentials' in new XMLHttpRequest())
-};
-
-// AJAX handlers for CORS (modern browsers) or JSONP (older browsers)
-L.esri.RequestHandlers = {
-  CORS: function(url, params, callback, context){
-    var httpRequest = new XMLHttpRequest();
-
-    params.f="json";
-
-    httpRequest.onreadystatechange = function(){
-      var response;
-      if (httpRequest.readyState === 4) {
-        try {
-          response = JSON.parse(httpRequest.responseText);
-        } catch(e) {
-          response = {
-            error: "Could not parse response as JSON."
-          };
-        }
-        if(context){
-          callback.call(context, response);
-        } else {
-          callback(response);
-        }
-      }
-    };
-
-    httpRequest.open('GET', url + '?' + L.esri.Util.serialize(params), true);
-    httpRequest.send(null);
-  },
-  JSONP: function(url, params, callback, context){
-    var callbackId = "c"+(Math.random() * 1e9).toString(36).replace(".", "_");
-
-    params.f="json";
-    params.callback="L.esri._callback."+callbackId;
-
-    var script = L.DomUtil.create('script', null, document.body);
-    script.type = 'text/javascript';
-    script.src = url + '?' +  L.esri.Util.serialize(params);
-    script.id = callbackId;
-
-    L.esri._callback[callbackId] = function(response){
-      if(context){
-        callback.call(context, response);
-      } else {
-        callback(response);
-      }
-      document.body.removeChild(script);
-      delete L.esri._callback[callbackId];
-    };
-
-  }
-};
-
-// Choose the correct AJAX handler depending on CORS support
-L.esri.get = (L.esri.Support.CORS) ? L.esri.RequestHandlers.CORS : L.esri.RequestHandlers.JSONP;
-
-L.esri.Mixins = {};
-
-L.esri.Mixins.featureGrid = {
-  _activeRequests: 0,
-  _initializeFeatureGrid: function(map){
-    this._map = map;
-    this._previousCells = [];
-    this.center = this._map.getCenter();
-    this.origin = this._map.project(this.center);
-
-    this._moveHandler = L.esri.Util.debounce(function(e){
-      if(e.type === "zoomend"){
-        this.origin = this._map.project(this.center);
-        this._previousCells = [];
-      }
-      this._requestFeatures(e.target.getBounds());
-    }, this.options.debounce, this);
-
-    map.on("zoomend resize move", this._moveHandler, this);
-
-    this._requestFeatures(map.getBounds());
-  },
-  _destroyFeatureGrid: function(map){
-    map.off("zoomend resize move", this._moveHandler, this);
-  },
-  _requestFeatures: function(bounds){
-    var cells = this._cellsWithin(bounds);
-    if(cells && cells.length > 0) {
-      this.fire("loading", {
-        bounds: bounds
-      });
-    }
-    for (var i = 0; i < cells.length; i++) {
-      this._makeRequest(cells[i], cells, bounds);
-    }
-  },
-  _makeRequest: function(cell, cells, bounds){
-    this._activeRequests++;
-
-    var requestOptions = {
-      geometryType: "esriGeometryEnvelope",
-      geometry: JSON.stringify(L.esri.Util.boundsToExtent(cell.bounds)),
-      outFields: this.options.fields.join(","),
-      outSR: 4326,
-      inSR: 4326,
-      where: this.options.where
-    };
-
-    if(this.options.token){
-      requestOptions.token = this.options.token;
-    }
-
-    L.esri.get(this.url+"query", requestOptions, function(response){
-      //deincriment the request counter
-      this._activeRequests--;
-
-      // if there are no more active requests fire a load event for this view
-      if(this._activeRequests <= 0){
-        this.fire("load", {
-          bounds: bounds
-        });
-      }
-
-      // if there is a invalid token error...
-      if(response.error && (response.error.code === 499 || response.error.code === 498)) {
-
-        // if we have already asked for authentication
-        if(!this._authenticating){
-
-          // ask for authentication
-          this._authenticating = true;
-
-          // ask for authentication. developer should fire the retry() method with the new token
-          this.fire('authenticationrequired', {
-            retry: L.Util.bind(function(token){
-              // we are no longer authenticating
-              this._authenticating = false;
-
-              // set the new token
-              this.options.token = token;
-
-              // clear the previously loaded cells, since they failed to load successfully
-              this._previousCells = [];
-
-              // request the features in the current map view again
-              this._requestFeatures(this._map.getBounds());
-            }, this)
-          });
-        }
-      } else {
-        // call the render method to render features
-        this._render(response);
-      }
-    }, this);
-  },
-  _cellsWithin: function(mapBounds){
-    var size = this._map.getSize();
-    var offset = this._map.project(this._map.getCenter());
-    var padding = Math.min(this.options.cellSize/size.x, this.options.cellSize/size.y);
-    var bounds = mapBounds.pad(0.1);
-    var cells = [];
-
-    var topLeftPoint = this._map.project(bounds.getNorthWest());
-    var bottomRightPoint = this._map.project(bounds.getSouthEast());
-
-    var topLeft = topLeftPoint.subtract(offset).divideBy(this.options.cellSize);
-    var bottomRight = bottomRightPoint.subtract(offset).divideBy(this.options.cellSize);
-
-    var offsetRows = Math.round((this.origin.x - offset.x) / this.options.cellSize);
-    var offsetCols = Math.round((this.origin.y - offset.y) / this.options.cellSize);
-
-    var minRow = L.esri.Util.roundAwayFromZero(topLeft.x)-offsetRows;
-    var maxRow = L.esri.Util.roundAwayFromZero(bottomRight.x)-offsetRows;
-    var minCol = L.esri.Util.roundAwayFromZero(topLeft.y)-offsetCols;
-    var maxCol = L.esri.Util.roundAwayFromZero(bottomRight.y)-offsetCols;
-
-    for (var row = minRow; row < maxRow; row++) {
-      for (var col = minCol; col < maxCol; col++) {
-        var cellId = "cell:"+row+":"+col;
-        var duplicate = L.esri.Util.indexOf(this._previousCells, cellId) >= 0;
-
-        if(!duplicate || !this.options.deduplicate){
-          var cellBounds = this._cellExtent(row, col);
-          var cellCenter = cellBounds.getCenter();
-          var radius = cellCenter.distanceTo(cellBounds.getNorthWest());
-          var distance = cellCenter.distanceTo(this.center);
-          var cell = {
-            row: row,
-            col: col,
-            id: cellId,
-            center: cellCenter,
-            bounds: cellBounds,
-            distance:distance,
-            radius: radius
-          };
-          cells.push(cell);
-          this._previousCells.push(cellId);
-        }
-      }
-    }
-
-    cells.sort(function (a, b) {
-      return a.distance - b.distance;
-    });
-
-    return cells;
-  },
-  _cellExtent: function(row, col){
-    var swPoint = this._cellPoint(row, col);
-    var nePoint = this._cellPoint(row+1, col+1);
-    var sw = this._map.unproject(swPoint);
-    var ne = this._map.unproject(nePoint);
-    return L.latLngBounds(sw, ne);
-  },
-  _cellPoint:function(row, col){
-    var x = this.origin.x + (row*this.options.cellSize);
-    var y = this.origin.y + (col*this.options.cellSize);
-    return [x, y];
-  }
-};
-
-L.esri.Mixins.identifiableLayer = {
-  identify:function(latLng, options, callback){
-    var defaults = {
-      sr: '4326',
-      mapExtent: JSON.stringify(L.esri.Util.boundsToExtent(this._map.getBounds())),
-      tolerance: 5,
-      geometryType: 'esriGeometryPoint',
-      imageDisplay: this._map._size.x + ',' + this._map._size.y + ',96',
-      geometry: JSON.stringify({
-        x: latLng.lng,
-        y: latLng.lat,
-        spatialReference: {
-          wkid: 4326
-        }
-      })
-    };
-
-    if(this.options.layers) {
-      defaults.layers = this.options.layers;
-    }
-
-    var params;
-
-    if (typeof options === 'function' && typeof callback === 'undefined') {
-      callback = options;
-      params = defaults;
-    } else if (typeof options === 'object') {
-      if (options.layerDefs) {
-        options.layerDefs = this.parseLayerDefs(options.layerDefs);
-      }
-
-      params = L.Util.extend(defaults, options);
-    }
-
-    L.esri.get(this.url + '/identify', params, callback);
-  },
-  parseLayerDefs: function (layerDefs) {
-    if (layerDefs instanceof Array) {
-      //throw 'must be object or string';
-      return '';
-    }
-
-    if (typeof layerDefs === 'object') {
-      return JSON.stringify(layerDefs);
-    }
-
-    return layerDefs;
-  }
-};
-
-L.esri.Mixins.metadata = {
-  _getMetadata: function(){
-   var requestOptions = {};
-
-    if(this.options.token){
-      requestOptions.token = this.options.token;
-    }
-
-    L.esri.get(this.url, requestOptions, function(response){
-      // if there is a invalid token error...
-      if(response.error && (response.error.code === 499 || response.error.code === 498)) {
-
-        // if we have already asked for authentication
-        if(!this._authenticating){
-
-          // ask for authentication
-          this._authenticating = true;
-
-          // ask for authentication. developer should fire the retry() method with the new token
-          this.fire('authenticationrequired', {
-            retry: L.Util.bind(function(token){
-              // set the new token
-              this.options.token = token;
-
-              // get metadata again
-              this._getMetadata();
-
-              // reload the image so it shows up with the new token
-              this._update();
-            }, this)
-          });
-        }
-      } else {
-        var extent = response.extent || response.initialExtent || response.fullExtent;
-        var payload = {
-          metadata: response
-        };
-
-        if(extent && this._map){
-          if(this._map && (extent.spatialReference.wkid === 102100 || extent.spatialReference.wkid === 3857)) {
-            payload.bounds = L.esri.Util.mercatorExtentToBounds(extent, this._map);
-          } else if(extent.spatialReference.wkid === 4326) {
-            payload.bounds = L.esri.Util.extentToBounds(extent);
-          }
-        }
-
-        this.fire("metadata", payload);
-      }
-
-    }, this);
+  VERSION: '0.0.1-beta.5',
+  Layers: {},
+  Services: {},
+  Util: {},
+  Support: {
+    CORS: !!(window.XMLHttpRequest && 'withCredentials' in new XMLHttpRequest()),
+    pointerEvents: document.documentElement.style.pointerEvents === ''
   }
 };
 (function(L){
 
-  var tileProtocol = (window.location.protocol !== "https:") ? "http:" : "https:";
-  var attributionStyles = "line-height:9px; text-overflow:ellipsis; white-space:nowrap;overflow:hidden; display:inline-block;";
-  var logoStyles = "position:absolute; top:-38px; right:2px;";
-  var attributionLogo = "<img src='https://serverapi.arcgisonline.com/jsapi/arcgis/3.5/js/esri/images/map/logo-med.png' alt='Powered by Esri' class='esri-attribution-logo' style='"+logoStyles+"'>";
-  var formatTextAttributions = function formatTextAttributions(text){
-    return "<span class='esri-attributions' style='"+attributionStyles+"'>" + text + "</span>";
+  // shallow object clone for feature properties and attributes
+  // from http://jsperf.com/cloning-an-object/2
+  function clone(obj) {
+    var target = {};
+    for (var i in obj) {
+      if (obj.hasOwnProperty(i)) {
+        target[i] = obj[i];
+      }
+    }
+    return target;
+  }
+
+  // determine if polygon ring coordinates are clockwise. clockwise signifies outer ring, counter-clockwise an inner ring
+  // or hole. this logic was found at http://stackoverflow.com/questions/1165647/how-to-determine-if-a-list-of-polygon-
+  // points-are-in-clockwise-order
+  function ringIsClockwise(ringToTest) {
+    var total = 0,i = 0;
+    var rLength = ringToTest.length;
+    var pt1 = ringToTest[i];
+    var pt2;
+    for (i; i < rLength - 1; i++) {
+      pt2 = ringToTest[i + 1];
+      total += (pt2[0] - pt1[0]) * (pt2[1] + pt1[1]);
+      pt1 = pt2;
+    }
+    return (total >= 0);
+  }
+
+  // ported from terraformer.js https://github.com/Esri/Terraformer/blob/master/terraformer.js#L504-L519
+  function vertexIntersectsVertex(a1, a2, b1, b2) {
+    var uaT = (b2[0] - b1[0]) * (a1[1] - b1[1]) - (b2[1] - b1[1]) * (a1[0] - b1[0]);
+    var ubT = (a2[0] - a1[0]) * (a1[1] - b1[1]) - (a2[1] - a1[1]) * (a1[0] - b1[0]);
+    var uB  = (b2[1] - b1[1]) * (a2[0] - a1[0]) - (b2[0] - b1[0]) * (a2[1] - a1[1]);
+
+    if ( uB !== 0 ) {
+      var ua = uaT / uB;
+      var ub = ubT / uB;
+
+      if ( 0 <= ua && ua <= 1 && 0 <= ub && ub <= 1 ) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  // ported from terraformer.js https://github.com/Esri/Terraformer/blob/master/terraformer.js#L521-L531
+  function arrayIntersectsArray(a, b) {
+    for (var i = 0; i < a.length - 1; i++) {
+      for (var j = 0; j < b.length - 1; j++) {
+        if (vertexIntersectsVertex(a[i], a[i + 1], b[j], b[j + 1])) {
+          return true;
+        }
+      }
+    }
+
+    return false;
+  }
+
+  // ported from terraformer.js https://github.com/Esri/Terraformer/blob/master/terraformer.js#L470-L480
+  function coordinatesContainPoint(coordinates, point) {
+    var contains = false;
+    for(var i = -1, l = coordinates.length, j = l - 1; ++i < l; j = i) {
+      if (((coordinates[i][1] <= point[1] && point[1] < coordinates[j][1]) ||
+           (coordinates[j][1] <= point[1] && point[1] < coordinates[i][1])) &&
+          (point[0] < (coordinates[j][0] - coordinates[i][0]) * (point[1] - coordinates[i][1]) / (coordinates[j][1] - coordinates[i][1]) + coordinates[i][0])) {
+        contains = !contains;
+      }
+    }
+    return contains;
+  }
+
+  // ported from terraformer-arcgis-parser.js https://github.com/Esri/terraformer-arcgis-parser/blob/master/terraformer-arcgis-parser.js#L106-L113
+  function coordinatesContainCoordinates(outer, inner){
+    var intersects = arrayIntersectsArray(outer, inner);
+    var contains = coordinatesContainPoint(outer, inner[0]);
+    if(!intersects && contains){
+      return true;
+    }
+    return false;
+  }
+
+  // do any polygons in this array contain any other polygons in this array?
+  // used for checking for holes in arcgis rings
+  // ported from terraformer-arcgis-parser.js https://github.com/Esri/terraformer-arcgis-parser/blob/master/terraformer-arcgis-parser.js#L117-L172
+  function convertRingsToGeoJSON(rings){
+    var outerRings = [];
+    var holes = [];
+
+    // for each ring
+    for (var r = 0; r < rings.length; r++) {
+      var ring = rings[r].slice(0);
+
+      // is this ring an outer ring? is it clockwise?
+      if(ringIsClockwise(ring)){
+        var polygon = [ ring ];
+        outerRings.push(polygon); // push to outer rings
+      } else {
+        holes.push(ring); // counterclockwise push to holes
+      }
+    }
+
+    // while there are holes left...
+    while(holes.length){
+      // pop a hole off out stack
+      var hole = holes.pop();
+      var matched = false;
+
+      // loop over all outer rings and see if they contain our hole.
+      for (var x = outerRings.length - 1; x >= 0; x--) {
+        var outerRing = outerRings[x][0];
+        if(coordinatesContainCoordinates(outerRing, hole)){
+          // the hole is contained push it into our polygon
+          outerRings[x].push(hole);
+
+          // we matched the hole
+          matched = true;
+
+          // stop checking to see if other outer rings contian this hole
+          break;
+        }
+      }
+
+      // no outer rings contain this hole turn it into and outer ring (reverse it)
+      if(!matched){
+        outerRings.push([ hole.reverse() ]);
+      }
+    }
+
+    if(outerRings.length === 1){
+      return {
+        type: 'Polygon',
+        coordinates: outerRings[0]
+      };
+    } else {
+      return {
+        type: 'MultiPolygon',
+        coordinates: outerRings
+      };
+    }
+  }
+
+  function calculateBoundsFromArray (array) {
+    var x1 = null, x2 = null, y1 = null, y2 = null;
+
+    for (var i = 0; i < array.length; i++) {
+      var lonlat = array[i];
+      var lon = lonlat[0];
+      var lat = lonlat[1];
+
+      if (x1 === null) {
+        x1 = lon;
+      } else if (lon < x1) {
+        x1 = lon;
+      }
+
+      if (x2 === null) {
+        x2 = lon;
+      } else if (lon > x2) {
+        x2 = lon;
+      }
+
+      if (y1 === null) {
+        y1 = lat;
+      } else if (lat < y1) {
+        y1 = lat;
+      }
+
+      if (y2 === null) {
+        y2 = lat;
+      } else if (lat > y2) {
+        y2 = lat;
+      }
+    }
+
+    return [x1, y1, x2, y2 ];
+  }
+
+  function calculateBoundsFromNestedArrays (array) {
+    var x1 = null, x2 = null, y1 = null, y2 = null;
+
+    for (var i = 0; i < array.length; i++) {
+      var inner = array[i];
+
+      for (var j = 0; j < inner.length; j++) {
+        var lonlat = inner[j];
+
+        var lon = lonlat[0];
+        var lat = lonlat[1];
+
+        if (x1 === null) {
+          x1 = lon;
+        } else if (lon < x1) {
+          x1 = lon;
+        }
+
+        if (x2 === null) {
+          x2 = lon;
+        } else if (lon > x2) {
+          x2 = lon;
+        }
+
+        if (y1 === null) {
+          y1 = lat;
+        } else if (lat < y1) {
+          y1 = lat;
+        }
+
+        if (y2 === null) {
+          y2 = lat;
+        } else if (lat > y2) {
+          y2 = lat;
+        }
+      }
+    }
+
+    return [x1, y1, x2, y2 ];
+  }
+
+  function calculateBoundsFromNestedArrayOfArrays (array) {
+    var x1 = null, x2 = null, y1 = null, y2 = null;
+
+    for (var i = 0; i < array.length; i++) {
+      var inner = array[i];
+
+      for (var j = 0; j < inner.length; j++) {
+        var innerinner = inner[j];
+        for (var k = 0; k < innerinner.length; k++) {
+          var lonlat = innerinner[k];
+
+          var lon = lonlat[0];
+          var lat = lonlat[1];
+
+          if (x1 === null) {
+            x1 = lon;
+          } else if (lon < x1) {
+            x1 = lon;
+          }
+
+          if (x2 === null) {
+            x2 = lon;
+          } else if (lon > x2) {
+            x2 = lon;
+          }
+
+          if (y1 === null) {
+            y1 = lat;
+          } else if (lat < y1) {
+            y1 = lat;
+          }
+
+          if (y2 === null) {
+            y2 = lat;
+          } else if (lat > y2) {
+            y2 = lat;
+          }
+        }
+      }
+    }
+
+    return [x1, y1, x2, y2];
+  }
+
+  // This function ensures that rings are oriented in the right directions
+  // outer rings are clockwise, holes are counterclockwise
+  // used for converting GeoJSON Polygons to ArcGIS Polygons
+  function orientRings(poly){
+    var output = [];
+    var polygon = poly.slice(0);
+    var outerRing = polygon.shift().slice(0);
+
+    if(!ringIsClockwise(outerRing)){
+      outerRing.reverse();
+    }
+
+    output.push(outerRing);
+
+    for (var i = 0; i < polygon.length; i++) {
+      var hole = polygon[i].slice(0);
+      if(ringIsClockwise(hole)){
+        hole.reverse();
+      }
+      output.push(hole);
+    }
+
+    return output;
+  }
+
+  // This function flattens holes in multipolygons to one array of polygons
+  // used for converting GeoJSON Polygons to ArcGIS Polygons
+  function flattenMultiPolygonRings(rings){
+    var output = [];
+    for (var i = 0; i < rings.length; i++) {
+      var polygon = orientRings(rings[i]);
+      for (var x = polygon.length - 1; x >= 0; x--) {
+        var ring = polygon[x].slice(0);
+        output.push(ring);
+      }
+    }
+    return output;
+  }
+
+  // make it so that passed `function` never gets called
+  // twice within `delay` milliseconds. Used to throttle
+  // `move` events on layers.
+  // http://remysharp.com/2010/07/21/throttling-function-calls/
+  L.esri.Util.debounce = function (fn, delay, context) {
+    var timer = null;
+    return function() {
+      var context = this||context, args = arguments;
+      clearTimeout(timer);
+      timer = setTimeout(function () {
+        fn.apply(context, args);
+      }, delay);
+    };
   };
+
+  // round a number away from zero used to snap
+  // row/columns away from the origin of the grid
+  L.esri.Util.roundAwayFromZero = function (num){
+    return (num > 0) ? Math.ceil(num) : Math.floor(num);
+  };
+
+  // trim whitespace on strings
+  // used to clean urls
+  L.esri.Util.trim = function(str) {
+    return str.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+  };
+
+  // trim whitespace and add a tailing slash is needed to a url
+  L.esri.Util.cleanUrl = function(url){
+    url = L.esri.Util.trim(url);
+
+    //add a trailing slash to the url if the user omitted it
+    if(url[url.length-1] !== '/'){
+      url += '/';
+    }
+
+    return url;
+  };
+
+  // quick and dirty param serialization
+  L.esri.Util.serialize = function(params){
+    var qs='';
+
+    for(var param in params){
+      if(params.hasOwnProperty(param)){
+        var key = param;
+        var value = params[param];
+        qs+=encodeURIComponent(key);
+        qs+='=';
+        qs+=encodeURIComponent(value);
+        qs+='&';
+      }
+    }
+
+    return qs.substring(0, qs.length - 1);
+  };
+
+  // index of polyfill, needed for IE 8
+  L.esri.Util.indexOf = function(arr, obj, start){
+    start = start || 0;
+    if(arr.indexOf){
+      return arr.indexOf(obj, start);
+    }
+    for (var i = start, j = arr.length; i < j; i++) {
+      if (arr[i] === obj) { return i; }
+    }
+    return -1;
+  };
+
+  // convert an extent (ArcGIS) to LatLngBounds (Leaflet)
+  L.esri.Util.extentToBounds = function(extent){
+    var sw = new L.LatLng(extent.ymin, extent.xmin);
+    var ne = new L.LatLng(extent.ymax, extent.xmax);
+    return new L.LatLngBounds(sw, ne);
+  };
+
+  L.esri.Util.mercatorExtentToBounds = function(extent, map){
+    var sw = map.unproject(L.point([extent.ymin, extent.xmin]));
+    var ne = map.unproject(L.point([extent.ymax, extent.xmax]));
+    return new L.LatLngBounds(sw, ne);
+  };
+
+  // convert an LatLngBounds (Leaflet) to extent (ArcGIS)
+  L.esri.Util.boundsToExtent = function(bounds) {
+    return {
+      'xmin': bounds.getSouthWest().lng,
+      'ymin': bounds.getSouthWest().lat,
+      'xmax': bounds.getNorthEast().lng,
+      'ymax': bounds.getNorthEast().lat,
+      'spatialReference': {
+        'wkid' : 4326
+      }
+    };
+  };
+
+  // convert a LatLngBounds (Leaflet) to a Envelope (Terraformer.Rtree)
+  L.esri.Util.boundsToEnvelope = function(bounds){
+    var extent = L.esri.Util.boundsToExtent(bounds);
+    return {
+      x: extent.xmin,
+      y: extent.ymin,
+      w: Math.abs(extent.xmin - extent.xmax),
+      h: Math.abs(extent.ymin - extent.ymax)
+    };
+  };
+
+  L.esri.Util.arcgisToGeojson = function (arcgis, options){
+    var geojson = {};
+
+    options = options || {};
+    options.idAttribute = options.idAttribute || undefined;
+
+    if(arcgis.x && arcgis.y){
+      geojson.type = 'Point';
+      geojson.coordinates = [arcgis.x, arcgis.y];
+    }
+
+    if(arcgis.points){
+      geojson.type = 'MultiPoint';
+      geojson.coordinates = arcgis.points.slice(0);
+    }
+
+    if(arcgis.paths) {
+      if(arcgis.paths.length === 1){
+        geojson.type = 'LineString';
+        geojson.coordinates = arcgis.paths[0].slice(0);
+      } else {
+        geojson.type = 'MultiLineString';
+        geojson.coordinates = arcgis.paths.slice(0);
+      }
+    }
+
+    if(arcgis.rings) {
+      geojson = convertRingsToGeoJSON(arcgis.rings.slice(0));
+    }
+
+    if(arcgis.geometry || arcgis.attributes) {
+      geojson.type = 'Feature';
+      geojson.geometry = (arcgis.geometry) ? L.esri.Util.arcgisToGeojson(arcgis.geometry) : null;
+      geojson.properties = (arcgis.attributes) ? clone(arcgis.attributes) : null;
+      if(arcgis.attributes) {
+        geojson.id =  arcgis.attributes[options.idAttribute] || arcgis.attributes.OBJECTID || arcgis.attributes.FID;
+      }
+    }
+
+    return geojson;
+  };
+
+  // GeoJSON -> ArcGIS
+  L.esri.Util.geojsonToArcGIS = function(geojson, options){
+    var idAttribute = (options && options.idAttribute) ? options.idAttribute : 'OBJECTID';
+    var spatialReference = (options && options.sr) ? { wkid: options.sr } : { wkid: 4326 };
+    var result = {};
+    var i;
+
+    switch(geojson.type){
+    case 'Point':
+      result.x = geojson.coordinates[0];
+      result.y = geojson.coordinates[1];
+      result.spatialReference = spatialReference;
+      break;
+    case 'MultiPoint':
+      result.points = geojson.coordinates.slice(0);
+      result.spatialReference = spatialReference;
+      break;
+    case 'LineString':
+      result.paths = [geojson.coordinates.slice(0)];
+      result.spatialReference = spatialReference;
+      break;
+    case 'MultiLineString':
+      result.paths = geojson.coordinates.slice(0);
+      result.spatialReference = spatialReference;
+      break;
+    case 'Polygon':
+      result.rings = orientRings(geojson.coordinates.slice(0));
+      result.spatialReference = spatialReference;
+      break;
+    case 'MultiPolygon':
+      result.rings = flattenMultiPolygonRings(geojson.coordinates.slice(0));
+      result.spatialReference = spatialReference;
+      break;
+    case 'Feature':
+      if(geojson.geometry) {
+        result.geometry = L.esri.Util.geojsonToArcGIS(geojson.geometry, options);
+      }
+      result.attributes = (geojson.properties) ? L.esri.Util.clone(geojson.properties) : {};
+      result.attributes[idAttribute] = geojson.id;
+      break;
+    case 'FeatureCollection':
+      result = [];
+      for (i = 0; i < geojson.features.length; i++){
+        result.push(L.esri.Util.geojsonToArcGIS(geojson.features[i], options));
+      }
+      break;
+    case 'GeometryCollection':
+      result = [];
+      for (i = 0; i < geojson.geometries.length; i++){
+        result.push(L.esri.Util.geojsonToArcGIS(geojson.geometries[i], options));
+      }
+      break;
+    }
+
+    return result;
+  };
+
+  L.esri.Util.geojsonBounds = function(geojson) {
+    if(geojson.type){
+      switch (geojson.type) {
+        case 'Point':
+          return [ geojson.coordinates[0], geojson.coordinates[1], geojson.coordinates[0], geojson.coordinates[1]];
+
+        case 'MultiPoint':
+          return calculateBoundsFromArray(geojson.coordinates);
+
+        case 'LineString':
+          return calculateBoundsFromArray(geojson.coordinates);
+
+        case 'MultiLineString':
+          return calculateBoundsFromNestedArrays(geojson.coordinates);
+
+        case 'Polygon':
+          return calculateBoundsFromNestedArrays(geojson.coordinates);
+
+        case 'MultiPolygon':
+          return calculateBoundsFromNestedArrayOfArrays(geojson.coordinates);
+
+        case 'Feature':
+          return geojson.geometry? L.esri.Util.geojsonBounds(geojson.geometry) : null;
+
+        default:
+          throw new Error('Unknown type: ' + geojson.type);
+      }
+    }
+
+    return null;
+  };
+
+  L.esri.Util.featureSetToFeatureCollection = function(featureSet){
+    var objectIdField;
+
+    if(featureSet.objectIdFieldName){
+      objectIdField = featureSet.objectIdFieldName;
+    } else {
+      if(featureSet.fields){
+        for (var j = 0; j <= featureSet.fields.length - 1; j++) {
+          if(featureSet.fields[j].type === 'esriFieldTypeOID') {
+            objectIdField = featureSet.fields[j].name;
+            break;
+          }
+        }
+      }
+    }
+
+    var featureCollection = {
+      type: 'FeatureCollection',
+      features: []
+    };
+
+    if(featureSet.features.length){
+      for (var i = featureSet.features.length - 1; i >= 0; i--) {
+        featureCollection.features.push(L.esri.Util.arcgisToGeojson(featureSet.features[i], {
+          idAttribute: objectIdField
+        }));
+      }
+    }
+
+    return featureCollection;
+  };
+
+})(L);
+(function(L){
+
+  function createRequest(callback, context){
+   var httpRequest = new XMLHttpRequest();
+
+    httpRequest.onreadystatechange = function(){
+      var response;
+      var error;
+
+      if (httpRequest.readyState === 4) {
+        try {
+          response = JSON.parse(httpRequest.responseText);
+        } catch(e) {
+          response = null;
+          error = {
+            error: 'Could not parse response as JSON.',
+            code: 500
+          };
+        }
+
+        if (!error && response.error) {
+          error = response.error;
+          response = null;
+        }
+
+        callback.call(context, error, response);
+      }
+    };
+
+    return httpRequest;
+  }
+
+  // AJAX handlers for CORS (modern browsers) or JSONP (older browsers)
+  L.esri.RequestHandlers = {
+    post: function (url, params, callback, context) {
+      params.f = 'json';
+
+      var httpRequest = createRequest(callback, context);
+
+      httpRequest.open('POST', url);
+      httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+      httpRequest.send(L.esri.Util.serialize(params));
+    },
+    get: {
+      CORS: function (url, params, callback, context) {
+        params.f = 'json';
+
+        var httpRequest = createRequest(callback, context);
+
+        httpRequest.open('GET', url + '?' + L.esri.Util.serialize(params), true);
+        httpRequest.send(null);
+      },
+      JSONP: function(url, params, callback, context){
+        L.esri._callback = L.esri._callback || {};
+
+        var callbackId = 'c'+(Math.random() * 1e9).toString(36).replace('.', '_');
+
+        params.f='json';
+        params.callback='L.esri._callback.'+callbackId;
+
+        var script = L.DomUtil.create('script', null, document.body);
+        script.type = 'text/javascript';
+        script.src = url + '?' +  L.esri.Util.serialize(params);
+        script.id = callbackId;
+
+        L.esri._callback[callbackId] = function(response){
+          var error;
+          var responseType = Object.prototype.toString.call(response);
+
+          if(!(responseType === '[object Object]' || responseType === '[object Array]')){
+            error = {
+              code: 500,
+              error: 'Expected array or object as JSONP response'
+            };
+            response = null;
+          }
+
+          if (!error && response.error) {
+            error = response.error;
+            response = null;
+          }
+
+          callback.call(context, error, response);
+
+          document.body.removeChild(script);
+          delete L.esri._callback[callbackId];
+        };
+      }
+    }
+  };
+
+  // Choose the correct AJAX handler depending on CORS support
+  L.esri.get = (L.esri.Support.CORS) ? L.esri.RequestHandlers.get.CORS : L.esri.RequestHandlers.get.JSONP;
+
+  // Always use XMLHttpRequest for posts
+  L.esri.post = L.esri.RequestHandlers.post;
+
+})(L);
+(function(L){
+
+  var tileProtocol = (window.location.protocol !== 'https:') ? 'http:' : 'https:';
 
   L.esri.BasemapLayer = L.TileLayer.extend({
     statics: {
       TILES: {
         Streets: {
-          urlTemplate: tileProtocol + "//{s}.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}",
-          attributionUrl: "https://static.arcgis.com/attribution/World_Street_Map",
+          urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
+          attributionUrl: 'https://static.arcgis.com/attribution/World_Street_Map',
           options: {
             minZoom: 1,
             maxZoom: 19,
-            subdomains: ["server", "services"],
-            attribution: formatTextAttributions("Esri") + attributionLogo
+            hideLogo: false,
+            subdomains: ['server', 'services'],
+            attribution: 'Esri'
           }
         },
         Topographic: {
-          urlTemplate: tileProtocol + "//{s}.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}",
-          attributionUrl: "https://static.arcgis.com/attribution/World_Topo_Map",
+          urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',
+          attributionUrl: 'https://static.arcgis.com/attribution/World_Topo_Map',
           options: {
             minZoom: 1,
             maxZoom: 19,
-            subdomains: ["server", "services"],
-            attribution: formatTextAttributions("Esri") + attributionLogo
+            hideLogo: false,
+            subdomains: ['server', 'services'],
+            attribution: 'Esri'
           }
         },
         Oceans: {
-          urlTemplate: tileProtocol + "//server.arcgisonline.com/ArcGIS/rest/services/Ocean_Basemap/MapServer/tile/{z}/{y}/{x}",
-          attributionUrl: "https://static.arcgis.com/attribution/Ocean_Basemap",
+          urlTemplate: tileProtocol + '//{s}.arcgisonline.com/arcgis/rest/services/Ocean/World_Ocean_Base/MapServer/tile/{z}/{y}/{x}',
+          attributionUrl: 'https://static.arcgis.com/attribution/Ocean_Basemap',
           options: {
             minZoom: 1,
             maxZoom: 16,
-            subdomains: ["server", "services"],
-            attribution: formatTextAttributions("Esri") + attributionLogo
+            hideLogo: false,
+            subdomains: ['server', 'services'],
+            attribution: 'Esri'
+          }
+        },
+        OceansLabels: {
+          urlTemplate: tileProtocol + '//{s}.arcgisonline.com/arcgis/rest/services/Ocean/World_Ocean_Reference/MapServer/tile/{z}/{y}/{x}',
+          options: {
+            pane: 'esri-label',
+            minZoom: 1,
+            maxZoom: 16,
+            hideLogo: false,
+            subdomains: ['server', 'services']
           }
         },
         NationalGeographic: {
-          urlTemplate: "https://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}",
+          urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}',
           options: {
             minZoom: 1,
             maxZoom: 16,
-            subdomains: ["server", "services"],
-            attribution: formatTextAttributions("Esri") + attributionLogo
+            hideLogo: false,
+            subdomains: ['server', 'services'],
+            attribution: 'Esri'
           }
         },
         DarkGray: {
-          urlTemplate: tileProtocol + "//tiles{s}.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/World_Dark_Gray_Base_Beta/MapServer/tile/{z}/{y}/{x}",
+          urlTemplate: tileProtocol + '//{s}.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/World_Dark_Gray_Base_Beta/MapServer/tile/{z}/{y}/{x}',
           options: {
             minZoom: 1,
             maxZoom: 10,
-            subdomains: [1, 2],
-            attribution: formatTextAttributions("Esri, DeLorme, HERE") + attributionLogo
+            hideLogo: false,
+            subdomains: ['server', 'services'],
+            attribution: 'Esri, DeLorme, HERE'
           }
         },
         DarkGrayLabels: {
-          urlTemplate: tileProtocol + "//tiles{s}.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/World_Dark_Gray_Reference_Beta/MapServer/tile/{z}/{y}/{x}",
+          urlTemplate: tileProtocol + '//{s}.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/World_Dark_Gray_Reference_Beta/MapServer/tile/{z}/{y}/{x}',
           options: {
+            pane: 'esri-label',
             minZoom: 1,
             maxZoom: 10,
-            subdomains: [1, 2]
+            hideLogo: false,
+            subdomains: ['server', 'services']
           }
         },
         Gray: {
-          urlTemplate: tileProtocol + "//{s}.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}",
+          urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}',
           options: {
             minZoom: 1,
             maxZoom: 16,
-            subdomains: ["server", "services"],
-            attribution: formatTextAttributions("Esri, NAVTEQ, DeLorme") + attributionLogo
+            hideLogo: false,
+            subdomains: ['server', 'services'],
+            attribution: 'Esri, NAVTEQ, DeLorme'
           }
         },
         GrayLabels: {
-          urlTemplate: tileProtocol + "//{s}.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}",
+          urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}',
           options: {
+            pane: 'esri-label',
             minZoom: 1,
             maxZoom: 16,
-            subdomains: ["server", "services"]
+            hideLogo: false,
+            subdomains: ['server', 'services']
           }
         },
         Imagery: {
-          urlTemplate: tileProtocol + "//{s}.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+          urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
           options: {
             minZoom: 1,
             maxZoom: 19,
-            subdomains: ["server", "services"],
-            attribution: formatTextAttributions("Esri, DigitalGlobe, GeoEye, i-cubed, USDA, USGS, AEX, Getmapping, Aerogrid, IGN, IGP, swisstopo, and the GIS User Community") + attributionLogo
+            hideLogo: false,
+            subdomains: ['server', 'services'],
+            attribution: 'Esri, DigitalGlobe, GeoEye, i-cubed, USDA, USGS, AEX, Getmapping, Aerogrid, IGN, IGP, swisstopo, and the GIS User Community'
           }
         },
         ImageryLabels: {
-          urlTemplate: tileProtocol + "//{s}.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",
+          urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}',
           options: {
+            pane: 'esri-label',
             minZoom: 1,
             maxZoom: 19,
-            subdomains: ["server", "services"]
+            hideLogo: false,
+            subdomains: ['server', 'services']
           }
         },
         ImageryTransportation: {
-          urlTemplate: tileProtocol + "//{s}.arcgisonline.com/ArcGIS/rest/services/Reference/World_Transportation/MapServer/tile/{z}/{y}/{x}",
+          urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/Reference/World_Transportation/MapServer/tile/{z}/{y}/{x}',
+          pane: 'esri-label',
           options: {
             minZoom: 1,
             maxZoom: 19,
-            subdomains: ["server", "services"]
+            hideLogo: false,
+            subdomains: ['server', 'services']
           }
         },
         ShadedRelief: {
-          urlTemplate: tileProtocol + "//{s}.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}",
+          urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}',
           options: {
             minZoom: 1,
             maxZoom: 13,
-            subdomains: ["server", "services"],
-            attribution: formatTextAttributions("ESRI, NAVTEQ, DeLorme") + attributionLogo
+            hideLogo: false,
+            subdomains: ['server', 'services'],
+            attribution: 'ESRI, NAVTEQ, DeLorme'
           }
         },
         ShadedReliefLabels: {
-          urlTemplate: tileProtocol + "//{s}.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places_Alternate/MapServer/tile/{z}/{y}/{x}",
+          urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places_Alternate/MapServer/tile/{z}/{y}/{x}',
+          pane: 'esri-label',
           options: {
             minZoom: 1,
             maxZoom: 12,
-            subdomains: ["server", "services"]
+            hideLogo: false,
+            subdomains: ['server', 'services']
           }
         },
         Terrain: {
-          urlTemplate: tileProtocol + "//{s}.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/{z}/{y}/{x}",
+          urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/{z}/{y}/{x}',
           options: {
             minZoom: 1,
             maxZoom: 13,
-            subdomains: ["server", "services"],
-            attribution: formatTextAttributions("Esri, USGS, NOAA") + attributionLogo
+            hideLogo: false,
+            subdomains: ['server', 'services'],
+            attribution: 'Esri, USGS, NOAA'
           }
         },
         TerrainLabels: {
-          urlTemplate: tileProtocol + "//{s}.arcgisonline.com/ArcGIS/rest/services/Reference/World_Reference_Overlay/MapServer/tile/{z}/{y}/{x}",
+          urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/Reference/World_Reference_Overlay/MapServer/tile/{z}/{y}/{x}',
           options: {
+            pane: 'esri-label',
             minZoom: 1,
             maxZoom: 13,
-            subdomains: ["server", "services"]
+            hideLogo: false,
+            subdomains: ['server', 'services']
           }
         }
       }
     },
     initialize: function(key, options){
       var config;
+
       // set the config variable with the appropriate config object
-      if (typeof key === "object" && key.urlTemplate && key.options){
+      if (typeof key === 'object' && key.urlTemplate && key.options){
         config = key;
-      } else if(typeof key === "string" && L.esri.BasemapLayer.TILES[key]){
+      } else if(typeof key === 'string' && L.esri.BasemapLayer.TILES[key]){
         config = L.esri.BasemapLayer.TILES[key];
       } else {
-        throw new Error("L.esri.BasemapLayer: Invalid parameter. Use one of 'Streets', 'Topographic', 'Oceans', 'NationalGeographic', 'Gray', 'GrayLabels', 'DarkGray', 'DarkGrayLabels', 'Imagery', 'ImageryLabels', 'ImageryTransportation', 'ShadedRelief' or 'ShadedReliefLabels'");
+        throw new Error('L.esri.BasemapLayer: Invalid parameter. Use one of "Streets", "Topographic", "Oceans", "OceansLabels", "NationalGeographic", "Gray", "GrayLabels", "DarkGray", "DarkGrayLabels", "Imagery", "ImageryLabels", "ImageryTransportation", "ShadedRelief", "ShadedReliefLabels", "Terrain" or "TerrainLabels"');
       }
 
       // merge passed options into the config options
-      var mergedOptions = L.Util.extend(config.options, options);
+      var tileOptions = L.Util.extend(config.options, options);
 
       // call the initialize method on L.TileLayer to set everything up
-      L.TileLayer.prototype.initialize.call(this, config.urlTemplate, L.Util.setOptions(this, mergedOptions));
+      L.TileLayer.prototype.initialize.call(this, config.urlTemplate, L.Util.setOptions(this, tileOptions));
 
       // if this basemap requires dynamic attribution set it up
       if(config.attributionUrl){
-        var attributionUrl = config.attributionUrl;
-        this._dynamicAttribution = true;
-        this._getAttributionData(attributionUrl);
+        this._getAttributionData(config.attributionUrl);
       }
     },
-    _dynamicAttribution: false,
-    bounds: null,
-    zoom: null,
     onAdd: function(map){
-      if(!map.attributionControl && console){
-        console.warn("L.esri.BasemapLayer requires attribution. Please set attributionControl to true on your map");
-        return;
+      if(this.options.pane && L.esri.Support.pointerEvents){
+        this._initPane();
       }
+
       L.TileLayer.prototype.onAdd.call(this, map);
-      if(this._dynamicAttribution){
-        this.on("load", this._handleTileUpdates, this);
-        this._map.on("viewreset zoomend dragend", this._handleTileUpdates, this);
-      }
-      this._map.on("resize", this._resizeAttribution, this);
+
+      map.on('moveend', this._updateMapAttribution, this);
     },
     onRemove: function(map){
-      if(this._dynamicAttribution){
-        this.off("load", this._handleTileUpdates, this);
-        this._map.off("viewreset zoomend dragend", this._handleTileUpdates, this);
-      }
-      this._map.off("resize", this._resizeAttribution, this);
       L.TileLayer.prototype.onRemove.call(this, map);
+
+      map.off('moveend', this._updateMapAttribution, this);
     },
-    _handleTileUpdates: function(e){
-      var newBounds;
-      var newZoom;
-
-      if(e.type === "load"){
-        newBounds = this._map.getBounds();
-        newZoom = this._map.getZoom();
-      }
-
-      if(e.type === "viewreset" || e.type === "dragend" || e.type ==="zoomend"){
-        newBounds = e.target.getBounds();
-        newZoom = e.target.getZoom();
-      }
-
-      if(this.attributionBoundingBoxes && newBounds && newZoom){
-        if(!newBounds.equals(this.bounds) || newZoom !== this.zoom){
-          this.bounds = newBounds;
-          this.zoom = newZoom;
-          this._updateMapAttribution();
-        }
-      }
+    getAttribution:function(){
+      var logo = (this.options.hideLogo) ?  '' : '<a href="https://developers.arcgis.com"><img src="http://js.arcgis.com/3.9/js/esri/images/map/logo-med.png" style="position:absolute; top:-38px; right:2px;"></a>';
+      var attribution = '<span class="esri-attributions" style="line-height:14px; vertical-align: -3px; text-overflow:ellipsis; white-space:nowrap; overflow:hidden; display:inline-block;">' + this.options.attribution + '</span>' + logo;
+      return (this.options.attribution) ?  attribution : false;
     },
-    _resizeAttribution: function(){
-      var mapWidth = this._map.getSize().x;
-      this._getAttributionLogo().style.display = (mapWidth < 600) ? "none":"block";
-      this._getAttributionSpan().style.maxWidth =  (mapWidth* 0.75) + "px";
+    _initPane: function(){
+      if(!this._map.getPane(this.options.pane)){
+        var pane = this._map.createPane(this.options.pane);
+        pane.style.pointerEvents = 'none';
+        pane.style.zIndex = 5;
+      }
     },
     _getAttributionData: function(url){
-      this.attributionBoundingBoxes = [];
-      L.esri.RequestHandlers.JSONP(url, {}, this._processAttributionData, this);
-    },
-    _processAttributionData: function(attributionData){
-      for (var c = 0; c < attributionData.contributors.length; c++) {
-        var contributor = attributionData.contributors[c];
-        for (var i = 0; i < contributor.coverageAreas.length; i++) {
-          var coverageArea = contributor.coverageAreas[i];
-          var southWest = new L.LatLng(coverageArea.bbox[0], coverageArea.bbox[1]);
-          var northEast = new L.LatLng(coverageArea.bbox[2], coverageArea.bbox[3]);
-          this.attributionBoundingBoxes.push({
-            attribution: contributor.attribution,
-            score: coverageArea.score,
-            bounds: new L.LatLngBounds(southWest, northEast),
-            minZoom: coverageArea.zoomMin,
-            maxZoom: coverageArea.zoomMax
-          });
-        }
-      }
-      this.attributionBoundingBoxes.sort(function(a,b){
-        if (a.score < b.score){ return -1; }
-        if (a.score > b.score){ return 1; }
-        return 0;
-      });
-      if(this.bounds){
-        this._updateMapAttribution();
-      }
-    },
-    _getAttributionSpan:function(){
-      return this._map._container.querySelectorAll('.esri-attributions')[0];
-    },
-    _getAttributionLogo:function(){
-      return this._map._container.querySelectorAll('.esri-attribution-logo')[0];
-    },
-    _updateMapAttribution: function(){
-      var newAttributions = '';
-      for (var i = 0; i < this.attributionBoundingBoxes.length; i++) {
-        var attr = this.attributionBoundingBoxes[i];
-        if(this.bounds.intersects(attr.bounds) && this.zoom >= attr.minZoom && this.zoom <= attr.maxZoom) {
-          var attribution = this.attributionBoundingBoxes[i].attribution;
-          if(newAttributions.indexOf(attribution) === -1){
-            if(newAttributions.length > 0){
-              newAttributions += ', ';
-            }
-            newAttributions += attribution;
+      L.esri.RequestHandlers.get.JSONP(url, {}, function(error, attributions){
+        this._attributions = [];
+        for (var c = 0; c < attributions.contributors.length; c++) {
+          var contributor = attributions.contributors[c];
+          for (var i = 0; i < contributor.coverageAreas.length; i++) {
+            var coverageArea = contributor.coverageAreas[i];
+            var southWest = new L.LatLng(coverageArea.bbox[0], coverageArea.bbox[1]);
+            var northEast = new L.LatLng(coverageArea.bbox[2], coverageArea.bbox[3]);
+            this._attributions.push({
+              attribution: contributor.attribution,
+              score: coverageArea.score,
+              bounds: new L.LatLngBounds(southWest, northEast),
+              minZoom: coverageArea.zoomMin,
+              maxZoom: coverageArea.zoomMax
+            });
           }
         }
+
+        this._attributions.sort(function(a, b){
+          return b.score - a.score;
+        });
+
+        this._updateMapAttribution();
+      }, this);
+    },
+    _updateMapAttribution: function(){
+      if(this._map && this._map.attributionControl && this._attributions){
+        var newAttributions = '';
+        var bounds = this._map.getBounds();
+        var zoom = this._map.getZoom();
+
+        for (var i = 0; i < this._attributions.length; i++) {
+          var attribution = this._attributions[i];
+          var text = attribution.attribution;
+          if(!newAttributions.match(text) && bounds.intersects(attribution.bounds) && zoom >= attribution.minZoom && zoom <= attribution.maxZoom) {
+            newAttributions += (', ' + text);
+          }
+        }
+
+        var attributionElement = this._map.attributionControl._container.querySelector('.esri-attributions');
+        attributionElement.innerHTML = newAttributions.substr(2);
+        attributionElement.style.maxWidth =  (this._map.getSize().x * 0.65) + 'px';
       }
-      this._getAttributionSpan().innerHTML = newAttributions;
-      this._resizeAttribution();
     }
   });
 

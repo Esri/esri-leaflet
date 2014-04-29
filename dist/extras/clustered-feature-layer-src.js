@@ -1,108 +1,156 @@
-/*! Esri-Leaflet - v0.0.1-beta.4 - 2014-03-09
+/*! Esri-Leaflet - v0.0.1-beta.4 - 2014-04-29
 *   Copyright (c) 2014 Environmental Systems Research Institute, Inc.
 *   Apache License*/
-/* globals L */
-(function(L, Terraformer){
-  L.esri.ClusteredFeatureLayer = L.Class.extend({
-    includes: L.esri.Mixins.featureGrid,
-    options: {
-      cellSize: 512,
-      debounce: 100,
-      deduplicate: true,
-      where: "1=1",
-      fields: ["*"],
-      createMarker: function (geojson, latlng) {
-        return new L.marker(latlng);
-      },
-      onEachMarker: undefined
-    },
-    initialize: function(url, options){
-      this.url = L.esri.Util.cleanUrl(url);
+L.esri.ClusteredFeatureLayer = L.esri.FeatureManager.extend({
 
-      L.Util.setOptions(this, options);
+  /**
+   * Constructor
+   */
 
-      this._getMetadata();
+  initialize: function (url, options) {
+    L.esri.FeatureManager.prototype.initialize.call(this, url, options);
 
-      this._loaded = [];
-      this.cluster = this.options.cluster || new L.MarkerClusterGroup();
-    },
-    onAdd: function(map){
-      this.cluster.addTo(map);
-      this._initializeFeatureGrid(map);
-    },
-    onRemove: function(map){
-      map.removeLayer(this.cluster);
-      this._destroyFeatureGrid(map);
-    },
-    addTo: function (map) {
-      map.addLayer(this);
-      return this;
-    },
-    getWhere: function(){
-      return this.options.where;
-    },
-    setWhere: function(where){
-      this.options.where = where;
-      this.refresh();
-      return this;
-    },
-    getFields: function(){
-      return this.options.fields;
-    },
-    setFields: function(fields){
-      this.options.fields = fields;
-      this.refresh();
-      return this;
-    },
-    refresh: function(){
-      this.cluster.clearLayers();
-      this._loaded = [];
-      this._previousCells = [];
-      this._requestFeatures(this._map.getBounds());
-    },
-    _setObjectIdField: function(response){
-      if(response.objectIdFieldName){
-        this._objectIdField = response.objectIdFieldName;
-      } else {
-        for (var j = 0; j <= response.fields.length - 1; j++) {
-          if(response.fields[j].type === "esriFieldTypeOID") {
-            this._objectIdField = response.fields[j].name;
-            break;
-          }
+    this.index = L.esri._rbush();
+
+    options = L.setOptions(this, options);
+
+    this._layers = {};
+
+    this.cluster = new L.MarkerClusterGroup(options);
+    this.cluster.addEventParent(this);
+  },
+
+  /**
+   * Layer Interface
+   */
+
+  onAdd: function(){
+    L.esri.FeatureManager.prototype.onAdd.call(this);
+    this._map.addLayer(this.cluster);
+  },
+
+  onRemove: function(){
+    L.esri.FeatureManager.prototype.onRemove.call(this);
+        this._map.removeLayer(this.cluster);
+  },
+
+  /**
+   * Feature Managment Methods
+   */
+
+  createLayers: function(features){
+    var markers = [];
+
+    for (var i = features.length - 1; i >= 0; i--) {
+      var geojson = features[i];
+      var layer = this._layers[geojson.id];
+      if(!layer){
+        var newLayer = L.GeoJSON.geometryToLayer(geojson, this.options);
+        newLayer.feature = L.GeoJSON.asFeature(geojson);
+
+        // style the layer
+        newLayer.defaultOptions = newLayer.options;
+        this.resetStyle(newLayer);
+
+        // bubble events from layers to this
+        newLayer.addEventParent(this);
+
+        // bind a popup if we have one
+        if(this._popup){
+          newLayer.bindPopup(this._popup(newLayer.feature, newLayer));
         }
-      }
-    },
-    _render: function(response){
-      if(response.features && response.features.length && !response.error){
-        if(!this._objectIdField){
-          this._setObjectIdField(response);
-        }
-        var markers = [];
-        for (var i = response.features.length - 1; i >= 0; i--) {
-          var feature = response.features[i];
-          var id = feature.attributes[this._objectIdField];
-          if(L.esri.Util.indexOf(this._loaded, id) < 0){
-            var geojson = L.esri.Util.arcgisToGeojson(feature);
-            geojson.id = id;
-            var marker = this.options.createMarker(geojson, [geojson.geometry.coordinates[1], geojson.geometry.coordinates[0]]);
 
-            if(this.options.onEachMarker){
-              this.options.onEachMarker(geojson, marker);
-            }
+        // cache the layer
+        this._layers[newLayer.feature.id] = newLayer;
 
-            markers.push(marker);
-            this._loaded.push(id);
-          }
+        // add the layer if it is within the time bounds or our layer is not time enabled
+        if(!this._timeEnabled || (this._timeEnabled && this._featureWithinTimeRange(geojson)) ){
+          markers.push(newLayer);
         }
-        this.cluster.addLayers(markers);
       }
     }
-  });
 
-  L.esri.ClusteredFeatureLayer.include(L.Mixin.Events);
-  L.esri.ClusteredFeatureLayer.include(L.esri.Mixins.metadata);
+    if(markers.length){
+      this.cluster.addLayers(markers);
+    }
+  },
 
-  L.esri.clusteredFeatureLayer = function(url, options){
-    return new L.esri.ClusteredFeatureLayer(url, options);
-  };
-})(L);
+  addLayers: function(ids){
+    var layersToAdd = [];
+    for (var i = ids.length - 1; i >= 0; i--) {
+      var layer = this._layers[ids[i]];
+      layersToAdd.push(layer);
+    }
+    this.cluster.addLayers(layersToAdd);
+  },
+
+  removeLayers: function(ids){
+    var layersToRemove = [];
+    for (var i = ids.length - 1; i >= 0; i--) {
+      var layer = this._layers[ids[i]];
+      layersToRemove.push(layer);
+    }
+    this.cluster.removeLayers(layersToRemove);
+  },
+
+  /**
+   * Styling Methods
+   */
+
+  resetStyle: function (layer) {
+    // reset any custom styles
+    layer.options = layer.defaultOptions;
+    this._setLayerStyle(layer, this.options.style);
+  },
+
+  setStyle: function (style) {
+    this.eachLayer(function (layer) {
+      this._setLayerStyle(layer, style);
+    }, this);
+  },
+
+  _setLayerStyle: function (layer, style) {
+    if (typeof style === 'function') {
+      style = style(layer.feature);
+    }
+    if (layer.setStyle) {
+      layer.setStyle(style);
+    }
+  },
+
+  /**
+   * Popup Methods
+   */
+
+  bindPopup: function (fn, options) {
+    this._popup = fn;
+    for (var i in this._layers) {
+      var layer = this._layers[i];
+      var popupContent = this._popup(layer.feature, layer);
+      layer.bindPopup(popupContent, options);
+    }
+  },
+
+  unbindPopup: function () {
+    this._popup =  false;
+    for (var i in this._layers) {
+      this._layers[i].unbindPopup();
+    }
+  },
+
+  /**
+   * Utility Methods
+   */
+
+  eachFeature: function (fn, context) {
+    for (var i in this._layers) {
+      fn.call(context, this._layers[i]);
+    }
+    return this;
+  },
+
+  getFeature: function (id) {
+    return this._layers[id];
+  }
+
+});

@@ -23,27 +23,30 @@ module.exports = function(grunt) {
         src: [
           'src/EsriLeaflet.js',
           'src/Util.js',
-          'src/RBush.js',
-          'src/Layers/BasemapLayer.js',
-          'src/Layers/FeatureLayer.js',
-          'src/Layers/TiledMapLayer.js',
-          'src/Layers/DynamicMapLayer.js'
+          'src/Request.js',
+          'src/rbush.js',
+          'src/Services/**/*.js',
+          'src/Layers/FeatureGrid.js',
+          'src/Layers/FeatureManager.js',
+          'src/Layers/FeatureLayer.js'
         ],
         dest: 'dist/esri-leaflet-src.js'
       },
       basemaps: {
         src: [
           'src/EsriLeaflet.js',
+          'src/Util.js',
+          'src/Request.js',
           'src/Layers/BasemapLayer.js'
         ],
         dest: 'dist/extras/esri-basemaps-src.js'
       },
       cluster: {
-        src: ['src/Layers/ClusteredFeatureLayer.js'],
+        src: ['src/Layers/ClusteredFeatureLayer/ClusteredFeatureLayer.js'],
         dest: 'dist/extras/clustered-feature-layer-src.js'
       },
       heat: {
-        src: ['src/Layers/HeatMapFeatureLayer.js'],
+        src: ['src/Layers/HeatMapFeatureLayer/HeatMapFeatureLayer.js'],
         dest: 'dist/extras/heatmap-feature-layer-src.js'
       }
     },

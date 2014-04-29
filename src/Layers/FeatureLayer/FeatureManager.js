@@ -29,6 +29,8 @@
 
       this._timeEnabled = !!(options.from && options.to);
 
+      this._service = new L.esri.Services.FeatureLayer(this.url);
+
       if(this._timeEnabled){
         this.timeIndex = new TemporalIndex();
       }
@@ -58,7 +60,6 @@
     },
 
     _requestFeatures: function(bounds, callback){
-
       this._activeRequests++;
 
       // our first active request fires loading
@@ -68,28 +69,16 @@
         });
       }
 
-      L.esri.get(this.url + 'query', this._buildQueryParams(bounds), function(response){
+      this._buildQuery(bounds).run(function(error, response){
         //deincriment the request counter
         this._activeRequests--;
 
-        if(!this._getObjectIdField()){
-          this._setObjectIdField(response);
+        if(response.features.length){
+          this._addFeatures(response.features);
         }
-
-        var features = [];
-
-        if(response.features){
-          for (var i = response.features.length - 1; i >= 0; i--) {
-            features.push(L.esri.Util.arcgisToGeojson(response.features[i], {
-              idAttribute: this._getObjectIdField()
-            }));
-          }
-        }
-
-        this._addFeatures(features);
 
         if(callback){
-          callback.call(this, features);
+          callback.call(this, response.features);
         }
 
         // if there are no more active requests fire a load event for this view
@@ -113,27 +102,18 @@
       this.createLayers(features);
     },
 
-    _buildQueryParams: function(bounds){
-      var requestParams = {
-        returnGeometry: true,
-        spatialRel: 'esriSpatialRelIntersects',
-        geometryType: 'esriGeometryEnvelope',
-        geometry: JSON.stringify(L.esri.Util.boundsToExtent(bounds)),
-        outFields: this.options.fields.join(','),
-        outSR: 4326,
-        inSR: 4326,
-        where: this.options.where
-      };
+    _buildQuery: function(bounds){
+      var query = this._service.query().within(bounds).where(this.options.where).fields(this.options.fields);
 
       if(this.options.simplifyFactor){
-        requestParams.maxAllowableOffset = this._getMaxAllowableOffset();
+        query.simplify(this._map, this.options.simplifyFactor);
       }
 
       if(this.options.timeFilterMode === 'server' && this.options.from && this.options.to){
-        requestParams.time = this.options.from.valueOf() +','+this.options.to.valueOf();
+        query.between(this.options.from, this.options.to);
       }
 
-      return requestParams;
+      return query;
     },
 
     /**
@@ -288,43 +268,13 @@
         return (date > from) && (date < to);
       }
 
-      if(this.options.timeField.from, this.options.timeField.to){
+      if(this.options.timeField.from &&  this.options.timeField.to){
         var startDate = feature.properties[this.options.timeField.from];
         var endDate = feature.properties[this.options.timeField.to];
         return ((startDate > from) && (startDate < to)) || ((endDate > from) && (endDate < to));
       }
-    },
-
-    /**
-     * Utility Methods
-     */
-
-    _getMaxAllowableOffset: function(){
-      var mapWidth = Math.abs(this._map.getBounds().getWest() - this._map.getBounds().getEast());
-      var mapWidthPx = this._map.getSize().y;
-
-      return (mapWidth / mapWidthPx) * (1 - this.options.simplifyFactor);
-    },
-
-
-    _setObjectIdField: function(response){
-      if(response.objectIdFieldName){
-        this._objectIdField = response.objectIdFieldName;
-      } else {
-        if(response.fields){
-          for (var j = 0; j <= response.fields.length - 1; j++) {
-            if(response.fields[j].type === 'esriFieldTypeOID') {
-              this._objectIdField = response.fields[j].name;
-              break;
-            }
-          }
-        }
-      }
-    },
-
-    _getObjectIdField: function(){
-      return this._objectIdField;
     }
+
   });
 
   L.esri.featureManager = function(options){

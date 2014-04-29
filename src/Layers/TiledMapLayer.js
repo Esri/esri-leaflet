@@ -9,6 +9,7 @@ L.esri.TiledMapLayer = L.TileLayer.extend({
     this.tileUrl = L.esri.Util.cleanUrl(url) + 'tile/{z}/{y}/{x}';
 
     //if this is looking at the AGO tiles subdomain insert the subdomain placeholder
+    this.tileUrl.match('://services[0-9]?.arcgis.com')
     if(this.tileUrl.match('://tiles.arcgis.com')){
       this.tileUrl = this.tileUrl.replace('://tiles.arcgis.com', '://tiles{s}.arcgis.com');
       options.subdomains = ['1', '2', '3', '4'];

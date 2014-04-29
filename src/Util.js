@@ -1,4 +1,5 @@
 (function(L){
+
   // shallow object clone for feature properties and attributes
   // from http://jsperf.com/cloning-an-object/2
   function clone(obj) {
@@ -29,13 +30,13 @@
 
   // ported from terraformer.js https://github.com/Esri/Terraformer/blob/master/terraformer.js#L504-L519
   function vertexIntersectsVertex(a1, a2, b1, b2) {
-    var ua_t = (b2[0] - b1[0]) * (a1[1] - b1[1]) - (b2[1] - b1[1]) * (a1[0] - b1[0]);
-    var ub_t = (a2[0] - a1[0]) * (a1[1] - b1[1]) - (a2[1] - a1[1]) * (a1[0] - b1[0]);
-    var u_b  = (b2[1] - b1[1]) * (a2[0] - a1[0]) - (b2[0] - b1[0]) * (a2[1] - a1[1]);
+    var uaT = (b2[0] - b1[0]) * (a1[1] - b1[1]) - (b2[1] - b1[1]) * (a1[0] - b1[0]);
+    var ubT = (a2[0] - a1[0]) * (a1[1] - b1[1]) - (a2[1] - a1[1]) * (a1[0] - b1[0]);
+    var uB  = (b2[1] - b1[1]) * (a2[0] - a1[0]) - (b2[0] - b1[0]) * (a2[1] - a1[1]);
 
-    if ( u_b !== 0 ) {
-      var ua = ua_t / u_b;
-      var ub = ub_t / u_b;
+    if ( uB !== 0 ) {
+      var ua = uaT / uB;
+      var ub = ubT / uB;
 
       if ( 0 <= ua && ua <= 1 && 0 <= ub && ub <= 1 ) {
         return true;
@@ -301,236 +302,273 @@
     return output;
   }
 
-  // General utility namespace
-  L.esri.Util = {
-    // make it so that passed `function` never gets called
-    // twice within `delay` milliseconds. Used to throttle
-    // `move` events on layers.
-    // http://remysharp.com/2010/07/21/throttling-function-calls/
-    debounce: function (fn, delay, context) {
-      var timer = null;
-      return function() {
-        var context = this||context, args = arguments;
-        clearTimeout(timer);
-        timer = setTimeout(function () {
-          fn.apply(context, args);
-        }, delay);
-      };
-    },
-    // round a number away from zero used to snap
-    // row/columns away from the origin of the grid
-    roundAwayFromZero: function (num){
-      return (num > 0) ? Math.ceil(num) : Math.floor(num);
-    },
-    // trim whitespace on strings
-    // used to clean urls
-    trim: function(str) {
-      return str.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
-    },
-    // trim whitespace and add a tailing slash is needed to a url
-    cleanUrl: function(url){
-      url = L.esri.Util.trim(url);
-
-      //add a trailing slash to the url if the user omitted it
-      if(url[url.length-1] !== '/'){
-        url += '/';
-      }
-
-      return url;
-    },
-    // quick and dirty param serialization
-    serialize: function(params){
-      var qs='';
-
-      for(var param in params){
-        if(params.hasOwnProperty(param)){
-          var key = param;
-          var value = params[param];
-          qs+=encodeURIComponent(key);
-          qs+='=';
-          qs+=encodeURIComponent(value);
-          qs+='&';
-        }
-      }
-
-      return qs.substring(0, qs.length - 1);
-    },
-
-    // index of polyfill, needed for IE 8
-    indexOf: function(arr, obj, start){
-      start = start || 0;
-      if(arr.indexOf){
-        return arr.indexOf(obj, start);
-      }
-      for (var i = start, j = arr.length; i < j; i++) {
-        if (arr[i] === obj) { return i; }
-      }
-      return -1;
-    },
-
-    // convert an extent (ArcGIS) to LatLngBounds (Leaflet)
-    extentToBounds: function(extent){
-      var sw = new L.LatLng(extent.ymin, extent.xmin);
-      var ne = new L.LatLng(extent.ymax, extent.xmax);
-      return new L.LatLngBounds(sw, ne);
-    },
-
-    mercatorExtentToBounds: function(extent, map){
-      var sw = map.unproject(L.point([extent.ymin, extent.xmin]));
-      var ne = map.unproject(L.point([extent.ymax, extent.xmax]));
-      return new L.LatLngBounds(sw, ne);
-    },
-
-    // convert an LatLngBounds (Leaflet) to extent (ArcGIS)
-    boundsToExtent: function(bounds) {
-      return {
-        'xmin': bounds.getSouthWest().lng,
-        'ymin': bounds.getSouthWest().lat,
-        'xmax': bounds.getNorthEast().lng,
-        'ymax': bounds.getNorthEast().lat,
-        'spatialReference': {
-          'wkid' : 4326
-        }
-      };
-    },
-
-    // convert a LatLngBounds (Leaflet) to a Envelope (Terraformer.Rtree)
-    boundsToEnvelope: function(bounds){
-      var extent = L.esri.Util.boundsToExtent(bounds);
-      return {
-        x: extent.xmin,
-        y: extent.ymin,
-        w: Math.abs(extent.xmin - extent.xmax),
-        h: Math.abs(extent.ymin - extent.ymax)
-      };
-    },
-    arcgisToGeojson: function (arcgis, options){
-      var geojson = {};
-
-      options = options || {};
-      options.idAttribute = options.idAttribute || undefined;
-
-      if(arcgis.x && arcgis.y){
-        geojson.type = 'Point';
-        geojson.coordinates = [arcgis.x, arcgis.y];
-      }
-
-      if(arcgis.points){
-        geojson.type = 'MultiPoint';
-        geojson.coordinates = arcgis.points.slice(0);
-      }
-
-      if(arcgis.paths) {
-        if(arcgis.paths.length === 1){
-          geojson.type = 'LineString';
-          geojson.coordinates = arcgis.paths[0].slice(0);
-        } else {
-          geojson.type = 'MultiLineString';
-          geojson.coordinates = arcgis.paths.slice(0);
-        }
-      }
-
-      if(arcgis.rings) {
-        geojson = convertRingsToGeoJSON(arcgis.rings.slice(0));
-      }
-
-      if(arcgis.geometry || arcgis.attributes) {
-        geojson.type = 'Feature';
-        geojson.geometry = (arcgis.geometry) ? L.esri.Util.arcgisToGeojson(arcgis.geometry) : null;
-        geojson.properties = (arcgis.attributes) ? clone(arcgis.attributes) : null;
-        if(arcgis.attributes) {
-          geojson.id =  arcgis.attributes[options.idAttribute] || arcgis.attributes.OBJECTID || arcgis.attributes.FID;
-        }
-      }
-
-      return geojson;
-    },
-
-    // GeoJSON -> ArcGIS
-    geojsonToArcGIS: function(geojson, options){
-      var idAttribute = (options && options.idAttribute) ? options.idAttribute : 'OBJECTID';
-      var spatialReference = (options && options.sr) ? { wkid: options.sr } : { wkid: 4326 };
-      var result = {};
-      var i;
-
-      switch(geojson.type){
-      case 'Point':
-        result.x = geojson.coordinates[0];
-        result.y = geojson.coordinates[1];
-        result.spatialReference = spatialReference;
-        break;
-      case 'MultiPoint':
-        result.points = geojson.coordinates.slice(0);
-        result.spatialReference = spatialReference;
-        break;
-      case 'LineString':
-        result.paths = [geojson.coordinates.slice(0)];
-        result.spatialReference = spatialReference;
-        break;
-      case 'MultiLineString':
-        result.paths = geojson.coordinates.slice(0);
-        result.spatialReference = spatialReference;
-        break;
-      case 'Polygon':
-        result.rings = orientRings(geojson.coordinates.slice(0));
-        result.spatialReference = spatialReference;
-        break;
-      case 'MultiPolygon':
-        result.rings = flattenMultiPolygonRings(geojson.coordinates.slice(0));
-        result.spatialReference = spatialReference;
-        break;
-      case 'Feature':
-        if(geojson.geometry) {
-          result.geometry = L.esri.Util.geojsonToArcGIS(geojson.geometry, options);
-        }
-        result.attributes = (geojson.properties) ? L.esri.Util.clone(geojson.properties) : {};
-        result.attributes[idAttribute] = geojson.id;
-        break;
-      case 'FeatureCollection':
-        result = [];
-        for (i = 0; i < geojson.features.length; i++){
-          result.push(L.esri.Util.geojsonToArcGIS(geojson.features[i], options));
-        }
-        break;
-      case 'GeometryCollection':
-        result = [];
-        for (i = 0; i < geojson.geometries.length; i++){
-          result.push(L.esri.Util.geojsonToArcGIS(geojson.geometries[i], options));
-        }
-        break;
-      }
-
-      return result;
-    },
-    geojsonBounds: function(geojson) {
-      if(geojson.type){
-        switch (geojson.type) {
-          case 'Point':
-            return [ geojson.coordinates[0], geojson.coordinates[1], geojson.coordinates[0], geojson.coordinates[1]];
-
-          case 'MultiPoint':
-            return calculateBoundsFromArray(geojson.coordinates);
-
-          case 'LineString':
-            return calculateBoundsFromArray(geojson.coordinates);
-
-          case 'MultiLineString':
-            return calculateBoundsFromNestedArrays(geojson.coordinates);
-
-          case 'Polygon':
-            return calculateBoundsFromNestedArrays(geojson.coordinates);
-
-          case 'MultiPolygon':
-            return calculateBoundsFromNestedArrayOfArrays(geojson.coordinates);
-
-          case 'Feature':
-            return geojson.geometry? L.esri.Util.geojsonBounds(geojson.geometry) : null;
-
-          default:
-            throw new Error('Unknown type: ' + geojson.type);
-        }
-      }
-      return null;
-    }
+  // make it so that passed `function` never gets called
+  // twice within `delay` milliseconds. Used to throttle
+  // `move` events on layers.
+  // http://remysharp.com/2010/07/21/throttling-function-calls/
+  L.esri.Util.debounce = function (fn, delay, context) {
+    var timer = null;
+    return function() {
+      var context = this||context, args = arguments;
+      clearTimeout(timer);
+      timer = setTimeout(function () {
+        fn.apply(context, args);
+      }, delay);
+    };
   };
+
+  // round a number away from zero used to snap
+  // row/columns away from the origin of the grid
+  L.esri.Util.roundAwayFromZero = function (num){
+    return (num > 0) ? Math.ceil(num) : Math.floor(num);
+  };
+
+  // trim whitespace on strings
+  // used to clean urls
+  L.esri.Util.trim = function(str) {
+    return str.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+  };
+
+  // trim whitespace and add a tailing slash is needed to a url
+  L.esri.Util.cleanUrl = function(url){
+    url = L.esri.Util.trim(url);
+
+    //add a trailing slash to the url if the user omitted it
+    if(url[url.length-1] !== '/'){
+      url += '/';
+    }
+
+    return url;
+  };
+
+  // quick and dirty param serialization
+  L.esri.Util.serialize = function(params){
+    var qs='';
+
+    for(var param in params){
+      if(params.hasOwnProperty(param)){
+        var key = param;
+        var value = params[param];
+        qs+=encodeURIComponent(key);
+        qs+='=';
+        qs+=encodeURIComponent(value);
+        qs+='&';
+      }
+    }
+
+    return qs.substring(0, qs.length - 1);
+  };
+
+  // index of polyfill, needed for IE 8
+  L.esri.Util.indexOf = function(arr, obj, start){
+    start = start || 0;
+    if(arr.indexOf){
+      return arr.indexOf(obj, start);
+    }
+    for (var i = start, j = arr.length; i < j; i++) {
+      if (arr[i] === obj) { return i; }
+    }
+    return -1;
+  };
+
+  // convert an extent (ArcGIS) to LatLngBounds (Leaflet)
+  L.esri.Util.extentToBounds = function(extent){
+    var sw = new L.LatLng(extent.ymin, extent.xmin);
+    var ne = new L.LatLng(extent.ymax, extent.xmax);
+    return new L.LatLngBounds(sw, ne);
+  };
+
+  L.esri.Util.mercatorExtentToBounds = function(extent, map){
+    var sw = map.unproject(L.point([extent.ymin, extent.xmin]));
+    var ne = map.unproject(L.point([extent.ymax, extent.xmax]));
+    return new L.LatLngBounds(sw, ne);
+  };
+
+  // convert an LatLngBounds (Leaflet) to extent (ArcGIS)
+  L.esri.Util.boundsToExtent = function(bounds) {
+    return {
+      'xmin': bounds.getSouthWest().lng,
+      'ymin': bounds.getSouthWest().lat,
+      'xmax': bounds.getNorthEast().lng,
+      'ymax': bounds.getNorthEast().lat,
+      'spatialReference': {
+        'wkid' : 4326
+      }
+    };
+  };
+
+  // convert a LatLngBounds (Leaflet) to a Envelope (Terraformer.Rtree)
+  L.esri.Util.boundsToEnvelope = function(bounds){
+    var extent = L.esri.Util.boundsToExtent(bounds);
+    return {
+      x: extent.xmin,
+      y: extent.ymin,
+      w: Math.abs(extent.xmin - extent.xmax),
+      h: Math.abs(extent.ymin - extent.ymax)
+    };
+  };
+
+  L.esri.Util.arcgisToGeojson = function (arcgis, options){
+    var geojson = {};
+
+    options = options || {};
+    options.idAttribute = options.idAttribute || undefined;
+
+    if(arcgis.x && arcgis.y){
+      geojson.type = 'Point';
+      geojson.coordinates = [arcgis.x, arcgis.y];
+    }
+
+    if(arcgis.points){
+      geojson.type = 'MultiPoint';
+      geojson.coordinates = arcgis.points.slice(0);
+    }
+
+    if(arcgis.paths) {
+      if(arcgis.paths.length === 1){
+        geojson.type = 'LineString';
+        geojson.coordinates = arcgis.paths[0].slice(0);
+      } else {
+        geojson.type = 'MultiLineString';
+        geojson.coordinates = arcgis.paths.slice(0);
+      }
+    }
+
+    if(arcgis.rings) {
+      geojson = convertRingsToGeoJSON(arcgis.rings.slice(0));
+    }
+
+    if(arcgis.geometry || arcgis.attributes) {
+      geojson.type = 'Feature';
+      geojson.geometry = (arcgis.geometry) ? L.esri.Util.arcgisToGeojson(arcgis.geometry) : null;
+      geojson.properties = (arcgis.attributes) ? clone(arcgis.attributes) : null;
+      if(arcgis.attributes) {
+        geojson.id =  arcgis.attributes[options.idAttribute] || arcgis.attributes.OBJECTID || arcgis.attributes.FID;
+      }
+    }
+
+    return geojson;
+  };
+
+  // GeoJSON -> ArcGIS
+  L.esri.Util.geojsonToArcGIS = function(geojson, options){
+    var idAttribute = (options && options.idAttribute) ? options.idAttribute : 'OBJECTID';
+    var spatialReference = (options && options.sr) ? { wkid: options.sr } : { wkid: 4326 };
+    var result = {};
+    var i;
+
+    switch(geojson.type){
+    case 'Point':
+      result.x = geojson.coordinates[0];
+      result.y = geojson.coordinates[1];
+      result.spatialReference = spatialReference;
+      break;
+    case 'MultiPoint':
+      result.points = geojson.coordinates.slice(0);
+      result.spatialReference = spatialReference;
+      break;
+    case 'LineString':
+      result.paths = [geojson.coordinates.slice(0)];
+      result.spatialReference = spatialReference;
+      break;
+    case 'MultiLineString':
+      result.paths = geojson.coordinates.slice(0);
+      result.spatialReference = spatialReference;
+      break;
+    case 'Polygon':
+      result.rings = orientRings(geojson.coordinates.slice(0));
+      result.spatialReference = spatialReference;
+      break;
+    case 'MultiPolygon':
+      result.rings = flattenMultiPolygonRings(geojson.coordinates.slice(0));
+      result.spatialReference = spatialReference;
+      break;
+    case 'Feature':
+      if(geojson.geometry) {
+        result.geometry = L.esri.Util.geojsonToArcGIS(geojson.geometry, options);
+      }
+      result.attributes = (geojson.properties) ? L.esri.Util.clone(geojson.properties) : {};
+      result.attributes[idAttribute] = geojson.id;
+      break;
+    case 'FeatureCollection':
+      result = [];
+      for (i = 0; i < geojson.features.length; i++){
+        result.push(L.esri.Util.geojsonToArcGIS(geojson.features[i], options));
+      }
+      break;
+    case 'GeometryCollection':
+      result = [];
+      for (i = 0; i < geojson.geometries.length; i++){
+        result.push(L.esri.Util.geojsonToArcGIS(geojson.geometries[i], options));
+      }
+      break;
+    }
+
+    return result;
+  };
+
+  L.esri.Util.geojsonBounds = function(geojson) {
+    if(geojson.type){
+      switch (geojson.type) {
+        case 'Point':
+          return [ geojson.coordinates[0], geojson.coordinates[1], geojson.coordinates[0], geojson.coordinates[1]];
+
+        case 'MultiPoint':
+          return calculateBoundsFromArray(geojson.coordinates);
+
+        case 'LineString':
+          return calculateBoundsFromArray(geojson.coordinates);
+
+        case 'MultiLineString':
+          return calculateBoundsFromNestedArrays(geojson.coordinates);
+
+        case 'Polygon':
+          return calculateBoundsFromNestedArrays(geojson.coordinates);
+
+        case 'MultiPolygon':
+          return calculateBoundsFromNestedArrayOfArrays(geojson.coordinates);
+
+        case 'Feature':
+          return geojson.geometry? L.esri.Util.geojsonBounds(geojson.geometry) : null;
+
+        default:
+          throw new Error('Unknown type: ' + geojson.type);
+      }
+    }
+
+    return null;
+  };
+
+  L.esri.Util.featureSetToFeatureCollection = function(featureSet){
+    var objectIdField;
+
+    if(featureSet.objectIdFieldName){
+      objectIdField = featureSet.objectIdFieldName;
+    } else {
+      if(featureSet.fields){
+        for (var j = 0; j <= featureSet.fields.length - 1; j++) {
+          if(featureSet.fields[j].type === 'esriFieldTypeOID') {
+            objectIdField = featureSet.fields[j].name;
+            break;
+          }
+        }
+      }
+    }
+
+    var featureCollection = {
+      type: 'FeatureCollection',
+      features: []
+    };
+
+    if(featureSet.features.length){
+      for (var i = featureSet.features.length - 1; i >= 0; i--) {
+        featureCollection.features.push(L.esri.Util.arcgisToGeojson(featureSet.features[i], {
+          idAttribute: objectIdField
+        }));
+      }
+    }
+
+    return featureCollection;
+  };
+
 })(L);

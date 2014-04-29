@@ -215,7 +215,7 @@ L.esri.FeatureGrid = L.Layer.extend({
     this._wrapCoords(coords);
 
     // generate the cell key
-    var key = this._cellCoordsToKey(coords)
+    var key = this._cellCoordsToKey(coords);
 
     // get the cell from the cache
     var cell = this._cells[key];
@@ -239,7 +239,7 @@ L.esri.FeatureGrid = L.Layer.extend({
        cell = {
         coords: coords,
         bounds: this._cellCoordsToBounds(coords)
-      }
+      };
 
       this._cells[key] = cell;
       this._activeCells[key] = cell;
@@ -269,6 +269,7 @@ L.esri.FeatureGrid = L.Layer.extend({
         bounds.min.divideBy(size).floor(),
         bounds.max.divideBy(size).ceil().subtract([1, 1])) : null;
   }
+
 });
 
 L.esri.featureGrid = function (options) {

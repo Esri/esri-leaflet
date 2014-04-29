@@ -1,94 +1,86 @@
-/*! Esri-Leaflet - v0.0.1-beta.4 - 2014-03-09
+/*! Esri-Leaflet - v0.0.1-beta.4 - 2014-04-29
 *   Copyright (c) 2014 Environmental Systems Research Institute, Inc.
 *   Apache License*/
-/* globals L */
-(function(L, Terraformer){
-  L.esri.HeatMapFeatureLayer = L.Class.extend({
-    includes: L.esri.Mixins.featureGrid,
-    options: {
-      cellSize: 512,
-      debounce: 100,
-      deduplicate: true,
-      where: "1=1",
-      fields: ["*"]
-    },
-    initialize: function(url, options){
-      this.url = L.esri.Util.cleanUrl(url);
+L.esri.HeatMapFeatureLayer = L.esri.FeatureManager.extend({
 
-      L.Util.setOptions(this, options);
+  /**
+   * Constructor
+   */
 
-      this._getMetadata();
+  initialize: function (url, options) {
+    L.esri.FeatureManager.prototype.initialize.call(this, url, options);
 
-      this._loaded = [];
-      this.heat = new L.heatLayer([], this.options);
-    },
-    onAdd: function(map){
-      this.heat.addTo(map);
-      this._initializeFeatureGrid(map);
-    },
-    onRemove: function(map){
-      map.removeLayer(this.heat);
-      this._destroyFeatureGrid(map);
-    },
-    addTo: function (map) {
-      map.addLayer(this);
-      return this;
-    },
-    getWhere: function(){
-      return this.options.where;
-    },
-    setWhere: function(where){
-      this.options.where = where;
-      this.refresh();
-      return this;
-    },
-    getFields: function(){
-      return this.options.fields;
-    },
-    setFields: function(fields){
-      this.options.fields = fields;
-      this.refresh();
-      return this;
-    },
-    refresh: function(){
-      this.heat._latlngs = [];
-      this._loaded = [];
-      this._previousCells = [];
-      this._requestFeatures(this._map.getBounds());
-    },
-    _render: function(response){
-      if(response.features && response.features.length && !response.error){
-        var idKey = response.objectIdFieldName;
-        var latlngs = [];
-        if(!idKey){
-          for (var j = 0; j <= response.fields.length - 1; j++) {
-            if(response.fields[j].type === "esriFieldTypeOID") {
-              idKey = response.fields[j].name;
-              break;
-            }
-          }
-        }
+    this.index = L.esri._rbush();
 
-        for (var i = response.features.length - 1; i >= 0; i--) {
-          var feature = response.features[i];
-          var id = feature.attributes[idKey];
-          if(L.esri.Util.indexOf(this._loaded, id) < 0){
-            latlngs.push(L.latLng([feature.geometry.y, feature.geometry.x]));
-            this._loaded.push(id);
-          }
-        }
+    options = L.setOptions(this, options);
 
-        this.heat._latlngs = this.heat._latlngs.concat(latlngs);
-        this.heat.redraw();
+    this._cache = {};
+    this._active = {};
 
+    this.heat = new L.heatLayer([], options);
+  },
+
+  /**
+   * Layer Interface
+   */
+
+  onAdd: function(){
+    L.esri.FeatureManager.prototype.onAdd.call(this);
+    this._map.addLayer(this.heat);
+  },
+
+  onRemove: function(){
+    L.esri.FeatureManager.prototype.onRemove.call(this);
+    this._map.removeLayer(this.heat);
+  },
+
+  /**
+   * Feature Managment Methods
+   */
+
+  createLayers: function(features){
+    for (var i = features.length - 1; i >= 0; i--) {
+      var geojson = features[i];
+      var id = geojson.id;
+      var latlng = new L.LatLng(geojson.geometry.coordinates[1], geojson.geometry.coordinates[0]);
+      this._cache[id] = latlng;
+
+      // add the layer if it is within the time bounds or our layer is not time enabled
+      if(!this._active[id] && (!this._timeEnabled || (this._timeEnabled && this._featureWithinTimeRange(geojson)))){
+        this._active[id] = latlng;
+        this.heat._latlngs.push(latlng);
       }
     }
-  });
 
-  L.esri.HeatMapFeatureLayer.include(L.Mixin.Events);
-  L.esri.HeatMapFeatureLayer.include(L.esri.Mixins.metadata);
+    this.heat.redraw();
+  },
 
-  L.esri.heatMapFeatureLayer = function(url, options){
-    return new L.esri.HeatMapFeatureLayer(url, options);
-  };
-})(L);
+  addLayers: function(ids){
+    for (var i = ids.length - 1; i >= 0; i--) {
+      var id = ids[i];
+      if(!this._active[id]){
+        var latlng = this._cache[id];
+        this.heat._latlngs.push(latlng);
+        this._active[id] = latlng;
+      }
+    }
+    this.heat.redraw();
+  },
+
+  removeLayers: function(ids){
+    var newLatLngs = [];
+    for (var i = ids.length - 1; i >= 0; i--) {
+      var id = ids[i];
+      if(this._active[id]){
+        delete this._active[id];
+      }
+    }
+
+    for (var latlng in this._active){
+      newLatLngs.push(this._active[latlng]);
+    }
+
+    this.heat.setLatLngs(newLatLngs);
+  }
+
+});

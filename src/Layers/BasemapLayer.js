@@ -75,7 +75,7 @@
             minZoom: 1,
             maxZoom: 10,
             hideLogo: false,
-            subdomains: ['server', 'services'],
+            subdomains: ['server', 'services']
           }
         },
         Gray: {
@@ -220,9 +220,8 @@
       }
     },
     _getAttributionData: function(url){
-      L.esri.RequestHandlers.JSONP(url, {}, function(attributions){
+      L.esri.RequestHandlers.get.JSONP(url, {}, function(error, attributions){
         this._attributions = [];
-
         for (var c = 0; c < attributions.contributors.length; c++) {
           var contributor = attributions.contributors[c];
           for (var i = 0; i < contributor.coverageAreas.length; i++) {
