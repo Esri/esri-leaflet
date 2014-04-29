@@ -34,8 +34,16 @@ L.esri.Service = L.Evented.extend({
     if (this._authenticating) {
       this._requestQueue.push(method, path, params, callback, context);
     } else {
-      L.esri[method](this.url + path, params, wrappedCallback);
+
+      var url = (this.options.proxy) ? this.options.proxy + '?' + this.url + path : this.url + path;
+      L.esri[method](url, params, wrappedCallback);
     }
+  },
+
+  authenticate: function(token){
+    this._authenticating = false;
+    this.options.token = token;
+    this._runQueue();
   },
 
   _createServiceCallback: function(method, path, params, callback, context){
@@ -48,11 +56,7 @@ L.esri.Service = L.Evented.extend({
         this._requestQueue.push(request);
 
         this.fire('authenticationrequired', {
-          authenticate: L.Util.bind(function (token) {
-            this._authenticating = false;
-            this.options.token = token;
-            this._runQueue();
-          }, this)
+          authenticate: this.authenticate
         });
       } else {
         if(context){
