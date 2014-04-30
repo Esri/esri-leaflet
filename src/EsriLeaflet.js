@@ -113,8 +113,35 @@ L.esri.Mixins.featureGrid = {
       where: this.options.where
     };
 
-    if(this.options.token){
-      requestOptions.token = this.options.token;
+    for (var i in this.options) {
+        if (this.options.hasOwnProperty(i) && i !== 'prototype') {
+            switch (i){
+                case "text":
+                case "geometry":
+                case "geometryType":
+                case "spatialRel":
+                case "token":
+                case "returnGeometry":
+                case "inSR":
+                case "relationParam":
+                case "objectIds":
+                case "time":
+                case "maxAllowableOffset":
+                case "geometryPrecision":
+                case "outSR":
+                case "returnIdsOnly":
+                case "returnCountOnly":
+                case "orderByFields":
+                case "outStatistics":
+                case "groupByFieldsForStatistics":
+                case "returnZ":
+                case "returnM":
+                case "returnDistinctValues":
+                case "gdbVersion":
+                    requestOptions[i] = this.options[i];
+                break;
+            }
+	    }
     }
 
     L.esri.get(this.url+"query", requestOptions, function(response){
