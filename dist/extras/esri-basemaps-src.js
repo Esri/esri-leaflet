@@ -1,4 +1,4 @@
-/*! Esri-Leaflet - v0.0.1-beta.4 - 2014-04-29
+/*! Esri-Leaflet - v0.0.1-beta.4 - 2014-04-30
 *   Copyright (c) 2014 Environmental Systems Research Institute, Inc.
 *   Apache License*/
 L.esri = {
@@ -153,127 +153,6 @@ L.esri = {
         coordinates: outerRings
       };
     }
-  }
-
-  function calculateBoundsFromArray (array) {
-    var x1 = null, x2 = null, y1 = null, y2 = null;
-
-    for (var i = 0; i < array.length; i++) {
-      var lonlat = array[i];
-      var lon = lonlat[0];
-      var lat = lonlat[1];
-
-      if (x1 === null) {
-        x1 = lon;
-      } else if (lon < x1) {
-        x1 = lon;
-      }
-
-      if (x2 === null) {
-        x2 = lon;
-      } else if (lon > x2) {
-        x2 = lon;
-      }
-
-      if (y1 === null) {
-        y1 = lat;
-      } else if (lat < y1) {
-        y1 = lat;
-      }
-
-      if (y2 === null) {
-        y2 = lat;
-      } else if (lat > y2) {
-        y2 = lat;
-      }
-    }
-
-    return [x1, y1, x2, y2 ];
-  }
-
-  function calculateBoundsFromNestedArrays (array) {
-    var x1 = null, x2 = null, y1 = null, y2 = null;
-
-    for (var i = 0; i < array.length; i++) {
-      var inner = array[i];
-
-      for (var j = 0; j < inner.length; j++) {
-        var lonlat = inner[j];
-
-        var lon = lonlat[0];
-        var lat = lonlat[1];
-
-        if (x1 === null) {
-          x1 = lon;
-        } else if (lon < x1) {
-          x1 = lon;
-        }
-
-        if (x2 === null) {
-          x2 = lon;
-        } else if (lon > x2) {
-          x2 = lon;
-        }
-
-        if (y1 === null) {
-          y1 = lat;
-        } else if (lat < y1) {
-          y1 = lat;
-        }
-
-        if (y2 === null) {
-          y2 = lat;
-        } else if (lat > y2) {
-          y2 = lat;
-        }
-      }
-    }
-
-    return [x1, y1, x2, y2 ];
-  }
-
-  function calculateBoundsFromNestedArrayOfArrays (array) {
-    var x1 = null, x2 = null, y1 = null, y2 = null;
-
-    for (var i = 0; i < array.length; i++) {
-      var inner = array[i];
-
-      for (var j = 0; j < inner.length; j++) {
-        var innerinner = inner[j];
-        for (var k = 0; k < innerinner.length; k++) {
-          var lonlat = innerinner[k];
-
-          var lon = lonlat[0];
-          var lat = lonlat[1];
-
-          if (x1 === null) {
-            x1 = lon;
-          } else if (lon < x1) {
-            x1 = lon;
-          }
-
-          if (x2 === null) {
-            x2 = lon;
-          } else if (lon > x2) {
-            x2 = lon;
-          }
-
-          if (y1 === null) {
-            y1 = lat;
-          } else if (lat < y1) {
-            y1 = lat;
-          }
-
-          if (y2 === null) {
-            y2 = lat;
-          } else if (lat > y2) {
-            y2 = lat;
-          }
-        }
-      }
-    }
-
-    return [x1, y1, x2, y2];
   }
 
   // This function ensures that rings are oriented in the right directions
@@ -518,38 +397,6 @@ L.esri = {
     }
 
     return result;
-  };
-
-  L.esri.Util.geojsonBounds = function(geojson) {
-    if(geojson.type){
-      switch (geojson.type) {
-        case 'Point':
-          return [ geojson.coordinates[0], geojson.coordinates[1], geojson.coordinates[0], geojson.coordinates[1]];
-
-        case 'MultiPoint':
-          return calculateBoundsFromArray(geojson.coordinates);
-
-        case 'LineString':
-          return calculateBoundsFromArray(geojson.coordinates);
-
-        case 'MultiLineString':
-          return calculateBoundsFromNestedArrays(geojson.coordinates);
-
-        case 'Polygon':
-          return calculateBoundsFromNestedArrays(geojson.coordinates);
-
-        case 'MultiPolygon':
-          return calculateBoundsFromNestedArrayOfArrays(geojson.coordinates);
-
-        case 'Feature':
-          return geojson.geometry? L.esri.Util.geojsonBounds(geojson.geometry) : null;
-
-        default:
-          throw new Error('Unknown type: ' + geojson.type);
-      }
-    }
-
-    return null;
   };
 
   L.esri.Util.featureSetToFeatureCollection = function(featureSet){

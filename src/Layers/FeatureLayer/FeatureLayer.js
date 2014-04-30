@@ -38,11 +38,6 @@ L.esri.FeatureLayer = L.esri.FeatureManager.extend({
         newLayer = L.GeoJSON.geometryToLayer(geojson, this.options);
         newLayer.feature = L.GeoJSON.asFeature(geojson);
 
-        // get bounds and add bbox
-        // var bbox = L.esri.Util.geojsonBounds(newLayer.feature);
-        // bbox.push(newLayer.feature.id);
-        // bounds.push(bbox);
-
         // style the layer
         newLayer.defaultOptions = newLayer.options;
         this.resetStyle(newLayer);
@@ -64,13 +59,9 @@ L.esri.FeatureLayer = L.esri.FeatureManager.extend({
         }
       }
     }
-
-    // load the indexes
-    //this.index.load(bounds);
   },
 
   cellEnter: function(bounds, coords){
-    console.log('cellEnter');
     var key = this._cellCoordsToKey(coords);
     var layers = this._cache[key];
     if(layers){
@@ -84,7 +75,6 @@ L.esri.FeatureLayer = L.esri.FeatureManager.extend({
   },
 
   cellLeave: function(bounds, coords){
-    console.log('cellLeave');
     var key = this._cellCoordsToKey(coords);
     var layers = this._cache[key];
     if(layers){
@@ -173,27 +163,6 @@ L.esri.FeatureLayer = L.esri.FeatureManager.extend({
 
   getFeature: function (id) {
     return this._layers[id];
-  },
-
-  /**
-   * Filtering Methods
-   */
-
-  _featuresWithinBounds: function(bounds){
-    var results = this.index.search(bounds.toBBoxString().split(','));
-    var ids = [];
-    var layers = [];
-    var i;
-
-    for (i = results.length - 1; i >= 0; i--) {
-      ids.push(results[i][4]);
-    }
-
-    for (i = ids.length - 1; i >= 0; i--) {
-      layers.push(this._layers[ids[i]]);
-    }
-
-    return layers;
   }
 
 });

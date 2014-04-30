@@ -104,8 +104,8 @@ L.esri.Services.Query = L.Class.extend({
 
   run: function(callback, context){
     this._request(function(error, response){
-      var featureCollection = L.esri.Util.featureSetToFeatureCollection(response);
-      callback.call(context, error, featureCollection);
+      response = (error) ? null : L.esri.Util.featureSetToFeatureCollection(response);
+      callback.call(context, error, response);
     }, context);
   },
 

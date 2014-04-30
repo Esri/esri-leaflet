@@ -24,10 +24,11 @@ L.esri.Services.Identify = L.Class.extend({
     var  extent = L.esri.Util.boundsToExtent(bounds);
     this._params.geometry = ([latlng.lng,latlng.lat]).join(',');
     this._params.geometryType = 'esriGeometryPoint';
-    this._params.tolerance = tolerance || 5;
+    this._params.tolerance = tolerance || 3;
     this._params.mapExtent=([extent.xmin, extent.xmax, extent.ymin, extent.ymax]).join(',');
     return this;
   },
+
   within: function (bounds){
     var extent = L.esri.Util.boundsToExtent(bounds);
     this._params.geometry = JSON.stringify(extent);
@@ -36,6 +37,7 @@ L.esri.Services.Identify = L.Class.extend({
     this._params.mapExtent=([extent.xmin, extent.xmax, extent.ymin, extent.ymax]).join(',');
     return this;
   },
+
   layerDef: function (id, where){
     this._params.layerDefs = (this._params.layerDefs) ? this._params.layerDefs + ';' : '';
     this._params.layerDefs += ([id, where]).join(':');
@@ -67,16 +69,16 @@ L.esri.Services.Identify = L.Class.extend({
     this._params.imageDisplay = (x * multiplier) + ',' + (y * multiplier) + ',' + (96 * multiplier);
     return this;
   },
+
   run: function (callback, context){
     this._request(function(error, response){
-      var featureCollection = L.esri.Util.featureSetToFeatureCollection(response);
-      callback.call(context, error, featureCollection);
+      callback.call(context, error, response);
     }, context);
   },
 
   _request: function(callback, context){
     if(this._service){
-      this._service.get('query', this._params, callback, context);
+      this._service.get('identify', this._params, callback, context);
     } else {
       L.esri.get(this.url, this._params, callback, context);
     }

@@ -74,12 +74,12 @@
         //deincriment the request counter
         this._activeRequests--;
 
-        if(response.features.length){
+        if(!error && response.features.length){
           this._addFeatures(response.features, coords);
         }
 
         if(callback){
-          callback.call(this, response.features);
+          callback.call(this, error, response);
         }
 
         // if there are no more active requests fire a load event for this view
@@ -129,10 +129,12 @@
       this.options.where = (where && where.length) ? where : '1=1';
       var oldSnapshot = [];
       var newShapshot = [];
-      var pendingRequests = this._activeCells.length;
-      var requestCallback = L.Util.bind(function(features){
-        for (var i = features.length - 1; i >= 0; i--) {
-          newShapshot.push(features[i].id);
+      var pendingRequests = 0;
+      var requestCallback = L.Util.bind(function(error, featureCollection){
+        if(featureCollection){
+          for (var i = featureCollection.features.length - 1; i >= 0; i--) {
+            newShapshot.push(featureCollection.features[i].id);
+          }
         }
 
         pendingRequests--;
@@ -155,8 +157,8 @@
         oldSnapshot.push(this._currentSnapshot[i]);
       }
 
-      for (var x = this._activeCells.length - 1; x >= 0; x--) {
-        var key = this._activeCells[i];
+      for(var key in this._activeCells){
+        pendingRequests++;
         var coords = this._keyToCellCoords(key);
         var bounds = this._cellCoordsToBounds(coords);
         this._requestFeatures(bounds, key, requestCallback);
@@ -178,7 +180,7 @@
     setTimeRange: function(from, to){
       var oldFrom = this.options.from;
       var oldTo = this.options.to;
-      var callback = L.Util.bind(function(){
+      var requestCallback = L.Util.bind(function(){
         this._filterExistingFeatures(oldFrom, oldTo, from, to);
       }, this);
 
@@ -188,11 +190,10 @@
       this._filterExistingFeatures(oldFrom, oldTo, from, to);
 
       if(this.options.timeFilterMode === 'server') {
-        for (var i = this._activeCells.length - 1; i >= 0; i--) {
-          var key = this._activeCells[i];
+        for(var key in this._activeCells){
           var coords = this._keyToCellCoords(key);
           var bounds = this._cellCoordsToBounds(coords);
-          this._requestFeatures(bounds, key, callback);
+          this._requestFeatures(bounds, key, requestCallback);
         }
       }
     },

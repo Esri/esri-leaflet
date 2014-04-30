@@ -14,6 +14,10 @@
 * `L.esri.FeatureLayer` now supports generalizing polygon and polyline features on the service side for performence using the new `simplifyFactor` option.
 * You can now pass a `hideLogo` option to `L.esri.BasemapLayer` https://github.com/Esri/esri-leaflet/issues/210
 * Don't throw errors when `L.esri.BasemapLayer` is added to maps without an attribution control.
+* Remove rbush. Switch to tracking feature ids with the cell key system.
+* Remove `L.esri.Util.geojsonBounds` as it was only being used to create bounds and envelopes for rbush.
+* add `bindPopup` method to `L.esri.DynamicMapLayer`.
+* add `getTimeRange` and `setTimeRange` methods `L.esri.DynamicMapLayer`.
 
 ## Beta 4 Patch 1
 

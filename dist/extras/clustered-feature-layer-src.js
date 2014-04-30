@@ -1,4 +1,4 @@
-/*! Esri-Leaflet - v0.0.1-beta.4 - 2014-04-29
+/*! Esri-Leaflet - v0.0.1-beta.4 - 2014-04-30
 *   Copyright (c) 2014 Environmental Systems Research Institute, Inc.
 *   Apache License*/
 L.esri.ClusteredFeatureLayer = L.esri.FeatureManager.extend({
@@ -9,8 +9,6 @@ L.esri.ClusteredFeatureLayer = L.esri.FeatureManager.extend({
 
   initialize: function (url, options) {
     L.esri.FeatureManager.prototype.initialize.call(this, url, options);
-
-    this.index = L.esri._rbush();
 
     options = L.setOptions(this, options);
 

@@ -6,7 +6,8 @@ L.esri.DynamicMapLayer = L.Layer.extend({
     position: 'front',
     updateInterval: 150,
     layers: [],
-    layerDefs: false
+    layerDefs: false,
+    layerTime: false
   },
 
   _defaultLayerParams: {
@@ -29,7 +30,12 @@ L.esri.DynamicMapLayer = L.Layer.extend({
     }
 
     if(this.options.layerDefs) {
-      this._layerParams.layerDefs = JSON.stringify(this.options.layerDefs);
+      this.setLayerDefs(this.options.layerDefs);
+
+    }
+
+    if(this.options.layerTime) {
+      this._layerParams.layerTimeOptions = JSON.stringify(this.options.layerTime);
     }
   },
 
@@ -97,28 +103,72 @@ L.esri.DynamicMapLayer = L.Layer.extend({
     return this._service.identify();
   },
 
+  getLayers: function(){
+
+  },
+
+  setLayers: function(){
+    this.options;
+  },
+
+  getLayerDefs: function(){
+    return this.options.layerDefs;
+  },
+
+  setLayerDefs: function(layerDefs){
+    this.options.layerDefs = layerDefs;
+    this._layerParams.layerDefs = JSON.stringify(this.options.layerDefs);
+    return this;
+  },
+
+  getLayerTime: function(){
+
+  },
+
+  setLayerTime: function(){
+
+  },
+
+  getTimeRange: function(){
+    return [this.options.from, this.options.to];
+  },
+
+  setTimeRange: function(from, to){
+    this.options.from = from;
+    this.options.to = to;
+    this._update();
+    return this;
+  },
+
   _getPopupData: function(e){
-    var callback = L.Util.bind(function(data) {
+    var callback = L.Util.bind(function(error, response) {
       setTimeout(L.Util.bind(function(){
-        this._renderPopup(e.latlng, data);
+        this._renderPopup(e.latlng, error, response);
       }, this), 300);
     }, this);
 
-    this.identify()
+    var identifyRequest = this.identify()
         .at(e.latlng, this._map.getBounds(), 5)
-        .layers('visible:' + this._options.layers.join(','))
-        .size(this._map.getSize().x, this._map.getSize().y)
-        .run(callback);
+        .size(this._map.getSize().x, this._map.getSize().y);
+
+    if(this.options.layers){
+      identifyRequest.layers('visible:' + this.options.layers.join(','));
+    }
+
+    identifyRequest.run(callback);
 
     // set the flags to show the popup
     this._shouldRenderPopup = true;
     this._lastClick = e.latlng;
   },
 
-  _renderPopup: function(latlng, data){
+  _renderPopup: function(latlng, error, response){
     if(this._shouldRenderPopup && this._lastClick.equals(latlng)){
       //add the popup to the map where the mouse was clicked at
-      this._popup.setLatLng(latlng).setContent(this._popupFunction(data)).openOn(this._map);
+      var content = this._popupFunction(error, response);
+      if (content) {
+        this._popup.setLatLng(latlng).setContent(content).openOn(this._map);
+      }
     }
   },
 
@@ -135,6 +185,10 @@ L.esri.DynamicMapLayer = L.Layer.extend({
 
     this._layerParams.bbox = [sw.x, sw.y, ne.x, ne.y].join(',');
     this._layerParams.size = size.x + ',' + size.y;
+
+    if(this.options.from && this.options.to){
+      this._layerParams.time = this.options.from.valueOf() + ',' + this.options.to.valueOf();
+    }
 
     if(this.options.token) {
       this._layerParams.token = this.options.token;
