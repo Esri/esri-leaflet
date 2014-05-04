@@ -7,8 +7,6 @@ L.esri.HeatMapFeatureLayer = L.esri.FeatureManager.extend({
   initialize: function (url, options) {
     L.esri.FeatureManager.prototype.initialize.call(this, url, options);
 
-    this.index = L.esri._rbush();
-
     options = L.setOptions(this, options);
 
     this._cache = {};
