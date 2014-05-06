@@ -1,5 +1,9 @@
 L.esri.ClusteredFeatureLayer = L.esri.FeatureManager.extend({
 
+   statics: {
+    EVENTS: 'click dblclick mouseover mouseout mousemove contextmenu popupopen popupclose clusterclick clusterdblclick clustermouseover clustermouseout clustermousemove clustercontextmenu clusterpopupopen clusterpopupclose'
+  },
+
   /**
    * Constructor
    */
@@ -12,7 +16,13 @@ L.esri.ClusteredFeatureLayer = L.esri.FeatureManager.extend({
     this._layers = {};
 
     this.cluster = new L.MarkerClusterGroup(options);
-    this.cluster.addEventParent(this);
+
+
+    // @TODO enable at Leaflet 0.8
+    // this.cluster.addEventParent(this);
+
+    // @TODO remove from Leaflet 0.8
+    this.cluster.on(L.esri.ClusteredFeatureLayer.EVENTS, this._propagateEvent, this);
   },
 
   /**
@@ -26,7 +36,7 @@ L.esri.ClusteredFeatureLayer = L.esri.FeatureManager.extend({
 
   onRemove: function(){
     L.esri.FeatureManager.prototype.onRemove.call(this);
-        this._map.removeLayer(this.cluster);
+    this._map.removeLayer(this.cluster);
   },
 
   /**
@@ -146,6 +156,20 @@ L.esri.ClusteredFeatureLayer = L.esri.FeatureManager.extend({
 
   getFeature: function (id) {
     return this._layers[id];
+  },
+
+  // from https://github.com/Leaflet/Leaflet/blob/v0.7.2/src/layer/FeatureGroup.js
+  //  @TODO remove at Leaflet 0.8
+  _propagateEvent: function (e) {
+    e = L.extend({
+      layer: e.target,
+      target: this
+    }, e);
+    this.fire(e.type, e);
   }
 
 });
+
+L.esri.clusteredFeatureLayer = function (options) {
+  return new L.esri.ClusteredFeatureLayer(options);
+};

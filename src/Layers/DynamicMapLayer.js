@@ -1,6 +1,9 @@
 /* globals L */
 
-L.esri.DynamicMapLayer = L.Layer.extend({
+L.esri.DynamicMapLayer = L.Class.extend({
+
+  includes: L.Mixin.Events,
+
   options: {
     opacity: 1,
     position: 'front',
@@ -48,6 +51,9 @@ L.esri.DynamicMapLayer = L.Layer.extend({
       this._layerParams.imageSR = sr;
     }
 
+    // @TODO remove at Leaflet 0.8
+    this._map.addEventListener(this.getEvents(), this);
+
     this._update();
   },
 
@@ -55,6 +61,19 @@ L.esri.DynamicMapLayer = L.Layer.extend({
     if (this._currentImage) {
       this._map.removeLayer(this._currentImage);
     }
+
+    // @TODO remove at Leaflet 0.8
+    this._map.removeEventListener(this.getEvents(), this);
+  },
+
+  addTo: function(map){
+    map.addLayer(this);
+    return this;
+  },
+
+  removeFrom: function(map){
+    map.removeLayer(this);
+    return this;
   },
 
   getEvents: function(){

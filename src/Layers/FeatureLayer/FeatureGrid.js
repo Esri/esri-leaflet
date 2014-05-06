@@ -1,4 +1,7 @@
-L.esri.FeatureGrid = L.Layer.extend({
+L.esri.FeatureGrid = L.Class.extend({
+
+  includes: L.Mixin.Events,
+
   options: {
     cellSize: 512,
     updateInterval: 150
@@ -8,13 +11,19 @@ L.esri.FeatureGrid = L.Layer.extend({
     options = L.setOptions(this, options);
   },
 
-  onAdd: function () {
-    this._update = L.Util.throttle(this._update, this.options.updateInterval, this);
+  onAdd: function (map) {
+    this._map = map;
+    this._update = L.Util.limitExecByInterval(this._update, this.options.updateInterval, this);
+
+    // @TODO remove for leaflet 0.8
+    this._map.addEventListener(this.getEvents(), this);
+
     this._reset();
     this._update();
   },
 
   onRemove: function(){
+    this._map.removeEventListener(this.getEvents(), this);
     this._removeCells();
   },
 
@@ -25,6 +34,16 @@ L.esri.FeatureGrid = L.Layer.extend({
     };
 
     return events;
+  },
+
+  addTo: function(map){
+    map.addLayer(this);
+    return this;
+  },
+
+  removeFrom: function(map){
+    map.removeLayer(this);
+    return this;
   },
 
   _reset: function () {
@@ -75,11 +94,13 @@ L.esri.FeatureGrid = L.Layer.extend({
 
     if (zoom > this.options.maxZoom ||
         zoom < this.options.minZoom) { return; }
-
     // cell coordinates range for the current view
     var cellBounds = L.bounds(
       bounds.min.divideBy(cellSize).floor(),
       bounds.max.divideBy(cellSize).floor());
+    console.log(cellBounds);
+    console.log(cellBounds.min.x, cellBounds.max.x);
+    console.log(cellBounds.min.y, cellBounds.max.y);
 
     this._addCells(cellBounds);
     this._removeOtherCells(cellBounds);
@@ -91,21 +112,20 @@ L.esri.FeatureGrid = L.Layer.extend({
         zoom = this._map.getZoom();
 
     var j, i, coords;
-
     // create a queue of coordinates to load cells from
     for (j = bounds.min.y; j <= bounds.max.y; j++) {
       for (i = bounds.min.x; i <= bounds.max.x; i++) {
-
+        console.log('cell');
         coords = new L.Point(i, j);
         coords.z = zoom;
 
         // add cell to queue if it's not in cache or out of bounds
-        if (this._isValidCell(coords)) {
+        // if (this._isValidCell(coords)) {
           queue.push(coords);
-        }
+        // }
       }
     }
-
+    console.log(queue.length);
     var cellsToLoad = queue.length;
 
     if (cellsToLoad === 0) { return; }
@@ -142,15 +162,18 @@ L.esri.FeatureGrid = L.Layer.extend({
 
   // converts cell coordinates to its geographical bounds
   _cellCoordsToBounds: function (coords) {
-
     var map = this._map,
         cellSize = this.options.cellSize,
 
         nwPoint = coords.multiplyBy(cellSize),
         sePoint = nwPoint.add([cellSize, cellSize]),
 
-        nw = map.wrapLatLng(map.unproject(nwPoint, coords.z)),
-        se = map.wrapLatLng(map.unproject(sePoint, coords.z));
+        // @TODO for Leaflet 0.8
+        // nw = map.wrapLatLng(map.unproject(nwPoint, coords.z)),
+        // se = map.wrapLatLng(map.unproject(sePoint, coords.z));
+
+        nw = map.unproject(nwPoint, coords.z).wrap(),
+        se = map.unproject(sePoint, coords.z).wrap();
 
     return new L.LatLngBounds(nw, se);
   },
@@ -211,6 +234,7 @@ L.esri.FeatureGrid = L.Layer.extend({
   },
 
   _addCell: function (coords) {
+
     // wrap cell coords if necessary (depending on CRS)
     this._wrapCoords(coords);
 
@@ -219,8 +243,8 @@ L.esri.FeatureGrid = L.Layer.extend({
 
     // get the cell from the cache
     var cell = this._cells[key];
-
     // if this cell should be shown as isnt active yet (enter)
+
     if (cell && !this._activeCells[key]) {
       if (this.cellEnter) {
         this.cellEnter(cell.bounds, coords);
@@ -262,12 +286,20 @@ L.esri.FeatureGrid = L.Layer.extend({
 
   // get the global cell coordinates range for the current zoom
   _getCellNumBounds: function () {
-    var bounds = this._map.getPixelWorldBounds(),
-      size = this._getCellSize();
+    // @TODO for Leaflet 0.8
+    // var bounds = this._map.getPixelWorldBounds(),
+    //     size = this._getCellSize();
+    //
+    // return bounds ? L.bounds(
+    //     bounds.min.divideBy(size).floor(),
+    //     bounds.max.divideBy(size).ceil().subtract([1, 1])) : null;
 
-    return bounds ? L.bounds(
-        bounds.min.divideBy(size).floor(),
-        bounds.max.divideBy(size).ceil().subtract([1, 1])) : null;
+    var bounds = this._map.getPixelBounds(),
+        tileSize = this._getCellSize();
+
+    return L.bounds(
+            bounds.min.divideBy(tileSize)._floor(),
+            bounds.max.divideBy(tileSize)._floor());
   }
 
 });

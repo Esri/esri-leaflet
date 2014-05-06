@@ -44,12 +44,12 @@
      * Layer Interface
      */
 
-    onAdd: function(){
-      L.esri.FeatureGrid.prototype.onAdd.call(this);
+    onAdd: function(map){
+      return L.esri.FeatureGrid.prototype.onAdd.call(this, map);
     },
 
-    onRemove: function(){
-      L.esri.FeatureGrid.prototype.onRemove.call(this);
+    onRemove: function(map){
+      return L.esri.FeatureGrid.prototype.onRemove.call(this, map);
     },
 
     /**

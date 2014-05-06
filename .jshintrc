@@ -19,6 +19,7 @@
   "boss": false,
   "funcscope": false,
   "browser": true,
+  "debug": true,
   "predef": ["L", "XMLHttpRequest", "module"],
   "indent": 2
 }

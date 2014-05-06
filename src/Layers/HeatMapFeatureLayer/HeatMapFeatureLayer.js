@@ -19,13 +19,13 @@ L.esri.HeatMapFeatureLayer = L.esri.FeatureManager.extend({
    * Layer Interface
    */
 
-  onAdd: function(){
-    L.esri.FeatureManager.prototype.onAdd.call(this);
+  onAdd: function(map){
+    L.esri.FeatureManager.prototype.onAdd.call(this, map);
     this._map.addLayer(this.heat);
   },
 
-  onRemove: function(){
-    L.esri.FeatureManager.prototype.onRemove.call(this);
+  onRemove: function(map){
+    L.esri.FeatureManager.prototype.onRemove.call(this, map);
     this._map.removeLayer(this.heat);
   },
 
@@ -79,3 +79,7 @@ L.esri.HeatMapFeatureLayer = L.esri.FeatureManager.extend({
   }
 
 });
+
+L.esri.heatMapFeatureLayer = function (options) {
+  return new L.esri.HeatMapFeatureLayer(options);
+};

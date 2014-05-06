@@ -1,13 +1,15 @@
 L.esri.FeatureLayer = L.esri.FeatureManager.extend({
 
+  statics: {
+    EVENTS: 'click dblclick mouseover mouseout mousemove contextmenu popupopen popupclose'
+  },
+
   /**
    * Constructor
    */
 
   initialize: function (url, options) {
     L.esri.FeatureManager.prototype.initialize.call(this, url, options);
-
-    //this.index = L.esri._rbush();
 
     options = L.setOptions(this, options);
 
@@ -19,7 +21,6 @@ L.esri.FeatureLayer = L.esri.FeatureManager.extend({
    */
 
   createLayers: function(features){
-    var bounds = [];
     for (var i = features.length - 1; i >= 0; i--) {
       var geojson = features[i];
       var layer = this._layers[geojson.id];
@@ -30,12 +31,18 @@ L.esri.FeatureLayer = L.esri.FeatureManager.extend({
       }
 
       if (layer && layer.setLatLngs) {
-        newLayer = L.GeoJSON.geometryToLayer(geojson, this.options);
+        // @TODO Leaflet 0.8
+        //newLayer = L.GeoJSON.geometryToLayer(geojson, this.options);
+
+        newLayer = L.GeoJSON.geometryToLayer(geojson, this.options.pointToLayer, L.GeoJSON.coordsToLatLng, this.options);
         layer.setLatLngs(newLayer.getLatLngs());
       }
 
       if(!layer){
-        newLayer = L.GeoJSON.geometryToLayer(geojson, this.options);
+        // @TODO Leaflet 0.8
+        //newLayer = L.GeoJSON.geometryToLayer(geojson, this.options);
+
+        newLayer = L.GeoJSON.geometryToLayer(geojson, this.options.pointToLayer, L.GeoJSON.coordsToLatLng, this.options);
         newLayer.feature = L.GeoJSON.asFeature(geojson);
 
         // style the layer
@@ -43,10 +50,15 @@ L.esri.FeatureLayer = L.esri.FeatureManager.extend({
         this.resetStyle(newLayer);
 
         // bubble events from layers to this
-        newLayer.addEventParent(this);
+        // @TODO Leaflet 0.8
+        // newLayer.addEventParent(this);
+
+        if (newLayer.on) {
+          newLayer.on(L.esri.FeatureLayer.EVENTS, this._propagateEvent, this);
+        }
 
         // bind a popup if we have one
-        if(this._popup){
+        if(this._popup && newLayer.bindPopup){
           newLayer.bindPopup(this._popup(newLayer.feature, newLayer));
         }
 
@@ -75,6 +87,7 @@ L.esri.FeatureLayer = L.esri.FeatureManager.extend({
   },
 
   cellLeave: function(bounds, coords){
+
     var key = this._cellCoordsToKey(coords);
     var layers = this._cache[key];
     if(layers){
@@ -163,6 +176,16 @@ L.esri.FeatureLayer = L.esri.FeatureManager.extend({
 
   getFeature: function (id) {
     return this._layers[id];
+  },
+
+  // from https://github.com/Leaflet/Leaflet/blob/v0.7.2/src/layer/FeatureGroup.js
+  // @TODO remove at Leaflet 0.8
+  _propagateEvent: function (e) {
+    e = L.extend({
+      layer: e.target,
+      target: this
+    }, e);
+    this.fire(e.type, e);
   }
 
 });

@@ -1,5 +1,7 @@
 // @TODO proxy support
-L.esri.Service = L.Evented.extend({
+L.esri.Service = L.Class.extend({
+
+  includes: L.Mixin.Events,
 
   options: {
     proxy: false
@@ -80,5 +82,5 @@ L.esri.Service = L.Evented.extend({
 });
 
 L.esri.service = function(url, params){
-  return new L.esri.services(url, params);
+  return new L.esri.Service(url, params);
 };
