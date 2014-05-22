@@ -3,18 +3,18 @@
   L.esri.FeatureManager = L.esri.FeatureGrid.extend({
 
     /**
-     * Constructor
+     * Options
      */
 
     options: {
-      precision: 6,
       where: '1=1',
       fields: ['*'],
       from: false,
       to: false,
       timeField: false,
       timeFilterMode: 'server',
-      simplifyFactor: 0
+      simplifyFactor: 0,
+      precision: 6
     },
 
     /**
@@ -197,23 +197,12 @@
       }
     },
 
-    _diffLayerState: function(oldFeatures, newFeatures){
-      var featuresToRemove = [];
-      console.log(oldFeatures.sort(), newFeatures.sort());
-
-      return {
-        oldFeatures: oldFeatures,
-        newFeatures: newFeatures
-      };
-    },
-
     _filterExistingFeatures: function (oldFrom, oldTo, newFrom, newTo) {
       var oldFeatures = this._getFeaturesInTimeRange(oldFrom, oldTo);
       var newFeatures = this._getFeaturesInTimeRange(newFrom, newTo);
       this.removeLayers(oldFeatures);
       this.addLayers(newFeatures);
     },
-
 
     _getFeaturesInTimeRange: function(start, end){
       var ids = [];
@@ -279,10 +268,30 @@
       }
     },
 
+    /**
+     * Service Methods
+     */
     query: function(){
       return this._service.query();
-    }
+    },
 
+    addFeature: function(feature, callback, context){
+      this._service.addFeature(feature, function(error, response){
+        //@ TODO
+      }, context);
+    },
+
+    updateFeature: function(feature, callback, context){
+      this._service.updateFeature(feature, function(error, response){
+        //@ TODO
+      }, context);
+    },
+
+    removeFeature: function(id, callback, context){
+      this._service.removeFeature(id, function(error, response){
+        //@ TODO
+      }, context);
+    }
   });
 
   L.esri.featureManager = function(options){
@@ -307,6 +316,7 @@
     var currentIndex;
     var currentElement;
     var resultIndex;
+
     while (minIndex <= maxIndex) {
       resultIndex = currentIndex = (minIndex + maxIndex) / 2 || 0;
       currentElement = this.values[Math.round(currentIndex)];

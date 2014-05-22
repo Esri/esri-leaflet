@@ -17,6 +17,23 @@ L.esri.FeatureLayer = L.esri.FeatureManager.extend({
   },
 
   /**
+   * Layer Interface
+   */
+
+  onAdd: function(map){
+    return L.esri.FeatureManager.prototype.onAdd.call(this, map);
+  },
+
+  onRemove: function(map){
+
+    for (var i in this._layers) {
+      map.removeLayer(this._layers[i]);
+    }
+
+    return L.esri.FeatureManager.prototype.onRemove.call(this, map);
+  },
+
+  /**
    * Feature Managment Methods
    */
 

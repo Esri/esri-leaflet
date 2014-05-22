@@ -17,7 +17,6 @@ L.esri.ClusteredFeatureLayer = L.esri.FeatureManager.extend({
 
     this.cluster = new L.MarkerClusterGroup(options);
 
-
     // @TODO enable at Leaflet 0.8
     // this.cluster.addEventParent(this);
 

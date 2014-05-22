@@ -1,5 +1,22 @@
 (function(L){
 
+  function serialize(params){
+    var qs='';
+
+    for(var param in params){
+      if(params.hasOwnProperty(param)){
+        var key = param;
+        var value = params[param];
+        qs+=encodeURIComponent(key);
+        qs+='=';
+        qs+=encodeURIComponent(value);
+        qs+='&';
+      }
+    }
+
+    return qs.substring(0, qs.length - 1);
+  }
+
   function createRequest(callback, context){
    var httpRequest = new XMLHttpRequest();
 
@@ -39,7 +56,7 @@
 
       httpRequest.open('POST', url);
       httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-      httpRequest.send(L.esri.Util.serialize(params));
+      httpRequest.send(serialize(params));
     },
     get: {
       CORS: function (url, params, callback, context) {
@@ -47,7 +64,7 @@
 
         var httpRequest = createRequest(callback, context);
 
-        httpRequest.open('GET', url + '?' + L.esri.Util.serialize(params), true);
+        httpRequest.open('GET', url + '?' + serialize(params), true);
         httpRequest.send(null);
       },
       JSONP: function(url, params, callback, context){
@@ -55,12 +72,12 @@
 
         var callbackId = 'c'+(Math.random() * 1e9).toString(36).replace('.', '_');
 
-        params.f='json';
-        params.callback='L.esri._callback.'+callbackId;
+        params.f = 'json';
+        params.callback = 'L.esri._callback.'+callbackId;
 
         var script = L.DomUtil.create('script', null, document.body);
         script.type = 'text/javascript';
-        script.src = url + '?' +  L.esri.Util.serialize(params);
+        script.src = url + '?' +  serialize(params);
         script.id = callbackId;
 
         L.esri._callback[callbackId] = function(response){

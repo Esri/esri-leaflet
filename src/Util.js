@@ -199,38 +199,6 @@
     return url;
   };
 
-  // quick and dirty param serialization
-  L.esri.Util.serialize = function(params){
-    var qs='';
-
-    for(var param in params){
-      if(params.hasOwnProperty(param)){
-        var key = param;
-        var value = params[param];
-        qs+=encodeURIComponent(key);
-        qs+='=';
-        qs+=encodeURIComponent(value);
-        qs+='&';
-      }
-    }
-
-    return qs.substring(0, qs.length - 1);
-  };
-
-  // index of polyfill, needed for IE 8
-  L.esri.Util.indexOf = function(arr, obj, start){
-    start = start || 0;
-    if(arr.indexOf){
-      return arr.indexOf(obj, start);
-    }
-    for (var i = start, j = arr.length; i < j; i++) {
-      if (arr[i] === obj) {
-        return i;
-      }
-    }
-    return -1;
-  };
-
   // convert an extent (ArcGIS) to LatLngBounds (Leaflet)
   L.esri.Util.extentToBounds = function(extent){
     var sw = new L.LatLng(extent.ymin, extent.xmin);

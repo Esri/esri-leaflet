@@ -4,7 +4,6 @@
 
 #### Changes
 
-* Leaflet 0.8 compatibility fixes.
 * Added `OceansLabels` to `L.esri.BasemapLayer`.
 * `Oceans` has switched to the new Ocean basemap with out labels.
 * `L.esri.FeatureLayer` has been refactored into several classes. `L.esri.FeatureGrid` and `L.esri.FeatureManager` now handle loading and querying features from the service.
@@ -18,6 +17,18 @@
 * Remove `L.esri.Util.geojsonBounds` as it was only being used to create bounds and envelopes for rbush.
 * add `bindPopup` method to `L.esri.DynamicMapLayer`.
 * add `getTimeRange` and `setTimeRange` methods `L.esri.DynamicMapLayer`.
+
+#### Breaking Changes
+
+* `Oceans` no longer contains map labels, labels have been added as another key `OceansLabels`.
+* `L.esri.FeatureLayer` no longer inherits from `L.GeoJSON` and as a result no longer has `getBounds`, `bringToBack` or `bringToFront` or `addData` methods.
+* L.esri.Util.geojsonBounds has been removed. If you need to get the bounding box of a GeoJSON object please use [Terraformer](http://terraformer.io) or [`L.GeoJSON`](http://leafletjs.com/reference.html#geojson).
+* Many other utility methods have been removed. If you were using methods in the `L.esri.Util` namespace please check that they exist.
+* Layers no longer fire a `metadata` event. They now have a `metadata` method that can be used to get layer metadata. If you need to convert extents into L.LatLngBounds you can use `L.esri.Util.extentToBounds`.
+* `L.esri.DynamicMapLayer` no longer inherits from `L.ImageOverlay` as a result the `setUrl` method no longer exists.
+* You can no longer pass a `cluster` object to `L.esri.ClusteredFeatureLayer`, insteed pass any options you want to pass to `L.MarkerClusterGroup` directly to `L.esri.ClusteredFeatureLayer`.
+* You can no long pass a string for the `layerDefs` option on `L.esri.DynamicMapLayer`. Layer definitions should now be passed as an object like `{'0':'STATE_NAME='Kansas' and POP2007>25000'}`
+* You can no longer pass a string for the `layers` option on `L.esri.DynamicMapLayer` you can now only pass an array of layer ids that will be shown like `[0,1,2]`.
 
 ## Beta 4 Patch 1
 

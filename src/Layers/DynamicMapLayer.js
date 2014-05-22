@@ -8,38 +8,17 @@ L.esri.DynamicMapLayer = L.Class.extend({
     opacity: 1,
     position: 'front',
     updateInterval: 150,
-    layers: [],
+    layers: false,
     layerDefs: false,
-    layerTime: false
-  },
-
-  _defaultLayerParams: {
+    timeOptions: false,
     format: 'png24',
-    transparent: true,
-    f: 'image',
-    bboxSR: 3875,
-    imageSR: 3875
+    transparent: true
   },
 
   initialize: function (url, options) {
     this.url = L.esri.Util.cleanUrl(url);
-    this._layerParams = L.Util.extend({}, this._defaultLayerParams);
     this._service = new L.esri.Services.MapService(this.url);
-
     L.Util.setOptions(this, options);
-
-    if(this.options.layers.length) {
-      this._layerParams.layers = 'show:' + this.options.layers.join(',');
-    }
-
-    if(this.options.layerDefs) {
-      this.setLayerDefs(this.options.layerDefs);
-
-    }
-
-    if(this.options.layerTime) {
-      this._layerParams.layerTimeOptions = JSON.stringify(this.options.layerTime);
-    }
   },
 
   onAdd: function (map) {
@@ -49,8 +28,8 @@ L.esri.DynamicMapLayer = L.Class.extend({
 
     if (map.options.crs && map.options.crs.code) {
       var sr = map.options.crs.code.split(':')[1];
-      this._layerParams.bboxSR = sr;
-      this._layerParams.imageSR = sr;
+      this.options.bboxSR = sr;
+      this.options.imageSR = sr;
     }
 
     // @TODO remove at Leaflet 0.8
@@ -125,11 +104,13 @@ L.esri.DynamicMapLayer = L.Class.extend({
   },
 
   getLayers: function(){
-
+    return this.options.layers;
   },
 
-  setLayers: function(){
-    this.options;
+  setLayers: function(layers){
+    this.options.layers = layers;
+    this._update();
+    return this;
   },
 
   getLayerDefs: function(){
@@ -138,7 +119,17 @@ L.esri.DynamicMapLayer = L.Class.extend({
 
   setLayerDefs: function(layerDefs){
     this.options.layerDefs = layerDefs;
-    this._layerParams.layerDefs = JSON.stringify(this.options.layerDefs);
+    this._update();
+    return this;
+  },
+
+  getTimeOptions: function(layerDefs){
+    return this.options.timeOptions;
+  },
+
+  setTimeOptions: function(timeOptions){
+    this.options.timeOptions = timeOptions;
+    this._update();
     return this;
   },
 
@@ -190,55 +181,50 @@ L.esri.DynamicMapLayer = L.Class.extend({
     this._lastClick = e.latlng;
   },
 
-  _getImageUrl: function () {
+  _buildExportParams: function () {
     var bounds = this._map.getBounds();
     var size = this._map.getSize();
     var ne = this._map.options.crs.project(bounds._northEast);
     var sw = this._map.options.crs.project(bounds._southWest);
+    var params = {
+      bbox: [sw.x, sw.y, ne.x, ne.y].join(','),
+      size: size.x + ',' + size.y,
+      dpi: 96,
+      format: this.options.format,
+      transparent: this.options.transparent,
+      bboxSR: this.options.bboxSR,
+      imageSR: this.options.imageSR
+    }
 
-    this._layerParams.bbox = [sw.x, sw.y, ne.x, ne.y].join(',');
-    this._layerParams.size = size.x + ',' + size.y;
-    this._layerParams.dpi = 96;
+    if(this.options.layers){
+      params.layers = 'show:' + this.options.layers.join(',');
+    }
+
+    if(this.options.layerDefs){
+      params.layerDefs = JSON.stringify(this.options.layerDefs);
+    }
+
+    if(this.options.timeOptions){
+      params.timeOptions = JSON.stringify(this.options.timeOptions);
+    }
 
     if(this.options.from && this.options.to){
-      this._layerParams.time = this.options.from.valueOf() + ',' + this.options.to.valueOf();
+      params.time = this.options.from.valueOf() + ',' + this.options.to.valueOf();
     }
 
     if(this.options.token) {
-      this._layerParams.token = this.options.token;
+      params.token = this.options.token;
     }
-    console.log(this._layerParams);
-    var url = this.url + 'export' + L.Util.getParamString(this._layerParams);
 
-    return url;
+    return params;
   },
 
-  _update: function () {
-    if(this._animatingZoom){
-      return;
-    }
-
-    if (this._map._panTransition && this._map._panTransition._inProgress) {
-      return;
-    }
-
-    var zoom = this._map.getZoom();
-
-    if (zoom > this.options.maxZoom || zoom < this.options.minZoom) {
-      return;
-    }
-
-    var bounds = this._map.getBounds();
-    bounds._southWest.wrap();
-    bounds._northEast.wrap();
-
-    var image = new L.ImageOverlay(this._getImageUrl(), bounds, {
+  _renderImage: function(url, bounds){
+    var image = new L.ImageOverlay(url, bounds, {
       opacity: 0
     }).addTo(this._map);
 
-    this._loading = true;
-
-    image.on('load', function(e){
+    image.once('load', function(e){
       var newImage = e.target;
       var oldImage = this._currentImage;
 
@@ -256,23 +242,40 @@ L.esri.DynamicMapLayer = L.Class.extend({
         if(oldImage){
           this._map.removeLayer(oldImage);
         }
-
-        this.fire('load', {
-          bounds: bounds
-        });
-
-        this._loading = false;
-
       } else {
         this._map.removeLayer(newImage);
       }
-    }, this);
 
-    if(!this._loading){
-      this.fire('loading', {
+      this.fire('load', {
         bounds: bounds
       });
+
+    }, this);
+
+    this.fire('loading', {
+      bounds: bounds
+    });
+  },
+
+  _update: function () {
+    var zoom = this._map.getZoom();
+    var bounds = this._map.getBounds();
+
+    if(this._animatingZoom){
+      return;
     }
+
+    if (this._map._panTransition && this._map._panTransition._inProgress) {
+      return;
+    }
+
+    if (zoom > this.options.maxZoom || zoom < this.options.minZoom) {
+      return;
+    }
+
+    this._service.get('export', this._buildExportParams(), function(error, response){
+      this._renderImage(response.href, bounds);
+    }, this);
   }
 });
 
