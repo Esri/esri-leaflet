@@ -32,6 +32,9 @@
 
       this._service = new L.esri.Services.FeatureLayer(this.url);
 
+      // Leaflet 0.8 change to new propagation
+      this._service.on('authenticationrequired', this._propagateEvent, this);
+
       if(this._timeEnabled){
         this.timeIndex = new TemporalIndex();
       }
@@ -162,6 +165,8 @@
         var bounds = this._cellCoordsToBounds(coords);
         this._requestFeatures(bounds, key, requestCallback);
       }
+
+      return this;
     },
 
     getWhere: function(){
@@ -176,11 +181,12 @@
       return [this.options.from, this.options.to];
     },
 
-    setTimeRange: function(from, to){
+    setTimeRange: function(from, to, callback, context){
       var oldFrom = this.options.from;
       var oldTo = this.options.to;
       var requestCallback = L.Util.bind(function(){
         this._filterExistingFeatures(oldFrom, oldTo, from, to);
+        callback.call(context);
       }, this);
 
       this.options.from = from;
@@ -271,26 +277,45 @@
     /**
      * Service Methods
      */
+
+    metadata: function(callback, context){
+      this._service.metadata(callback, context);
+      return this;
+    },
+
     query: function(){
       return this._service.query();
     },
 
-    addFeature: function(feature, callback, context){
-      this._service.addFeature(feature, function(error, response){
+    createFeature: function(feature, callback, context){
+      this._service.createFeature(feature, function(error, response){
         //@ TODO
       }, context);
+      return this;
     },
 
     updateFeature: function(feature, callback, context){
       this._service.updateFeature(feature, function(error, response){
         //@ TODO
       }, context);
+      return this;
     },
 
     removeFeature: function(id, callback, context){
       this._service.removeFeature(id, function(error, response){
         //@ TODO
       }, context);
+      return this;
+    },
+
+    // from https://github.com/Leaflet/Leaflet/blob/v0.7.2/src/layer/FeatureGroup.js
+    // @TODO remove at Leaflet 0.8
+    _propagateEvent: function (e) {
+      e = L.extend({
+        layer: e.target,
+        target: this
+      }, e);
+      this.fire(e.type, e);
     }
   });
 

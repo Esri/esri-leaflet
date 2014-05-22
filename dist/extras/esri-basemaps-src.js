@@ -1,4 +1,4 @@
-/*! Esri-Leaflet - v0.0.1-beta.4 - 2014-05-09
+/*! Esri-Leaflet - v0.0.1-beta.4 - 2014-05-22
 *   Copyright (c) 2014 Environmental Systems Research Institute, Inc.
 *   Apache License*/
 L.esri = {
@@ -212,36 +212,6 @@ L.esri = {
     return url;
   };
 
-  // quick and dirty param serialization
-  L.esri.Util.serialize = function(params){
-    var qs='';
-
-    for(var param in params){
-      if(params.hasOwnProperty(param)){
-        var key = param;
-        var value = params[param];
-        qs+=encodeURIComponent(key);
-        qs+='=';
-        qs+=encodeURIComponent(value);
-        qs+='&';
-      }
-    }
-
-    return qs.substring(0, qs.length - 1);
-  };
-
-  // index of polyfill, needed for IE 8
-  L.esri.Util.indexOf = function(arr, obj, start){
-    start = start || 0;
-    if(arr.indexOf){
-      return arr.indexOf(obj, start);
-    }
-    for (var i = start, j = arr.length; i < j; i++) {
-      if (arr[i] === obj) { return i; }
-    }
-    return -1;
-  };
-
   // convert an extent (ArcGIS) to LatLngBounds (Leaflet)
   L.esri.Util.extentToBounds = function(extent){
     var sw = new L.LatLng(extent.ymin, extent.xmin);
@@ -396,6 +366,23 @@ L.esri = {
 })(L);
 (function(L){
 
+  function serialize(params){
+    var qs='';
+
+    for(var param in params){
+      if(params.hasOwnProperty(param)){
+        var key = param;
+        var value = params[param];
+        qs+=encodeURIComponent(key);
+        qs+='=';
+        qs+=encodeURIComponent(value);
+        qs+='&';
+      }
+    }
+
+    return qs.substring(0, qs.length - 1);
+  }
+
   function createRequest(callback, context){
    var httpRequest = new XMLHttpRequest();
 
@@ -435,7 +422,7 @@ L.esri = {
 
       httpRequest.open('POST', url);
       httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-      httpRequest.send(L.esri.Util.serialize(params));
+      httpRequest.send(serialize(params));
     },
     get: {
       CORS: function (url, params, callback, context) {
@@ -443,7 +430,7 @@ L.esri = {
 
         var httpRequest = createRequest(callback, context);
 
-        httpRequest.open('GET', url + '?' + L.esri.Util.serialize(params), true);
+        httpRequest.open('GET', url + '?' + serialize(params), true);
         httpRequest.send(null);
       },
       JSONP: function(url, params, callback, context){
@@ -451,12 +438,12 @@ L.esri = {
 
         var callbackId = 'c'+(Math.random() * 1e9).toString(36).replace('.', '_');
 
-        params.f='json';
-        params.callback='L.esri._callback.'+callbackId;
+        params.f = 'json';
+        params.callback = 'L.esri._callback.'+callbackId;
 
         var script = L.DomUtil.create('script', null, document.body);
         script.type = 'text/javascript';
-        script.src = url + '?' +  L.esri.Util.serialize(params);
+        script.src = url + '?' +  serialize(params);
         script.id = callbackId;
 
         L.esri._callback[callbackId] = function(response){
@@ -535,7 +522,7 @@ L.esri = {
         OceansLabels: {
           urlTemplate: tileProtocol + '//{s}.arcgisonline.com/arcgis/rest/services/Ocean/World_Ocean_Reference/MapServer/tile/{z}/{y}/{x}',
           options: {
-            pane: 'esri-label',
+            //pane: 'esri-label',
             minZoom: 1,
             maxZoom: 16,
             hideLogo: false,
@@ -565,7 +552,7 @@ L.esri = {
         DarkGrayLabels: {
           urlTemplate: tileProtocol + '//{s}.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/World_Dark_Gray_Reference_Beta/MapServer/tile/{z}/{y}/{x}',
           options: {
-            pane: 'esri-label',
+            //pane: 'esri-label',
             minZoom: 1,
             maxZoom: 10,
             hideLogo: false,
@@ -585,7 +572,7 @@ L.esri = {
         GrayLabels: {
           urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}',
           options: {
-            pane: 'esri-label',
+            //pane: 'esri-label',
             minZoom: 1,
             maxZoom: 16,
             hideLogo: false,
@@ -605,7 +592,7 @@ L.esri = {
         ImageryLabels: {
           urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}',
           options: {
-            pane: 'esri-label',
+            //pane: 'esri-label',
             minZoom: 1,
             maxZoom: 19,
             hideLogo: false,
@@ -614,7 +601,7 @@ L.esri = {
         },
         ImageryTransportation: {
           urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/Reference/World_Transportation/MapServer/tile/{z}/{y}/{x}',
-          pane: 'esri-label',
+          //pane: 'esri-label',
           options: {
             minZoom: 1,
             maxZoom: 19,
@@ -634,7 +621,7 @@ L.esri = {
         },
         ShadedReliefLabels: {
           urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places_Alternate/MapServer/tile/{z}/{y}/{x}',
-          pane: 'esri-label',
+//          pane: 'esri-label',
           options: {
             minZoom: 1,
             maxZoom: 12,
@@ -655,7 +642,7 @@ L.esri = {
         TerrainLabels: {
           urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/Reference/World_Reference_Overlay/MapServer/tile/{z}/{y}/{x}',
           options: {
-            pane: 'esri-label',
+            //pane: 'esri-label',
             minZoom: 1,
             maxZoom: 13,
             hideLogo: false,
@@ -688,9 +675,9 @@ L.esri = {
       }
     },
     onAdd: function(map){
-      if(this.options.pane && L.esri.Support.pointerEvents){
-        this._initPane();
-      }
+      // if(this.options.pane && L.esri.Support.pointerEvents){
+      //   this._initPane();
+      // }
 
       L.TileLayer.prototype.onAdd.call(this, map);
 
@@ -706,13 +693,13 @@ L.esri = {
       var attribution = '<span class="esri-attributions" style="line-height:14px; vertical-align: -3px; text-overflow:ellipsis; white-space:nowrap; overflow:hidden; display:inline-block;">' + this.options.attribution + '</span>' + logo;
       return (this.options.attribution) ?  attribution : false;
     },
-    _initPane: function(){
-      if(!this._map.getPane(this.options.pane)){
-        var pane = this._map.createPane(this.options.pane);
-        pane.style.pointerEvents = 'none';
-        pane.style.zIndex = 5;
-      }
-    },
+    // _initPane: function(){
+    //   if(!this._map.getPane(this.options.pane)){
+    //     var pane = this._map.createPane(this.options.pane);
+    //     pane.style.pointerEvents = 'none';
+    //     pane.style.zIndex = 5;
+    //   }
+    // },
     _getAttributionData: function(url){
       L.esri.RequestHandlers.get.JSONP(url, {}, function(error, attributions){
         this._attributions = [];

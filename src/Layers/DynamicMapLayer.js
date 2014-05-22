@@ -18,6 +18,7 @@ L.esri.DynamicMapLayer = L.Class.extend({
   initialize: function (url, options) {
     this.url = L.esri.Util.cleanUrl(url);
     this._service = new L.esri.Services.MapService(this.url);
+    this._service.on('authenticationrequired', this._propagateEvent, this);
     L.Util.setOptions(this, options);
   },
 
@@ -101,6 +102,11 @@ L.esri.DynamicMapLayer = L.Class.extend({
 
   identify: function(){
     return this._service.identify();
+  },
+
+  metadata: function(callback, context){
+    this._service.metadata(callback, context);
+    return this;
   },
 
   getLayers: function(){
@@ -276,6 +282,16 @@ L.esri.DynamicMapLayer = L.Class.extend({
     this._service.get('export', this._buildExportParams(), function(error, response){
       this._renderImage(response.href, bounds);
     }, this);
+  },
+
+  // from https://github.com/Leaflet/Leaflet/blob/v0.7.2/src/layer/FeatureGroup.js
+  // @TODO remove at Leaflet 0.8
+  _propagateEvent: function (e) {
+    e = L.extend({
+      layer: e.target,
+      target: this
+    }, e);
+    this.fire(e.type, e);
   }
 });
 

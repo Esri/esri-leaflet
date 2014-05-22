@@ -4,7 +4,7 @@ L.esri.Services.FeatureLayer = L.esri.Service.extend({
     return new L.esri.Services.Query(this);
   },
 
-  addFeature: function(feature, callback, context) {
+  createFeature: function(feature, callback, context) {
     feature = L.esri.Util.geojsonToArcGIS(feature);
     this.post(this.url + 'addFeatures', JSON.stringify(feature), callback, context);
   },

@@ -1,4 +1,4 @@
-/*! Esri-Leaflet - v0.0.1-beta.4 - 2014-05-09
+/*! Esri-Leaflet - v0.0.1-beta.4 - 2014-05-22
 *   Copyright (c) 2014 Environmental Systems Research Institute, Inc.
 *   Apache License*/
 L.esri = {
@@ -212,36 +212,6 @@ L.esri = {
     return url;
   };
 
-  // quick and dirty param serialization
-  L.esri.Util.serialize = function(params){
-    var qs='';
-
-    for(var param in params){
-      if(params.hasOwnProperty(param)){
-        var key = param;
-        var value = params[param];
-        qs+=encodeURIComponent(key);
-        qs+='=';
-        qs+=encodeURIComponent(value);
-        qs+='&';
-      }
-    }
-
-    return qs.substring(0, qs.length - 1);
-  };
-
-  // index of polyfill, needed for IE 8
-  L.esri.Util.indexOf = function(arr, obj, start){
-    start = start || 0;
-    if(arr.indexOf){
-      return arr.indexOf(obj, start);
-    }
-    for (var i = start, j = arr.length; i < j; i++) {
-      if (arr[i] === obj) { return i; }
-    }
-    return -1;
-  };
-
   // convert an extent (ArcGIS) to LatLngBounds (Leaflet)
   L.esri.Util.extentToBounds = function(extent){
     var sw = new L.LatLng(extent.ymin, extent.xmin);
@@ -396,6 +366,23 @@ L.esri = {
 })(L);
 (function(L){
 
+  function serialize(params){
+    var qs='';
+
+    for(var param in params){
+      if(params.hasOwnProperty(param)){
+        var key = param;
+        var value = params[param];
+        qs+=encodeURIComponent(key);
+        qs+='=';
+        qs+=encodeURIComponent(value);
+        qs+='&';
+      }
+    }
+
+    return qs.substring(0, qs.length - 1);
+  }
+
   function createRequest(callback, context){
    var httpRequest = new XMLHttpRequest();
 
@@ -435,7 +422,7 @@ L.esri = {
 
       httpRequest.open('POST', url);
       httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-      httpRequest.send(L.esri.Util.serialize(params));
+      httpRequest.send(serialize(params));
     },
     get: {
       CORS: function (url, params, callback, context) {
@@ -443,7 +430,7 @@ L.esri = {
 
         var httpRequest = createRequest(callback, context);
 
-        httpRequest.open('GET', url + '?' + L.esri.Util.serialize(params), true);
+        httpRequest.open('GET', url + '?' + serialize(params), true);
         httpRequest.send(null);
       },
       JSONP: function(url, params, callback, context){
@@ -451,12 +438,12 @@ L.esri = {
 
         var callbackId = 'c'+(Math.random() * 1e9).toString(36).replace('.', '_');
 
-        params.f='json';
-        params.callback='L.esri._callback.'+callbackId;
+        params.f = 'json';
+        params.callback = 'L.esri._callback.'+callbackId;
 
         var script = L.DomUtil.create('script', null, document.body);
         script.type = 'text/javascript';
-        script.src = url + '?' +  L.esri.Util.serialize(params);
+        script.src = url + '?' +  serialize(params);
         script.id = callbackId;
 
         L.esri._callback[callbackId] = function(response){
@@ -557,6 +544,7 @@ L.esri.Services.Identify = L.Class.extend({
     this._params.time = ([start, end]).join();
     return this;
   },
+
   layers: function (string){
     this._params.layers = string;
     return this;
@@ -610,7 +598,8 @@ L.esri.Services.Query = L.Class.extend({
     }
 
     this._params = {
-      outSr: 4326
+      outSr: 4326,
+      outFields: '*'
     };
 
     for(var key in options){
@@ -703,6 +692,7 @@ L.esri.Services.Query = L.Class.extend({
   },
 
   run: function(callback, context){
+    //@TODO chaining
     this._request(function(error, response){
       response = (error) ? null : L.esri.Util.featureSetToFeatureCollection(response);
       callback.call(context, error, response);
@@ -710,19 +700,29 @@ L.esri.Services.Query = L.Class.extend({
   },
 
   count: function(callback, context){
+    //@TODO chaining
     this._params.returnCountOnly = true;
-    this._request(callback, context);
+    this._request(function(error, response){
+      callback(error, response.count);
+    }, context);
+    return this;
   },
 
   ids: function(callback, context){
+    //@TODO chaining
     this._params.returnIdsOnly = true;
-    this._request(callback, context);
+    this._request(function(error, response){
+      callback(error, response.objectIds);
+    }, context);
+    return this;
   },
 
   bounds: function(callback, context){
+    //@TODO chaining
     this._params.returnExtentOnly = true;
     this._params.returnCountOnly = true;
     this._request(callback, context);
+    return this;
   },
 
   _request: function(callback, context){

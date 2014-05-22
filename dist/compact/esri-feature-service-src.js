@@ -1,4 +1,4 @@
-/*! Esri-Leaflet - v0.0.1-beta.4 - 2014-05-09
+/*! Esri-Leaflet - v0.0.1-beta.4 - 2014-05-22
 *   Copyright (c) 2014 Environmental Systems Research Institute, Inc.
 *   Apache License*/
 L.esri = {
@@ -212,36 +212,6 @@ L.esri = {
     return url;
   };
 
-  // quick and dirty param serialization
-  L.esri.Util.serialize = function(params){
-    var qs='';
-
-    for(var param in params){
-      if(params.hasOwnProperty(param)){
-        var key = param;
-        var value = params[param];
-        qs+=encodeURIComponent(key);
-        qs+='=';
-        qs+=encodeURIComponent(value);
-        qs+='&';
-      }
-    }
-
-    return qs.substring(0, qs.length - 1);
-  };
-
-  // index of polyfill, needed for IE 8
-  L.esri.Util.indexOf = function(arr, obj, start){
-    start = start || 0;
-    if(arr.indexOf){
-      return arr.indexOf(obj, start);
-    }
-    for (var i = start, j = arr.length; i < j; i++) {
-      if (arr[i] === obj) { return i; }
-    }
-    return -1;
-  };
-
   // convert an extent (ArcGIS) to LatLngBounds (Leaflet)
   L.esri.Util.extentToBounds = function(extent){
     var sw = new L.LatLng(extent.ymin, extent.xmin);
@@ -396,6 +366,23 @@ L.esri = {
 })(L);
 (function(L){
 
+  function serialize(params){
+    var qs='';
+
+    for(var param in params){
+      if(params.hasOwnProperty(param)){
+        var key = param;
+        var value = params[param];
+        qs+=encodeURIComponent(key);
+        qs+='=';
+        qs+=encodeURIComponent(value);
+        qs+='&';
+      }
+    }
+
+    return qs.substring(0, qs.length - 1);
+  }
+
   function createRequest(callback, context){
    var httpRequest = new XMLHttpRequest();
 
@@ -435,7 +422,7 @@ L.esri = {
 
       httpRequest.open('POST', url);
       httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-      httpRequest.send(L.esri.Util.serialize(params));
+      httpRequest.send(serialize(params));
     },
     get: {
       CORS: function (url, params, callback, context) {
@@ -443,7 +430,7 @@ L.esri = {
 
         var httpRequest = createRequest(callback, context);
 
-        httpRequest.open('GET', url + '?' + L.esri.Util.serialize(params), true);
+        httpRequest.open('GET', url + '?' + serialize(params), true);
         httpRequest.send(null);
       },
       JSONP: function(url, params, callback, context){
@@ -451,12 +438,12 @@ L.esri = {
 
         var callbackId = 'c'+(Math.random() * 1e9).toString(36).replace('.', '_');
 
-        params.f='json';
-        params.callback='L.esri._callback.'+callbackId;
+        params.f = 'json';
+        params.callback = 'L.esri._callback.'+callbackId;
 
         var script = L.DomUtil.create('script', null, document.body);
         script.type = 'text/javascript';
-        script.src = url + '?' +  L.esri.Util.serialize(params);
+        script.src = url + '?' +  serialize(params);
         script.id = callbackId;
 
         L.esri._callback[callbackId] = function(response){
@@ -542,7 +529,8 @@ L.esri.Services.Query = L.Class.extend({
     }
 
     this._params = {
-      outSr: 4326
+      outSr: 4326,
+      outFields: '*'
     };
 
     for(var key in options){
@@ -635,6 +623,7 @@ L.esri.Services.Query = L.Class.extend({
   },
 
   run: function(callback, context){
+    //@TODO chaining
     this._request(function(error, response){
       response = (error) ? null : L.esri.Util.featureSetToFeatureCollection(response);
       callback.call(context, error, response);
@@ -642,19 +631,29 @@ L.esri.Services.Query = L.Class.extend({
   },
 
   count: function(callback, context){
+    //@TODO chaining
     this._params.returnCountOnly = true;
-    this._request(callback, context);
+    this._request(function(error, response){
+      callback(error, response.count);
+    }, context);
+    return this;
   },
 
   ids: function(callback, context){
+    //@TODO chaining
     this._params.returnIdsOnly = true;
-    this._request(callback, context);
+    this._request(function(error, response){
+      callback(error, response.objectIds);
+    }, context);
+    return this;
   },
 
   bounds: function(callback, context){
+    //@TODO chaining
     this._params.returnExtentOnly = true;
     this._params.returnCountOnly = true;
     this._request(callback, context);
+    return this;
   },
 
   _request: function(callback, context){
@@ -985,18 +984,18 @@ L.esri.featureGrid = function (options) {
   L.esri.FeatureManager = L.esri.FeatureGrid.extend({
 
     /**
-     * Constructor
+     * Options
      */
 
     options: {
-      precision: 6,
       where: '1=1',
       fields: ['*'],
       from: false,
       to: false,
       timeField: false,
       timeFilterMode: 'server',
-      simplifyFactor: 0
+      simplifyFactor: 0,
+      precision: 6
     },
 
     /**
@@ -1013,6 +1012,9 @@ L.esri.featureGrid = function (options) {
       this._timeEnabled = !!(options.from && options.to);
 
       this._service = new L.esri.Services.FeatureLayer(this.url);
+
+      // Leaflet 0.8 change to new propagation
+      this._service.on('authenticationrequired', this._propagateEvent, this);
 
       if(this._timeEnabled){
         this.timeIndex = new TemporalIndex();
@@ -1114,6 +1116,7 @@ L.esri.featureGrid = function (options) {
       var newShapshot = [];
       var pendingRequests = 0;
       var requestCallback = L.Util.bind(function(error, featureCollection){
+
         if(featureCollection){
           for (var i = featureCollection.features.length - 1; i >= 0; i--) {
             newShapshot.push(featureCollection.features[i].id);
@@ -1123,12 +1126,9 @@ L.esri.featureGrid = function (options) {
         pendingRequests--;
 
         if(pendingRequests <= 0){
-          var states = this._diffLayerState(oldSnapshot, newShapshot);
-
-          this._currentSnapshot = states.newFeatures;
-
-          this.removeLayers(states.oldFeatures);
-          this.addLayers(states.newFeatures);
+          this._currentSnapshot = newShapshot;
+          this.removeLayers(oldSnapshot);
+          this.addLayers(newShapshot);
 
           if(callback) {
             callback.call(this);
@@ -1181,39 +1181,12 @@ L.esri.featureGrid = function (options) {
       }
     },
 
-    _diffLayerState: function(oldFeatures, newFeatures){
-       var featuresToRemove = [];
-
-      for (var i = oldFeatures.length - 1; i >= 0; i--) {
-        var idx = L.esri.Util.indexOf(newFeatures, oldFeatures[i]);
-        if (idx >= 0) {
-          featuresToRemove.push(idx);
-        }
-      }
-
-      for (i = featuresToRemove.length - 1; i >= 0; i--) {
-        oldFeatures.splice(featuresToRemove[i], 1);
-        newFeatures.splice(featuresToRemove[i], 1);
-      }
-
-      return {
-        oldFeatures: oldFeatures,
-        newFeatures: newFeatures
-      };
-    },
-
     _filterExistingFeatures: function (oldFrom, oldTo, newFrom, newTo) {
       var oldFeatures = this._getFeaturesInTimeRange(oldFrom, oldTo);
       var newFeatures = this._getFeaturesInTimeRange(newFrom, newTo);
-
-      var state = this._diffLayerState(oldFeatures, newFeatures);
-
-      this._currentSnapshot = state.newFeatures;
-
-      this.removeLayers(state.oldFeatures);
-      this.addLayers(state.newFeatures);
+      this.removeLayers(oldFeatures);
+      this.addLayers(newFeatures);
     },
-
 
     _getFeaturesInTimeRange: function(start, end){
       var ids = [];
@@ -1277,8 +1250,51 @@ L.esri.featureGrid = function (options) {
         var endDate = feature.properties[this.options.timeField.to];
         return ((startDate > from) && (startDate < to)) || ((endDate > from) && (endDate < to));
       }
-    }
+    },
 
+    /**
+     * Service Methods
+     */
+
+    metadata: function(callback, context){
+      this._service.metadata(callback, context);
+      return this;
+    },
+
+    query: function(){
+      return this._service.query();
+    },
+
+    addFeature: function(feature, callback, context){
+      this._service.addFeature(feature, function(error, response){
+        //@ TODO
+      }, context);
+      return this;
+    },
+
+    updateFeature: function(feature, callback, context){
+      this._service.updateFeature(feature, function(error, response){
+        //@ TODO
+      }, context);
+      return this;
+    },
+
+    removeFeature: function(id, callback, context){
+      this._service.removeFeature(id, function(error, response){
+        //@ TODO
+      }, context);
+      return this;
+    },
+
+    // from https://github.com/Leaflet/Leaflet/blob/v0.7.2/src/layer/FeatureGroup.js
+    // @TODO remove at Leaflet 0.8
+    _propagateEvent: function (e) {
+      e = L.extend({
+        layer: e.target,
+        target: this
+      }, e);
+      this.fire(e.type, e);
+    }
   });
 
   L.esri.featureManager = function(options){
@@ -1303,6 +1319,7 @@ L.esri.featureGrid = function (options) {
     var currentIndex;
     var currentElement;
     var resultIndex;
+
     while (minIndex <= maxIndex) {
       resultIndex = currentIndex = (minIndex + maxIndex) / 2 || 0;
       currentElement = this.values[Math.round(currentIndex)];
@@ -1362,6 +1379,23 @@ L.esri.FeatureLayer = L.esri.FeatureManager.extend({
     options = L.setOptions(this, options);
 
     this._layers = {};
+  },
+
+  /**
+   * Layer Interface
+   */
+
+  onAdd: function(map){
+    return L.esri.FeatureManager.prototype.onAdd.call(this, map);
+  },
+
+  onRemove: function(map){
+
+    for (var i in this._layers) {
+      map.removeLayer(this._layers[i]);
+    }
+
+    return L.esri.FeatureManager.prototype.onRemove.call(this, map);
   },
 
   /**
@@ -1451,7 +1485,7 @@ L.esri.FeatureLayer = L.esri.FeatureManager.extend({
     for (var i = ids.length - 1; i >= 0; i--) {
       var layer = this._layers[ids[i]];
       if(layer){
-        layer.addTo(this._map);
+        this._map.addLayer(layer);
       }
     }
   },
@@ -1460,7 +1494,7 @@ L.esri.FeatureLayer = L.esri.FeatureManager.extend({
     for (var i = ids.length - 1; i >= 0; i--) {
       var layer = this._layers[ids[i]];
       if(layer){
-        layer.removeFrom(this._map);
+        this._map.removeLayer(layer);
       }
     }
   },
@@ -1523,16 +1557,6 @@ L.esri.FeatureLayer = L.esri.FeatureManager.extend({
 
   getFeature: function (id) {
     return this._layers[id];
-  },
-
-  // from https://github.com/Leaflet/Leaflet/blob/v0.7.2/src/layer/FeatureGroup.js
-  // @TODO remove at Leaflet 0.8
-  _propagateEvent: function (e) {
-    e = L.extend({
-      layer: e.target,
-      target: this
-    }, e);
-    this.fire(e.type, e);
   }
 
 });

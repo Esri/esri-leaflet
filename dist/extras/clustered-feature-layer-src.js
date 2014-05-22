@@ -1,4 +1,4 @@
-/*! Esri-Leaflet - v0.0.1-beta.4 - 2014-05-09
+/*! Esri-Leaflet - v0.0.1-beta.4 - 2014-05-22
 *   Copyright (c) 2014 Environmental Systems Research Institute, Inc.
 *   Apache License*/
 L.esri.ClusteredFeatureLayer = L.esri.FeatureManager.extend({
@@ -19,7 +19,6 @@ L.esri.ClusteredFeatureLayer = L.esri.FeatureManager.extend({
     this._layers = {};
 
     this.cluster = new L.MarkerClusterGroup(options);
-
 
     // @TODO enable at Leaflet 0.8
     // this.cluster.addEventParent(this);

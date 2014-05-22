@@ -61,10 +61,13 @@ L.esri.FeatureLayer = L.esri.FeatureManager.extend({
 
         newLayer = L.GeoJSON.geometryToLayer(geojson, this.options.pointToLayer, L.GeoJSON.coordsToLatLng, this.options);
         newLayer.feature = L.GeoJSON.asFeature(geojson);
+        newLayer.defaultOptions = newLayer.options;
+
+        // cache the layer
+        this._layers[newLayer.feature.id] = newLayer;
 
         // style the layer
-        newLayer.defaultOptions = newLayer.options;
-        this.resetStyle(newLayer);
+        this.resetStyle(newLayer.feature.id);
 
         // bubble events from layers to this
         // @TODO Leaflet 0.8
@@ -79,8 +82,7 @@ L.esri.FeatureLayer = L.esri.FeatureManager.extend({
           newLayer.bindPopup(this._popup(newLayer.feature, newLayer));
         }
 
-        // cache the layer
-        this._layers[newLayer.feature.id] = newLayer;
+
 
         // add the layer if it is within the time bounds or our layer is not time enabled
         if(!this._timeEnabled || (this._timeEnabled && this._featureWithinTimeRange(geojson)) ){
@@ -138,16 +140,20 @@ L.esri.FeatureLayer = L.esri.FeatureManager.extend({
    * Styling Methods
    */
 
-  resetStyle: function (layer) {
+  resetStyle: function (id) {
+    var layer = this._layers[id];
+
     // reset any custom styles
     layer.options = layer.defaultOptions;
     this._setLayerStyle(layer, this.options.style);
+    return this;
   },
 
   setStyle: function (style) {
     this.eachLayer(function (layer) {
       this._setLayerStyle(layer, style);
     }, this);
+    return this;
   },
 
   _setLayerStyle: function (layer, style) {
@@ -170,6 +176,7 @@ L.esri.FeatureLayer = L.esri.FeatureManager.extend({
       var popupContent = this._popup(layer.feature, layer);
       layer.bindPopup(popupContent, options);
     }
+    return this;
   },
 
   unbindPopup: function () {
@@ -177,6 +184,7 @@ L.esri.FeatureLayer = L.esri.FeatureManager.extend({
     for (var i in this._layers) {
       this._layers[i].unbindPopup();
     }
+    return this;
   },
 
   /**
@@ -192,16 +200,6 @@ L.esri.FeatureLayer = L.esri.FeatureManager.extend({
 
   getFeature: function (id) {
     return this._layers[id];
-  },
-
-  // from https://github.com/Leaflet/Leaflet/blob/v0.7.2/src/layer/FeatureGroup.js
-  // @TODO remove at Leaflet 0.8
-  _propagateEvent: function (e) {
-    e = L.extend({
-      layer: e.target,
-      target: this
-    }, e);
-    this.fire(e.type, e);
   }
 
 });

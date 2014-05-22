@@ -14,11 +14,11 @@ Constructor | Description
 
 ### Options
 
-`L.esri.TiledMapLayer` also accepts all the options you can pass to [`L.TileLayer`](http://leafletjs.com/reference.html#tilelayer-options).
+`L.esri.TiledMapLayer` accepts all [`L.TileLayer`](http://leafletjs.com/reference.html#tilelayer-options) options.
 
 ### Events
 
-`L.esri.TiledMapLayer` also fires all the same events as [`L.TileLayer`](http://leafletjs.com/reference.html#tilelayer) in addition to these events.
+`L.esri.TiledMapLayer` fires all  [`L.TileLayer`](http://leafletjs.com/reference.html#tilelayer) events.
 
 ### Example
 
