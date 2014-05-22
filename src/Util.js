@@ -181,27 +181,6 @@
     return output;
   }
 
-  // make it so that passed `function` never gets called
-  // twice within `delay` milliseconds. Used to throttle
-  // `move` events on layers.
-  // http://remysharp.com/2010/07/21/throttling-function-calls/
-  L.esri.Util.debounce = function (fn, delay, context) {
-    var timer = null;
-    return function() {
-      var context = this||context, args = arguments;
-      clearTimeout(timer);
-      timer = setTimeout(function () {
-        fn.apply(context, args);
-      }, delay);
-    };
-  };
-
-  // round a number away from zero used to snap
-  // row/columns away from the origin of the grid
-  L.esri.Util.roundAwayFromZero = function (num){
-    return (num > 0) ? Math.ceil(num) : Math.floor(num);
-  };
-
   // trim whitespace on strings
   // used to clean urls
   L.esri.Util.trim = function(str) {
@@ -245,7 +224,9 @@
       return arr.indexOf(obj, start);
     }
     for (var i = start, j = arr.length; i < j; i++) {
-      if (arr[i] === obj) { return i; }
+      if (arr[i] === obj) {
+        return i;
+      }
     }
     return -1;
   };
@@ -254,12 +235,6 @@
   L.esri.Util.extentToBounds = function(extent){
     var sw = new L.LatLng(extent.ymin, extent.xmin);
     var ne = new L.LatLng(extent.ymax, extent.xmax);
-    return new L.LatLngBounds(sw, ne);
-  };
-
-  L.esri.Util.mercatorExtentToBounds = function(extent, map){
-    var sw = map.unproject(L.point([extent.ymin, extent.xmin]));
-    var ne = map.unproject(L.point([extent.ymax, extent.xmax]));
     return new L.LatLngBounds(sw, ne);
   };
 
@@ -273,17 +248,6 @@
       'spatialReference': {
         'wkid' : 4326
       }
-    };
-  };
-
-  // convert a LatLngBounds (Leaflet) to a Envelope (Terraformer.Rtree)
-  L.esri.Util.boundsToEnvelope = function(bounds){
-    var extent = L.esri.Util.boundsToExtent(bounds);
-    return {
-      x: extent.xmin,
-      y: extent.ymin,
-      w: Math.abs(extent.xmin - extent.xmax),
-      h: Math.abs(extent.ymin - extent.ymax)
     };
   };
 

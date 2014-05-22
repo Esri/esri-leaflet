@@ -54,7 +54,9 @@ L.esri.FeatureGrid = L.Class.extend({
     this._cellsToLoad = 0;
     this._cellsTotal = 0;
 
-    this._cellNumBounds = this._getCellNumBounds();
+    // @TODO enable at Leaflet 0.8
+    // this._cellNumBounds = this._getCellNumBounds();
+
     this._resetWrap();
   },
 
@@ -94,13 +96,11 @@ L.esri.FeatureGrid = L.Class.extend({
 
     if (zoom > this.options.maxZoom ||
         zoom < this.options.minZoom) { return; }
+
     // cell coordinates range for the current view
     var cellBounds = L.bounds(
       bounds.min.divideBy(cellSize).floor(),
       bounds.max.divideBy(cellSize).floor());
-    console.log(cellBounds);
-    console.log(cellBounds.min.x, cellBounds.max.x);
-    console.log(cellBounds.min.y, cellBounds.max.y);
 
     this._addCells(cellBounds);
     this._removeOtherCells(cellBounds);
@@ -115,17 +115,17 @@ L.esri.FeatureGrid = L.Class.extend({
     // create a queue of coordinates to load cells from
     for (j = bounds.min.y; j <= bounds.max.y; j++) {
       for (i = bounds.min.x; i <= bounds.max.x; i++) {
-        console.log('cell');
         coords = new L.Point(i, j);
         coords.z = zoom;
 
-        // add cell to queue if it's not in cache or out of bounds
+        // @TODO enable at Leaflet 0.8
         // if (this._isValidCell(coords)) {
-          queue.push(coords);
+        //   queue.push(coords);
         // }
+
+        queue.push(coords);
       }
     }
-    console.log(queue.length);
     var cellsToLoad = queue.length;
 
     if (cellsToLoad === 0) { return; }
@@ -143,22 +143,29 @@ L.esri.FeatureGrid = L.Class.extend({
     }
   },
 
-  _isValidCell: function (coords) {
-    var crs = this._map.options.crs;
+  // @TODO enable at Leaflet 0.8
+  // _isValidCell: function (coords) {
+  //   var crs = this._map.options.crs;
 
-    if (!crs.infinite) {
-      // don't load cell if it's out of bounds and not wrapped
-      var bounds = this._cellNumBounds;
-      if ((!crs.wrapLng && (coords.x < bounds.min.x || coords.x > bounds.max.x)) ||
-          (!crs.wrapLat && (coords.y < bounds.min.y || coords.y > bounds.max.y))) { return false; }
-    }
+  //   if (!crs.infinite) {
+  //     // don't load cell if it's out of bounds and not wrapped
+  //     var bounds = this._cellNumBounds;
+  //     if (
+  //       (!crs.wrapLng && (coords.x < bounds.min.x || coords.x > bounds.max.x)) ||
+  //       (!crs.wrapLat && (coords.y < bounds.min.y || coords.y > bounds.max.y))
+  //     ) {
+  //       return false;
+  //     }
+  //   }
 
-    if (!this.options.bounds) { return true; }
+  //   if (!this.options.bounds) {
+  //     return true;
+  //   }
 
-    // don't load cell if it doesn't intersect the bounds in options
-    var cellBounds = this._cellCoordsToBounds(coords);
-    return L.latLngBounds(this.options.bounds).intersects(cellBounds);
-  },
+  //   // don't load cell if it doesn't intersect the bounds in options
+  //   var cellBounds = this._cellCoordsToBounds(coords);
+  //   return L.latLngBounds(this.options.bounds).intersects(cellBounds);
+  // },
 
   // converts cell coordinates to its geographical bounds
   _cellCoordsToBounds: function (coords) {
@@ -285,22 +292,16 @@ L.esri.FeatureGrid = L.Class.extend({
   },
 
   // get the global cell coordinates range for the current zoom
-  _getCellNumBounds: function () {
-    // @TODO for Leaflet 0.8
-    // var bounds = this._map.getPixelWorldBounds(),
-    //     size = this._getCellSize();
-    //
-    // return bounds ? L.bounds(
-    //     bounds.min.divideBy(size).floor(),
-    //     bounds.max.divideBy(size).ceil().subtract([1, 1])) : null;
-
-    var bounds = this._map.getPixelBounds(),
-        tileSize = this._getCellSize();
-
-    return L.bounds(
-            bounds.min.divideBy(tileSize)._floor(),
-            bounds.max.divideBy(tileSize)._floor());
-  }
+  // @TODO enable at Leaflet 0.8
+  // _getCellNumBounds: function () {
+  //   // @TODO for Leaflet 0.8
+  //   // var bounds = this._map.getPixelWorldBounds(),
+  //   //     size = this._getCellSize();
+  //   //
+  //   // return bounds ? L.bounds(
+  //   //     bounds.min.divideBy(size).floor(),
+  //   //     bounds.max.divideBy(size).ceil().subtract([1, 1])) : null;
+  // }
 
 });
 

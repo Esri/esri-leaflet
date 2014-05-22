@@ -87,7 +87,6 @@ L.esri.FeatureLayer = L.esri.FeatureManager.extend({
   },
 
   cellLeave: function(bounds, coords){
-
     var key = this._cellCoordsToKey(coords);
     var layers = this._cache[key];
     if(layers){
@@ -104,7 +103,7 @@ L.esri.FeatureLayer = L.esri.FeatureManager.extend({
     for (var i = ids.length - 1; i >= 0; i--) {
       var layer = this._layers[ids[i]];
       if(layer){
-        layer.addTo(this._map);
+        this._map.addLayer(layer);
       }
     }
   },
@@ -113,7 +112,7 @@ L.esri.FeatureLayer = L.esri.FeatureManager.extend({
     for (var i = ids.length - 1; i >= 0; i--) {
       var layer = this._layers[ids[i]];
       if(layer){
-        layer.removeFrom(this._map);
+        this._map.removeLayer(layer);
       }
     }
   },

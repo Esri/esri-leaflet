@@ -1,4 +1,3 @@
-// @TODO proxy support
 L.esri.Service = L.Class.extend({
 
   includes: L.Mixin.Events,
@@ -27,7 +26,7 @@ L.esri.Service = L.Class.extend({
   },
 
   request: function(method, path, params, callback, context){
-    var wrappedCallback = this._createServiceCallback('post', path, params, callback, context);
+    var wrappedCallback = this._createServiceCallback(method, path, params, callback, context);
 
     if (this.options.token) {
       params.token = this.options.token;

@@ -48,6 +48,7 @@ L.esri.Services.Identify = L.Class.extend({
     this._params.time = ([start, end]).join();
     return this;
   },
+
   layers: function (string){
     this._params.layers = string;
     return this;

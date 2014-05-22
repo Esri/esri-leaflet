@@ -7,6 +7,7 @@
      */
 
     options: {
+      precision: 6,
       where: '1=1',
       fields: ['*'],
       from: false,
@@ -108,7 +109,7 @@
     },
 
     _buildQuery: function(bounds){
-      var query = this._service.query().within(bounds).where(this.options.where).fields(this.options.fields);
+      var query = this._service.query().within(bounds).where(this.options.where).fields(this.options.fields).precision(this.options.precision);
 
       if(this.options.simplifyFactor){
         query.simplify(this._map, this.options.simplifyFactor);
@@ -131,6 +132,7 @@
       var newShapshot = [];
       var pendingRequests = 0;
       var requestCallback = L.Util.bind(function(error, featureCollection){
+
         if(featureCollection){
           for (var i = featureCollection.features.length - 1; i >= 0; i--) {
             newShapshot.push(featureCollection.features[i].id);
@@ -140,12 +142,9 @@
         pendingRequests--;
 
         if(pendingRequests <= 0){
-          var states = this._diffLayerState(oldSnapshot, newShapshot);
-
-          this._currentSnapshot = states.newFeatures;
-
-          this.removeLayers(states.oldFeatures);
-          this.addLayers(states.newFeatures);
+          this._currentSnapshot = newShapshot;
+          this.removeLayers(oldSnapshot);
+          this.addLayers(newShapshot);
 
           if(callback) {
             callback.call(this);
@@ -199,19 +198,8 @@
     },
 
     _diffLayerState: function(oldFeatures, newFeatures){
-       var featuresToRemove = [];
-
-      for (var i = oldFeatures.length - 1; i >= 0; i--) {
-        var idx = newFeatures.indexOf(oldFeatures[i]);
-        if (idx >= 0) {
-          featuresToRemove.push(idx);
-        }
-      }
-
-      for (i = featuresToRemove.length - 1; i >= 0; i--) {
-        oldFeatures.splice(featuresToRemove[i], 1);
-        newFeatures.splice(featuresToRemove[i], 1);
-      }
+      var featuresToRemove = [];
+      console.log(oldFeatures.sort(), newFeatures.sort());
 
       return {
         oldFeatures: oldFeatures,
@@ -222,13 +210,8 @@
     _filterExistingFeatures: function (oldFrom, oldTo, newFrom, newTo) {
       var oldFeatures = this._getFeaturesInTimeRange(oldFrom, oldTo);
       var newFeatures = this._getFeaturesInTimeRange(newFrom, newTo);
-
-      var state = this._diffLayerState(oldFeatures, newFeatures);
-
-      this._currentSnapshot = state.newFeatures;
-
-      this.removeLayers(state.oldFeatures);
-      this.addLayers(state.newFeatures);
+      this.removeLayers(oldFeatures);
+      this.addLayers(newFeatures);
     },
 
 
@@ -294,6 +277,10 @@
         var endDate = feature.properties[this.options.timeField.to];
         return ((startDate > from) && (startDate < to)) || ((endDate > from) && (endDate < to));
       }
+    },
+
+    query: function(){
+      return this._service.query();
     }
 
   });
@@ -320,11 +307,9 @@
     var currentIndex;
     var currentElement;
     var resultIndex;
-
     while (minIndex <= maxIndex) {
       resultIndex = currentIndex = (minIndex + maxIndex) / 2 || 0;
-      currentElement = this.values[currentIndex];
-
+      currentElement = this.values[Math.round(currentIndex)];
       if (currentElement[key] < query) {
         minIndex = currentIndex + 1;
       } else if (currentElement[key] > query) {

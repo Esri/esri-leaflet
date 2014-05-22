@@ -20,6 +20,6 @@
   "funcscope": false,
   "browser": true,
   "debug": true,
-  "predef": ["L", "XMLHttpRequest", "module"],
+  "predef": ["L", "XMLHttpRequest", "mocha", "describe", "expect", "beforeEach", "afterEach", "it"],
   "indent": 2
 }

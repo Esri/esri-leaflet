@@ -10,7 +10,8 @@ L.esri.Services.Query = L.Class.extend({
     }
 
     this._params = {
-      outSr: 4326
+      outSr: 4326,
+      outFields: '*'
     };
 
     for(var key in options){
@@ -103,6 +104,7 @@ L.esri.Services.Query = L.Class.extend({
   },
 
   run: function(callback, context){
+    //@TODO chaining
     this._request(function(error, response){
       response = (error) ? null : L.esri.Util.featureSetToFeatureCollection(response);
       callback.call(context, error, response);
@@ -110,18 +112,29 @@ L.esri.Services.Query = L.Class.extend({
   },
 
   count: function(callback, context){
+    //@TODO chaining
     this._params.returnCountOnly = true;
-    this._request(callback, context);
+    this._request(function(error, response){
+      callback(error, response.count);
+    }, context);
+    return this;
   },
 
   ids: function(callback, context){
+    //@TODO chaining
     this._params.returnIdsOnly = true;
-    this._request(callback, context);
+    this._request(function(error, response){
+      callback(error, response.objectIds);
+    }, context);
+    return this;
   },
 
   bounds: function(callback, context){
+    //@TODO chaining
     this._params.returnExtentOnly = true;
+    this._params.returnCountOnly = true;
     this._request(callback, context);
+    return this;
   },
 
   _request: function(callback, context){

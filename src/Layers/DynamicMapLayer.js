@@ -43,7 +43,9 @@ L.esri.DynamicMapLayer = L.Class.extend({
   },
 
   onAdd: function (map) {
-    this._update = L.Util.throttle(this._update, this.options.updateInterval, this);
+    this._map = map;
+
+    this._update = L.Util.limitExecByInterval(this._update, this.options.updateInterval, this);
 
     if (map.options.crs && map.options.crs.code) {
       var sr = map.options.crs.code.split(':')[1];
@@ -140,14 +142,6 @@ L.esri.DynamicMapLayer = L.Class.extend({
     return this;
   },
 
-  getLayerTime: function(){
-
-  },
-
-  setLayerTime: function(){
-
-  },
-
   getTimeRange: function(){
     return [this.options.from, this.options.to];
   },
@@ -204,6 +198,7 @@ L.esri.DynamicMapLayer = L.Class.extend({
 
     this._layerParams.bbox = [sw.x, sw.y, ne.x, ne.y].join(',');
     this._layerParams.size = size.x + ',' + size.y;
+    this._layerParams.dpi = 96;
 
     if(this.options.from && this.options.to){
       this._layerParams.time = this.options.from.valueOf() + ',' + this.options.to.valueOf();
@@ -212,7 +207,7 @@ L.esri.DynamicMapLayer = L.Class.extend({
     if(this.options.token) {
       this._layerParams.token = this.options.token;
     }
-
+    console.log(this._layerParams);
     var url = this.url + 'export' + L.Util.getParamString(this._layerParams);
 
     return url;

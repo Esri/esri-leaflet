@@ -29,13 +29,13 @@ L.esri.ClusteredFeatureLayer = L.esri.FeatureManager.extend({
    * Layer Interface
    */
 
-  onAdd: function(){
-    L.esri.FeatureManager.prototype.onAdd.call(this);
+  onAdd: function(map){
+    L.esri.FeatureManager.prototype.onAdd.call(this, map);
     this._map.addLayer(this.cluster);
   },
 
-  onRemove: function(){
-    L.esri.FeatureManager.prototype.onRemove.call(this);
+  onRemove: function(map){
+    L.esri.FeatureManager.prototype.onRemove.call(this, map);
     this._map.removeLayer(this.cluster);
   },
 
@@ -49,16 +49,21 @@ L.esri.ClusteredFeatureLayer = L.esri.FeatureManager.extend({
     for (var i = features.length - 1; i >= 0; i--) {
       var geojson = features[i];
       var layer = this._layers[geojson.id];
+
       if(!layer){
-        var newLayer = L.GeoJSON.geometryToLayer(geojson, this.options);
+        // @TODO Leaflet 0.8
+        //newLayer = L.GeoJSON.geometryToLayer(geojson, this.options);
+
+        var newLayer = L.GeoJSON.geometryToLayer(geojson, this.options.pointToLayer, L.GeoJSON.coordsToLatLng, this.options);
         newLayer.feature = L.GeoJSON.asFeature(geojson);
 
         // style the layer
         newLayer.defaultOptions = newLayer.options;
         this.resetStyle(newLayer);
 
+        // @TODO Leaflet 0.8
         // bubble events from layers to this
-        newLayer.addEventParent(this);
+        // newLayer.addEventParent(this);
 
         // bind a popup if we have one
         if(this._popup){

@@ -1,4 +1,4 @@
-/*! Esri-Leaflet - v0.0.1-beta.4 - 2014-04-30
+/*! Esri-Leaflet - v0.0.1-beta.4 - 2014-05-09
 *   Copyright (c) 2014 Environmental Systems Research Institute, Inc.
 *   Apache License*/
 L.esri.HeatMapFeatureLayer = L.esri.FeatureManager.extend({
@@ -9,8 +9,6 @@ L.esri.HeatMapFeatureLayer = L.esri.FeatureManager.extend({
 
   initialize: function (url, options) {
     L.esri.FeatureManager.prototype.initialize.call(this, url, options);
-
-    this.index = L.esri._rbush();
 
     options = L.setOptions(this, options);
 
@@ -24,13 +22,13 @@ L.esri.HeatMapFeatureLayer = L.esri.FeatureManager.extend({
    * Layer Interface
    */
 
-  onAdd: function(){
-    L.esri.FeatureManager.prototype.onAdd.call(this);
+  onAdd: function(map){
+    L.esri.FeatureManager.prototype.onAdd.call(this, map);
     this._map.addLayer(this.heat);
   },
 
-  onRemove: function(){
-    L.esri.FeatureManager.prototype.onRemove.call(this);
+  onRemove: function(map){
+    L.esri.FeatureManager.prototype.onRemove.call(this, map);
     this._map.removeLayer(this.heat);
   },
 
@@ -84,3 +82,7 @@ L.esri.HeatMapFeatureLayer = L.esri.FeatureManager.extend({
   }
 
 });
+
+L.esri.heatMapFeatureLayer = function (options) {
+  return new L.esri.HeatMapFeatureLayer(options);
+};

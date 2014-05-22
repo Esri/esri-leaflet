@@ -41,7 +41,7 @@
         OceansLabels: {
           urlTemplate: tileProtocol + '//{s}.arcgisonline.com/arcgis/rest/services/Ocean/World_Ocean_Reference/MapServer/tile/{z}/{y}/{x}',
           options: {
-            pane: 'esri-label',
+            //pane: 'esri-label',
             minZoom: 1,
             maxZoom: 16,
             hideLogo: false,
@@ -71,7 +71,7 @@
         DarkGrayLabels: {
           urlTemplate: tileProtocol + '//{s}.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/World_Dark_Gray_Reference_Beta/MapServer/tile/{z}/{y}/{x}',
           options: {
-            pane: 'esri-label',
+            //pane: 'esri-label',
             minZoom: 1,
             maxZoom: 10,
             hideLogo: false,
@@ -91,7 +91,7 @@
         GrayLabels: {
           urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}',
           options: {
-            pane: 'esri-label',
+            //pane: 'esri-label',
             minZoom: 1,
             maxZoom: 16,
             hideLogo: false,
@@ -111,7 +111,7 @@
         ImageryLabels: {
           urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}',
           options: {
-            pane: 'esri-label',
+            //pane: 'esri-label',
             minZoom: 1,
             maxZoom: 19,
             hideLogo: false,
@@ -120,7 +120,7 @@
         },
         ImageryTransportation: {
           urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/Reference/World_Transportation/MapServer/tile/{z}/{y}/{x}',
-          pane: 'esri-label',
+          //pane: 'esri-label',
           options: {
             minZoom: 1,
             maxZoom: 19,
@@ -140,7 +140,7 @@
         },
         ShadedReliefLabels: {
           urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places_Alternate/MapServer/tile/{z}/{y}/{x}',
-          pane: 'esri-label',
+//          pane: 'esri-label',
           options: {
             minZoom: 1,
             maxZoom: 12,
@@ -161,7 +161,7 @@
         TerrainLabels: {
           urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/Reference/World_Reference_Overlay/MapServer/tile/{z}/{y}/{x}',
           options: {
-            pane: 'esri-label',
+            //pane: 'esri-label',
             minZoom: 1,
             maxZoom: 13,
             hideLogo: false,
@@ -194,9 +194,9 @@
       }
     },
     onAdd: function(map){
-      if(this.options.pane && L.esri.Support.pointerEvents){
-        this._initPane();
-      }
+      // if(this.options.pane && L.esri.Support.pointerEvents){
+      //   this._initPane();
+      // }
 
       L.TileLayer.prototype.onAdd.call(this, map);
 
@@ -212,13 +212,13 @@
       var attribution = '<span class="esri-attributions" style="line-height:14px; vertical-align: -3px; text-overflow:ellipsis; white-space:nowrap; overflow:hidden; display:inline-block;">' + this.options.attribution + '</span>' + logo;
       return (this.options.attribution) ?  attribution : false;
     },
-    _initPane: function(){
-      if(!this._map.getPane(this.options.pane)){
-        var pane = this._map.createPane(this.options.pane);
-        pane.style.pointerEvents = 'none';
-        pane.style.zIndex = 5;
-      }
-    },
+    // _initPane: function(){
+    //   if(!this._map.getPane(this.options.pane)){
+    //     var pane = this._map.createPane(this.options.pane);
+    //     pane.style.pointerEvents = 'none';
+    //     pane.style.zIndex = 5;
+    //   }
+    // },
     _getAttributionData: function(url){
       L.esri.RequestHandlers.get.JSONP(url, {}, function(error, attributions){
         this._attributions = [];

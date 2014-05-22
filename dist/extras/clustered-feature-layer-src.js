@@ -1,7 +1,11 @@
-/*! Esri-Leaflet - v0.0.1-beta.4 - 2014-04-30
+/*! Esri-Leaflet - v0.0.1-beta.4 - 2014-05-09
 *   Copyright (c) 2014 Environmental Systems Research Institute, Inc.
 *   Apache License*/
 L.esri.ClusteredFeatureLayer = L.esri.FeatureManager.extend({
+
+   statics: {
+    EVENTS: 'click dblclick mouseover mouseout mousemove contextmenu popupopen popupclose clusterclick clusterdblclick clustermouseover clustermouseout clustermousemove clustercontextmenu clusterpopupopen clusterpopupclose'
+  },
 
   /**
    * Constructor
@@ -15,21 +19,27 @@ L.esri.ClusteredFeatureLayer = L.esri.FeatureManager.extend({
     this._layers = {};
 
     this.cluster = new L.MarkerClusterGroup(options);
-    this.cluster.addEventParent(this);
+
+
+    // @TODO enable at Leaflet 0.8
+    // this.cluster.addEventParent(this);
+
+    // @TODO remove from Leaflet 0.8
+    this.cluster.on(L.esri.ClusteredFeatureLayer.EVENTS, this._propagateEvent, this);
   },
 
   /**
    * Layer Interface
    */
 
-  onAdd: function(){
-    L.esri.FeatureManager.prototype.onAdd.call(this);
+  onAdd: function(map){
+    L.esri.FeatureManager.prototype.onAdd.call(this, map);
     this._map.addLayer(this.cluster);
   },
 
-  onRemove: function(){
-    L.esri.FeatureManager.prototype.onRemove.call(this);
-        this._map.removeLayer(this.cluster);
+  onRemove: function(map){
+    L.esri.FeatureManager.prototype.onRemove.call(this, map);
+    this._map.removeLayer(this.cluster);
   },
 
   /**
@@ -42,16 +52,21 @@ L.esri.ClusteredFeatureLayer = L.esri.FeatureManager.extend({
     for (var i = features.length - 1; i >= 0; i--) {
       var geojson = features[i];
       var layer = this._layers[geojson.id];
+
       if(!layer){
-        var newLayer = L.GeoJSON.geometryToLayer(geojson, this.options);
+        // @TODO Leaflet 0.8
+        //newLayer = L.GeoJSON.geometryToLayer(geojson, this.options);
+
+        var newLayer = L.GeoJSON.geometryToLayer(geojson, this.options.pointToLayer, L.GeoJSON.coordsToLatLng, this.options);
         newLayer.feature = L.GeoJSON.asFeature(geojson);
 
         // style the layer
         newLayer.defaultOptions = newLayer.options;
         this.resetStyle(newLayer);
 
+        // @TODO Leaflet 0.8
         // bubble events from layers to this
-        newLayer.addEventParent(this);
+        // newLayer.addEventParent(this);
 
         // bind a popup if we have one
         if(this._popup){
@@ -149,6 +164,20 @@ L.esri.ClusteredFeatureLayer = L.esri.FeatureManager.extend({
 
   getFeature: function (id) {
     return this._layers[id];
+  },
+
+  // from https://github.com/Leaflet/Leaflet/blob/v0.7.2/src/layer/FeatureGroup.js
+  //  @TODO remove at Leaflet 0.8
+  _propagateEvent: function (e) {
+    e = L.extend({
+      layer: e.target,
+      target: this
+    }, e);
+    this.fire(e.type, e);
   }
 
 });
+
+L.esri.clusteredFeatureLayer = function (options) {
+  return new L.esri.ClusteredFeatureLayer(options);
+};

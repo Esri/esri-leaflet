@@ -1,4 +1,4 @@
-/*! Esri-Leaflet - v0.0.1-beta.4 - 2014-04-30
+/*! Esri-Leaflet - v0.0.1-beta.4 - 2014-05-09
 *   Copyright (c) 2014 Environmental Systems Research Institute, Inc.
 *   Apache License*/
 L.esri = {
@@ -194,27 +194,6 @@ L.esri = {
     return output;
   }
 
-  // make it so that passed `function` never gets called
-  // twice within `delay` milliseconds. Used to throttle
-  // `move` events on layers.
-  // http://remysharp.com/2010/07/21/throttling-function-calls/
-  L.esri.Util.debounce = function (fn, delay, context) {
-    var timer = null;
-    return function() {
-      var context = this||context, args = arguments;
-      clearTimeout(timer);
-      timer = setTimeout(function () {
-        fn.apply(context, args);
-      }, delay);
-    };
-  };
-
-  // round a number away from zero used to snap
-  // row/columns away from the origin of the grid
-  L.esri.Util.roundAwayFromZero = function (num){
-    return (num > 0) ? Math.ceil(num) : Math.floor(num);
-  };
-
   // trim whitespace on strings
   // used to clean urls
   L.esri.Util.trim = function(str) {
@@ -270,12 +249,6 @@ L.esri = {
     return new L.LatLngBounds(sw, ne);
   };
 
-  L.esri.Util.mercatorExtentToBounds = function(extent, map){
-    var sw = map.unproject(L.point([extent.ymin, extent.xmin]));
-    var ne = map.unproject(L.point([extent.ymax, extent.xmax]));
-    return new L.LatLngBounds(sw, ne);
-  };
-
   // convert an LatLngBounds (Leaflet) to extent (ArcGIS)
   L.esri.Util.boundsToExtent = function(bounds) {
     return {
@@ -286,17 +259,6 @@ L.esri = {
       'spatialReference': {
         'wkid' : 4326
       }
-    };
-  };
-
-  // convert a LatLngBounds (Leaflet) to a Envelope (Terraformer.Rtree)
-  L.esri.Util.boundsToEnvelope = function(bounds){
-    var extent = L.esri.Util.boundsToExtent(bounds);
-    return {
-      x: extent.xmin,
-      y: extent.ymin,
-      w: Math.abs(extent.xmin - extent.xmax),
-      h: Math.abs(extent.ymin - extent.ymax)
     };
   };
 
@@ -691,6 +653,7 @@ L.esri.Services.Query = L.Class.extend({
 
   bounds: function(callback, context){
     this._params.returnExtentOnly = true;
+    this._params.returnCountOnly = true;
     this._request(callback, context);
   },
 
@@ -707,7 +670,10 @@ L.esri.Services.Query = L.Class.extend({
 L.esri.Services.query = function(url, params){
   return new L.esri.Services.Query(url, params);
 };
-L.esri.FeatureGrid = L.Layer.extend({
+L.esri.FeatureGrid = L.Class.extend({
+
+  includes: L.Mixin.Events,
+
   options: {
     cellSize: 512,
     updateInterval: 150
@@ -717,13 +683,19 @@ L.esri.FeatureGrid = L.Layer.extend({
     options = L.setOptions(this, options);
   },
 
-  onAdd: function () {
-    this._update = L.Util.throttle(this._update, this.options.updateInterval, this);
+  onAdd: function (map) {
+    this._map = map;
+    this._update = L.Util.limitExecByInterval(this._update, this.options.updateInterval, this);
+
+    // @TODO remove for leaflet 0.8
+    this._map.addEventListener(this.getEvents(), this);
+
     this._reset();
     this._update();
   },
 
   onRemove: function(){
+    this._map.removeEventListener(this.getEvents(), this);
     this._removeCells();
   },
 
@@ -736,6 +708,16 @@ L.esri.FeatureGrid = L.Layer.extend({
     return events;
   },
 
+  addTo: function(map){
+    map.addLayer(this);
+    return this;
+  },
+
+  removeFrom: function(map){
+    map.removeLayer(this);
+    return this;
+  },
+
   _reset: function () {
     this._removeCells();
 
@@ -744,7 +726,9 @@ L.esri.FeatureGrid = L.Layer.extend({
     this._cellsToLoad = 0;
     this._cellsTotal = 0;
 
-    this._cellNumBounds = this._getCellNumBounds();
+    // @TODO enable at Leaflet 0.8
+    // this._cellNumBounds = this._getCellNumBounds();
+
     this._resetWrap();
   },
 
@@ -800,21 +784,20 @@ L.esri.FeatureGrid = L.Layer.extend({
         zoom = this._map.getZoom();
 
     var j, i, coords;
-
     // create a queue of coordinates to load cells from
     for (j = bounds.min.y; j <= bounds.max.y; j++) {
       for (i = bounds.min.x; i <= bounds.max.x; i++) {
-
         coords = new L.Point(i, j);
         coords.z = zoom;
 
-        // add cell to queue if it's not in cache or out of bounds
-        if (this._isValidCell(coords)) {
-          queue.push(coords);
-        }
+        // @TODO enable at Leaflet 0.8
+        // if (this._isValidCell(coords)) {
+        //   queue.push(coords);
+        // }
+
+        queue.push(coords);
       }
     }
-
     var cellsToLoad = queue.length;
 
     if (cellsToLoad === 0) { return; }
@@ -832,34 +815,44 @@ L.esri.FeatureGrid = L.Layer.extend({
     }
   },
 
-  _isValidCell: function (coords) {
-    var crs = this._map.options.crs;
+  // @TODO enable at Leaflet 0.8
+  // _isValidCell: function (coords) {
+  //   var crs = this._map.options.crs;
 
-    if (!crs.infinite) {
-      // don't load cell if it's out of bounds and not wrapped
-      var bounds = this._cellNumBounds;
-      if ((!crs.wrapLng && (coords.x < bounds.min.x || coords.x > bounds.max.x)) ||
-          (!crs.wrapLat && (coords.y < bounds.min.y || coords.y > bounds.max.y))) { return false; }
-    }
+  //   if (!crs.infinite) {
+  //     // don't load cell if it's out of bounds and not wrapped
+  //     var bounds = this._cellNumBounds;
+  //     if (
+  //       (!crs.wrapLng && (coords.x < bounds.min.x || coords.x > bounds.max.x)) ||
+  //       (!crs.wrapLat && (coords.y < bounds.min.y || coords.y > bounds.max.y))
+  //     ) {
+  //       return false;
+  //     }
+  //   }
 
-    if (!this.options.bounds) { return true; }
+  //   if (!this.options.bounds) {
+  //     return true;
+  //   }
 
-    // don't load cell if it doesn't intersect the bounds in options
-    var cellBounds = this._cellCoordsToBounds(coords);
-    return L.latLngBounds(this.options.bounds).intersects(cellBounds);
-  },
+  //   // don't load cell if it doesn't intersect the bounds in options
+  //   var cellBounds = this._cellCoordsToBounds(coords);
+  //   return L.latLngBounds(this.options.bounds).intersects(cellBounds);
+  // },
 
   // converts cell coordinates to its geographical bounds
   _cellCoordsToBounds: function (coords) {
-
     var map = this._map,
         cellSize = this.options.cellSize,
 
         nwPoint = coords.multiplyBy(cellSize),
         sePoint = nwPoint.add([cellSize, cellSize]),
 
-        nw = map.wrapLatLng(map.unproject(nwPoint, coords.z)),
-        se = map.wrapLatLng(map.unproject(sePoint, coords.z));
+        // @TODO for Leaflet 0.8
+        // nw = map.wrapLatLng(map.unproject(nwPoint, coords.z)),
+        // se = map.wrapLatLng(map.unproject(sePoint, coords.z));
+
+        nw = map.unproject(nwPoint, coords.z).wrap(),
+        se = map.unproject(sePoint, coords.z).wrap();
 
     return new L.LatLngBounds(nw, se);
   },
@@ -920,6 +913,7 @@ L.esri.FeatureGrid = L.Layer.extend({
   },
 
   _addCell: function (coords) {
+
     // wrap cell coords if necessary (depending on CRS)
     this._wrapCoords(coords);
 
@@ -928,8 +922,8 @@ L.esri.FeatureGrid = L.Layer.extend({
 
     // get the cell from the cache
     var cell = this._cells[key];
-
     // if this cell should be shown as isnt active yet (enter)
+
     if (cell && !this._activeCells[key]) {
       if (this.cellEnter) {
         this.cellEnter(cell.bounds, coords);
@@ -970,14 +964,16 @@ L.esri.FeatureGrid = L.Layer.extend({
   },
 
   // get the global cell coordinates range for the current zoom
-  _getCellNumBounds: function () {
-    var bounds = this._map.getPixelWorldBounds(),
-      size = this._getCellSize();
-
-    return bounds ? L.bounds(
-        bounds.min.divideBy(size).floor(),
-        bounds.max.divideBy(size).ceil().subtract([1, 1])) : null;
-  }
+  // @TODO enable at Leaflet 0.8
+  // _getCellNumBounds: function () {
+  //   // @TODO for Leaflet 0.8
+  //   // var bounds = this._map.getPixelWorldBounds(),
+  //   //     size = this._getCellSize();
+  //   //
+  //   // return bounds ? L.bounds(
+  //   //     bounds.min.divideBy(size).floor(),
+  //   //     bounds.max.divideBy(size).ceil().subtract([1, 1])) : null;
+  // }
 
 });
 
@@ -993,6 +989,7 @@ L.esri.featureGrid = function (options) {
      */
 
     options: {
+      precision: 6,
       where: '1=1',
       fields: ['*'],
       from: false,
@@ -1030,12 +1027,12 @@ L.esri.featureGrid = function (options) {
      * Layer Interface
      */
 
-    onAdd: function(){
-      L.esri.FeatureGrid.prototype.onAdd.call(this);
+    onAdd: function(map){
+      return L.esri.FeatureGrid.prototype.onAdd.call(this, map);
     },
 
-    onRemove: function(){
-      L.esri.FeatureGrid.prototype.onRemove.call(this);
+    onRemove: function(map){
+      return L.esri.FeatureGrid.prototype.onRemove.call(this, map);
     },
 
     /**
@@ -1094,7 +1091,7 @@ L.esri.featureGrid = function (options) {
     },
 
     _buildQuery: function(bounds){
-      var query = this._service.query().within(bounds).where(this.options.where).fields(this.options.fields);
+      var query = this._service.query().within(bounds).where(this.options.where).fields(this.options.fields).precision(this.options.precision);
 
       if(this.options.simplifyFactor){
         query.simplify(this._map, this.options.simplifyFactor);
@@ -1188,7 +1185,7 @@ L.esri.featureGrid = function (options) {
        var featuresToRemove = [];
 
       for (var i = oldFeatures.length - 1; i >= 0; i--) {
-        var idx = newFeatures.indexOf(oldFeatures[i]);
+        var idx = L.esri.Util.indexOf(newFeatures, oldFeatures[i]);
         if (idx >= 0) {
           featuresToRemove.push(idx);
         }
@@ -1306,11 +1303,9 @@ L.esri.featureGrid = function (options) {
     var currentIndex;
     var currentElement;
     var resultIndex;
-
     while (minIndex <= maxIndex) {
       resultIndex = currentIndex = (minIndex + maxIndex) / 2 || 0;
-      currentElement = this.values[currentIndex];
-
+      currentElement = this.values[Math.round(currentIndex)];
       if (currentElement[key] < query) {
         minIndex = currentIndex + 1;
       } else if (currentElement[key] > query) {
@@ -1353,14 +1348,16 @@ L.esri.featureGrid = function (options) {
 }(L));
 L.esri.FeatureLayer = L.esri.FeatureManager.extend({
 
+  statics: {
+    EVENTS: 'click dblclick mouseover mouseout mousemove contextmenu popupopen popupclose'
+  },
+
   /**
    * Constructor
    */
 
   initialize: function (url, options) {
     L.esri.FeatureManager.prototype.initialize.call(this, url, options);
-
-    //this.index = L.esri._rbush();
 
     options = L.setOptions(this, options);
 
@@ -1372,7 +1369,6 @@ L.esri.FeatureLayer = L.esri.FeatureManager.extend({
    */
 
   createLayers: function(features){
-    var bounds = [];
     for (var i = features.length - 1; i >= 0; i--) {
       var geojson = features[i];
       var layer = this._layers[geojson.id];
@@ -1383,12 +1379,18 @@ L.esri.FeatureLayer = L.esri.FeatureManager.extend({
       }
 
       if (layer && layer.setLatLngs) {
-        newLayer = L.GeoJSON.geometryToLayer(geojson, this.options);
+        // @TODO Leaflet 0.8
+        //newLayer = L.GeoJSON.geometryToLayer(geojson, this.options);
+
+        newLayer = L.GeoJSON.geometryToLayer(geojson, this.options.pointToLayer, L.GeoJSON.coordsToLatLng, this.options);
         layer.setLatLngs(newLayer.getLatLngs());
       }
 
       if(!layer){
-        newLayer = L.GeoJSON.geometryToLayer(geojson, this.options);
+        // @TODO Leaflet 0.8
+        //newLayer = L.GeoJSON.geometryToLayer(geojson, this.options);
+
+        newLayer = L.GeoJSON.geometryToLayer(geojson, this.options.pointToLayer, L.GeoJSON.coordsToLatLng, this.options);
         newLayer.feature = L.GeoJSON.asFeature(geojson);
 
         // style the layer
@@ -1396,10 +1398,15 @@ L.esri.FeatureLayer = L.esri.FeatureManager.extend({
         this.resetStyle(newLayer);
 
         // bubble events from layers to this
-        newLayer.addEventParent(this);
+        // @TODO Leaflet 0.8
+        // newLayer.addEventParent(this);
+
+        if (newLayer.on) {
+          newLayer.on(L.esri.FeatureLayer.EVENTS, this._propagateEvent, this);
+        }
 
         // bind a popup if we have one
-        if(this._popup){
+        if(this._popup && newLayer.bindPopup){
           newLayer.bindPopup(this._popup(newLayer.feature, newLayer));
         }
 
@@ -1516,6 +1523,16 @@ L.esri.FeatureLayer = L.esri.FeatureManager.extend({
 
   getFeature: function (id) {
     return this._layers[id];
+  },
+
+  // from https://github.com/Leaflet/Leaflet/blob/v0.7.2/src/layer/FeatureGroup.js
+  // @TODO remove at Leaflet 0.8
+  _propagateEvent: function (e) {
+    e = L.extend({
+      layer: e.target,
+      target: this
+    }, e);
+    this.fire(e.type, e);
   }
 
 });

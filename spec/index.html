@@ -10,26 +10,35 @@
 <div id="mocha"></div>
 <script type="text/javascript" src="../node_modules/mocha/mocha.js"></script>
 <script type="text/javascript" src="../node_modules/expect.js/expect.js"></script>
-<script type="text/javascript" src="sinon.js"></script>
 
 <!-- leaflet -->
 <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
 
 <!-- source -->
-<script type="text/javascript" src="../src/EsriLeaflet.js"></script>
-<script type="text/javascript" src="../src/Util.js"></script>
-<script type="text/javascript" src="../src/RBush.js"></script>
-<script type="text/javascript" src="../src/Layers/BasemapLayer.js"></script>
-<script type="text/javascript" src="../src/Layers/DynamicMapLayer.js"></script>
-<script type="text/javascript" src="../src/Layers/FeatureLayer.js"></script>
-<script type="text/javascript" src="../src/Layers/TiledMapLayer.js"></script>
+<script src="../src/EsriLeaflet.js"></script>
+<script src="../src/Util.js"></script>
+<script src="../src/Layers/BasemapLayer.js"></script>
+<script src="../src/Layers/TiledMapLayer.js"></script>
+<script src="../src/Layers/DynamicMapLayer.js"></script>
+<script src="../src/Layers/FeatureLayer/FeatureGrid.js"></script>
+<script src="../src/Layers/FeatureLayer/FeatureManager.js"></script>
+<script src="../src/Layers/FeatureLayer/FeatureLayer.js"></script>
+<script src="../src/Layers/ClusteredFeatureLayer/ClusteredFeatureLayer.js"></script>
+<script src="../src/Layers/HeatMapFeatureLayer/HeatMapFeatureLayer.js"></script>
+<script src="../src/Request.js"></script>
+<script src="../src/Services/Service.js"></script>
+<script src="../src/Services/FeatureLayer.js"></script>
+<script src="../src/Services/FeatureService.js"></script>
+<script src="../src/Services/MapService.js"></script>
+<script src="../src/Services/Query.js"></script>
+<script src="../src/Services/Identify.js"></script>
 
 <script>
-    mocha.setup({
-        ui: 'bdd',
-        globals: ['_leaflet_resize3']
-    });
-    mocha.ignoreLeaks();
+  mocha.setup({
+      ui: 'bdd',
+      globals: ['_leaflet_resize3']
+  });
+  mocha.ignoreLeaks();
 </script>
 
 <!-- spec files -->
