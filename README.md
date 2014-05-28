@@ -423,8 +423,8 @@ An example of using Oauth 2 to access a private feature service on ArcGIS Online
 6. Make your changes and create a [pull request](https://help.github.com/articles/creating-a-pull-request)
 
 ### Dependencies
-* [Leaflet](http://leaflet.com) - the core Leaflet library
-* [Leaflet.markercluster](http://leaflet.com) - If you want to use `L.esri.ClusteredFeatureLayer` you will need the Leaflet markercluster plugin
+* [Leaflet](http://leafletjs.com) - the core Leaflet library
+* [Leaflet.markercluster](https://github.com/Leaflet/Leaflet.markercluster) - If you want to use `L.esri.ClusteredFeatureLayer` you will need the Leaflet markercluster plugin
 
 ## Resources
 
