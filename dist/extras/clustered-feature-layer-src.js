@@ -1,7 +1,7 @@
-/*! Esri-Leaflet - v0.0.1-beta.4 - 2014-05-22
+/*! Esri-Leaflet - v0.0.1-beta.4 - 2014-05-26
 *   Copyright (c) 2014 Environmental Systems Research Institute, Inc.
 *   Apache License*/
-L.esri.ClusteredFeatureLayer = L.esri.FeatureManager.extend({
+L.esri.Layers.ClusteredFeatureLayer = L.esri.Layers.FeatureManager.extend({
 
    statics: {
     EVENTS: 'click dblclick mouseover mouseout mousemove contextmenu popupopen popupclose clusterclick clusterdblclick clustermouseover clustermouseout clustermousemove clustercontextmenu clusterpopupopen clusterpopupclose'
@@ -177,6 +177,12 @@ L.esri.ClusteredFeatureLayer = L.esri.FeatureManager.extend({
 
 });
 
-L.esri.clusteredFeatureLayer = function (options) {
-  return new L.esri.ClusteredFeatureLayer(options);
+L.esri.ClusteredFeatureLayer = L.esri.Layers.ClusteredFeatureLayer;
+
+L.esri.Layers.clusteredFeatureLayer = function(key, options){
+  return new L.esri.Layers.ClusteredFeatureLayer(key, options);
+};
+
+L.esri.clusteredFeatureLayer = function(key, options){
+  return new L.esri.Layers.ClusteredFeatureLayer(key, options);
 };

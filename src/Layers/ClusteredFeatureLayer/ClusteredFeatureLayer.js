@@ -1,4 +1,4 @@
-L.esri.ClusteredFeatureLayer = L.esri.FeatureManager.extend({
+L.esri.Layers.ClusteredFeatureLayer = L.esri.Layers.FeatureManager.extend({
 
    statics: {
     EVENTS: 'click dblclick mouseover mouseout mousemove contextmenu popupopen popupclose clusterclick clusterdblclick clustermouseover clustermouseout clustermousemove clustercontextmenu clusterpopupopen clusterpopupclose'
@@ -174,6 +174,12 @@ L.esri.ClusteredFeatureLayer = L.esri.FeatureManager.extend({
 
 });
 
-L.esri.clusteredFeatureLayer = function (options) {
-  return new L.esri.ClusteredFeatureLayer(options);
+L.esri.ClusteredFeatureLayer = L.esri.Layers.ClusteredFeatureLayer;
+
+L.esri.Layers.clusteredFeatureLayer = function(key, options){
+  return new L.esri.Layers.ClusteredFeatureLayer(key, options);
+};
+
+L.esri.clusteredFeatureLayer = function(key, options){
+  return new L.esri.Layers.ClusteredFeatureLayer(key, options);
 };

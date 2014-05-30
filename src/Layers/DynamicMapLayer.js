@@ -1,6 +1,6 @@
 /* globals L */
 
-L.esri.DynamicMapLayer = L.Class.extend({
+L.esri.Layers.DynamicMapLayer = L.Class.extend({
 
   includes: L.Mixin.Events,
 
@@ -17,7 +17,7 @@ L.esri.DynamicMapLayer = L.Class.extend({
 
   initialize: function (url, options) {
     this.url = L.esri.Util.cleanUrl(url);
-    this._service = new L.esri.Services.MapService(this.url);
+    this._service = new L.esri.Services.MapService(this.url, options);
     this._service.on('authenticationrequired', this._propagateEvent, this);
     L.Util.setOptions(this, options);
   },
@@ -33,6 +33,11 @@ L.esri.DynamicMapLayer = L.Class.extend({
       this.options.imageSR = sr;
     }
 
+    if(this._popup){
+      this._map.on('click', this._getPopupData, this);
+      this._map.on('dblclick', this._resetPopupState, this);
+    }
+
     // @TODO remove at Leaflet 0.8
     this._map.addEventListener(this.getEvents(), this);
 
@@ -42,6 +47,11 @@ L.esri.DynamicMapLayer = L.Class.extend({
   onRemove: function () {
     if (this._currentImage) {
       this._map.removeLayer(this._currentImage);
+    }
+
+    if(this._popup){
+      this._map.off('click', this._getPopupData, this);
+      this._map.off('dblclick', this._resetPopupState, this);
     }
 
     // @TODO remove at Leaflet 0.8
@@ -66,11 +76,6 @@ L.esri.DynamicMapLayer = L.Class.extend({
     return events;
   },
 
-  setOpacity: function(opacity){
-    this.options.opacity = opacity;
-    this._currentImage.setOpacity(opacity);
-  },
-
   bringToFront: function(){
     this.options.position = 'front';
     this._currentImage.bringToFront();
@@ -83,14 +88,14 @@ L.esri.DynamicMapLayer = L.Class.extend({
     return this;
   },
 
-  bindPopup: function(fn, options){
-    this._popupIdentifyParams = (options) ? options.params : {};
+  bindPopup: function(fn, popupOptions){
     this._shouldRenderPopup = false;
     this._lastClick = false;
-    this._popup = L.popup((options) ? options.popup : {});
+    this._popup = L.popup(popupOptions);
     this._popupFunction = fn;
     this._map.on('click', this._getPopupData, this);
     this._map.on('dblclick', this._resetPopupState, this);
+    return this;
   },
 
   unbindPopup: function(){
@@ -98,14 +103,16 @@ L.esri.DynamicMapLayer = L.Class.extend({
     this._map.off('click', this._getPopupData, this);
     this._map.off('dblclick', this._resetPopupState, this);
     this._popup = false;
+    return this;
   },
 
-  identify: function(){
-    return this._service.identify();
+  getOpacity: function(){
+    return this.options.opacity;
   },
 
-  metadata: function(callback, context){
-    this._service.metadata(callback, context);
+  setOpacity: function(opacity){
+    this.options.opacity = opacity;
+    this._currentImage.setOpacity(opacity);
     return this;
   },
 
@@ -129,7 +136,7 @@ L.esri.DynamicMapLayer = L.Class.extend({
     return this;
   },
 
-  getTimeOptions: function(layerDefs){
+  getTimeOptions: function(){
     return this.options.timeOptions;
   },
 
@@ -147,6 +154,24 @@ L.esri.DynamicMapLayer = L.Class.extend({
     this.options.from = from;
     this.options.to = to;
     this._update();
+    return this;
+  },
+
+  metadata: function(callback, context){
+    this._service.metadata(callback, context);
+    return this;
+  },
+
+  identify: function(){
+    return this._service.identify();
+  },
+
+  query: function(){
+    return this._service.query();
+  },
+
+  authenticate: function(token){
+    this._service.authenticate(token);
     return this;
   },
 
@@ -200,7 +225,7 @@ L.esri.DynamicMapLayer = L.Class.extend({
       transparent: this.options.transparent,
       bboxSR: this.options.bboxSR,
       imageSR: this.options.imageSR
-    }
+    };
 
     if(this.options.layers){
       params.layers = 'show:' + this.options.layers.join(',');
@@ -295,6 +320,12 @@ L.esri.DynamicMapLayer = L.Class.extend({
   }
 });
 
-L.esri.dynamicMapLayer = function (url, options) {
-  return new L.esri.DynamicMapLayer(url, options);
+L.esri.DynamicMapLayer = L.esri.Layers.dynamicMapLayer;
+
+L.esri.Layers.dynamicMapLayer = function(key, options){
+  return new L.esri.Layers.DynamicMapLayer(key, options);
+};
+
+L.esri.dynamicMapLayer = function(key, options){
+  return new L.esri.Layers.DynamicMapLayer(key, options);
 };

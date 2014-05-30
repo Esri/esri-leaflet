@@ -1,10 +1,11 @@
-/*! Esri-Leaflet - v0.0.1-beta.4 - 2014-05-22
+/*! Esri-Leaflet - v0.0.1-beta.4 - 2014-05-26
 *   Copyright (c) 2014 Environmental Systems Research Institute, Inc.
 *   Apache License*/
 L.esri = {
   VERSION: '0.0.1-beta.5',
   Layers: {},
   Services: {},
+  Tasks: {},
   Util: {},
   Support: {
     CORS: !!(window.XMLHttpRequest && 'withCredentials' in new XMLHttpRequest()),
@@ -194,24 +195,6 @@ L.esri = {
     return output;
   }
 
-  // trim whitespace on strings
-  // used to clean urls
-  L.esri.Util.trim = function(str) {
-    return str.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
-  };
-
-  // trim whitespace and add a tailing slash is needed to a url
-  L.esri.Util.cleanUrl = function(url){
-    url = L.esri.Util.trim(url);
-
-    //add a trailing slash to the url if the user omitted it
-    if(url[url.length-1] !== '/'){
-      url += '/';
-    }
-
-    return url;
-  };
-
   // convert an extent (ArcGIS) to LatLngBounds (Leaflet)
   L.esri.Util.extentToBounds = function(extent){
     var sw = new L.LatLng(extent.ymin, extent.xmin);
@@ -232,11 +215,8 @@ L.esri = {
     };
   };
 
-  L.esri.Util.arcgisToGeojson = function (arcgis, options){
+  L.esri.Util.arcgisToGeojson = function (arcgis, idAttribute){
     var geojson = {};
-
-    options = options || {};
-    options.idAttribute = options.idAttribute || undefined;
 
     if(arcgis.x && arcgis.y){
       geojson.type = 'Point';
@@ -267,7 +247,7 @@ L.esri = {
       geojson.geometry = (arcgis.geometry) ? L.esri.Util.arcgisToGeojson(arcgis.geometry) : null;
       geojson.properties = (arcgis.attributes) ? clone(arcgis.attributes) : null;
       if(arcgis.attributes) {
-        geojson.id =  arcgis.attributes[options.idAttribute] || arcgis.attributes.OBJECTID || arcgis.attributes.FID;
+        geojson.id =  arcgis.attributes[idAttribute] || arcgis.attributes.OBJECTID || arcgis.attributes.FID;
       }
     }
 
@@ -275,9 +255,9 @@ L.esri = {
   };
 
   // GeoJSON -> ArcGIS
-  L.esri.Util.geojsonToArcGIS = function(geojson, options){
-    var idAttribute = (options && options.idAttribute) ? options.idAttribute : 'OBJECTID';
-    var spatialReference = (options && options.sr) ? { wkid: options.sr } : { wkid: 4326 };
+  L.esri.Util.geojsonToArcGIS = function(geojson, idAttribute){
+    idAttribute = idAttribute || 'OBJECTID';
+    var spatialReference = { wkid: 4326 };
     var result = {};
     var i;
 
@@ -309,7 +289,7 @@ L.esri = {
       break;
     case 'Feature':
       if(geojson.geometry) {
-        result.geometry = L.esri.Util.geojsonToArcGIS(geojson.geometry, options);
+        result.geometry = L.esri.Util.geojsonToArcGIS(geojson.geometry, idAttribute);
       }
       result.attributes = (geojson.properties) ? L.esri.Util.clone(geojson.properties) : {};
       result.attributes[idAttribute] = geojson.id;
@@ -317,13 +297,13 @@ L.esri = {
     case 'FeatureCollection':
       result = [];
       for (i = 0; i < geojson.features.length; i++){
-        result.push(L.esri.Util.geojsonToArcGIS(geojson.features[i], options));
+        result.push(L.esri.Util.geojsonToArcGIS(geojson.features[i], idAttribute));
       }
       break;
     case 'GeometryCollection':
       result = [];
       for (i = 0; i < geojson.geometries.length; i++){
-        result.push(L.esri.Util.geojsonToArcGIS(geojson.geometries[i], options));
+        result.push(L.esri.Util.geojsonToArcGIS(geojson.geometries[i], idAttribute));
       }
       break;
     }
@@ -354,13 +334,23 @@ L.esri = {
 
     if(featureSet.features.length){
       for (var i = featureSet.features.length - 1; i >= 0; i--) {
-        featureCollection.features.push(L.esri.Util.arcgisToGeojson(featureSet.features[i], {
-          idAttribute: objectIdField
-        }));
+        featureCollection.features.push(L.esri.Util.arcgisToGeojson(featureSet.features[i], objectIdField));
       }
     }
 
     return featureCollection;
+  };
+
+    // trim whitespace and add a tailing slash is needed to a url
+  L.esri.Util.cleanUrl = function(url){
+    url.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+
+    //add a trailing slash to the url if the user omitted it
+    if(url[url.length-1] !== '/'){
+      url += '/';
+    }
+
+    return url;
   };
 
 })(L);
@@ -414,16 +404,19 @@ L.esri = {
   }
 
   // AJAX handlers for CORS (modern browsers) or JSONP (older browsers)
-  L.esri.RequestHandlers = {
-    post: function (url, params, callback, context) {
-      params.f = 'json';
+  L.esri.Request = {
+    post: {
+      XMLHTTP: function (url, params, callback, context) {
+        params.f = 'json';
 
-      var httpRequest = createRequest(callback, context);
+        var httpRequest = createRequest(callback, context);
 
-      httpRequest.open('POST', url);
-      httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-      httpRequest.send(serialize(params));
+        httpRequest.open('POST', url);
+        httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        httpRequest.send(serialize(params));
+      }
     },
+
     get: {
       CORS: function (url, params, callback, context) {
         params.f = 'json';
@@ -473,10 +466,10 @@ L.esri = {
   };
 
   // Choose the correct AJAX handler depending on CORS support
-  L.esri.get = (L.esri.Support.CORS) ? L.esri.RequestHandlers.get.CORS : L.esri.RequestHandlers.get.JSONP;
+  L.esri.get = (L.esri.Support.CORS) ? L.esri.Request.get.CORS : L.esri.Request.get.JSONP;
 
   // Always use XMLHttpRequest for posts
-  L.esri.post = L.esri.RequestHandlers.post;
+  L.esri.post = L.esri.RequestHandlers.post.XMLHTTP;
 
 })(L);
 L.esri.Services.MapService = L.esri.Service.extend({
@@ -494,7 +487,7 @@ L.esri.Services.MapService = L.esri.Service.extend({
 L.esri.Services.mapService = function(url, params){
   return new L.esri.Services.MapService(url, params);
 };
-L.esri.Services.Identify = L.Class.extend({
+L.esri.Tasks.Identify = L.Class.extend({
 
   initialize: function(service, options){
     if(service.url && service.get){
@@ -586,7 +579,7 @@ L.esri.Services.Identify = L.Class.extend({
 L.esri.Services.identify = function(url, params){
   return new L.esri.Services.Identify(url, params);
 };
-L.esri.Services.Query = L.Class.extend({
+L.esri.Tasks.Query = L.Class.extend({
 
   initialize: function(service, options){
 
@@ -598,6 +591,7 @@ L.esri.Services.Query = L.Class.extend({
     }
 
     this._params = {
+      where: '1=1',
       outSr: 4326,
       outFields: '*'
     };

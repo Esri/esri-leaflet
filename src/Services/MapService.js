@@ -1,11 +1,11 @@
-L.esri.Services.MapService = L.esri.Service.extend({
+L.esri.Services.MapService = L.esri.Services.Service.extend({
 
   identify: function () {
-    return new L.esri.Services.Identify(this);
+    return new L.esri.Tasks.Identify(this);
   },
 
   query: function(){
-    return new L.esri.Services.Query(this);
+    return new L.esri.Tasks.Query(this);
   }
 
 });

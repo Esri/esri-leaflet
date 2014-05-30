@@ -2,6 +2,7 @@ L.esri = {
   VERSION: '0.0.1-beta.5',
   Layers: {},
   Services: {},
+  Tasks: {},
   Util: {},
   Support: {
     CORS: !!(window.XMLHttpRequest && 'withCredentials' in new XMLHttpRequest()),

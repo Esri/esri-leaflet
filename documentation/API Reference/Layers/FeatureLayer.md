@@ -6,7 +6,9 @@
 
 | Constructor | Description |
 | --- | --- |
-| `new L.esri.FeatureLayer(url, options)`<br>`L.esri.FeatureLayer(url, options)` | The `url` parameter is the url to the FeatureLayer you should like to display. See [service URLs](#service-urls) for more information on how to find these urls. |
+| `new L.esri.Layers.FeatureLayer(url, options)`<br>`L.esri.Layers.FeatureLayer(url, options)` | The `url` parameter is the url to the FeatureLayer you should like to display. See [service URLs](#service-urls) for more information on how to find these urls. |
+
+You can also initalize `L.esri.Layers.FeatureLayer` with the aliases `new L.esri.FeatureLayer(url, options)` and `L.esri.featureLayer(url, options)`.
 
 ### Options
 
@@ -37,50 +39,70 @@
         <tr>
             <td><code>where</code></td>
             <td><code>String</code></td
-            <td>A server side expression that will be evaluated to filter features. By default this will include all features in a service.</td></tr>
+            <td>A server side expression that will be evaluated to filter features. By default this will include all features in a service.</td>
+        </tr>
         <tr>
             <td><code>fields</code></td>
             <td><code>Array</code></td>
-            <td>An array of metadata names to pull from the service. Includes all fields by default.</td></tr>
+            <td>An array of metadata names to pull from the service. Includes all fields by default.</td>
+        </tr>
         <tr>
             <td><code>from</code></td>
             <td><code>Date</code></td>
-            <td>When paired with <code>to</code> defines the time range of features to display. Required the Feature Layer to be time enabled.</td></tr>
+            <td>When paired with <code>to</code> defines the time range of features to display. Required the Feature Layer to be time enabled.</td>
+        </tr>
         <tr>
             <td><code>to</code></td>
             <td><code>Date</code></td>
-            <td>When paired with <code>from</code> defines the time range of features to display. Required the Feature Layer to be time enabled.</td></tr>
+            <td>When paired with <code>from</code> defines the time range of features to display. Required the Feature Layer to be time enabled.</td>
+        </tr>
         <tr>
             <td><code>timeField</code>| </code>String</code> or </code>Object</code></td>
             <td><code>false</code></td>
-            <td>The name of the field to lookup the time of the feature. Can also be an object like <code>{start:'startTime', end:'endTime'}</code>.</td></tr>
+            <td>The name of the field to lookup the time of the feature. Can also be an object like <code>{start:'startTime', end:'endTime'}</code>.</td>
+        </tr>
         <tr>
             <td><code>timeFilterMode</code></td>
             <td><code>'client'</code> or </code>'server'</code></td>
-            <td>Determines where features are filtered by time. By default features will be filtered by the server. If set to <code>'client'</code> all features are loaded and filtered on the client before display.</td></tr>
+            <td>Determines where features are filtered by time. By default features will be filtered by the server. If set to <code>'client'</code> all features are loaded and filtered on the client before display.</td>
+        </tr>
         <tr>
             <td><code>simplifyFactor</code></td>
             <td><code>Integer</code></td>
-            <td>How much to simplify polygons and polylines. More means better performance, and less means more accurate representation.</td></tr>
+            <td>How much to simplify polygons and polylines. More means better performance, and less means more accurate representation.</td>
+        </tr>
         <tr>
             <td><code>precision</code></td>
             <td><code>Integer</code></td>
-            <td>How many digits of precision to request from the server. <a href="http://en.wikipedia.org/wiki/Decimal_degrees">Wikipedia</a> has a great referance of digit precision to meters.</td></tr>
+            <td>How many digits of precision to request from the server. <a href="http://en.wikipedia.org/wiki/Decimal_degrees">Wikipedia</a> has a great referance of digit precision to meters.</td>
+        </tr>
         <tr>
             <td><code>token</code></td>
             <td><code>String</code></td>
             <td>If you pass a token in your options it will included in all requests to the service. See [working with authenticated services](#working-with-authenticated-services) for more information.</td>
+        </tr>
+        <tr>
+            <td><code>proxy</code></td>
+            <td><code>String</code></td>
+            <td><code>false</code></td>
+            <td>URL of an <a href="https://developers.arcgis.com/javascript/jshelp/ags_proxy.html">ArcGIS API for JavaScript proxies</a> or <a href="https://github.com/Esri/resource-proxy">ArcGIS Resoruce Proxies</a> to use for proxying POST requests.</td>
+        </tr>
+        <tr>
+            <td><code>useCORS</code></td>
+            <td><code>Boolean</code></td>
+            <td><code>true</code></td>
+            <td>If this service should use CORS when making GET requests.</td>
         </tr>
     </tbody>
 </table>
 
 ### Events
 
-| Event | Data | Description |
+| Event | Type | Description |
 | --- | --- | --- |
-| `loading` | [`Loading`](#loading-event) | Fires when new features start loading. |
-| `load` | [`Load`](#load-event) | Fires when all features in the current bounds of the map have loaded. |
-| `authenticationrequired` | [`Authentication`](#authentication-event) | This will be fired when a request to a service fails and requires authentication. See [working with authenticated services](#working-with-authenticated-services) for more information. |
+| `loading` | [&lt;LoadingEvent&gt;]() | Fires when new features start loading. |
+| `load` | [&lt;Load&gt;]() | Fires when all features in the current bounds of the map have loaded. |
+| `authenticationrequired` | `[&lt;AuthenticationEvent&gt;]()` | This will be fired when a request to the service fails and requires authentication. See [working with authenticated services](#working-with-authenticated-services) for more information. |
 
 In additon to these events `L.esri.FeatureLayer` also fires the following [Mouse Events](http://leafletjs.com/reference.html#event-objects) `click`, `dblclick`, `mouseover`, `mouseout`, `mousemove`, and `contextmenu` as well as the following the [Popup Events](http://leafletjs.com/reference.html#event-objects) `popupopen` and `popupclose`.
 
@@ -117,7 +139,7 @@ In additon to these events `L.esri.FeatureLayer` also fires the following [Mouse
             </td>
         </tr>
         <tr>
-            <td><code>unbindPopup</code></td>
+            <td><code>unbindPopup()</code></td>
             <td><code>this</code></td>
             <td>Removed a popup previously bound with `bindPopup`.</td>
         </tr>
@@ -157,10 +179,15 @@ In additon to these events `L.esri.FeatureLayer` also fires the following [Mouse
             <td>Sets the current time filter applied to features. An optional callback is run upon completion only if <code>timeFilterMode</code> is set to <code>'server'</code>.</td>
         </tr>
         <tr>
+            <td><code>authenticate(&lt;String&gt; token)</code></td>
+            <td><code>this</code></td>
+            <td>Authenticates this service with a new token and runs any pending requests that required a token.</td>
+        </tr>
+        <tr>
             <td><code>query()</code></td>
             <td><code>this</code></td>
             <td>
-                Returns a new <a href=""><code>L.esri.services.Query</code></a> object that can be used to query this layer.
+                Returns a new <a href=""><code>L.esri.services.Query</code></a> object that can be used to query this layer. Your callback function will be passed a <a href="http://geojson.org/geojson-spec.html#feature-collection-objects">GeoJSON FeatureCollection</a> with the results or an error.
 <pre class="js"><code>featureLayer.query.within(latlngbounds).where("Direction = 'WEST'").run(function(error, featureCollection){
   console.log(featureCollection);
 });</code></pre>
@@ -188,8 +215,6 @@ In additon to these events `L.esri.FeatureLayer` also fires the following [Mouse
             </td>
         </tr>
         <tr>
-            <td><code>updateFeature(&lt;GeoJSON Feature&gt; feature, &lt;Function&gt; callback)</code></td>
-            <td><code>this</code></td>
             <td><code>updateFeature(&lt;<a href="http://geojson.org/geojson-spec.html#feature-objects">GeoJSON Feature</a>&gt; feature, &lt;Function&gt; callback)</code></td>
             <td><code>this</code></td>
             <td>

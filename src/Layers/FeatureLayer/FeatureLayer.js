@@ -1,4 +1,4 @@
-L.esri.FeatureLayer = L.esri.FeatureManager.extend({
+L.esri.Layers.FeatureLayer = L.esri.Layers.FeatureManager.extend({
 
   statics: {
     EVENTS: 'click dblclick mouseover mouseout mousemove contextmenu popupopen popupclose'
@@ -9,7 +9,7 @@ L.esri.FeatureLayer = L.esri.FeatureManager.extend({
    */
 
   initialize: function (url, options) {
-    L.esri.FeatureManager.prototype.initialize.call(this, url, options);
+    L.esri.Layers.FeatureManager.prototype.initialize.call(this, url, options);
 
     options = L.setOptions(this, options);
 
@@ -21,7 +21,7 @@ L.esri.FeatureLayer = L.esri.FeatureManager.extend({
    */
 
   onAdd: function(map){
-    return L.esri.FeatureManager.prototype.onAdd.call(this, map);
+    return L.esri.Layers.FeatureManager.prototype.onAdd.call(this, map);
   },
 
   onRemove: function(map){
@@ -30,7 +30,7 @@ L.esri.FeatureLayer = L.esri.FeatureManager.extend({
       map.removeLayer(this._layers[i]);
     }
 
-    return L.esri.FeatureManager.prototype.onRemove.call(this, map);
+    return L.esri.Layers.FeatureManager.prototype.onRemove.call(this, map);
   },
 
   /**
@@ -74,7 +74,7 @@ L.esri.FeatureLayer = L.esri.FeatureManager.extend({
         // newLayer.addEventParent(this);
 
         if (newLayer.on) {
-          newLayer.on(L.esri.FeatureLayer.EVENTS, this._propagateEvent, this);
+          newLayer.on(L.esri.Layers.FeatureLayer.EVENTS, this._propagateEvent, this);
         }
 
         // bind a popup if we have one
@@ -204,6 +204,12 @@ L.esri.FeatureLayer = L.esri.FeatureManager.extend({
 
 });
 
-L.esri.featureLayer = function (options) {
-  return new L.esri.FeatureLayer(options);
+L.esri.FeatureLayer = L.esri.Layers.FeatureLayer;
+
+L.esri.Layers.featureLayer = function(key, options){
+  return new L.esri.Layers.FeatureLayer(key, options);
+};
+
+L.esri.featureLayer = function(key, options){
+  return new L.esri.Layers.FeatureLayer(key, options);
 };

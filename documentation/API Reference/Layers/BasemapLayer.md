@@ -4,9 +4,11 @@
 
 ### Constructor
 
-Constructor | Description
---- | ---
-`new L.esri.BasemapLayer(key, options)`<br>`L.esri.BasemapLayer(key, options)` | `key` type of base map you want to add. The `options` parameter can accept the same [options](http://leafletjs.com/reference.html#tilelayer) as `L.TileLayer`.
+| Constructor | Description |
+| --- | --- |
+| `new L.esri.Layers.BasemapLayer(key, options)`<br>`L.esri.Layers.basemapLayer(key, options)` | `key` type of base map you want to add. The `options` parameter can accept the same [options](http://leafletjs.com/reference.html#tilelayer) as `L.TileLayer`. |
+
+You can also initalize `L.esri.Layers.BasemapLayer` with the aliases `new L.esri.BasemapLayer(key, options)` and `L.esri.basemapLayer(key, options)`.
 
 **Valid Keys**
 
@@ -25,13 +27,17 @@ Constructor | Description
 * `ShadedRelief`
 * `ShadedReliefLabels` - Labels for pairing with the `ShadedRelief` base map
 
+### Options
+
+`L.esri.TiledMapLayer` accepts all [`L.TileLayer`](http://leafletjs.com/reference.html#tilelayer-options) options.
+
 ### Methods
 
 `L.esri.BasemapLayer` inherits all methods from [`L.TileLayer`](http://leafletjs.com/reference.html#tilelayer).
 
 ### Events
 
-`L.esri.BasemapLayer`inherits all events from [`L.TileLayer`](http://leafletjs.com/reference.html#tilelayer).
+`L.esri.TiledMapLayer` fires all  [`L.TileLayer`](http://leafletjs.com/reference.html#tilelayer) events.
 
 ### Example
 

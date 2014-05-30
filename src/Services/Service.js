@@ -1,9 +1,10 @@
-L.esri.Service = L.Class.extend({
+L.esri.Services.Service = L.Class.extend({
 
   includes: L.Mixin.Events,
 
   options: {
-    proxy: false
+    proxy: false,
+    useCors: true
   },
 
   initialize: function (url, options) {
@@ -14,18 +15,31 @@ L.esri.Service = L.Class.extend({
   },
 
   get: function (path, params, callback, context) {
-    this.request('get', path, params, callback, context);
+    return this._request('get', path, params, callback, context);
+
   },
 
   post: function (path, params, callback, context) {
-    this.request('post', path, params, callback, context);
+    return this._request('post', path, params, callback, context);
   },
 
   metadata: function (callback, context) {
-    this.request('get', '', {}, callback, context);
+    return this._request('get', '', {}, callback, context);
   },
 
-  request: function(method, path, params, callback, context){
+  authenticate: function(token){
+    this._authenticating = false;
+    this.options.token = token;
+    this._runQueue();
+    return this;
+  },
+
+  _request: function(method, path, params, callback, context){
+    this.fire('requeststart', {
+      url: path,
+      params: params
+    });
+
     var wrappedCallback = this._createServiceCallback(method, path, params, callback, context);
 
     if (this.options.token) {
@@ -37,14 +51,15 @@ L.esri.Service = L.Class.extend({
     } else {
 
       var url = (this.options.proxy) ? this.options.proxy + '?' + this.url + path : this.url + path;
-      L.esri[method](url, params, wrappedCallback);
-    }
-  },
 
-  authenticate: function(token){
-    this._authenticating = false;
-    this.options.token = token;
-    this._runQueue();
+      if(method === 'get' && !this.options.useCors){
+        L.esri.Request.get.JSONP(url, params, wrappedCallback);
+      } else {
+        L.esri[method](url, params, wrappedCallback);
+      }
+    }
+
+    return this;
   },
 
   _createServiceCallback: function(method, path, params, callback, context){
@@ -65,6 +80,10 @@ L.esri.Service = L.Class.extend({
         } else {
           callback(error, response);
         }
+        this.fire('requestend', {
+          url: path,
+          params: params
+        });
       }
     }, this);
   },

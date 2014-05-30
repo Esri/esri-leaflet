@@ -2,7 +2,7 @@
 
   var tileProtocol = (window.location.protocol !== 'https:') ? 'http:' : 'https:';
 
-  L.esri.BasemapLayer = L.TileLayer.extend({
+  L.esri.Layers.BasemapLayer = L.TileLayer.extend({
     statics: {
       TILES: {
         Streets: {
@@ -266,8 +266,14 @@
     }
   });
 
+  L.esri.BasemapLayer = L.esri.Layers.BasemapLayer;
+
+  L.esri.Layers.basemapLayer = function(key, options){
+    return new L.esri.Layers.BasemapLayer(key, options);
+  };
+
   L.esri.basemapLayer = function(key, options){
-    return new L.esri.BasemapLayer(key, options);
+    return new L.esri.Layers.BasemapLayer(key, options);
   };
 
 })(L);

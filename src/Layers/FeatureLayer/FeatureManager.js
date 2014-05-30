@@ -1,6 +1,6 @@
 (function(L){
 
-  L.esri.FeatureManager = L.esri.FeatureGrid.extend({
+  L.esri.Layers.FeatureManager = L.esri.Layers.FeatureGrid.extend({
 
     /**
      * Options
@@ -22,7 +22,7 @@
      */
 
     initialize: function (url, options) {
-      L.esri.FeatureGrid.prototype.initialize.call(this, options);
+      L.esri.Layers.FeatureGrid.prototype.initialize.call(this, options);
 
       options = L.setOptions(this, options);
 
@@ -30,10 +30,10 @@
 
       this._timeEnabled = !!(options.from && options.to);
 
-      this._service = new L.esri.Services.FeatureLayer(this.url);
+      this._service = new L.esri.Services.FeatureLayer(this.url, options);
 
       // Leaflet 0.8 change to new propagation
-      this._service.on('authenticationrequired', this._propagateEvent, this);
+      this._service.on('authenticationrequired requeststart requestend', this._propagateEvent, this);
 
       if(this._timeEnabled){
         this.timeIndex = new TemporalIndex();
@@ -49,11 +49,11 @@
      */
 
     onAdd: function(map){
-      return L.esri.FeatureGrid.prototype.onAdd.call(this, map);
+      return L.esri.Layers.FeatureGrid.prototype.onAdd.call(this, map);
     },
 
     onRemove: function(map){
-      return L.esri.FeatureGrid.prototype.onRemove.call(this, map);
+      return L.esri.Layers.FeatureGrid.prototype.onRemove.call(this, map);
     },
 
     /**
@@ -278,6 +278,11 @@
      * Service Methods
      */
 
+    authenticate: function(token){
+      this._service.authenticate(token);
+      return this;
+    },
+
     metadata: function(callback, context){
       this._service.metadata(callback, context);
       return this;
@@ -318,10 +323,6 @@
       this.fire(e.type, e);
     }
   });
-
-  L.esri.featureManager = function(options){
-    return new L.esri.FeatureManager(options);
-  };
 
   /**
    * Temporal Binary Search Index

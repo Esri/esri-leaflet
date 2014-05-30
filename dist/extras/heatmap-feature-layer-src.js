@@ -1,7 +1,7 @@
-/*! Esri-Leaflet - v0.0.1-beta.4 - 2014-05-22
+/*! Esri-Leaflet - v0.0.1-beta.4 - 2014-05-26
 *   Copyright (c) 2014 Environmental Systems Research Institute, Inc.
 *   Apache License*/
-L.esri.HeatMapFeatureLayer = L.esri.FeatureManager.extend({
+L.esri.Layers.HeatMapFeatureLayer = L.esri.Layers.FeatureManager.extend({
 
   /**
    * Constructor
@@ -83,6 +83,12 @@ L.esri.HeatMapFeatureLayer = L.esri.FeatureManager.extend({
 
 });
 
-L.esri.heatMapFeatureLayer = function (options) {
-  return new L.esri.HeatMapFeatureLayer(options);
+L.esri.HeatMapFeatureLayer = L.esri.Layers.HeatMapFeatureLayer;
+
+L.esri.Layers.heatMapFeatureLayer = function(key, options){
+  return new L.esri.Layers.HeatMapFeatureLayer(key, options);
+};
+
+L.esri.heatMapFeatureLayer = function(key, options){
+  return new L.esri.Layers.heatMapFeatureLayer(key, options);
 };

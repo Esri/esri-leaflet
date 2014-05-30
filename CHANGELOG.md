@@ -29,6 +29,7 @@
 * You can no longer pass a `cluster` object to `L.esri.ClusteredFeatureLayer`, insteed pass any options you want to pass to `L.MarkerClusterGroup` directly to `L.esri.ClusteredFeatureLayer`.
 * You can no long pass a string for the `layerDefs` option on `L.esri.DynamicMapLayer`. Layer definitions should now be passed as an object like `{'0':'STATE_NAME='Kansas' and POP2007>25000'}`
 * You can no longer pass a string for the `layers` option on `L.esri.DynamicMapLayer` you can now only pass an array of layer ids that will be shown like `[0,1,2]`.
+* The `createMarker` method on `L.esri.ClusteredFeatureLayer` has been renamed to `pointToLayer`.
 
 ## Beta 4 Patch 1
 

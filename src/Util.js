@@ -181,24 +181,6 @@
     return output;
   }
 
-  // trim whitespace on strings
-  // used to clean urls
-  L.esri.Util.trim = function(str) {
-    return str.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
-  };
-
-  // trim whitespace and add a tailing slash is needed to a url
-  L.esri.Util.cleanUrl = function(url){
-    url = L.esri.Util.trim(url);
-
-    //add a trailing slash to the url if the user omitted it
-    if(url[url.length-1] !== '/'){
-      url += '/';
-    }
-
-    return url;
-  };
-
   // convert an extent (ArcGIS) to LatLngBounds (Leaflet)
   L.esri.Util.extentToBounds = function(extent){
     var sw = new L.LatLng(extent.ymin, extent.xmin);
@@ -219,11 +201,8 @@
     };
   };
 
-  L.esri.Util.arcgisToGeojson = function (arcgis, options){
+  L.esri.Util.arcgisToGeojson = function (arcgis, idAttribute){
     var geojson = {};
-
-    options = options || {};
-    options.idAttribute = options.idAttribute || undefined;
 
     if(arcgis.x && arcgis.y){
       geojson.type = 'Point';
@@ -254,7 +233,7 @@
       geojson.geometry = (arcgis.geometry) ? L.esri.Util.arcgisToGeojson(arcgis.geometry) : null;
       geojson.properties = (arcgis.attributes) ? clone(arcgis.attributes) : null;
       if(arcgis.attributes) {
-        geojson.id =  arcgis.attributes[options.idAttribute] || arcgis.attributes.OBJECTID || arcgis.attributes.FID;
+        geojson.id =  arcgis.attributes[idAttribute] || arcgis.attributes.OBJECTID || arcgis.attributes.FID;
       }
     }
 
@@ -262,9 +241,9 @@
   };
 
   // GeoJSON -> ArcGIS
-  L.esri.Util.geojsonToArcGIS = function(geojson, options){
-    var idAttribute = (options && options.idAttribute) ? options.idAttribute : 'OBJECTID';
-    var spatialReference = (options && options.sr) ? { wkid: options.sr } : { wkid: 4326 };
+  L.esri.Util.geojsonToArcGIS = function(geojson, idAttribute){
+    idAttribute = idAttribute || 'OBJECTID';
+    var spatialReference = { wkid: 4326 };
     var result = {};
     var i;
 
@@ -296,7 +275,7 @@
       break;
     case 'Feature':
       if(geojson.geometry) {
-        result.geometry = L.esri.Util.geojsonToArcGIS(geojson.geometry, options);
+        result.geometry = L.esri.Util.geojsonToArcGIS(geojson.geometry, idAttribute);
       }
       result.attributes = (geojson.properties) ? L.esri.Util.clone(geojson.properties) : {};
       result.attributes[idAttribute] = geojson.id;
@@ -304,13 +283,13 @@
     case 'FeatureCollection':
       result = [];
       for (i = 0; i < geojson.features.length; i++){
-        result.push(L.esri.Util.geojsonToArcGIS(geojson.features[i], options));
+        result.push(L.esri.Util.geojsonToArcGIS(geojson.features[i], idAttribute));
       }
       break;
     case 'GeometryCollection':
       result = [];
       for (i = 0; i < geojson.geometries.length; i++){
-        result.push(L.esri.Util.geojsonToArcGIS(geojson.geometries[i], options));
+        result.push(L.esri.Util.geojsonToArcGIS(geojson.geometries[i], idAttribute));
       }
       break;
     }
@@ -341,13 +320,23 @@
 
     if(featureSet.features.length){
       for (var i = featureSet.features.length - 1; i >= 0; i--) {
-        featureCollection.features.push(L.esri.Util.arcgisToGeojson(featureSet.features[i], {
-          idAttribute: objectIdField
-        }));
+        featureCollection.features.push(L.esri.Util.arcgisToGeojson(featureSet.features[i], objectIdField));
       }
     }
 
     return featureCollection;
+  };
+
+    // trim whitespace and add a tailing slash is needed to a url
+  L.esri.Util.cleanUrl = function(url){
+    url.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+
+    //add a trailing slash to the url if the user omitted it
+    if(url[url.length-1] !== '/'){
+      url += '/';
+    }
+
+    return url;
   };
 
 })(L);

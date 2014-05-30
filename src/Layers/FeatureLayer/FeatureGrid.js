@@ -1,4 +1,4 @@
-L.esri.FeatureGrid = L.Class.extend({
+L.esri.Layers.FeatureGrid = L.Class.extend({
 
   includes: L.Mixin.Events,
 
@@ -289,7 +289,7 @@ L.esri.FeatureGrid = L.Class.extend({
   _wrapCoords: function (coords) {
     coords.x = this._wrapLng ? L.Util.wrapNum(coords.x, this._wrapLng) : coords.x;
     coords.y = this._wrapLat ? L.Util.wrapNum(coords.y, this._wrapLat) : coords.y;
-  },
+  }
 
   // get the global cell coordinates range for the current zoom
   // @TODO enable at Leaflet 0.8
@@ -304,7 +304,3 @@ L.esri.FeatureGrid = L.Class.extend({
   // }
 
 });
-
-L.esri.featureGrid = function (options) {
-  return new L.esri.FeatureGrid(options);
-};

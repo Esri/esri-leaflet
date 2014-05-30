@@ -48,16 +48,19 @@
   }
 
   // AJAX handlers for CORS (modern browsers) or JSONP (older browsers)
-  L.esri.RequestHandlers = {
-    post: function (url, params, callback, context) {
-      params.f = 'json';
+  L.esri.Request = {
+    post: {
+      XMLHTTP: function (url, params, callback, context) {
+        params.f = 'json';
 
-      var httpRequest = createRequest(callback, context);
+        var httpRequest = createRequest(callback, context);
 
-      httpRequest.open('POST', url);
-      httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-      httpRequest.send(serialize(params));
+        httpRequest.open('POST', url);
+        httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        httpRequest.send(serialize(params));
+      }
     },
+
     get: {
       CORS: function (url, params, callback, context) {
         params.f = 'json';
@@ -107,9 +110,9 @@
   };
 
   // Choose the correct AJAX handler depending on CORS support
-  L.esri.get = (L.esri.Support.CORS) ? L.esri.RequestHandlers.get.CORS : L.esri.RequestHandlers.get.JSONP;
+  L.esri.get = (L.esri.Support.CORS) ? L.esri.Request.get.CORS : L.esri.Request.get.JSONP;
 
   // Always use XMLHttpRequest for posts
-  L.esri.post = L.esri.RequestHandlers.post;
+  L.esri.post = L.esri.Request.post.XMLHTTP;
 
 })(L);

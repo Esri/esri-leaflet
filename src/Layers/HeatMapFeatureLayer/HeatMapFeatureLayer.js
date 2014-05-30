@@ -1,4 +1,4 @@
-L.esri.HeatMapFeatureLayer = L.esri.FeatureManager.extend({
+L.esri.Layers.HeatMapFeatureLayer = L.esri.Layers.FeatureManager.extend({
 
   /**
    * Constructor
@@ -80,6 +80,12 @@ L.esri.HeatMapFeatureLayer = L.esri.FeatureManager.extend({
 
 });
 
-L.esri.heatMapFeatureLayer = function (options) {
-  return new L.esri.HeatMapFeatureLayer(options);
+L.esri.HeatMapFeatureLayer = L.esri.Layers.HeatMapFeatureLayer;
+
+L.esri.Layers.heatMapFeatureLayer = function(key, options){
+  return new L.esri.Layers.HeatMapFeatureLayer(key, options);
+};
+
+L.esri.heatMapFeatureLayer = function(key, options){
+  return new L.esri.Layers.heatMapFeatureLayer(key, options);
 };

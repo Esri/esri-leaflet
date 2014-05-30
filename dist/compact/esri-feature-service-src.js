@@ -1,10 +1,11 @@
-/*! Esri-Leaflet - v0.0.1-beta.4 - 2014-05-22
+/*! Esri-Leaflet - v0.0.1-beta.4 - 2014-05-26
 *   Copyright (c) 2014 Environmental Systems Research Institute, Inc.
 *   Apache License*/
 L.esri = {
   VERSION: '0.0.1-beta.5',
   Layers: {},
   Services: {},
+  Tasks: {},
   Util: {},
   Support: {
     CORS: !!(window.XMLHttpRequest && 'withCredentials' in new XMLHttpRequest()),
@@ -194,24 +195,6 @@ L.esri = {
     return output;
   }
 
-  // trim whitespace on strings
-  // used to clean urls
-  L.esri.Util.trim = function(str) {
-    return str.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
-  };
-
-  // trim whitespace and add a tailing slash is needed to a url
-  L.esri.Util.cleanUrl = function(url){
-    url = L.esri.Util.trim(url);
-
-    //add a trailing slash to the url if the user omitted it
-    if(url[url.length-1] !== '/'){
-      url += '/';
-    }
-
-    return url;
-  };
-
   // convert an extent (ArcGIS) to LatLngBounds (Leaflet)
   L.esri.Util.extentToBounds = function(extent){
     var sw = new L.LatLng(extent.ymin, extent.xmin);
@@ -232,11 +215,8 @@ L.esri = {
     };
   };
 
-  L.esri.Util.arcgisToGeojson = function (arcgis, options){
+  L.esri.Util.arcgisToGeojson = function (arcgis, idAttribute){
     var geojson = {};
-
-    options = options || {};
-    options.idAttribute = options.idAttribute || undefined;
 
     if(arcgis.x && arcgis.y){
       geojson.type = 'Point';
@@ -267,7 +247,7 @@ L.esri = {
       geojson.geometry = (arcgis.geometry) ? L.esri.Util.arcgisToGeojson(arcgis.geometry) : null;
       geojson.properties = (arcgis.attributes) ? clone(arcgis.attributes) : null;
       if(arcgis.attributes) {
-        geojson.id =  arcgis.attributes[options.idAttribute] || arcgis.attributes.OBJECTID || arcgis.attributes.FID;
+        geojson.id =  arcgis.attributes[idAttribute] || arcgis.attributes.OBJECTID || arcgis.attributes.FID;
       }
     }
 
@@ -275,9 +255,9 @@ L.esri = {
   };
 
   // GeoJSON -> ArcGIS
-  L.esri.Util.geojsonToArcGIS = function(geojson, options){
-    var idAttribute = (options && options.idAttribute) ? options.idAttribute : 'OBJECTID';
-    var spatialReference = (options && options.sr) ? { wkid: options.sr } : { wkid: 4326 };
+  L.esri.Util.geojsonToArcGIS = function(geojson, idAttribute){
+    idAttribute = idAttribute || 'OBJECTID';
+    var spatialReference = { wkid: 4326 };
     var result = {};
     var i;
 
@@ -309,7 +289,7 @@ L.esri = {
       break;
     case 'Feature':
       if(geojson.geometry) {
-        result.geometry = L.esri.Util.geojsonToArcGIS(geojson.geometry, options);
+        result.geometry = L.esri.Util.geojsonToArcGIS(geojson.geometry, idAttribute);
       }
       result.attributes = (geojson.properties) ? L.esri.Util.clone(geojson.properties) : {};
       result.attributes[idAttribute] = geojson.id;
@@ -317,13 +297,13 @@ L.esri = {
     case 'FeatureCollection':
       result = [];
       for (i = 0; i < geojson.features.length; i++){
-        result.push(L.esri.Util.geojsonToArcGIS(geojson.features[i], options));
+        result.push(L.esri.Util.geojsonToArcGIS(geojson.features[i], idAttribute));
       }
       break;
     case 'GeometryCollection':
       result = [];
       for (i = 0; i < geojson.geometries.length; i++){
-        result.push(L.esri.Util.geojsonToArcGIS(geojson.geometries[i], options));
+        result.push(L.esri.Util.geojsonToArcGIS(geojson.geometries[i], idAttribute));
       }
       break;
     }
@@ -354,13 +334,23 @@ L.esri = {
 
     if(featureSet.features.length){
       for (var i = featureSet.features.length - 1; i >= 0; i--) {
-        featureCollection.features.push(L.esri.Util.arcgisToGeojson(featureSet.features[i], {
-          idAttribute: objectIdField
-        }));
+        featureCollection.features.push(L.esri.Util.arcgisToGeojson(featureSet.features[i], objectIdField));
       }
     }
 
     return featureCollection;
+  };
+
+    // trim whitespace and add a tailing slash is needed to a url
+  L.esri.Util.cleanUrl = function(url){
+    url.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+
+    //add a trailing slash to the url if the user omitted it
+    if(url[url.length-1] !== '/'){
+      url += '/';
+    }
+
+    return url;
   };
 
 })(L);
@@ -414,16 +404,19 @@ L.esri = {
   }
 
   // AJAX handlers for CORS (modern browsers) or JSONP (older browsers)
-  L.esri.RequestHandlers = {
-    post: function (url, params, callback, context) {
-      params.f = 'json';
+  L.esri.Request = {
+    post: {
+      XMLHTTP: function (url, params, callback, context) {
+        params.f = 'json';
 
-      var httpRequest = createRequest(callback, context);
+        var httpRequest = createRequest(callback, context);
 
-      httpRequest.open('POST', url);
-      httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-      httpRequest.send(serialize(params));
+        httpRequest.open('POST', url);
+        httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        httpRequest.send(serialize(params));
+      }
     },
+
     get: {
       CORS: function (url, params, callback, context) {
         params.f = 'json';
@@ -473,30 +466,19 @@ L.esri = {
   };
 
   // Choose the correct AJAX handler depending on CORS support
-  L.esri.get = (L.esri.Support.CORS) ? L.esri.RequestHandlers.get.CORS : L.esri.RequestHandlers.get.JSONP;
+  L.esri.get = (L.esri.Support.CORS) ? L.esri.Request.get.CORS : L.esri.Request.get.JSONP;
 
   // Always use XMLHttpRequest for posts
-  L.esri.post = L.esri.RequestHandlers.post;
+  L.esri.post = L.esri.RequestHandlers.post.XMLHTTP;
 
 })(L);
-L.esri.Services.FeatureServer = L.esri.Service.extend({
-
-  query: function(){
-    return new L.esri.Services.Query(this);
-  }
-
-});
-
-L.esri.Services.featureService = function(url, options) {
-  return new L.esri.Services.FeatureService(url, options);
-};
 L.esri.Services.FeatureLayer = L.esri.Service.extend({
 
   query: function(){
     return new L.esri.Services.Query(this);
   },
 
-  addFeature: function(feature, callback, context) {
+  createFeature: function(feature, callback, context) {
     feature = L.esri.Util.geojsonToArcGIS(feature);
     this.post(this.url + 'addFeatures', JSON.stringify(feature), callback, context);
   },
@@ -517,7 +499,7 @@ L.esri.Services.FeatureLayer = L.esri.Service.extend({
 L.esri.Services.featureLayer = function(url, options) {
   return new L.esri.Services.FeatureLayer(url, options);
 };
-L.esri.Services.Query = L.Class.extend({
+L.esri.Tasks.Query = L.Class.extend({
 
   initialize: function(service, options){
 
@@ -529,6 +511,7 @@ L.esri.Services.Query = L.Class.extend({
     }
 
     this._params = {
+      where: '1=1',
       outSr: 4326,
       outFields: '*'
     };
@@ -669,7 +652,7 @@ L.esri.Services.Query = L.Class.extend({
 L.esri.Services.query = function(url, params){
   return new L.esri.Services.Query(url, params);
 };
-L.esri.FeatureGrid = L.Class.extend({
+L.esri.Layers.FeatureGrid = L.Class.extend({
 
   includes: L.Mixin.Events,
 
@@ -960,7 +943,7 @@ L.esri.FeatureGrid = L.Class.extend({
   _wrapCoords: function (coords) {
     coords.x = this._wrapLng ? L.Util.wrapNum(coords.x, this._wrapLng) : coords.x;
     coords.y = this._wrapLat ? L.Util.wrapNum(coords.y, this._wrapLat) : coords.y;
-  },
+  }
 
   // get the global cell coordinates range for the current zoom
   // @TODO enable at Leaflet 0.8
@@ -975,13 +958,9 @@ L.esri.FeatureGrid = L.Class.extend({
   // }
 
 });
-
-L.esri.featureGrid = function (options) {
-  return new L.esri.FeatureGrid(options);
-};
 (function(L){
 
-  L.esri.FeatureManager = L.esri.FeatureGrid.extend({
+  L.esri.Layers.FeatureManager = L.esri.Layers.FeatureGrid.extend({
 
     /**
      * Options
@@ -1003,7 +982,7 @@ L.esri.featureGrid = function (options) {
      */
 
     initialize: function (url, options) {
-      L.esri.FeatureGrid.prototype.initialize.call(this, options);
+      L.esri.Layers.FeatureGrid.prototype.initialize.call(this, options);
 
       options = L.setOptions(this, options);
 
@@ -1011,10 +990,10 @@ L.esri.featureGrid = function (options) {
 
       this._timeEnabled = !!(options.from && options.to);
 
-      this._service = new L.esri.Services.FeatureLayer(this.url);
+      this._service = new L.esri.Services.FeatureLayer(this.url, options);
 
       // Leaflet 0.8 change to new propagation
-      this._service.on('authenticationrequired', this._propagateEvent, this);
+      this._service.on('authenticationrequired requeststart requestend', this._propagateEvent, this);
 
       if(this._timeEnabled){
         this.timeIndex = new TemporalIndex();
@@ -1030,11 +1009,11 @@ L.esri.featureGrid = function (options) {
      */
 
     onAdd: function(map){
-      return L.esri.FeatureGrid.prototype.onAdd.call(this, map);
+      return L.esri.Layers.FeatureGrid.prototype.onAdd.call(this, map);
     },
 
     onRemove: function(map){
-      return L.esri.FeatureGrid.prototype.onRemove.call(this, map);
+      return L.esri.Layers.FeatureGrid.prototype.onRemove.call(this, map);
     },
 
     /**
@@ -1146,6 +1125,8 @@ L.esri.featureGrid = function (options) {
         var bounds = this._cellCoordsToBounds(coords);
         this._requestFeatures(bounds, key, requestCallback);
       }
+
+      return this;
     },
 
     getWhere: function(){
@@ -1160,11 +1141,12 @@ L.esri.featureGrid = function (options) {
       return [this.options.from, this.options.to];
     },
 
-    setTimeRange: function(from, to){
+    setTimeRange: function(from, to, callback, context){
       var oldFrom = this.options.from;
       var oldTo = this.options.to;
       var requestCallback = L.Util.bind(function(){
         this._filterExistingFeatures(oldFrom, oldTo, from, to);
+        callback.call(context);
       }, this);
 
       this.options.from = from;
@@ -1256,6 +1238,11 @@ L.esri.featureGrid = function (options) {
      * Service Methods
      */
 
+    authenticate: function(token){
+      this._service.authenticate(token);
+      return this;
+    },
+
     metadata: function(callback, context){
       this._service.metadata(callback, context);
       return this;
@@ -1265,8 +1252,8 @@ L.esri.featureGrid = function (options) {
       return this._service.query();
     },
 
-    addFeature: function(feature, callback, context){
-      this._service.addFeature(feature, function(error, response){
+    createFeature: function(feature, callback, context){
+      this._service.createFeature(feature, function(error, response){
         //@ TODO
       }, context);
       return this;
@@ -1296,10 +1283,6 @@ L.esri.featureGrid = function (options) {
       this.fire(e.type, e);
     }
   });
-
-  L.esri.featureManager = function(options){
-    return new L.esri.FeatureManager(options);
-  };
 
   /**
    * Temporal Binary Search Index
@@ -1363,7 +1346,7 @@ L.esri.featureGrid = function (options) {
   };
 
 }(L));
-L.esri.FeatureLayer = L.esri.FeatureManager.extend({
+L.esri.Layers.FeatureLayer = L.esri.Layers.FeatureManager.extend({
 
   statics: {
     EVENTS: 'click dblclick mouseover mouseout mousemove contextmenu popupopen popupclose'
@@ -1374,7 +1357,7 @@ L.esri.FeatureLayer = L.esri.FeatureManager.extend({
    */
 
   initialize: function (url, options) {
-    L.esri.FeatureManager.prototype.initialize.call(this, url, options);
+    L.esri.Layers.FeatureManager.prototype.initialize.call(this, url, options);
 
     options = L.setOptions(this, options);
 
@@ -1386,7 +1369,7 @@ L.esri.FeatureLayer = L.esri.FeatureManager.extend({
    */
 
   onAdd: function(map){
-    return L.esri.FeatureManager.prototype.onAdd.call(this, map);
+    return L.esri.Layers.FeatureManager.prototype.onAdd.call(this, map);
   },
 
   onRemove: function(map){
@@ -1395,7 +1378,7 @@ L.esri.FeatureLayer = L.esri.FeatureManager.extend({
       map.removeLayer(this._layers[i]);
     }
 
-    return L.esri.FeatureManager.prototype.onRemove.call(this, map);
+    return L.esri.Layers.FeatureManager.prototype.onRemove.call(this, map);
   },
 
   /**
@@ -1426,17 +1409,20 @@ L.esri.FeatureLayer = L.esri.FeatureManager.extend({
 
         newLayer = L.GeoJSON.geometryToLayer(geojson, this.options.pointToLayer, L.GeoJSON.coordsToLatLng, this.options);
         newLayer.feature = L.GeoJSON.asFeature(geojson);
+        newLayer.defaultOptions = newLayer.options;
+
+        // cache the layer
+        this._layers[newLayer.feature.id] = newLayer;
 
         // style the layer
-        newLayer.defaultOptions = newLayer.options;
-        this.resetStyle(newLayer);
+        this.resetStyle(newLayer.feature.id);
 
         // bubble events from layers to this
         // @TODO Leaflet 0.8
         // newLayer.addEventParent(this);
 
         if (newLayer.on) {
-          newLayer.on(L.esri.FeatureLayer.EVENTS, this._propagateEvent, this);
+          newLayer.on(L.esri.Layers.FeatureLayer.EVENTS, this._propagateEvent, this);
         }
 
         // bind a popup if we have one
@@ -1444,8 +1430,7 @@ L.esri.FeatureLayer = L.esri.FeatureManager.extend({
           newLayer.bindPopup(this._popup(newLayer.feature, newLayer));
         }
 
-        // cache the layer
-        this._layers[newLayer.feature.id] = newLayer;
+
 
         // add the layer if it is within the time bounds or our layer is not time enabled
         if(!this._timeEnabled || (this._timeEnabled && this._featureWithinTimeRange(geojson)) ){
@@ -1503,16 +1488,20 @@ L.esri.FeatureLayer = L.esri.FeatureManager.extend({
    * Styling Methods
    */
 
-  resetStyle: function (layer) {
+  resetStyle: function (id) {
+    var layer = this._layers[id];
+
     // reset any custom styles
     layer.options = layer.defaultOptions;
     this._setLayerStyle(layer, this.options.style);
+    return this;
   },
 
   setStyle: function (style) {
     this.eachLayer(function (layer) {
       this._setLayerStyle(layer, style);
     }, this);
+    return this;
   },
 
   _setLayerStyle: function (layer, style) {
@@ -1535,6 +1524,7 @@ L.esri.FeatureLayer = L.esri.FeatureManager.extend({
       var popupContent = this._popup(layer.feature, layer);
       layer.bindPopup(popupContent, options);
     }
+    return this;
   },
 
   unbindPopup: function () {
@@ -1542,6 +1532,7 @@ L.esri.FeatureLayer = L.esri.FeatureManager.extend({
     for (var i in this._layers) {
       this._layers[i].unbindPopup();
     }
+    return this;
   },
 
   /**
@@ -1561,6 +1552,12 @@ L.esri.FeatureLayer = L.esri.FeatureManager.extend({
 
 });
 
-L.esri.featureLayer = function (options) {
-  return new L.esri.FeatureLayer(options);
+L.esri.FeatureLayer = L.esri.Layers.FeatureLayer;
+
+L.esri.Layers.featureLayer = function(key, options){
+  return new L.esri.Layers.FeatureLayer(key, options);
+};
+
+L.esri.featureLayer = function(key, options){
+  return new L.esri.Layers.FeatureLayer(key, options);
 };
