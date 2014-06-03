@@ -24,10 +24,10 @@
           value = param;
         }
 
-        data += encodeURIComponent(key) + '=' + encodeURIComponent(param);
+        data += encodeURIComponent(key) + '=' + encodeURIComponent(value);
       }
     }
-
+    console.log(data);
     return data;
   }
 
@@ -88,7 +88,6 @@
     get: {
       CORS: function (url, params, callback, context) {
         var httpRequest = createRequest(callback, context);
-        console.log(url + '?' + serialize(params));
         httpRequest.open('GET', url + '?' + serialize(params), true);
         httpRequest.send(null);
 

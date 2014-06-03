@@ -17,7 +17,7 @@ L.esri.Tasks.Query = L.Class.extend({
   },
 
   within: function(bounds){
-    this._params.geometry = JSON.stringify(L.esri.Util.boundsToExtent(bounds));
+    this._params.geometry = L.esri.Util.boundsToExtent(bounds);
     this._params.geometryType = 'esriGeometryEnvelope';
     this._params.spatialRel = 'esriSpatialRelIntersects';
     return this;
@@ -30,12 +30,6 @@ L.esri.Tasks.Query = L.Class.extend({
     this._params.units = 'esriSRUnit_Meter';
     this._params.distance = radius;
     this._params.inSr = 4326;
-    return this;
-  },
-
-  layerDef: function(id, where){
-    this._params.layerDefs = (this._params.layerDefs) ? this._params.layerDefs + ';' : '';
-    this._params.layerDefs += ([id, where]).join(':');
     return this;
   },
 
@@ -75,10 +69,10 @@ L.esri.Tasks.Query = L.Class.extend({
     return this;
   },
 
-  orderBy: function(fieldName, asc){
-    var order = (asc) ? 'ASC' : 'DESC';
+  orderBy: function(fieldName, order){
+    order = order || 'ASC';
     this._params.orderByFields = (this._params.orderByFields) ? this._params.orderByFields + ',' : '';
-    this._params.orderByFields += ([fieldName, order]).join(',');
+    this._params.orderByFields += ([fieldName, order]).join(' ');
     return this;
   },
 
@@ -131,7 +125,7 @@ L.esri.Tasks.Query = L.Class.extend({
     if(this._service){
       this._service.get('query', this._params, callback, context);
     } else {
-      L.esri.get(this.url, this._params, callback, context);
+      L.esri.get(this.url + 'query', this._params, callback, context);
     }
   }
 

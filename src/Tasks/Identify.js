@@ -52,7 +52,6 @@ L.esri.Tasks.Identify = L.Class.extend({
   simplify: function(map, factor){
     var mapWidth = Math.abs(map.getBounds().getWest() - map.getBounds().getEast());
     this._params.maxAllowableOffset = (mapWidth / map.getSize().y) * (1 - factor);
-    console.log(this._params.maxAllowableOffset);
     return this;
   },
 
@@ -62,7 +61,7 @@ L.esri.Tasks.Identify = L.Class.extend({
   },
 
   tolerance: function(tolerance){
-    this._params = tolerance;
+    this._params.tolerance = tolerance;
     return this;
   },
 
