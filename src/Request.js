@@ -27,7 +27,7 @@
         data += encodeURIComponent(key) + '=' + encodeURIComponent(value);
       }
     }
-    console.log(data);
+
     return data;
   }
 
