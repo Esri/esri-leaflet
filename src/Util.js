@@ -12,6 +12,25 @@
     return target;
   }
 
+  // checks if the first and last points of a ring are equal and closes the ring
+  function closeRing(coordinates) {
+    if (!pointsEqual(coordinates[0], coordinates[coordinates.length - 1])) {
+      coordinates.push(coordinates[0]);
+    }
+    return coordinates;
+  }
+
+  // checks if 2 x,y points are equal
+  function pointsEqual(a, b) {
+    for (var i = 0; i < a.length; i++) {
+      if (a[i] !== b[i]) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+
   // determine if polygon ring coordinates are clockwise. clockwise signifies outer ring, counter-clockwise an inner ring
   // or hole. this logic was found at http://stackoverflow.com/questions/1165647/how-to-determine-if-a-list-of-polygon-
   // points-are-in-clockwise-order
@@ -91,8 +110,10 @@
 
     // for each ring
     for (var r = 0; r < rings.length; r++) {
-      var ring = rings[r].slice(0);
-
+      var ring = closeRing(rings[r].slice(0));
+      if(ring.length < 4){
+        continue;
+      }
       // is this ring an outer ring? is it clockwise?
       if(ringIsClockwise(ring)){
         var polygon = [ ring ];
@@ -148,20 +169,23 @@
   function orientRings(poly){
     var output = [];
     var polygon = poly.slice(0);
-    var outerRing = polygon.shift().slice(0);
-
-    if(!ringIsClockwise(outerRing)){
-      outerRing.reverse();
-    }
-
-    output.push(outerRing);
-
-    for (var i = 0; i < polygon.length; i++) {
-      var hole = polygon[i].slice(0);
-      if(ringIsClockwise(hole)){
-        hole.reverse();
+    var outerRing = closeRing(polygon.shift().slice(0));
+    if(outerRing.length >= 4){
+      if(!ringIsClockwise(outerRing)){
+        outerRing.reverse();
       }
-      output.push(hole);
+
+      output.push(outerRing);
+
+      for (var i = 0; i < polygon.length; i++) {
+        var hole = closeRing(polygon[i].slice(0));
+        if(hole.length >= 4){
+          if(ringIsClockwise(hole)){
+            hole.reverse();
+          }
+          output.push(hole);
+        }
+      }
     }
 
     return output;
@@ -204,7 +228,7 @@
   L.esri.Util.arcgisToGeojson = function (arcgis, idAttribute){
     var geojson = {};
 
-    if(arcgis.x && arcgis.y){
+    if(typeof arcgis.x === 'number' && typeof arcgis.y === 'number'){
       geojson.type = 'Point';
       geojson.coordinates = [arcgis.x, arcgis.y];
     }
@@ -277,8 +301,10 @@
       if(geojson.geometry) {
         result.geometry = L.esri.Util.geojsonToArcGIS(geojson.geometry, idAttribute);
       }
-      result.attributes = (geojson.properties) ? L.esri.Util.clone(geojson.properties) : {};
-      result.attributes[idAttribute] = geojson.id;
+      result.attributes = (geojson.properties) ? clone(geojson.properties) : {};
+      if(geojson.id){
+        result.attributes[idAttribute] = geojson.id;
+      }
       break;
     case 'FeatureCollection':
       result = [];
@@ -297,30 +323,30 @@
     return result;
   };
 
-  L.esri.Util.featureSetToFeatureCollection = function(featureSet){
+  L.esri.Util.responseToFeatureCollection = function(featureSet){
     var objectIdField;
 
     if(featureSet.objectIdFieldName){
       objectIdField = featureSet.objectIdFieldName;
-    } else {
-      if(featureSet.fields){
-        for (var j = 0; j <= featureSet.fields.length - 1; j++) {
-          if(featureSet.fields[j].type === 'esriFieldTypeOID') {
-            objectIdField = featureSet.fields[j].name;
-            break;
-          }
+    } else if(featureSet.fields) {
+      for (var j = 0; j <= featureSet.fields.length - 1; j++) {
+        if(featureSet.fields[j].type === 'esriFieldTypeOID') {
+          objectIdField = featureSet.fields[j].name;
+          break;
         }
       }
+    } else {
+      objectIdField = 'OBJECTID';
     }
 
     var featureCollection = {
       type: 'FeatureCollection',
       features: []
     };
-
-    if(featureSet.features.length){
-      for (var i = featureSet.features.length - 1; i >= 0; i--) {
-        featureCollection.features.push(L.esri.Util.arcgisToGeojson(featureSet.features[i], objectIdField));
+    var features = featureSet.features || featureSet.results;
+    if(features.length){
+      for (var i = features.length - 1; i >= 0; i--) {
+        featureCollection.features.push(L.esri.Util.arcgisToGeojson(features[i], objectIdField));
       }
     }
 
@@ -329,7 +355,7 @@
 
     // trim whitespace and add a tailing slash is needed to a url
   L.esri.Util.cleanUrl = function(url){
-    url.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+    url = url.replace(/\s\s*/g, '');
 
     //add a trailing slash to the url if the user omitted it
     if(url[url.length-1] !== '/'){

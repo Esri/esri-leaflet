@@ -75,11 +75,23 @@ L.esri.Services.Service = L.Class.extend({
           authenticate: this.authenticate
         });
       } else {
-        if(context){
-          callback.call(context, error, response);
+        callback.call(context, error, response);
+
+        if(error) {
+          this.fire('requesterror', {
+            url: path,
+            params: params,
+            error: error.error,
+            code: error.code
+          });
         } else {
-          callback(error, response);
+          this.fire('requestsuccess', {
+            url: path,
+            params: params,
+            response: response
+          });
         }
+
         this.fire('requestend', {
           url: path,
           params: params

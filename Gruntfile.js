@@ -7,9 +7,28 @@ module.exports = function(grunt) {
       all: {
         src: [
           'Gruntfile.js',
-          'src/**/*.js'
+          'src/**/*.js',
+          'spec/**/*.js'
         ]
       }
+    },
+    watch: {
+      scripts: {
+        files: [
+          'src/**/*.js',
+          'spec/**/*.js'
+        ],
+        tasks: ['jshint'],
+        options: {
+          spawn: false,
+        },
+      },
+    },
+    concurrent: {
+      options: {
+        logConcurrentOutput: true
+      },
+      dev: ['connect', 'watch:scripts', 'karma:watch'],
     },
     concat: {
       options: {
@@ -108,23 +127,19 @@ module.exports = function(grunt) {
       }
     },
     karma: {
-      single: {
+      options: {
         configFile: 'karma.conf.js'
       },
-      watch: {
-        configFile: 'karma.conf.js',
-        autoWatch: true,
-        singleRun: false
-      },
+      run: {},
       coverage: {
-        configFile: 'karma.conf.js',
-        preprocessors:{
+        reporters: ['progress', 'coverage'],
+        preprocessors: {
           'src/**/*.js': 'coverage'
-        },
-        coverageReporter: {
-          type : 'html',
-          dir : './coverage/'
         }
+      },
+      watch: {
+        singleRun: false,
+        autoWatch: true
       }
     },
     connect: {
@@ -145,15 +160,17 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.registerTask('default', ['jshint', 'test']);
+  grunt.registerTask('default', ['concurrent:dev']);
   grunt.registerTask('build', ['jshint', 'karma:coverage','concat', 'uglify']);
-  grunt.registerTask('test', ['karma:single']);
+  grunt.registerTask('test', ['karma:run']);
 
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-connect');
+  grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-concurrent');
   grunt.loadNpmTasks('grunt-karma');
   grunt.loadNpmTasks('grunt-gh-pages');
 
