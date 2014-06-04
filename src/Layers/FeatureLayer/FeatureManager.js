@@ -28,14 +28,12 @@
 
       this.url = L.esri.Util.cleanUrl(url);
 
-      this._timeEnabled = !!(options.from && options.to);
-
       this._service = new L.esri.Services.FeatureLayer(this.url, options);
 
       // Leaflet 0.8 change to new propagation
       this._service.on('authenticationrequired requeststart requestend requesterror requestsuccess', this._propagateEvent, this);
 
-      if(this._timeEnabled){
+      if(options.timeField){
         this.timeIndex = new TemporalIndex();
       }
 
@@ -75,7 +73,7 @@
       }
 
       this._buildQuery(bounds).run(function(error, featureCollection, response){
-        if(response.exceededTransferLimit){
+        if(response && response.exceededTransferLimit){
           this.fire('drawlimitexceeded');
         }
 

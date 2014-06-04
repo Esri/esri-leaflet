@@ -9,7 +9,7 @@ L.esri.Layers.ClusteredFeatureLayer = L.esri.Layers.FeatureManager.extend({
    */
 
   initialize: function (url, options) {
-    L.esri.FeatureManager.prototype.initialize.call(this, url, options);
+    L.esri.Layers.FeatureManager.prototype.initialize.call(this, url, options);
 
     options = L.setOptions(this, options);
 
@@ -29,12 +29,12 @@ L.esri.Layers.ClusteredFeatureLayer = L.esri.Layers.FeatureManager.extend({
    */
 
   onAdd: function(map){
-    L.esri.FeatureManager.prototype.onAdd.call(this, map);
+    L.esri.Layers.FeatureManager.prototype.onAdd.call(this, map);
     this._map.addLayer(this.cluster);
   },
 
   onRemove: function(map){
-    L.esri.FeatureManager.prototype.onRemove.call(this, map);
+    L.esri.Layers.FeatureManager.prototype.onRemove.call(this, map);
     this._map.removeLayer(this.cluster);
   },
 
@@ -73,7 +73,7 @@ L.esri.Layers.ClusteredFeatureLayer = L.esri.Layers.FeatureManager.extend({
         this._layers[newLayer.feature.id] = newLayer;
 
         // add the layer if it is within the time bounds or our layer is not time enabled
-        if(!this._timeEnabled || (this._timeEnabled && this._featureWithinTimeRange(geojson)) ){
+        if(!this.options.timeField || (this.options.timeField && this._featureWithinTimeRange(geojson)) ){
           markers.push(newLayer);
         }
       }

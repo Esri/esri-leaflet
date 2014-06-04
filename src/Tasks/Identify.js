@@ -67,8 +67,7 @@ L.esri.Tasks.Identify = L.Class.extend({
 
   run: function (callback, context){
     this._request(function(error, response){
-      var featureCollection = (!error && response) ? L.esri.Util.responseToFeatureCollection(response) : undefined;
-      callback.call(context, error, featureCollection, response);
+      callback.call(context, error, (response && L.esri.Util.responseToFeatureCollection(response)), response);
     }, context);
   },
 

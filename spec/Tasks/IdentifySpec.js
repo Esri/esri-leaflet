@@ -74,7 +74,6 @@ describe('L.esri.Tasks.Identify', function () {
     server.respondWith('GET', url + 'identify?sr=4326&layers=all&tolerance=3&imageDisplay=500%2C500%2C96&mapExtent=-122.66535758972167%2C45.50624163368495%2C-122.65462875366211%2C45.51376023843158&geometry=-122.66%2C45.51&geometryType=esriGeometryPoint&f=json', JSON.stringify(sampleResponse));
 
     task.run(function(error, featureCollection, raw){
-      expect(error).to.equal(undefined);
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleResponse);
       done();
@@ -87,7 +86,6 @@ describe('L.esri.Tasks.Identify', function () {
     server.respondWith('GET', url + 'identify?sr=4326&layers=all&tolerance=3&imageDisplay=500%2C500%2C96&mapExtent=-122.66535758972167%2C45.50624163368495%2C-122.65462875366211%2C45.51376023843158&geometry=-122.66%2C45.51&geometryType=esriGeometryPoint&layerDefs=0%3ANAME%3DOregon&f=json', JSON.stringify(sampleResponse));
 
     task.layerDef(0, 'NAME=Oregon').run(function(error, featureCollection, raw){
-      expect(error).to.equal(undefined);
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleResponse);
       done();
@@ -96,13 +94,11 @@ describe('L.esri.Tasks.Identify', function () {
     server.respond();
   });
 
-
   it('should identify features with a 2 layer definitions', function(done){
 
     server.respondWith('GET', url + 'identify?sr=4326&layers=all&tolerance=3&imageDisplay=500%2C500%2C96&mapExtent=-122.66535758972167%2C45.50624163368495%2C-122.65462875366211%2C45.51376023843158&geometry=-122.66%2C45.51&geometryType=esriGeometryPoint&layerDefs=0%3ANAME%3DOregon%3B1%3ANAME%3DMultnomah&f=json', JSON.stringify(sampleResponse));
 
     task.layerDef(0, 'NAME=Oregon').layerDef(1, 'NAME=Multnomah').run(function(error, featureCollection, raw){
-      expect(error).to.equal(undefined);
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleResponse);
       done();
@@ -118,7 +114,6 @@ describe('L.esri.Tasks.Identify', function () {
     var end = new Date('January 1 2014');
 
     task.between(start, end).run(function(error, featureCollection, raw){
-      expect(error).to.equal(undefined);
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleResponse);
       done();
@@ -131,7 +126,6 @@ describe('L.esri.Tasks.Identify', function () {
     server.respondWith('GET', url + 'identify?sr=4326&layers=top&tolerance=3&imageDisplay=500%2C500%2C96&mapExtent=-122.66535758972167%2C45.50624163368495%2C-122.65462875366211%2C45.51376023843158&geometry=-122.66%2C45.51&geometryType=esriGeometryPoint&f=json', JSON.stringify(sampleResponse));
 
     task.layers('top').run(function(error, featureCollection, raw){
-      expect(error).to.equal(undefined);
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleResponse);
       done();
@@ -144,7 +138,6 @@ describe('L.esri.Tasks.Identify', function () {
     server.respondWith('GET', url + 'identify?sr=4326&layers=all&tolerance=3&imageDisplay=500%2C500%2C96&mapExtent=-122.66535758972167%2C45.50624163368495%2C-122.65462875366211%2C45.51376023843158&geometry=-122.66%2C45.51&geometryType=esriGeometryPoint&geometryPrecision=4&f=json', JSON.stringify(sampleResponse));
 
     task.precision(4).run(function(error, featureCollection, raw){
-      expect(error).to.equal(undefined);
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleResponse);
       done();
@@ -157,7 +150,6 @@ describe('L.esri.Tasks.Identify', function () {
     server.respondWith('GET', url + 'identify?sr=4326&layers=all&tolerance=3&imageDisplay=500%2C500%2C96&mapExtent=-122.66535758972167%2C45.50624163368495%2C-122.65462875366211%2C45.51376023843158&geometry=-122.66%2C45.51&geometryType=esriGeometryPoint&maxAllowableOffset=0.000010728836059556101&f=json', JSON.stringify(sampleResponse));
 
     task.simplify(map, 0.5).run(function(error, featureCollection, raw){
-      expect(error).to.equal(undefined);
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleResponse);
       done();
@@ -170,7 +162,6 @@ describe('L.esri.Tasks.Identify', function () {
     server.respondWith('GET', url + 'identify?sr=4326&layers=all&tolerance=3&imageDisplay=500%2C500%2C96&mapExtent=-122.66535758972167%2C45.50624163368495%2C-122.65462875366211%2C45.51376023843158&geometry=-122.66%2C45.51&geometryType=esriGeometryPoint&token=foo&f=json', JSON.stringify(sampleResponse));
 
     task.token('foo').run(function(error, featureCollection, raw){
-      expect(error).to.equal(undefined);
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleResponse);
       done();
@@ -183,7 +174,6 @@ describe('L.esri.Tasks.Identify', function () {
     server.respondWith('GET', url + 'identify?sr=4326&layers=all&tolerance=4&imageDisplay=500%2C500%2C96&mapExtent=-122.66535758972167%2C45.50624163368495%2C-122.65462875366211%2C45.51376023843158&geometry=-122.66%2C45.51&geometryType=esriGeometryPoint&f=json', JSON.stringify(sampleResponse));
 
     task.tolerance(4).run(function(error, featureCollection, raw){
-      expect(error).to.equal(undefined);
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleResponse);
       done();
@@ -198,7 +188,6 @@ describe('L.esri.Tasks.Identify', function () {
     server.respondWith('GET', url + 'identify?sr=4326&layers=all&tolerance=3&imageDisplay=500%2C500%2C96&mapExtent=-122.66535758972167%2C45.50624163368495%2C-122.65462875366211%2C45.51376023843158&geometry=-122.66%2C45.51&geometryType=esriGeometryPoint&f=json', JSON.stringify(sampleResponse));
 
     service.identify().on(map).at(latlng).run(function(error, featureCollection, raw){
-      expect(error).to.equal(undefined);
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleResponse);
       done();

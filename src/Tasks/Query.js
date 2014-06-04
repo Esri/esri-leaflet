@@ -88,8 +88,7 @@ L.esri.Tasks.Query = L.Class.extend({
 
   run: function(callback, context){
     this._request(function(error, response){
-      var featureCollection = (!error && response) ? L.esri.Util.responseToFeatureCollection(response) : undefined;
-      callback.call(context, error, featureCollection, response);
+      callback.call(context, error, (response && L.esri.Util.responseToFeatureCollection(response)), response);
     }, context);
     return this;
   },
@@ -97,8 +96,7 @@ L.esri.Tasks.Query = L.Class.extend({
   count: function(callback, context){
     this._params.returnCountOnly = true;
     this._request(function(error, response){
-      var count = (!error && response) ? response.count : undefined;
-      callback.call(this, error, count, response);
+      callback.call(this, error, (response && response.count), response);
     }, context);
     return this;
   },
@@ -106,8 +104,7 @@ L.esri.Tasks.Query = L.Class.extend({
   ids: function(callback, context){
     this._params.returnIdsOnly = true;
     this._request(function(error, response){
-      var ids = (!error && response) ? response.objectIds : undefined;
-      callback.call(this, error, ids, response);
+      callback.call(this, error, (response && response.objectIds), response);
     }, context);
     return this;
   },
@@ -115,8 +112,7 @@ L.esri.Tasks.Query = L.Class.extend({
   bounds: function(callback, context){
     this._params.returnExtentOnly = true;
     this._request(function(error, response){
-      var bounds = (!error && response) ? L.esri.Util.extentToBounds(response.extent) : undefined;
-      callback.call(context, error, bounds, response);
+      callback.call(context, error, (response && L.esri.Util.extentToBounds(response.extent)), response);
     }, context);
     return this;
   },

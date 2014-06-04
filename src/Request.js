@@ -52,10 +52,8 @@
         } catch(e) {
           response = null;
           error = {
-            error: {
-              code: 500,
-              message: 'Could not parse response as JSON.'
-            }
+            code: 500,
+            message: 'Could not parse response as JSON.'
           };
         }
 
@@ -106,30 +104,33 @@
         script.id = callbackId;
 
         L.esri._callback[callbackId] = function(response){
-          var error;
-          var responseType = Object.prototype.toString.call(response);
+          if(L.esri._callback[callbackId] !== true){
+            var error;
+            var responseType = Object.prototype.toString.call(response);
 
-          if(!(responseType === '[object Object]' || responseType === '[object Array]')){
-            error = {
-              error: {
-                code: 500,
-                message: 'Expected array or object as JSONP response'
-              }
-            };
-            response = null;
+            if(!(responseType === '[object Object]' || responseType === '[object Array]')){
+              error = {
+                error: {
+                  code: 500,
+                  message: 'Expected array or object as JSONP response'
+                }
+              };
+              response = null;
+            }
+
+            if (!error && response.error) {
+              error = response;
+              response = null;
+            }
+
+            callback.call(context, error, response);
+            L.esri._callback[callbackId] = true;
           }
-
-          if (!error && response.error) {
-            error = response;
-            response = null;
-          }
-
-          callback.call(context, error, response);
         };
 
         callbacks++;
 
-        return callbackId;
+        return L.esri._callback[callbackId];
       }
     }
 

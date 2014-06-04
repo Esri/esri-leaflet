@@ -18,7 +18,6 @@ describe('L.esri.Service', function () {
     }));
 
     service.get('route', {}, function(error, response){
-      expect(error).to.equal(undefined);
       expect(response).to.deep.equal({foo:'bar'});
       done();
     });
@@ -29,13 +28,12 @@ describe('L.esri.Service', function () {
   it('should make GET requests w/ JSONP', function(done){
     service.options.useCors = false;
 
-    var id = service.get('route', {}, function(error, response){
-      expect(error).to.equal(undefined);
+    var request = service.get('route', {}, function(error, response){
       expect(response).to.deep.equal({foo:'bar'});
       done();
     });
 
-    L.esri._callback[id]({foo:'bar'});
+    request({foo:'bar'});
   });
 
   it('should make POST requests', function(done){
@@ -44,7 +42,6 @@ describe('L.esri.Service', function () {
     }));
 
     service.post('route', {}, function(error, response){
-      expect(error).to.equal(undefined);
       expect(response).to.deep.equal({foo:'bar'});
       done();
     });
@@ -58,7 +55,6 @@ describe('L.esri.Service', function () {
     }));
 
     service.metadata(function(error, response){
-      expect(error).to.equal(undefined);
       expect(response).to.deep.equal({foo:'bar'});
       done();
     });
@@ -165,7 +161,6 @@ describe('L.esri.Service', function () {
     }));
 
     service.get('route', {}, function(error, response){
-      expect(error).to.equal(undefined);
       expect(response).to.deep.equal({foo:'bar'});
       done();
     });
@@ -191,7 +186,6 @@ describe('L.esri.Service', function () {
     });
 
     service.get('route', {}, function(error, response){
-      expect(error).to.equal(undefined);
       expect(response).to.deep.equal({foo:'bar'});
       done();
     });
@@ -217,7 +211,6 @@ describe('L.esri.Service', function () {
 
     service.on('authenticationrequired', function(e){
       service.get('other/route', {}, function(error, response){
-        expect(error).to.equal(undefined);
         expect(response).to.deep.equal({foo:'bar'});
         done();
       });
