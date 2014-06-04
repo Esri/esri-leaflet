@@ -33,7 +33,7 @@
       this._service = new L.esri.Services.FeatureLayer(this.url, options);
 
       // Leaflet 0.8 change to new propagation
-      this._service.on('authenticationrequired requeststart requestend', this._propagateEvent, this);
+      this._service.on('authenticationrequired requeststart requestend requesterror requestsuccess', this._propagateEvent, this);
 
       if(this._timeEnabled){
         this.timeIndex = new TemporalIndex();
@@ -74,16 +74,20 @@
         });
       }
 
-      this._buildQuery(bounds).run(function(error, response){
+      this._buildQuery(bounds).run(function(error, featureCollection, response){
+        if(response.exceededTransferLimit){
+          this.fire('drawlimitexceeded');
+        }
+
         //deincriment the request counter
         this._activeRequests--;
 
-        if(!error && response.features.length){
-          this._addFeatures(response.features, coords);
+        if(!error && featureCollection.features.length){
+          this._addFeatures(featureCollection.features, coords);
         }
 
         if(callback){
-          callback.call(this, error, response);
+          callback.call(this, error, featureCollection);
         }
 
         // if there are no more active requests fire a load event for this view

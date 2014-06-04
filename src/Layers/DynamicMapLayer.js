@@ -18,7 +18,7 @@ L.esri.Layers.DynamicMapLayer = L.Class.extend({
   initialize: function (url, options) {
     this.url = L.esri.Util.cleanUrl(url);
     this._service = new L.esri.Services.MapService(this.url, options);
-    this._service.on('authenticationrequired', this._propagateEvent, this);
+    this._service.on('authenticationrequired requeststart requestend requesterror requestsuccess', this._propagateEvent, this);
     L.Util.setOptions(this, options);
   },
 
@@ -182,9 +182,7 @@ L.esri.Layers.DynamicMapLayer = L.Class.extend({
       }, this), 300);
     }, this);
 
-    var identifyRequest = this.identify()
-        .at(e.latlng, this._map.getBounds(), 5)
-        .size(this._map.getSize().x, this._map.getSize().y);
+    var identifyRequest = this.identify().at(e.latlng, this._map, 3);
 
     if(this.options.layers){
       identifyRequest.layers('visible:' + this.options.layers.join(','));
@@ -320,7 +318,7 @@ L.esri.Layers.DynamicMapLayer = L.Class.extend({
   }
 });
 
-L.esri.DynamicMapLayer = L.esri.Layers.dynamicMapLayer;
+L.esri.DynamicMapLayer = L.esri.Layers.DynamicMapLayer;
 
 L.esri.Layers.dynamicMapLayer = function(key, options){
   return new L.esri.Layers.DynamicMapLayer(key, options);
