@@ -36,7 +36,7 @@ L.esri.Services.Service = L.Class.extend({
 
   _request: function(method, path, params, callback, context){
     this.fire('requeststart', {
-      url: path,
+      url: this.url + path,
       params: params
     });
 
@@ -49,51 +49,49 @@ L.esri.Services.Service = L.Class.extend({
     if (this._authenticating) {
       this._requestQueue.push(method, path, params, callback, context);
     } else {
-
       var url = (this.options.proxy) ? this.options.proxy + '?' + this.url + path : this.url + path;
 
       if(method === 'get' && !this.options.useCors){
-        L.esri.Request.get.JSONP(url, params, wrappedCallback);
+        return L.esri.Request.get.JSONP(url, params, wrappedCallback);
       } else {
-        L.esri[method](url, params, wrappedCallback);
+        return L.esri[method](url, params, wrappedCallback);
       }
     }
-
-    return this;
   },
 
   _createServiceCallback: function(method, path, params, callback, context){
     var request = [method, path, params, callback, context];
 
     return L.Util.bind(function(error, response){
+
       if (error && (error.code === 499 || error.code === 498)) {
         this._authenticating = true;
 
         this._requestQueue.push(request);
 
         this.fire('authenticationrequired', {
-          authenticate: this.authenticate
+          authenticate: L.Util.bind(this.authenticate, this)
         });
       } else {
         callback.call(context, error, response);
 
         if(error) {
           this.fire('requesterror', {
-            url: path,
+            url: this.url + path,
             params: params,
-            error: error.error,
+            message: error.message,
             code: error.code
           });
         } else {
           this.fire('requestsuccess', {
-            url: path,
+            url: this.url + path,
             params: params,
             response: response
           });
         }
 
         this.fire('requestend', {
-          url: path,
+          url: this.url + path,
           params: params
         });
       }
@@ -111,6 +109,6 @@ L.esri.Services.Service = L.Class.extend({
 
 });
 
-L.esri.service = function(url, params){
-  return new L.esri.Service(url, params);
+L.esri.Services.service = function(url, params){
+  return new L.esri.Services.Service(url, params);
 };

@@ -88,6 +88,7 @@
     get: {
       CORS: function (url, params, callback, context) {
         var httpRequest = createRequest(callback, context);
+
         httpRequest.open('GET', url + '?' + serialize(params), true);
         httpRequest.send(null);
 
