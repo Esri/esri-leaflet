@@ -188,7 +188,9 @@
       var oldTo = this.options.to;
       var requestCallback = L.Util.bind(function(){
         this._filterExistingFeatures(oldFrom, oldTo, from, to);
-        callback.call(context);
+        if(callback){
+          callback.call(context);
+        }
       }, this);
 
       this.options.from = from;

@@ -85,7 +85,7 @@ L.esri.Layers.FeatureLayer = L.esri.Layers.FeatureManager.extend({
 
 
         // add the layer if it is within the time bounds or our layer is not time enabled
-        if(!this._timeEnabled || (this._timeEnabled && this._featureWithinTimeRange(geojson)) ){
+        if(!this.options.timeField || (this.options.timeField && this._featureWithinTimeRange(geojson)) ){
           this._map.addLayer(newLayer);
         }
       }

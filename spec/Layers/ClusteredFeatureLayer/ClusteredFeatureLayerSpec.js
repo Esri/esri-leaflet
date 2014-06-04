@@ -46,18 +46,18 @@ describe('L.esri.Layers.ClusteredFeatureLayer', function () {
     }]);
   });
 
-  it('should create features on a heatmap', function(){
+  it('should create features on a cluster', function(){
     expect(layer.cluster.hasLayer(layer.getFeature(1))).to.equal(true);
     expect(layer.cluster.hasLayer(layer.getFeature(2))).to.equal(true);
   });
 
-  it('should remove features on a heatmap', function(){
+  it('should remove features on a cluster', function(){
     layer.removeLayers([1]);
     expect(layer.cluster.hasLayer(layer.getFeature(1))).to.equal(false);
     expect(layer.cluster.hasLayer(layer.getFeature(2))).to.equal(true);
   });
 
-  it('should add features back to a heatmap', function(){
+  it('should add features back to a cluster', function(){
     layer.removeLayers([1]);
     layer.addLayers([1]);
     expect(layer.cluster.hasLayer(layer.getFeature(1))).to.equal(true);
@@ -78,6 +78,8 @@ describe('L.esri.Layers.ClusteredFeatureLayer', function () {
         time: new Date('March 1 2014').valueOf()
       }
     }]);
+    expect(layer.cluster.hasLayer(layer.getFeature(1))).to.equal(true);
+    expect(layer.cluster.hasLayer(layer.getFeature(2))).to.equal(true);
     expect(layer.cluster.hasLayer(layer.getFeature(3))).to.equal(false);
   });
 
