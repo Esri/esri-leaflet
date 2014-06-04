@@ -296,8 +296,8 @@
       return this._service.query();
     },
 
-    createFeature: function(feature, callback, context){
-      this._service.createFeature(feature, function(error, response){
+    addFeature: function(feature, callback, context){
+      this._service.addFeature(feature, function(error, response){
         //@ TODO
       }, context);
       return this;

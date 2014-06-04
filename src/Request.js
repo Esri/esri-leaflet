@@ -76,7 +76,6 @@
     post: {
       XMLHTTP: function (url, params, callback, context) {
         var httpRequest = createRequest(callback, context);
-
         httpRequest.open('POST', url);
         httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         httpRequest.send(serialize(params));
