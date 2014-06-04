@@ -47,7 +47,7 @@ L.esri.Services.Service = L.Class.extend({
     }
 
     if (this._authenticating) {
-      this._requestQueue.push(method, path, params, callback, context);
+      this._requestQueue.push([method, path, params, callback, context]);
     } else {
       var url = (this.options.proxy) ? this.options.proxy + '?' + this.url + path : this.url + path;
 

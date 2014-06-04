@@ -198,4 +198,38 @@ describe('L.esri.Service', function () {
 
     server.respond();
   });
+
+  it('should queue requests and run them when authenticated', function(done){
+    server.respondWith('GET', 'http://services.arcgis.com/mock/arcgis/rest/services/MockService/route?f=json', JSON.stringify({
+      error: {
+        code: 499,
+        message: 'Auth'
+      }
+    }));
+
+    server.respondWith('GET', 'http://services.arcgis.com/mock/arcgis/rest/services/MockService/route?f=json&token=foo', JSON.stringify({
+      foo: 'bar'
+    }));
+
+    server.respondWith('GET', 'http://services.arcgis.com/mock/arcgis/rest/services/MockService/other/route?token=foo&f=json', JSON.stringify({
+      foo: 'bar'
+    }));
+
+    service.on('authenticationrequired', function(e){
+      service.get('other/route', {}, function(error, response){
+        expect(error).to.equal(undefined);
+        expect(response).to.deep.equal({foo:'bar'});
+        done();
+      });
+
+      e.authenticate('foo');
+
+      server.respond();
+    });
+
+    service.get('route', {}, function(){});
+
+    server.respond();
+  });
+
 });
