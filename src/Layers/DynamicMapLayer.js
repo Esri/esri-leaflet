@@ -166,10 +166,6 @@ L.esri.Layers.DynamicMapLayer = L.Class.extend({
     return this._service.identify();
   },
 
-  query: function(){
-    return this._service.query();
-  },
-
   authenticate: function(token){
     this._service.authenticate(token);
     return this;

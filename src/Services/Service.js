@@ -16,7 +16,6 @@ L.esri.Services.Service = L.Class.extend({
 
   get: function (path, params, callback, context) {
     return this._request('get', path, params, callback, context);
-
   },
 
   post: function (path, params, callback, context) {

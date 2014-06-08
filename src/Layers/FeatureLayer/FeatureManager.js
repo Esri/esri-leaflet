@@ -33,8 +33,11 @@
       // Leaflet 0.8 change to new propagation
       this._service.on('authenticationrequired requeststart requestend requesterror requestsuccess', this._propagateEvent, this);
 
-      if(options.timeField){
-        this.timeIndex = new TemporalIndex();
+      if(this.options.timeField.start && this.options.timeField.end){
+        this._startTimeIndex = new BinarySearchIndex();
+        this._endTimeIndex = new BinarySearchIndex();
+      } else if(this.options.timeField){
+        this._timeIndex = new BinarySearchIndex();
       }
 
       this._cache = {};
@@ -106,7 +109,7 @@
         this._currentSnapshot.push(id);
       }
 
-      if(this._timeEnabled){
+      if(this.options.timeField){
         this._buildTimeIndexes(features);
       }
 
@@ -131,13 +134,12 @@
      * Where Methods
      */
 
-    setWhere: function(where, callback){
+    setWhere: function(where){
       this.options.where = (where && where.length) ? where : '1=1';
       var oldSnapshot = [];
       var newShapshot = [];
       var pendingRequests = 0;
       var requestCallback = L.Util.bind(function(error, featureCollection){
-
         if(featureCollection){
           for (var i = featureCollection.features.length - 1; i >= 0; i--) {
             newShapshot.push(featureCollection.features[i].id);
@@ -150,10 +152,6 @@
           this._currentSnapshot = newShapshot;
           this.removeLayers(oldSnapshot);
           this.addLayers(newShapshot);
-
-          if(callback) {
-            callback.call(this);
-          }
         }
       }, this);
 
@@ -183,14 +181,12 @@
       return [this.options.from, this.options.to];
     },
 
-    setTimeRange: function(from, to, callback, context){
+    setTimeRange: function(from, to){
       var oldFrom = this.options.from;
       var oldTo = this.options.to;
+
       var requestCallback = L.Util.bind(function(){
         this._filterExistingFeatures(oldFrom, oldTo, from, to);
-        if(callback){
-          callback.call(context);
-        }
       }, this);
 
       this.options.from = from;
@@ -207,11 +203,29 @@
       }
     },
 
+    refresh: function(){
+      for(var key in this._activeCells){
+        var coords = this._keyToCellCoords(key);
+        var bounds = this._cellCoordsToBounds(coords);
+        this._requestFeatures(bounds, key);
+      }
+    },
+
     _filterExistingFeatures: function (oldFrom, oldTo, newFrom, newTo) {
-      var oldFeatures = this._getFeaturesInTimeRange(oldFrom, oldTo);
-      var newFeatures = this._getFeaturesInTimeRange(newFrom, newTo);
-      this.removeLayers(oldFeatures);
-      this.addLayers(newFeatures);
+      var layersToRemove = (oldFrom && oldTo) ? this._getFeaturesInTimeRange(oldFrom, oldTo) : this._currentSnapshot;
+      var layersToAdd = this._getFeaturesInTimeRange(newFrom, newTo);
+
+      if(layersToAdd.indexOf){
+        for (var i = 0; i < layersToAdd.length; i++) {
+          var shouldRemoveLayer = layersToRemove.indexOf(layersToAdd[i]);
+          if(shouldRemoveLayer >= 0){
+            layersToRemove.splice(shouldRemoveLayer, 1);
+          }
+        }
+      }
+
+      this.removeLayers(layersToRemove);
+      this.addLayers(layersToAdd);
     },
 
     _getFeaturesInTimeRange: function(start, end){
@@ -219,11 +233,11 @@
       var search;
 
       if(this.options.timeField.start && this.options.timeField.end){
-        var startTimes = this.timeIndex.between(start, end, this.options.timeField.start);
-        var endTimes = this.timeIndex.between(start, end, this.options.timeField.end);
+        var startTimes = this._startTimeIndex.between(start, end);
+        var endTimes = this._endTimeIndex.between(start, end);
         search = startTimes.concat(endTimes);
       } else {
-        search = this.timeIndex.between(start, end, this.options.timeField);
+        search = this._timeIndex.between(start, end);
       }
 
       for (var i = search.length - 1; i >= 0; i--) {
@@ -234,47 +248,55 @@
     },
 
     _buildTimeIndexes: function(geojson){
-      var timeEntries = [];
-
-      for (var i = geojson.length - 1; i >= 0; i--) {
-        timeEntries.push(this._createTimeEntry(geojson[i]));
-      }
-
-      this.timeIndex.add(timeEntries);
-    },
-
-    _createTimeEntry: function(feature){
-      var timeEntry = {
-        id: feature.id
-      };
-
+      var i;
+      var feature;
       if(this.options.timeField.start && this.options.timeField.end){
-        timeEntry.start = new Date(feature.properties[this.options.timeField.start]);
-        timeEntry.end = new Date(feature.properties[this.options.timeField.end]);
+        var startTimeEntries = [];
+        var endTimeEntries = [];
+        for (i = geojson.length - 1; i >= 0; i--) {
+          feature = geojson[i];
+          startTimeEntries.push( {
+            id: feature.id,
+            value: new Date(feature.properties[this.options.timeField.start])
+          });
+          endTimeEntries.push( {
+            id: feature.id,
+            value: new Date(feature.properties[this.options.timeField.end])
+          });
+        }
+        this._startTimeIndex.bulkAdd(startTimeEntries);
+        this._endTimeIndex.bulkAdd(endTimeEntries);
       } else {
-        timeEntry.date = new Date(feature.properties[this.options.timeField]);
-      }
+        var timeEntries = [];
+        for (i = geojson.length - 1; i >= 0; i--) {
+          feature = geojson[i];
+          timeEntries.push( {
+            id: feature.id,
+            value: new Date(feature.properties[this.options.timeField])
+          });
+        }
 
-      return timeEntry;
+        this._timeIndex.bulkAdd(timeEntries);
+      }
     },
 
     _featureWithinTimeRange: function(feature){
-      if(!this.options.timeField || !this.options.from || !this.options.to){
+      if(!this.options.from || !this.options.to){
         return true;
       }
 
-      var from = this.options.from.valueOf();
-      var to = this.options.to.valueOf();
+      var from = +this.options.from.valueOf();
+      var to = +this.options.to.valueOf();
 
       if(typeof this.options.timeField === 'string'){
-        var date = feature.properties[this.options.timeField];
-        return (date > from) && (date < to);
+        var date = +feature.properties[this.options.timeField];
+        return (date >= from) && (date <= to);
       }
 
-      if(this.options.timeField.from &&  this.options.timeField.to){
-        var startDate = feature.properties[this.options.timeField.from];
-        var endDate = feature.properties[this.options.timeField.to];
-        return ((startDate > from) && (startDate < to)) || ((endDate > from) && (endDate < to));
+      if(this.options.timeField.start &&  this.options.timeField.end){
+        var startDate = +feature.properties[this.options.timeField.start];
+        var endDate = +feature.properties[this.options.timeField.end];
+        return ((startDate >= from) && (startDate <= to)) || ((endDate >= from) && (endDate <= to));
       }
     },
 
@@ -298,23 +320,24 @@
 
     addFeature: function(feature, callback, context){
       this._service.addFeature(feature, function(error, response){
-        //@ TODO
-      }, context);
+        this.refresh();
+        callback.call(context, error, response);
+      }, this);
       return this;
     },
 
     updateFeature: function(feature, callback, context){
-      this._service.updateFeature(feature, function(error, response){
-        //@ TODO
-      }, context);
-      return this;
+      return this._service.updateFeature(feature, function(error, response){
+        this.refresh();
+        callback.call(context, error, response);
+      }, this);
     },
 
-    removeFeature: function(id, callback, context){
-      this._service.removeFeature(id, function(error, response){
-        //@ TODO
-      }, context);
-      return this;
+    deleteFeature: function(id, callback, context){
+      return this._service.deleteFeature(id, function(error, response){
+        this.removeLayers([response.objectId]);
+        callback.call(context, error, response);
+      }, this);
     },
 
     // from https://github.com/Leaflet/Leaflet/blob/v0.7.2/src/layer/FeatureGroup.js
@@ -332,15 +355,11 @@
    * Temporal Binary Search Index
    */
 
-  function TemporalIndex(values) {
+  function BinarySearchIndex(values) {
     this.values = values || [];
   }
 
-  TemporalIndex.prototype._query = function(key, query){
-    if(Object.prototype.toString.call(query) === '[object Date]'){
-      query = query.valueOf();
-    }
-
+  BinarySearchIndex.prototype._query = function(query){
     var minIndex = 0;
     var maxIndex = this.values.length - 1;
     var currentIndex;
@@ -348,45 +367,48 @@
     var resultIndex;
 
     while (minIndex <= maxIndex) {
-      resultIndex = currentIndex = (minIndex + maxIndex) / 2 || 0;
+      resultIndex = currentIndex = (minIndex + maxIndex) / 2 | 0;
       currentElement = this.values[Math.round(currentIndex)];
-      if (currentElement[key] < query) {
+      if (+currentElement.value < +query) {
         minIndex = currentIndex + 1;
-      } else if (currentElement[key] > query) {
+      } else if (+currentElement.value > +query) {
         maxIndex = currentIndex - 1;
       } else {
         return currentIndex;
       }
     }
 
-    return Math.abs(maxIndex);
+    return ~maxIndex;
   };
 
-  TemporalIndex.prototype.query = function(key, query){
-    this.sortOn(key);
-    return this._query(key, query);
+  BinarySearchIndex.prototype.sort = function(){
+    this.values.sort(function(a, b) {
+      return +b.value - +a.value;
+    }).reverse();
+    this.dirty = false;
   };
 
-  TemporalIndex.prototype.sortOn = function(key){
-    if(this.lastKey !== key){
-      this.lastKey = key;
-      this.values.sort(function(a, b) {
-        return a[key] - b[key];
-      });
+  BinarySearchIndex.prototype.between = function(start, end){
+    if(this.dirty){
+      this.sort();
     }
-  };
 
-  TemporalIndex.prototype.between = function(start, end, key){
-    this.sortOn(key);
+    var startIndex = this._query(start);
+    var endIndex = this._query(end);
 
-    var startIndex = this._query(key, start);
-    var endIndex = this._query(key, end);
+    if(startIndex === 0 && endIndex === 0){
+      return [];
+    }
+
+    startIndex = Math.abs(startIndex);
+    endIndex = (endIndex < 0) ? Math.abs(endIndex): endIndex + 1;
 
     return this.values.slice(startIndex, endIndex);
   };
 
-  TemporalIndex.prototype.add = function(values){
-    this.values  = this.values.concat(values);
+  BinarySearchIndex.prototype.bulkAdd = function(items){
+    this.dirty = true;
+    this.values = this.values.concat(items);
   };
 
 }(L));

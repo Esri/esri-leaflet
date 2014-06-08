@@ -82,8 +82,6 @@ L.esri.Layers.FeatureLayer = L.esri.Layers.FeatureManager.extend({
           newLayer.bindPopup(this._popup(newLayer.feature, newLayer));
         }
 
-
-
         // add the layer if it is within the time bounds or our layer is not time enabled
         if(!this.options.timeField || (this.options.timeField && this._featureWithinTimeRange(geojson)) ){
           this._map.addLayer(newLayer);
@@ -97,7 +95,7 @@ L.esri.Layers.FeatureLayer = L.esri.Layers.FeatureManager.extend({
     var layers = this._cache[key];
     if(layers){
       for (var i = layers.length - 1; i >= 0; i--) {
-        var layer = layers[i];
+        var layer = this.getFeature(layers[i]);
         if(!this._map.hasLayer(layer)){
           this._map.addLayer(layer);
         }
@@ -110,7 +108,7 @@ L.esri.Layers.FeatureLayer = L.esri.Layers.FeatureManager.extend({
     var layers = this._cache[key];
     if(layers){
       for (var i = layers.length - 1; i >= 0; i--) {
-        var layer = layers[i];
+        var layer = this.getFeature(layers[i]);
         if(this._map.hasLayer(layer)){
           this._map.removeLayer(layer);
         }
@@ -150,7 +148,7 @@ L.esri.Layers.FeatureLayer = L.esri.Layers.FeatureManager.extend({
   },
 
   setStyle: function (style) {
-    this.eachLayer(function (layer) {
+    this.eachFeature(function (layer) {
       this._setLayerStyle(layer, style);
     }, this);
     return this;

@@ -37,7 +37,12 @@ module.exports = function(config) {
     ],
 
     // list of files to exclude
-    exclude: [],
+    exclude: [
+      // 'spec/Layers/FeatureLayer/FeatureManagerSpec.js',
+      // 'spec/Layers/FeatureLayer/FeatureLayerSpec.js',
+      // 'spec/Layers/ClusteredFeatureLayer/ClusteredFeatureLayerSpec.js',
+      // 'spec/Layers/HeatmapFeatureLayer/HeatmapFeatureLayerSpec.js',
+    ],
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor

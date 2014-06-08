@@ -16,24 +16,24 @@ L.esri.Services.FeatureLayer = L.esri.Services.Service.extend({
     return this.post('addFeatures', {
       features: [feature]
     }, function(error, response){
-      callback(error || response.addResults[0].error, response.addResults[0]);
+      callback.call(this, error || response.addResults[0].error, response.addResults[0]);
     }, context);
   },
 
   updateFeature: function(feature, callback, context) {
     feature = L.esri.Util.geojsonToArcGIS(feature, this.options.idAttribute);
-    this.post('updateFeatures', {
+    return this.post('updateFeatures', {
       features: [feature]
     }, function(error, response){
-      callback(error || response.updateResults[0].error, response.updateResults[0]);
+      callback.call(context, error || response.updateResults[0].error, response.updateResults[0]);
     }, context);
   },
 
   deleteFeature: function(id, callback, context) {
-    this.post('deleteFeatures', {
+    return this.post('deleteFeatures', {
       objectIds: id
     }, function(error, response){
-      callback(error || response.deleteResults[0].error, response.deleteResults[0]);
+      callback.call(context, error || response.deleteResults[0].error, response.deleteResults[0]);
     }, context);
   }
 
