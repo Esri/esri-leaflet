@@ -20,15 +20,15 @@ module.exports = function(grunt) {
         ],
         tasks: ['jshint'],
         options: {
-          spawn: false,
-        },
-      },
+          spawn: false
+        }
+      }
     },
     concurrent: {
       options: {
         logConcurrentOutput: true
       },
-      dev: ['connect', 'watch:scripts', 'karma:watch'],
+      dev: ['connect', 'watch:scripts', 'karma:watch']
     },
     concat: {
       options: {
@@ -43,10 +43,12 @@ module.exports = function(grunt) {
           'src/EsriLeaflet.js',
           'src/Util.js',
           'src/Request.js',
-          'src/Services/**/*.js',
+          'src/Services/Service.js',
+          'src/Services/FeatureLayer.js',
+          'src/Services/MapService.js',
           'src/Tasks/**/*.js',
-          'src/Layers/DynamicMapLayer',
-          'src/Layers/TiledMapLayer',
+          'src/Layers/DynamicMapLayer.js',
+          'src/Layers/TiledMapLayer.js',
           'src/Layers/FeatureLayer/FeatureGrid.js',
           'src/Layers/FeatureLayer/FeatureManager.js',
           'src/Layers/FeatureLayer/FeatureLayer.js'
