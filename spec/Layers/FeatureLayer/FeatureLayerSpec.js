@@ -20,30 +20,38 @@ describe('L.esri.Layers.FeatureLayer', function () {
 
   beforeEach(function(){
     layer = L.esri.featureLayer('http://services.arcgis.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0', {
-      timeField: 'time'
+      timeField: 'time',
+      pointToLayer: function(feature, latlng){
+        return L.circleMarker(latlng);
+      }
     }).addTo(map);
 
-    layer.createLayers([{
-      type: 'Feature',
-      id: 1,
-      geometry: {
-        type: 'Point',
-        coordinates: [-122, 45]
-      },
-      properties: {
-        time: new Date('January 1 2014').valueOf()
-      }
-    },{
+    layer.createLayers([({
+          type: 'Feature',
+          id: 1,
+          geometry: {
+            type: 'LineString',
+            coordinates: [[-122, 45], [-121, 40]]
+          },
+          properties: {
+            time: new Date('January 1 2014').valueOf()
+          }
+        }),{
       type: 'Feature',
       id: 2,
       geometry: {
-        type: 'Point',
-        coordinates: [-123, 46]
+        type: 'LineString',
+        coordinates: [[-123, 46], [-120, 45]]
       },
       properties: {
         time: new Date('Febuary 1 2014').valueOf()
       }
     }]);
+  });
+
+  it('should have an alias at L.esri.Layers.featureLayer', function(){
+    var layer = L.esri.Layers.featureLayer('http://services.arcgis.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0');
+    expect(layer).to.be.an.instanceof(L.esri.Layers.FeatureLayer);
   });
 
   it('should create features on a map', function(){
@@ -62,6 +70,24 @@ describe('L.esri.Layers.FeatureLayer', function () {
     layer.addLayers([1]);
     expect(map.hasLayer(layer.getFeature(1))).to.equal(true);
     expect(map.hasLayer(layer.getFeature(2))).to.equal(true);
+  });
+
+  it('should readd features back to a map', function(){
+    map.removeLayer(layer.getFeature(1));
+
+    layer.createLayers([{
+      type: 'Feature',
+      id: 1,
+      geometry: {
+        type: 'LineString',
+        coordinates: [[-122, 45], [-121, 40], [-121.5, 42.5]]
+      },
+      properties: {
+        time: new Date('January 1 2014').valueOf()
+      }
+    }]);
+    expect(map.hasLayer(layer.getFeature(1))).to.equal(true);
+    expect(layer.getFeature(1).getLatLngs().length).to.equal(3);
   });
 
   it('should not add features outside the time range', function(){
@@ -95,5 +121,94 @@ describe('L.esri.Layers.FeatureLayer', function () {
     map.removeLayer(layer);
 
     expect(map.hasLayer(layer)).to.equal(false);
+  });
+
+  it('should bind popups to existing features', function(){
+    layer.bindPopup(function(feature){
+      return 'ID: ' + feature.id;
+    });
+    expect(layer.getFeature(1)._popup.getContent()).to.equal('ID: 1');
+    expect(layer.getFeature(2)._popup.getContent()).to.equal('ID: 2');
+  });
+
+  it('should bind popups to new features', function(){
+    layer.bindPopup(function(feature){
+      return 'ID: ' + feature.id;
+    });
+
+    layer.createLayers([{
+      type: 'Feature',
+      id: 3,
+      geometry: {
+        type: 'Point',
+        coordinates: [-123, 46]
+      },
+      properties: {
+        time: new Date('Febuary 24 2014').valueOf()
+      }
+    }]);
+
+    expect(layer.getFeature(3)._popup.getContent()).to.equal('ID: 3');
+  });
+
+  it('should unbind popups on features', function(){
+    layer.bindPopup(function(feature){
+      return 'ID: ' + feature.id;
+    });
+    layer.unbindPopup();
+    expect(layer.getFeature(1)._popup).to.equal(null);
+    expect(layer.getFeature(2)._popup).to.equal(null);
+  });
+
+  it('should iterate over each feautre', function(){
+    var spy = sinon.spy();
+    layer.eachFeature(spy);
+    expect(spy).to.have.been.calledWith(layer.getFeature(1));
+    expect(spy).to.have.been.calledWith(layer.getFeature(2));
+  });
+
+  it('should change styles on features with an object', function(){
+    layer.setStyle({
+      fill: 'red'
+    });
+
+    expect(layer.getFeature(1).options.fill).to.equal('red');
+    expect(layer.getFeature(2).options.fill).to.equal('red');
+  });
+
+  it('should change styles on feautres with a function', function(){
+    layer.setStyle(function(){
+      return {
+        fill: 'red'
+      };
+    });
+
+    expect(layer.getFeature(1).options.fill).to.equal('red');
+    expect(layer.getFeature(2).options.fill).to.equal('red');
+  });
+
+  it('should add features to the map when their cell enters the view', function(){
+    layer._cache['1:1'] = [1];
+    map.removeLayer(layer.getFeature(1));
+    layer.cellEnter(null, L.point([1,1]));
+    expect(map.hasLayer(layer.getFeature(1))).to.equal(true);
+  });
+
+  it('should remove features to the map when their cell leaves the view', function(){
+    layer._cache['1:1'] = [1];
+    layer.cellLeave(null, L.point([1,1]));
+    expect(map.hasLayer(layer.getFeature(1))).to.equal(false);
+  });
+
+  it('should propagate events from individual features', function(){
+    var spy = sinon.spy();
+    layer.on('click', spy);
+
+    layer.getFeature(1).fire('click', {
+      foo: 'bar'
+    });
+
+    expect(spy.getCall(0).args[0].foo).to.equal('bar');
+    expect(spy.getCall(0).args[0].type).to.equal('click');
   });
 });

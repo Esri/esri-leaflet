@@ -65,7 +65,7 @@ L.esri.Layers.ClusteredFeatureLayer = L.esri.Layers.FeatureManager.extend({
         // newLayer.addEventParent(this);
 
         // bind a popup if we have one
-        if(this._popup){
+        if(this._popup && newLayer.bindPopup){
           newLayer.bindPopup(this._popup(newLayer.feature, newLayer));
         }
 
@@ -113,7 +113,7 @@ L.esri.Layers.ClusteredFeatureLayer = L.esri.Layers.FeatureManager.extend({
   },
 
   setStyle: function (style) {
-    this.eachLayer(function (layer) {
+    this.eachFeature(function (layer) {
       this._setLayerStyle(layer, style);
     }, this);
   },

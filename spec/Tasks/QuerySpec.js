@@ -25,20 +25,20 @@ describe('L.esri.Tasks.Query', function () {
   var sampleQueryResponse = {
     'objectIdFieldName': 'FID',
     'feilds': [{
-      name: 'stop_desc',
-      type: 'esriFieldTypeString',
-      alias: 'stop_desc',
-      sqlType: 'sqlTypeNVarchar',
-      length: 256,
-      domain: null,
-      defaultValue: null
+      'name': 'stop_desc',
+      'type': 'esriFieldTypeString',
+      'alias': 'stop_desc',
+      'sqlType': 'sqlTypeNVarchar',
+      'length': 256,
+      'domain': null,
+      'defaultValue': null
     },{
-      name: 'FID',
-      type: 'esriFieldTypeInteger',
-      alias: 'FID',
-      sqlType: 'sqlTypeInteger',
-      domain: null,
-      defaultValue: null
+      'name': 'FID',
+      'type': 'esriFieldTypeInteger',
+      'alias': 'FID',
+      'sqlType': 'sqlTypeInteger',
+      'domain': null,
+      'defaultValue': null
     }],
     'features': [
       {

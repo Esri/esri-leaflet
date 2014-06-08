@@ -20,7 +20,10 @@ describe('L.esri.Layers.ClusteredFeatureLayer', function () {
 
   beforeEach(function(){
     layer = L.esri.clusteredFeatureLayer('http://services.arcgis.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0', {
-      timeField: 'time'
+      timeField: 'time',
+      pointToLayer: function(feature, latlng){
+        return L.circleMarker(latlng);
+      }
     });
 
     layer.createLayers([{
@@ -53,6 +56,7 @@ describe('L.esri.Layers.ClusteredFeatureLayer', function () {
 
   it('should remove features on a cluster', function(){
     layer.removeLayers([1]);
+
     expect(layer.cluster.hasLayer(layer.getFeature(1))).to.equal(false);
     expect(layer.cluster.hasLayer(layer.getFeature(2))).to.equal(true);
   });
@@ -60,6 +64,7 @@ describe('L.esri.Layers.ClusteredFeatureLayer', function () {
   it('should add features back to a cluster', function(){
     layer.removeLayers([1]);
     layer.addLayers([1]);
+
     expect(layer.cluster.hasLayer(layer.getFeature(1))).to.equal(true);
     expect(layer.cluster.hasLayer(layer.getFeature(2))).to.equal(true);
   });
@@ -78,6 +83,7 @@ describe('L.esri.Layers.ClusteredFeatureLayer', function () {
         time: new Date('March 1 2014').valueOf()
       }
     }]);
+
     expect(layer.cluster.hasLayer(layer.getFeature(1))).to.equal(true);
     expect(layer.cluster.hasLayer(layer.getFeature(2))).to.equal(true);
     expect(layer.cluster.hasLayer(layer.getFeature(3))).to.equal(false);
@@ -97,4 +103,76 @@ describe('L.esri.Layers.ClusteredFeatureLayer', function () {
     expect(map.hasLayer(layer)).to.equal(false);
     expect(map.hasLayer(layer.cluster)).to.equal(false);
   });
+
+  it('should bind popups to existing features', function(){
+    layer.bindPopup(function(feature){
+      return 'ID: ' + feature.id;
+    });
+    expect(layer.getFeature(1)._popup.getContent()).to.equal('ID: 1');
+    expect(layer.getFeature(2)._popup.getContent()).to.equal('ID: 2');
+  });
+
+  it('should bind popups to new features', function(){
+    layer.bindPopup(function(feature){
+      return 'ID: ' + feature.id;
+    });
+
+    layer.createLayers([{
+      type: 'Feature',
+      id: 3,
+      geometry: {
+        type: 'Point',
+        coordinates: [-123, 46]
+      },
+      properties: {
+        time: new Date('Febuary 24 2014').valueOf()
+      }
+    }]);
+
+    expect(layer.getFeature(3)._popup.getContent()).to.equal('ID: 3');
+  });
+
+  it('should unbind popups on features', function(){
+    layer.bindPopup(function(feature){
+      return 'ID: ' + feature.id;
+    });
+    layer.unbindPopup();
+    expect(layer.getFeature(1)._popup).to.equal(null);
+    expect(layer.getFeature(2)._popup).to.equal(null);
+  });
+
+  it('should iterate over each feautre', function(){
+    var spy = sinon.spy();
+    layer.eachFeature(spy);
+    expect(spy).to.have.been.calledWith(layer.getFeature(1));
+    expect(spy).to.have.been.calledWith(layer.getFeature(2));
+  });
+
+  it('should iterate over each feautre', function(){
+    var spy = sinon.spy();
+    layer.eachFeature(spy);
+    expect(spy).to.have.been.calledWith(layer.getFeature(1));
+    expect(spy).to.have.been.calledWith(layer.getFeature(2));
+  });
+
+  it('should change styles on features with an object', function(){
+    layer.setStyle({
+      fill: 'red'
+    });
+
+    expect(layer.getFeature(1).options.fill).to.equal('red');
+    expect(layer.getFeature(2).options.fill).to.equal('red');
+  });
+
+  it('should change styles on feautres with a function', function(){
+    layer.setStyle(function(){
+      return {
+        fill: 'red'
+      };
+    });
+
+    expect(layer.getFeature(1).options.fill).to.equal('red');
+    expect(layer.getFeature(2).options.fill).to.equal('red');
+  });
+
 });
