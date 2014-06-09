@@ -11,7 +11,6 @@
           options: {
             minZoom: 1,
             maxZoom: 19,
-            hideLogo: false,
             subdomains: ['server', 'services'],
             attribution: 'Esri'
           }
@@ -22,7 +21,6 @@
           options: {
             minZoom: 1,
             maxZoom: 19,
-            hideLogo: false,
             subdomains: ['server', 'services'],
             attribution: 'Esri'
           }
@@ -33,7 +31,6 @@
           options: {
             minZoom: 1,
             maxZoom: 16,
-            hideLogo: false,
             subdomains: ['server', 'services'],
             attribution: 'Esri'
           }
@@ -44,7 +41,6 @@
             //pane: 'esri-label',
             minZoom: 1,
             maxZoom: 16,
-            hideLogo: false,
             subdomains: ['server', 'services']
           }
         },
@@ -53,7 +49,6 @@
           options: {
             minZoom: 1,
             maxZoom: 16,
-            hideLogo: false,
             subdomains: ['server', 'services'],
             attribution: 'Esri'
           }
@@ -63,7 +58,6 @@
           options: {
             minZoom: 1,
             maxZoom: 10,
-            hideLogo: false,
             subdomains: ['server', 'services'],
             attribution: 'Esri, DeLorme, HERE'
           }
@@ -74,7 +68,6 @@
             //pane: 'esri-label',
             minZoom: 1,
             maxZoom: 10,
-            hideLogo: false,
             subdomains: ['server', 'services']
           }
         },
@@ -83,7 +76,6 @@
           options: {
             minZoom: 1,
             maxZoom: 16,
-            hideLogo: false,
             subdomains: ['server', 'services'],
             attribution: 'Esri, NAVTEQ, DeLorme'
           }
@@ -94,7 +86,6 @@
             //pane: 'esri-label',
             minZoom: 1,
             maxZoom: 16,
-            hideLogo: false,
             subdomains: ['server', 'services']
           }
         },
@@ -103,7 +94,6 @@
           options: {
             minZoom: 1,
             maxZoom: 19,
-            hideLogo: false,
             subdomains: ['server', 'services'],
             attribution: 'Esri, DigitalGlobe, GeoEye, i-cubed, USDA, USGS, AEX, Getmapping, Aerogrid, IGN, IGP, swisstopo, and the GIS User Community'
           }
@@ -114,7 +104,6 @@
             //pane: 'esri-label',
             minZoom: 1,
             maxZoom: 19,
-            hideLogo: false,
             subdomains: ['server', 'services']
           }
         },
@@ -124,7 +113,6 @@
           options: {
             minZoom: 1,
             maxZoom: 19,
-            hideLogo: false,
             subdomains: ['server', 'services']
           }
         },
@@ -133,7 +121,6 @@
           options: {
             minZoom: 1,
             maxZoom: 13,
-            hideLogo: false,
             subdomains: ['server', 'services'],
             attribution: 'ESRI, NAVTEQ, DeLorme'
           }
@@ -144,7 +131,6 @@
           options: {
             minZoom: 1,
             maxZoom: 12,
-            hideLogo: false,
             subdomains: ['server', 'services']
           }
         },
@@ -153,7 +139,6 @@
           options: {
             minZoom: 1,
             maxZoom: 13,
-            hideLogo: false,
             subdomains: ['server', 'services'],
             attribution: 'Esri, USGS, NOAA'
           }
@@ -164,7 +149,6 @@
             //pane: 'esri-label',
             minZoom: 1,
             maxZoom: 13,
-            hideLogo: false,
             subdomains: ['server', 'services']
           }
         }
@@ -208,9 +192,9 @@
       map.off('moveend', this._updateMapAttribution, this);
     },
     getAttribution:function(){
-      var logo = (this.options.hideLogo) ?  '' : '<a href="https://developers.arcgis.com"><img src="http://js.arcgis.com/3.9/js/esri/images/map/logo-med.png" style="position:absolute; top:-38px; right:2px;"></a>';
+      var logo = '<a href="https://developers.arcgis.com"><img src="http://js.arcgis.com/3.9/js/esri/images/map/logo-med.png" style="position:absolute; top:-38px; right:2px;"></a>';
       var attribution = '<span class="esri-attributions" style="line-height:14px; vertical-align: -3px; text-overflow:ellipsis; white-space:nowrap; overflow:hidden; display:inline-block;">' + this.options.attribution + '</span>' + logo;
-      return (this.options.attribution) ?  attribution : false;
+      return attribution;
     },
     // _initPane: function(){
     //   if(!this._map.getPane(this.options.pane)){
@@ -220,7 +204,7 @@
     //   }
     // },
     _getAttributionData: function(url){
-      L.esri.RequestHandlers.get.JSONP(url, {}, function(error, attributions){
+      L.esri.get(url, {}, function(error, attributions){
         this._attributions = [];
         for (var c = 0; c < attributions.contributors.length; c++) {
           var contributor = attributions.contributors[c];
@@ -258,10 +242,13 @@
             newAttributions += (', ' + text);
           }
         }
-
+        newAttributions = newAttributions.substr(2);
         var attributionElement = this._map.attributionControl._container.querySelector('.esri-attributions');
-        attributionElement.innerHTML = newAttributions.substr(2);
+        attributionElement.innerHTML = newAttributions;
         attributionElement.style.maxWidth =  (this._map.getSize().x * 0.65) + 'px';
+        this.fire('attributionupdated', {
+          attribution: newAttributions
+        });
       }
     }
   });

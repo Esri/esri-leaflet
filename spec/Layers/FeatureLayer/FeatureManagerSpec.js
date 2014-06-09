@@ -735,7 +735,7 @@ describe('L.esri.Layers.FeatureManager', function () {
     }]);
   });
 
-  it('should propagating events from the service', function(){
+  it('should propagate events from the service', function(){
     server.respondWith('GET', 'http://services.arcgis.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?where=1%3D1&outSr=4326&outFields=*&geometry=%7B%22xmin%22%3A-122.6953125%2C%22ymin%22%3A45.521743896993634%2C%22xmax%22%3A-122.6513671875%2C%22ymax%22%3A45.55252525134013%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&f=json', JSON.stringify({
       fields: fields,
       features: [],
@@ -753,7 +753,7 @@ describe('L.esri.Layers.FeatureManager', function () {
 
     server.respond();
 
-    expect(requeststartSpy).to.have.been.called;
-    expect(requestendSpy).to.have.been.called;
+    expect(requeststartSpy.callCount).to.be.above(0);
+    expect(requestendSpy.callCount).to.be.above(0);
   });
 });
