@@ -33,7 +33,7 @@ module.exports = function(grunt) {
         }
       },
       'docs-js': {
-        files: ['site/source/ **/*.js'],
+        files: ['site/source/**/*.js'],
         tasks: ['copy:assemble'],
         options: {
           nospawn: true
@@ -228,6 +228,7 @@ module.exports = function(grunt) {
       assemble: {
         files: [
           { src: 'dist/esri-leaflet.js', dest: 'site/build/js/esri-leaflet.js'},
+          { src: 'dist/esri-leaflet-src.js', dest: 'site/build/js/esri-leaflet-src.js'},
           { src: 'site/source/js/script.js', dest: 'site/build/js/script.js'}
         ]
       }
