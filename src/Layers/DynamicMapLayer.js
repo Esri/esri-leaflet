@@ -1,231 +1,275 @@
 /* globals L */
 
-/*!
- * The MIT License (MIT)
- *
- * Copyright (c) 2013 Sanborn Map Company, Inc.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
+L.esri.Layers.DynamicMapLayer = L.Class.extend({
 
-L.esri.DynamicMapLayer = L.Class.extend({
-  includes: L.esri.Mixins.identifiableLayer,
+  includes: L.Mixin.Events,
 
   options: {
     opacity: 1,
-    position: 'front'
-  },
-
-  _defaultLayerParams: {
+    position: 'front',
+    updateInterval: 150,
+    layers: false,
+    layerDefs: false,
+    timeOptions: false,
     format: 'png24',
     transparent: true,
-    f: 'image',
-    bboxSR: 3875,
-    imageSR: 3875,
-    layers: '',
-    layerDefs: ''
+    f: 'image'
   },
 
   initialize: function (url, options) {
     this.url = L.esri.Util.cleanUrl(url);
-    this._layerParams = L.Util.extend({}, this._defaultLayerParams);
-
-    for (var opt in options) {
-      if (options.hasOwnProperty(opt) && this._defaultLayerParams.hasOwnProperty(opt)) {
-        this._layerParams[opt] = options[opt];
-      }
-    }
-
-    this._parseLayers();
-    this._parseLayerDefs();
-
+    this._service = new L.esri.Services.MapService(this.url, options);
+    this._service.on('authenticationrequired requeststart requestend requesterror requestsuccess', this._propagateEvent, this);
     L.Util.setOptions(this, options);
-
-    this._getMetadata();
-
-    if(!this._layerParams.transparent) {
-      this.options.opacity = 1;
-    }
   },
 
   onAdd: function (map) {
     this._map = map;
-    this._moveHandler = L.esri.Util.debounce(this._update, 150, this);
 
-    map.on("moveend", this._moveHandler, this);
+    this._update = L.Util.limitExecByInterval(this._update, this.options.updateInterval, this);
 
     if (map.options.crs && map.options.crs.code) {
-      var sr = map.options.crs.code.split(":")[1];
-      this._layerParams.bboxSR = sr;
-      this._layerParams.imageSR = sr;
+      var sr = map.options.crs.code.split(':')[1];
+      this.options.bboxSR = sr;
+      this.options.imageSR = sr;
     }
+
+    if(this._popup){
+      this._map.on('click', this._getPopupData, this);
+      this._map.on('dblclick', this._resetPopupState, this);
+    }
+
+    // @TODO remove at Leaflet 0.8
+    this._map.addEventListener(this.getEvents(), this);
 
     this._update();
   },
 
-  onRemove: function (map) {
-    if (this._currentImage) { this._map.removeLayer(this._currentImage); }
-    map.off("moveend", this._moveHandler, this);
+  onRemove: function () {
+    if (this._currentImage) {
+      this._map.removeLayer(this._currentImage);
+    }
+
+    if(this._popup){
+      this._map.off('click', this._getPopupData, this);
+      this._map.off('dblclick', this._resetPopupState, this);
+    }
+
+    // @TODO remove at Leaflet 0.8
+    this._map.removeEventListener(this.getEvents(), this);
   },
 
-  addTo: function (map) {
+  addTo: function(map){
     map.addLayer(this);
     return this;
   },
 
-  setOpacity: function(opacity){
-    this.options.opacity = opacity;
-    this._currentImage.setOpacity(opacity);
+  removeFrom: function(map){
+    map.removeLayer(this);
+    return this;
+  },
+
+  getEvents: function(){
+    var events = {
+      moveend: this._update
+    };
+
+    return events;
   },
 
   bringToFront: function(){
     this.options.position = 'front';
-    this._currentImage.bringToFront();
+    if(this._currentImage){
+      this._currentImage.bringToFront();
+    }
     return this;
   },
 
   bringToBack: function(){
     this.options.position = 'back';
-    this._currentImage.bringToBack();
+    if(this._currentImage){
+      this._currentImage.bringToBack();
+    }
     return this;
   },
 
-  _parseLayers: function () {
-    if (typeof this._layerParams.layers === 'undefined') {
-      delete this._layerParams.layerOption;
-      return;
+  bindPopup: function(fn, popupOptions){
+    this._shouldRenderPopup = false;
+    this._lastClick = false;
+    this._popup = L.popup(popupOptions);
+    this._popupFunction = fn;
+    if(this._map){
+      this._map.on('click', this._getPopupData, this);
+      this._map.on('dblclick', this._resetPopupState, this);
+    }
+    return this;
+  },
+
+  unbindPopup: function(){
+    if(this._map){
+      this._map.closePopup(this._popup);
+      this._map.off('click', this._getPopupData, this);
+      this._map.off('dblclick', this._resetPopupState, this);
+    }
+    this._popup = false;
+    return this;
+  },
+
+  getOpacity: function(){
+    return this.options.opacity;
+  },
+
+  setOpacity: function(opacity){
+    this.options.opacity = opacity;
+    this._currentImage.setOpacity(opacity);
+    return this;
+  },
+
+  getLayers: function(){
+    return this.options.layers;
+  },
+
+  setLayers: function(layers){
+    this.options.layers = layers;
+    this._update();
+    return this;
+  },
+
+  getLayerDefs: function(){
+    return this.options.layerDefs;
+  },
+
+  setLayerDefs: function(layerDefs){
+    this.options.layerDefs = layerDefs;
+    this._update();
+    return this;
+  },
+
+  getTimeOptions: function(){
+    return this.options.timeOptions;
+  },
+
+  setTimeOptions: function(timeOptions){
+    this.options.timeOptions = timeOptions;
+    this._update();
+    return this;
+  },
+
+  getTimeRange: function(){
+    return [this.options.from, this.options.to];
+  },
+
+  setTimeRange: function(from, to){
+    this.options.from = from;
+    this.options.to = to;
+    this._update();
+    return this;
+  },
+
+  metadata: function(callback, context){
+    this._service.metadata(callback, context);
+    return this;
+  },
+
+  identify: function(){
+    return this._service.identify();
+  },
+
+  authenticate: function(token){
+    this._service.authenticate(token);
+    return this;
+  },
+
+  _getPopupData: function(e){
+    var callback = L.Util.bind(function(error, featureCollection, response) {
+      setTimeout(L.Util.bind(function(){
+        this._renderPopup(e.latlng, error, featureCollection, response);
+      }, this), 300);
+    }, this);
+
+    var identifyRequest = this.identify().on(this._map).at(e.latlng);
+
+    if(this.options.layers){
+      identifyRequest.layers('visible:' + this.options.layers.join(','));
     }
 
-    var action = this._layerParams.layerOption || null,
-        layers = this._layerParams.layers || null,
-        verb = 'show',
-        verbs = ['show', 'hide', 'include', 'exclude'];
+    identifyRequest.run(callback);
 
-    delete this._layerParams.layerOption;
+    // set the flags to show the popup
+    this._shouldRenderPopup = true;
+    this._lastClick = e.latlng;
+  },
 
-    if (!action) {
-      if (layers instanceof Array) {
-        this._layerParams.layers = verb + ':' + layers.join(',');
-      } else if (typeof layers === 'string') {
-        var match = layers.match(':');
-
-        if (match) {
-          layers = layers.split(match[0]);
-          if (Number(layers[1].split(',')[0])) {
-            if (verbs.indexOf(layers[0]) !== -1) {
-              verb = layers[0];
-            }
-
-            layers = layers[1];
-          }
-        }
-        this._layerParams.layers = verb + ':' + layers;
+  _renderPopup: function(latlng, error, featureCollection, response){
+    if(this._shouldRenderPopup && this._lastClick.equals(latlng)){
+      //add the popup to the map where the mouse was clicked at
+      var content = this._popupFunction(error, featureCollection, response);
+      if (content) {
+        this._popup.setLatLng(latlng).setContent(content).openOn(this._map);
       }
-    } else {
-      if (verbs.indexOf(action) !== -1) {
-        verb = action;
-      }
-
-      this._layerParams.layers = verb + ':' + layers;
     }
   },
 
-  _parseLayerDefs: function () {
-    if (typeof this._layerParams.layerDefs === 'undefined') {
-      return;
-    }
-
-    var layerDefs = this._layerParams.layerDefs;
-
-    var defs = [];
-
-    if (layerDefs instanceof Array) {
-      var len = layerDefs.length;
-      for (var i = 0; i < len; i++) {
-        if (layerDefs[i]) {
-          defs.push(i + ':' + layerDefs[i]);
-        }
-      }
-    } else if (typeof layerDefs === 'object') {
-      for (var layer in layerDefs) {
-        if(layerDefs.hasOwnProperty(layer)){
-          defs.push(layer + ':' + layerDefs[layer]);
-        }
-      }
-    } else {
-      delete this._layerParams.layerDefs;
-      return;
-    }
-    this._layerParams.layerDefs = defs.join(';');
+  _resetPopupState: function(e){
+    this._shouldRenderPopup = false;
+    this._lastClick = e.latlng;
   },
 
-  _getImageUrl: function () {
+  _buildExportParams: function () {
     var bounds = this._map.getBounds();
     var size = this._map.getSize();
     var ne = this._map.options.crs.project(bounds._northEast);
     var sw = this._map.options.crs.project(bounds._southWest);
 
-    this._layerParams.bbox = [sw.x, sw.y, ne.x, ne.y].join(',');
-    this._layerParams.size = size.x + ',' + size.y;
+    var params = {
+      bbox: [sw.x, sw.y, ne.x, ne.y].join(','),
+      size: size.x + ',' + size.y,
+      dpi: 96,
+      format: this.options.format,
+      transparent: this.options.transparent,
+      bboxSR: this.options.bboxSR,
+      imageSR: this.options.imageSR
+    };
 
-    if(this.options.token) {
-      this._layerParams.token = this.options.token;
+    if(this.options.layers){
+      params.layers = 'show:' + this.options.layers.join(',');
     }
 
-    var url = this.url + 'export' + L.Util.getParamString(this._layerParams);
+    if(this.options.layerDefs){
+      params.layerDefs = JSON.stringify(this.options.layerDefs);
+    }
 
-    return url;
+    if(this.options.timeOptions){
+      params.timeOptions = JSON.stringify(this.options.timeOptions);
+    }
+
+    if(this.options.from && this.options.to){
+      params.time = this.options.from.valueOf() + ',' + this.options.to.valueOf();
+    }
+
+    if(this._service.options.token) {
+      params.token = this._service.options.token;
+    }
+
+    return params;
   },
 
-  _update: function (e) {
-    if(this._animatingZoom){
-      return;
-    }
-
-    if (this._map._panTransition && this._map._panTransition._inProgress) {
-      return;
-    }
-
-    var zoom = this._map.getZoom();
-
-    if (zoom > this.options.maxZoom || zoom < this.options.minZoom) {
-      return;
-    }
-
-    var bounds = this._map.getBounds();
-    bounds._southWest.wrap();
-    bounds._northEast.wrap();
-    var image = new L.ImageOverlay(this._getImageUrl(), bounds, {
+  _renderImage: function(url, bounds){
+    var image = new L.ImageOverlay(url, bounds, {
       opacity: 0
     }).addTo(this._map);
 
-    image.on('load', function(e){
+    image.once('load', function(e){
       var newImage = e.target;
       var oldImage = this._currentImage;
 
       if(newImage._bounds.equals(bounds)){
         this._currentImage = newImage;
 
-        if(this.options.position === "front"){
-          this._currentImage.bringToFront();
+        if(this.options.position === 'front'){
+          this.bringToFront();
         } else {
-          this._currentImage.bringToBack();
+          this.bringToBack();
         }
 
         this._currentImage.setOpacity(this.options.opacity);
@@ -236,18 +280,66 @@ L.esri.DynamicMapLayer = L.Class.extend({
       } else {
         this._map.removeLayer(newImage);
       }
-    }, this);
 
+      this.fire('load', {
+        bounds: bounds
+      });
+
+    }, this);
 
     this.fire('loading', {
       bounds: bounds
     });
+  },
+
+  _update: function () {
+    if(!this._map){
+      return;
+    }
+
+    var zoom = this._map.getZoom();
+    var bounds = this._map.getBounds();
+
+    if(this._animatingZoom){
+      return;
+    }
+
+    if (this._map._panTransition && this._map._panTransition._inProgress) {
+      return;
+    }
+
+    if (zoom > this.options.maxZoom || zoom < this.options.minZoom) {
+      return;
+    }
+    var params = this._buildExportParams();
+
+    if(this.options.f === 'json'){
+      this._service.get('export', params, function(error, response){
+        this._renderImage(response.href, bounds);
+      }, this);
+    } else {
+      params.f = 'image';
+      this._renderImage(this.url + 'export' + L.Util.getParamString(params), bounds);
+    }
+  },
+
+  // from https://github.com/Leaflet/Leaflet/blob/v0.7.2/src/layer/FeatureGroup.js
+  // @TODO remove at Leaflet 0.8
+  _propagateEvent: function (e) {
+    e = L.extend({
+      layer: e.target,
+      target: this
+    }, e);
+    this.fire(e.type, e);
   }
 });
 
-L.esri.DynamicMapLayer.include(L.Mixin.Events);
-L.esri.DynamicMapLayer.include(L.esri.Mixins.metadata);
+L.esri.DynamicMapLayer = L.esri.Layers.DynamicMapLayer;
 
-L.esri.dynamicMapLayer = function (url, options) {
-  return new L.esri.DynamicMapLayer(url, options);
+L.esri.Layers.dynamicMapLayer = function(key, options){
+  return new L.esri.Layers.DynamicMapLayer(key, options);
+};
+
+L.esri.dynamicMapLayer = function(key, options){
+  return new L.esri.Layers.DynamicMapLayer(key, options);
 };

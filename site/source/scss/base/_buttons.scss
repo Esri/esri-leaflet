@@ -5,14 +5,14 @@
   background-color: $green;
   color: $lighter-gray;
   border: none;
-  @include border-radius(3px);
+  // @include border-radius(3px);
   text-decoration: none;
-  font-family: $source;
+  font-family: $lato;
   font-size: 0.75em;
   font-weight: 300;
   cursor: pointer;
-  @include user-select(none);
-  @include transition(background-color 75ms linear, color 75ms linear);
+  // @include user-select(none);
+  // @include transition(background-color 75ms linear, color 75ms linear);
   &:hover, &:focus {
     background-color: lighten($green, 10%);
     color: $white;
