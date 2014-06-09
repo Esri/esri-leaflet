@@ -1,6 +1,6 @@
 {
   "name": "Esri-Leaflet",
-  "version": "0.0.1-beta.4",
+  "version": "0.0.1-beta.5",
   "description": "ArcGIS Plugins for Leaflet",
   "main": "src/esri-leaflet.js",
   "devDependencies": {
@@ -27,6 +27,10 @@
     "load-grunt-tasks": "~0.4.0",
     "grunt-contrib-sass": "^0.7.3",
     "grunt-contrib-copy": "^0.5.0"
+  },
+  "scripts": {
+    "start": "node -e \"require('grunt').tasks(['default']);\"",
+    "test": "node -e \"require('grunt').tasks(['test']);\""
   },
   "author": "Patrick Arlt <parlt@esri.com> (http://patrickarlt.com)",
   "contributors": [
