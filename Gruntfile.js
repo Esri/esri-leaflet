@@ -1,4 +1,5 @@
 module.exports = function(grunt) {
+  var browsers = grunt.option('browser') ? grunt.option('browser').split(',') : ['PhantomJS'];
 
   // Project configuration.
   grunt.initConfig({
@@ -8,8 +9,7 @@ module.exports = function(grunt) {
       all: {
         src: [
           'Gruntfile.js',
-          'src/**/*.js',
-          'spec/**/*.js'
+          'src/**/*.js'
         ]
       }
     },
@@ -52,7 +52,7 @@ module.exports = function(grunt) {
       options: {
         logConcurrentOutput: true
       },
-      dev: ['connect:server', 'watch:scripts', 'karma:watch']
+      dev: ['watch:scripts', 'karma:watch', 'docs']
     },
 
     concat: {
@@ -63,7 +63,7 @@ module.exports = function(grunt) {
         '*   Apache License' +
         '*/\n'
       },
-      core: {
+      complete: {
         src: [
           'src/EsriLeaflet.js',
           'src/Util.js',
@@ -79,6 +79,15 @@ module.exports = function(grunt) {
           'src/Layers/FeatureLayer/FeatureLayer.js'
         ],
         dest: 'dist/esri-leaflet-src.js'
+      },
+      core: {
+        src: [
+          'src/EsriLeaflet.js',
+          'src/Util.js',
+          'src/Request.js',
+          'src/Services/Service.js'
+        ],
+        dest: 'dist/esri-leaflet-core-src.js'
       },
       basemaps: {
         src: [
@@ -139,6 +148,9 @@ module.exports = function(grunt) {
           'dist/esri-leaflet.js': [
             'dist/esri-leaflet-src.js'
           ],
+          'dist/esri-leaflet-core.js': [
+            'dist/esri-leaflet-core-src.js'
+          ],
           'dist/extras/esri-basemaps.js': [
             'dist/extras/esri-basemaps-src.js'
           ],
@@ -159,16 +171,21 @@ module.exports = function(grunt) {
       options: {
         configFile: 'karma.conf.js'
       },
-      run: {},
+      run: {
+        reporters: ['mocha'],
+        browsers: browsers
+      },
       coverage: {
-        reporters: ['progress', 'coverage'],
+        reporters: ['mocha', 'coverage'],
+        browsers: browsers,
         preprocessors: {
           'src/**/*.js': 'coverage'
         }
       },
       watch: {
         singleRun: false,
-        autoWatch: true
+        autoWatch: true,
+        browsers: browsers
       }
     },
 

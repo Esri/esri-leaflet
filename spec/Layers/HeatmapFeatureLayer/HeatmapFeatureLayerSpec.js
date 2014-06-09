@@ -73,7 +73,7 @@ describe('L.esri.Layers.HeatmapFeatureLayer', function () {
       }
     }]);
 
-    expect(layer.heat._latlngs).to.deep.equal([L.latLng(45,-122), L.latLng(46,-123)]);
+    expect(layer.heat._latlngs).not.to.include(L.latLng( 47,-123));
   });
 
   it('should be able to add itself to a map', function(){
