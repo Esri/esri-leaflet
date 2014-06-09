@@ -72,6 +72,7 @@ module.exports = function(grunt) {
           'src/Services/FeatureLayer.js',
           'src/Services/MapService.js',
           'src/Tasks/**/*.js',
+          'src/Layers/BasemapLayer.js',
           'src/Layers/DynamicMapLayer.js',
           'src/Layers/TiledMapLayer.js',
           'src/Layers/FeatureLayer/FeatureGrid.js',
@@ -227,7 +228,7 @@ module.exports = function(grunt) {
       assemble: {
         files: [
           { src: 'dist/esri-leaflet.js', dest: 'site/build/js/esri-leaflet.js'},
-          { src: 'site/source/js/script.js', dest: 'site/build/js/script.js'},
+          { src: 'site/source/js/script.js', dest: 'site/build/js/script.js'}
         ]
       }
     },
