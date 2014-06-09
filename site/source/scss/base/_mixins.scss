@@ -1,0 +1,64 @@
+// RESPOND TO
+@mixin respond-to($type, $m: max-width) {
+  @if $type == handheld {
+    @media screen and (max-width: 767px) {
+      @content;
+    }
+  } @else if $type == webkit {
+    @media screen and (-webkit-min-device-pixel-ratio: 0) {
+      @content;
+    }
+  } @else if $type == nonhandheld {
+    @media screen and (min-width: 769px) {
+      @content;
+    }
+  } @else {
+    @media screen and ($m: $type) {
+      @content;
+    }
+  }
+}
+
+
+// SHOW HIDE
+@mixin show() {
+  visibility: visible;
+}
+@mixin hide() {
+  display: none !important;
+  visibility: hidden;
+}
+
+.show {
+  @include show();
+}
+
+.hide {
+  @include hide();
+}
+
+@media screen and (min-width: $tablet-mid) {
+  .phone-hide   {@include show();}
+  .tablet-hide  {@include show();}
+  .phone-show   {@include hide();}
+  .tablet-show  {@include hide();}
+  .tablet-only  {@include hide();}
+}
+
+// tablets
+@media screen and (max-width: $tablet-mid - 1) and (min-width: $phone) {
+  .phone-hide   {@include show();}
+  .tablet-hide  {@include hide();}
+  .phone-show   {@include hide();}
+  .tablet-show  {@include show();}
+  .tablet-only  {@include show();}
+}
+
+// mobile phones
+@media screen and (max-width: $phone - 1) {
+  .phone-hide   {@include hide();}
+  .tablet-hide  {@include hide();}
+  .phone-show   {@include show();}
+  .tablet-show  {@include show();}
+  .tablet-only  {@include hide();}
+}
