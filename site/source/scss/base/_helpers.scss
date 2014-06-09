@@ -1,0 +1,19 @@
+.right {
+  float: right;
+}
+
+.left {
+  float: left;
+}
+
+.show {
+  @include show();
+}
+
+.hide {
+  @include hide();
+}
+
+.clearfix {
+  @include clearfix();
+}
