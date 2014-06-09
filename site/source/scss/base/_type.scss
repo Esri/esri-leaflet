@@ -1,0 +1,89 @@
+// ┌───────────┐
+// │ TYPEFACES │
+// └───────────┘
+$lato: 'Lato', sans-serif;
+$vollkorn: 'Vollkorn', serif;
+
+// ┌─────────┐
+// │ L A T O │
+// └─────────┘
+%Lato {
+  font-family: $lato; font-weight: 400; font-style: normal; text-rendering: optimizeLegibility;
+  strong {@extend %LatoBold;}
+  em     {@extend %LatoItalic;}
+}
+
+%LatoItalic {
+  font-family: $lato; font-weight: 400; font-style: italic; text-rendering: optimizeLegibility;
+  strong {@extend %LatoBoldItalic;}
+}
+
+%LatoBold {
+  font-family: $lato; font-weight: 700; font-style: normal; text-rendering: optimizeLegibility;
+  strong {@extend %LatoBold;}
+  em     {@extend %LatoBoldItalic;}
+}
+
+%LatoBoldItalic {
+  font-family: $lato; font-weight: 700; font-style: italic; text-rendering: optimizeLegibility;
+  em, strong {@extend %LatoBold;}
+}
+
+// ┌─────────────────┐
+// │ V O L L K O R N │
+// └─────────────────┘
+%Vollkorn {
+  font-family: $vollkorn; font-weight: 400; font-style: normal; text-rendering: optimizeLegibility;
+  strong {@extend %VollkornBold;}
+  em     {@extend %VollkornItalic;}
+}
+
+%VollkornItalic {
+  font-family: $vollkorn; font-weight: 400; font-style: italic; text-rendering: optimizeLegibility;
+  strong {@extend %VollkornBoldItalic;}
+}
+
+%VollkornBold {
+  font-family: $vollkorn; font-weight: 700; font-style: normal; text-rendering: optimizeLegibility;
+  strong {@extend %VollkornBold;}
+  em     {@extend %VollkornBoldItalic;}
+}
+
+%VollkornBoldItalic {
+  font-family: $vollkorn; font-weight: 700; font-style: italic; text-rendering: optimizeLegibility;
+  em, strong {@extend %VollkornBold;}
+}
+
+
+// ┌─────────────┐
+// │ S O U R C E │
+// └─────────────┘
+%Source {
+  font-family: monospace; font-weight: 300; font-style: normal; text-rendering: optimizeLegibility;
+}
+
+// ┌─────────────────────────────┐
+// │ AUG. FOURTH: 16px @ 1:1.414 │
+// └─────────────────────────────┘
+$p90: 5.653rem;
+$p63: 3.998rem;
+$p45: 2.827rem;
+$p31: 1.999rem;
+$p22: 1.414rem;
+$p16: 1rem;
+$p11: 0.707rem;
+
+$baseline: 1.5rem;
+html  {font-size: $p16; @extend %Lato; line-height: 1*$baseline;}
+body  {color: $darker-gray}
+h1    {font-size: $p90; @extend %Vollkorn; color: $dark-gray;}
+h2    {font-size: $p63; @extend %Vollkorn; color: $dark-gray;}
+h3    {font-size: $p45; @extend %Vollkorn; color: $dark-gray;}
+h4    {font-size: $p31; @extend %Vollkorn; color: $dark-gray;}
+h5    {font-size: $p22; @extend %Vollkorn; color: $dark-gray;}
+small {font-size: $p11;}
+.large {font-size: $p22; line-height: 1.5*$baseline;}
+
+.center-text {
+  text-align: center
+}

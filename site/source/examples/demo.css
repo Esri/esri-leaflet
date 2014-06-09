@@ -5,6 +5,7 @@ html, body, #map {
   font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
   font-size: 16px;
 }
+
 .leaflet-popup-content-wrapper {
   -webkit-border-radius: 4px;
   border-radius: 4px;
