@@ -26,7 +26,7 @@ module.exports = function(grunt) {
         }
       },
       'docs-sass': {
-        files: ['site/source/**/*.scss'],
+        files: ['site/source/scss/**/*.scss'],
         tasks: ['sass'],
         options: {
           nospawn: true
