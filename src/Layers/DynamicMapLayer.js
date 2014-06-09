@@ -12,7 +12,8 @@ L.esri.Layers.DynamicMapLayer = L.Class.extend({
     layerDefs: false,
     timeOptions: false,
     format: 'png24',
-    transparent: true
+    transparent: true,
+    f: 'image'
   },
 
   initialize: function (url, options) {
@@ -78,13 +79,17 @@ L.esri.Layers.DynamicMapLayer = L.Class.extend({
 
   bringToFront: function(){
     this.options.position = 'front';
-    this._currentImage.bringToFront();
+    if(this._currentImage){
+      this._currentImage.bringToFront();
+    }
     return this;
   },
 
   bringToBack: function(){
     this.options.position = 'back';
-    this._currentImage.bringToBack();
+    if(this._currentImage){
+      this._currentImage.bringToBack();
+    }
     return this;
   },
 
@@ -93,15 +98,19 @@ L.esri.Layers.DynamicMapLayer = L.Class.extend({
     this._lastClick = false;
     this._popup = L.popup(popupOptions);
     this._popupFunction = fn;
-    this._map.on('click', this._getPopupData, this);
-    this._map.on('dblclick', this._resetPopupState, this);
+    if(this._map){
+      this._map.on('click', this._getPopupData, this);
+      this._map.on('dblclick', this._resetPopupState, this);
+    }
     return this;
   },
 
   unbindPopup: function(){
-    this._map.closePopup(this._popup);
-    this._map.off('click', this._getPopupData, this);
-    this._map.off('dblclick', this._resetPopupState, this);
+    if(this._map){
+      this._map.closePopup(this._popup);
+      this._map.off('click', this._getPopupData, this);
+      this._map.off('dblclick', this._resetPopupState, this);
+    }
     this._popup = false;
     return this;
   },
@@ -172,13 +181,13 @@ L.esri.Layers.DynamicMapLayer = L.Class.extend({
   },
 
   _getPopupData: function(e){
-    var callback = L.Util.bind(function(error, response) {
+    var callback = L.Util.bind(function(error, featureCollection, response) {
       setTimeout(L.Util.bind(function(){
-        this._renderPopup(e.latlng, error, response);
+        this._renderPopup(e.latlng, error, featureCollection, response);
       }, this), 300);
     }, this);
 
-    var identifyRequest = this.identify().at(e.latlng, this._map, 3);
+    var identifyRequest = this.identify().on(this._map).at(e.latlng);
 
     if(this.options.layers){
       identifyRequest.layers('visible:' + this.options.layers.join(','));
@@ -191,10 +200,10 @@ L.esri.Layers.DynamicMapLayer = L.Class.extend({
     this._lastClick = e.latlng;
   },
 
-  _renderPopup: function(latlng, error, response){
+  _renderPopup: function(latlng, error, featureCollection, response){
     if(this._shouldRenderPopup && this._lastClick.equals(latlng)){
       //add the popup to the map where the mouse was clicked at
-      var content = this._popupFunction(error, response);
+      var content = this._popupFunction(error, featureCollection, response);
       if (content) {
         this._popup.setLatLng(latlng).setContent(content).openOn(this._map);
       }
@@ -211,6 +220,7 @@ L.esri.Layers.DynamicMapLayer = L.Class.extend({
     var size = this._map.getSize();
     var ne = this._map.options.crs.project(bounds._northEast);
     var sw = this._map.options.crs.project(bounds._southWest);
+
     var params = {
       bbox: [sw.x, sw.y, ne.x, ne.y].join(','),
       size: size.x + ',' + size.y,
@@ -237,8 +247,8 @@ L.esri.Layers.DynamicMapLayer = L.Class.extend({
       params.time = this.options.from.valueOf() + ',' + this.options.to.valueOf();
     }
 
-    if(this.options.token) {
-      params.token = this.options.token;
+    if(this._service.options.token) {
+      params.token = this._service.options.token;
     }
 
     return params;
@@ -257,9 +267,9 @@ L.esri.Layers.DynamicMapLayer = L.Class.extend({
         this._currentImage = newImage;
 
         if(this.options.position === 'front'){
-          this._currentImage.bringToFront();
+          this.bringToFront();
         } else {
-          this._currentImage.bringToBack();
+          this.bringToBack();
         }
 
         this._currentImage.setOpacity(this.options.opacity);
@@ -283,6 +293,10 @@ L.esri.Layers.DynamicMapLayer = L.Class.extend({
   },
 
   _update: function () {
+    if(!this._map){
+      return;
+    }
+
     var zoom = this._map.getZoom();
     var bounds = this._map.getBounds();
 
@@ -297,10 +311,16 @@ L.esri.Layers.DynamicMapLayer = L.Class.extend({
     if (zoom > this.options.maxZoom || zoom < this.options.minZoom) {
       return;
     }
+    var params = this._buildExportParams();
 
-    this._service.get('export', this._buildExportParams(), function(error, response){
-      this._renderImage(response.href, bounds);
-    }, this);
+    if(this.options.f === 'json'){
+      this._service.get('export', params, function(error, response){
+        this._renderImage(response.href, bounds);
+      }, this);
+    } else {
+      params.f = 'image';
+      this._renderImage(this.url + 'export' + L.Util.getParamString(params), bounds);
+    }
   },
 
   // from https://github.com/Leaflet/Leaflet/blob/v0.7.2/src/layer/FeatureGroup.js

@@ -11,10 +11,8 @@ L.esri.Layers.TiledMapLayer = L.TileLayer.extend({
     this._service.on('authenticationrequired requeststart requestend requesterror requestsuccess', this._propagateEvent, this);
 
     //if this is looking at the AGO tiles subdomain insert the subdomain placeholder
-    this.tileUrl.match('://services[0-9]?.arcgis.com');
-
-    if(this.tileUrl.match('://tiles.arcgis.com')){
-      this.tileUrl = this.tileUrl.replace('://tiles.arcgis.com', '://tiles{s}.arcgis.com');
+    if(this.tileUrl.match('://tiles.arcgisonline.com')){
+      this.tileUrl = this.tileUrl.replace('://tiles.arcgisonline.com', '://tiles{s}.arcgisonline.com');
       options.subdomains = ['1', '2', '3', '4'];
     }
 
@@ -49,10 +47,10 @@ L.esri.Layers.TiledMapLayer = L.TileLayer.extend({
 
 L.esri.TiledMapLayer = L.esri.Layers.tiledMapLayer;
 
-L.esri.Layers.tiledMapLayer = function(key, options){
-  return new L.esri.Layers.TiledMapLayer(key, options);
+L.esri.Layers.tiledMapLayer = function(url, options){
+  return new L.esri.Layers.TiledMapLayer(url, options);
 };
 
-L.esri.tiledMapLayer = function(key, options){
-  return new L.esri.Layers.TiledMapLayer(key, options);
+L.esri.tiledMapLayer = function(url, options){
+  return new L.esri.Layers.TiledMapLayer(url, options);
 };

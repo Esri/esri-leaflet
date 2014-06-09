@@ -15,10 +15,12 @@ describe('L.esri.TiledMapLayer', function () {
         var tiledLayer = L.esri.tiledMapLayer(url);
         expect(tiledLayer.url).to.contain(url);
       });
+
       it('will assign a tile scheme to the url', function () {
         var tiledLayer = L.esri.tiledMapLayer(url);
         expect(tiledLayer.tileUrl).to.contain('tile/{z}/{y}/{x}');
       });
+
       it('will modify url for tiles.arcgis.com services', function () {
         var tiledLayer = L.esri.tiledMapLayer('http://tiles.arcgis.com/ArcGIS/rest/services/Demographics');
         expect(tiledLayer.tileUrl).to.contain('://tiles{s}.arcgis.com');
