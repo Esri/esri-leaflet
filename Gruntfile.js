@@ -3,6 +3,7 @@ module.exports = function(grunt) {
   // Project configuration.
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
+
     jshint: {
       all: {
         src: [
@@ -12,6 +13,7 @@ module.exports = function(grunt) {
         ]
       }
     },
+
     watch: {
       scripts: {
         files: [
@@ -22,14 +24,37 @@ module.exports = function(grunt) {
         options: {
           spawn: false
         }
+      },
+      'docs-sass': {
+        files: ['site/source/**/*.scss'],
+        tasks: ['sass'],
+        options: {
+          nospawn: true
+        }
+      },
+      'docs-js': {
+        files: ['site/source/ **/*.js'],
+        tasks: ['copy:assemble'],
+        options: {
+          nospawn: true
+        }
+      },
+      'docs-assemble': {
+        files: ['site/source/**/*.md', 'site/source/**/*.hbs'],
+        tasks: ['assemble'],
+        options: {
+          nospawn: true
+        }
       }
     },
+
     concurrent: {
       options: {
         logConcurrentOutput: true
       },
-      dev: ['connect', 'watch:scripts', 'karma:watch']
+      dev: ['connect:server', 'watch:scripts', 'karma:watch']
     },
+
     concat: {
       options: {
         separator: '\n',
@@ -99,6 +124,7 @@ module.exports = function(grunt) {
         dest: 'dist/extras/heatmap-feature-layer-src.js'
       }
     },
+
     uglify: {
       options: {
         wrap: false,
@@ -128,6 +154,7 @@ module.exports = function(grunt) {
         }
       }
     },
+
     karma: {
       options: {
         configFile: 'karma.conf.js'
@@ -144,6 +171,7 @@ module.exports = function(grunt) {
         autoWatch: true
       }
     },
+
     connect: {
       server: {
         options: {
@@ -151,8 +179,50 @@ module.exports = function(grunt) {
           base: '.',
           keepalive: true
         }
+      },
+      docs: {
+        options: {
+          port: 8001,
+          hostname: '0.0.0.0',
+          base: './site/build/'
+        }
       }
     },
+
+    assemble: {
+      options: {
+        layout: 'layout.hbs',
+        assets: 'site/build/',
+        layoutdir: 'site/source/layouts/',
+        partials: 'site/source/partials/**/*.hbs'
+      },
+      posts: {
+        files: [{
+          cwd: 'site/source/pages',
+          dest: 'site/build',
+          expand: true,
+          src: ['**/*.hbs', '**/*.md']
+        }]
+      }
+    },
+
+    copy: {
+      assemble: {
+        files: [
+          { src: 'dist/esri-leaflet.js', dest: 'site/build/js/esri-leaflet.js'},
+          { src: 'site/source/js/script.js', dest: 'site/build/js/script.js'},
+        ]
+      }
+    },
+
+    sass: {
+      site: {
+        files: {
+          'site/build/css/style.css': 'site/source/scss/style.scss'
+        }
+      }
+    },
+
     'gh-pages': {
       options: {
         base: 'examples',
@@ -162,18 +232,18 @@ module.exports = function(grunt) {
     }
   });
 
+  // Development Tasks
   grunt.registerTask('default', ['concurrent:dev']);
   grunt.registerTask('build', ['jshint', 'karma:coverage','concat', 'uglify']);
   grunt.registerTask('test', ['karma:run']);
 
-  grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-contrib-concat');
-  grunt.loadNpmTasks('grunt-contrib-connect');
-  grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-concurrent');
-  grunt.loadNpmTasks('grunt-karma');
-  grunt.loadNpmTasks('grunt-gh-pages');
+  // Documentation Site Tasks
+  grunt.registerTask('docs', ['assemble', 'sass', 'copy', 'connect:docs', 'watch']);
+
+  // Documentation Site Tasks
+  grunt.registerTask('docs:build', ['assemble', 'sass', 'gh-pages']);
+
+  // Require all grunt modules
+  require('load-grunt-tasks')(grunt, {pattern: ['grunt-*', 'assemble']});
 
 };
