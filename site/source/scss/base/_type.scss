@@ -1,0 +1,85 @@
+// ┌───────────┐
+// │ TYPEFACES │
+// └───────────┘
+$lato: 'Lato', sans-serif;
+$vollkorn: 'Vollkorn', serif;
+
+// <link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+// ┌─────────┐
+// │ L A T O │
+// └─────────┘
+%Lato {
+  font-family: $lato; font-weight: 400; font-style: normal;
+  strong {@extend %LatoBold;}
+  em     {@extend %LatoItalic;}
+}
+
+%LatoItalic {
+  font-family: $lato; font-weight: 400; font-style: italic;
+  strong {@extend %LatoBoldItalic;}
+}
+
+%LatoBold {
+  font-family: $lato; font-weight: 700; font-style: normal;
+  strong {@extend %LatoBold;}
+  em     {@extend %LatoBoldItalic;}
+}
+
+%LatoBoldItalic {
+  font-family: $lato; font-weight: 700; font-style: italic;
+  em, strong {@extend %LatoBold;}
+}
+
+// <link href='http://fonts.googleapis.com/css?family=Vollkorn:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
+// ┌─────────────────┐
+// │ V O L L K O R N │
+// └─────────────────┘
+%Vollkorn {
+  font-family: $vollkorn; font-weight: 400; font-style: normal;
+  strong {@extend %VollkornBold;}
+  em     {@extend %VollkornItalic;}
+}
+
+%VollkornItalic {
+  font-family: $vollkorn; font-weight: 400; font-style: italic;
+  strong {@extend %VollkornBoldItalic;}
+}
+
+%VollkornBold {
+  font-family: $vollkorn; font-weight: 700; font-style: normal;
+  strong {@extend %VollkornBold;}
+  em     {@extend %VollkornBoldItalic;}
+}
+
+%VollkornBoldItalic {
+  font-family: $vollkorn; font-weight: 700; font-style: italic;
+  em, strong {@extend %VollkornBold;}
+}
+
+
+//  <link rel="stylesheet" href="//brick.a.ssl.fastly.net/Source+Code+Pro:300">
+// ┌─────────────┐
+// │ S O U R C E │
+// └─────────────┘
+%Source {
+  font-family: $code; font-weight: 300; font-style: normal;
+}
+
+// ┌─────────────────────────────┐
+// │ AUG. FOURTH: 16px @ 1:1.414 │
+// └─────────────────────────────┘
+$90p: 5.653rem;
+$63p: 3.998rem;
+$45p: 2.827rem;
+$31p: 1.999rem;
+$22p: 1.414rem;
+$16p: 1rem;
+$11p: 0.707rem;
+
+html  {font-size: $16p;}
+h1    {font-size: $90p;}
+h2    {font-size: $63p;}
+h3    {font-size: $45p;}
+h4    {font-size: $31p;}
+h5    {font-size: $22p;}
+small {font-size: $11p;}
