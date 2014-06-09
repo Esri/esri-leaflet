@@ -525,232 +525,116 @@ L.esri = {
   L.esri.post = L.esri.Request.post.XMLHTTP;
 
 })(L);
-L.esri.Services.MapService = L.esri.Services.Service.extend({
+L.esri.Services.Service = L.Class.extend({
 
-  identify: function () {
-    return new L.esri.Tasks.Identify(this);
+  includes: L.Mixin.Events,
+
+  options: {
+    proxy: false,
+    useCors: true
+  },
+
+  initialize: function (url, options) {
+    this.url = L.esri.Util.cleanUrl(url);
+    this._requestQueue = [];
+    this._authenticating = false;
+    options =  L.Util.setOptions(this, options);
+  },
+
+  get: function (path, params, callback, context) {
+    return this._request('get', path, params, callback, context);
+  },
+
+  post: function (path, params, callback, context) {
+    return this._request('post', path, params, callback, context);
+  },
+
+  metadata: function (callback, context) {
+    return this._request('get', '', {}, callback, context);
+  },
+
+  authenticate: function(token){
+    this._authenticating = false;
+    this.options.token = token;
+    this._runQueue();
+    return this;
+  },
+
+  _request: function(method, path, params, callback, context){
+    this.fire('requeststart', {
+      url: this.url + path,
+      params: params
+    });
+
+    var wrappedCallback = this._createServiceCallback(method, path, params, callback, context);
+
+    if (this.options.token) {
+      params.token = this.options.token;
+    }
+
+    if (this._authenticating) {
+      this._requestQueue.push([method, path, params, callback, context]);
+    } else {
+      var url = (this.options.proxy) ? this.options.proxy + '?' + this.url + path : this.url + path;
+
+      if(method === 'get' && !this.options.useCors){
+        return L.esri.Request.get.JSONP(url, params, wrappedCallback);
+      } else {
+        return L.esri[method](url, params, wrappedCallback);
+      }
+    }
+  },
+
+  _createServiceCallback: function(method, path, params, callback, context){
+    var request = [method, path, params, callback, context];
+
+    return L.Util.bind(function(error, response){
+
+      if (error && (error.code === 499 || error.code === 498)) {
+        this._authenticating = true;
+
+        this._requestQueue.push(request);
+
+        this.fire('authenticationrequired', {
+          authenticate: L.Util.bind(this.authenticate, this)
+        });
+      } else {
+        callback.call(context, error, response);
+
+        if(error) {
+          this.fire('requesterror', {
+            url: this.url + path,
+            params: params,
+            message: error.message,
+            code: error.code
+          });
+        } else {
+          this.fire('requestsuccess', {
+            url: this.url + path,
+            params: params,
+            response: response
+          });
+        }
+
+        this.fire('requestend', {
+          url: this.url + path,
+          params: params
+        });
+      }
+    }, this);
+  },
+
+  _runQueue: function(){
+    for (var i = this._requestQueue.length - 1; i >= 0; i--) {
+      var request = this._requestQueue[i];
+      var method = request.shift();
+      this[method].apply(this, request);
+    }
+    this._requestQueue = [];
   }
 
 });
 
-L.esri.Services.mapService = function(url, params){
-  return new L.esri.Services.MapService(url, params);
-};
-L.esri.Tasks.Identify = L.Class.extend({
-
-  initialize: function(service){
-    if(service.url && service.get){
-      this._service = service;
-      this.url = service.url;
-    } else {
-      this.url = L.esri.Util.cleanUrl(service);
-    }
-
-    this._params = {
-      sr: 4326,
-      layers: 'all',
-      tolerance: 3
-    };
-  },
-  on: function(map){
-    var extent = L.esri.Util.boundsToExtent(map.getBounds());
-    var size = map.getSize();
-    this._params.imageDisplay = [size.x, size.y, 96].join(',');
-    this._params.mapExtent=([extent.xmin, extent.ymin, extent.xmax, extent.ymax]).join(',');
-    return this;
-  },
-
-  at: function(latlng){
-    this._params.geometry = ([latlng.lng, latlng.lat]).join(',');
-    this._params.geometryType = 'esriGeometryPoint';
-    return this;
-  },
-
-  layerDef: function (id, where){
-    this._params.layerDefs = (this._params.layerDefs) ? this._params.layerDefs + ';' : '';
-    this._params.layerDefs += ([id, where]).join(':');
-    return this;
-  },
-
-  between: function(start, end){
-    this._params.time = ([start.valueOf(), end.valueOf()]).join(',');
-    return this;
-  },
-
-  layers: function (string){
-    this._params.layers = string;
-    return this;
-  },
-
-  precision: function(num){
-    this._params.geometryPrecision = num;
-    return this;
-  },
-
-  simplify: function(map, factor){
-    var mapWidth = Math.abs(map.getBounds().getWest() - map.getBounds().getEast());
-    this._params.maxAllowableOffset = (mapWidth / map.getSize().y) * (1 - factor);
-    return this;
-  },
-
-  token: function(token){
-    this._params.token = token;
-    return this;
-  },
-
-  tolerance: function(tolerance){
-    this._params.tolerance = tolerance;
-    return this;
-  },
-
-  run: function (callback, context){
-    this._request(function(error, response){
-      callback.call(context, error, (response && L.esri.Util.responseToFeatureCollection(response)), response);
-    }, context);
-  },
-
-  _request: function(callback, context){
-    if(this._service){
-      this._service.get('identify', this._params, callback, context);
-    } else {
-      L.esri.get(this.url + 'identify', this._params, callback, context);
-    }
-  }
-
-});
-
-L.esri.Tasks.identify = function(url, params){
-  return new L.esri.Tasks.Identify(url, params);
-};
-L.esri.Tasks.Query = L.Class.extend({
-
-  initialize: function(service){
-
-    if(service.url && service.get){
-      this._service = service;
-      this.url = service.url;
-    } else {
-      this.url = L.esri.Util.cleanUrl(service);
-    }
-
-    this._params = {
-      where: '1=1',
-      outSr: 4326,
-      outFields: '*'
-    };
-  },
-
-  within: function(bounds){
-    this._params.geometry = L.esri.Util.boundsToExtent(bounds);
-    this._params.geometryType = 'esriGeometryEnvelope';
-    this._params.spatialRel = 'esriSpatialRelIntersects';
-    return this;
-  },
-
-  nearby: function(latlng, radius){
-    this._params.geometry = ([latlng.lng,latlng.lat]).join(',');
-    this._params.geometryType = 'esriGeometryPoint';
-    this._params.spatialRel = 'esriSpatialRelIntersects';
-    this._params.units = 'esriSRUnit_Meter';
-    this._params.distance = radius;
-    this._params.inSr = 4326;
-    return this;
-  },
-
-  where: function(string){
-    this._params.where = string;
-    return this;
-  },
-
-  offset: function(offset){
-    this._params.offset = offset;
-    return this;
-  },
-
-  limit: function(limit){
-    this._params.limit = limit;
-    return this;
-  },
-
-  between: function(start, end){
-    this._params.time = ([start.valueOf(), end.valueOf()]).join();
-    return this;
-  },
-
-  fields: function(array){
-    this._params.outFields = array.join(',');
-    return this;
-  },
-
-  precision: function(num){
-    this._params.geometryPrecision = num;
-    return this;
-  },
-
-  simplify: function(map, factor){
-    var mapWidth = Math.abs(map.getBounds().getWest() - map.getBounds().getEast());
-    this._params.maxAllowableOffset = (mapWidth / map.getSize().y) * factor;
-    return this;
-  },
-
-  orderBy: function(fieldName, order){
-    order = order || 'ASC';
-    this._params.orderByFields = (this._params.orderByFields) ? this._params.orderByFields + ',' : '';
-    this._params.orderByFields += ([fieldName, order]).join(' ');
-    return this;
-  },
-
-  featureIds: function(ids){
-    this._params.objectIds = ids.join(',');
-    return this;
-  },
-
-  token: function(token){
-    this._params.token = token;
-    return this;
-  },
-
-  run: function(callback, context){
-    this._request(function(error, response){
-      callback.call(context, error, (response && L.esri.Util.responseToFeatureCollection(response)), response);
-    }, context);
-    return this;
-  },
-
-  count: function(callback, context){
-    this._params.returnCountOnly = true;
-    this._request(function(error, response){
-      callback.call(this, error, (response && response.count), response);
-    }, context);
-    return this;
-  },
-
-  ids: function(callback, context){
-    this._params.returnIdsOnly = true;
-    this._request(function(error, response){
-      callback.call(this, error, (response && response.objectIds), response);
-    }, context);
-    return this;
-  },
-
-  bounds: function(callback, context){
-    this._params.returnExtentOnly = true;
-    this._request(function(error, response){
-      callback.call(context, error, (response && L.esri.Util.extentToBounds(response.extent)), response);
-    }, context);
-    return this;
-  },
-
-  _request: function(callback, context){
-    if(this._service){
-      this._service.get('query', this._params, callback, context);
-    } else {
-      L.esri.get(this.url + 'query', this._params, callback, context);
-    }
-  }
-
-});
-
-L.esri.Tasks.query = function(url, params){
-  return new L.esri.Tasks.Query(url, params);
+L.esri.Services.service = function(url, params){
+  return new L.esri.Services.Service(url, params);
 };

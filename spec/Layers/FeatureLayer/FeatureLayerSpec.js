@@ -160,11 +160,10 @@ describe('L.esri.Layers.FeatureLayer', function () {
     expect(layer.getFeature(2)._popup).to.equal(null);
   });
 
-  it('should iterate over each feautre', function(){
+  it('should iterate over each feature', function(){
     var spy = sinon.spy();
     layer.eachFeature(spy);
-    expect(spy).to.have.been.calledWith(layer.getFeature(1));
-    expect(spy).to.have.been.calledWith(layer.getFeature(2));
+    expect(spy.callCount).to.equal(2);
   });
 
   it('should change styles on features with an object', function(){
