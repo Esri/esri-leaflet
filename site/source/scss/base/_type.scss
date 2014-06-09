@@ -1,0 +1,35 @@
+// ┌─────────────┐
+// │ O S W A L D │
+// └─────────────┘
+%OswaldLight {
+  font-family: $oswald; font-weight: 300; font-style: normal;
+  em, strong {@extend %Oswald}
+}
+
+%Oswald {
+  font-family: $oswald; font-weight: 400; font-style: normal;
+  em, strong {@extend %OswaldBold}
+}
+
+%OswaldBold {
+  font-family: $oswald; font-weight: 700; font-style: normal;
+  em, strong {@extend %OswaldBold}
+}
+
+// ┌─────────────┐
+// │ S O U R C E │
+// └─────────────┘
+%SourceThin {
+  font-family: $source; font-weight: 200; font-style: normal;
+  em, strong {@extend %Source}
+}
+
+%SourceLight {
+  font-family: $source; font-weight: 300; font-style: normal;
+  em, strong {@extend %Source}
+}
+
+%Source {
+  font-family: $source; font-weight: 400; font-style: normal;
+  em, strong {@extend %Source}
+}
