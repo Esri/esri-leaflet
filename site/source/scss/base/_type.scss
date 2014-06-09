@@ -82,8 +82,20 @@ h3    {font-size: $p45; @extend %Vollkorn; color: $dark-gray;}
 h4    {font-size: $p31; @extend %Vollkorn; color: $dark-gray;}
 h5    {font-size: $p22; @extend %Vollkorn; color: $dark-gray;}
 small {font-size: $p11;}
-.large {font-size: $p22; line-height: 1.5*$baseline;}
 
-.center-text {
-  text-align: center
+.large {font-size: $p22; line-height: 1.5*$baseline;}
+.center-text { text-align: center; }
+
+a {
+  color: $dark-green;
+  text-decoration: none;
+  padding-bottom: .25em;
+  border-bottom: 2px solid transparent;
+  @include user-select(none);
+  @include transition(all 100ms linear);
+  &:focus, &:hover {
+    @include user-select(none);
+    border-bottom: 2px solid $dark-green;
+    outline: none;
+  }
 }
