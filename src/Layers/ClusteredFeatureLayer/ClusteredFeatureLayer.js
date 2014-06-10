@@ -72,6 +72,10 @@ L.esri.Layers.ClusteredFeatureLayer = L.esri.Layers.FeatureManager.extend({
         // cache the layer
         this._layers[newLayer.feature.id] = newLayer;
 
+        if(this.options.onEachFeature){
+          this.options.onEachFeature(newLayer.feature, newLayer);
+        }
+
         // add the layer if it is within the time bounds or our layer is not time enabled
         if(!this.options.timeField || (this.options.timeField && this._featureWithinTimeRange(geojson)) ){
           markers.push(newLayer);

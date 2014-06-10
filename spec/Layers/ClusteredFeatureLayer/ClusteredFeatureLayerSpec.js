@@ -17,7 +17,27 @@ describe('L.esri.Layers.ClusteredFeatureLayer', function () {
 
   var layer;
   var map = createMap();
-
+  var features = [{
+    type: 'Feature',
+    id: 1,
+    geometry: {
+      type: 'Point',
+      coordinates: [-122, 45]
+    },
+    properties: {
+      time: new Date('January 1 2014').valueOf()
+    }
+  },{
+    type: 'Feature',
+    id: 2,
+    geometry: {
+      type: 'Point',
+      coordinates: [-123, 46]
+    },
+    properties: {
+      time: new Date('Febuary 1 2014').valueOf()
+    }
+  }];
   beforeEach(function(){
     layer = L.esri.clusteredFeatureLayer('http://services.arcgis.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0', {
       timeField: 'time',
@@ -26,27 +46,7 @@ describe('L.esri.Layers.ClusteredFeatureLayer', function () {
       }
     });
 
-    layer.createLayers([{
-      type: 'Feature',
-      id: 1,
-      geometry: {
-        type: 'Point',
-        coordinates: [-122, 45]
-      },
-      properties: {
-        time: new Date('January 1 2014').valueOf()
-      }
-    },{
-      type: 'Feature',
-      id: 2,
-      geometry: {
-        type: 'Point',
-        coordinates: [-123, 46]
-      },
-      properties: {
-        time: new Date('Febuary 1 2014').valueOf()
-      }
-    }]);
+    layer.createLayers(features);
   });
 
   it('should create features on a cluster', function(){
@@ -146,6 +146,15 @@ describe('L.esri.Layers.ClusteredFeatureLayer', function () {
     layer.eachFeature(spy);
     expect(spy).to.have.been.calledWith(layer.getFeature(1));
     expect(spy).to.have.been.calledWith(layer.getFeature(2));
+  });
+
+  it('should run a function against every feature', function(){
+    var spy = sinon.spy();
+    layer = L.esri.featureLayer('http://services.arcgis.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0', {
+      onEachFeature: spy
+    }).addTo(map);
+    layer.createLayers(features);
+    expect(spy.callCount).to.equal(2);
   });
 
   it('should iterate over each feautre', function(){
