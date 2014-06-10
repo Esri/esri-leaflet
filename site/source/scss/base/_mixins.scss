@@ -29,15 +29,15 @@
         transition: $value;
 }
 
-// Border-Box
-
-@mixin border-box($value) {
+// Box Sizing
+@mixin box-sizing($value) {
   -webkit-box-sizing: $value;
      -moz-box-sizing: $value;
           box-sizing: $value;
 }
 
-@mixin drop-shadow ($value) {
+// Box Shadow
+@mixin box-shadow ($value) {
   -webkit-box-shadow: $value;
      -moz-box-shadow: $value;
           box-shadow: $value;

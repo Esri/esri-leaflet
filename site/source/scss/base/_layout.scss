@@ -1,16 +1,52 @@
 .container {
+  @include box-sizing(border-box);
   max-width: $container-max;
   margin-right: auto;
   margin-left: auto;
+  position: relative;
+  z-index: 3;
   @include clearfix();
+  padding: 2em 0;
+  &.white {
+    padding: 0;
+    position: relative;
+    background-color: white;
+    @include box-shadow(0 0 4px 1px rgba(0, 0, 0, 0.15));
+  }
 }
 
 .site-nav {
+  display: inline-block;
   margin: 0 1em;
+  color: $white;
+  text-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.15);
+  &:hover {
+    border-color: $white;
+  }
   &:first-of-type {
     margin-left: 0;
   }
   &:last-of-type {
     margin-right: 0;
+  }
+}
+
+.background-map {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  .leaflet-map-pane {
+    opacity: .2;
+  }
+  &.leaflet-container {
+    background-color: $dark-green;
+  }
+  img {
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    filter: grayscale(100%);
   }
 }

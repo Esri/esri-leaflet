@@ -4,13 +4,9 @@
   padding: 1em;
   background-color: $green;
   color: $dark-gray;
-  //border: none;
-  // @include border-radius(3px);
   text-decoration: none;
   font-family: $lato;
   cursor: pointer;
-  // @include user-select(none);
-  // @include transition(background-color 75ms linear, color 75ms linear);
   &:hover, &:focus {
     background-color: lighten($green, 10%);
     color: $gray;

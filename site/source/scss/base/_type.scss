@@ -73,15 +73,17 @@ $p22: 1.414rem;
 $p16: 1rem;
 $p11: 0.707rem;
 
+
+
 $baseline: 1.5rem;
-html  {font-size: $p16; @extend %Lato; line-height: 1*$baseline;}
+html  {font-size: 1rem; @extend %Lato; line-height: 1*$baseline;}
 body  {color: $darker-gray}
-h1    {font-size: $p90; @extend %Vollkorn; color: $dark-gray;}
-h2    {font-size: $p63; @extend %Vollkorn; color: $dark-gray;}
-h3    {font-size: $p45; @extend %Vollkorn; color: $dark-gray;}
-h4    {font-size: $p31; @extend %Vollkorn; color: $dark-gray;}
-h5    {font-size: $p22; @extend %Vollkorn; color: $dark-gray;}
-small {font-size: $p11;}
+h1    {font-size: 2.50rem; @extend %Vollkorn; color: $dark-gray;}
+h2    {font-size: 2.25rem; @extend %Vollkorn; color: $dark-gray;}
+h3    {font-size: 2.00rem; @extend %Vollkorn; color: $dark-gray;}
+h4    {font-size: 1.75rem; @extend %Vollkorn; color: $dark-gray;}
+h5    {font-size: 1.50rem; @extend %Vollkorn; color: $dark-gray;}
+small {font-size: 0.75rem;}
 
 .large {font-size: $p22; line-height: 1.5*$baseline;}
 .center-text { text-align: center; }
