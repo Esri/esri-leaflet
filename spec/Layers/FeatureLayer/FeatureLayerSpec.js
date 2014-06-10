@@ -17,6 +17,27 @@ describe('L.esri.Layers.FeatureLayer', function () {
 
   var layer;
   var map = createMap();
+  var features = [({
+        type: 'Feature',
+        id: 1,
+        geometry: {
+          type: 'LineString',
+          coordinates: [[-122, 45], [-121, 40]]
+        },
+        properties: {
+          time: new Date('January 1 2014').valueOf()
+        }
+      }),{
+    type: 'Feature',
+    id: 2,
+    geometry: {
+      type: 'LineString',
+      coordinates: [[-123, 46], [-120, 45]]
+    },
+    properties: {
+      time: new Date('Febuary 1 2014').valueOf()
+    }
+  }];
 
   beforeEach(function(){
     layer = L.esri.featureLayer('http://services.arcgis.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0', {
@@ -26,27 +47,7 @@ describe('L.esri.Layers.FeatureLayer', function () {
       }
     }).addTo(map);
 
-    layer.createLayers([({
-          type: 'Feature',
-          id: 1,
-          geometry: {
-            type: 'LineString',
-            coordinates: [[-122, 45], [-121, 40]]
-          },
-          properties: {
-            time: new Date('January 1 2014').valueOf()
-          }
-        }),{
-      type: 'Feature',
-      id: 2,
-      geometry: {
-        type: 'LineString',
-        coordinates: [[-123, 46], [-120, 45]]
-      },
-      properties: {
-        time: new Date('Febuary 1 2014').valueOf()
-      }
-    }]);
+    layer.createLayers(features);
   });
 
   it('should have an alias at L.esri.Layers.featureLayer', function(){
@@ -163,6 +164,15 @@ describe('L.esri.Layers.FeatureLayer', function () {
   it('should iterate over each feature', function(){
     var spy = sinon.spy();
     layer.eachFeature(spy);
+    expect(spy.callCount).to.equal(2);
+  });
+
+  it('should run a function against every feature', function(){
+    var spy = sinon.spy();
+    layer = L.esri.featureLayer('http://services.arcgis.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0', {
+      onEachFeature: spy
+    }).addTo(map);
+    layer.createLayers(features);
     expect(spy.callCount).to.equal(2);
   });
 
