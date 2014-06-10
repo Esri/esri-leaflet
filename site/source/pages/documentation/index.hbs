@@ -1,7 +1,28 @@
 ---
 title: "Esri Leaflet Documentation"
 class: documentation
-layout: html.hbs
+layout: page.hbs
 ---
 
-<h1>Esri Leaflet API Reference</h1>
+{{>sidebar-documentation}}
+
+<div class="main-content">
+  <h1 class="trailer-0 leader-2">Esri Leaflet API Reference</h1>
+  <div class="doc-section">{{md 'site/source/documentation/API Reference/Events.md'}}</div>
+  <div class="doc-section">{{md 'site/source/documentation/API Reference/Request.md'}}</div>
+  <div class="doc-section">{{md 'site/source/documentation/API Reference/Utils.md'}}</div>
+  <h2 class="trailer-2">Layers</h2>
+  <div class="doc-section">{{md 'site/source/documentation/API Reference/Layers/BasemapLayer.md'}}</div>
+  <div class="doc-section">{{md 'site/source/documentation/API Reference/Layers/ClusteredFeatureLayer.md'}}</div>
+  <div class="doc-section">{{md 'site/source/documentation/API Reference/Layers/DynamicMapLayer.md'}}</div>
+  <div class="doc-section">{{md 'site/source/documentation/API Reference/Layers/FeatureLayer.md'}}</div>
+  <div class="doc-section">{{md 'site/source/documentation/API Reference/Layers/HeatmapFeatureLayer.md'}}</div>
+  <div class="doc-section">{{md 'site/source/documentation/API Reference/Layers/TiledMapLayer.md'}}</div>
+  <h4 class="trailer-2">Services</h4>
+  <div class="doc-section">{{md 'site/source/documentation/API Reference/Services/FeatureLayer.md'}}</div>
+  <div class="doc-section">{{md 'site/source/documentation/API Reference/Services/MapService.md'}}</div>
+  <div class="doc-section">{{md 'site/source/documentation/API Reference/Services/Service.md'}}</div>
+  <h4 class="trailer-2">Tasks</h4>
+  <div class="doc-section">{{md 'site/source/documentation/API Reference/Tasks/Identify.md'}}</div>
+  <div class="doc-section">{{md 'site/source/documentation/API Reference/Tasks/Query.md'}}</div>
+</div>
