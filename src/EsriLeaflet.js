@@ -244,7 +244,7 @@ L.esri.Mixins.identifiableLayer = {
     };
 
     if(this.options.layers) {
-      defaults.layers = this.options.layers;
+      defaults.layers = "visible:" + this.options.layers;
     }
 
     var params;
