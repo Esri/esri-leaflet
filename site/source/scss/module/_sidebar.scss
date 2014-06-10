@@ -1,0 +1,26 @@
+.sidebar {
+  @include box-sizing(border-box);
+  padding: 1rem;
+  background: $off-white;
+  border-right: 2px solid $lightest-gray;
+  position: absolute;
+  top:0;
+  right: 75%;
+  bottom: 0;
+  left: 0;
+  nav {
+    a {
+      display: block;
+      float: left;
+      clear: both;
+      padding: .15em 0;
+      margin-bottom: .25em;
+      @include clearfix();
+    }
+  }
+  h4 {
+    float: left;
+    clear: both;
+    margin: 2rem 0 1rem 0;
+  }
+}

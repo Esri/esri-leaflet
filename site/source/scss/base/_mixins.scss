@@ -1,4 +1,59 @@
-// RESPOND TO
+// Crust (A Tiny Sass Mixin Library)
+@mixin clearfix(){
+  &:before,
+  &:after {
+    content: " ";
+    display: table;
+  }
+  &:after {
+    clear: both;
+  }
+}
+
+// Show
+@mixin show() {
+  visibility: visible;
+}
+
+// Hide
+@mixin hide() {
+  display: none !important;
+  visibility: hidden;
+}
+
+// Transition
+@mixin transition($value) {
+-webkit-transition: $value;
+   -moz-transition: $value;
+     -o-transition: $value;
+        transition: $value;
+}
+
+// Box Sizing
+@mixin box-sizing($value) {
+  -webkit-box-sizing: $value;
+     -moz-box-sizing: $value;
+          box-sizing: $value;
+}
+
+// Box Shadow
+@mixin box-shadow ($value) {
+  -webkit-box-shadow: $value;
+     -moz-box-shadow: $value;
+          box-shadow: $value;
+}
+
+// User Select
+@mixin user-select($value) {
+  -webkit-touch-callout: $value;
+    -webkit-user-select: $value;
+     -khtml-user-select: $value;
+       -moz-user-select: $value;
+        -ms-user-select: $value;
+            user-select: $value;
+}
+
+// Respond To
 @mixin respond-to($type, $m: max-width) {
   @if $type == handheld {
     @media screen and (max-width: 767px) {
@@ -17,24 +72,6 @@
       @content;
     }
   }
-}
-
-
-// SHOW HIDE
-@mixin show() {
-  visibility: visible;
-}
-@mixin hide() {
-  display: none !important;
-  visibility: hidden;
-}
-
-.show {
-  @include show();
-}
-
-.hide {
-  @include hide();
 }
 
 @media screen and (min-width: $tablet-mid) {

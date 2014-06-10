@@ -1,0 +1,14 @@
+.main-content {
+  width: 75%;
+  float: left;
+  padding: 0 1rem;
+  margin-left: 25%;
+  @include box-sizing(border-box);
+}
+
+.doc-section {
+  margin-top: 5rem;
+  h1 {
+    padding-top: 3rem;
+  }
+}

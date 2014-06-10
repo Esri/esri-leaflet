@@ -1,0 +1,32 @@
+.right {
+  float: right;
+}
+
+.left {
+  float: left;
+}
+
+.show {
+  @include show();
+}
+
+.hide {
+  @include hide();
+}
+
+.clearfix {
+  @include clearfix();
+}
+
+.leader-5 { margin-top: 5 * $baseline;}
+.leader-4 { margin-top: 4 * $baseline;}
+.leader-3 { margin-top: 3 * $baseline;}
+.leader-2 { margin-top: 2 * $baseline;}
+.leader-1 { margin-top: 1 * $baseline;}
+.leader-0 { margin-top: 0 * $baseline;}
+.trailer-5 { margin-bottom: 5 * $baseline;}
+.trailer-4 { margin-bottom: 4 * $baseline;}
+.trailer-3 { margin-bottom: 3 * $baseline;}
+.trailer-2 { margin-bottom: 2 * $baseline;}
+.trailer-1 { margin-bottom: 1 * $baseline;}
+.trailer-0 { margin-bottom: 0 * $baseline;}
