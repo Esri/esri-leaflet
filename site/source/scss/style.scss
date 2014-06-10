@@ -14,8 +14,10 @@
 // │ M O D U L E S │
 // └───────────────┘
 @import 'module/modal';
+@import 'module/sidebar';
 
 // ┌───────────┐
 // │ P A G E S │
 // └───────────┘
 @import 'pages/index';
+@import 'pages/doc';
