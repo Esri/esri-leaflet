@@ -1,3 +1,7 @@
+---
+layout: documentation.hbs
+---
+
 # Request
 
 Generic methods for GET and POST requests to ArcGIS Online or ArcGIS Server resources.

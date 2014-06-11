@@ -1,3 +1,7 @@
+---
+layout: documentation.hbs
+---
+
 # FeatureLayer
 
 **Extends** `L.esri.Service`

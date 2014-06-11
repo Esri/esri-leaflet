@@ -1,3 +1,7 @@
+---
+layout: documentation.hbs
+---
+
 # DynamicMapLayer
 
 If you have a MapService you and use `L.esri.DynamicMapLayer(url, options)` to render it on a map.

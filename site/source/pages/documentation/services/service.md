@@ -1,3 +1,7 @@
+---
+layout: documentation.hbs
+---
+
 # Service
 
 `L.esri.Service`

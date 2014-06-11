@@ -1,3 +1,7 @@
+---
+layout: documentation.hbs
+---
+
 # TiledMapLayer
 
 **Extends** `L.TileLayer`

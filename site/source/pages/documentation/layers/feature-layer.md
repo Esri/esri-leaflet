@@ -1,14 +1,18 @@
-## ClusteredFeatureLayer
+---
+layout: documentation.hbs
+---
 
-`L.esri.ClusteredFeatureLayer` provides integration for Feature Layers with the [Leaflet.markercluster plugin](https://github.com/Leaflet/Leaflet.markercluster). Because of the extra Dependency on Leaflet.markercluster we do not include `L.esri.ClusteredFeatureLayer` in the default build of Esri Leaflet. It lives in /dist/extras/clustered-feature-layer.js. You will also need to include your own copy of the [Leaflet.markercluster plugin](https://github.com/Leaflet/Leaflet.markercluster).
+# FeatureLayer
+
+`L.esri.FeatureLayer` is used to visualize and query data hosted in ArcGIS Feature Layers. These layers are hosted as a part of Feature Services on either ArcGIS Online or ArcGIS Server.
 
 ### Constructor
 
 | Constructor | Description |
 | --- | --- |
-| `new L.esri.Layers.ClusteredFeatureLayer(url, options)`<br>`L.esri.Layers.clusteredFeatureLayer(url, options)` | `url` should be the URL of the feature layer to consume. See [service URLs](#service-urls) for more information on how to find these urls. |
+| `new L.esri.Layers.FeatureLayer(url, options)`<br>`L.esri.Layers.FeatureLayer(url, options)` | The `url` parameter is the url to the FeatureLayer you should like to display. See [service URLs](#service-urls) for more information on how to find these urls. |
 
-You can also initalize `L.esri.Layers.ClusteredFeatureLayer` with the aliases `new L.esri.ClusteredFeatureLayer(url, options)` and `L.esri.clusteredFeatureLayer(url, options)`.
+You can also initalize `L.esri.Layers.FeatureLayer` with the aliases `new L.esri.FeatureLayer(url, options)` and `L.esri.featureLayer(url, options)`.
 
 ### Options
 
@@ -34,11 +38,11 @@ You can also initalize `L.esri.Layers.ClusteredFeatureLayer` with the aliases `n
         <tr>
             <td><code>onEachFeature(&lt;GeoJSON&gt;<GeoJSON> featureData, &lt;iLayer&gt; layer)</code></td>
             <td><code>Function</code></td>
-            <td></td>
+            <td> </td>
         </tr>
         <tr>
             <td><code>where</code></td>
-            <td><code>String</code></td
+            <td><code>String</code></td>
             <td>A server side expression that will be evaluated to filter features. By default this will include all features in a service.</td>
         </tr>
         <tr>
@@ -84,19 +88,15 @@ You can also initalize `L.esri.Layers.ClusteredFeatureLayer` with the aliases `n
         <tr>
             <td><code>proxy</code></td>
             <td><code>String</code></td>
-            <td><code>false</code></td>
             <td>URL of an <a href="https://developers.arcgis.com/javascript/jshelp/ags_proxy.html">ArcGIS API for JavaScript proxies</a> or <a href="https://github.com/Esri/resource-proxy">ArcGIS Resoruce Proxies</a> to use for proxying POST requests.</td>
         </tr>
         <tr>
             <td><code>useCORS</code></td>
             <td><code>Boolean</code></td>
-            <td><code>true</code></td>
             <td>If this service should use CORS when making GET requests.</td>
         </tr>
     </tbody>
 </table>
-
-`ClusteredFeatureLayer` will also accept any options that can be passed to [Leaflet.heat](https://github.com/Leaflet/Leaflet.markercluster#all-options) to customize the behavior and appearance of the clustering.
 
 ### Events
 
@@ -106,7 +106,7 @@ You can also initalize `L.esri.Layers.ClusteredFeatureLayer` with the aliases `n
 | `load` | [&lt;Load&gt;]() | Fires when all features in the current bounds of the map have loaded. |
 | `authenticationrequired` | `[&lt;AuthenticationEvent&gt;]()` | This will be fired when a request to the service fails and requires authentication. See [working with authenticated services](#working-with-authenticated-services) for more information. |
 
-In additon to these events `L.esri.FeatureLayer` also fires the following [Mouse Events](http://leafletjs.com/reference.html#event-objects) `click`, `dblclick`, `mouseover`, `mouseout`, `mousemove`, and `contextmenu`, `clusterclick`, `clusterdblclick`, `clustermouseover`, `vmouseout`, `clustermousemove`, and `clustercontextmenu` as well as the following the [Popup Events](http://leafletjs.com/reference.html#event-objects) `popupopen` and `popupclose`.
+In additon to these events `L.esri.FeatureLayer` also fires the following [Mouse Events](http://leafletjs.com/reference.html#event-objects) `click`, `dblclick`, `mouseover`, `mouseout`, `mousemove`, and `contextmenu` as well as the following the [Popup Events](http://leafletjs.com/reference.html#event-objects) `popupopen` and `popupclose`.
 
 ### Methods
 
@@ -141,7 +141,7 @@ In additon to these events `L.esri.FeatureLayer` also fires the following [Mouse
             </td>
         </tr>
         <tr>
-            <td><code>unbindPopup</code></td>
+            <td><code>unbindPopup()</code></td>
             <td><code>this</code></td>
             <td>Removed a popup previously bound with `bindPopup`.</td>
         </tr>
@@ -151,7 +151,7 @@ In additon to these events `L.esri.FeatureLayer` also fires the following [Mouse
             <td>
                 Calls the passed function against every feature. The function will be passed the layer that represents the feature.
 <pre class="js"><code>featureLayer.eachFeature(function(layer){
-  console.log(layer.feature);
+  console.log(layer.feature.properties.NAME);
 });</code></pre>
             </td>
         </tr>
@@ -194,7 +194,7 @@ In additon to these events `L.esri.FeatureLayer` also fires the following [Mouse
             .within(latlngbounds)
             .where("Direction = 'WEST'")
             .run(function(error, featureCollection){
-              console.log(featureCollection);
+                console.log(featureCollection);
             });</code></pre>
             </td>
         </tr>
@@ -251,23 +251,5 @@ var map = L.map('map').setView([45.53,-122.64], 16);
 
 L.esri.basemapLayer("Streets").addTo(map);
 
-var url = "http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0";
-
-var busStops = new L.esri.ClusteredFeatureLayer(url, {
-  // Cluster Options
-  disableClusteringAtZoom: 16,
-  polygonOptions: {
-    color: "#2d84c8"
-  },
-
-  // Feature Layer Options
-  pointToLayer: function (geojson, latlng) {
-    return L.circleMarker(latlng, 10, {
-      color: "#2D84C8"
-    });
-  },
-  onEachMarker: function(geojson, marker) {
-    marker.bindPopup("<h3>"+geojson.properties.stop_name+"</h3><p>Stop ID: "+geojson.properties.stop_id+"</p><p>"+geojson.properties.stop_desc+"</p>")
-  }
-}).addTo(map);
+var busStops = L.esri.featureLayer('http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0/').addTo(map);
 ```

@@ -1,3 +1,7 @@
+---
+layout: documentation.hbs
+---
+
 # Events
 
 Event types common across components of Esri Leaflet are documented here.

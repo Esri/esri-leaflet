@@ -1,3 +1,7 @@
+---
+layout: documentation.hbs
+---
+
 # MapService
 
 **Extends** `L.esri.Service`

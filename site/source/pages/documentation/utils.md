@@ -1,3 +1,7 @@
+---
+layout: documentation.hbs
+---
+
 # Utils
 
 Utility methods used internally by Esri Leaflet.
