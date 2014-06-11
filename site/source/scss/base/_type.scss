@@ -76,7 +76,7 @@ $p11: 0.707rem;
 
 
 $baseline: 1.5rem;
-html  {font-size: 1rem; @extend %Lato; line-height: 1*$baseline;}
+html  {font-size: 16px; @extend %Lato; line-height: 1*$baseline;}
 body  {color: $darker-gray}
 h1    {font-size: 2.50rem; @extend %Vollkorn; color: $dark-gray;}
 h2    {font-size: 2.25rem; @extend %Vollkorn; color: $dark-gray;}

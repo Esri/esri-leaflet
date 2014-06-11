@@ -1,8 +1,9 @@
 .main-content {
-  width: 75%;
+  width: 80%;
   float: left;
+  margin: 1rem 0 0 0;
   padding: 0 1rem;
-  margin-left: 25%;
+  margin-left: 20%;
   @include box-sizing(border-box);
 }
 
@@ -19,10 +20,12 @@ pre {
   border: 1px solid mix($lighter-gray, $light-gray);
   code {
     margin: 1rem;
+    background: transparent;
   }
 }
 
 td pre {
+  font-size: .85rem;
   border: none;
   code {
     margin: 0;

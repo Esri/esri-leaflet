@@ -1,12 +1,12 @@
 L.esri.Tasks.Query = L.Class.extend({
 
-  initialize: function(service){
+  initialize: function(endpoint){
 
-    if(service.url && service.get){
-      this._service = service;
-      this.url = service.url;
+    if(endpoint.url && endpoint.get){
+      this._service = endpoint;
+      this.url = endpoint.url;
     } else {
-      this.url = L.esri.Util.cleanUrl(service);
+      this.url = L.esri.Util.cleanUrl(endpoint);
     }
 
     this._params = {
