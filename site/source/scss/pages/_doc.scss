@@ -1,10 +1,13 @@
 .main-content {
   width: 80%;
-  float: left;
+  float: right;
   margin: 1rem 0 0 0;
   padding: 0 1rem;
-  margin-left: 20%;
   @include box-sizing(border-box);
+}
+
+.page-content {
+  @include clearfix();
 }
 
 .doc-section {
