@@ -277,6 +277,7 @@ L.esri.Mixins.identifiableLayer = {
 };
 
 L.esri.Mixins.metadata = {
+  _metadataLoaded: false,
   _getMetadata: function(){
    var requestOptions = {};
 
@@ -322,6 +323,7 @@ L.esri.Mixins.metadata = {
           }
         }
 
+        this._metadataLoaded = true;
         this.fire("metadata", payload);
       }
 

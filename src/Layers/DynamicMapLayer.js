@@ -29,7 +29,8 @@ L.esri.DynamicMapLayer = L.Class.extend({
 
   options: {
     opacity: 1,
-    position: 'front'
+    position: 'front',
+    delayMetadataLoad: false
   },
 
   _defaultLayerParams: {
@@ -57,7 +58,7 @@ L.esri.DynamicMapLayer = L.Class.extend({
 
     L.Util.setOptions(this, options);
 
-    this._getMetadata();
+    if (!this.options.delayMetadataLoad) { this._getMetadata(); }
 
     if(!this._layerParams.transparent) {
       this.options.opacity = 1;
@@ -65,6 +66,8 @@ L.esri.DynamicMapLayer = L.Class.extend({
   },
 
   onAdd: function (map) {
+    if (!this._metadataLoaded) { this._getMetadata(); }
+
     this._map = map;
     this._moveHandler = L.esri.Util.debounce(this._update, 150, this);
 
