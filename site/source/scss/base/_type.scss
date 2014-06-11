@@ -76,11 +76,17 @@ $p11: 0.707rem;
 
 
 $baseline: 1.5rem;
+@function lines($lines){
+  @return $lines*$baseline;
+}
 html  {font-size: 16px; @extend %Lato; line-height: 1*$baseline;}
 body  {color: $darker-gray}
-h1    {font-size: 2.50rem; @extend %Vollkorn; color: $dark-gray;}
-h2    {font-size: 2.25rem; @extend %Vollkorn; color: $dark-gray;}
-h3    {font-size: 2.00rem; @extend %Vollkorn; color: $dark-gray;}
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+}
+h1    {font-size: 2.50rem; line-height: lines(3); @extend %Vollkorn; color: $dark-gray;}
+h2    {font-size: 2.25rem; line-height: lines(3); @extend %Vollkorn; color: $dark-gray;}
+h3    {font-size: 2.00rem; line-height: lines(3); @extend %Vollkorn; color: $dark-gray;}
 h4    {font-size: 1.75rem; @extend %Vollkorn; color: $dark-gray;}
 h5    {font-size: 1.50rem; @extend %Vollkorn; color: $dark-gray;}
 small {font-size: 0.75rem;}
