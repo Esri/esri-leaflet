@@ -212,7 +212,15 @@ module.exports = function(grunt) {
         layout: 'layout.hbs',
         assets: 'site/build/',
         layoutdir: 'site/source/layouts/',
-        partials: 'site/source/partials/**/*.hbs'
+        partials: 'site/source/partials/**/*.hbs',
+        helpers: ['site/source/helpers/**/*.js' ],
+        // marked: {
+        //   options: {
+        //     highlight: function  (lang, code)  {
+        //       return  hljs.highlightAuto(lang, code).value;
+        //     }
+        //   }
+        // }
       },
       posts: {
         files: [{

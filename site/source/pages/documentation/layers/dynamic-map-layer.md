@@ -1,3 +1,7 @@
+---
+layout: documentation.hbs
+---
+
 # DynamicMapLayer
 
 If you have a MapService you and use `L.esri.DynamicMapLayer(url, options)` to render it on a map.
@@ -21,13 +25,13 @@ Option | Type | Default | Description
 `f` | `String` | `'image'` | Output type
 `bboxSR` | `Integer` | `4326` | Spatial reference of the bounding box to generate the image with. If you don't know what this is don't change it.
 `imageSR` | | `3857` | Spatial reference of the output image. If you don't know what this is don't change it.
-`layers` | `String` or `Array` | `''` | An array of Layer IDs like `[3,4,5]` to show from the service or a string in the format like `[show | hide | include | exclude]:layerId1,layerId2` like `exclude:3,5`.
+`layers` | `Array` | `''` | An array of Layer IDs like `[3,4,5]` to show from the service.
 `layerDefs` | `String` `Object` | `''` | A string representing a query to run against the service before the image is rendered. This can be a string like `"STATE_NAME='Kansas' and POP2007>25000"` or an object mapping different queries to specific layers `{5:"STATE_NAME='Kansas'", 4:"STATE_NAME='Kansas'}`.
 `opacity` | `Integer` | `1` | Opacity of the layer. Should be a value between 0 and 1.
 `position` | `String` | '"front"` | position of the layer relative to other overlays
 `token` | `String` | `null` | If you pass a token in your options it will included in all requests to the service. See [working with authenticated services](#working-with-authenticated-services) for more information.
-| `proxy` | `String` | `false` | URL of an [ArcGIS API for JavaScript proxies](https://developers.arcgis.com/javascript/jshelp/ags_proxy.html) or [ArcGIS Resoruce Proxies](https://github.com/Esri/resource-proxy) to use for proxying POST requests. |
-| `useCORS` | `Boolean` | `true` | If this service should use CORS when making GET requests. |
+`proxy` | `String` | `false` | URL of an [ArcGIS API for JavaScript proxies](https://developers.arcgis.com/javascript/jshelp/ags_proxy.html) or [ArcGIS Resoruce Proxies](https://github.com/Esri/resource-proxy) to use for proxying POST requests.
+`useCORS` | `Boolean` | `true` | If this service should use CORS when making GET requests.
 
 ### Methods
 
@@ -136,19 +140,11 @@ Option | Type | Default | Description
             <td><code>this</code></td>
             <td>
                 Returns a new <a href=""><code>L.esri.services.Identify</code></a> object that can be used to identify features on this layer. Your callback function will be passed a <a href="http://geojson.org/geojson-spec.html#feature-collection-objects">GeoJSON FeatureCollection</a> with the results or an error.
-<pre class="js"><code>featureLayer.identify.at(latlng, latlngbounds, 5).run(function(error, featureCollection){
-  console.log(featureCollection);
-});</code></pre>
-            </td>
-        </tr>
-        <tr>
-            <td><code>query()</code></td>
-            <td><code>this</code></td>
-            <td>
-                Returns a new <a href=""><code>L.esri.services.Query</code></a> object that can be used to query this layer. Your callback function will be passed a <a href="http://geojson.org/geojson-spec.html#feature-collection-objects">GeoJSON FeatureCollection</a> with the results or an error.
-<pre class="js"><code>featureLayer.query.within(latlngbounds).where("Direction = 'WEST'").run(function(error, featureCollection){
-  console.log(featureCollection);
-});</code></pre>
+<pre class="js"><code>featureLayer.identify()
+            .at(latlng, latlngbounds, 5)
+            .run(function(error, featureCollection){
+              console.log(featureCollection);
+            });</code></pre>
             </td>
         </tr>
     </tbody>
@@ -168,7 +164,9 @@ Event | Data | Description
 ```js
 var map = L.map('map').setView([ 38.24788726821097,-85.71807861328125], 13 );
 
-L.esri.dynamicMapLayer("http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/PublicSafety/PublicSafetyHazardsandRisks/MapServer", {
+var url = "http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/PublicSafety/PublicSafetyHazardsandRisks/MapServer";
+
+L.esri.dynamicMapLayer(url, {
   opacity : 0.25
 }).addTo(map);
 ```

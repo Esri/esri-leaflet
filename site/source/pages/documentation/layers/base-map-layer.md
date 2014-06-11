@@ -1,3 +1,7 @@
+---
+layout: documentation.hbs
+---
+
 # BasemapLayer
 
 **Extends** [`L.TileLayer`](http://leafletjs.com/reference.html#tilelayer)

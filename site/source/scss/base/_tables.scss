@@ -5,6 +5,7 @@ table {
   border-spacing: 0;
   border: 1px solid mix($lighter-gray, $light-gray);
   text-align: left;
+  margin: 1rem 0;
   > thead {
     background-color: mix($off-white, $lighter-gray);
     border-bottom: 1px solid mix($lighter-gray, $light-gray);

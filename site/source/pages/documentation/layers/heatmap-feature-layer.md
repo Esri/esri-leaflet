@@ -1,14 +1,18 @@
-# FeatureLayer
+---
+layout: documentation.hbs
+---
 
-`L.esri.FeatureLayer` is used to visualize and query data hosted in ArcGIS Feature Layers. These layers are hosted as a part of Feature Services on either ArcGIS Online or ArcGIS Server.
+# HeatMapFeatureLayer
+
+`L.esri.HeatMapFeatureLayer` provides integration for Feature Layers with the [Leaflet.heat plugin](https://github.com/Leaflet/Leaflet.heat). Because of the extra Dependency on Leaflet.heat we do not include `L.esri.HeatMapFeatureLayer` in the default build of Esri Leaflet. It lives in /dist/extras/heatmap-feature-layer.js. You will also need to include your own copy of the [Leaflet.heat plugin](https://github.com/Leaflet/Leaflet.heat).
 
 ### Constructor
 
-| Constructor | Description |
-| --- | --- |
-| `new L.esri.Layers.FeatureLayer(url, options)`<br>`L.esri.Layers.FeatureLayer(url, options)` | The `url` parameter is the url to the FeatureLayer you should like to display. See [service URLs](#service-urls) for more information on how to find these urls. |
+|Constructor | Description |
+|--- | --- |
+|`new L.esri.Layers.HeatMapFeatureLayer(url, options)`<br>`L.esri.Layers.heatMapFeatureLayer(url, options)` | `url` should be the URL of the feature layer to consume. See [service URLs](#service-urls) for more information on how to find these urls. |
 
-You can also initalize `L.esri.Layers.FeatureLayer` with the aliases `new L.esri.FeatureLayer(url, options)` and `L.esri.featureLayer(url, options)`.
+You can also initalize `L.esri.Layers.HeatMapFeatureLayer` with the aliases `new L.esri.HeatMapFeatureLayer(url, options)` and `L.esri.heatMapFeatureLayer(url, options)`.
 
 ### Options
 
@@ -21,21 +25,6 @@ You can also initalize `L.esri.Layers.FeatureLayer` with the aliases `new L.esri
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td><code>pointToLayer(&lt;GeoJSON&gt;<GeoJSON> featureData, &lt;LatLng&gt; latlng)</code></td>
-            <td><code>function</code></td>
-            <td>Function that will be used for creating layers for GeoJSON points (if not specified, simple markers will be created).</td>
-        </tr>
-        <tr>
-            <td><code>style(&lt;GeoJSON&gt;<GeoJSON> featureData)</code></td>
-            <td><code>Function</code></td>
-            <td>Function that will be used to get style options for vector layers created for GeoJSON features.</td>
-        </tr>
-        <tr>
-            <td><code>onEachFeature(&lt;GeoJSON&gt;<GeoJSON> featureData, &lt;iLayer&gt; layer)</code></td>
-            <td><code>Function</code></td>
-            <td></td>
-        </tr>
         <tr>
             <td><code>where</code></td>
             <td><code>String</code></td
@@ -67,11 +56,6 @@ You can also initalize `L.esri.Layers.FeatureLayer` with the aliases `new L.esri
             <td>Determines where features are filtered by time. By default features will be filtered by the server. If set to <code>'client'</code> all features are loaded and filtered on the client before display.</td>
         </tr>
         <tr>
-            <td><code>simplifyFactor</code></td>
-            <td><code>Integer</code></td>
-            <td>How much to simplify polygons and polylines. More means better performance, and less means more accurate representation.</td>
-        </tr>
-        <tr>
             <td><code>precision</code></td>
             <td><code>Integer</code></td>
             <td>How many digits of precision to request from the server. <a href="http://en.wikipedia.org/wiki/Decimal_degrees">Wikipedia</a> has a great referance of digit precision to meters.</td>
@@ -84,17 +68,17 @@ You can also initalize `L.esri.Layers.FeatureLayer` with the aliases `new L.esri
         <tr>
             <td><code>proxy</code></td>
             <td><code>String</code></td>
-            <td><code>false</code></td>
             <td>URL of an <a href="https://developers.arcgis.com/javascript/jshelp/ags_proxy.html">ArcGIS API for JavaScript proxies</a> or <a href="https://github.com/Esri/resource-proxy">ArcGIS Resoruce Proxies</a> to use for proxying POST requests.</td>
         </tr>
         <tr>
             <td><code>useCORS</code></td>
             <td><code>Boolean</code></td>
-            <td><code>true</code></td>
             <td>If this service should use CORS when making GET requests.</td>
         </tr>
     </tbody>
 </table>
+
+`L.esri.HeatMapFeatureLayer` will also accept any options that can be passed to [Leaflet.heat](https://github.com/Leaflet/Leaflet.heat#lheatlayerlatlngs-options) to customize the appearance of the heatmap.
 
 ### Events
 
@@ -103,8 +87,6 @@ You can also initalize `L.esri.Layers.FeatureLayer` with the aliases `new L.esri
 | `loading` | [&lt;LoadingEvent&gt;]() | Fires when new features start loading. |
 | `load` | [&lt;Load&gt;]() | Fires when all features in the current bounds of the map have loaded. |
 | `authenticationrequired` | `[&lt;AuthenticationEvent&gt;]()` | This will be fired when a request to the service fails and requires authentication. See [working with authenticated services](#working-with-authenticated-services) for more information. |
-
-In additon to these events `L.esri.FeatureLayer` also fires the following [Mouse Events](http://leafletjs.com/reference.html#event-objects) `click`, `dblclick`, `mouseover`, `mouseout`, `mousemove`, and `contextmenu` as well as the following the [Popup Events](http://leafletjs.com/reference.html#event-objects) `popupopen` and `popupclose`.
 
 ### Methods
 
@@ -117,47 +99,6 @@ In additon to these events `L.esri.FeatureLayer` also fires the following [Mouse
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td><code>setStyle(&lt;<a href="http://leafletjs.com/reference.html#path-options">Path options</a>&gt; style)</code></td>
-            <td><code>this</code></td>
-            <td>Sets the given path options to each layer that has a <code>setStyle</code> method.</td>
-        </tr>
-        <tr>
-            <td><code>resetStyle(&lt;String|Integer&gt; id)</code></td>
-            <td><code>this</code></td>
-            <td>Given the ID of a feature, reset that feature to the original style, useful for resetting style after hover events.</td>
-
-        </tr>
-        <tr>
-            <td><code>bindPopup(&lt;Function&gt; fn, &lt;<a href="http://leafletjs.com/reference.html#popup-options">Popup options</a>&gt; options)</code></td>
-            <td><code>this</code></td>
-            <td>
-              Defines a function that will return HTML to be bound to a popup on each feature.
-<pre class="js"><code>featureLayer.bindPopup(function(features){
-  return "The name of this feature is: " + features.properties.NAME;
-});</code></pre>
-            </td>
-        </tr>
-        <tr>
-            <td><code>unbindPopup()</code></td>
-            <td><code>this</code></td>
-            <td>Removed a popup previously bound with `bindPopup`.</td>
-        </tr>
-        <tr>
-            <td><code>eachFeature(&lt;Function&gt; fn, &lt;Object&gt; context)</code></td>
-            <td><code>this</code></td>
-            <td>
-                Calls the passed function against every feature. The function will be passed the layer that represents the feature.
-<pre class="js"><code>featureLayer.eachFeature(function(layer){
-  console.log(layer.feature.properties.NAME);
-});</code></pre>
-            </td>
-        </tr>
-        <tr>
-            <td><code>getFeature(&lt;String|Integer&gt; id)</code></td>
-            <td><code>Layer</code></td>
-            <td>Given the id of a Feature return the layer on the map that represents it. This will usually be a Leaflet vector layer like <a href="http://leafletjs.com/reference.html#polyline">Polygon</a> or <a href="http://leafletjs.com/reference.html#polyline">Polygon</a>, or a Leaflet <a href="http://leafletjs.com/reference.html#marker">Marker</a>.</td>
-        </tr>
         <tr>
             <td><code>getWhere()</code></td>
             <td><code>String</code></td>
@@ -188,7 +129,10 @@ In additon to these events `L.esri.FeatureLayer` also fires the following [Mouse
             <td><code>this</code></td>
             <td>
                 Returns a new <a href=""><code>L.esri.services.Query</code></a> object that can be used to query this layer. Your callback function will be passed a <a href="http://geojson.org/geojson-spec.html#feature-collection-objects">GeoJSON FeatureCollection</a> with the results or an error.
-<pre class="js"><code>featureLayer.query.within(latlngbounds).where("Direction = 'WEST'").run(function(error, featureCollection){
+<pre class="js"><code>featureLayer.query()
+            .within(latlngbounds)
+            .where("Direction = 'WEST'")
+            .run(function(error, featureCollection){
   console.log(featureCollection);
 });</code></pre>
             </td>
@@ -242,9 +186,14 @@ In additon to these events `L.esri.FeatureLayer` also fires the following [Mouse
 ### Example
 
 ```js
-var map = L.map('map').setView([45.53,-122.64], 16);
+var map = new L.Map('map').setView([40.722868115037,-73.92142295837404], 14);
 
-L.esri.basemapLayer("Streets").addTo(map);
-
-var busStops = L.esri.featureLayer('http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0/').addTo(map);
+var heatmap = new L.esri.HeatMapFeatureLayer("http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Graffiti_Locations3/FeatureServer/0", {
+  radius: 12,
+  gradient: {
+    0.4: "#ffeda0",
+    0.65: "#feb24c",
+    1: "#f03b20"
+  }
+}).addTo(map);
 ```
