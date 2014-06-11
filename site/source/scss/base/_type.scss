@@ -107,3 +107,8 @@ a {
     outline: none;
   }
 }
+
+hr {
+  border: none;
+  border-top: 2px solid $light-gray;
+}

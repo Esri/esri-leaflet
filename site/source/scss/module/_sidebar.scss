@@ -5,6 +5,9 @@
   border-right: 2px solid $lightest-gray;
   float: left;
   width: 20%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
   nav {
     a {
       display: block;

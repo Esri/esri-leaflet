@@ -4,6 +4,10 @@
   margin: 1rem 0 0 0;
   padding: 0 1rem;
   @include box-sizing(border-box);
+
+  h3 {
+    margin-top: lines(2);
+  }
 }
 
 .page-content {
