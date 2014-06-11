@@ -1,6 +1,20 @@
 {
-  globals: {
-    L: true,
-    Terraformer: true
+  "curly": true,
+  "eqeqeq": true,
+  "immed": true,
+  "latedef": true,
+  "newcap": true,
+  "noarg": true,
+  "sub": true,
+  "undef":  true,
+  "boss": true,
+  "eqnull": true,
+  "browser": true,
+  "globals": {
+    "XMLHttpRequest": true,
+    "Terraformer": true,
+    "module": true,
+    "L": true,
+    "console": true
   }
 }
