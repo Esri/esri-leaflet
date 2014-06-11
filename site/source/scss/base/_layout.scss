@@ -1,11 +1,11 @@
 .container {
   @include box-sizing(border-box);
+  @include clearfix();
   max-width: $container-max;
   margin-right: auto;
   margin-left: auto;
   position: relative;
   z-index: 3;
-  @include clearfix();
   padding: 2em 0;
   &.white {
     padding: 0;
@@ -15,11 +15,12 @@
   }
 }
 
-.site-nav {
+.site-nav,  {
   display: inline-block;
   margin: 0 1em;
+  font-size: 1rem;
   color: $white;
-  text-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.15);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
   &:hover {
     border-color: $white;
   }
@@ -31,6 +32,25 @@
   }
 }
 
+.copyright {
+  display: inline-block;
+  font-size: 1rem;
+  color: $white;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+  a {
+    color: $white;
+    &:hover {
+      border-color: $white;
+    }
+    &:first-of-type {
+      margin-left: 0;
+    }
+    &:last-of-type {
+      margin-right: 0;
+    }
+  }
+}
+
 .background-map {
   position: fixed;
   top: 0;
@@ -39,14 +59,59 @@
   left: 0;
   z-index: 2;
   .leaflet-map-pane {
-    opacity: .2;
+    opacity: .35;
   }
   &.leaflet-container {
-    background-color: rgba(121, 189, 143, 1);
+    background-color: rgba(157, 120, 210, 0.85);
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-duration: 300s;
+    -webkit-animation-name: colorshift;
+    -moz-animation-iteration-count: infinite;
+    -moz-animation-duration: 300s;
+    -moz-animation-name: colorshift;
+    animation-iteration-count: infinite;
+    animation-duration: 300s;
+    animation-name: colorshift;
   }
   img {
-    -webkit-filter: grayscale(100%);
-    -moz-filter: grayscale(100%);
-    filter: grayscale(100%);
+    -webkit-filter: grayscale(50%);
+    -moz-filter: grayscale(50%);
+    filter: grayscale(50%);
+  }
+}
+
+@keyframes colorshift {
+  0% {
+    background-color: rgba(157, 120, 210, 0.85);
+  }
+  33% {
+    background-color: rgba(36, 132, 210, 0.85)
+  }
+  66% {
+    background-color: rgba(121, 189, 143, 0.85)
+  }
+}
+
+@-webkit-keyframes colorshift {
+  0% {
+    background-color: rgba(157, 120, 210, 0.85);
+  }
+  33% {
+    background-color: rgba(36, 132, 210, 0.85)
+  }
+  66% {
+    background-color: rgba(121, 189, 143, 0.85)
+  }
+}
+
+@-moz-keyframes colorshift {
+  0% {
+    background-color: rgba(157, 120, 210, 0.85);
+  }
+  33% {
+    background-color: rgba(36, 132, 210, 0.85)
+  }
+  66% {
+    background-color: rgba(121, 189, 143, 0.85)
   }
 }
