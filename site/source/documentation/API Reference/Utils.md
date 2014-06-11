@@ -1,18 +1,18 @@
 # Utils
 
-Utility methods used internally by Esri Leaflet, mostly for converting [ArcGIS Geometry JSON](http://resources.arcgis.com/en/help/arcgis-rest-api/#/Geometry_Objects/02r3000000n1000000/) structures to their Leaflet equivalents.
+Utility methods used internally by Esri Leaflet.
 
 <table>
     <thead>
         <tr>
-            <tr>Method</tr>
-            <tr>Returns</tr>
-            <tr>Description</tr>
+            <td>Method</td>
+            <td>Returns</td>
+            <td>Description</td>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td><code>extentToBounds(&lt;Extent&gt;, extent)</code></td>
+            <td><code>extentToBounds({{{param 'Extent' 'extent'}}})</code></td>
             <td><code><a href="http://leafletjs.com/reference.html#latlngbounds">LatLngBounds</a></code></td>
             <td>Converts ArcGIS Extent objects to Leaflet <a href="http://leafletjs.com/reference.html#latlngbounds">LatLngBounds</a> objects.</td>
         </tr>
@@ -22,7 +22,7 @@ Utility methods used internally by Esri Leaflet, mostly for converting [ArcGIS G
             <td>Converts Leaflet <a href="http://leafletjs.com/reference.html#latlngbounds">LatLngBounds</a> objects to ArcGIS Extent objects.</td>
         </tr>
         <tr>
-            <td>arcgisToGeojson(&lt;<a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Geometry_Objects/02r3000000n1000000/">ArcGIS Geometry Objects</a>|<a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Feature_object/02r3000000n8000000/">ArcGIS Feature Objects</a>&gt;)</td>
+            <td><code>arcgisToGeojson(&lt;<a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Geometry_Objects/02r3000000n1000000/">ArcGIS Geometry Objects</a> | <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Feature_object/02r3000000n8000000/">ArcGIS Feature Objects</a>&gt; arcgis)</code></td>
             <td><code><a href="http://geojson.org/geojson-spec.html#geojson-objects">GeoJSON</a></code></td>
             <td>Converts <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Geometry_Objects/02r3000000n1000000/">ArcGIS Geometry Objects</a> or <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Feature_object/02r3000000n8000000/">ArcGIS Feature Objects</a> objects to <a href="http://geojson.org/geojson-spec.html#geojson-objects">GeoJSON</a>. If you pass a GeoJSON Feature or FeatureCollection you should also pass <code>idAttribute</code> to assign a property from the feature attributes to the ID of the GeoJSON Feature, <code>'OBJECTID'</code> or <code>'FID'</code> attributes by default.</td>
         </tr>

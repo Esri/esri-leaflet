@@ -27,7 +27,7 @@
 
 | Method | Returns | Description | 
 | --- | --- | --- |
-| `get(&lt;String&gt; path, &lt;Object&gt; params, &lt;Function&gt; callback, &lt;Object&gt; context)` | `this` | Makes a GET request to the service. The services URL will be combined with the `path` option and parameters will be serialized to a query string. Accepts an optional function context for the callback. |
+| `get({{{param 'String' 'url'}}})` | `this` | Makes a GET request to the service. The services URL will be combined with the `path` option and parameters will be serialized to a query string. Accepts an optional function context for the callback. |
 | `post(&lt;String&gt; url, &lt;Object&gt; params, &lt;Function&gt; callback, &lt;Object&gt; context)` | `this` | Makes a POST request to the service. The services URL will be combined with the `path` option and parameters will be serialized. Accepts an optional function context for the callback. |
 | `metadata(&lt;Function&gt; callback, &lt;Object&gt; context)` | `this` | Requests the metadata about the service. This is an alias for get("/", {}, callback, context). |
 | `authenticate(&lt;String&gt; token)` | `this` | Authenticates this service with a new token and runs any pending requests that required a token. |

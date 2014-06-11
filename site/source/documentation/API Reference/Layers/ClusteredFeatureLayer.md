@@ -136,7 +136,7 @@ In additon to these events `L.esri.FeatureLayer` also fires the following [Mouse
             <td>
               Defines a function that will return HTML to be bound to a popup on each feature.
 <pre class="js"><code>featureLayer.bindPopup(function(features){
-  return "The name of this feature is: " + features.properties.NAME;
+  return "Name: " + features.properties.NAME;
 });</code></pre>
             </td>
         </tr>
@@ -151,7 +151,7 @@ In additon to these events `L.esri.FeatureLayer` also fires the following [Mouse
             <td>
                 Calls the passed function against every feature. The function will be passed the layer that represents the feature.
 <pre class="js"><code>featureLayer.eachFeature(function(layer){
-  console.log(layer.feature.properties.NAME);
+  console.log(layer.feature);
 });</code></pre>
             </td>
         </tr>
@@ -190,9 +190,12 @@ In additon to these events `L.esri.FeatureLayer` also fires the following [Mouse
             <td><code>this</code></td>
             <td>
                 Returns a new <a href=""><code>L.esri.services.Query</code></a> object that can be used to query this layer. Your callback function will be passed a <a href="http://geojson.org/geojson-spec.html#feature-collection-objects">GeoJSON FeatureCollection</a> with the results or an error.
-<pre class="js"><code>featureLayer.query.within(latlngbounds).where("Direction = 'WEST'").run(function(error, featureCollection){
-  console.log(featureCollection);
-});</code></pre>
+<pre class="js"><code>featureLayer.query()
+            .within(latlngbounds)
+            .where("Direction = 'WEST'")
+            .run(function(error, featureCollection){
+              console.log(featureCollection);
+            });</code></pre>
             </td>
         </tr>
         <tr>
@@ -248,7 +251,9 @@ var map = L.map('map').setView([45.53,-122.64], 16);
 
 L.esri.basemapLayer("Streets").addTo(map);
 
-var busStops = new L.esri.ClusteredFeatureLayer("http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0", {
+var url = "http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0";
+
+var busStops = new L.esri.ClusteredFeatureLayer(url, {
   // Cluster Options
   disableClusteringAtZoom: 16,
   polygonOptions: {

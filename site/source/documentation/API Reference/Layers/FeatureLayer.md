@@ -34,11 +34,11 @@ You can also initalize `L.esri.Layers.FeatureLayer` with the aliases `new L.esri
         <tr>
             <td><code>onEachFeature(&lt;GeoJSON&gt;<GeoJSON> featureData, &lt;iLayer&gt; layer)</code></td>
             <td><code>Function</code></td>
-            <td></td>
+            <td> </td>
         </tr>
         <tr>
             <td><code>where</code></td>
-            <td><code>String</code></td
+            <td><code>String</code></td>
             <td>A server side expression that will be evaluated to filter features. By default this will include all features in a service.</td>
         </tr>
         <tr>
@@ -84,13 +84,11 @@ You can also initalize `L.esri.Layers.FeatureLayer` with the aliases `new L.esri
         <tr>
             <td><code>proxy</code></td>
             <td><code>String</code></td>
-            <td><code>false</code></td>
             <td>URL of an <a href="https://developers.arcgis.com/javascript/jshelp/ags_proxy.html">ArcGIS API for JavaScript proxies</a> or <a href="https://github.com/Esri/resource-proxy">ArcGIS Resoruce Proxies</a> to use for proxying POST requests.</td>
         </tr>
         <tr>
             <td><code>useCORS</code></td>
             <td><code>Boolean</code></td>
-            <td><code>true</code></td>
             <td>If this service should use CORS when making GET requests.</td>
         </tr>
     </tbody>
@@ -134,7 +132,7 @@ In additon to these events `L.esri.FeatureLayer` also fires the following [Mouse
             <td>
               Defines a function that will return HTML to be bound to a popup on each feature.
 <pre class="js"><code>featureLayer.bindPopup(function(features){
-  return "The name of this feature is: " + features.properties.NAME;
+  return "Name: " + features.properties.NAME;
 });</code></pre>
             </td>
         </tr>
@@ -188,9 +186,12 @@ In additon to these events `L.esri.FeatureLayer` also fires the following [Mouse
             <td><code>this</code></td>
             <td>
                 Returns a new <a href=""><code>L.esri.services.Query</code></a> object that can be used to query this layer. Your callback function will be passed a <a href="http://geojson.org/geojson-spec.html#feature-collection-objects">GeoJSON FeatureCollection</a> with the results or an error.
-<pre class="js"><code>featureLayer.query.within(latlngbounds).where("Direction = 'WEST'").run(function(error, featureCollection){
-  console.log(featureCollection);
-});</code></pre>
+<pre class="js"><code>featureLayer.query()
+            .within(latlngbounds)
+            .where("Direction = 'WEST'")
+            .run(function(error, featureCollection){
+                console.log(featureCollection);
+            });</code></pre>
             </td>
         </tr>
         <tr>

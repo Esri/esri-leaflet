@@ -54,19 +54,11 @@ You can also initalize `L.esri.Layers.TiledMapLayer` with the aliases `new L.esr
             <td><code>this</code></td>
             <td>
                 Returns a new <a href=""><code>L.esri.services.Identify</code></a> object that can be used to identify features on this layer. Your callback function will be passed a GeoJSON FeatureCollection with the results or an error.
-<pre class="js"><code>featureLayer.identify.at(latlng, latlngbounds, 5).run(function(error, featureCollection){
-  console.log(featureCollection);
-});</code></pre>
-            </td>
-        </tr>
-        <tr>
-            <td><code>query()</code></td>
-            <td><code>this</code></td>
-            <td>
-                Returns a new <a href=""><code>L.esri.services.Query</code></a> object that can be used to query this layer. Your callback function will be passed a GeoJSON FeatureCollection with the results or an error.
-<pre class="js"><code>featureLayer.query.within(latlngbounds).where("Direction = 'WEST'").run(function(error, featureCollection){
-  console.log(featureCollection);
-});</code></pre>
+<pre class="js"><code>featureLayer.identify()
+            .at(latlng, latlngbounds, 5)
+            .run(function(error, featureCollection){
+              console.log(featureCollection);
+            });</code></pre>
             </td>
         </tr>
     </tbody>

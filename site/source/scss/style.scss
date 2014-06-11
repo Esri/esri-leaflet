@@ -15,9 +15,11 @@
 // └───────────────┘
 @import 'module/modal';
 @import 'module/sidebar';
+@import 'module/-webkit-highlight: ;highlight: ;';
 
 // ┌───────────┐
 // │ P A G E S │
 // └───────────┘
 @import 'pages/index';
+@import 'pages/doc';
 @import 'pages/doc';

@@ -12,3 +12,19 @@
     padding-top: 3rem;
   }
 }
+
+pre {
+  display: block;
+  overflow: auto;
+  border: 1px solid mix($lighter-gray, $light-gray);
+  code {
+    margin: 1rem;
+  }
+}
+
+td pre {
+  border: none;
+  code {
+    margin: 0;
+  }
+}

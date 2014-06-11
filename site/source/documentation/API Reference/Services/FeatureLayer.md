@@ -34,9 +34,12 @@
             <td><code>this</code></td>
             <td>
                 Returns a new <a href=""><code>L.esri.services.Query</code></a> object that can be used to query this layer. Your callback function will be passed a <a href="http://geojson.org/geojson-spec.html#feature-collection-objects">GeoJSON FeatureCollection</a> with the results or an error.
-<pre class="js"><code>featureLayer.query.within(latlngbounds).where("Direction = 'WEST'").run(function(error, featureCollection){
-  console.log(featureCollection);
-});</code></pre>
+<pre class="js"><code>featureLayer.query()
+            .within(latlngbounds)
+            .where("Direction = 'WEST'")
+            .run(function(error, featureCollection){
+              console.log(featureCollection);
+            });</code></pre>
             </td>
         </tr>
         <tr>
