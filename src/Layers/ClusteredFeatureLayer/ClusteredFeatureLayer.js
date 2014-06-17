@@ -1,6 +1,6 @@
 L.esri.Layers.ClusteredFeatureLayer = L.esri.Layers.FeatureManager.extend({
 
-   statics: {
+  statics: {
     EVENTS: 'click dblclick mouseover mouseout mousemove contextmenu popupopen popupclose',
     CLUSTEREVENTS: 'clusterclick clusterdblclick clustermouseover clustermouseout clustermousemove clustercontextmenu'
   },
