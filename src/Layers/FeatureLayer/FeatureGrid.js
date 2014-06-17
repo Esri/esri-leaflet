@@ -267,7 +267,7 @@ L.esri.Layers.FeatureGrid = L.Class.extend({
 
     // if we dont have this cell in the cache yet (create)
     if (!cell) {
-       cell = {
+      cell = {
         coords: coords,
         bounds: this._cellCoordsToBounds(coords)
       };

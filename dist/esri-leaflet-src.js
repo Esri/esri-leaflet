@@ -985,7 +985,7 @@ L.esri.Tasks.query = function(url, params){
           }
         },
         DarkGray: {
-          urlTemplate: tileProtocol + "//tiles{s}.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/World_Dark_Gray_Base_Beta/MapServer/tile/{z}/{y}/{x}",
+          urlTemplate: tileProtocol + '//tiles{s}.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/World_Dark_Gray_Base_Beta/MapServer/tile/{z}/{y}/{x}',
           options: {
             minZoom: 1,
             maxZoom: 10,
@@ -1865,7 +1865,7 @@ L.esri.Layers.FeatureGrid = L.Class.extend({
 
     // if we dont have this cell in the cache yet (create)
     if (!cell) {
-       cell = {
+      cell = {
         coords: coords,
         bounds: this._cellCoordsToBounds(coords)
       };
