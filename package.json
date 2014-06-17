@@ -1,8 +1,8 @@
 {
   "name": "Esri-Leaflet",
   "version": "0.0.1-beta.5",
-  "description": "ArcGIS Plugins for Leaflet",
-  "main": "src/esri-leaflet.js",
+  "description": "Leaflet Plugins for consuming ArcGIS Online and ArcGIS Server services",
+  "main": "dist/esri-leaflet.js",
   "devDependencies": {
     "grunt": "~0.4.2",
     "grunt-karma": "~0.8.3",

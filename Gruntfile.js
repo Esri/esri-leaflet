@@ -50,7 +50,7 @@ module.exports = function(grunt) {
       },
       'docs-assemble': {
         files: ['site/source/**/*.md', 'site/source/**/*.hbs'],
-        tasks: ['assemble'],
+        tasks: ['assemble:dev'],
         options: {
           nospawn: true
         }
@@ -112,6 +112,7 @@ module.exports = function(grunt) {
           'src/EsriLeaflet.js',
           'src/Util.js',
           'src/Request.js',
+          'src/Services/Service.js',
           'src/Services/MapService.js',
           'src/Tasks/Identify.js',
           'src/Tasks/Query.js',
@@ -125,6 +126,7 @@ module.exports = function(grunt) {
           'src/EsriLeaflet.js',
           'src/Util.js',
           'src/Request.js',
+          'src/Services/Service.js',
           'src/Services/FeatureLayer.js',
           'src/Tasks/Query.js',
           'src/Layers/FeatureLayer/FeatureGrid.js',
@@ -221,12 +223,25 @@ module.exports = function(grunt) {
     assemble: {
       options: {
         layout: 'layout.hbs',
-        assets: 'site/build/',
         layoutdir: 'site/source/layouts/',
         partials: 'site/source/partials/**/*.hbs',
         helpers: ['site/source/helpers/**/*.js' ]
       },
-      posts: {
+      dev: {
+        options: {
+          assets: 'site/build/'
+        },
+        files: [{
+          cwd: 'site/source/pages',
+          dest: 'site/build',
+          expand: true,
+          src: ['**/*.hbs', '**/*.md']
+        }]
+      },
+      build: {
+        options: {
+          assets: 'esri-leaflet/'
+        },
         files: [{
           cwd: 'site/source/pages',
           dest: 'site/build',
@@ -270,7 +285,7 @@ module.exports = function(grunt) {
     'gh-pages': {
       options: {
         base: 'site/build',
-        repo: grunt.option('repo') || 'git@github.com:Esri/esri-leaflet.git'
+        repo: grunt.option('repo')
       },
       src: ['**']
     },
@@ -310,10 +325,10 @@ module.exports = function(grunt) {
   grunt.registerTask('test', ['karma:run']);
 
   // Documentation Site Tasks
-  grunt.registerTask('docs', ['assemble', 'sass', 'copy', 'connect:docs', 'watch']);
+  grunt.registerTask('docs', ['assemble:dev', 'sass', 'copy', 'connect:docs', 'watch']);
 
   // Documentation Site Tasks
-  grunt.registerTask('docs:build', ['assemble', 'sass', 'gh-pages']);
+  grunt.registerTask('docs:build', ['assemble:build', 'sass', 'gh-pages']);
 
   // Require all grunt modules
   require('load-grunt-tasks')(grunt, {pattern: ['grunt-*', 'assemble']});

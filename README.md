@@ -1,13 +1,13 @@
 # Esri Leaflet
 
-Leaflet plugin for [ArcGIS Services](http://developers.arcgis.com). Currently Esri Leaflet supports loading Esri [basemaps](#basemaplayer) and [feature services](#featurelayer), as well as [tiled](#tiledmaplayer) and [dynamic](#dynamicmaplayer) map services.
+Leaflet plugin for [ArcGIS Services](http://developers.arcgis.com). Currently Esri Leaflet supports loading Esri [basemaps](http://esri.github.io/esri-leaflet/examples/switching-basemaps.html) and [feature services](http://esri.github.io/esri-leaflet/examples/simple-feature-layer.html), as well as [tiled](http://esri.github.io/esri-leaflet/examples/tile-layer-2.html) and [dynamic](http://esri.github.io/esri-leaflet/examples/simple-dynamic-map-layer.html) map services.
 
 The goal of Esri Leaflet is **not** to replace the [ArcGIS API for JavaScript](https://developers.arcgis.com/en/javascript/), but rather to provide small components to allow developers to build mapping applications with Leaflet.
 
 **Currently Esri Leaflet is in development and should be thought of as a beta or preview.**
 
 ### Demos
-There are [loads of demos](http://esri.github.io/esri-leaflet/) showing the features of Esri Leaflet.
+There are [loads of demos](http://patrickarlt.github.io/esri-leaflet/examples/) showing the features of Esri Leaflet that will help you get started.
 
 ### Example
 Here is a quick example to get you started. Just change the paths to point to the proper libraries and go.
@@ -18,17 +18,19 @@ Here is a quick example to get you started. Just change the paths to point to th
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Esri Leaflet Demo</title>
-    <link rel="stylesheet" href="/the/path/to/leaflet.css">
-    <!--[if lte IE 8]><link rel="stylesheet" href="/the/path/to/leaflet.ie.css"><![endif]-->
+     <!-- Load Leaflet from CDN-->
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+
+    <!-- Load Esri Leaflet from CDN -->
+    <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/0.0.1-beta.5/esri-leaflet.js"></script>
+
     <style>
       html, body,  #map {
         width : 100%;
         height : 100%;
       }
     </style>
-    <script src="/the/path/to/leaflet.js"></script>
-    <script src="/the/path/to/esri-leaflet.js"></script>
   </head>
   <body>
     <div id="map"></div>
@@ -53,16 +55,26 @@ Here is a quick example to get you started. Just change the paths to point to th
 </html>
 ```
 
-## Documentation
+### Documentation & Examples
 
-@TODO
+A full [API Reference](http://esri.github.io/esri-leaflet/api-reference/) and plenty of [sample code](http://esri.github.io/esri-leaflet/examples/) can be found at the [Esri Leaflet](http://esri.github.io/esri-leaflet/) website.
 
-## Development Instructions
+### Projects Using Esri Leaflet
+
+* [Geotrigger Editor](https://github.com/Esri/geotrigger-editor)
+* [Geotrigger Faker](https://github.com/Esri/geotrigger-faker)
+* [ArcGIS for Developers](https://developers.arcgis.com/en/)
+
+Feel free to add your projects to this list!
+
+### Development Instructions
+
+Make Sure you have the [Grunt CLI](http://gruntjs.com/getting-started) installed.
 
 1. [Fork and clone Esri Leaflet](https://help.github.com/articles/fork-a-repo)
 2. `cd` into the `esri-leaflet` folder
 5. Install the dependancies with `npm install`
-5. The examples in the `/examples` folder should work
+5. run `grunt` from the command line. This will start the web server locally at [http://localhost:8001](http://localhost:8001) and start watching the source files and running linting and testing commands.
 6. Make your changes and create a [pull request](https://help.github.com/articles/creating-a-pull-request)
 
 ### Dependencies
@@ -71,27 +83,29 @@ Here is a quick example to get you started. Just change the paths to point to th
 ### Optional Dependencies
 * [Leaflet.markercluster](https://github.com/Leaflet/Leaflet.markercluster) - for `L.esri.ClusteredFeatureLayer`
 * [Leaflet.heat](https://github.com/Leaflet/Leaflet.heat) - only for `L.esri.HeatmapLayer`.
+* [Esri Leaflet Geocoder](https://github.com/Esri/esri-leaflet-geocoder) - for geocoding functionality.
 
-## Resources
+### Resources
 
+* [Importing Data Into Feature Services](https://developers.arcgis.com/tools/csv-to-feature-service/)
 * [ArcGIS for Developers](http://developers.arcgis.com)
 * [ArcGIS REST Services](http://resources.arcgis.com/en/help/arcgis-rest-api/)
 * [@Esri](http://twitter.com/esri)
 * [@EsriPDX](http://twitter.com/esripdx)
 
-## Issues
+### Issues
 
-Find a bug or want to request a new feature?  Please let us know by submitting an issue.
+Find a bug or want to request a new feature?  Please let us know by submitting an [issue](https://github.com/Esri/esri-leaflet/issues).
 
-## Contributing
+### Contributing
 
-Esri welcomes contributions from anyone and everyone. Please see our [guidelines for contributing](https://github.com/esri/contributing).
+Esri welcomes contributions from anyone and everyone. Please see our [guidelines for contributing](https://github.com/Esri/esri-leaflet/blob/master/CONTRIBUTING.md).
 
-## Credit
+### Credit
 
-`L.esri.DymanicMapLayer` was origninally code from https://github.com/sanborn/leaflet-ags/blob/master/src/AGS.Layer.Dynamic.js that was significantly modified.
+`L.esri.DymanicMapLayer` was originally code from https://github.com/sanborn/leaflet-ags/blob/master/src/AGS.Layer.Dynamic.js
 
-## Licensing
+### Licensing
 Copyright 2013 Esri
 
 Licensed under the Apache License, Version 2.0 (the "License");
