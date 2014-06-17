@@ -5,7 +5,7 @@ layout: documentation.hbs
 
 # {{page.data.title}}
 
-Inherits from [`L.esri.Service`]({{assets}}/api-reference/services/service.html)
+Inherits from [`L.esri.Service`]({{assets}}api-reference/services/service.html)
 
 `L.esri.Services.FeatureLayer` is an abstraction interacting with Feature Layers running on ArcGIS Online and ArcGIS server that allows you to make requests to the API, as well as query, add, update and remove features from the service.
 

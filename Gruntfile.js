@@ -288,7 +288,7 @@ module.exports = function(grunt) {
     'gh-pages': {
       options: {
         base: 'site/build',
-        repo: grunt.option('repo')
+        repo: 'git@github.com:Esri/esri-leaflet.git'
       },
       src: ['**']
     },

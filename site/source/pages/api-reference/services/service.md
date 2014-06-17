@@ -1,4 +1,5 @@
 ---
+title: L.esri.Services.Service
 layout: documentation.hbs
 ---
 
