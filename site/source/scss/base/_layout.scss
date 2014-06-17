@@ -1,3 +1,6 @@
+.page-content {
+  margin: 0 .75em
+}
 .container {
   @include box-sizing(border-box);
   @include clearfix();
@@ -10,8 +13,6 @@
   &.white {
     padding: 0;
     position: relative;
-    // background-color: white;
-    // @include box-shadow(0 0 4px 1px rgba(0, 0, 0, 0.15));
   }
   &.single {
     padding: 1px 1em;
