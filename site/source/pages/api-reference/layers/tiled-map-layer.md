@@ -7,7 +7,9 @@ layout: documentation.hbs
 
 Inherits from [`L.TileLayer`](http://leafletjs.com/reference.html#tilelayer)
 
-Access tile caches from ArcGIS Online and ArcGIS Server as well as visualze and identify features on them.
+Access tiles from ArcGIS Online and ArcGIS Server as well as visualze and identify features on them.
+
+Is you have Feature Services published on ArcGIS online you can create a static set of tiles using your Feature Service. You can find details on that process on the [ArcGIS Online Help](http://doc.arcgis.com/en/arcgis-online/share-maps/publish-tiles.htm#ESRI_SECTION1_F68FCBD33BD54117B23232D41A762E89)
 
 **Your map service must be published using the Web Mercator Auxiliary Sphere tiling scheme (WKID 102100/3857) and the default scale option used by Google Maps, Bing Maps and [ArcGIS Online](http://resources.arcgis.com/en/help/arcgisonline-content/index.html#//011q00000002000000). Esri Leaflet will not support any other spatial reference for tile layers.**
 

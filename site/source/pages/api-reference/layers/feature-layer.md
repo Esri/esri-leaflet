@@ -7,6 +7,24 @@ layout: documentation.hbs
 
 `L.esri.Layer.FeatureLayer` is used to visualize and query vector geographic data hosted in ArcGIS Feature Layers. These layers are hosted as a part of Feature Services on either ArcGIS Online or ArcGIS Server.
 
+Feature Layers are provided by Feature Services which can contain multupile layers. Feature Layers expose vector geographic information as a web service that can be visualized, styled, queried and edited.
+
+Here is a sample Feature Service URL 
+
+```
+http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Neighborhoods_pdx/
+```
+
+FeatureServer` note that it ends in `/FeatureService`. This particular service contains only 1 Feature Layer 
+
+```
+http://services.arcgis.com/rOo16HdIMeOBI4Mb/ArcGIS/rest/services/Neighborhoods_pdx/FeatureServer/0
+```
+
+Note that the Feature Layer url ends in `/FeatureService/{LAYER_ID}`.
+
+You can create a new empty feature service witha  single layer on the [ArcGIS for Devleopers website](https://developers.arcgis.com/en/hosted-data/#/new) or you can use ArcGIS Online to [create a Feature Service from a CSV or Shapefile](https://developers.arcgis.com/tools/csv-to-feature-service/).
+
 ### Constructor
 
 <table>
