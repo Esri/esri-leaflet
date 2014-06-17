@@ -5,7 +5,7 @@ layout: documentation.hbs
 
 # L.esri.Utils
 
-Utility methods used internally by Esri Leaflet. These methods are useful for converting data between ArcGIS and Leaflt formats.
+Utility methods used internally by Esri Leaflet. These methods are useful for converting data between ArcGIS and Leaflet formats.
 
 <table>
     <thead>

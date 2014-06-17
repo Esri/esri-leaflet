@@ -18,7 +18,7 @@ A generic class representing a hosted resource on ArcGIS Online or ArcGIS Server
     <tbody>
         <tr>
             <td><code class="nobr">new L.esri.Services.Service({{{param 'String' 'url'}}}, {{{param 'Object' 'options'}}})</code><br><br><code class="nobr">L.esri.Services.service({{{param 'String' 'url'}}}, {{{param 'Object' 'options'}}})</code></td>
-            <td>The `url` parameter is the url to the ArcGIS Server or ArcGIS Online service you would like to consume.</td>
+            <td>The `url` parameter is the URL to the ArcGIS Server or ArcGIS Online service you would like to consume.</td>
         </tr>
     </tbody>
 </table>
@@ -27,12 +27,12 @@ A generic class representing a hosted resource on ArcGIS Online or ArcGIS Server
 
 | Option | Type | Default | Description |
 | --- | --- | --- | --- |
-| `proxy` | `String` | `false` | URL of an [ArcGIS API for JavaScript proxies](https://developers.arcgis.com/javascript/jshelp/ags_proxy.html) or [ArcGIS Resoruce Proxies](https://github.com/Esri/resource-proxy) to use for proxying POST requests. |
+| `proxy` | `String` | `false` | URL of an [ArcGIS API for JavaScript proxies](https://developers.arcgis.com/javascript/jshelp/ags_proxy.html) or [ArcGIS Resource Proxies](https://github.com/Esri/resource-proxy) to use for proxying POST requests. |
 | `useCORS` | `Boolean` | `true` | If this service should use CORS when making GET requests. |
 
 ### Events
 
-| Event | Type | Description | 
+| Event | Type | Description |
 | --- | --- | --- |
 | `requeststart` | [<`RequestEvent`>]({{assets}}api-reference/events.html#request-event) | Fired when a request to the service begins. |
 | `requestend` | [<`RequestEvent`>]({{assets}}api-reference/events.html#request-event) | Fired when a request to the service ends. |

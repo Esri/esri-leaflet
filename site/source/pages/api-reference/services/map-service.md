@@ -7,7 +7,7 @@ layout: documentation.hbs
 
 Inherits from [`L.esri.Service`]({{assets}}/api-reference/services/service.html)
 
-`L.esri.Services.MapService` is an abstaction interacting with Map Services running on ArcGIS Online and ArcGIS server that allows you to make requests to the API, as well as query and identify features on the service.
+`L.esri.Services.MapService` is an abstraction interacting with Map Services running on ArcGIS Online and ArcGIS server that allows you to make requests to the API, as well as query and identify features on the service.
 
 ### Constructor
 
@@ -21,7 +21,7 @@ Inherits from [`L.esri.Service`]({{assets}}/api-reference/services/service.html)
     <tbody>
         <tr>
             <td><code class="nobr">new L.esri.Services.MapService({{{param 'String' 'url'}}}, {{{param 'Object' 'options'}}})</code><br><br><code class="nobr">L.esri.Services.mapService({{{param 'String' 'url'}}}, {{{param 'Object' 'options'}}})</code></td>
-            <td>The `url` parameter is the url to the ArcGIS Server or ArcGIS Online map service you would like to consume.</td>
+            <td>The `url` parameter is the URL to the ArcGIS Server or ArcGIS Online map service you would like to consume.</td>
         </tr>
     </tbody>
 </table>
@@ -36,7 +36,7 @@ Inherits from [`L.esri.Service`]({{assets}}/api-reference/services/service.html)
 
 ### Methods
 
-| Method | Returns | Description | 
+| Method | Returns | Description |
 | --- | --- | --- |
 | `identify()` | `this` | Returns a new [`L.esri.Tasks.Identify()`]({{assets}}/api-reference/tasks/query.html) object bound to this service. |
 

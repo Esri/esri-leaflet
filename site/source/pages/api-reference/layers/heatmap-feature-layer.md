@@ -67,7 +67,7 @@ layout: documentation.hbs
         <tr>
             <td><code>precision</code></td>
             <td><code>Integer</code></td>
-            <td>How many digits of precision to request from the server. <a href="http://en.wikipedia.org/wiki/Decimal_degrees">Wikipedia</a> has a great referance of digit precision to meters.</td>
+            <td>How many digits of precision to request from the server. <a href="http://en.wikipedia.org/wiki/Decimal_degrees">Wikipedia</a> has a great reference of digit precision to meters.</td>
         </tr>
         <tr>
             <td><code>token</code></td>
@@ -77,7 +77,7 @@ layout: documentation.hbs
         <tr>
             <td><code>proxy</code></td>
             <td><code>String</code></td>
-            <td>URL of an <a href="https://developers.arcgis.com/javascript/jshelp/ags_proxy.html">ArcGIS API for JavaScript proxies</a> or <a href="https://github.com/Esri/resource-proxy">ArcGIS Resoruce Proxies</a> to use for proxying POST requests.</td>
+            <td>URL of an <a href="https://developers.arcgis.com/javascript/jshelp/ags_proxy.html">ArcGIS API for JavaScript proxies</a> or <a href="https://github.com/Esri/resource-proxy">ArcGIS Resource Proxies</a> to use for proxying POST requests.</td>
         </tr>
         <tr>
             <td><code>useCORS</code></td>
@@ -163,7 +163,7 @@ layout: documentation.hbs
             <td>
                 Adds a new feature to the feature layer. this also adds the feature to the map if creation is successful.
                 <ul>
-                    <li>Requires authentication as a user who has permission to edit the service in ArcGIS Online or the user who created the srevice.</li>
+                    <li>Requires authentication as a user who has permission to edit the service in ArcGIS Online or the user who created the service.</li>
                     <li>Requires the <code>Create</code> capability be enabled on the service. You can check if creation exists by checking the metadata of your service under capabilities in the metadata.</li>
                 </ul>
             </td>
@@ -174,7 +174,7 @@ layout: documentation.hbs
             <td>
                 Update the provided feature on the Feature Layer. This also updates the feature on the map.
                 <ul>
-                    <li>Requires authentication as a user who has permission to edit the service in ArcGIS Online or the user who created the srevice.</li>
+                    <li>Requires authentication as a user who has permission to edit the service in ArcGIS Online or the user who created the service.</li>
                     <li>Requires the <code>Update</code> capability be enabled on the service. You can check if creation exists by checking the metadata of your service under capabilities in the metadata.</li>
                 </ul>
             </td>
@@ -185,7 +185,7 @@ layout: documentation.hbs
             <td>
                 Remove the feature with the provided id from the feature layer. This will also remove the feature from the map if it exists.
                 <ul>
-                    <li>Requires authentication as a user who has permission to edit the service in ArcGIS Online or the user who created the srevice.</li>
+                    <li>Requires authentication as a user who has permission to edit the service in ArcGIS Online or the user who created the service.</li>
                     <li>Requires the <code>Update</code> capability be enabled on the service. You can check if creation exists by checking the metadata of your service under capabilities in the metadata.</li>
                 </ul>
             </td>

@@ -7,7 +7,7 @@ layout: documentation.hbs
 
 Inherits from [`L.esri.Service`]({{assets}}/api-reference/services/service.html)
 
-`L.esri.Services.FeatureLayer` is an abstaction interacting with Feature Layers running on ArcGIS Online and ArcGIS server that allows you to make requests to the API, as well as query, add, update and remove features from the service.
+`L.esri.Services.FeatureLayer` is an abstraction interacting with Feature Layers running on ArcGIS Online and ArcGIS server that allows you to make requests to the API, as well as query, add, update and remove features from the service.
 
 ### Constructor
 
@@ -21,7 +21,7 @@ Inherits from [`L.esri.Service`]({{assets}}/api-reference/services/service.html)
     <tbody>
         <tr>
             <td><code class="nobr">new L.esri.Services.FeatureLayer({{{param 'String' 'url'}}}, {{{param 'Object' 'options'}}})</code><br><br><code class="nobr">L.esri.Services.featureLayer({{{param 'String' 'url'}}}, {{{param 'Object' 'options'}}})</code></td>
-            <td>The `url` parameter is the url to the ArcGIS Server or ArcGIS Online feature layer you would like to consume.</td>
+            <td>The `url` parameter is the URL to the ArcGIS Server or ArcGIS Online feature layer you would like to consume.</td>
         </tr>
     </tbody>
 </table>
@@ -64,7 +64,7 @@ Inherits from [`L.esri.Service`]({{assets}}/api-reference/services/service.html)
             <td>
                 Adds a new feature to the feature layer. this also adds the feature to the map if creation is successful.
                 <ul>
-                    <li>Requires authentication as a user who has permission to edit the service in ArcGIS Online or the user who created the srevice.</li>
+                    <li>Requires authentication as a user who has permission to edit the service in ArcGIS Online or the user who created the service.</li>
                     <li>Requires the <code>Create</code> capability be enabled on the service. You can check if creation exists by checking the metadata of your service under capabilities in the metadata.</li>
                 </ul>
             </td>
@@ -75,7 +75,7 @@ Inherits from [`L.esri.Service`]({{assets}}/api-reference/services/service.html)
             <td>
                 Update the provided feature on the Feature Layer. This also updates the feature on the map.
                 <ul>
-                    <li>Requires authentication as a user who has permission to edit the service in ArcGIS Online or the user who created the srevice.</li>
+                    <li>Requires authentication as a user who has permission to edit the service in ArcGIS Online or the user who created the service.</li>
                     <li>Requires the <code>Update</code> capability be enabled on the service. You can check if creation exists by checking the metadata of your service under capabilities in the metadata.</li>
                 </ul>
             </td>
