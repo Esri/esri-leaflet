@@ -1,0 +1,79 @@
+---
+title: Access premium ArcGIS Online content
+description: Access Esri hosted and curated content is ArcGIS Online like traffic maps. You will be asked to authenticate with ArcGIS Online, alternately in your application you can generate a token and pass it in.
+layout: example.hbs
+---
+
+<style>
+  #auth {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 10;
+    background: white;
+    padding: 1em;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.65);
+    border-radius: 4px;
+  }
+
+  #auth input {
+    display: inline-block;
+    border: 1px solid #999;
+    font-size: 14px;
+    border-radius: 4px;
+    height: 28px;
+    line-height: 28px;
+  }
+</style>
+
+<div id="map"></div>
+<div id="auth">
+  <a href="#" id="sign-in">Add Traffic Layer</a>
+</div>
+
+<script>
+  var clientID = 'FxeCTSwkrA9yqVGS';
+  var accessToken;
+  var callbacks = [];
+  var callbackPage = 'http://esri.github.io/esri-leaflet/examples/oauth/callback.html';
+
+  var signInButton = document.getElementById('sign-in');
+
+  var trafficLayer;
+
+  var map = new L.Map('map').setView([34.045, -118.195], 12);
+
+  L.esri.basemapLayer('Streets').addTo(map);
+
+  // this function will be called when the oauth process is complete
+  window.oauthCallback = function(token) {
+    accessToken = token;
+    for (var i = 0; i < callbacks.length; i++) {
+      callbacks[i](token);
+    }
+    callbacks = [];
+  };
+   // this function will open a window and start the oauth process
+  function oauth(callback) {
+    if(accessToken){
+      callback(accessToken);
+    } else {
+      callbacks.push(callback);
+      window.open('https://www.arcgis.com/sharing/oauth2/authorize?client_id='+clientID+'&response_type=token&expiration=20160&redirect_uri=' + window.encodeURIComponent(callbackPage), 'oauth-window', 'height=400,width=600,menubar=no,location=yes,resizable=yes,scrollbars=yes,status=yes');
+    }
+  }
+
+  signInButton.addEventListener('click', function(e){
+    oauth(function(token){
+      trafficLayer = L.esri.dynamicMapLayer('http://traffic.arcgis.com/arcgis/rest/services/World/Traffic/MapServer', {
+        token: token
+      }).addTo(map);
+      trafficLayer.on('authenticationrequired', function(e){
+        oauth(function(token){
+          e.authenticate(token);
+        });
+      });
+    });
+    e.preventDefault();
+  });
+</script>

@@ -1,0 +1,24 @@
+---
+title: Center the initial map state
+description: Geocode an address and then center the map on it automatically. This demo relies of the <a href="https://github.com/Esri/esri-leaflet-geocoder">Esri Leaflet Geocoder</a> plugin.
+layout: example.hbs
+---
+
+<script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.3/esri-leaflet-geocoder.js"></script>
+<link rel="stylesheet" type="text/css" href="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.3/esri-leaflet-geocoder.css">
+
+<div id="map"></div>
+
+<script>
+  var geocoder = new L.esri.Services.Geocoding();
+
+  var map = L.map('map');
+
+  L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+  }).addTo(map);
+
+  geocoder.geocode('New York City', {}, function (error, results) {
+    map.fitBounds(results[0].bounds);
+  });
+</script>

@@ -1,0 +1,52 @@
+---
+title: Styling points
+description: Custom styles on point features with <code>L.Icon</code>. More information about Feature Layers can be found in the <a href="/esri-leaflet/api-reference/layers/feature-layer.html">L.esri.Layers.FeatureLayer</a> documentation.
+layout: example.hbs
+---
+
+<div id="map"></div>
+
+<script>
+  var map = L.map('map').setView([45.526, -122.667], 15);
+
+  var icons = {
+    north: L.icon({
+      iconUrl: '{{assets}}img/bus-stop-north.png',
+      iconRetinaUrl: '{{assets}}img/bus-stop-north@2x.png',
+      iconSize: [27, 31],
+      iconAnchor: [13.5, 17.5],
+      popupAnchor: [0, -11],
+    }),
+    south: L.icon({
+      iconUrl: '{{assets}}img/bus-stop-south.png',
+      iconRetinaUrl: '{{assets}}img/bus-stop-south@2x.png',
+      iconSize: [27, 31],
+      iconAnchor: [13.5, 13.5],
+      popupAnchor: [0, -11],
+    }),
+    east: L.icon({
+      iconUrl: '{{assets}}img/bus-stop-east.png',
+      iconRetinaUrl: '{{assets}}img/bus-stop-east@2x.png',
+      iconSize: [31, 27],
+      iconAnchor: [13.5, 17.5],
+      popupAnchor: [0, -11],
+    }),
+    west: L.icon({
+      iconUrl: '{{assets}}img/bus-stop-west.png',
+      iconRetinaUrl: '{{assets}}img/bus-stop-west@2x.png',
+      iconSize: [31, 27],
+      iconAnchor: [17.5, 13.5],
+      popupAnchor: [0, -11],
+    }),
+  };
+
+  L.esri.basemapLayer('Streets').addTo(map);
+  L.esri.featureLayer('http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Trimet_Transit_Stops/FeatureServer/0', {
+   pointToLayer: function (geojson, latlng) {
+    console.log(geojson, latlng);
+      return L.marker(latlng, {
+        icon: icons[geojson.properties.direction.toLowerCase()]
+      });
+    },
+  }).addTo(map);
+</script>

@@ -1,0 +1,37 @@
+---
+title: ArcGIS Server username/password
+description: Example showing authentication with ArcGIS Server via a username and password. In this example a username and password are hardcoded in.
+layout: example.hbs
+---
+
+<div id="map"></div>
+
+<script>
+  var map = new L.Map('map').setView([34.326, -117.697], 12);
+
+  L.esri.basemapLayer('Topographic').addTo(map);
+
+  function serverAuth(callback){
+    L.esri.post('http://sampleserver6.arcgisonline.com/arcgis/tokens/generateToken', {
+      username: 'user1',
+      password: 'user1',
+      f: 'json',
+      expiration: 86400,
+      client: 'referer',
+      referer: window.location.origin
+    }, callback);
+  }
+
+  serverAuth(function(error, response){
+    var dl = L.esri.dynamicMapLayer('http://sampleserver6.arcgisonline.com/arcgis/rest/services/Wildfire_secure_ac/MapServer', {
+      opacity: 1,
+      token:  response.token
+    }).addTo(map);
+
+    dl.on('authenticationrequired', function (e) {
+      serverAuth(function(error, response){
+        e.authenticate(response.token);
+      });
+    });
+  });
+</script>

@@ -1,0 +1,76 @@
+---
+title: Styling lines
+description: Custom styles for line features with the <code>style</code> option. More information about Feature Layers can be found in the <a href="/esri-leaflet/api-reference/layers/feature-layer.html">L.esri.Layers.FeatureLayer</a> documentation.
+layout: example.hbs
+---
+
+<style>
+  #info-pane {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 10;
+    padding: 1em;
+    background: white;
+  }
+</style>
+
+<div id="map"></div>
+<div id="info-pane" class="leaflet-bar"></div>
+
+<script type='text/javascript'>
+  var map = L.map('map').setView([45.5275, -122.6717], 14);
+
+  L.esri.basemapLayer('Streets').addTo(map);
+
+  var bikePaths = L.esri.featureLayer('http://services.arcgis.com/uCXeTVveQzP4IIcx/arcgis/rest/services/bike_rte/FeatureServer/0', {
+    style: function (feature) {
+      var c,o = 0.75;
+      switch (feature.properties.BIKEMODE) {
+        case 'Low traffic through street':
+          c = '#007D7D';
+          break;
+        case 'Bike boulevard':
+          c = '#00FF3C';
+          break;
+        case 'Caution area':
+          c = '#FF0000';
+          break;
+        case 'Local multi-use path':
+          c = '#00BEFF';
+          break;
+        case 'Regional multi-use path':
+          c = '#b1a9d0';
+          break;
+        case 'Moderate traffic through street':
+          c = '#FFEB00';
+          break;
+        case 'Planned multi-use path':
+          c = '#000000';
+          break;
+        case 'Bike lane':
+          c = '#328000';
+          o = '0.70';
+          break;
+        case 'High traffic through street':
+          c = '#FFA500';
+          break;
+        case 'Planned bike lane':
+          c = '#000000';
+          o = '1.0';
+          break;
+        default:
+          c = '#C0C0C0';
+      }
+      return {color: c, opacity: o, weight: 5};
+    }
+  }).addTo(map);
+
+  bikePaths.on('mouseout', function(e){
+    document.getElementById('info-pane').innerText = 'Hover to Inspect';
+  });
+
+  bikePaths.on('mouseover', function(e){
+    document.getElementById('info-pane').innerText = e.layer.feature.properties.BIKEMODE;
+  });
+</script>

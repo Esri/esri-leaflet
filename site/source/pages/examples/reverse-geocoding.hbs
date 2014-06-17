@@ -1,0 +1,26 @@
+---
+title: Reverse geocoding
+description: Query the closest address to a given point with the Esri Leaflet Geocoder plugin. Click to show the closet street address to the clicked point. This demo relies of the <a href="https://github.com/Esri/esri-leaflet-geocoder">Esri Leaflet Geocoder</a> plugin.
+layout: example.hbs
+---
+
+<script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.3/esri-leaflet-geocoder.js"></script>
+<link rel="stylesheet" type="text/css" href="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.3/esri-leaflet-geocoder.css">
+
+<div id="map"></div>
+
+<script>
+  var map = L.map('map').setView([ 40.702, -73.979], 13);
+
+  L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+  }).addTo(map);
+
+  var geocodeService = new L.esri.Services.Geocoding();
+
+  map.on('click', function(e){
+    geocodeService.reverse(e.latlng, {}, function(error, result){
+      L.marker(result.latlng).addTo(map).bindPopup(result.address).openPopup();
+    });
+  });
+</script>

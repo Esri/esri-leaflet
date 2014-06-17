@@ -1,0 +1,55 @@
+---
+title: Simplifying complex features
+description: Complex features can be simplified on the server for faster response times. Zoom in and watch as higher resolution vectors are loaded from the service. Hover over features for effects. More information about Feature Layers can be found in the <a href="/esri-leaflet/api-reference/layers/feature-layer.html">L.esri.Layers.FeatureLayer</a> documentation.
+layout: example.hbs
+---
+
+<style>
+  #info-pane {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 10;
+    padding: 1em;
+    background: white;
+  }
+</style>
+
+<div id="map"></div>
+<div id="info-pane" class="leaflet-bar"></div>
+
+<script>
+  var map = L.map('map').setView([37.75, -122.23], 9);
+
+  L.esri.basemapLayer('Gray').addTo(map);
+
+  var zipcodes = L.esri.featureLayer('http://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_ZIP_Codes/FeatureServer/0', {
+    simplifyFactor: 0.25,
+    fields: ['FID', 'ZIP', 'PO_NAME'],
+    style: function(feature) {
+      return {
+        color: '#000',
+        weight: 1,
+        opacity: 1
+      }
+    }
+  }).addTo(map);
+
+  var oldId;
+
+  zipcodes.on('mouseout', function(e){
+    document.getElementById('info-pane').innerText = 'Hover to Inspect';
+  });
+
+  zipcodes.on('mouseover', function(e){
+    zipcodes.resetStyle(oldId);
+    oldId = e.layer.feature.id;
+    document.getElementById('info-pane').innerText = e.layer.feature.properties.ZIP + ' ' + e.layer.feature.properties.PO_NAME;
+    e.layer.bringToFront();
+    zipcodes.setFeatureStyle(e.layer.feature.id, {
+      color: '#9D78D2',
+      weight: 3,
+      opacity: 1
+    });
+  });
+</script>

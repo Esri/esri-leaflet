@@ -1,0 +1,13 @@
+---
+title: Showing an ArcGIS basemap
+description: Displaying an ArcGIS Online basemap.
+layout: example.hbs
+---
+
+<div id="map"></div>
+
+<script>
+  var map = L.map('map').setView([37.78, -92.85], 4);
+
+  L.esri.basemapLayer('Streets').addTo(map);
+</script>

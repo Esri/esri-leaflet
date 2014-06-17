@@ -1,0 +1,118 @@
+// ┌───────────┐
+// │ TYPEFACES │
+// └───────────┘
+$lato: 'Lato', sans-serif;
+$vollkorn: 'Vollkorn', serif;
+
+// ┌─────────┐
+// │ L A T O │
+// └─────────┘
+%Lato {
+  font-family: $lato; font-weight: 400; font-style: normal; text-rendering: optimizeLegibility;
+  strong {@extend %LatoBold;}
+  em     {@extend %LatoItalic;}
+}
+
+%LatoItalic {
+  font-family: $lato; font-weight: 400; font-style: italic; text-rendering: optimizeLegibility;
+  strong {@extend %LatoBoldItalic;}
+}
+
+%LatoBold {
+  font-family: $lato; font-weight: 700; font-style: normal; text-rendering: optimizeLegibility;
+  strong {@extend %LatoBold;}
+  em     {@extend %LatoBoldItalic;}
+}
+
+%LatoBoldItalic {
+  font-family: $lato; font-weight: 700; font-style: italic; text-rendering: optimizeLegibility;
+  em, strong {@extend %LatoBold;}
+}
+
+// ┌─────────────────┐
+// │ V O L L K O R N │
+// └─────────────────┘
+%Vollkorn {
+  font-family: $vollkorn; font-weight: 400; font-style: normal; text-rendering: optimizeLegibility;
+  strong {@extend %VollkornBold;}
+  em     {@extend %VollkornItalic;}
+}
+
+%VollkornItalic {
+  font-family: $vollkorn; font-weight: 400; font-style: italic; text-rendering: optimizeLegibility;
+  strong {@extend %VollkornBoldItalic;}
+}
+
+%VollkornBold {
+  font-family: $vollkorn; font-weight: 700; font-style: normal; text-rendering: optimizeLegibility;
+  strong {@extend %VollkornBold;}
+  em     {@extend %VollkornBoldItalic;}
+}
+
+%VollkornBoldItalic {
+  font-family: $vollkorn; font-weight: 700; font-style: italic; text-rendering: optimizeLegibility;
+  em, strong {@extend %VollkornBold;}
+}
+
+
+// ┌─────────────┐
+// │ S O U R C E │
+// └─────────────┘
+%Source {
+  font-family: monospace; font-weight: 300; font-style: normal; text-rendering: optimizeLegibility;
+}
+
+// ┌─────────────────────────────┐
+// │ AUG. FOURTH: 16px @ 1:1.414 │
+// └─────────────────────────────┘
+$p90: 5.653rem;
+$p63: 3.998rem;
+$p45: 2.827rem;
+$p31: 1.999rem;
+$p22: 1.414rem;
+$p16: 1rem;
+$p11: 0.707rem;
+
+
+
+$baseline: 1.5rem;
+@function lines($lines){
+  @return $lines*$baseline;
+}
+html  {font-size: 16px; @extend %Lato; line-height: 1*$baseline;}
+body  {color: $darker-gray}
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+}
+h1    {font-size: 2.50rem; margin:lines(1) 0; line-height: lines(2); @extend %Vollkorn; color: $dark-gray;}
+h2    {font-size: 2.25rem; margin:lines(1) 0; line-height: lines(2); @extend %Vollkorn; color: $dark-gray;}
+h3    {font-size: 2.00rem; margin:lines(1) 0; line-height: lines(2); @extend %Vollkorn; color: $dark-gray;}
+h4    {font-size: 1.75rem; @extend %Vollkorn; color: $dark-gray;}
+h5    {font-size: 1.50rem; @extend %Vollkorn; color: $dark-gray;}
+small {font-size: 0.75rem;}
+
+.large {font-size: $p22; line-height: 1.5*$baseline;}
+.center-text { text-align: center; }
+
+a {
+  color: $dark-green;
+  text-decoration: none;
+  padding-bottom: .25em;
+  border-bottom: 2px solid transparent;
+  @include user-select(none);
+  @include transition(all 100ms linear);
+  &:focus, &:hover {
+    @include user-select(none);
+    border-bottom: 2px solid $dark-green;
+    outline: none;
+  }
+}
+
+hr {
+  border: none;
+  border-top: 2px solid $light-gray;
+}
+
+p {
+  margin: lines(1) 0;
+}

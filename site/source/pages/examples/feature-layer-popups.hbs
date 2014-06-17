@@ -1,0 +1,18 @@
+---
+title: Custom popups
+description: Customize popups on a Feature Layer. More information about Feature Layers can be found in the <a href="/esri-leaflet/api-reference/layers/feature-layer.html">L.esri.Layers.FeatureLayer</a> documentation.
+layout: example.hbs
+---
+
+<div id="map"></div>
+
+<script>
+  var map = L.map('map').setView([45.526, -122.667], 13);
+
+  L.esri.basemapLayer('Streets').addTo(map);
+  var trees = L.esri.featureLayer('http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Heritage_Trees_Portland/FeatureServer/0').addTo(map);
+
+  trees.bindPopup(function (feature) {
+    return L.Util.template('<p>{COMMON_NAM}<br>{SCIENTIFIC}<br>{NOTES}</p>', feature.properties);
+  });
+</script>

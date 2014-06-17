@@ -1,0 +1,74 @@
+---
+title: Time Ranges
+description: Using time to filter visualized information from a Map Service. Enter dates between 1930 and 1980. More information about Map Services can be found in the <a href="/esri-leaflet/api-reference/layers/dymanic-map-layer.html">L.esri.Layers.DynamicMapLayer</a> documentation.
+layout: example.hbs
+---
+
+<!-- Load Leaflet.heat via rawgit.com, do not use in production -->
+<script src="https://rawgit.com/Leaflet/Leaflet.heat/gh-pages/dist/leaflet-heat.js"></script>
+
+<style>
+  #time-ranges {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 10;
+    padding: 1em;
+    background: white;
+  }
+  #time-ranges input {
+    display: inline-block;
+    border: 1px solid #999;
+    font-size: 14px;
+    border-radius: 4px;
+    height: 28px;
+    line-height: 28px;
+  }
+  #time-ranges input[type='submit'] {
+    box-sizing: content-box;
+    padding: 0 1em;
+    text-transform: uppercase;
+    color: white;
+    background: #5C7DB8;
+    border-color: #5C7DB8;
+  }
+</style>
+
+<div id="map"></div>
+
+<div id="time-ranges" class="leaflet-bar">
+  <form action="#" id="form">
+    <label for="from">
+      From
+      <input id='from' type="date" value='1930-01-01' name='from'>
+    </label>
+    <label for="to">
+      To
+      <input  id='to' type="date" value='1950-12-31' name='to'>
+    </label>
+    <input type="submit" value="Update">
+  </form>
+</div>
+
+<script>
+  var timeForm = document.getElementById('form');
+  var startTimeInput = document.getElementById('from');
+  var endTimeInput = document.getElementById('to');
+
+  var map = L.map('map').setView([37.604,-101.15], 9);
+
+  L.esri.basemapLayer('Gray').addTo(map);
+  L.esri.basemapLayer('GrayLabels').addTo(map);
+
+  var oilWells = L.esri.dynamicMapLayer('http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Petroleum/KSWells/MapServer', {
+    useCors: false,
+    layers: [0],
+    from: new Date(startTimeInput.value),
+    to: new Date(endTimeInput.value)
+  }).addTo(map);
+
+  timeForm.addEventListener('submit', function updateTimeRange(e){
+    oilWells.setTimeRange(new Date(startTimeInput.value), new Date(endTimeInput.value));
+    e.preventDefault();
+  });
+</script>

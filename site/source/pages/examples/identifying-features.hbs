@@ -1,0 +1,50 @@
+---
+title: Identifying Features
+description: Identifying features on a Dynamic Map Layer on click by querying the service. Click a feature to identify it. More information about Map Services can be found in the <a href="/esri-leaflet/api-reference/layers/dymanic-map-layer.html">L.esri.Layers.DynamicMapLayer</a> documentation.
+layout: example.hbs
+---
+
+<style>
+  #selectedFeatures {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 10;
+    background: white;
+    padding: 1em;
+  }
+</style>
+
+<div id="map"></div>
+<div id="selectedFeatures" class="leaflet-bar">No Features Selected</div>
+<script>
+  var map = L.map('map').setView([34.025, -116.203], 9);
+
+  L.esri.basemapLayer('Gray').addTo(map);
+
+  var federalLands = L.esri.dynamicMapLayer('http://maps1.arcgisonline.com/ArcGIS/rest/services/USA_Federal_Lands/MapServer', {
+    opacity: 0.5,
+    useCors: false
+  }).addTo(map);
+
+  var identifiedFeature;
+  var pane = document.getElementById('selectedFeatures');
+
+  map.on('click', function (e) {
+    if(identifiedFeature){
+      map.removeLayer(identifiedFeature);
+      pane.innerText = 'Loading';
+    }
+    federalLands.identify().on(map).at(e.latlng).run(function(error, featureCollection){
+      identifiedFeature = new L.GeoJSON(featureCollection.features[0], {
+        style: function(){
+          return {
+            color: '#5C7DB8',
+            weight: 2
+          };
+        }
+      }).addTo(map);
+      pane.innerText = featureCollection.features[0].properties.NAME1;
+    });
+  });
+</script>

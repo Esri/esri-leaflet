@@ -10,6 +10,9 @@ Icon
 *.sublime-project
 .idea/*
 
+# SASS
+.sass-cache
+
 # Node
 node_modules
 
@@ -20,4 +23,7 @@ coverage
 .grunt/
 
 # Debugging Files
-debug.html
+working
+
+# Docs Build
+site/build

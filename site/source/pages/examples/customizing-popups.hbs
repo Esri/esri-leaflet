@@ -1,0 +1,26 @@
+---
+title: Custom Popup with Dynamic Map Layer
+description: Customizing a popup on a Dynamic Map Layer. Click to render a popup. More information about Map Services can be found in the <a href="/esri-leaflet/api-reference/layers/dymanic-map-layer.html">L.esri.Layers.DynamicMapLayer</a> documentation.
+layout: example.hbs
+---
+
+<div id="map"></div>
+
+<script>
+  var map = L.map('map').setView([34.025, -116.203], 9);
+
+  L.esri.basemapLayer('Gray').addTo(map);
+
+  var federalLands = L.esri.dynamicMapLayer('http://maps1.arcgisonline.com/ArcGIS/rest/services/USA_Federal_Lands/MapServer', {
+    opacity: 0.5,
+    useCors: false
+  }).addTo(map);
+
+  federalLands.bindPopup(function (error, featureCollection) {
+    if(error || featureCollection.features.length === 0) {
+      return false;
+    } else {
+      return 'Name: ' + featureCollection.features[0].properties.NAME1;
+    }
+  });
+</script>

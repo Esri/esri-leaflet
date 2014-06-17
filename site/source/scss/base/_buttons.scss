@@ -1,0 +1,41 @@
+// Buttons
+.btn {
+  display: inline-block;
+  padding: 1em;
+  background-color: $green;
+  color: $dark-gray;
+  text-decoration: none;
+  font-family: $lato;
+  cursor: pointer;
+  &:hover, &:focus {
+    background-color: lighten($green, 10%);
+    color: $gray;
+    outline: none;
+  }
+  &.outline {
+    background: transparent;
+    color: $green;
+    border: 1px solid $green;
+    &:hover {
+      background-color: lighten($green, 10%);
+      color: $white;
+      border: 1px solid lighten($green, 10%);
+    }
+  }
+  &.dark-green {
+    background: $dark-green;
+    color: $light-gray;
+    &:hover {
+      background-color: lighten($dark-green, 10%);
+      color: $lighter-gray;
+    }
+  }
+  &.white {
+    background: $off-white;
+    color: $dark-green;
+    &:hover {
+      background-color: $white;
+      color: $green;
+    }
+  }
+}

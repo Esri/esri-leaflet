@@ -1,0 +1,30 @@
+---
+title: Styling heatmaps
+description: Custom styling of heatmap gradients with the <code>L.heat</code> options. More information about Feature Layers can be found in the <a href="/esri-leaflet/api-reference/layers/feature-layer.html">L.esri.Layers.FeatureLayer</a> documentation.
+layout: example.hbs
+---
+
+<!-- Include Leaflet.heat via rawgit.com, do not use in production -->
+<script src="https://rawgit.com/Leaflet/Leaflet.heat/gh-pages/dist/leaflet-heat.js"></script>
+
+<!-- Load Heatmap Feature Layer from CDN -->
+<script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/0.0.1-beta.5/esri-leafelt-heatmap-feature-layer.js"></script>
+
+<div id="map"></div>
+
+<script>
+  var map = L.map('map').setView([ 40.706, -73.926], 14);
+
+  L.esri.basemapLayer('Gray').addTo(map);
+
+  L.esri.heatmapFeatureLayer('http://services.arcgis.com/rOo16HdIMeOBI4Mb/ArcGIS/rest/services/Graffiti_Reports/FeatureServer/0', {
+    radius: 14,
+    gradient: {
+      0.2: '#ffffb2',
+      0.4: '#fd8d3c',
+      0.6: '#fd8d3c',
+      0.8: '#f03b20',
+      1: '#bd0026'
+    }
+  }).addTo(map);
+</script>

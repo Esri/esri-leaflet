@@ -1,0 +1,24 @@
+.sidebar {
+  @include box-sizing(border-box);
+  padding: 1.5rem 1rem;
+  float: left;
+  width: 24.75%;
+  position: relative;
+  background-color: white;
+  z-index: 3;
+  nav {
+    a {
+      display: block;
+      float: left;
+      clear: both;
+      padding: .15em 0;
+      margin-bottom: .25em;
+      @include clearfix();
+    }
+  }
+  h5 {
+    float: left;
+    clear: both;
+    margin: 1rem 0 0.5rem;
+  }
+}

@@ -1,0 +1,44 @@
+---
+title: Querying features
+description: Performing advanced queries on a Feature Layer. Click on the map to query all features within 500 meters. More information about Feature Layers can be found in the <a href="/esri-leaflet/api-reference/layers/feature-layer.html">L.esri.Layers.FeatureLayer</a> documentation.
+layout: example.hbs
+---
+
+<div id="map"></div>
+
+<script>
+  var map = L.map('map').setView([45.526, -122.667], 15);
+
+  L.esri.basemapLayer('Streets').addTo(map);
+  var stops = L.esri.featureLayer('http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Trimet_Transit_Stops/FeatureServer/0', {
+   pointToLayer: function (geojson, latlng) {
+      return L.circleMarker(latlng, {
+        color: '#5B7CBA',
+        weight: 2,
+        opacity: 0.85,
+        fillOpacity: 0.5
+      });
+    },
+  }).addTo(map);
+
+  var previousIds = [];
+
+  map.on('click', function(e){
+    stops.query().nearby(e.latlng, 500).ids(function(error, ids){
+      for (var j = 0; j < previousIds.length; j++) {
+        stops.resetStyle(previousIds[j]);
+      }
+
+      previousIds = ids;
+
+      for (var i = 0; i < ids.length; i++) {
+        stops.setFeatureStyle(ids[i], {
+          color: '#BA454E',
+          weight: 2,
+          opacity: 0.85,
+          fillOpacity: 0.5
+        });
+      }
+    });
+  });
+</script>

@@ -1,0 +1,46 @@
+---
+title: Non-mercator projection
+description: Using non mercator tiles with <code>L.esri.Layers.TiledMapLayer</code> with the <a href="https://github.com/kartena/Proj4Leaflet">Proj4Leaflet</a> plugin.
+layout: example.hbs
+---
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/proj4js/2.0.0/proj4.js"></script>
+<script src="https://cdn.rawgit.com/kartena/Proj4Leaflet/0.7.0/src/proj4leaflet.js"></script>
+
+<div id="map"></div>
+
+<script>
+  // create new Proj4Leaflet CRS
+  var crs = new L.Proj.CRS('EPSG:26912', '+proj=utm +zone=12 +ellps=GRS80 +datum=NAD83 +units=m +no_defs', {
+    transformation: new L.Transformation(1, 5120900, -1, 9998100),
+    resolutions: [
+      4891.96999883583,
+      2445.98499994708,
+      1222.99250010583,
+      611.496250052917,
+      305.748124894166,
+      152.8740625,
+      76.4370312632292,
+      38.2185156316146,
+      19.1092578131615,
+      9.55462890525781,
+      4.77731445262891,
+      2.38865722657904,
+      1.19432861315723,
+      0.597164306578613,
+      0.298582153289307
+    ]
+  });
+
+  // pass crs into map constructor
+  var map = new L.Map('map', {
+    crs: crs
+  }).setView([40.381, -111.859], 5);
+
+  L.esri.tiledMapLayer('http://mapserv.utah.gov/arcgis/rest/services/BaseMaps/Terrain/MapServer', {
+    maxZoom: 14,
+    minZoom: 0,
+    continuousWorld: true,
+    attribution: 'State of Utah'
+  }).addTo(map);
+</script>

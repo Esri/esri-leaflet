@@ -1,0 +1,46 @@
+---
+layout: page.hbs
+---
+
+{{> sidebar-examples }}
+
+<div class="example-content">
+<div class="wrap">
+  <h1>{{ title }}</h1>
+  <p>{{{description}}}</p>
+</div>
+<div id="map-wrapper">
+  {{> body }}
+</div>
+{{#markdown}}
+```xml
+<html>
+<head>
+  <meta charset=utf-8 />
+  <title>{{page.data.title}}</title>
+  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+
+  <!-- Load Leaflet from CDN-->
+  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+  <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+
+  <!-- Load Esri Leaflet from CDN -->
+  <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/0.0.1-beta.5/esri-leaflet.js"></script>
+
+  <style>
+    body {margin:0;padding:0;}
+    #map {position: absolute;top:0;bottom:0;right:0;left:0;}
+  </style>
+</head>
+<body>
+
+{{#each this.pages}}{{#if isCurrentPage}}{{{trim page}}}{{/if}}{{/each}}
+
+</body>
+</html>
+```
+{{/markdown}}
+<div class="wrap">
+  <p><a href="http://github.com/esri/esri-leaflet/edit/master/{{page.src}}">Edit this sample on GitHub</a></p>
+</div>
+</div>

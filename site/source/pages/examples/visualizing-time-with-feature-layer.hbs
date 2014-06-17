@@ -1,0 +1,77 @@
+---
+title: Visualizing time on a feature layer
+description: Filtering a feature layer within a certain time range. Try dates between October 2010 and August 2011. More information about Feature Layers can be found in the <a href="/esri-leaflet/api-reference/layers/feature-layer.html">L.esri.Layers.FeatureLayer</a> documentation.
+layout: example.hbs
+---
+
+<!-- Include Leaflet.heat via rawgit.com, do not use in production -->
+<script src="https://rawgit.com/Leaflet/Leaflet.heat/gh-pages/dist/leaflet-heat.js"></script>
+
+<!-- Load Heatmap Feature Layer from CDN -->
+<script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/0.0.1-beta.5/esri-leafelt-heatmap-feature-layer.js"></script>
+
+<style>
+  #time-ranges {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 10;
+    padding: 1em;
+    background: white;
+  }
+  #time-ranges input {
+    display: inline-block;
+    border: 1px solid #999;
+    font-size: 14px;
+    border-radius: 4px;
+    height: 28px;
+    line-height: 28px;
+  }
+  #time-ranges input[type='submit'] {
+    box-sizing: content-box;
+    padding: 0 1em;
+    text-transform: uppercase;
+    color: white;
+    background: #5C7DB8;
+    border-color: #5C7DB8;
+  }
+</style>
+
+<div id="map"></div>
+
+<div id="time-ranges" class="leaflet-bar">
+  <form action="#" id="form">
+    <label for="from">
+      From
+      <input id='from' type="date" value='2011-01-01' name='from'>
+    </label>
+    <label for="to">
+      To
+      <input  id='to' type="date" value='2011-03-31' name='to'>
+    </label>
+    <input type="submit" value="Update">
+  </form>
+</div>
+
+<script>
+  var timeForm = document.getElementById('form');
+  var startTimeInput = document.getElementById('from');
+  var endTimeInput = document.getElementById('to');
+
+  var map = L.map('map').setView([ 40.706, -73.926], 12);
+
+  L.esri.basemapLayer('Gray').addTo(map);
+  L.esri.basemapLayer('GrayLabels').addTo(map);
+
+  var reports = L.esri.heatmapFeatureLayer('http://services.arcgis.com/rOo16HdIMeOBI4Mb/ArcGIS/rest/services/Graffiti_Reports/FeatureServer/0', {
+    timeField: 'CreatedDate',
+    from: new Date(startTimeInput.value),
+    to: new Date(endTimeInput.value),
+    radius: 12
+  }).addTo(map);
+
+  timeForm.addEventListener('submit', function updateTimeRange(e){
+    reports.setTimeRange(new Date(startTimeInput.value), new Date(endTimeInput.value));
+    e.preventDefault();
+  });
+</script>
