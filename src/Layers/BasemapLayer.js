@@ -54,21 +54,21 @@
           }
         },
         DarkGray: {
-          urlTemplate: tileProtocol + '//{s}.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/World_Dark_Gray_Base_Beta/MapServer/tile/{z}/{y}/{x}',
+          urlTemplate: tileProtocol + "//tiles{s}.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/World_Dark_Gray_Base_Beta/MapServer/tile/{z}/{y}/{x}",
           options: {
             minZoom: 1,
             maxZoom: 10,
-            subdomains: ['server', 'services'],
+            subdomains: ['1', '2'],
             attribution: 'Esri, DeLorme, HERE'
           }
         },
         DarkGrayLabels: {
-          urlTemplate: tileProtocol + '//{s}.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/World_Dark_Gray_Reference_Beta/MapServer/tile/{z}/{y}/{x}',
+          urlTemplate: tileProtocol + '//tiles{s}.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/World_Dark_Gray_Reference_Beta/MapServer/tile/{z}/{y}/{x}',
           options: {
             //pane: 'esri-label',
             minZoom: 1,
             maxZoom: 10,
-            subdomains: ['server', 'services']
+            subdomains: ['1', '2']
           }
         },
         Gray: {

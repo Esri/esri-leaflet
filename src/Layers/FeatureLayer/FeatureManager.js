@@ -31,7 +31,12 @@
       this._service = new L.esri.Services.FeatureLayer(this.url, options);
 
       // Leaflet 0.8 change to new propagation
-      this._service.on('authenticationrequired requeststart requestend requesterror requestsuccess', this._propagateEvent, this);
+      this._service.on('authenticationrequired requeststart requestend requesterror requestsuccess', function (e) {
+        e = L.extend({
+          target: this
+        }, e);
+        this.fire(e.type, e);
+      }, this);
 
       if(this.options.timeField.start && this.options.timeField.end){
         this._startTimeIndex = new BinarySearchIndex();
@@ -338,16 +343,6 @@
         this.removeLayers([response.objectId]);
         callback.call(context, error, response);
       }, this);
-    },
-
-    // from https://github.com/Leaflet/Leaflet/blob/v0.7.2/src/layer/FeatureGroup.js
-    // @TODO remove at Leaflet 0.8
-    _propagateEvent: function (e) {
-      e = L.extend({
-        layer: e.target,
-        target: this
-      }, e);
-      this.fire(e.type, e);
     }
   });
 

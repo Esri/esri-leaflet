@@ -1,18 +1,28 @@
 ---
+title: L.esri.Layers.FeatureLayer
 layout: documentation.hbs
 ---
 
-# FeatureLayer
+# {{page.data.title}}
 
-`L.esri.FeatureLayer` is used to visualize and query data hosted in ArcGIS Feature Layers. These layers are hosted as a part of Feature Services on either ArcGIS Online or ArcGIS Server.
+`L.esri.Layer.FeatureLayer` is used to visualize and query vector geographic data hosted in ArcGIS Feature Layers. These layers are hosted as a part of Feature Services on either ArcGIS Online or ArcGIS Server.
 
 ### Constructor
 
-| Constructor | Description |
-| --- | --- |
-| `new L.esri.Layers.FeatureLayer(url, options)`<br>`L.esri.Layers.FeatureLayer(url, options)` | The `url` parameter is the url to the FeatureLayer you should like to display. See [service URLs](#service-urls) for more information on how to find these urls. |
-
-You can also initalize `L.esri.Layers.FeatureLayer` with the aliases `new L.esri.FeatureLayer(url, options)` and `L.esri.featureLayer(url, options)`.
+<table>
+    <thead>
+        <tr>
+            <th>Constructor</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code class="nobr">new L.esri.Layers.FeatureLayer({{{param 'String' 'key'}}}, {{{param 'Object' 'options'}}})</code><br><br><code class="nobr">L.esri.Layers.featureLayer({{{param 'String' 'key'}}}, {{{param 'Object' 'options'}}})</code><br><br><code class="nobr">new L.esri.FeatureLayer({{{param 'String' 'key'}}}, {{{param 'Object' 'options'}}})</code><br><br><code class="nobr">L.esri.featureLayer({{{param 'String' 'key'}}}, {{{param 'Object' 'options'}}})</code></td>
+            <td><code>url</code> should be the URL to the Feature Layer.</td>
+        </tr>
+    </tbody>
+</table>
 
 ### Options
 
@@ -26,17 +36,17 @@ You can also initalize `L.esri.Layers.FeatureLayer` with the aliases `new L.esri
     </thead>
     <tbody>
         <tr>
-            <td><code>pointToLayer(&lt;GeoJSON&gt;<GeoJSON> featureData, &lt;LatLng&gt; latlng)</code></td>
-            <td><code>function</code></td>
+            <td><code>pointToLayer({{{param 'GeoJSON Feature' 'feature' 'http://geojson.org/geojson-spec.html#feature-objects'}}}, {{{param 'LatLng' 'latlng' 'http://leafletjs.com/reference.html#latlng'}}})</code></td>
+            <td><code>Function</code></td>
             <td>Function that will be used for creating layers for GeoJSON points (if not specified, simple markers will be created).</td>
         </tr>
         <tr>
-            <td><code>style(&lt;GeoJSON&gt;<GeoJSON> featureData)</code></td>
+            <td><code>style({{{param 'GeoJSON Feature' 'feature' 'http://geojson.org/geojson-spec.html#feature-objects'}}}, {{{param 'ILayer' 'layer' 'http://leafletjs.com/reference.html#ilayer'}}})</code></td>
             <td><code>Function</code></td>
             <td>Function that will be used to get style options for vector layers created for GeoJSON features.</td>
         </tr>
         <tr>
-            <td><code>onEachFeature(&lt;GeoJSON&gt;<GeoJSON> featureData, &lt;iLayer&gt; layer)</code></td>
+            <td><code>onEachFeature({{{param 'GeoJSON Feature' 'feature' 'http://geojson.org/geojson-spec.html#feature-objects'}}}, {{{param 'ILayer' 'layer' 'http://leafletjs.com/reference.html#ilayer'}}})</code></td>
             <td><code>Function</code></td>
             <td> </td>
         </tr>
@@ -61,9 +71,9 @@ You can also initalize `L.esri.Layers.FeatureLayer` with the aliases `new L.esri
             <td>When paired with <code>from</code> defines the time range of features to display. Required the Feature Layer to be time enabled.</td>
         </tr>
         <tr>
-            <td><code>timeField</code>| </code>String</code> or </code>Object</code></td>
+            <td><code>timeField</code></td>
             <td><code>false</code></td>
-            <td>The name of the field to lookup the time of the feature. Can also be an object like <code>{start:'startTime', end:'endTime'}</code>.</td>
+            <td>The name of the field to lookup the time of the feature. Can be an object like <code>{start:'startTime', end:'endTime'}</code> or a string like <code>'created'</code>.</td>
         </tr>
         <tr>
             <td><code>timeFilterMode</code></td>
@@ -102,11 +112,12 @@ You can also initalize `L.esri.Layers.FeatureLayer` with the aliases `new L.esri
 
 | Event | Type | Description |
 | --- | --- | --- |
-| `loading` | [&lt;LoadingEvent&gt;]() | Fires when new features start loading. |
-| `load` | [&lt;Load&gt;]() | Fires when all features in the current bounds of the map have loaded. |
-| `authenticationrequired` | `[&lt;AuthenticationEvent&gt;]()` | This will be fired when a request to the service fails and requires authentication. See [working with authenticated services](#working-with-authenticated-services) for more information. |
+| `loading` | [<`LoadingEvent`>]({{assets}}api-reference/events.html#loading-event) | Fires when new features start loading. |
+| `load` | [<`LoadEvent`>]({{assets}}api-reference/events.html#load-event) | Fires when all features in the current bounds of the map have loaded. |
 
-In additon to these events `L.esri.FeatureLayer` also fires the following [Mouse Events](http://leafletjs.com/reference.html#event-objects) `click`, `dblclick`, `mouseover`, `mouseout`, `mousemove`, and `contextmenu` as well as the following the [Popup Events](http://leafletjs.com/reference.html#event-objects) `popupopen` and `popupclose`.
+`L.esri.Layer.FeatureLayer` also fires all  [`L.esri.Service.FeatureLayer`]({{assets}}/api-reference/services/feature-layer.html) events.
+
+In additon to these events `L.esri.Layer.FeatureLayer` also fires the following [Mouse Events](http://leafletjs.com/reference.html#event-objects) `click`, `dblclick`, `mouseover`, `mouseout`, `mousemove`, and `contextmenu` and the following the [Popup Events](http://leafletjs.com/reference.html#event-objects) `popupopen` and `popupclose`
 
 ### Methods
 
@@ -120,18 +131,31 @@ In additon to these events `L.esri.FeatureLayer` also fires the following [Mouse
     </thead>
     <tbody>
         <tr>
-            <td><code>setStyle(&lt;<a href="http://leafletjs.com/reference.html#path-options">Path options</a>&gt; style)</code></td>
+            <td><code>setStyle({{{param 'PathOptions' 'style' 'http://leafletjs.com/reference.html#path-options'}}})</code><br><br><code>setStyle({{{param 'Function' 'style'}}})</code></td>
             <td><code>this</code></td>
-            <td>Sets the given path options to each layer that has a <code>setStyle</code> method.</td>
+            <td>Sets the given path options to each layer that has a <code>setStyle</code> method. Can also be a <code>Function</code> that will recive a <code>feature</code> argument and should return <a href="http://leafletjs.com/reference.html#path-options">Path Options</a>
+            <pre><code class="language-javascript">featureLayer.setStyle(1, {
+    color: white;
+})</code></pre>
+            <pre><code class="language-javascript">featureLayer.setStyle(1, function(feature){
+    return {
+    weight: feature.properties.pixelWidth
+    };
+})</code></pre>
+            </td>
         </tr>
         <tr>
-            <td><code>resetStyle(&lt;String|Integer&gt; id)</code></td>
+            <td><code>setFeatureStyle({{{param 'String or Integer' 'id'}}}, {{{param 'Function or <a href="http://leafletjs.com/reference.html#path-options">Path Options</a>a>'}}})</code></td>
             <td><code>this</code></td>
-            <td>Given the ID of a feature, reset that feature to the original style, useful for resetting style after hover events.</td>
-
+            <td>Changes the style on a specfic feature.</td>
         </tr>
         <tr>
-            <td><code>bindPopup(&lt;Function&gt; fn, &lt;<a href="http://leafletjs.com/reference.html#popup-options">Popup options</a>&gt; options)</code></td>
+            <td><code>resetStyle({{{param 'String or Integer' id}}})</code></td>
+            <td><code>this</code></td>
+            <td>Given the ID of a feature, reset that feature to the original style.</td>
+        </tr>
+        <tr>
+            <td><code>bindPopup({{{param 'Function' 'fn'}}}, {{{param 'PopupOptions' 'popupOptions' 'http://leafletjs.com/reference.html#popup-options'}}})</code></td>
             <td><code>this</code></td>
             <td>
               Defines a function that will return HTML to be bound to a popup on each feature.
@@ -146,7 +170,7 @@ In additon to these events `L.esri.FeatureLayer` also fires the following [Mouse
             <td>Removed a popup previously bound with `bindPopup`.</td>
         </tr>
         <tr>
-            <td><code>eachFeature(&lt;Function&gt; fn, &lt;Object&gt; context)</code></td>
+            <td><code>eachFeature({{{param 'Function' 'fn'}}}, {{{param 'Object' 'context'}}})</code></td>
             <td><code>this</code></td>
             <td>
                 Calls the passed function against every feature. The function will be passed the layer that represents the feature.
@@ -156,7 +180,7 @@ In additon to these events `L.esri.FeatureLayer` also fires the following [Mouse
             </td>
         </tr>
         <tr>
-            <td><code>getFeature(&lt;String|Integer&gt; id)</code></td>
+            <td><code>getFeature({{{param 'String or Integer' id}}} id)</code></td>
             <td><code>Layer</code></td>
             <td>Given the id of a Feature return the layer on the map that represents it. This will usually be a Leaflet vector layer like <a href="http://leafletjs.com/reference.html#polyline">Polygon</a> or <a href="http://leafletjs.com/reference.html#polyline">Polygon</a>, or a Leaflet <a href="http://leafletjs.com/reference.html#marker">Marker</a>.</td>
         </tr>
@@ -166,7 +190,7 @@ In additon to these events `L.esri.FeatureLayer` also fires the following [Mouse
             <td>Returns the current `where` setting</td>
         </tr>
         <tr>
-            <td><code>setWhere(&lt;String&gt; where, &lt;Function&gt; callback)</code></td>
+            <td><code>setWhere({{{param 'String' 'where'}}})</code></td>
             <td><code>this</code></td>
             <td>Sets the new `where` option and refreshes the layer to reflect the new <code>where</code> filter.</td>
         </tr>
@@ -176,12 +200,12 @@ In additon to these events `L.esri.FeatureLayer` also fires the following [Mouse
             <td>Returns the current time range as an array like <code>[from, to]</code></td>
         </tr>
         <tr>
-            <td><code>setTimeRange(&lt;Date&gt; from, &lt;Date&gt; to, &lt;Function&gt; callback, &lt;Object&gt; context)</code></td>
+            <td><code>setTimeRange({{{param 'Date' 'from'}}}, {{{param 'Date' 'to'}}})</code></td>
             <td><code>this</code></td>
             <td>Sets the current time filter applied to features. An optional callback is run upon completion only if <code>timeFilterMode</code> is set to <code>'server'</code>.</td>
         </tr>
         <tr>
-            <td><code>authenticate(&lt;String&gt; token)</code></td>
+            <td><code>authenticate({{{param 'String' 'token'}}})</code></td>
             <td><code>this</code></td>
             <td>Authenticates this service with a new token and runs any pending requests that required a token.</td>
         </tr>
@@ -199,7 +223,7 @@ In additon to these events `L.esri.FeatureLayer` also fires the following [Mouse
             </td>
         </tr>
         <tr>
-            <td><code>metadata(&lt;Function&gt; callback, &lt;Object&gt; context)</code></td>
+            <td><code>metadata({{{param 'Function' 'callback'}}}, {{{param 'Object' 'context'}}})</code></td>
             <td><code>this</code></td>
             <td>
                 Requests metadata about this Feature Layer. Callback will be called with `error` and `metadata`.
@@ -208,8 +232,8 @@ In additon to these events `L.esri.FeatureLayer` also fires the following [Mouse
 });</code></pre>
             </td>
         </tr>
-        <tr>
-            <td><code>createFeature(&lt;<a href="http://geojson.org/geojson-spec.html#feature-objects">GeoJSON Feature</a>&gt; feature, &lt;Function&gt; callback)</code></td>
+ <tr>
+            <td><code>createFeature({{{param 'GeoJSON Feature' 'feature' 'http://geojson.org/geojson-spec.html#feature-objects'}}}, {{{param 'Function' 'callback'}}}, {{{param 'Object' 'context'}}})</code></td>
             <td><code>this</code></td>
             <td>
                 Adds a new feature to the feature layer. this also adds the feature to the map if creation is successful.
@@ -220,7 +244,7 @@ In additon to these events `L.esri.FeatureLayer` also fires the following [Mouse
             </td>
         </tr>
         <tr>
-            <td><code>updateFeature(&lt;<a href="http://geojson.org/geojson-spec.html#feature-objects">GeoJSON Feature</a>&gt; feature, &lt;Function&gt; callback)</code></td>
+            <td><code>updateFeature({{{param 'GeoJSON Feature' 'feature' 'http://geojson.org/geojson-spec.html#feature-objects'}}}, {{{param 'Function' 'callback'}}}, {{{param 'Object' 'context'}}})</code></td>
             <td><code>this</code></td>
             <td>
                 Update the provided feature on the Feature Layer. This also updates the feature on the map.
@@ -231,7 +255,7 @@ In additon to these events `L.esri.FeatureLayer` also fires the following [Mouse
             </td>
         </tr>
         <tr>
-            <td><code>removeFeature(&lt;String|Integer&gt; id, &lt;Function&gt; callback)</code></td>
+            <td><code>deleteFeature({{{param 'String or Integer' 'id'}}}, {{{param 'Function' 'callback'}}}, {{{param 'Object' 'context'}}})</code></td>
             <td><code>this</code></td>
             <td>
                 Remove the feature with the provided id from the feature layer. This will also remove the feature from the map if it exists.
@@ -247,7 +271,7 @@ In additon to these events `L.esri.FeatureLayer` also fires the following [Mouse
 ### Example
 
 ```js
-var map = L.map('map').setView([45.53,-122.64], 16);
+var map = L.map('map').setView([45.53,-122.64], 14);
 
 L.esri.basemapLayer("Streets").addTo(map);
 

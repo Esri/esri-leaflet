@@ -1,8 +1,6 @@
-console.log('hey there, sailor');
-
-var map = L.map('background-map', {
-    center: [54, 160],
-    zoom: 9,
+var bgmap = L.map('background-map', {
+    center: [68.41, -343.47],
+    zoom: 10,
     scrollWheelZoom: false,
     doubleClickZoom: true,
     touchZoom: true,
@@ -11,4 +9,4 @@ var map = L.map('background-map', {
     attributionControl: false
 });
 
-L.esri.Layers.basemapLayer('Imagery').addTo(map);
+L.esri.Layers.basemapLayer('Imagery').addTo(bgmap);

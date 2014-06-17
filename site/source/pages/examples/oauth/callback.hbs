@@ -1,0 +1,21 @@
+---
+layout: none
+---
+
+<!DOCTYPE html>
+<html>
+<head></head>
+<body>
+  <script>
+  var match;
+  if(window.location.hash && (match=window.location.hash.match(/#access_token=([^&]+)/))) {
+    if(window.opener && window.opener.parent) {
+      window.opener.parent.oauthCallback(match[1]);
+    } else {
+      window.parent.oauthCallback(match[1]);
+    }
+    window.close();
+  }
+  </script>
+</body>
+</html>

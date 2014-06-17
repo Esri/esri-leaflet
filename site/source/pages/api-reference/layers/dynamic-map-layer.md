@@ -1,18 +1,28 @@
 ---
+title: L.esri.Layers.DynamicMapLayer
 layout: documentation.hbs
 ---
 
-# DynamicMapLayer
+# {{page.data.title}}
 
-If you have a MapService you and use `L.esri.DynamicMapLayer(url, options)` to render it on a map.
+Render and visualize Map Services from ArcGIS Online and ArcGIS Server. L.esri.Layers.DynamicMapLayer also supports custom popups and identification of features.
 
 ### Constructor
 
-| Constructor | Description |
-| --- | --- |
-| `new L.esri.Layers.DynamicMapLayer(url, options)`<br>`L.esri.Layers.dynamicMapLayer(url, options)` | `url` should be the URL of the feature layer to consume. See [service URLs](#service-urls) for more information on how to find these urls.
-
-You can also initalize `L.esri.Layers.DynamicMapLayer` with the aliases `new L.esri.DynamicMapLayer(url, options)` and `L.esri.dynamicMapLayer(url, options)`.
+<table>
+    <thead>
+        <tr>
+            <th>Constructor</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code class="nobr">new L.esri.Layers.DynamicMapLayer({{{param 'String' 'key'}}}, {{{param 'Object' 'options'}}})</code><br><br><code class="nobr">L.esri.Layers.dynamicMapLayer({{{param 'String' 'key'}}}, {{{param 'Object' 'options'}}})</code><br><br><code class="nobr">new L.esri.DynamicMapLayer({{{param 'String' 'key'}}}, {{{param 'Object' 'options'}}})</code><br><br><code class="nobr">L.esri.dynamicMapLayer({{{param 'String' 'key'}}}, {{{param 'Object' 'options'}}})</code></td>
+            <td><code>url</code> should be the URL to the Map Service hosted the tiles. The <code>options</code> parameter can accept the same options as <a href="http://leafletjs.com/reference.html#tilelayer"><code>L.TileLayer</code></a></td>
+        </tr>
+    </tbody>
+</table>
 
 ### Options
 
@@ -55,11 +65,11 @@ Option | Type | Default | Description
             <td>Redraws this layer above all other overlay layers.</td>
         </tr>
         <tr>
-            <td><code>bindPopup()</code></td>
+            <td><code>bindPopup({{{param 'Function' 'fn'}}}, {{{param 'PopupOptions' 'popupOptions' 'http://leafletjs.com/reference.html#popup-options'}}})</code></td>
             <td><code>this</code></td>
             <td>
                 Uses the provided function to create a popup that will identify features whenever the map is clicked. Your function will be passed a <a href="http://geojson.org/geojson-spec.html#feature-collection-objects">GeoJSON FeatureCollection</a> of teh features at the clicked location and should return the appropriate HTML. If you do not want to open the popup when there are no results, return <code>false</code>.
-<pre class="js"><code>dynamicMapLayer.bindPopup(function(featureCollection){
+<pre class="js"><code>dynamicMapLayer.bindPopup(function(err, features, response){
     var count = featureCollection.features.length;
     return (count) ? count + ' features' : false;
 });</code></pre>
@@ -76,7 +86,7 @@ Option | Type | Default | Description
             <td>Returns the current opacity of the layer.</td>
         </tr>
         <tr>
-            <td><code>setOpacity(&lt;Float&gt; opacity)</code></td>
+            <td><code>setOpacity({{{param 'Float' 'opacity'}}})</code></td>
             <td><code>this</code></td>
             <td>Sets the opacity of the layer.</td>
         </tr>
@@ -86,7 +96,7 @@ Option | Type | Default | Description
             <td>Returns the array of layers on the MapService that are being shown.</td>
         </tr>
         <tr>
-            <td><code>setLayers(&lt;Array&gt; layers)</code></td>
+            <td><code>setLayers({{{param 'Array' 'layers'}}})</code></td>
             <td><code>this</code></td>
             <td>Redraws the layer to show the passed array of layer ids.</td>
         </tr>
@@ -96,9 +106,9 @@ Option | Type | Default | Description
             <td>Returns the current layer definition(s) being used for rendering.</td>
         </tr>
         <tr>
-            <td><code>setLayerDefs(&lt;Object&gt; layerDefs)</code></td>
+            <td><code>setLayerDefs({{{param 'Object' 'layerDefs' 'http://resources.arcgis.com/en/help/arcgis-rest-api/#/Export_Map/02r3000000v7000000/'}}})</code></td>
             <td><code>this</code></td>
-            <td>Sets the current layer definitions being used to render the layer. Corresponds to the <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Export_Map/02r3000000v7000000/">layerDefs</a> option on the export API.</td>
+            <td>Redraws the layer with the new layer definitions. Corresponds to the <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Export_Map/02r3000000v7000000/">layerDefs</a> option on the export API.</td>
         </tr>
         <tr>
             <td><code>getTimeRange()</code></td>
@@ -106,9 +116,9 @@ Option | Type | Default | Description
             <td>Returns the current time range being used for rendering.</td>
         </tr>
         <tr>
-            <td><code>setTimeRange(&lt;Date&gt; from, &lt;Date&gt;, to)</code></td>
+            <td><code>setTimeRange({{{param 'Date' 'from'}}}, {{{param 'Date' 'to'}}})</code></td>
             <td><code>this</code></td>
-            <td>Sets the current time range displayed.</td>
+            <td>Redraws the layer witht he passed time range.</td>
         </tr>
         <tr>
             <td><code>getTimeOptions()</code></td>
@@ -116,12 +126,12 @@ Option | Type | Default | Description
             <td>Returns the current time options being used for rendering.</td>
         </tr>
         <tr>
-            <td><code>setTimeOptions(&lt;Object&gt; timeOptions)</code></td>
+            <td><code>setTimeOptions({{{param 'Object' 'timeOptions' 'http://resources.arcgis.com/en/help/arcgis-rest-api/#/Export_Map/02r3000000v7000000/'}}})</code></td>
             <td><code>this</code></td>
             <td>Sets the current time options being used to render the layer. Corresponds to the <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Export_Map/02r3000000v7000000/">layerTimeOptions</a> option on the export API.</td>
         </tr>
         <tr>
-            <td><code>metadata(&lt;Function&gt; callback, &lt;Object&gt; context)</code></td>
+            <td><code>metadata({{{param 'Function' 'callback'}}}, {{{param 'Object' 'context'}}})</code></td>
             <td><code>this</code></td>
             <td>
                 Requests metadata about this Feature Layer. Callback will be called with `error` and `metadata`.
@@ -131,7 +141,7 @@ Option | Type | Default | Description
             </td>
         </tr>
         <tr>
-            <td><code>authenticate(&lt;String&gt; token)</code></td>
+            <td><code>authenticate({{{param 'String' 'token'}}})</code></td>
             <td><code>this</code></td>
             <td>Authenticates this service with a new token and runs any pending requests that required a token.</td>
         </tr>
@@ -152,21 +162,24 @@ Option | Type | Default | Description
 
 ### Events
 
-`L.esri.DynamicMapLayer` also fires all the same events as [`L.TileLayer`](http://leafletjs.com/reference.html#tilelayer) in addition to these events.
+| Event | Data | Description |
+| --- | --- | --- |
+| `loading` | [<`LoadingEvent`>]({{assets}}api-reference/events.html#loading-event) | Fires when new features start loading. |
+| `load` | [<`LoadEvent`>]({{assets}}api-reference/events.html#load-event) | Fires when all features in the current bounds of the map have loaded. |
 
-Event | Data | Description
---- | --- | ---
-`metadata` | [`Metadata`](#metadata-event) | After creating a new `L.esri.DynamicMapLayer` a request for data describing the service will be made and passed to the metadata event.
-`authenticationrequired` | [`Authentication`](#authentication-event) | This will be fired when a request to a service fails and requires authentication. See [working with authenticated services](#working-with-authenticated-services) for more information.
+`L.esri.Layer.DynamicMapLayer` also fires all  [`L.esri.Service.MapService`]({{assets}}/api-reference/services/map-service.html) events.
 
 ### Example
 
 ```js
-var map = L.map('map').setView([ 38.24788726821097,-85.71807861328125], 13 );
+var map = L.map('map').setView([ 38.83,-98.5], 7);
 
-var url = "http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/PublicSafety/PublicSafetyHazardsandRisks/MapServer";
+L.esri.basemapLayer('Gray').addTo(map);
+
+var url = "http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Petroleum/KGS_OilGasFields_Kansas/MapServer";
 
 L.esri.dynamicMapLayer(url, {
   opacity : 0.25
 }).addTo(map);
+
 ```

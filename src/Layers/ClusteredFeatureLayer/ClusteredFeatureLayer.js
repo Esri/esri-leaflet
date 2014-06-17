@@ -1,7 +1,8 @@
 L.esri.Layers.ClusteredFeatureLayer = L.esri.Layers.FeatureManager.extend({
 
    statics: {
-    EVENTS: 'click dblclick mouseover mouseout mousemove contextmenu popupopen popupclose clusterclick clusterdblclick clustermouseover clustermouseout clustermousemove clustercontextmenu clusterpopupopen clusterpopupclose'
+    EVENTS: 'click dblclick mouseover mouseout mousemove contextmenu popupopen popupclose',
+    CLUSTEREVENTS: 'clusterclick clusterdblclick clustermouseover clustermouseout clustermousemove clustercontextmenu'
   },
 
   /**
@@ -14,14 +15,17 @@ L.esri.Layers.ClusteredFeatureLayer = L.esri.Layers.FeatureManager.extend({
     options = L.setOptions(this, options);
 
     this._layers = {};
+    this._leafletIds = {};
 
     this.cluster = new L.MarkerClusterGroup(options);
+    this._key = 'c'+(Math.random() * 1e9).toString(36).replace('.', '_');
 
     // @TODO enable at Leaflet 0.8
     // this.cluster.addEventParent(this);
 
     // @TODO remove from Leaflet 0.8
     this.cluster.on(L.esri.ClusteredFeatureLayer.EVENTS, this._propagateEvent, this);
+    this.cluster.on(L.esri.ClusteredFeatureLayer.CLUSTEREVENTS, this._propagateClusterEvent, this);
   },
 
   /**
@@ -55,14 +59,10 @@ L.esri.Layers.ClusteredFeatureLayer = L.esri.Layers.FeatureManager.extend({
 
         var newLayer = L.GeoJSON.geometryToLayer(geojson, this.options.pointToLayer, L.GeoJSON.coordsToLatLng, this.options);
         newLayer.feature = L.GeoJSON.asFeature(geojson);
-
-        // style the layer
         newLayer.defaultOptions = newLayer.options;
-        this.resetStyle(newLayer);
+        newLayer._leaflet_id = this._key + '_' + geojson.id;
 
-        // @TODO Leaflet 0.8
-        // bubble events from layers to this
-        // newLayer.addEventParent(this);
+        this.resetStyle(newLayer.feature.id);
 
         // bind a popup if we have one
         if(this._popup && newLayer.bindPopup){
@@ -71,6 +71,8 @@ L.esri.Layers.ClusteredFeatureLayer = L.esri.Layers.FeatureManager.extend({
 
         // cache the layer
         this._layers[newLayer.feature.id] = newLayer;
+
+        this._leafletIds[newLayer._leaflet_id] = geojson.id;
 
         if(this.options.onEachFeature){
           this.options.onEachFeature(newLayer.feature, newLayer);
@@ -110,19 +112,27 @@ L.esri.Layers.ClusteredFeatureLayer = L.esri.Layers.FeatureManager.extend({
    * Styling Methods
    */
 
-  resetStyle: function (layer) {
-    // reset any custom styles
-    layer.options = layer.defaultOptions;
-    this._setLayerStyle(layer, this.options.style);
+  resetStyle: function (id) {
+    var layer = this._layers[id];
+
+    if(layer){
+      layer.options = layer.defaultOptions;
+      this.setFeatureStyle(layer.feature.id, this.options.style);
+    }
+
+    return this;
   },
 
   setStyle: function (style) {
     this.eachFeature(function (layer) {
-      this._setLayerStyle(layer, style);
+      this.setFeatureStyle(layer.feature.id, style);
     }, this);
+    return this;
   },
 
-  _setLayerStyle: function (layer, style) {
+  setFeatureStyle: function (id, style) {
+    var layer = this._layers[id];
+
     if (typeof style === 'function') {
       style = style(layer.feature);
     }
@@ -170,11 +180,20 @@ L.esri.Layers.ClusteredFeatureLayer = L.esri.Layers.FeatureManager.extend({
   //  @TODO remove at Leaflet 0.8
   _propagateEvent: function (e) {
     e = L.extend({
+      layer: this._layers[this._leafletIds[e.target._leaflet_id]],
+      target: this
+    }, e);
+    this.fire(e.type, e);
+  },
+
+  _propagateClusterEvent: function (e) {
+    e = L.extend({
       layer: e.target,
       target: this
     }, e);
     this.fire(e.type, e);
   }
+
 
 });
 

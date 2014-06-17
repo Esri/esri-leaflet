@@ -1,32 +1,57 @@
 ---
+title: L.esri.Services.MapService
 layout: documentation.hbs
 ---
 
-# MapService
+# {{page.data.title}}
 
-**Extends** `L.esri.Service`
+Inherits from [`L.esri.Service`]({{assets}}/api-reference/services/service.html)
 
 `L.esri.Services.MapService` is an abstaction interacting with Map Services running on ArcGIS Online and ArcGIS server that allows you to make requests to the API, as well as query and identify features on the service.
 
 ### Constructor
 
-| Constructor | Description |
-| --- | --- |
-| `new L.esri.Services.MapService(url, options)`<br>`L.esri.Services.mapService(url, options)` | The `url` parameter is the url to the ArcGIS Server or ArcGIS Online map service you should like to consume. See [service URLs](#service-urls) for more information on how to find these urls. |
+<table>
+    <thead>
+        <tr>
+            <th>Constructor</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code class="nobr">new L.esri.Services.MapService({{{param 'String' 'url'}}}, {{{param 'Object' 'options'}}})</code><br><br><code class="nobr">L.esri.Services.mapService({{{param 'String' 'url'}}}, {{{param 'Object' 'options'}}})</code></td>
+            <td>The `url` parameter is the url to the ArcGIS Server or ArcGIS Online map service you would like to consume.</td>
+        </tr>
+    </tbody>
+</table>
 
 ### Options
 
-`L.esri.Services.MapService` accepts all [`L.esri.Service`]() options.
+`L.esri.Services.MapService` accepts all [`L.esri.Services.Service`]({{assets}}/api-reference/services/service.html) options.
 
 ### Events
 
-`L.esri.Services.MapService` fires all  [`L.esri.Service`]() events.
+`L.esri.Services.MapService` fires all  [`L.esri.Services.service`]({{assets}}/api-reference/services/service.html) events.
 
 ### Methods
 
 | Method | Returns | Description | 
 | --- | --- | --- |
-| `query()` | `this` | Returns a new [`L.esri.Tasks.Query()`]() object bound to this service. |
-| `identify()` | `this` | Returns a new [`L.esri.Tasks.Identify()`]() object bound to this service. |
+| `identify()` | `this` | Returns a new [`L.esri.Tasks.Identify()`]({{assets}}/api-reference/tasks/query.html) object bound to this service. |
 
 ### Example
+
+```js
+var map = new L.Map('map').setView([ 45.543, -122.621 ], 5);
+
+var service = L.esri.Services.MapService('http://sampleserver6.arcgisonline.com/arcgis/rest/services/WorldTimeZones/MapServer');
+
+service.identify()
+    .on(map)
+    .at([45.543, -122.621])
+    .layers('visible:1')
+    .run(function(error, featureCollection, response){
+        console.log("UTC Offset: " + featureCollection.features[0].properties.ZONE);
+    });
+```

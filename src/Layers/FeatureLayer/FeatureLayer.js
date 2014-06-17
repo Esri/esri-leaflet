@@ -14,6 +14,8 @@ L.esri.Layers.FeatureLayer = L.esri.Layers.FeatureManager.extend({
     options = L.setOptions(this, options);
 
     this._layers = {};
+    this._leafletIds = {};
+    this._key = 'c'+(Math.random() * 1e9).toString(36).replace('.', '_');
   },
 
   /**
@@ -39,7 +41,9 @@ L.esri.Layers.FeatureLayer = L.esri.Layers.FeatureManager.extend({
 
   createLayers: function(features){
     for (var i = features.length - 1; i >= 0; i--) {
+
       var geojson = features[i];
+
       var layer = this._layers[geojson.id];
       var newLayer;
 
@@ -51,8 +55,8 @@ L.esri.Layers.FeatureLayer = L.esri.Layers.FeatureManager.extend({
         // @TODO Leaflet 0.8
         //newLayer = L.GeoJSON.geometryToLayer(geojson, this.options);
 
-        newLayer = L.GeoJSON.geometryToLayer(geojson, this.options.pointToLayer, L.GeoJSON.coordsToLatLng, this.options);
-        layer.setLatLngs(newLayer.getLatLngs());
+        var updateGeo = L.GeoJSON.geometryToLayer(geojson, this.options.pointToLayer, L.GeoJSON.coordsToLatLng, this.options);
+        layer.setLatLngs(updateGeo.getLatLngs());
       }
 
       if(!layer){
@@ -60,22 +64,17 @@ L.esri.Layers.FeatureLayer = L.esri.Layers.FeatureManager.extend({
         //newLayer = L.GeoJSON.geometryToLayer(geojson, this.options);
 
         newLayer = L.GeoJSON.geometryToLayer(geojson, this.options.pointToLayer, L.GeoJSON.coordsToLatLng, this.options);
-        newLayer.feature = L.GeoJSON.asFeature(geojson);
+        newLayer.feature = geojson;
         newLayer.defaultOptions = newLayer.options;
+        newLayer._leaflet_id = this._key + '_' + geojson.id;
 
-        // cache the layer
-        this._layers[newLayer.feature.id] = newLayer;
-
-        // style the layer
-        this.resetStyle(newLayer.feature.id);
+        this._leafletIds[newLayer._leaflet_id] = geojson.id;
 
         // bubble events from layers to this
         // @TODO Leaflet 0.8
         // newLayer.addEventParent(this);
 
-        if (newLayer.on) {
-          newLayer.on(L.esri.Layers.FeatureLayer.EVENTS, this._propagateEvent, this);
-        }
+        newLayer.on(L.esri.Layers.FeatureLayer.EVENTS, this._propagateEvent, this);
 
         // bind a popup if we have one
         if(this._popup && newLayer.bindPopup){
@@ -86,6 +85,11 @@ L.esri.Layers.FeatureLayer = L.esri.Layers.FeatureManager.extend({
           this.options.onEachFeature(newLayer.feature, newLayer);
         }
 
+        // cache the layer
+        this._layers[newLayer.feature.id] = newLayer;
+
+        // style the layer
+        this.resetStyle(newLayer.feature.id);
         // add the layer if it is within the time bounds or our layer is not time enabled
         if(!this.options.timeField || (this.options.timeField && this._featureWithinTimeRange(geojson)) ){
           this._map.addLayer(newLayer);
@@ -145,20 +149,24 @@ L.esri.Layers.FeatureLayer = L.esri.Layers.FeatureManager.extend({
   resetStyle: function (id) {
     var layer = this._layers[id];
 
-    // reset any custom styles
-    layer.options = layer.defaultOptions;
-    this._setLayerStyle(layer, this.options.style);
+    if(layer){
+      layer.options = layer.defaultOptions;
+      this.setFeatureStyle(layer.feature.id, this.options.style);
+    }
+
     return this;
   },
 
   setStyle: function (style) {
     this.eachFeature(function (layer) {
-      this._setLayerStyle(layer, style);
+      this.setFeatureStyle(layer.feature.id, style);
     }, this);
     return this;
   },
 
-  _setLayerStyle: function (layer, style) {
+  setFeatureStyle: function (id, style) {
+    var layer = this._layers[id];
+
     if (typeof style === 'function') {
       style = style(layer.feature);
     }
@@ -202,8 +210,15 @@ L.esri.Layers.FeatureLayer = L.esri.Layers.FeatureManager.extend({
 
   getFeature: function (id) {
     return this._layers[id];
-  }
+  },
 
+  // from https://github.com/Leaflet/Leaflet/blob/v0.7.2/src/layer/FeatureGroup.js
+  // @TODO remove at Leaflet 0.8
+  _propagateEvent: function (e) {
+    e.layer = this._layers[this._leafletIds[e.target._leaflet_id]];
+    e.target = this;
+    this.fire(e.type, e);
+  }
 });
 
 L.esri.FeatureLayer = L.esri.Layers.FeatureLayer;

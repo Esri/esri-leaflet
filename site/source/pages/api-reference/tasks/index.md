@@ -1,8 +1,9 @@
 ---
+title: L.esri.Tasks
 layout: documentation.hbs
 ---
 
-# L.esri.Tasks
+# {{page.data.title}}
 
 Wrappers for commonly used API methods on ArcGIS services. Commonly used parameters to make them more accessible to Leaflet.
 

@@ -1,7 +1,13 @@
 ---
-title: "Viewport Grid Example Sample"
-class: examples
-layout: page.hbs
+title: Esri Leaflet Quickstart
+description: A quick template to get started with Esri Leaflet
+layout: example.hbs
 ---
 
-<h1>Esri Leaflet Examples</h1>
+<div id="map"></div>
+
+<script>
+  var map = L.map('map').setView([37.75, -122.23], 10);
+
+  L.esri.basemapLayer('Topographic').addTo(map);
+</script>

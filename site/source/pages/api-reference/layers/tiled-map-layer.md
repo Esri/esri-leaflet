@@ -1,22 +1,32 @@
 ---
+title: L.esri.Layers.TiledMapLayer
 layout: documentation.hbs
 ---
 
-# TiledMapLayer
+# {{page.data.title}}
 
-**Extends** `L.TileLayer`
+Inherits from [`L.TileLayer`](http://leafletjs.com/reference.html#tilelayer)
 
-Esri Leaflet can work with tiled map services as well. You can use `L.esri.TiledMapLayer(url, options)` to use tiled map services. The `url` parameter is the url to the MapServer and options are identical to the [options you can pass](http://leafletjs.com/reference.html#tilelayer) to `L.TileLayer`.
+Access tile caches from ArcGIS Online and ArcGIS Server as well as visualze and identify features on them.
 
-**Your map service must be published using the Web Mercator Auxiliary Sphere tiling scheme (WKID 102100/3857) used by Google Maps, Bing Maps and [ArcGIS Online](http://resources.arcgis.com/en/help/arcgisonline-content/index.html#//011q00000002000000). Esri Leaflet will not support any other spatial reference for tile layers.**
+**Your map service must be published using the Web Mercator Auxiliary Sphere tiling scheme (WKID 102100/3857) and the default scale option used by Google Maps, Bing Maps and [ArcGIS Online](http://resources.arcgis.com/en/help/arcgisonline-content/index.html#//011q00000002000000). Esri Leaflet will not support any other spatial reference for tile layers.**
 
 ### Constructor
 
-| Constructor | Description |
-| --- | --- |
-| `new L.esri.Layers.TiledMapLayer(url, options)`<br>`L.esri.Layers.tiledMapLayer(url, options)` | `url` should be the URL of the feature layer to consume. See [service URLs](#service-urls) for more information on how to find these urls. |
-
-You can also initalize `L.esri.Layers.TiledMapLayer` with the aliases `new L.esri.TiledMapLayer(url, options)` and `L.esri.tiledMapLayer(url, options)`.
+<table>
+    <thead>
+        <tr>
+            <th>Constructor</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code class="nobr">new L.esri.Layers.TiledMapLayer({{{param 'String' 'url'}}}, {{{param 'Object' 'options'}}})</code><br><br><code class="nobr">L.esri.Layers.tiledMapLayer({{{param 'String' 'url'}}}, {{{param 'Object' 'options'}}})</code><br><br><code class="nobr">new L.esri.TiledMapLayer({{{param 'String' 'url'}}}, {{{param 'Object' 'options'}}})</code><br><br><code class="nobr">L.esri.tiledMapLayer({{{param 'String' 'url'}}}, {{{param 'Object' 'options'}}})</code></td>
+            <td><code>url</code> should be the URL to the Map Service hosted the tiles. The <code>options</code> parameter can accept the same options as <a href="http://leafletjs.com/reference.html#tilelayer"><code>L.TileLayer</code></a></td>
+        </tr>
+    </tbody>
+</table>
 
 ### Options
 
@@ -77,10 +87,9 @@ You can also initalize `L.esri.Layers.TiledMapLayer` with the aliases `new L.esr
 ### Example
 
 ```js
-var map = L.map('map').setView([37.761487048570935, -122.39112854003905], 12);
+var map = L.map('map').setView([37.7614, -122.3911], 12);
 
-L.esri.tiledMapLayer("http://services.portlandmaps.com/ags/rest/services/Public/Basemap_Color/MapServer/", {
-  minZoom: 9,
-  maxZoom: 20
+L.esri.tiledMapLayer("http://services.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer", {
+  maxZoom: 15
 }).addTo(map);
 ```

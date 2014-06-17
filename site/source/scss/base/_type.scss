@@ -84,9 +84,9 @@ body  {color: $darker-gray}
 h1, h2, h3, h4, h5, h6 {
   margin: 0;
 }
-h1    {font-size: 2.50rem; line-height: lines(3); @extend %Vollkorn; color: $dark-gray;}
-h2    {font-size: 2.25rem; line-height: lines(3); @extend %Vollkorn; color: $dark-gray;}
-h3    {font-size: 2.00rem; line-height: lines(3); @extend %Vollkorn; color: $dark-gray;}
+h1    {font-size: 2.50rem; margin:lines(1) 0; line-height: lines(2); @extend %Vollkorn; color: $dark-gray;}
+h2    {font-size: 2.25rem; margin:lines(1) 0; line-height: lines(2); @extend %Vollkorn; color: $dark-gray;}
+h3    {font-size: 2.00rem; margin:lines(1) 0; line-height: lines(2); @extend %Vollkorn; color: $dark-gray;}
 h4    {font-size: 1.75rem; @extend %Vollkorn; color: $dark-gray;}
 h5    {font-size: 1.50rem; @extend %Vollkorn; color: $dark-gray;}
 small {font-size: 0.75rem;}
@@ -111,4 +111,8 @@ a {
 hr {
   border: none;
   border-top: 2px solid $light-gray;
+}
+
+p {
+  margin: lines(1) 0;
 }

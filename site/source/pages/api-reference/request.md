@@ -1,12 +1,19 @@
 ---
+title: Request
 layout: documentation.hbs
 ---
 
-# Request
+# L.esri.Request
 
-Generic methods for GET and POST requests to ArcGIS Online or ArcGIS Server resources.
+Generic methods for GET and POST requests to ArcGIS Online or ArcGIS Server resources. These methods will handle serializing the input parameters and the parsing of the response into a response and error property similar to Node JS.
 
-### `L.esri.get(url, params, callback)`
+GET requests will be made with `XMLHttpRequest` (via CORS) if the browser supports it and will fallback to JSONP. POST requests will always me made with `XMLHttpRequest` (via CORS) but the [ArcGIS API for JavaScript proxies](https://developers.arcgis.com/javascript/jshelp/ags_proxy.html) and the [ArcGIS Resoruce Proxies](https://github.com/Esri/resource-proxy) are support via [`L.esri.Services.Service`]({{assets}}api-reference/services/service.html).
+
+### L.esri.get(url, params, callback)
+
+Execute a GET request via `XMLHttpRequest' (via CORS) or JSON depending on what is available in the browser.
+
+**Note**: ArcGIS server before 10.1 does not have CORS support enabled by default. You can either enable CORSon your server or tell Esri Leafelt to always use JSONP requests with `L.esri.get = L.esri.Request.get.JSONP;` After you load Esri leaflet but befor your own scripts.
 
 #### Params
 
@@ -17,11 +24,23 @@ Generic methods for GET and POST requests to ArcGIS Online or ArcGIS Server reso
 | `callback` | `Function` | Function to run when the request completes, will be passed `error` and `response`. |
 | `context` | `Object` | Optional function context for the callback. |
 
-This function will execute the GET request via CORS or JSON depending on what is available in the browser.
+#### Example
 
-**Note**: ArcGIS server before 10.1 does not have CORS support enabled by default. You can either enable CORS or run `L.esri.get = L.esri.Request.get.JSON;` in your script after loading Esri Leaflet
+```js
+L.esri.get('http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Heritage_Trees_Portland/FeatureServer/0', {}, function(error, response){
+  if(error){
+    console.log(error);
+  } else {
+    console.log(response.name);
+  }
+});
+```
 
-### `L.esri.post(url, params, callback)`
+### L.esri.post(url, params, callback)
+
+Execute a POST request via `XMLHttpRequest' (via CORS).
+
+This request is made via `XMLHttpRequest` which cannot make cross domain requests in IE 8 and 9. Esri Leaflet supports both the [ArcGIS API for JavaScript proxies](https://developers.arcgis.com/javascript/jshelp/ags_proxy.html) and the [ArcGIS Resoruce Proxies](https://github.com/Esri/resource-proxy) which can be hosted on your server and used with the [`L.esri.Services.Service`]({{assets}}api-reference/services/service.html) classes to work around this issue.
 
 | Param | Value | Description |
 | --- | --- | --- | 
@@ -30,4 +49,14 @@ This function will execute the GET request via CORS or JSON depending on what is
 | `callback` | `Function` | Function to run when the request completes, will be passed `error` and `response`. |
 | `context` | `Object` | Optional function context for the callback. |
 
-This request is made via `XMLHttpRequest` which cannot make cross domain requests in IE 8 and 9. Esri Leaflet supports both the [ArcGIS API for JavaScript proxies](https://developers.arcgis.com/javascript/jshelp/ags_proxy.html) and the [ArcGIS Resoruce Proxies](https://github.com/Esri/resource-proxy) which can be hosted on your server and used with the `L.esri.Service` classes to work around this issue.
+#### Example
+
+```js
+L.esri.post('http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Heritage_Trees_Portland/FeatureServer/0', {}, function(error, response){
+  if(error){
+    console.log(error);
+  } else {
+    console.log(response.name);
+  }
+});
+```

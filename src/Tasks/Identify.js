@@ -14,6 +14,7 @@ L.esri.Tasks.Identify = L.Class.extend({
       tolerance: 3
     };
   },
+
   on: function(map){
     var extent = L.esri.Util.boundsToExtent(map.getBounds());
     var size = map.getSize();

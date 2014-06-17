@@ -36,7 +36,8 @@ L.esri.Services.Service = L.Class.extend({
   _request: function(method, path, params, callback, context){
     this.fire('requeststart', {
       url: this.url + path,
-      params: params
+      params: params,
+      method: method
     });
 
     var wrappedCallback = this._createServiceCallback(method, path, params, callback, context);
@@ -79,19 +80,22 @@ L.esri.Services.Service = L.Class.extend({
             url: this.url + path,
             params: params,
             message: error.message,
-            code: error.code
+            code: error.code,
+            method: method
           });
         } else {
           this.fire('requestsuccess', {
             url: this.url + path,
             params: params,
-            response: response
+            response: response,
+            method: method
           });
         }
 
         this.fire('requestend', {
           url: this.url + path,
-          params: params
+          params: params,
+          method: method
         });
       }
     }, this);

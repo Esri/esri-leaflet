@@ -34,7 +34,7 @@ L.esri.Tasks.Query = L.Class.extend({
   },
 
   where: function(string){
-    this._params.where = string;
+    this._params.where = string.replace(/"/g, '\'');
     return this;
   },
 
@@ -87,6 +87,7 @@ L.esri.Tasks.Query = L.Class.extend({
   },
 
   run: function(callback, context){
+    this._cleanParams();
     this._request(function(error, response){
       callback.call(context, error, (response && L.esri.Util.responseToFeatureCollection(response)), response);
     }, context);
@@ -94,6 +95,7 @@ L.esri.Tasks.Query = L.Class.extend({
   },
 
   count: function(callback, context){
+    this._cleanParams();
     this._params.returnCountOnly = true;
     this._request(function(error, response){
       callback.call(this, error, (response && response.count), response);
@@ -102,6 +104,7 @@ L.esri.Tasks.Query = L.Class.extend({
   },
 
   ids: function(callback, context){
+    this._cleanParams();
     this._params.returnIdsOnly = true;
     this._request(function(error, response){
       callback.call(this, error, (response && response.objectIds), response);
@@ -110,11 +113,18 @@ L.esri.Tasks.Query = L.Class.extend({
   },
 
   bounds: function(callback, context){
+    this._cleanParams();
     this._params.returnExtentOnly = true;
     this._request(function(error, response){
-      callback.call(context, error, (response && L.esri.Util.extentToBounds(response.extent)), response);
+      callback.call(context, error, (response && response.extent && L.esri.Util.extentToBounds(response.extent)), response);
     }, context);
     return this;
+  },
+
+  _cleanParams: function(){
+    delete this._params.returnIdsOnly;
+    delete this._params.returnExtentOnly;
+    delete this._params.returnCountOnly;
   },
 
   _request: function(callback, context){

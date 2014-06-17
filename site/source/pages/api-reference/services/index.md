@@ -1,9 +1,9 @@
 ---
-title: Services
+title: L.esri.Services
 layout: documentation.hbs
 ---
 
-# L.esri.Services
+# {{page.data.title}}
 
 Services wrap ArcGIS API endpoints exposing common methods for interacting with the APIs and handling proxying and authentication.
 

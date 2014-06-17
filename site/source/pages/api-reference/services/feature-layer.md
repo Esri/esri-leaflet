@@ -1,26 +1,38 @@
 ---
+title: L.esri.Services.FeatureLayer
 layout: documentation.hbs
 ---
 
-# FeatureLayer
+# {{page.data.title}}
 
-**Extends** `L.esri.Service`
+Inherits from [`L.esri.Service`]({{assets}}/api-reference/services/service.html)
 
-`L.esri.Services.FeatureLayer` is an abstaction interacting with Map Services running on ArcGIS Online and ArcGIS server that allows you to make requests to the API, as well as query and identify features on the service.
+`L.esri.Services.FeatureLayer` is an abstaction interacting with Feature Layers running on ArcGIS Online and ArcGIS server that allows you to make requests to the API, as well as query, add, update and remove features from the service.
 
 ### Constructor
 
-| Constructor | Description |
-| --- | --- |
-| `new L.esri.Services.FeatureLayer(url, options)`<br>`L.esri.Services.featureLayer(url, options)` | The `url` parameter is the url to the ArcGIS Server or ArcGIS Online map service you should like to consume. See [service URLs](#service-urls) for more information on how to find these urls. |
+<table>
+    <thead>
+        <tr>
+            <th>Constructor</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code class="nobr">new L.esri.Services.FeatureLayer({{{param 'String' 'url'}}}, {{{param 'Object' 'options'}}})</code><br><br><code class="nobr">L.esri.Services.featureLayer({{{param 'String' 'url'}}}, {{{param 'Object' 'options'}}})</code></td>
+            <td>The `url` parameter is the url to the ArcGIS Server or ArcGIS Online feature layer you would like to consume.</td>
+        </tr>
+    </tbody>
+</table>
 
 ### Options
 
-`L.esri.Services.FeatureLayer` accepts all [`L.esri.Service`]() options.
+`L.esri.Services.FeatureLayer` accepts all [`L.esri.Services.Service`]({{assets}}/api-reference/services/service.html) options.
 
 ### Events
 
-`L.esri.Services.FeatureLayer` fires all  [`L.esri.Service`]() events.
+`L.esri.Services.FeatureLayer` fires all  [`L.esri.Services.service`]({{assets}}/api-reference/services/service.html) events.
 
 ### Methods
 
@@ -37,7 +49,7 @@ layout: documentation.hbs
             <td><code>query()</code></td>
             <td><code>this</code></td>
             <td>
-                Returns a new <a href=""><code>L.esri.services.Query</code></a> object that can be used to query this layer. Your callback function will be passed a <a href="http://geojson.org/geojson-spec.html#feature-collection-objects">GeoJSON FeatureCollection</a> with the results or an error.
+                Returns a new <a href="{{assets}}/api-reference/tasks/query.html"><code>L.esri.Tasks.Query</code></a> object that can be used to query this layer.
 <pre class="js"><code>featureLayer.query()
             .within(latlngbounds)
             .where("Direction = 'WEST'")
@@ -47,7 +59,7 @@ layout: documentation.hbs
             </td>
         </tr>
         <tr>
-            <td><code>createFeature(&lt;<a href="http://geojson.org/geojson-spec.html#feature-objects">GeoJSON Feature</a>&gt; feature, &lt;Function&gt; callback)</code></td>
+            <td><code>createFeature({{{param 'GeoJSON Feature' 'feature' 'http://geojson.org/geojson-spec.html#feature-objects'}}}, {{{param 'Function' 'callback'}}}, {{{param 'Object' 'context'}}})</code></td>
             <td><code>this</code></td>
             <td>
                 Adds a new feature to the feature layer. this also adds the feature to the map if creation is successful.
@@ -58,7 +70,7 @@ layout: documentation.hbs
             </td>
         </tr>
         <tr>
-            <td><code>updateFeature(&lt;<a href="http://geojson.org/geojson-spec.html#feature-objects">GeoJSON Feature</a>&gt; feature, &lt;Function&gt; callback)</code></td>
+            <td><code>updateFeature({{{param 'GeoJSON Feature' 'feature' 'http://geojson.org/geojson-spec.html#feature-objects'}}}, {{{param 'Function' 'callback'}}}, {{{param 'Object' 'context'}}})</code></td>
             <td><code>this</code></td>
             <td>
                 Update the provided feature on the Feature Layer. This also updates the feature on the map.
@@ -69,7 +81,7 @@ layout: documentation.hbs
             </td>
         </tr>
         <tr>
-            <td><code>removeFeature(&lt;String|Integer&gt; id, &lt;Function&gt; callback)</code></td>
+            <td><code>deleteFeature({{{param 'String or Integer' 'id'}}}, {{{param 'Function' 'callback'}}}, {{{param 'Object' 'context'}}})</code></td>
             <td><code>this</code></td>
             <td>
                 Remove the feature with the provided id from the feature layer. This will also remove the feature from the map if it exists.
@@ -82,4 +94,80 @@ layout: documentation.hbs
     </tbody>
 </table>
 
-### Example
+### Examples
+
+**Note**: These examples use a public feature service on ArcGIS Online that required no authentication.
+
+##### Adding Features
+```js
+var service = L.esri.Services.featureLayer('http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Pubic_Feature_Service/FeatureServer/0');
+
+var feature = {
+    type: 'Feature',
+    geometry: {
+        type: 'Point',
+        coordinates: [-122, 45]
+    },
+    properties: {
+        name: 'Hello World'
+    }
+};
+
+service.addFeature(feature, function(error, response){
+    if(error){
+      console.log('error creating feature' + error.message);
+    } else {
+      console.log('Successfully created feature with id ' + response.objectId);
+    }
+});
+```
+
+##### Updating Features
+
+```js
+var service = L.esri.Services.featureLayer('http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Pubic_Feature_Service/FeatureServer/0');
+
+var feature = {
+    type: 'Feature',
+    id: 2,
+    geometry: {
+        type: 'Point',
+        coordinates: [-122, 45]
+    },
+    properties: {
+        name: 'Hi I\'m Feature 2'
+    }
+};
+
+service.updateFeature(feature, function(error, response){
+    if(error){
+      console.log('error updating feature' + error.message);
+    } else {
+      console.log('Successfully updated feature ' + feature.id);
+    }
+});
+```
+
+##### Deleting Features
+
+```js
+var service = L.esri.Services.featureLayer('http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Pubic_Feature_Service/FeatureServer/0');
+
+service.deleteFeature(2, function(error, response){
+    if(error){
+      console.log('error deleting feature' + error.message);
+    } else {
+      console.log('Successfully deleted feature ' + response.objectId);
+    }
+});
+```
+
+##### Querying Feautres
+
+```js
+var service = L.esri.Services.featureLayer('http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Pubic_Feature_Service/FeatureServer/0');
+
+service.query().where("name='Hello World'").run(function(error, featureCollection, response){
+    console.log(featureCollection.features[0].properties.name);
+});
+```

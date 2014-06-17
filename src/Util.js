@@ -323,15 +323,17 @@
     return result;
   };
 
-  L.esri.Util.responseToFeatureCollection = function(featureSet){
+  L.esri.Util.responseToFeatureCollection = function(response, idAttribute){
     var objectIdField;
 
-    if(featureSet.objectIdFieldName){
-      objectIdField = featureSet.objectIdFieldName;
-    } else if(featureSet.fields) {
-      for (var j = 0; j <= featureSet.fields.length - 1; j++) {
-        if(featureSet.fields[j].type === 'esriFieldTypeOID') {
-          objectIdField = featureSet.fields[j].name;
+    if(idAttribute){
+      objectIdField = idAttribute;
+    } else if(response.objectIdFieldName){
+      objectIdField = response.objectIdFieldName;
+    } else if(response.fields) {
+      for (var j = 0; j <= response.fields.length - 1; j++) {
+        if(response.fields[j].type === 'esriFieldTypeOID') {
+          objectIdField = response.fields[j].name;
           break;
         }
       }
@@ -343,7 +345,7 @@
       type: 'FeatureCollection',
       features: []
     };
-    var features = featureSet.features || featureSet.results;
+    var features = response.features || response.results;
     if(features.length){
       for (var i = features.length - 1; i >= 0; i--) {
         featureCollection.features.push(L.esri.Util.arcgisToGeojson(features[i], objectIdField));

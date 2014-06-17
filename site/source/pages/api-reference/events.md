@@ -1,4 +1,5 @@
 ---
+title: Events
 layout: documentation.hbs
 ---
 
@@ -30,8 +31,35 @@ layer.on('load', function(e){
 layer.addTo(map);
 ```
 
+### Request Event
+
+| Data | Value | Description |
+| --- | --- | --- |
+| `url` | `String` | The url the request was made to. |
+| `params` | `Object` | The parameters that were passed to the request. |
+| `method` | `String` | The HTTP method that was used for the request. |
+
+### Request Success Event
+
+| Data | Value | Description |
+| --- | --- | --- |
+| `url` | `String` | The url the request was made to. |
+| `params` | `Object` | The parameters that were passed to the request. |
+| `method` | `String` | The HTTP method that was used for the request. |
+| `response` | `Object` | The JSON returned from the request. |
+
+### Request Error Event
+
+| Data | Value | Description |
+| --- | --- | --- |
+| `url` | `String` | The url the request was made to. |
+| `params` | `Object` | The parameters that were passed to the request. |
+| `method` | `String` | The HTTP method that was used for the request. |
+| `code` | `Integer`| The error code that was returned. |
+| `message` | `String`| The error message that was returned. |
+
 ### Authentication Event
 
 | Data | Value | Description |
 | --- | --- | --- |
-| `authenticate` | `Function` | Pass an access token to this method to retry the failed request and update the `token` parameter for the layer. See [working with authenticated services](#working-with-authenticated-services) for more information. |
+| `authenticate` | `Function` | Pass a new access token to this method to retry the failed request(s).

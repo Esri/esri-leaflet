@@ -20,12 +20,8 @@
   margin: 50px auto;
   z-index: 100;
   background: $off-white;
-  border: 1px solid $light-gray;
-  // @include border-radius(3px);
-  // @include box-sizing(border-box);
-  // @include box-shadow(0 0 45px rgba(0,0,0,.1));
   padding: 2rem;
-  width: 25rem;
+  width: 30rem;
   opacity: 1;
 
   &.vertically-centered {

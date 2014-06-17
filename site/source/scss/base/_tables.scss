@@ -6,9 +6,15 @@ table {
   border: 1px solid mix($lighter-gray, $light-gray);
   text-align: left;
   margin: (1*$baseline) 0;
+  font-size: .875rem;
   > thead {
     background-color: mix($off-white, $lighter-gray);
     border-bottom: 1px solid mix($lighter-gray, $light-gray);
+  }
+  thead {
+    th, td {
+      font-weight: 700;
+    }
   }
   th, td {
     border-left: 1px solid mix($lighter-gray, $light-gray);

@@ -1,13 +1,11 @@
 .sidebar {
   @include box-sizing(border-box);
-  padding: 1rem;
-  background: $off-white;
-  border-right: 2px solid $lightest-gray;
+  padding: 1.5rem 1rem;
   float: left;
-  width: 20%;
-  position: absolute;
-  top: 0;
-  bottom: 0;
+  width: 24.75%;
+  position: relative;
+  background-color: white;
+  z-index: 3;
   nav {
     a {
       display: block;
@@ -18,9 +16,9 @@
       @include clearfix();
     }
   }
-  h4 {
+  h5 {
     float: left;
     clear: both;
-    margin: 2rem 0 1rem 0;
+    margin: 1rem 0 0.5rem;
   }
 }

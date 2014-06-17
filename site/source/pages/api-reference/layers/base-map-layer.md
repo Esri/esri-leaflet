@@ -1,18 +1,30 @@
 ---
+title: L.esri.Layers.BasemapLayer
 layout: documentation.hbs
 ---
 
-# BasemapLayer
+# {{page.data.title}}
 
-**Extends** [`L.TileLayer`](http://leafletjs.com/reference.html#tilelayer)
+Quickly access Esri published map tiles from on ArcGIS Online in Leaflet.
+
+Inherits from [`L.TileLayer`](http://leafletjs.com/reference.html#tilelayer)
 
 ### Constructor
 
-| Constructor | Description |
-| --- | --- |
-| `new L.esri.Layers.BasemapLayer(key, options)`<br>`L.esri.Layers.basemapLayer(key, options)` | `key` type of base map you want to add. The `options` parameter can accept the same [options](http://leafletjs.com/reference.html#tilelayer) as `L.TileLayer`. |
-
-You can also initalize `L.esri.Layers.BasemapLayer` with the aliases `new L.esri.BasemapLayer(key, options)` and `L.esri.basemapLayer(key, options)`.
+<table>
+    <thead>
+        <tr>
+            <th>Constructor</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code class="nobr">new L.esri.Layers.BaseMapLayer({{{param 'String' 'key'}}}, {{{param 'Object' 'options'}}})</code><br><br><code class="nobr">L.esri.Layers.baseMapLayer({{{param 'String' 'key'}}}, {{{param 'Object' 'options'}}})</code><br><br><code class="nobr">new L.esri.BaseMapLayer({{{param 'String' 'key'}}}, {{{param 'Object' 'options'}}})</code><br><br><code class="nobr">L.esri.baseMapLayer({{{param 'String' 'key'}}}, {{{param 'Object' 'options'}}})</code></td>
+            <td><code>key</code> type of base map you want to add. The <code>options</code> parameter can accept the same [options](http://leafletjs.com/reference.html#tilelayer) as `L.TileLayer`.</td>
+        </tr>
+    </tbody>
+</table>
 
 **Valid Keys**
 

@@ -15,8 +15,8 @@ module.exports = function(config) {
     files: [
       'http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css',
       'http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js',
-      'http://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-heat/v0.1.0/leaflet-heat.js',
-      'https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js',
+      'http://cdn-geoweb.s3.amazonaws.com/Leaflet.heat/0.1.1/leaflet-heat.js',
+      'http://cdn-geoweb.s3.amazonaws.com/Leaflet.markercluster/0.4.0/leaflet.markercluster-src.js',
       'spec/**/*Spec.js',
       'src/EsriLeaflet.js',
       'src/Util.js',

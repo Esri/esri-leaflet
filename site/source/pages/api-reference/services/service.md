@@ -2,15 +2,26 @@
 layout: documentation.hbs
 ---
 
-# Service
+# L.esri.Service
 
-`L.esri.Service`
+A generic class representing a hosted resource on ArcGIS Online or ArcGIS Server. This class can be extended to provide support for making requests as well as a standard for authentication and proxying.
 
 ### Constructor
 
-| Constructor | Description |
-| --- | --- |
-| `new L.esri.Service(url, options)`<br>`L.esri.service(url, options)` | The `url` parameter is the url to the ArcGIS Server or ArcGIS Online service you should like to consume. See [service URLs](#service-urls) for more information on how to find these urls. |
+<table>
+    <thead>
+        <tr>
+            <th>Constructor</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code class="nobr">new L.esri.Services.Service({{{param 'String' 'url'}}}, {{{param 'Object' 'options'}}})</code><br><br><code class="nobr">L.esri.Services.service({{{param 'String' 'url'}}}, {{{param 'Object' 'options'}}})</code></td>
+            <td>The `url` parameter is the url to the ArcGIS Server or ArcGIS Online service you would like to consume.</td>
+        </tr>
+    </tbody>
+</table>
 
 ### Options
 
@@ -23,17 +34,42 @@ layout: documentation.hbs
 
 | Event | Type | Description | 
 | --- | --- | --- |
-| `requeststart` | `[&lt;RequestEvent&gt;]()` | Fired when a request to the service begins. |
-| `requestend` | `[&lt;RequestEvent&gt;]()` | Fired when a request to the service ends. |
-| `authenticationrequired` | `[&lt;AuthenticationEvent&gt;]()` | This will be fired when a request to the service fails and requires authentication. See [working with authenticated services](#working-with-authenticated-services) for more information. |
+| `requeststart` | [<`RequestEvent`>]({{assets}}api-reference/events.html#request-event) | Fired when a request to the service begins. |
+| `requestend` | [<`RequestEvent`>]({{assets}}api-reference/events.html#request-event) | Fired when a request to the service ends. |
+| `requestsuccess` | [<`RequestSuccessEvent`>]({{assets}}api-reference/events.html#request-success-event) | Fired when a request to the service was successful. |
+| `requesterror` | [<`RequestErrorEvent`>]({{assets}}api-reference/events.html#request-error-event) | Fired when a request to the service responsed with an error. |
+| `authenticationrequired` | [<`AuthenticationEvent`>]({{assets}}api-reference/events.html#authentication-event) | This will be fired when a request to the service fails and requires authentication. See [working with authenticated services](#working-with-authenticated-services) for more information. |
 
 ### Methods
 
-| Method | Returns | Description | 
-| --- | --- | --- |
-| `get({{{param 'String' 'url'}}})` | `this` | Makes a GET request to the service. The services URL will be combined with the `path` option and parameters will be serialized to a query string. Accepts an optional function context for the callback. |
-| `post(&lt;String&gt; url, &lt;Object&gt; params, &lt;Function&gt; callback, &lt;Object&gt; context)` | `this` | Makes a POST request to the service. The services URL will be combined with the `path` option and parameters will be serialized. Accepts an optional function context for the callback. |
-| `metadata(&lt;Function&gt; callback, &lt;Object&gt; context)` | `this` | Requests the metadata about the service. This is an alias for get("/", {}, callback, context). |
-| `authenticate(&lt;String&gt; token)` | `this` | Authenticates this service with a new token and runs any pending requests that required a token. |
-
-### Example
+<table>
+    <thead>
+        <tr>
+            <th>Method</th>
+            <td>Returns</td>
+            <td>Description</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>get({{{param 'String' 'url'}}}, {{{param 'Object' 'params'}}}, {{{param 'Function' 'callback'}}}, {{{param 'Object' 'context'}}})</code></td>
+            <td><code>this</code></td>
+            <td>Makes a GET request to the service. The services URL will be combined with the `path` option and parameters will be serialized to a query string. Accepts an optional function context for the callback.</td>
+        </tr>
+        <tr>
+            <td><code>post({{{param 'String' 'url'}}}, {{{param 'Object' 'params'}}}, {{{param 'Function' 'callback'}}}, {{{param 'Object' 'context'}}})</code></td>
+            <td><code>this</code></td>
+            <td>Makes a POST request to the service. The services URL will be combined with the `path` option and parameters will be serialized. Accepts an optional function context for the callback.</td>
+        </tr>
+        <tr>
+            <td><code>metadata({{{param 'Function' 'callback'}}}, {{{param 'Object' 'context'}}})</code></td>
+            <td><code>this</code></td>
+            <td>Requests the metadata about the service. This is an alias for get("/", {}, callback, context).</td>
+        </tr>
+        <tr>
+            <td><code>authenticate({{{param 'String' 'token'}}})</code></td>
+            <td><code>this</code></td>
+            <td>Authenticates this service with a new token and runs any pending requests that required a token.</td>
+        </tr>
+    </tbody>
+</table>

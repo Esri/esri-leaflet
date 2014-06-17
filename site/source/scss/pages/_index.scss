@@ -1,6 +1,8 @@
 .homepage {
+
   .modal {
-    margin-top: 12rem;
+    margin-top: 8rem;
+    text-align: center;
   }
 
   #homepage-map {
@@ -11,6 +13,7 @@
     font-size: $p63;
     margin-top: 1*$baseline;
     margin-bottom: 0.5*$baseline;
+    padding-bottom: 1.5*$baseline;
     line-height: 2*$baseline;
     border-bottom: 4px solid $dark-gray;
   }
@@ -20,6 +23,7 @@
   }
 
   .btn {
-    min-width: 8em;
+    @include box-sizing(border-box);
+    width: 32%;
   }
 }

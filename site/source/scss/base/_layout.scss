@@ -6,12 +6,16 @@
   margin-left: auto;
   position: relative;
   z-index: 3;
-  padding: 2em 0;
+  padding: 2em 1em;
   &.white {
     padding: 0;
     position: relative;
-    background-color: white;
-    @include box-shadow(0 0 4px 1px rgba(0, 0, 0, 0.15));
+    // background-color: white;
+    // @include box-shadow(0 0 4px 1px rgba(0, 0, 0, 0.15));
+  }
+
+  &.single {
+    padding: 1px 1em 1em;
   }
 }
 
@@ -20,7 +24,8 @@
   margin: 0 1em;
   font-size: 1rem;
   color: $white;
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.75);
+  letter-spacing: 1px;
   &:hover {
     border-color: $white;
   }
