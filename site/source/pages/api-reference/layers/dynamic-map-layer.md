@@ -40,7 +40,7 @@ Option | Type | Default | Description
 `opacity` | `Integer` | `1` | Opacity of the layer. Should be a value between 0 and 1.
 `position` | `String` | '"front"` | position of the layer relative to other overlays
 `token` | `String` | `null` | If you pass a token in your options it will included in all requests to the service. See [working with authenticated services](#working-with-authenticated-services) for more information.
-`proxy` | `String` | `false` | URL of an [ArcGIS API for JavaScript proxies](https://developers.arcgis.com/javascript/jshelp/ags_proxy.html) or [ArcGIS Resoruce Proxies](https://github.com/Esri/resource-proxy) to use for proxying POST requests.
+`proxy` | `String` | `false` | URL of an [ArcGIS API for JavaScript proxies](https://developers.arcgis.com/javascript/jshelp/ags_proxy.html) or [ArcGIS Resource Proxies](https://github.com/Esri/resource-proxy) to use for proxying POST requests.
 `useCORS` | `Boolean` | `true` | If this service should use CORS when making GET requests.
 
 ### Methods
@@ -118,7 +118,7 @@ Option | Type | Default | Description
         <tr>
             <td><code>setTimeRange({{{param 'Date' 'from'}}}, {{{param 'Date' 'to'}}})</code></td>
             <td><code>this</code></td>
-            <td>Redraws the layer witht he passed time range.</td>
+            <td>Redraws the layer with he passed time range.</td>
         </tr>
         <tr>
             <td><code>getTimeOptions()</code></td>

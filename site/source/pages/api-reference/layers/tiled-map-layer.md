@@ -7,7 +7,7 @@ layout: documentation.hbs
 
 Inherits from [`L.TileLayer`](http://leafletjs.com/reference.html#tilelayer)
 
-Access tile caches from ArcGIS Online and ArcGIS Server as well as visualze and identify features on them.
+Access tile caches from ArcGIS Online and ArcGIS Server as well as visualize and identify features on them.
 
 **Your map service must be published using the Web Mercator Auxiliary Sphere tiling scheme (WKID 102100/3857) and the default scale option used by Google Maps, Bing Maps and [ArcGIS Online](http://resources.arcgis.com/en/help/arcgisonline-content/index.html#//011q00000002000000). Esri Leaflet will not support any other spatial reference for tile layers.**
 
@@ -32,7 +32,7 @@ Access tile caches from ArcGIS Online and ArcGIS Server as well as visualze and 
 
 | Option | Type | Default | Description |
 | --- | --- | --- | --- |
-| `proxy` | `String` | `false` | URL of an [ArcGIS API for JavaScript proxies](https://developers.arcgis.com/javascript/jshelp/ags_proxy.html) or [ArcGIS Resoruce Proxies](https://github.com/Esri/resource-proxy) to use for proxying POST requests. |
+| `proxy` | `String` | `false` | URL of an [ArcGIS API for JavaScript proxies](https://developers.arcgis.com/javascript/jshelp/ags_proxy.html) or [ArcGIS Resource Proxies](https://github.com/Esri/resource-proxy) to use for proxying POST requests. |
 | `useCORS` | `Boolean` | `true` | If this service should use CORS when making GET requests. |
 
 `L.esri.TiledMapLayer` also accepts all [`L.TileLayer`](http://leafletjs.com/reference.html#tilelayer-options) options.

@@ -4,7 +4,7 @@ layout: documentation.hbs
 
 # L.esri.Layers
 
-Layers provide visualization capabilites for data hosted in Feautre Services and Map Services.s
+Layers provide visualization capabilities for data hosted in Feature Services and Map Services.s
 
 * [`L.esri.Layers.BasemapLayer`]({{assets}}api-reference/layers/basemap-layer.html)
 * [`L.esri.Layers.DynamicMapLayer`]({{assets}}api-reference/layers/dynamic-map-layer.html)

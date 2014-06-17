@@ -5,7 +5,7 @@ layout: documentation.hbs
 
 # {{page.data.title}}
 
-`L.esri.Tasks.Query` is an abstaction for the query API that exists on Feature Layers and Map Services. It provides a chainable API for building request parameters and executing queries.
+`L.esri.Tasks.Query` is an abstraction for the query API that exists on Feature Layers and Map Services. It provides a chainable API for building request parameters and executing queries.
 
 ### Constructor
 
@@ -22,7 +22,7 @@ layout: documentation.hbs
             <code>L.esri.Tasks.query({{{param 'FeatureLayer' 'endpoint' '../../api-reference/services/feature-layer.html'}}})</code><br><br>
             <code>new L.esri.Tasks.Query({{{param 'String' 'endpoint'}}})</code><br><br>
             <code>L.esri.Tasks.query({{{param 'String' 'endpoint'}}})</code></td>
-            <td>The `endpoint` parameter is the service that you want to query either an  ArcGIS Server or ArcGIS Online service. You can also pass the URL to a service directly as a string. See [service URLs](#service-urls) for more information on how to find these urls.</td>
+            <td>The `endpoint` parameter is the service that you want to query either an  ArcGIS Server or ArcGIS Online service. You can also pass the URL to a service directly as a string. See [service URLs](#service-urls) for more information on how to find these URLs.</td>
         </tr>
     </tbody>
 </table>
@@ -41,7 +41,7 @@ layout: documentation.hbs
         <tr>
             <td><code>within({{{param 'LatLngBounds' 'bounds' 'http://leafletjs.com/reference.html#latlngbounds'}}})</code></td>
             <td><code>this</code></td>
-            <td>Queries feautres with the given <a href="http://leafletjs.com/reference.html#latlngbounds">LatLngBounds</a> object.</td>
+            <td>Queries features with the given <a href="http://leafletjs.com/reference.html#latlngbounds">LatLngBounds</a> object.</td>
         </tr>
         <tr>
             <td><code>nearby({{{param 'LatLng' 'latlng' 'http://leafletjs.com/reference.html#latlng'}}}, {{{param 'Integer' 'distance'}}})</code></td>
@@ -56,7 +56,7 @@ layout: documentation.hbs
         <tr>
             <td><code>offset({{{param 'Integer' 'offset'}}})</code></td>
             <td><code>this</code></td>
-            <td>Define the offest of the results, when combined with `limit` can be used for paging. Available only for Feature Services hosted on ArcGIS Online.</td>
+            <td>Define the offset of the results, when combined with `limit` can be used for paging. Available only for Feature Services hosted on ArcGIS Online.</td>
         </tr>
         <tr>
             <td><code>limit({{{param 'Integer' 'limit'}}})</code></td>
@@ -76,7 +76,7 @@ layout: documentation.hbs
         <tr>
             <td><code>simplify({{{param 'Map' 'map' 'http://leafletjs.com/reference.html#map'}}},  {{{param 'Integer' 'factor'}}})</code></td>
             <td><code>this</code></td>
-            <td>Simplify the geometries of the output features for the current map view. the <code>factor</code> parameter controls the amount of simplification between 0 (no simplication)and 1 (simplify to the most basic shape possible).</td>
+            <td>Simplify the geometries of the output features for the current map view. the <code>factor</code> parameter controls the amount of simplification between 0 (no simplification) and 1 (simplify to the most basic shape possible).</td>
         </tr>
         <tr>
             <td><code>orderBy({{{param 'String' 'fieldName'}}}, {{{param 'String' 'order'}}})</code></td>
@@ -97,7 +97,7 @@ layout: documentation.hbs
             <td><code>token({{{param 'String' 'token'}}})</code></td>
             <td><code>this</code></td>
             <td>Adds a token to this request if the service requires authentication. Will be added automatically if used with a service.</td>
-        </tr>        
+        </tr>
         <tr>
             <td><code>run({{{param 'Function' 'callback'}}}, {{{param 'Object' 'context'}}})</code></td>
             <td><code>this</code></td>
