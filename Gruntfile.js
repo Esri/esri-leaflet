@@ -226,7 +226,21 @@ module.exports = function(grunt) {
         partials: 'site/source/partials/**/*.hbs',
         helpers: ['site/source/helpers/**/*.js' ]
       },
-      posts: {
+      dev: {
+        options: {
+          assets: 'site/build/',
+        },
+        files: [{
+          cwd: 'site/source/pages',
+          dest: 'site/build',
+          expand: true,
+          src: ['**/*.hbs', '**/*.md']
+        }]
+      },
+      build: {
+        options: {
+          assets: 'esri-leaflet/',
+        },
         files: [{
           cwd: 'site/source/pages',
           dest: 'site/build',
@@ -270,7 +284,7 @@ module.exports = function(grunt) {
     'gh-pages': {
       options: {
         base: 'site/build',
-        repo: grunt.option('repo') || 'git@github.com:Esri/esri-leaflet.git'
+        repo: grunt.option('repo')
       },
       src: ['**']
     },
@@ -310,10 +324,10 @@ module.exports = function(grunt) {
   grunt.registerTask('test', ['karma:run']);
 
   // Documentation Site Tasks
-  grunt.registerTask('docs', ['assemble', 'sass', 'copy', 'connect:docs', 'watch']);
+  grunt.registerTask('docs', ['assemble:dev', 'sass', 'copy', 'connect:docs', 'watch']);
 
   // Documentation Site Tasks
-  grunt.registerTask('docs:build', ['assemble', 'sass', 'gh-pages']);
+  grunt.registerTask('docs:build', ['assemble:build', 'sass', 'gh-pages']);
 
   // Require all grunt modules
   require('load-grunt-tasks')(grunt, {pattern: ['grunt-*', 'assemble']});
