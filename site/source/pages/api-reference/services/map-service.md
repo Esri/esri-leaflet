@@ -28,17 +28,17 @@ Inherits from [`L.esri.Service`]({{assets}}api-reference/services/service.html)
 
 ### Options
 
-`L.esri.Services.MapService` accepts all [`L.esri.Services.Service`]({{assets}}/api-reference/services/service.html) options.
+`L.esri.Services.MapService` accepts all [`L.esri.Services.Service`]({{assets}}api-reference/services/service.html) options.
 
 ### Events
 
-`L.esri.Services.MapService` fires all  [`L.esri.Services.service`]({{assets}}/api-reference/services/service.html) events.
+`L.esri.Services.MapService` fires all  [`L.esri.Services.service`]({{assets}}api-reference/services/service.html) events.
 
 ### Methods
 
 | Method | Returns | Description |
 | --- | --- | --- |
-| `identify()` | `this` | Returns a new [`L.esri.Tasks.Identify()`]({{assets}}/api-reference/tasks/query.html) object bound to this service. |
+| `identify()` | `this` | Returns a new [`L.esri.Tasks.Identify()`]({{assets}}api-reference/tasks/query.html) object bound to this service. |
 
 ### Example
 

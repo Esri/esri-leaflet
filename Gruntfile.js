@@ -331,7 +331,7 @@ module.exports = function(grunt) {
   grunt.registerTask('docs', ['assemble:dev', 'sass', 'copy', 'connect:docs', 'watch']);
 
   // Documentation Site Tasks
-  grunt.registerTask('docs:build', ['assemble:build', 'sass', 'gh-pages']);
+  grunt.registerTask('docs:build', ['assemble:build', 'imagemin','sass', 'gh-pages']);
 
   // Require all grunt modules
   require('load-grunt-tasks')(grunt, {pattern: ['grunt-*', 'assemble']});
