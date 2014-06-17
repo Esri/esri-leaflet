@@ -59,6 +59,14 @@ Here is a quick example to get you started. Just change the paths to point to th
 
 A full [API Reference](http://esri.github.io/esri-leaflet/api-reference/) and plenty of [sample code](http://esri.github.io/esri-leaflet/examples/) can be found at the [Esri Leaflet](http://esri.github.io/esri-leaflet/) website.
 
+### Projects Using Esri Leaflet
+
+* [Geotrigger Editor](https://github.com/Esri/geotrigger-editor)
+* [Geotrigger Faker](https://github.com/Esri/geotrigger-faker)
+* [ArcGIS for Developers](https://developers.arcgis.com/en/)
+
+Feel free to add your projects to this list!
+
 ### Development Instructions
 
 Make Sure you have the [Grunt CLI](http://gruntjs.com/getting-started) installed.
