@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]> <html class="ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html class="ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html class="ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html class="ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="not-ie"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+
+  
+    <title>Visualizing time on a feature layer | Esri Leaflet</title>
+  
+
+  
+    <meta name="description" content="Filtering a feature layer within a certain time range. Try dates between October 2010 and August 2011. More information about Feature Layers can be found in the &lt;a href=&quot;/esri-leaflet/api-reference/layers/feature-layer.html&quot;&gt;L.esri.Layers.FeatureLayer&lt;/a&gt; documentation.">
+  
+
+  <meta name="description" content="Esri Leaflet">
+  <meta name="viewport" content="width=device-width">
+
+  <!--[if lt IE 9]>
+    <script src="//cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv-printshiv.js"></script>
+  <![endif]-->
+
+  <!-- google fonts -->
+  <link href='http://fonts.googleapis.com/css?family=Vollkorn:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="//brick.a.ssl.fastly.net/Source+Code+Pro:300">
+  <link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+
+  <!-- stylesheet -->
+  <link rel="stylesheet" href="../../../esri-leaflet/css/style.css">
+
+  <!-- cluster -->
+  <link rel="stylesheet" type="text/css" href="http://cdn-geoweb.s3.amazonaws.com/Leaflet.markercluster/0.4.0/MarkerCluster.css">
+  <link rel="stylesheet" type="text/css" href="http://cdn-geoweb.s3.amazonaws.com/Leaflet.markercluster/0.4.0/MarkerCluster.Default.css">
+
+  <!-- leaflet -->
+  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+  <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet-src.js"></script>
+
+  <!-- leaflet plugins -->
+  <script src="http://cdn-geoweb.s3.amazonaws.com/Leaflet.heat/0.1.1/leaflet-heat.js"></script>
+  <script src="http://cdn-geoweb.s3.amazonaws.com/Leaflet.markercluster/0.4.0/leaflet.markercluster-src.js"></script>
+
+  <!-- esri leaflet -->
+  <script src="../../../esri-leaflet/js/esri-leaflet-src.js"></script>
+  <script src="../../../esri-leaflet/js/heatmap-feature-layer-src.js"></script>
+  <script src="../../../esri-leaflet/js/clustered-feature-layer-src.js"></script>
+
+  <!-- esri leaflet geocoder -->
+  <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.3/esri-leaflet-geocoder.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.3/esri-leaflet-geocoder.css">
+
+  <!-- Google Analytics -->
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-44963317-3', 'auto');
+    ga('send', 'pageview');
+  </script>
+  <!-- End Google Analytics -->
+</head>
+<body>
+  <div class="page-content ">
+    <div class="container">
+      <a class="site-nav" href="../../../esri-leaflet/" class="left logo">Esri Leaflet</a>
+      <nav class="right">
+        <a class="site-nav" href="../../../esri-leaflet/examples/">Examples</a>
+        <a class="site-nav" href="../../../esri-leaflet/api-reference/">API Reference</a>
+        <a class="site-nav" href="../../../esri-leaflet/download/">Download</a>
+        <a class="site-nav" href="https://github.com/Esri/esri-leaflet">View on GitHub</a>
+      </nav>
+    </div>
+    <div id="background-map" class="background-map"></div>
+
+  
+
+<div class="container white">
+  
+
+<aside class="sidebar">
+  <h5>Basemaps</h5>
+  <nav>
+    <a href="../../../esri-leaflet/examples/showing-a-basemap.html">Showing an ArcGIS basemap</a>
+    <a href="../../../esri-leaflet/examples/basemap-with-labels.html">Basemap with labels</a>
+    <a href="../../../esri-leaflet/examples/switching-basemaps.html">Switching basemaps</a>
+    <a href="../../../esri-leaflet/examples/retina-basemap.html">Retina Basemap</a>
+  </nav>
+
+  <h5>Tile Layers</h5>
+  <nav>
+    <a href="../../../esri-leaflet/examples/tile-layer-1.html">Tiles from a Map Service #1</a>
+    <a href="../../../esri-leaflet/examples/tile-layer-2.html">Tiles from a Map Service #2</a>
+    <a href="../../../esri-leaflet/examples/non-mercator-projection.html">Non-mercator tiles</a>
+  </nav>
+
+  <h5>Dynamic Map Layer</h5>
+  <nav>
+    <a href="../../../esri-leaflet/examples/simple-dynamic-map-layer.html">Simple DynamicMapLayer</a>
+    <a href="../../../esri-leaflet/examples/identifying-features.html">Identifying Features</a>
+    <a href="../../../esri-leaflet/examples/customizing-popups.html">Custom popups</a>
+    <a href="../../../esri-leaflet/examples/visualizing-time-on-dynamic-map-layer.html">Time Ranges</a>
+  </nav>
+
+  <h5>Feature Layers</h5>
+  <nav>
+    <a href="../../../esri-leaflet/examples/simple-feature-layer.html">Simple FeatureLayer</a>
+    <a href="../../../esri-leaflet/examples/styling-feature-layer-points.html">Styling points</a>
+    <a href="../../../esri-leaflet/examples/styling-feature-layer-polylines.html">Styling lines</a>
+    <a href="../../../esri-leaflet/examples/styling-feature-layer-polygons.html">Styling polygons</a>
+    <a href="../../../esri-leaflet/examples/feature-layer-popups.html">Custom popups</a>
+    <a href="../../../esri-leaflet/examples/querying-feature-layers-1.html">Querying features #1</a>
+    <a href="../../../esri-leaflet/examples/querying-feature-layers-2.html">Querying features #2</a>
+    <a href="../../../esri-leaflet/examples/simplifying-complex-features.html">Simplifying complex features</a>
+    <a href="../../../esri-leaflet/examples/zooming-to-all-features.html">Zoom to all features</a>
+    <a href="../../../esri-leaflet/examples/custering-feature-layers.html">Clustering points</a>
+    <a href="../../../esri-leaflet/examples/styling-clusters.html">Styling clusters</a>
+    <a href="../../../esri-leaflet/examples/visualize-points-as-a-heatmap.html">Points as a heatmap</a>
+    <a href="../../../esri-leaflet/examples/styling-heatmaps.html">Styling heatmaps</a>
+    <a href="../../../esri-leaflet/examples/visualizing-time-with-feature-layer.html">Time enabled services</a>
+  </nav>
+
+  <h5>Authentication</h5>
+  <nav>
+    <a href="../../../esri-leaflet/examples/arcgis-online-auth.html">ArcGIS Online OAuth</a>
+    <a href="../../../esri-leaflet/examples/premium-content.html">Premium ArcGIS Online content</a>
+    <a href="../../../esri-leaflet/examples/arcgis-server-auth.html">ArcGIS Server username/password</a>
+  </nav>
+
+  <h5>Geocoding</h5>
+  <nav>
+    <a href="../../../esri-leaflet/examples/geocoding-control.html">Geocoding control</a>
+    <a href="../../../esri-leaflet/examples/center-map-on-address.html">Center the initial map state</a>
+    <a href="../../../esri-leaflet/examples/reverse-geocoding.html">Reverse geocoding</a>
+  </nav>
+
+  <h5>Misc.</h5>
+  <nav>
+    <a href="../../../esri-leaflet/examples/getting-service-metadata.html">Getting service metadata</a>
+  </nav>
+
+</aside>
+
+
+<div class="example-content">
+<div class="wrap">
+  <h1>Visualizing time on a feature layer</h1>
+  <p>Filtering a feature layer within a certain time range. Try dates between October 2010 and August 2011. More information about Feature Layers can be found in the <a href="/esri-leaflet/api-reference/layers/feature-layer.html">L.esri.Layers.FeatureLayer</a> documentation.</p>
+</div>
+<div id="map-wrapper">
+  
+
+<!-- Include Leaflet.heat via rawgit.com, do not use in production -->
+<script src="https://rawgit.com/Leaflet/Leaflet.heat/gh-pages/dist/leaflet-heat.js"></script>
+
+<!-- Load Heatmap Feature Layer from CDN -->
+<script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/0.0.1-beta.5/esri-leafelt-heatmap-feature-layer.js"></script>
+
+<style>
+  #time-ranges {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 10;
+    padding: 1em;
+    background: white;
+  }
+  #time-ranges input {
+    display: inline-block;
+    border: 1px solid #999;
+    font-size: 14px;
+    border-radius: 4px;
+    height: 28px;
+    line-height: 28px;
+  }
+  #time-ranges input[type='submit'] {
+    box-sizing: content-box;
+    padding: 0 1em;
+    text-transform: uppercase;
+    color: white;
+    background: #5C7DB8;
+    border-color: #5C7DB8;
+  }
+</style>
+
+<div id="map"></div>
+
+<div id="time-ranges" class="leaflet-bar">
+  <form action="#" id="form">
+    <label for="from">
+      From
+      <input id='from' type="date" value='2011-01-01' name='from'>
+    </label>
+    <label for="to">
+      To
+      <input  id='to' type="date" value='2011-03-31' name='to'>
+    </label>
+    <input type="submit" value="Update">
+  </form>
+</div>
+
+<script>
+  var timeForm = document.getElementById('form');
+  var startTimeInput = document.getElementById('from');
+  var endTimeInput = document.getElementById('to');
+
+  var map = L.map('map').setView([ 40.706, -73.926], 12);
+
+  L.esri.basemapLayer('Gray').addTo(map);
+  L.esri.basemapLayer('GrayLabels').addTo(map);
+
+  var reports = L.esri.heatmapFeatureLayer('http://services.arcgis.com/rOo16HdIMeOBI4Mb/ArcGIS/rest/services/Graffiti_Reports/FeatureServer/0', {
+    timeField: 'CreatedDate',
+    from: new Date(startTimeInput.value),
+    to: new Date(endTimeInput.value),
+    radius: 12
+  }).addTo(map);
+
+  timeForm.addEventListener('submit', function updateTimeRange(e){
+    reports.setTimeRange(new Date(startTimeInput.value), new Date(endTimeInput.value));
+    e.preventDefault();
+  });
+</script>
+</div>
+<pre><code class="language-xml"><span class="tag">&lt;<span class="title">html</span>&gt;</span>
+<span class="tag">&lt;<span class="title">head</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">utf-8</span> /&gt;</span>
+  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Visualizing time on a feature layer<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">name</span>=<span class="value">'viewport'</span> <span class="attribute">content</span>=<span class="value">'initial-scale=1,maximum-scale=1,user-scalable=no'</span> /&gt;</span>
+
+  <span class="comment">&lt;!-- Load Leaflet from CDN--&gt;</span>
+  <span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css"</span> /&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+
+  <span class="comment">&lt;!-- Load Esri Leaflet from CDN --&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/0.0.1-beta.5/esri-leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+
+  <span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css">
+    <span class="tag">body</span> <span class="rules">{<span class="rule"><span class="attribute">margin</span>:<span class="value"><span class="number">0</span></span></span>;<span class="rule"><span class="attribute">padding</span>:<span class="value"><span class="number">0</span></span></span>;<span class="rule">}</span></span>
+    <span class="id">#map</span> <span class="rules">{<span class="rule"><span class="attribute">position</span>:<span class="value"> absolute</span></span>;<span class="rule"><span class="attribute">top</span>:<span class="value"><span class="number">0</span></span></span>;<span class="rule"><span class="attribute">bottom</span>:<span class="value"><span class="number">0</span></span></span>;<span class="rule"><span class="attribute">right</span>:<span class="value"><span class="number">0</span></span></span>;<span class="rule"><span class="attribute">left</span>:<span class="value"><span class="number">0</span></span></span>;<span class="rule">}</span></span>
+  </span><span class="tag">&lt;/<span class="title">style</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">head</span>&gt;</span>
+<span class="tag">&lt;<span class="title">body</span>&gt;</span>
+
+<span class="comment">&lt;!-- Include Leaflet.heat via rawgit.com, do not use in production --&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://rawgit.com/Leaflet/Leaflet.heat/gh-pages/dist/leaflet-heat.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+
+<span class="comment">&lt;!-- Load Heatmap Feature Layer from CDN --&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/0.0.1-beta.5/esri-leafelt-heatmap-feature-layer.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+
+<span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css">
+  <span class="id">#time-ranges</span> <span class="rules">{
+    <span class="rule"><span class="attribute">position</span>:<span class="value"> absolute</span></span>;
+    <span class="rule"><span class="attribute">top</span>:<span class="value"> <span class="number">10</span>px</span></span>;
+    <span class="rule"><span class="attribute">right</span>:<span class="value"> <span class="number">10</span>px</span></span>;
+    <span class="rule"><span class="attribute">z-index</span>:<span class="value"> <span class="number">10</span></span></span>;
+    <span class="rule"><span class="attribute">padding</span>:<span class="value"> <span class="number">1</span>em</span></span>;
+    <span class="rule"><span class="attribute">background</span>:<span class="value"> white</span></span>;
+  <span class="rule">}</span></span>
+  <span class="id">#time-ranges</span> <span class="tag">input</span> <span class="rules">{
+    <span class="rule"><span class="attribute">display</span>:<span class="value"> inline-block</span></span>;
+    <span class="rule"><span class="attribute">border</span>:<span class="value"> <span class="number">1</span>px solid <span class="hexcolor">#999</span></span></span>;
+    <span class="rule"><span class="attribute">font-size</span>:<span class="value"> <span class="number">14</span>px</span></span>;
+    <span class="rule"><span class="attribute">border-radius</span>:<span class="value"> <span class="number">4</span>px</span></span>;
+    <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">28</span>px</span></span>;
+    <span class="rule"><span class="attribute">line-height</span>:<span class="value"> <span class="number">28</span>px</span></span>;
+  <span class="rule">}</span></span>
+  <span class="id">#time-ranges</span> <span class="tag">input</span><span class="attr_selector">[type='submit']</span> <span class="rules">{
+    <span class="rule"><span class="attribute">box-sizing</span>:<span class="value"> content-box</span></span>;
+    <span class="rule"><span class="attribute">padding</span>:<span class="value"> <span class="number">0</span> <span class="number">1</span>em</span></span>;
+    <span class="rule"><span class="attribute">text-transform</span>:<span class="value"> uppercase</span></span>;
+    <span class="rule"><span class="attribute">color</span>:<span class="value"> white</span></span>;
+    <span class="rule"><span class="attribute">background</span>:<span class="value"> <span class="hexcolor">#5C7DB8</span></span></span>;
+    <span class="rule"><span class="attribute">border-color</span>:<span class="value"> <span class="hexcolor">#5C7DB8</span></span></span>;
+  <span class="rule">}</span></span>
+</span><span class="tag">&lt;/<span class="title">style</span>&gt;</span>
+
+<span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+
+<span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"time-ranges"</span> <span class="attribute">class</span>=<span class="value">"leaflet-bar"</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">form</span> <span class="attribute">action</span>=<span class="value">"#"</span> <span class="attribute">id</span>=<span class="value">"form"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">label</span> <span class="attribute">for</span>=<span class="value">"from"</span>&gt;</span>
+      From
+      <span class="tag">&lt;<span class="title">input</span> <span class="attribute">id</span>=<span class="value">'from'</span> <span class="attribute">type</span>=<span class="value">"date"</span> <span class="attribute">value</span>=<span class="value">'2011-01-01'</span> <span class="attribute">name</span>=<span class="value">'from'</span>&gt;</span>
+    <span class="tag">&lt;/<span class="title">label</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">label</span> <span class="attribute">for</span>=<span class="value">"to"</span>&gt;</span>
+      To
+      <span class="tag">&lt;<span class="title">input</span>  <span class="attribute">id</span>=<span class="value">'to'</span> <span class="attribute">type</span>=<span class="value">"date"</span> <span class="attribute">value</span>=<span class="value">'2011-03-31'</span> <span class="attribute">name</span>=<span class="value">'to'</span>&gt;</span>
+    <span class="tag">&lt;/<span class="title">label</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"submit"</span> <span class="attribute">value</span>=<span class="value">"Update"</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">form</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+
+<span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
+  <span class="keyword">var</span> timeForm = document.getElementById(<span class="string">'form'</span>);
+  <span class="keyword">var</span> startTimeInput = document.getElementById(<span class="string">'from'</span>);
+  <span class="keyword">var</span> endTimeInput = document.getElementById(<span class="string">'to'</span>);
+
+  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([ <span class="number">40.706</span>, -<span class="number">73.926</span>], <span class="number">12</span>);
+
+  L.esri.basemapLayer(<span class="string">'Gray'</span>).addTo(map);
+  L.esri.basemapLayer(<span class="string">'GrayLabels'</span>).addTo(map);
+
+  <span class="keyword">var</span> reports = L.esri.heatmapFeatureLayer(<span class="string">'http://services.arcgis.com/rOo16HdIMeOBI4Mb/ArcGIS/rest/services/Graffiti_Reports/FeatureServer/0'</span>, {
+    timeField: <span class="string">'CreatedDate'</span>,
+    from: <span class="keyword">new</span> Date(startTimeInput.value),
+    to: <span class="keyword">new</span> Date(endTimeInput.value),
+    radius: <span class="number">12</span>
+  }).addTo(map);
+
+  timeForm.addEventListener(<span class="string">'submit'</span>, <span class="function"><span class="keyword">function</span> <span class="title">updateTimeRange</span><span class="params">(e)</span>{</span>
+    reports.setTimeRange(<span class="keyword">new</span> Date(startTimeInput.value), <span class="keyword">new</span> Date(endTimeInput.value));
+    e.preventDefault();
+  });
+</span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+
+<span class="tag">&lt;/<span class="title">body</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">html</span>&gt;</span></code></pre>
+
+<div class="wrap">
+  <p><a href="http://github.com/esri/esri-leaflet/edit/master/site/source/pages/examples/visualizing-time-with-feature-layer.hbs">Edit this sample on GitHub</a></p>
+</div>
+</div>
+  <div style='clear:both;'></div>
+</div>
+<div class="container centered-text">
+  <p class="copyright">Esri Leaflet is a project from the <a href="http://pdx.esri.com">Esri PDX R&amp;D Center</a> and the <a href="https://github.com/Esri/esri-leaflet/graphs/contributors">Esri Community</a></p>
+</div>
+
+  </div>
+  <script src="../../../esri-leaflet/js/script.js"></script>
+  </body>
+</html>

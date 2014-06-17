@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]> <html class="ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html class="ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html class="ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html class="ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="not-ie"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+
+  
+    <title>L.esri.Services.FeatureLayer | Esri Leaflet</title>
+  
+
+  
+
+  <meta name="description" content="Esri Leaflet">
+  <meta name="viewport" content="width=device-width">
+
+  <!--[if lt IE 9]>
+    <script src="//cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv-printshiv.js"></script>
+  <![endif]-->
+
+  <!-- google fonts -->
+  <link href='http://fonts.googleapis.com/css?family=Vollkorn:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="//brick.a.ssl.fastly.net/Source+Code+Pro:300">
+  <link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+
+  <!-- stylesheet -->
+  <link rel="stylesheet" href="../../../../esri-leaflet/css/style.css">
+
+  <!-- cluster -->
+  <link rel="stylesheet" type="text/css" href="http://cdn-geoweb.s3.amazonaws.com/Leaflet.markercluster/0.4.0/MarkerCluster.css">
+  <link rel="stylesheet" type="text/css" href="http://cdn-geoweb.s3.amazonaws.com/Leaflet.markercluster/0.4.0/MarkerCluster.Default.css">
+
+  <!-- leaflet -->
+  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+  <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet-src.js"></script>
+
+  <!-- leaflet plugins -->
+  <script src="http://cdn-geoweb.s3.amazonaws.com/Leaflet.heat/0.1.1/leaflet-heat.js"></script>
+  <script src="http://cdn-geoweb.s3.amazonaws.com/Leaflet.markercluster/0.4.0/leaflet.markercluster-src.js"></script>
+
+  <!-- esri leaflet -->
+  <script src="../../../../esri-leaflet/js/esri-leaflet-src.js"></script>
+  <script src="../../../../esri-leaflet/js/heatmap-feature-layer-src.js"></script>
+  <script src="../../../../esri-leaflet/js/clustered-feature-layer-src.js"></script>
+
+  <!-- esri leaflet geocoder -->
+  <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.3/esri-leaflet-geocoder.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.3/esri-leaflet-geocoder.css">
+
+  <!-- Google Analytics -->
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-44963317-3', 'auto');
+    ga('send', 'pageview');
+  </script>
+  <!-- End Google Analytics -->
+</head>
+<body>
+  <div class="page-content ">
+    <div class="container">
+      <a class="site-nav" href="../../../../esri-leaflet/" class="left logo">Esri Leaflet</a>
+      <nav class="right">
+        <a class="site-nav" href="../../../../esri-leaflet/examples/">Examples</a>
+        <a class="site-nav" href="../../../../esri-leaflet/api-reference/">API Reference</a>
+        <a class="site-nav" href="../../../../esri-leaflet/download/">Download</a>
+        <a class="site-nav" href="https://github.com/Esri/esri-leaflet">View on GitHub</a>
+      </nav>
+    </div>
+    <div id="background-map" class="background-map"></div>
+
+  
+
+<div class="container white">
+  
+
+<aside class="sidebar">
+  <h5>L.esri</h5>
+  <nav>
+    <a href="../../../../esri-leaflet/api-reference/request.html">Request</a>
+    <a href="../../../../esri-leaflet/api-reference/utils.html">Utils</a>
+  </nav>
+
+  <h5>L.esri.Layers</h5>
+  <nav>
+    <a href="../../../../esri-leaflet/api-reference/layers/base-map-layer.html">BasemapLayer</a>
+    <a href="../../../../esri-leaflet/api-reference/layers/tiled-map-layer.html">TiledMapLayer</a>
+    <a href="../../../../esri-leaflet/api-reference/layers/dynamic-map-layer.html">DynamicMapLayer</a>
+    <a href="../../../../esri-leaflet/api-reference/layers/feature-layer.html">FeatureLayer</a>
+    <a href="../../../../esri-leaflet/api-reference/layers/clustered-feature-layer.html">ClusteredFeatureLayer</a>
+    <a href="../../../../esri-leaflet/api-reference/layers/heatmap-feature-layer.html">HeatmapFeatureLayer</a>
+  </nav>
+
+  <h5>L.esri.Services</h5>
+  <nav>
+    <a href="../../../../esri-leaflet/api-reference/services/feature-layer.html">FeatureLayer</a>
+    <a href="../../../../esri-leaflet/api-reference/services/map-service.html">MapService</a>
+    <a href="../../../../esri-leaflet/api-reference/services/service.html">Service</a>
+  </nav>
+
+  <h5>L.esri.Tasks</h5>
+  <nav>
+    <a href="../../../../esri-leaflet/api-reference/tasks/identify.html">Identify</a>
+    <a href="../../../../esri-leaflet/api-reference/tasks/query.html">Query</a>
+  </nav>
+
+  <h5>Misc.</h5>
+  <nav>
+    <a href="../../../../esri-leaflet/api-reference/events.html">Events</a>
+  </nav>
+</aside>
+
+<div class="main-content">
+  <h1 id="l-esri-services-featurelayer">L.esri.Services.FeatureLayer</h1>
+<p>Inherits from <a href="../../../../esri-leaflet//api-reference/services/service.html"><code>L.esri.Service</code></a></p>
+<p><code>L.esri.Services.FeatureLayer</code> is an abstraction interacting with Feature Layers running on ArcGIS Online and ArcGIS server that allows you to make requests to the API, as well as query, add, update and remove features from the service.</p>
+<h3 id="constructor">Constructor</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Constructor</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code class="nobr">new L.esri.Services.FeatureLayer(<nobr class="param"><span>&lt;String&gt;</span> <code>url</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br><code class="nobr">L.esri.Services.featureLayer(<nobr class="param"><span>&lt;String&gt;</span> <code>url</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code></td>
+            <td>The <code>url</code> parameter is the URL to the ArcGIS Server or ArcGIS Online feature layer you would like to consume.</td>
+        </tr>
+    </tbody>
+</table>
+
+<h3 id="options">Options</h3>
+<p><code>L.esri.Services.FeatureLayer</code> accepts all <a href="../../../../esri-leaflet//api-reference/services/service.html"><code>L.esri.Services.Service</code></a> options.</p>
+<h3 id="events">Events</h3>
+<p><code>L.esri.Services.FeatureLayer</code> fires all  <a href="../../../../esri-leaflet//api-reference/services/service.html"><code>L.esri.Services.service</code></a> events.</p>
+<h3 id="methods">Methods</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Method</th>
+            <th>Returns</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>query()</code></td>
+            <td><code>this</code></td>
+            <td>
+                Returns a new <a href="../../../../esri-leaflet//api-reference/tasks/query.html"><code>L.esri.Tasks.Query</code></a> object that can be used to query this layer.
+<pre class="js"><code>featureLayer.query()
+            .within(latlngbounds)
+            .where(&quot;Direction = &#39;WEST&#39;&quot;)
+            .run(function(error, featureCollection){
+              console.log(featureCollection);
+            });</code></pre>
+            </td>
+        </tr>
+        <tr>
+            <td><code>createFeature(<nobr class="param"><span>&lt;<a href="http://geojson.org/geojson-spec.html#feature-objects">GeoJSON Feature</a>&gt;</span> <code>feature</code></nobr>, <nobr class="param"><span>&lt;Function&gt;</span> <code>callback</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>context</code></nobr>)</code></td>
+            <td><code>this</code></td>
+            <td>
+                Adds a new feature to the feature layer. this also adds the feature to the map if creation is successful.
+                <ul>
+                    <li>Requires authentication as a user who has permission to edit the service in ArcGIS Online or the user who created the service.</li>
+                    <li>Requires the <code>Create</code> capability be enabled on the service. You can check if creation exists by checking the metadata of your service under capabilities in the metadata.</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><code>updateFeature(<nobr class="param"><span>&lt;<a href="http://geojson.org/geojson-spec.html#feature-objects">GeoJSON Feature</a>&gt;</span> <code>feature</code></nobr>, <nobr class="param"><span>&lt;Function&gt;</span> <code>callback</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>context</code></nobr>)</code></td>
+            <td><code>this</code></td>
+            <td>
+                Update the provided feature on the Feature Layer. This also updates the feature on the map.
+                <ul>
+                    <li>Requires authentication as a user who has permission to edit the service in ArcGIS Online or the user who created the service.</li>
+                    <li>Requires the <code>Update</code> capability be enabled on the service. You can check if creation exists by checking the metadata of your service under capabilities in the metadata.</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><code>deleteFeature(<nobr class="param"><span>&lt;String or Integer&gt;</span> <code>id</code></nobr>, <nobr class="param"><span>&lt;Function&gt;</span> <code>callback</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>context</code></nobr>)</code></td>
+            <td><code>this</code></td>
+            <td>
+                Remove the feature with the provided id from the feature layer. This will also remove the feature from the map if it exists.
+                <ul>
+                    <li>Requires authentication as a user who has permission to edit the service in ArcGIS Online or the user who created the srevice.</li>
+                    <li>Requires the <code>Update</code> capability be enabled on the service. You can check if creation exists by checking the metadata of your service under capabilities in the metadata.</li>
+                </ul>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<h3 id="examples">Examples</h3>
+<p><strong>Note</strong>: These examples use a public feature service on ArcGIS Online that required no authentication.</p>
+<h5 id="adding-features">Adding Features</h5>
+<pre><code class="language-js"><span class="keyword">var</span> service = L.esri.Services.featureLayer(<span class="string">'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Pubic_Feature_Service/FeatureServer/0'</span>);
+
+<span class="keyword">var</span> feature = {
+    type: <span class="string">'Feature'</span>,
+    geometry: {
+        type: <span class="string">'Point'</span>,
+        coordinates: [-<span class="number">122</span>, <span class="number">45</span>]
+    },
+    properties: {
+        name: <span class="string">'Hello World'</span>
+    }
+};
+
+service.addFeature(feature, <span class="function"><span class="keyword">function</span><span class="params">(error, response)</span>{</span>
+    <span class="keyword">if</span>(error){
+      console.log(<span class="string">'error creating feature'</span> + error.message);
+    } <span class="keyword">else</span> {
+      console.log(<span class="string">'Successfully created feature with id '</span> + response.objectId);
+    }
+});</code></pre>
+<h5 id="updating-features">Updating Features</h5>
+<pre><code class="language-js"><span class="keyword">var</span> service = L.esri.Services.featureLayer(<span class="string">'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Pubic_Feature_Service/FeatureServer/0'</span>);
+
+<span class="keyword">var</span> feature = {
+    type: <span class="string">'Feature'</span>,
+    id: <span class="number">2</span>,
+    geometry: {
+        type: <span class="string">'Point'</span>,
+        coordinates: [-<span class="number">122</span>, <span class="number">45</span>]
+    },
+    properties: {
+        name: <span class="string">'Hi I\'m Feature 2'</span>
+    }
+};
+
+service.updateFeature(feature, <span class="function"><span class="keyword">function</span><span class="params">(error, response)</span>{</span>
+    <span class="keyword">if</span>(error){
+      console.log(<span class="string">'error updating feature'</span> + error.message);
+    } <span class="keyword">else</span> {
+      console.log(<span class="string">'Successfully updated feature '</span> + feature.id);
+    }
+});</code></pre>
+<h5 id="deleting-features">Deleting Features</h5>
+<pre><code class="language-js"><span class="keyword">var</span> service = L.esri.Services.featureLayer(<span class="string">'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Pubic_Feature_Service/FeatureServer/0'</span>);
+
+service.deleteFeature(<span class="number">2</span>, <span class="function"><span class="keyword">function</span><span class="params">(error, response)</span>{</span>
+    <span class="keyword">if</span>(error){
+      console.log(<span class="string">'error deleting feature'</span> + error.message);
+    } <span class="keyword">else</span> {
+      console.log(<span class="string">'Successfully deleted feature '</span> + response.objectId);
+    }
+});</code></pre>
+<h5 id="querying-feautres">Querying Feautres</h5>
+<pre><code class="language-js"><span class="keyword">var</span> service = L.esri.Services.featureLayer(<span class="string">'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Pubic_Feature_Service/FeatureServer/0'</span>);
+
+service.query().where(<span class="string">"name='Hello World'"</span>).run(<span class="function"><span class="keyword">function</span><span class="params">(error, featureCollection, response)</span>{</span>
+    console.log(featureCollection.features[<span class="number">0</span>].properties.name);
+});</code></pre>
+
+  <p><a href="http://github.com/esri/esri-leaflet/edit/master/site/source/pages/api-reference/services/feature-layer.md">Edit this page on GitHub</a></p>
+</div>
+  <div style='clear:both;'></div>
+</div>
+<div class="container centered-text">
+  <p class="copyright">Esri Leaflet is a project from the <a href="http://pdx.esri.com">Esri PDX R&amp;D Center</a> and the <a href="https://github.com/Esri/esri-leaflet/graphs/contributors">Esri Community</a></p>
+</div>
+
+  </div>
+  <script src="../../../../esri-leaflet/js/script.js"></script>
+  </body>
+</html>
