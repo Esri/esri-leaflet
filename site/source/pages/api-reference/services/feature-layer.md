@@ -28,11 +28,11 @@ Inherits from [`L.esri.Service`]({{assets}}api-reference/services/service.html)
 
 ### Options
 
-`L.esri.Services.FeatureLayer` accepts all [`L.esri.Services.Service`]({{assets}}/api-reference/services/service.html) options.
+`L.esri.Services.FeatureLayer` accepts all [`L.esri.Services.Service`]({{assets}}api-reference/services/service.html) options.
 
 ### Events
 
-`L.esri.Services.FeatureLayer` fires all  [`L.esri.Services.service`]({{assets}}/api-reference/services/service.html) events.
+`L.esri.Services.FeatureLayer` fires all  [`L.esri.Services.service`]({{assets}}api-reference/services/service.html) events.
 
 ### Methods
 
@@ -49,7 +49,7 @@ Inherits from [`L.esri.Service`]({{assets}}api-reference/services/service.html)
             <td><code>query()</code></td>
             <td><code>this</code></td>
             <td>
-                Returns a new <a href="{{assets}}/api-reference/tasks/query.html"><code>L.esri.Tasks.Query</code></a> object that can be used to query this layer.
+                Returns a new <a href="{{assets}}api-reference/tasks/query.html"><code>L.esri.Tasks.Query</code></a> object that can be used to query this layer.
 <pre class="js"><code>featureLayer.query()
             .within(latlngbounds)
             .where("Direction = 'WEST'")

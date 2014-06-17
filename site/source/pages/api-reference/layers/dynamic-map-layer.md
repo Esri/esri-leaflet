@@ -169,7 +169,7 @@ Option | Type | Default | Description
 | `loading` | [<`LoadingEvent`>]({{assets}}api-reference/events.html#loading-event) | Fires when new features start loading. |
 | `load` | [<`LoadEvent`>]({{assets}}api-reference/events.html#load-event) | Fires when all features in the current bounds of the map have loaded. |
 
-`L.esri.Layer.DynamicMapLayer` also fires all  [`L.esri.Service.MapService`]({{assets}}/api-reference/services/map-service.html) events.
+`L.esri.Layer.DynamicMapLayer` also fires all  [`L.esri.Service.MapService`]({{assets}}api-reference/services/map-service.html) events.
 
 ### Example
 
