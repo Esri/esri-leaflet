@@ -90,7 +90,7 @@ More information about Feature Layers can be found in the [`L.esri.Layers.Featur
         <tr>
             <td><code>precision</code></td>
             <td><code>Integer</code></td>
-            <td>How many digits of precision to request from the server. <a href="http://en.wikipedia.org/wiki/Decimal_degrees">Wikipedia</a> has a great referance of digit precision to meters.</td>
+            <td>How many digits of precision to request from the server. <a href="http://en.wikipedia.org/wiki/Decimal_degrees">Wikipedia</a> has a great reference of digit precision to meters.</td>
         </tr>
         <tr>
             <td><code>token</code></td>
@@ -100,7 +100,7 @@ More information about Feature Layers can be found in the [`L.esri.Layers.Featur
         <tr>
             <td><code>proxy</code></td>
             <td><code>String</code></td>
-            <td>URL of an <a href="https://developers.arcgis.com/javascript/jshelp/ags_proxy.html">ArcGIS API for JavaScript proxies</a> or <a href="https://github.com/Esri/resource-proxy">ArcGIS Resoruce Proxies</a> to use for proxying POST requests.</td>
+            <td>URL of an <a href="https://developers.arcgis.com/javascript/jshelp/ags_proxy.html">ArcGIS API for JavaScript proxies</a> or <a href="https://github.com/Esri/resource-proxy">ArcGIS Resource Proxies</a> to use for proxying POST requests.</td>
         </tr>
         <tr>
             <td><code>useCORS</code></td>
@@ -147,7 +147,7 @@ In additon to these events `L.esri.FeatureLayer` also fires the following [Mouse
         <tr>
             <td><code>setStyle({{{param 'PathOptions' 'style' 'http://leafletjs.com/reference.html#path-options'}}})</code><br><br><code>setStyle({{{param 'Function' 'style'}}})</code></td>
             <td><code>this</code></td>
-            <td>Sets the given path options to each layer that has a <code>setStyle</code> method. Can also be a <code>Function</code> that will recive a <code>feature</code> argument and should return <a href="http://leafletjs.com/reference.html#path-options">Path Options</a>
+            <td>Sets the given path options to each layer that has a <code>setStyle</code> method. Can also be a <code>Function</code> that will receive a <code>feature</code> argument and should return <a href="http://leafletjs.com/reference.html#path-options">Path Options</a>
             <pre><code class="language-javascript">featureLayer.setStyle(1, {
     color: white;
 })</code></pre>
@@ -240,7 +240,7 @@ In additon to these events `L.esri.FeatureLayer` also fires the following [Mouse
             <td>
                 Adds a new feature to the feature layer. this also adds the feature to the map if creation is successful.
                 <ul>
-                    <li>Requires authentication as a user who has permission to edit the service in ArcGIS Online or the user who created the srevice.</li>
+                    <li>Requires authentication as a user who has permission to edit the service in ArcGIS Online or the user who created the service.</li>
                     <li>Requires the <code>Create</code> capability be enabled on the service. You can check if creation exists by checking the metadata of your service under capabilities in the metadata.</li>
                 </ul>
             </td>
@@ -251,7 +251,7 @@ In additon to these events `L.esri.FeatureLayer` also fires the following [Mouse
             <td>
                 Update the provided feature on the Feature Layer. This also updates the feature on the map.
                 <ul>
-                    <li>Requires authentication as a user who has permission to edit the service in ArcGIS Online or the user who created the srevice.</li>
+                    <li>Requires authentication as a user who has permission to edit the service in ArcGIS Online or the user who created the service.</li>
                     <li>Requires the <code>Update</code> capability be enabled on the service. You can check if creation exists by checking the metadata of your service under capabilities in the metadata.</li>
                 </ul>
             </td>
@@ -262,7 +262,7 @@ In additon to these events `L.esri.FeatureLayer` also fires the following [Mouse
             <td>
                 Remove the feature with the provided id from the feature layer. This will also remove the feature from the map if it exists.
                 <ul>
-                    <li>Requires authentication as a user who has permission to edit the service in ArcGIS Online or the user who created the srevice.</li>
+                    <li>Requires authentication as a user who has permission to edit the service in ArcGIS Online or the user who created the service.</li>
                     <li>Requires the <code>Update</code> capability be enabled on the service. You can check if creation exists by checking the metadata of your service under capabilities in the metadata.</li>
                 </ul>
             </td>

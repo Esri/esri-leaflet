@@ -5,7 +5,7 @@ layout: documentation.hbs
 
 # {{page.data.title}}
 
-`L.esri.Tasks.Identify` is an abstaction for the Identify API that exists on Map Services. It provides a chainable API for building request parameters and executing the request.
+`L.esri.Tasks.Identify` is an abstraction for the Identify API that exists on Map Services. It provides a chainable API for building request parameters and executing the request.
 
 ### Constructor
 
@@ -22,7 +22,7 @@ layout: documentation.hbs
             <code>L.esri.Tasks.identify({{{param 'MapService' 'endpoint' '../../api-reference/services/map-service.html'}}})</code><br><br>
             <code>new L.esri.Tasks.Identify({{{param 'String' 'endpoint'}}})</code><br><br>
             <code>L.esri.Tasks.identify({{{param 'String' 'endpoint'}}})</code><br></td>
-            <td>The `endpoint` parameter is the service that you want to identify either an  ArcGIS Server or ArcGIS Online service. You can also pass the URL to a service directly as a string. See [service URLs](#service-urls) for more information on how to find these urls.</td>
+            <td>The `endpoint` parameter is the service that you want to identify either an  ArcGIS Server or ArcGIS Online service. You can also pass the URL to a service directly as a string. See [service URLs](#service-urls) for more information on how to find these URLs.</td>
         </tr>
     </tbody>
 </table>
@@ -76,7 +76,7 @@ layout: documentation.hbs
         <tr>
             <td><code>simplify({{{param 'Map' 'map' 'http://leafletjs.com/reference.html#map'}}},  {{{param 'Integer' 'factor'}}})</code></td>
             <td><code>this</code></td>
-            <td>Simplify the geometries of the output features for the current map view. the <code>factor</code> parameter controls the amount of simplification between 0 (no simplication)and 1 (simplify to the most basic shape possible).</td>
+            <td>Simplify the geometries of the output features for the current map view. the <code>factor</code> parameter controls the amount of simplification between 0 (no simplification) and 1 (simplify to the most basic shape possible).</td>
         </tr>
         <tr>
             <td><code>token({{{param 'String' 'token'}}})</code></td>
@@ -86,7 +86,7 @@ layout: documentation.hbs
         <tr>
             <td><code>run({{{param 'Function' 'callback'}}}, {{{param 'Object' 'context'}}})</code></td>
             <td><code>this</code></td>
-            <td>Exectues the identify request with the current parameters, identified features will be passed to <code>callback</code> as a <a href="http://geojson.org/geojson-spec.html#feature-collection-objects">GeoJSON FeatureCollection</a>. Accepts an optional function context</td>
+            <td>Executes the identify request with the current parameters, identified features will be passed to <code>callback</code> as a <a href="http://geojson.org/geojson-spec.html#feature-collection-objects">GeoJSON FeatureCollection</a>. Accepts an optional function context</td>
         </tr>
     </tbody>
 </table>

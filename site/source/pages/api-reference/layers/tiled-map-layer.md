@@ -7,7 +7,7 @@ layout: documentation.hbs
 
 Inherits from [`L.TileLayer`](http://leafletjs.com/reference.html#tilelayer)
 
-Access tiles from ArcGIS Online and ArcGIS Server as well as visualze and identify features on them.
+Access tiles from ArcGIS Online and ArcGIS Server as well as visualize and identify features on them.
 
 Is you have Feature Services published on ArcGIS online you can create a static set of tiles using your Feature Service. You can find details on that process on the [ArcGIS Online Help](http://doc.arcgis.com/en/arcgis-online/share-maps/publish-tiles.htm#ESRI_SECTION1_F68FCBD33BD54117B23232D41A762E89)
 
@@ -34,7 +34,7 @@ Is you have Feature Services published on ArcGIS online you can create a static 
 
 | Option | Type | Default | Description |
 | --- | --- | --- | --- |
-| `proxy` | `String` | `false` | URL of an [ArcGIS API for JavaScript proxies](https://developers.arcgis.com/javascript/jshelp/ags_proxy.html) or [ArcGIS Resoruce Proxies](https://github.com/Esri/resource-proxy) to use for proxying POST requests. |
+| `proxy` | `String` | `false` | URL of an [ArcGIS API for JavaScript proxies](https://developers.arcgis.com/javascript/jshelp/ags_proxy.html) or [ArcGIS Resource Proxies](https://github.com/Esri/resource-proxy) to use for proxying POST requests. |
 | `useCORS` | `Boolean` | `true` | If this service should use CORS when making GET requests. |
 
 `L.esri.TiledMapLayer` also accepts all [`L.TileLayer`](http://leafletjs.com/reference.html#tilelayer-options) options.

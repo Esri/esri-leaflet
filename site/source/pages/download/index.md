@@ -6,7 +6,7 @@ class: no-sidebar
 
 # Download
 
-All builds of Esri Leaflet are availble for download on [GitHub](https://github.com/Esri/esri-leaflet/releases/).
+All builds of Esri Leaflet are available for download on [GitHub](https://github.com/Esri/esri-leaflet/releases/).
 
 <a href="https://github.com/Esri/esri-leaflet/releases/download/v0.0.1-beta.5/esri-leaflet-0.0.1-beta.5.zip" class="btn">Current Release</a>
 <a href="https://github.com/Esri/esri-leaflet/releases/" class="btn">Past Releases</a>

@@ -23,14 +23,14 @@
 * `L.esri.ClusteredFeatureLayer` and `L.esri.HeatMapFeatureLayer` now inherit from `L.`L.esri.FeatureManager` so they share many new methods and options.
 * `L.esri.FeatureLayer`, `L.esri.ClusteredFeatureLayer` and `L.esri.HeatMapFeatureLayer` now support time enabled service via `from`, `to`, `timeFields` and `timeFilterMode` options and `setTimeRange(from, to)` and `getTimeRange()` methods.
 * `L.esri.FeatureLayer`, `L.esri.ClusteredFeatureLayer` and `L.esri.HeatMapFeatureLayer` now support `where` options and have new methods for `setWhere()` and `getWhere()` to perform filtering.
-* `L.esri.FeatureLayer` now supports generalizing polygon and polyline features on the service side for performence using the new `simplifyFactor` option.
+* `L.esri.FeatureLayer` now supports generalizing polygon and polyline features on the service side for performance using the new `simplifyFactor` option.
 * Don't throw errors when `L.esri.BasemapLayer` is added to maps without an attribution control. If you do not add attribution you must handle adding attribution your self to the map.
 * Remove rbush. Switch to tracking feature ids with the cell key system.
 * Remove `L.esri.Util.geojsonBounds` as it was only being used to create bounds and envelopes for rbush.
 * add `bindPopup` method to `L.esri.DynamicMapLayer`.
 * add `getTimeRange` and `setTimeRange` methods `L.esri.DynamicMapLayer`.
 * New `L.esri.Services` namespace to handle generic abstraction of interacting with ArcGIS Online and ArcGIS server services.
-* new `L.esri.Services.Service` base class that can be used for interacting with any service. All `L.esri.Layers` classes now uses `L.esri.Services.Service` internally for their API requests. This class also abstracts authentication and proxying.s
+* new `L.esri.Services.Service` base class that can be used for interacting with any service. All `L.esri.Layers` classes now uses `L.esri.Services.Service` internally for their API requests. This class also abstracts authentication and proxying.
 * new `L.esri.Services.FeatureLayer` class for interacting with the Feature Layer API.
 * new `L.esri.Services.MapService` class for interacting with the Map Server API.
 * new `L.esri.Tasks` namespace for tasks that map to individual API methods.
@@ -64,6 +64,6 @@
 
 * Improve DynamicMapLayer panning and zooming performance. #137
 * FeatureLayer and ClusteredFeatureLayer can now load features from map services. Thanks to @odoe and @jgravois.
-* FeatureLayer, DynamicMapLayer and ClusteredFeatureLayer all accept a token option for accessing services that require authentication and fire a authenticationrequired event when they encounter a need for a token. Thanks to @aaronpk for the Oauth demos. #139
+* FeatureLayer, DynamicMapLayer and ClusteredFeatureLayer all accept a token option for accessing services that require authentication and fire a `authenticationrequired` event when they encounter a need for a token. Thanks to @aaronpk for the Oauth demos. #139
 * Add DarkGray and DarkGrayLabels to BasemapLayer. #190
 * An attributionControl on maps is now required when using BasemapLayer. #159
