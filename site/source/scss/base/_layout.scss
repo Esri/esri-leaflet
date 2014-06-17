@@ -1,6 +1,11 @@
-.page-content {
-  margin: 0 .75em
+body {
+  min-width: 768px;
 }
+
+.page-content {
+  margin: 0 .75em;
+}
+
 .container {
   @include box-sizing(border-box);
   @include clearfix();
