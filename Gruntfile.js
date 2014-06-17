@@ -50,7 +50,7 @@ module.exports = function(grunt) {
       },
       'docs-assemble': {
         files: ['site/source/**/*.md', 'site/source/**/*.hbs'],
-        tasks: ['assemble'],
+        tasks: ['assemble:dev'],
         options: {
           nospawn: true
         }
@@ -112,6 +112,7 @@ module.exports = function(grunt) {
           'src/EsriLeaflet.js',
           'src/Util.js',
           'src/Request.js',
+          'src/Services/Service.js',
           'src/Services/MapService.js',
           'src/Tasks/Identify.js',
           'src/Tasks/Query.js',
@@ -125,6 +126,7 @@ module.exports = function(grunt) {
           'src/EsriLeaflet.js',
           'src/Util.js',
           'src/Request.js',
+          'src/Services/Service.js',
           'src/Services/FeatureLayer.js',
           'src/Tasks/Query.js',
           'src/Layers/FeatureLayer/FeatureGrid.js',
@@ -221,14 +223,13 @@ module.exports = function(grunt) {
     assemble: {
       options: {
         layout: 'layout.hbs',
-        assets: 'site/build/',
         layoutdir: 'site/source/layouts/',
         partials: 'site/source/partials/**/*.hbs',
         helpers: ['site/source/helpers/**/*.js' ]
       },
       dev: {
         options: {
-          assets: 'site/build/',
+          assets: 'site/build/'
         },
         files: [{
           cwd: 'site/source/pages',
@@ -239,7 +240,7 @@ module.exports = function(grunt) {
       },
       build: {
         options: {
-          assets: 'esri-leaflet/',
+          assets: 'esri-leaflet/'
         },
         files: [{
           cwd: 'site/source/pages',

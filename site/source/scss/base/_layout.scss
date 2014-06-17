@@ -78,11 +78,12 @@
     animation-duration: 300s;
     animation-name: colorshift;
   }
-  img {
-    -webkit-filter: grayscale(50%);
-    -moz-filter: grayscale(50%);
-    filter: grayscale(50%);
-  }
+}
+
+.not-ie .background-map img {
+  -webkit-filter: grayscale(50%);
+  -moz-filter: grayscale(50%);
+  filter: grayscale(50%);
 }
 
 @keyframes colorshift {

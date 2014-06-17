@@ -23,9 +23,14 @@ Esri Leaflet is currently hosted on Amazon Cloudfront to make it easily availabl
 
 #### Other Builds
 
+Esri Leaflet is also built into several smaller components and plugins for specific use cases these more specialized builds are available on the CDN.
+
 ```xml
 <!-- Core Build -->
 <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/0.0.1-beta.5/esri-leaflet-core.js"></script>
+
+<!-- Basemaps Only Build -->
+<script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/0.0.1-beta.5/esri-leaflet-basemaps.js"></script>
 
 <!-- Feature Layer Only Build -->
 <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/0.0.1-beta.5/esri-leaflet-feature-layer.js"></script>
@@ -46,10 +51,12 @@ Esri Leaflet is currently hosted on Amazon Cloudfront to make it easily availabl
 
 # Builds
 
+A summary of what features exist in which builds.
+
 | Feature | Standard | Core | MapService | FeatureLayer | Basemaps | ClusteredFeatureLayer | HeatmapFeatureLayer |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| Size - kb | 37.5kb | 7.7kb | 10.1kb | 21.3kb | 8.3kb | 3.2kb | 1.5kb |
-| Size Gzipped - kb | 6.38kb | 1.6kb | 1.92kb | 4kb | 1.5kb | 0.6kb | 0.3kb |
+| Size    | 37.5kb | 7.7kb | 11.8kb | 23kb | 8.3kb | 3.w2kb | 1.5kb |
+| Gzipped | 6.38kb | 1.6kb | 2.23kb | 4.3kb | 1.5kb | 0.6kb | 0.3kb |
 | `L.esri.Request` | &#10003; | &#10003; | &#10003; | &#10003; | &#10003; | | |
 | `L.esri.Util` | &#10003; | &#10003; | &#10003; | &#10003; | | | |
 | `L.esri.Services.Service` | &#10003; | &#10003; | &#10003; | &#10003; | | | |

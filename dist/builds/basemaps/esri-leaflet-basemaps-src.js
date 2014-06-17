@@ -352,7 +352,7 @@ L.esri = {
       map.off('moveend', this._updateMapAttribution, this);
     },
     getAttribution:function(){
-      var logo = '<a href="https://developers.arcgis.com"><img src="http://js.arcgis.com/3.9/js/esri/images/map/logo-med.png" style="position:absolute; top:-38px; right:2px;"></a>';
+      var logo = '<a href="https://developers.arcgis.com" style="border: none;"><img src="http://js.arcgis.com/3.9/js/esri/images/map/logo-med.png" style="position:absolute; top:-38px; right:2px; border: none;"></a>';
       var attribution = '<span class="esri-attributions" style="line-height:14px; vertical-align: -3px; text-overflow:ellipsis; white-space:nowrap; overflow:hidden; display:inline-block;">' + this.options.attribution + '</span>' + logo;
       return attribution;
     },
