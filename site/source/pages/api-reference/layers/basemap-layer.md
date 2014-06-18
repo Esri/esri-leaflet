@@ -26,7 +26,7 @@ Inherits from [`L.TileLayer`](http://leafletjs.com/reference.html#tilelayer)
     </tbody>
 </table>
 
-###### Basemaps
+##### Basemaps
 
 These maps have worldwide coverage at a variety of zoom levels.
 
@@ -39,7 +39,7 @@ These maps have worldwide coverage at a variety of zoom levels.
 * `Imagery`
 * `ShadedRelief`
 
-###### Optional Labels
+##### Optional Labels
 
 These are optional layers that add extra text labels to the basemaps.
 
