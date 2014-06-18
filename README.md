@@ -59,6 +59,25 @@ Here is a quick example to get you started. Just change the paths to point to th
 
 A full [API Reference](http://esri.github.io/esri-leaflet/api-reference/) and plenty of [sample code](http://esri.github.io/esri-leaflet/examples/) can be found at the [Esri Leaflet](http://esri.github.io/esri-leaflet/) website.
 
+### Development Roadmap
+
+If you are interested in contributing to Esri Leaflet or are interetsed in seeing what is coming up next checkout the [development roadmap](https://github.com/Esri/esri-leaflet/wiki/Roadmap).
+
+### Freqently Asked Questions
+
+* [Will Esri Leaflet replace the ArcGIS API for JavaScript?](https://github.com/Esri/esri-leaflet/wiki/FAQ#will-esri-leaflet-replace-the-arcgis-api-for-javascript)
+* [What are the goals of Esri Leaflet?](https://github.com/Esri/esri-leaflet/wiki/FAQ#what-are-the-goals-of-esri-leaflet)
+* [When will Esri Leaflet leave beta?](https://github.com/Esri/esri-leaflet/wiki/FAQ#when-will-esri-leaflet-leave-beta)
+* [How do you decide what features get included in Esri Leaflet?](https://github.com/Esri/esri-leaflet/wiki/FAQ#how-do-you-decide-what-features-get-included-in-esri-leaflet)
+* [I have an idea! What should I do?](https://github.com/Esri/esri-leaflet/wiki/FAQ#i-have-an-idea-what-should-i-do)
+* [When will you support "x"?](https://github.com/Esri/esri-leaflet/wiki/FAQ#when-will-you-support-x)
+* [Can you implement feature "x"?](https://github.com/Esri/esri-leaflet/wiki/FAQ#can-you-implement-feature-x)
+* [When will feature "x" get done?](https://github.com/Esri/esri-leaflet/wiki/FAQ#when-will-feature-x-get-done)
+* [I want to contribute. How can I help?](https://github.com/Esri/esri-leaflet/wiki/FAQ#i-want-to-contribute-how-can-i-help)
+* [I built something with Esri Leaflet can I show you?](https://github.com/Esri/esri-leaflet/wiki/FAQ#i-built-something-with-esri-leaflet-can-i-show-you)
+* [I built a reusable component (layer type, api wrapper, ui control ect...) can I contribute it to Esri Leaflet?](i-built-a-reusable-component-layer-type-api-wrapper-ui-control-ect-can-i-contribute-it-to-esri-leaflet)
+* [What are some good Leaflet Plugins?](https://github.com/Esri/esri-leaflet/wiki/FAQ#what-are-some-good-leaflet-plugins)
+
 ### Projects Using Esri Leaflet
 
 * [Geotrigger Editor](https://github.com/Esri/geotrigger-editor)
@@ -78,7 +97,8 @@ Make Sure you have the [Grunt CLI](http://gruntjs.com/getting-started) installed
 6. Make your changes and create a [pull request](https://help.github.com/articles/creating-a-pull-request)
 
 ### Dependencies
-* [Leaflet](http://leaflet.com) version 0.7 or higher is required.
+
+* [Leaflet](http://leaflet.com) version 0.7 or higher is required but the latest version is recommended.
 
 ### Optional Dependencies
 * [Leaflet.markercluster](https://github.com/Leaflet/Leaflet.markercluster) - for `L.esri.ClusteredFeatureLayer`
