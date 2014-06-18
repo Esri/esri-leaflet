@@ -65,7 +65,18 @@ If you are interested in contributing to Esri Leaflet or are interetsed in seein
 
 ### Freqently Asked Questions
 
-
+* [Will Esri Leaflet replace the ArcGIS API for JavaScript?](https://github.com/Esri/esri-leaflet/wiki/FAQ#will-esri-leaflet-replace-the-arcgis-api-for-javascript)
+* [What are the goals of Esri Leaflet?](https://github.com/Esri/esri-leaflet/wiki/FAQ#what-are-the-goals-of-esri-leaflet)
+* [When will Esri Leaflet leave beta?](https://github.com/Esri/esri-leaflet/wiki/FAQ#when-will-esri-leaflet-leave-beta)
+* [How do you decide what features get included in Esri Leaflet?](https://github.com/Esri/esri-leaflet/wiki/FAQ#how-do-you-decide-what-features-get-included-in-esri-leaflet)
+* [I have an idea! What should I do?](https://github.com/Esri/esri-leaflet/wiki/FAQ#i-have-an-idea-what-should-i-do)
+* [When will you support "x"?](https://github.com/Esri/esri-leaflet/wiki/FAQ#when-will-you-support-x)
+* [Can you implement feature "x"?](https://github.com/Esri/esri-leaflet/wiki/FAQ#can-you-implement-feature-x)
+* [When will feature "x" get done?](https://github.com/Esri/esri-leaflet/wiki/FAQ#when-will-feature-x-get-done)
+* [I want to contribute. How can I help?](https://github.com/Esri/esri-leaflet/wiki/FAQ#i-want-to-contribute-how-can-i-help)
+* [I built something with Esri Leaflet can I show you?](https://github.com/Esri/esri-leaflet/wiki/FAQ#i-built-something-with-esri-leaflet-can-i-show-you)
+* [I built a reusable component (layer type, api wrapper, ui control ect...) can I contribute it to Esri Leaflet?](i-built-a-reusable-component-layer-type-api-wrapper-ui-control-ect-can-i-contribute-it-to-esri-leaflet)
+* [What are some good Leaflet Plugins?](https://github.com/Esri/esri-leaflet/wiki/FAQ#what-are-some-good-leaflet-plugins)
 
 ### Projects Using Esri Leaflet
 
