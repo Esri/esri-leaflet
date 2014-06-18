@@ -59,6 +59,14 @@ Here is a quick example to get you started. Just change the paths to point to th
 
 A full [API Reference](http://esri.github.io/esri-leaflet/api-reference/) and plenty of [sample code](http://esri.github.io/esri-leaflet/examples/) can be found at the [Esri Leaflet](http://esri.github.io/esri-leaflet/) website.
 
+### Development Roadmap
+
+If you are interested in contributing to Esri Leaflet or are interetsed in seeing what is coming up next checkout the [development roadmap](https://github.com/Esri/esri-leaflet/wiki/Roadmap).
+
+### Freqently Asked Questions
+
+
+
 ### Projects Using Esri Leaflet
 
 * [Geotrigger Editor](https://github.com/Esri/geotrigger-editor)
@@ -78,7 +86,8 @@ Make Sure you have the [Grunt CLI](http://gruntjs.com/getting-started) installed
 6. Make your changes and create a [pull request](https://help.github.com/articles/creating-a-pull-request)
 
 ### Dependencies
-* [Leaflet](http://leaflet.com) version 0.7 or higher is required.
+
+* [Leaflet](http://leaflet.com) version 0.7 or higher is required but the latest version is recommended.
 
 ### Optional Dependencies
 * [Leaflet.markercluster](https://github.com/Leaflet/Leaflet.markercluster) - for `L.esri.ClusteredFeatureLayer`
