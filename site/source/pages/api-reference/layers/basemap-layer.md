@@ -26,21 +26,28 @@ Inherits from [`L.TileLayer`](http://leafletjs.com/reference.html#tilelayer)
     </tbody>
 </table>
 
-**Valid Keys**
+###### Basemaps
+
+These maps have worldwide coverage at a variety of zoom levels.
 
 * `Streets`
 * `Topographic`
 * `NationalGeographic`
 * `Oceans`
-* `OceansLabels`
 * `Gray`
-* `GrayLabels` - Labels to pair with the `Gray` base map
 * `DarkGray`
-* `DarkGrayLabels` - Labels to pair with the `DarkGray` base map
 * `Imagery`
-* `ImageryLabels` - Labels and political boundaries to pair with the `Imagery` basemap
-* `ImageryTransportation` - A street map for pairing with the `Imagery` base map
 * `ShadedRelief`
+
+###### Optional Labels
+
+These are optional layers that add extra text labels to the basemaps.
+
+* `OceansLabels` - Labels to pair with the `Oceans` basemap
+* `GrayLabels` - Labels to pair with the `Gray` basemap
+* `DarkGrayLabels` - Labels to pair with the `DarkGray` basemap
+* `ImageryLabels` - Labels and political boundaries to pair with the `Imagery` basemap
+* `ImageryTransportation` - A street map for pairing with the `Imagery` basemap=
 * `ShadedReliefLabels` - Labels for pairing with the `ShadedRelief` base map
 
 ### Options
