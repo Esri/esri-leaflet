@@ -1,5 +1,8 @@
 Esri welcomes contributions from anyone and everyone. Please see our [guidelines for contributing](https://github.com/esri/contributing).
 
+### Before filing an issue
+
+Please take a look at previous issues that resolve common problems https://github.com/Esri/esri-leaflet/issues?labels=FAQ&milestone=&page=1&state=closed.
 
 ### I want to contribute, what should I work on?
 
