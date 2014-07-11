@@ -83,9 +83,11 @@ module.exports = function(grunt) {
           'src/Services/Service.js',
           'src/Services/FeatureLayer.js',
           'src/Services/MapService.js',
+          'src/Services/ImageService.js',
           'src/Tasks/**/*.js',
           'src/Layers/BasemapLayer.js',
           'src/Layers/DynamicMapLayer.js',
+          'src/Layers/ImageMapLayer.js',
           'src/Layers/TiledMapLayer.js',
           'src/Layers/FeatureLayer/FeatureGrid.js',
           'src/Layers/FeatureLayer/FeatureManager.js',
@@ -117,10 +119,12 @@ module.exports = function(grunt) {
           'src/Request.js',
           'src/Services/Service.js',
           'src/Services/MapService.js',
+          'src/Services/ImageService.js',
           'src/Tasks/Identify.js',
           'src/Tasks/Query.js',
-          'src/Layers/DynamicMapLayer',
-          'src/Layers/TiledMapLayer'
+          'src/Layers/DynamicMapLayer.js',
+          'src/Layers/ImageMapLayer.js',
+          'src/Layers/TiledMapLayer.js'
         ],
         dest: 'dist/builds/map-service/esri-leaflet-map-service-src.js'
       },
