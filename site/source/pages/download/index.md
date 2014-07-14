@@ -39,7 +39,7 @@ Esri Leaflet is also built into several smaller components and plugins for speci
 <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/0.0.1-beta.5/esri-leaflet-map-service.js"></script>
 
 <!-- Heatmap Feature Layer -->
-<script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/0.0.1-beta.5/esri-leafelt-heatmap-feature-layer.js"></script>
+<script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/0.0.1-beta.5/esri-leaflet-heatmap-feature-layer.js"></script>
 
 <!-- Clustered Feature Layer -->
 <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/0.0.1-beta.5/esri-leaflet-clustered-feature-layer.js"></script>
