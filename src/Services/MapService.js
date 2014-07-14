@@ -2,6 +2,10 @@ L.esri.Services.MapService = L.esri.Services.Service.extend({
 
   identify: function () {
     return new L.esri.Tasks.Identify(this);
+  },
+
+  find: function () {
+    return new L.esri.Tasks.Find(this);
   }
 
 });

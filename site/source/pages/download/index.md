@@ -55,8 +55,8 @@ A summary of what features exist in which builds.
 
 | Feature | Standard | Core | MapService | FeatureLayer | Basemaps | ClusteredFeatureLayer | HeatmapFeatureLayer |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| Size    | 38.27kb | 7.7kb | 13.15kb | 23kb | 8.3kb | 3.w2kb | 1.5kb |
-| Gzipped | 6.37kb | 1.6kb | 2.32kb | 4.3kb | 1.5kb | 0.6kb | 0.3kb |
+| Size    | 38.36kb | 7.56kb | 13.20kb | 23kb | 8.3kb | 3.w2kb | 1.5kb |
+| Gzipped | 6.38kb | 1.63kb | 2.33kb | 4.3kb | 1.5kb | 0.6kb | 0.3kb |
 | `L.esri.Request` | &#10003; | &#10003; | &#10003; | &#10003; | &#10003; | | |
 | `L.esri.Util` | &#10003; | &#10003; | &#10003; | &#10003; | | | |
 | `L.esri.Services.Service` | &#10003; | &#10003; | &#10003; | &#10003; | | | |

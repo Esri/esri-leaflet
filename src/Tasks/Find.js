@@ -57,7 +57,7 @@ L.esri.Tasks.Find = L.Class.extend({
     return this;
   },
 
-  returnGeometry: function (returnGeometry) {
+  geometry: function (returnGeometry) {
     this._params.returnGeometry = returnGeometry;
     return this;
   },

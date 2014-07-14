@@ -48,7 +48,7 @@ layout: documentation.hbs
         <tr>
             <td><code>contains({{{param 'Boolean' 'contains'}}})</code></td>
             <td><code>this</code></td>
-            <td>When `true` find task will search for a value that contains the `searchText`. When `false` it fill do an exact match on the `searchText` string. Default is `true`.</td>
+            <td>When `true` find task will search for a value that contains the `searchText`. When `false` it will do an exact match on the `searchText` string. Default is `true`.</td>
         </tr>
         <tr>
             <td><code>searchFields({{{param 'Array' 'searchFields'}}} or {{{param 'String' 'searchFields'}}})</code></td>
@@ -71,7 +71,7 @@ layout: documentation.hbs
             <td>Layers to perform find task on. Accepts an array of layer IDs or comma-separated list.</td>
         </tr>
         <tr>
-            <td><code>returnGeometry({{{param 'Boolean' 'returnGeometry'}}})</code></td>
+            <td><code>geometry({{{param 'Boolean' 'returnGeometry'}}})</code></td>
             <td><code>this</code></td>
             <td>Return geometry with results. Default is `true`.</td>
         </tr>
