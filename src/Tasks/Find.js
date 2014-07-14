@@ -1,5 +1,6 @@
 L.esri.Tasks.Find = L.Class.extend({
-	initialize: function (endpoint) {
+
+  initialize: function (endpoint) {
     if (endpoint.url && endpoint.get) {
       this._service = endpoint;
       this.url = endpoint.url;
@@ -8,6 +9,7 @@ L.esri.Tasks.Find = L.Class.extend({
     }
 
     this._params = {
+      sr: 4326,
       contains: true,
       returnGeometry: true,
       returnZ: true,
@@ -20,9 +22,53 @@ L.esri.Tasks.Find = L.Class.extend({
     return this;
   },
 
+  contains: function (contains) {
+    this._params.contains = contains;
+    return this;
+  },
+
   searchFields: function (searchFields) {
     this._params.searchFields = (this._params.searchFields) ? this._params.searchFields + ',' : '';
-    this._params.searchFields += searchFields.join(',');
+    if (L.Util.isArray(searchFields)) {
+      this._params.searchFields += searchFields.join(',');
+    } else {
+      this._params.searchFields += searchFields;
+    }
+    return this;
+  },
+
+  spatialReference: function (spatialReference) {
+    this._params.sr = spatialReference;
+    return this;
+  },
+
+  layerDefs: function (id, where) {
+    this._params.layerDefs = (this._params.layerDefs) ? this._params.layerDefs + ';' : '';
+    this._params.layerDefs += ([id, where]).join(':');
+    return this;
+  },
+
+  layers: function (layers) {
+    if (L.Util.isArray(layers)) {
+      this._params.layers = layers.join(',');
+    } else {
+      this._params.layers = layers;
+    }
+    return this;
+  },
+
+  returnGeometry: function (returnGeometry) {
+    this._params.returnGeometry = returnGeometry;
+    return this;
+  },
+
+  maxAllowableOffset: function (num) {
+    this._params.maxAllowableOffset = num;
+    return this;
+  },
+
+  precision: function (num) {
+    this._params.geometryPrecision = num;
     return this;
   },
 
@@ -31,39 +77,23 @@ L.esri.Tasks.Find = L.Class.extend({
     return this;
   },
 
-  contains: function (bool) {
-    this._params.contains = bool;
+  returnZ: function (returnZ) {
+    this._params.returnZ = returnZ;
     return this;
   },
 
-  returnGeometry: function (bool) {
-    this._params.returnGeometry = bool;
+  returnM: function (returnM) {
+    this._params.returnM = returnM;
     return this;
   },
 
-  returnZ: function (bool) {
-    this._params.returnZ = bool;
-    return this;
-  },
-
-  returnM: function (bool) {
-    this._params.returnM = bool;
+  gdbVersion: function (string) {
+    this._params.gdbVersion = string;
     return this;
   },
 
   token: function (token) {
     this._params.token = token;
-    return this;
-  },
-
-  layerDef: function (id, where) {
-    this._params.layerDefs = (this._params.layerDefs) ? this._params.layerDefs + ';' : '';
-    this._params.layerDefs += ([id, where]).join(':');
-    return this;
-  },
-
-  layers: function (string) {
-    this._params.layers = string;
     return this;
   },
 
