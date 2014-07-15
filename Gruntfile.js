@@ -86,6 +86,7 @@ module.exports = function(grunt) {
           'src/Services/ImageService.js',
           'src/Tasks/**/*.js',
           'src/Layers/BasemapLayer.js',
+          'src/Layers/RasterLayer.js',
           'src/Layers/DynamicMapLayer.js',
           'src/Layers/ImageMapLayer.js',
           'src/Layers/TiledMapLayer.js',
@@ -122,6 +123,7 @@ module.exports = function(grunt) {
           'src/Services/ImageService.js',
           'src/Tasks/Identify.js',
           'src/Tasks/Query.js',
+          'src/Layers/RasterLayer.js',
           'src/Layers/DynamicMapLayer.js',
           'src/Layers/ImageMapLayer.js',
           'src/Layers/TiledMapLayer.js'

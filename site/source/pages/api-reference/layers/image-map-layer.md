@@ -7,7 +7,7 @@ layout: documentation.hbs
 
 Render and visualize Image Services from ArcGIS Online and ArcGIS Server.
 
-TODO: More info about Image Servers
+Image Services provide access to raster data through a web service.
 
 ### Constructor
 
@@ -34,10 +34,8 @@ Option | Type | Default | Description
 --- | --- | --- | ---
 `format` | `String` | `'jpegpng'` | Output format of the image.
 `f` | `String` | `'image'` | Output type
-`bboxSR` | `Integer` | `4326` | Spatial reference of the bounding box to generate the image with. If you don't know what this is don't change it.
-`imageSR` | | `3857` | Spatial reference of the output image. If you don't know what this is don't change it.
-`opacity` | `Integer` | `1` | Opacity of the layer. Should be a value between 0 and 1.
-`position` | `String` | `'front'` | position of the layer relative to other overlays
+`opacity` | `Number` | `1` | Opacity of the layer. Should be a value between 0 and 1.
+`position` | `String` | `'front'` | Position of the layer relative to other overlays
 `useCORS` | `Boolean` | `true` | If this service should use CORS when making GET requests.
 
 ### Methods

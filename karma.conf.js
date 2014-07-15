@@ -21,6 +21,7 @@ module.exports = function(config) {
       'src/EsriLeaflet.js',
       'src/Util.js',
       'src/Layers/BasemapLayer.js',
+      'src/Layers/RasterLayer.js',
       'src/Layers/TiledMapLayer.js',
       'src/Layers/DynamicMapLayer.js',
       'src/Layers/ImageMapLayer.js',
