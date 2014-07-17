@@ -36,7 +36,7 @@ layout: example.hbs
     var searchText = document.getElementById('searchText');
 
     function goBtn() {
-        govUnits.find().layers('18').searchText(searchText.value).searchFields('GNIS_NAME')
+        govUnits.find().layers('18').text(searchText.value).fields('GNIS_NAME')
                 .run(function(error, featureCollection, response){
                     L.geoJson(featureCollection, {
                         style: function () {

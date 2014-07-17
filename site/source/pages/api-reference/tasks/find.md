@@ -41,7 +41,7 @@ layout: documentation.hbs
     </thead>
     <tbody>
         <tr>
-            <td><code>searchText({{{param 'String' 'searchText'}}})</code></td>
+            <td><code>text({{{param 'String' 'text'}}})</code></td>
             <td><code>this</code></td>
             <td>Text that is searched across the layers and fields the user specifies.</td>
         </tr>
@@ -51,7 +51,7 @@ layout: documentation.hbs
             <td>When `true` find task will search for a value that contains the `searchText`. When `false` it will do an exact match on the `searchText` string. Default is `true`.</td>
         </tr>
         <tr>
-            <td><code>searchFields({{{param 'Array' 'searchFields'}}} or {{{param 'String' 'searchFields'}}})</code></td>
+            <td><code>fields({{{param 'Array' 'fields'}}} or {{{param 'String' 'fields'}}})</code></td>
             <td><code>this</code></td>
             <td>An array or comma-separated list of field names to search. If not specified, all fields are searched.</td>
         </tr>
@@ -71,7 +71,7 @@ layout: documentation.hbs
             <td>Layers to perform find task on. Accepts an array of layer IDs or comma-separated list.</td>
         </tr>
         <tr>
-            <td><code>geometry({{{param 'Boolean' 'returnGeometry'}}})</code></td>
+            <td><code>returnGeometry({{{param 'Boolean' 'returnGeometry'}}})</code></td>
             <td><code>this</code></td>
             <td>Return geometry with results. Default is `true`.</td>
         </tr>
@@ -99,6 +99,11 @@ layout: documentation.hbs
             <td><code>dynamicLayers({{{param 'Object' 'dynamicLayers'}}})</code></td>
             <td><code>this</code></td>
             <td>Property used for adding new layers or modifying the data source of existing ones in the current map service.</td>
+        </tr>
+        <tr>
+            <td><code>simplify({{{param 'Map' 'map' 'http://leafletjs.com/reference.html#map'}}},  {{{param 'Integer' 'factor'}}})</code></td>
+            <td><code>this</code></td>
+            <td>Simplify the geometries of the output features for the current map view. the <code>factor</code> parameter controls the amount of simplification between 0 (no simplification) and 1 (simplify to the most basic shape possible).</td>
         </tr>
         <tr>
             <td><code>token({{{param 'String' 'token'}}})</code></td>

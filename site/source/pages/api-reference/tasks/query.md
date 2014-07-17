@@ -69,9 +69,14 @@ layout: documentation.hbs
             <td>Queries features within a given time range.</td>
         </tr>
         <tr>
-            <td><code>fields({{{param 'Array' 'fields'}}})</code></td>
+            <td><code>fields({{{param 'Array' 'fields'}}} or {{{param 'String' 'fields'}}})</code></td>
             <td><code>this</code></td>
             <td>An array of associated fields to request for each feature.</td>
+        </tr>
+        <tr>
+            <td><code>returnGeometry({{{param 'Boolean' 'returnGeometry'}}})</code></td>
+            <td><code>this</code></td>
+            <td>Return geometry with results. Default is `true`.</td>
         </tr>
         <tr>
             <td><code>simplify({{{param 'Map' 'map' 'http://leafletjs.com/reference.html#map'}}},  {{{param 'Integer' 'factor'}}})</code></td>

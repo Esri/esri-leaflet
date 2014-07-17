@@ -17,8 +17,8 @@ L.esri.Tasks.Find = L.Class.extend({
     };
   },
 
-  searchText: function (searchText) {
-    this._params.searchText = searchText;
+  text: function (text) {
+    this._params.searchText = text;
     return this;
   },
 
@@ -27,12 +27,12 @@ L.esri.Tasks.Find = L.Class.extend({
     return this;
   },
 
-  searchFields: function (searchFields) {
+  fields: function (fields) {
     this._params.searchFields = (this._params.searchFields) ? this._params.searchFields + ',' : '';
-    if (L.Util.isArray(searchFields)) {
-      this._params.searchFields += searchFields.join(',');
+    if (L.Util.isArray(fields)) {
+      this._params.searchFields += fields.join(',');
     } else {
-      this._params.searchFields += searchFields;
+      this._params.searchFields += fields;
     }
     return this;
   },
@@ -57,7 +57,7 @@ L.esri.Tasks.Find = L.Class.extend({
     return this;
   },
 
-  geometry: function (returnGeometry) {
+  returnGeometry: function (returnGeometry) {
     this._params.returnGeometry = returnGeometry;
     return this;
   },
@@ -89,6 +89,12 @@ L.esri.Tasks.Find = L.Class.extend({
 
   gdbVersion: function (string) {
     this._params.gdbVersion = string;
+    return this;
+  },
+
+  simplify: function(map, factor){
+    var mapWidth = Math.abs(map.getBounds().getWest() - map.getBounds().getEast());
+    this._params.maxAllowableOffset = (mapWidth / map.getSize().y) * factor;
     return this;
   },
 
