@@ -5,6 +5,8 @@ layout: documentation.hbs
 
 # {{page.data.title}}
 
+Inherits from [`L.esri.Layers.RasterLayer`]({{assets}}api-reference/layers/raster-layer.html)
+
 Render and visualize Image Services from ArcGIS Online and ArcGIS Server.
 
 Image Services provide access to raster data through a web service.
@@ -36,6 +38,7 @@ Option | Type | Default | Description
 `f` | `String` | `'image'` | Server response content type.
 `opacity` | `Number` | `1` | Opacity of the layer. Should be a value between 0 and 1.
 `position` | `String` | `'front'` | Position of the layer relative to other overlays.
+`proxy` | `String` | `false` | URL of an [ArcGIS API for JavaScript proxies](https://developers.arcgis.com/javascript/jshelp/ags_proxy.html) or [ArcGIS Resource Proxies](https://github.com/Esri/resource-proxy) to use for proxying POST requests.
 `useCors` | `Boolean` | `true` | If this service should use CORS when making GET requests.
 
 ### Methods

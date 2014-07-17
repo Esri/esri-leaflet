@@ -5,6 +5,8 @@ layout: documentation.hbs
 
 # {{page.data.title}}
 
+Inherits from [`L.esri.Layers.RasterLayer`]({{assets}}api-reference/layers/raster-layer.html)
+
 Render and visualize Map Services from ArcGIS Online and ArcGIS Server. L.esri.Layers.DynamicMapLayer also supports custom popups and identification of features.
 
 Map Servers are a way to expose the contents that make up a map as a web service and can expose different capabilites for exporting tiles images, querying and identifying features and more.
