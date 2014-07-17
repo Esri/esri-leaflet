@@ -33,10 +33,10 @@ Image Services provide access to raster data through a web service.
 Option | Type | Default | Description
 --- | --- | --- | ---
 `format` | `String` | `'jpegpng'` | Output format of the image.
-`f` | `String` | `'image'` | Output type
+`f` | `String` | `'image'` | Server response content type.
 `opacity` | `Number` | `1` | Opacity of the layer. Should be a value between 0 and 1.
-`position` | `String` | `'front'` | Position of the layer relative to other overlays
-`useCORS` | `Boolean` | `true` | If this service should use CORS when making GET requests.
+`position` | `String` | `'front'` | Position of the layer relative to other overlays.
+`useCors` | `Boolean` | `true` | If this service should use CORS when making GET requests.
 
 ### Methods
 

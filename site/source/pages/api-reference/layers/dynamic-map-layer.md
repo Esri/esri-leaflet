@@ -34,16 +34,16 @@ Option | Type | Default | Description
 --- | --- | --- | ---
 `format` | `String` | `'png24'` | Output format of the image.
 `transparent` | `Boolean` | `true` | Allow the server to produce transparent images.
-`f` | `String` | `'image'` | Output type
+`f` | `String` | `'image'` |  Server response content type.
 `bboxSR` | `Integer` | `4326` | Spatial reference of the bounding box to generate the image with. If you don't know what this is don't change it.
 `imageSR` | `Integer` | `3857` | Spatial reference of the output image. If you don't know what this is don't change it.
 `layers` | `Array` | `''` | An array of Layer IDs like `[3,4,5]` to show from the service.
 `layerDefs` | `String` `Object` | `''` | A string representing a query to run against the service before the image is rendered. This can be a string like `"STATE_NAME='Kansas' and POP2007>25000"` or an object mapping different queries to specific layers `{5:"STATE_NAME='Kansas'", 4:"STATE_NAME='Kansas'}`.
 `opacity` | `Number` | `1` | Opacity of the layer. Should be a value between 0 and 1.
-`position` | `String` | `'front'` | position of the layer relative to other overlays
+`position` | `String` | `'front'` | Position of the layer relative to other overlays.
 `token` | `String` | `null` | If you pass a token in your options it will included in all requests to the service. See [working with authenticated services](#working-with-authenticated-services) for more information.
 `proxy` | `String` | `false` | URL of an [ArcGIS API for JavaScript proxies](https://developers.arcgis.com/javascript/jshelp/ags_proxy.html) or [ArcGIS Resource Proxies](https://github.com/Esri/resource-proxy) to use for proxying POST requests.
-`useCORS` | `Boolean` | `true` | If this service should use CORS when making GET requests.
+`useCors` | `Boolean` | `true` | If this service should use CORS when making GET requests.
 
 ### Methods
 
