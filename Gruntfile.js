@@ -144,7 +144,7 @@ module.exports = function(grunt) {
       },
       heat: {
         src: ['src/Layers/HeatMapFeatureLayer/HeatMapFeatureLayer.js'],
-        dest: 'dist/builds/heatmap-feature-layer/esri-leafelt-heatmap-feature-layer-src.js'
+        dest: 'dist/builds/heatmap-feature-layer/esri-leaflet-heatmap-feature-layer-src.js'
       }
     },
 
@@ -171,8 +171,8 @@ module.exports = function(grunt) {
           'dist/builds/clustered-feature-layer/esri-leaflet-clustered-feature-layer.js': [
             'dist/builds/clustered-feature-layer/esri-leaflet-clustered-feature-layer-src.js'
           ],
-          'dist/builds/heatmap-feature-layer/esri-leafelt-heatmap-feature-layer.js': [
-            'dist/builds/heatmap-feature-layer/esri-leafelt-heatmap-feature-layer-src.js'
+          'dist/builds/heatmap-feature-layer/esri-leaflet-heatmap-feature-layer.js': [
+            'dist/builds/heatmap-feature-layer/esri-leaflet-heatmap-feature-layer-src.js'
           ],
           'dist/builds/map-service/esri-leaflet-map-service.js': [
             'dist/builds/map-service/esri-leaflet-map-service-src.js'
