@@ -16,7 +16,10 @@ L.esri.Services.FeatureLayer = L.esri.Services.Service.extend({
     return this.post('addFeatures', {
       features: [feature]
     }, function(error, response){
-      callback.call(this, error || response.addResults[0].error, response.addResults[0]);
+      var result = (response && response.addResults) ? response.addResults[0] : undefined;
+      if(callback){
+        callback.call(this, error || response.addResults[0].error, result);
+      }
     }, context);
   },
 
@@ -25,7 +28,10 @@ L.esri.Services.FeatureLayer = L.esri.Services.Service.extend({
     return this.post('updateFeatures', {
       features: [feature]
     }, function(error, response){
-      callback.call(context, error || response.updateResults[0].error, response.updateResults[0]);
+      var result = (response && response.updateResults) ? response.updateResults[0] : undefined;
+      if(callback){
+        callback.call(context, error || response.updateResults[0].error, result);
+      }
     }, context);
   },
 
@@ -33,7 +39,10 @@ L.esri.Services.FeatureLayer = L.esri.Services.Service.extend({
     return this.post('deleteFeatures', {
       objectIds: id
     }, function(error, response){
-      callback.call(context, error || response.deleteResults[0].error, response.deleteResults[0]);
+      var result = (response && response.deleteResults) ? response.deleteResults[0] : undefined;
+      if(callback){
+        callback.call(context, error || response.deleteResults[0].error, result);
+      }
     }, context);
   }
 
