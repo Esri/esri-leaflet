@@ -50,6 +50,29 @@ describe('L.esri.Services.FeatureLayer', function () {
     });
   });
 
+  it('should be able to add a feature to the layer without a callback', function(){
+    expect(function(){
+      service.addFeature({
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: [45, -121]
+        },
+        properties: {
+          foo: 'bar'
+        }
+      });
+    }).to.not.throw(Error);
+
+    requests[0].respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, JSON.stringify({
+      'addResults' : [{
+        'objectId' : 1,
+        'success' : true
+      }]
+    }));
+
+  });
+
   it('should be able to update a feature on the layer', function(){
     var callback = sinon.spy();
 
@@ -82,6 +105,30 @@ describe('L.esri.Services.FeatureLayer', function () {
     });
   });
 
+  it('should be able to update a feature on the layer without a callback', function(){
+
+    expect(function(){
+      service.updateFeature({
+        type: 'Feature',
+        id: 1,
+        geometry: {
+          type: 'Point',
+          coordinates: [45, -121]
+        },
+        properties: {
+          foo: 'bar'
+        }
+      });
+    }).to.not.throw(Error);
+
+    requests[0].respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, JSON.stringify({
+      'updateResults' : [{
+        'objectId' : 1,
+        'success' : true
+      }]
+    }));
+  });
+
   it('should be able to remove features from the layer', function(){
     var callback = sinon.spy();
 
@@ -102,5 +149,18 @@ describe('L.esri.Services.FeatureLayer', function () {
       'objectId' : 1,
       'success' : true
     });
+  });
+
+  it('should be able to remove features from the layer without a callback', function(){
+    expect(function(){
+      service.deleteFeature(1);
+    }).to.not.throw(Error);
+
+    requests[0].respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, JSON.stringify({
+      'deleteResults' : [{
+        'objectId' : 1,
+        'success' : true
+      }]
+    }));
   });
 });
