@@ -325,23 +325,38 @@
 
     addFeature: function(feature, callback, context){
       this._service.addFeature(feature, function(error, response){
-        this.refresh();
-        callback.call(context, error, response);
+        if(!error){
+          this.refresh();
+        }
+        if(callback){
+          callback.call(context, error, response);
+        }
       }, this);
       return this;
     },
 
     updateFeature: function(feature, callback, context){
       return this._service.updateFeature(feature, function(error, response){
-        this.refresh();
-        callback.call(context, error, response);
+        if(!error){
+          this.refresh();
+        }
+        if(callback){
+          callback.call(context, error, response);
+        }
       }, this);
     },
 
     deleteFeature: function(id, callback, context){
       return this._service.deleteFeature(id, function(error, response){
-        this.removeLayers([response.objectId]);
-        callback.call(context, error, response);
+        if(!error && response.objectId){
+          this.removeLayers([response.objectId]);
+          if(this._layers){
+            delete this._layers[id];
+          }
+        }
+        if(callback){
+          callback.call(context, error, response);
+        }
       }, this);
     }
   });

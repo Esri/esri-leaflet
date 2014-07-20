@@ -21,6 +21,7 @@ L.esri.Tasks.Query = L.Class.extend({
     this._params.geometry = L.esri.Util.boundsToExtent(bounds);
     this._params.geometryType = 'esriGeometryEnvelope';
     this._params.spatialRel = 'esriSpatialRelIntersects';
+    this._params.inSr = 4326;
     return this;
   },
 
