@@ -119,6 +119,7 @@ module.exports = function(grunt) {
           'src/Services/MapService.js',
           'src/Tasks/Identify.js',
           'src/Tasks/Query.js',
+          'src/Tasks/Find.js',
           'src/Layers/DynamicMapLayer',
           'src/Layers/TiledMapLayer'
         ],

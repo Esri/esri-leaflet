@@ -175,6 +175,10 @@ L.esri.Layers.DynamicMapLayer = L.Class.extend({
     return this._service.identify();
   },
 
+  find: function(){
+    return this._service.find();
+  },
+
   authenticate: function(token){
     this._service.authenticate(token);
     return this;

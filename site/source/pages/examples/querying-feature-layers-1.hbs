@@ -42,29 +42,29 @@ layout: example.hbs
       iconRetinaUrl: '{{assets}}img/bus-stop-north@2x.png',
       iconSize: [27, 31],
       iconAnchor: [13.5, 17.5],
-      popupAnchor: [0, -11],
+      popupAnchor: [0, -11]
     }),
     south: L.icon({
       iconUrl: '{{assets}}img/bus-stop-south.png',
       iconRetinaUrl: '{{assets}}img/bus-stop-south@2x.png',
       iconSize: [27, 31],
       iconAnchor: [13.5, 13.5],
-      popupAnchor: [0, -11],
+      popupAnchor: [0, -11]
     }),
     east: L.icon({
       iconUrl: '{{assets}}img/bus-stop-east.png',
       iconRetinaUrl: '{{assets}}img/bus-stop-east@2x.png',
       iconSize: [31, 27],
       iconAnchor: [13.5, 17.5],
-      popupAnchor: [0, -11],
+      popupAnchor: [0, -11]
     }),
     west: L.icon({
       iconUrl: '{{assets}}img/bus-stop-west.png',
       iconRetinaUrl: '{{assets}}img/bus-stop-west@2x.png',
       iconSize: [31, 27],
       iconAnchor: [17.5, 13.5],
-      popupAnchor: [0, -11],
-    }),
+      popupAnchor: [0, -11]
+    })
   };
 
   L.esri.basemapLayer('Streets').addTo(map);
@@ -73,7 +73,7 @@ layout: example.hbs
       return L.marker(latlng, {
         icon: icons[geojson.properties.direction.toLowerCase()]
       });
-    },
+    }
   }).addTo(map);
 
   var direction = document.getElementById('direction');

@@ -10,6 +10,7 @@ L.esri.Tasks.Query = L.Class.extend({
     }
 
     this._params = {
+      returnGeometry: true,
       where: '1=1',
       outSr: 4326,
       outFields: '*'
@@ -54,13 +55,22 @@ L.esri.Tasks.Query = L.Class.extend({
     return this;
   },
 
-  fields: function(array){
-    this._params.outFields = array.join(',');
+  fields: function (fields) {
+    if (L.Util.isArray(fields)) {
+      this._params.outFields = fields.join(',');
+    } else {
+      this._params.outFields = fields;
+    }
     return this;
   },
 
   precision: function(num){
     this._params.geometryPrecision = num;
+    return this;
+  },
+
+  returnGeometry: function (returnGeometry) {
+    this._params.returnGeometry = returnGeometry;
     return this;
   },
 
