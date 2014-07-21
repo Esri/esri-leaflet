@@ -82,7 +82,7 @@ More information about Feature Layers can be found in the [`L.esri.Layers.Featur
             <td>URL of an <a href="https://developers.arcgis.com/javascript/jshelp/ags_proxy.html">ArcGIS API for JavaScript proxies</a> or <a href="https://github.com/Esri/resource-proxy">ArcGIS Resource Proxies</a> to use for proxying POST requests.</td>
         </tr>
         <tr>
-            <td><code>useCORS</code></td>
+            <td><code>useCors</code></td>
             <td><code>Boolean</code></td>
             <td>If this service should use CORS when making GET requests.</td>
         </tr>

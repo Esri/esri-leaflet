@@ -21,8 +21,10 @@ module.exports = function(config) {
       'src/EsriLeaflet.js',
       'src/Util.js',
       'src/Layers/BasemapLayer.js',
+      'src/Layers/RasterLayer.js',
       'src/Layers/TiledMapLayer.js',
       'src/Layers/DynamicMapLayer.js',
+      'src/Layers/ImageMapLayer.js',
       'src/Layers/FeatureLayer/FeatureGrid.js',
       'src/Layers/FeatureLayer/FeatureManager.js',
       'src/Layers/FeatureLayer/FeatureLayer.js',
@@ -32,6 +34,7 @@ module.exports = function(config) {
       'src/Services/Service.js',
       'src/Services/FeatureLayer.js',
       'src/Services/MapService.js',
+      'src/Services/ImageService.js',
       'src/Tasks/Query.js',
       'src/Tasks/Identify.js',
       'src/Tasks/Find.js'
@@ -81,7 +84,7 @@ module.exports = function(config) {
       reporters:[
         {type: 'html', dir:'coverage/'},
         {type: 'text'}
-      ],
+      ]
     }
   });
 };

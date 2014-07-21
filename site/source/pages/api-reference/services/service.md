@@ -29,7 +29,7 @@ A generic class representing a hosted resource on ArcGIS Online or ArcGIS Server
 | Option | Type | Default | Description |
 | --- | --- | --- | --- |
 | `proxy` | `String` | `false` | URL of an [ArcGIS API for JavaScript proxies](https://developers.arcgis.com/javascript/jshelp/ags_proxy.html) or [ArcGIS Resource Proxies](https://github.com/Esri/resource-proxy) to use for proxying POST requests. |
-| `useCORS` | `Boolean` | `true` | If this service should use CORS when making GET requests. |
+| `useCors` | `Boolean` | `true` | If this service should use CORS when making GET requests. |
 
 ### Events
 

@@ -11,7 +11,7 @@ L.esri.Services.Service = L.Class.extend({
     this.url = L.esri.Util.cleanUrl(url);
     this._requestQueue = [];
     this._authenticating = false;
-    options =  L.Util.setOptions(this, options);
+    L.Util.setOptions(this, options);
   },
 
   get: function (path, params, callback, context) {

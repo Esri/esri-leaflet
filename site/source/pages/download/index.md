@@ -55,8 +55,8 @@ A summary of what features exist in which builds.
 
 | Feature | Standard | Core | MapService | FeatureLayer | Basemaps | ClusteredFeatureLayer | HeatmapFeatureLayer |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| Size    | 38.36kb | 7.56kb | 13.20kb | 23kb | 8.3kb | 3.2kb | 1.5kb |
-| Gzipped | 6.38kb | 1.63kb | 2.33kb | 4.3kb | 1.5kb | 0.6kb | 0.3kb |
+| Size    | 39.9kb | 7.7kb | 20.17kb | 23kb | 8.3kb | 3.2kb | 1.5kb |
+| Gzipped | 6.56kb | 1.6kb | 3.45kb | 4.3kb | 1.5kb | 0.6kb | 0.3kb |
 | `L.esri.Request` | &#10003; | &#10003; | &#10003; | &#10003; | &#10003; | | |
 | `L.esri.Util` | &#10003; | &#10003; | &#10003; | &#10003; | | | |
 | `L.esri.Services.Service` | &#10003; | &#10003; | &#10003; | &#10003; | | | |
@@ -66,6 +66,7 @@ A summary of what features exist in which builds.
 | `L.esri.Tasks.Identify` | &#10003; | | &#10003; | | | | |
 | `L.esri.Tasks.Find` | &#10003; | | &#10003; | | | | |
 | `L.esri.Layers.FeatureLayer` | &#10003; | | | &#10003; | | | |
+| `L.esri.Layers.ImageMapLayer` | &#10003; | | &#10003; | | | | |
 | `L.esri.Layers.DynamicMapLayer` | &#10003; | | &#10003; | | | | |
 | `L.esri.Layers.TiledMapLayer` | &#10003; | | &#10003; | | | | |
 | `L.esri.Layers.BasemapLayer` | &#10003; | | | | &#10003; | | |

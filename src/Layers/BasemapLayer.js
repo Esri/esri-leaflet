@@ -127,7 +127,7 @@
         },
         ShadedReliefLabels: {
           urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places_Alternate/MapServer/tile/{z}/{y}/{x}',
-//          pane: 'esri-label',
+          //pane: 'esri-label',
           options: {
             minZoom: 1,
             maxZoom: 12,
