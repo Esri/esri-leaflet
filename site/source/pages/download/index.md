@@ -64,6 +64,7 @@ A summary of what features exist in which builds.
 | `L.esri.Services.FeatureLayer` | &#10003; | | | &#10003; | | | |
 | `L.esri.Tasks.Query` | &#10003; | | | &#10003; | | | |
 | `L.esri.Tasks.Identify` | &#10003; | | &#10003; | | | | |
+| `L.esri.Tasks.Find` | &#10003; | | &#10003; | | | | |
 | `L.esri.Layers.FeatureLayer` | &#10003; | | | &#10003; | | | |
 | `L.esri.Layers.ImageMapLayer` | &#10003; | | &#10003; | | | | |
 | `L.esri.Layers.DynamicMapLayer` | &#10003; | | &#10003; | | | | |

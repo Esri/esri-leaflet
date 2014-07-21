@@ -17,6 +17,15 @@ L.esri.Layers.DynamicMapLayer = L.esri.Layers.RasterLayer.extend({
     L.Util.setOptions(this, options);
   },
 
+  onAdd: function(map){
+    L.esri.Layers.RasterLayer.prototype.onAdd.call(this, map);
+
+    if(this._popup){
+      this._map.on('click', this._getPopupData, this);
+      this._map.on('dblclick', this._resetPopupState, this);
+    }
+  },
+
   bindPopup: function(fn, popupOptions){
     this._shouldRenderPopup = false;
     this._lastClick = false;
@@ -71,6 +80,10 @@ L.esri.Layers.DynamicMapLayer = L.esri.Layers.RasterLayer.extend({
 
   identify: function(){
     return this._service.identify();
+  },
+
+  find: function(){
+    return this._service.find();
   },
 
   _getPopupData: function(e){

@@ -1,0 +1,51 @@
+---
+title: Find Features
+description: Find features on a Dynamic Map Layer. More information about Map Services can be found in the <a href="/esri-leaflet/api-reference/layers/dynamic-map-layer.html">L.esri.Layers.DynamicMapLayer</a> documentation.
+layout: example.hbs
+---
+
+<style>
+    #find {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        z-index: 10;
+        background: white;
+        padding: 1em;
+    }
+</style>
+
+<div id="map"></div>
+
+<div id="find" class="leaflet-bar">
+    <label>
+        Find:
+        <input id="searchText" class="leaflet-bar" />
+    </label>
+    <button id="goBtn" onClick="goBtn()" class="leaflet-bar">Go</button>
+</div>
+<script>
+    var map = L.map('map').setView([39.025, -95.203], 4);
+
+    L.esri.basemapLayer('Gray').addTo(map);
+
+    var govUnits = L.esri.dynamicMapLayer('http://services.nationalmap.gov/arcgis/rest/services/govunits/MapServer', {
+        opacity: 0.9
+    }).addTo(map);
+
+    var searchText = document.getElementById('searchText');
+
+    function goBtn() {
+        govUnits.find().layers('18').text(searchText.value).fields('GNIS_NAME')
+                .run(function(error, featureCollection, response){
+                    L.geoJson(featureCollection, {
+                        style: function () {
+                            return {color: 'blue'};
+                        },
+                        onEachFeature: function (feature, layer) {
+                            layer.bindPopup(feature.properties.GNIS_NAME);
+                        }
+                    }).addTo(map);
+                });
+    }
+</script>
