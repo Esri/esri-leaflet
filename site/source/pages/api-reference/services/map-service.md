@@ -39,13 +39,15 @@ Inherits from [`L.esri.Service`]({{assets}}api-reference/services/service.html)
 | Method | Returns | Description |
 | --- | --- | --- |
 | `identify()` | `this` | Returns a new [`L.esri.Tasks.Identify()`]({{assets}}api-reference/tasks/query.html) object bound to this service. |
+| `find()` | `this` | Returns a new [`L.esri.Tasks.Find()`]({{assets}}api-reference/tasks/find.html) object bound to this service. |
 
 ### Example
 
+#### Identify task
 ```js
 var map = new L.Map('map').setView([ 45.543, -122.621 ], 5);
 
-var service = L.esri.Services.MapService('http://sampleserver6.arcgisonline.com/arcgis/rest/services/WorldTimeZones/MapServer');
+var service = L.esri.Services.mapService('http://sampleserver6.arcgisonline.com/arcgis/rest/services/WorldTimeZones/MapServer');
 
 service.identify()
     .on(map)
@@ -53,5 +55,19 @@ service.identify()
     .layers('visible:1')
     .run(function(error, featureCollection, response){
         console.log("UTC Offset: " + featureCollection.features[0].properties.ZONE);
+    });
+```
+
+#### Find task
+
+```js
+var service = L.esri.Services.mapService('http://services.nationalmap.gov/arcgis/rest/services/govunits/MapServer');
+
+service.find()
+    .layers('18')
+    .searchText('Colorado')
+    .searchFields('GNIS_NAME')
+    .run(function(error, featureCollection, response){
+        console.log('Found GNIS ID: ' + featureCollection.features[0].properties.GNIS_ID + ' for the state of ' + featureCollection.features[0].properties.STATE_NAME);
     });
 ```

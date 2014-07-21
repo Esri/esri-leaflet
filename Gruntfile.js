@@ -123,6 +123,7 @@ module.exports = function(grunt) {
           'src/Services/ImageService.js',
           'src/Tasks/Identify.js',
           'src/Tasks/Query.js',
+          'src/Tasks/Find.js',
           'src/Layers/RasterLayer.js',
           'src/Layers/DynamicMapLayer.js',
           'src/Layers/ImageMapLayer.js',

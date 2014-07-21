@@ -139,7 +139,7 @@ Option | Type | Default | Description
             <td><code>this</code></td>
             <td>
                 Requests metadata about this Feature Layer. Callback will be called with `error` and `metadata`.
-<pre class="js"><code>featureLayer.metadata(function(error, metadata){
+<pre class="js"><code>dynamicMapLayer.metadata(function(error, metadata){
   console.log(metadata);
 });</code></pre>
             </td>
@@ -153,9 +153,22 @@ Option | Type | Default | Description
             <td><code>identify()</code></td>
             <td><code>this</code></td>
             <td>
-                Returns a new <a href=""><code>L.esri.services.Identify</code></a> object that can be used to identify features on this layer. Your callback function will be passed a <a href="http://geojson.org/geojson-spec.html#feature-collection-objects">GeoJSON FeatureCollection</a> with the results or an error.
-<pre class="js"><code>featureLayer.identify()
+                Returns a new <a href="/api-reference/tasks/identify.html"><code>L.esri.services.Identify</code></a> object that can be used to identify features on this layer. Your callback function will be passed a <a href="http://geojson.org/geojson-spec.html#feature-collection-objects">GeoJSON FeatureCollection</a> with the results or an error.
+<pre class="js"><code>dynamicMapLayer.identify()
             .at(latlng, latlngbounds, 5)
+            .run(function(error, featureCollection){
+              console.log(featureCollection);
+            });</code></pre>
+            </td>
+        </tr>
+        <tr>
+            <td><code>find()</code></td>
+            <td><code>this</code></td>
+            <td>
+                Returns a new <a href="/api-reference/tasks/find.html"><code>L.esri.services.Find</code></a> object that can be used to find features. Your callback function will be passed a <a href="http://geojson.org/geojson-spec.html#feature-collection-objects">GeoJSON FeatureCollection</a> with the results or an error.
+<pre class="js"><code>dynamicMapLayer.find()
+            .layers('18')
+            .searchText('Colorado')
             .run(function(error, featureCollection){
               console.log(featureCollection);
             });</code></pre>

@@ -82,6 +82,10 @@ L.esri.Layers.DynamicMapLayer = L.esri.Layers.RasterLayer.extend({
     return this._service.identify();
   },
 
+  find: function(){
+    return this._service.find();
+  },
+
   _getPopupData: function(e){
     var callback = L.Util.bind(function(error, featureCollection, response) {
       setTimeout(L.Util.bind(function(){

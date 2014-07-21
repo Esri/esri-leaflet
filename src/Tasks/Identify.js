@@ -11,7 +11,8 @@ L.esri.Tasks.Identify = L.Class.extend({
     this._params = {
       sr: 4326,
       layers: 'all',
-      tolerance: 3
+      tolerance: 3,
+      returnGeometry: true
     };
   },
 
@@ -47,6 +48,11 @@ L.esri.Tasks.Identify = L.Class.extend({
 
   precision: function(num){
     this._params.geometryPrecision = num;
+    return this;
+  },
+
+  returnGeometry: function (returnGeometry) {
+    this._params.returnGeometry = returnGeometry;
     return this;
   },
 
