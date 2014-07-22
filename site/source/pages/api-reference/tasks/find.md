@@ -126,7 +126,7 @@ layout: documentation.hbs
 var find = L.esri.Tasks.find('http://services.nationalmap.gov/arcgis/rest/services/govunits/MapServer');
 
 find.layers('18')
-    .searchText('Colorado');
+    .text('Colorado');
            
 find.run(function(error, featureCollection, response){
     console.log('GNIS Name: ' + featureCollection.features[0].properties.GNIS_NAME);
@@ -139,8 +139,8 @@ find.run(function(error, featureCollection, response){
 var find = L.esri.Tasks.find('http://services.nationalmap.gov/arcgis/rest/services/govunits/MapServer');
 
 find.layers('13')
-    .searchText('198133')
-    .searchFields('GNIS_ID');
+    .text('198133')
+    .fields('GNIS_ID');
 
 find.run(function(error, featureCollection, response){
     console.log('Found ' + featureCollection.features.length + ' feature(s)');
