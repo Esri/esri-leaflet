@@ -327,7 +327,7 @@ module.exports = function(grunt) {
         options: {
           remote: 'upstream',
           dryRun: grunt.option('dryRun') ? grunt.option('dryRun') : false,
-          silent: false,
+          silent: false
         }
       }
     }
