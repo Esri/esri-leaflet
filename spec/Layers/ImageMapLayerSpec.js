@@ -153,6 +153,22 @@ describe('L.esri.Layers.ImageMapLayer', function () {
     server.respond();
   });
 
+  it('should get and set rendering rule', function(done){
+    server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockImageService\/ImageServer\/exportImage\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&format=jpgpng&bboxSR=3857&imageSR=3857&renderingRule=%7B%22rasterFunction%22%3A%22RFTAspectColor%22%7D&f=json/), JSON.stringify({
+      href: 'http://placehold.it/500&text=WithRenderingRule'
+    }));
+
+    layer.once('load', function(){
+      expect(layer._currentImage._url).to.equal('http://placehold.it/500&text=WithRenderingRule');
+      done();
+    });
+
+    layer.setRenderingRule({rasterFunction : 'RFTAspectColor'});
+    expect(layer.getRenderingRule()).to.deep.equal({"rasterFunction" : "RFTAspectColor"});
+    layer.addTo(map);
+    server.respond();
+  });
+
   it('should get and set time ranges', function(done){
     server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockImageService\/ImageServer\/exportImage\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&format=jpgpng&bboxSR=3857&imageSR=3857&time=1389254400000%2C1389513600000&f=json/), JSON.stringify({
       href: 'http://placehold.it/500&text=WithTime'
