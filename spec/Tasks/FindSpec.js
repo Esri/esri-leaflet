@@ -157,7 +157,6 @@ describe('L.esri.Tasks.Find', function () {
     server.respondWith('GET', url + 'find?sr=4326&contains=true&returnGeometry=false&returnZ=true&returnM=false&layers=0&searchText=Site&f=json', JSON.stringify(sampleResponseWithoutGeometry));
 
     task.layers('0').text('Site').returnGeometry(false).run(function(error, featureCollection, raw){
-      console.log(featureCollection.features[0]);
       expect(featureCollection).to.deep.equal(sampleFeatureCollectionWithoutGeometry);
       expect(raw).to.deep.equal(sampleResponseWithoutGeometry);
       done();
