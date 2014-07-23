@@ -13,16 +13,25 @@ L.esri.Layers.ImageMapLayer = L.esri.Layers.RasterLayer.extend({
     L.Util.setOptions(this, options);
   },
 
-  setPixelType: function (types) {
-    if (L.Util.isArray(types)) {
-      this._params.pixelType = types.join(',');
-    } else {
-      this._params.pixelType = types;
-    }
+  setPixelType: function (pixelType) {
+    this._params.pixelType = pixelType;
     return this;
   },
 
   getPixelType: function () {
+    return this.options.pixelType;
+  },
+
+  setBandIds: function (bandIds) {
+    if (L.Util.isArray(bandIds)) {
+      this._params.bandIds = bandIds.join(',');
+    } else {
+      this._params.bandIds = bandIds;
+    }
+    return this;
+  },
+
+  getBandIds: function () {
     return this.options.pixelType;
   },
 
