@@ -36,7 +36,29 @@ Inherits from [`L.esri.Service`]({{assets}}api-reference/services/service.html)
 
 ### Methods
 
-No methods.
+<table>
+    <thead>
+        <tr>
+            <th>Method</th>
+            <th>Returns</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>query()</code></td>
+            <td><code>this</code></td>
+            <td>
+                Returns a new <a href="{{assets}}api-reference/tasks/query.html"><code>L.esri.Tasks.Query</code></a> object that can be used to query this service.
+<pre class="js"><code>imageService.query()
+            .within(latlngbounds)
+            .run(function(error, featureCollection, response){
+              console.log(featureCollection);
+            });</code></pre>
+            </td>
+        </tr>
+    </tbody>
+</table>
 
 ### Example
 

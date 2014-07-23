@@ -36,10 +36,58 @@ Inherits from [`L.esri.Service`]({{assets}}api-reference/services/service.html)
 
 ### Methods
 
-| Method | Returns | Description |
-| --- | --- | --- |
-| `identify()` | `this` | Returns a new [`L.esri.Tasks.Identify()`]({{assets}}api-reference/tasks/query.html) object bound to this service. |
-| `find()` | `this` | Returns a new [`L.esri.Tasks.Find()`]({{assets}}api-reference/tasks/find.html) object bound to this service. |
+<table>
+    <thead>
+        <tr>
+            <th>Method</th>
+            <th>Returns</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>query()</code></td>
+            <td><code>this</code></td>
+            <td>
+                Returns a new <a href="{{assets}}api-reference/tasks/query.html"><code>L.esri.Tasks.Query</code></a> object that can be used to query this service.
+<pre class="js"><code>mapService.query()
+        .layer(0)
+        .within(latlngbounds)
+        .run(function(error, featureCollection, response){
+          console.log(featureCollection);
+        });</code></pre>
+            </td>
+        </tr>
+        <tr>
+            <td><code>identify()</code></td>
+            <td><code>this</code></td>
+            <td>
+                Returns a new <a href="{{assets}}api-reference/tasks/identify.html"><code>L.esri.Tasks.Identify</code></a> object that can be used to identify features contained within this service.
+<pre class="js"><code>mapService.identify()
+        .on(map)
+        .at(latlng)
+        .run(function(error, featureCollection, response){
+            console.log(featureCollection)
+        });</code></pre>
+            </td>
+        </tr>
+        <tr>
+            <td><code>find()</code></td>
+            <td><code>this</code></td>
+            <td>
+                Returns a new <a href="{{assets}}api-reference/tasks/find.html"><code>L.esri.Tasks.Find</code></a> object that can be used to find features by text.
+<pre class="js"><code>mapService.find()
+        .layers('18')
+        .text('Colorado')
+        .fields('name')
+        .run(function(error, featureCollection, response){
+            console.log(featureCollection)
+        });</code></pre>
+            </td>
+        </tr>
+
+    </tbody>
+</table>
 
 ### Example
 

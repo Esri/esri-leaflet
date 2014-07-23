@@ -31,6 +31,31 @@ layer.on('load', function(e){
 layer.addTo(map);
 ```
 
+### Feature Create
+
+`createfeature` is fired when a feature from the Feature Layer is loaded for the first time.
+
+| Data | Value | Description |
+| --- | --- | --- |
+| `feature` | [`GeoJSON Feature`](http://geojson.org/geojson-spec.html#feature-objects) | GeoJSON respresentation of the feature that was created. |
+
+### Feature Remove
+
+`removefeature` is fired when a feature is removed from the map, either as the result of a filter operation or because it was deleted from the service.
+
+| Data | Value | Description |
+| --- | --- | --- |
+| `feature` | [`GeoJSON Feature`](http://geojson.org/geojson-spec.html#feature-objects) | GeoJSON respresentation of the feature that was created. |
+| `permanent` | `Boolean` | `true` if the feature was permanently deleted from the service or `false` if the feature was removed as the result of a filter operation.
+
+### Feature Add
+
+`addfeature` is fired when a feature that has already been created is added to the map again, usually the result of a filtering operation.
+
+| Data | Value | Description |
+| --- | --- | --- |
+| `feature` | [`GeoJSON Feature`](http://geojson.org/geojson-spec.html#feature-objects) | GeoJSON respresentation of the feature that was added. |
+
 ### Request Event
 
 | Data | Value | Description |

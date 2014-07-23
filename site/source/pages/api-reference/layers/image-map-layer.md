@@ -5,7 +5,7 @@ layout: documentation.hbs
 
 # {{page.data.title}}
 
-Inherits from [`L.esri.Layers.RasterLayer`]({{assets}}api-reference/layers/raster-layer.html)
+<!-- Inherits from [`L.esri.Layers.RasterLayer`]({{assets}}api-reference/layers/raster-layer.html) -->
 
 Render and visualize Image Services from ArcGIS Online and ArcGIS Server.
 
@@ -105,6 +105,11 @@ Option | Type | Default | Description
             <td>The pixel type, also known as data type, pertains to the type of values stored in the raster, such as signed integer, unsigned integer, or floating point. Possible values: `C128`, `C64`, `F32`, `F64`, `S16`, `S32`, `S8`, `U1`, `U16`, `U2`, `U32`, `U4`, `U8`, `UNKNOWN`.</td>
         </tr>
         <tr>
+            <td><code>authenticate({{{param 'String' 'token'}}})</code></td>
+            <td><code>this</code></td>
+            <td>Authenticates this service with a new token and runs any pending requests that required a token.</td>
+        </tr>
+        <tr>
             <td><code>metadata({{{param 'Function' 'callback'}}}, {{{param 'Object' 'context'}}})</code></td>
             <td><code>this</code></td>
             <td>
@@ -112,6 +117,18 @@ Option | Type | Default | Description
 <pre class="js"><code>featureLayer.metadata(function(error, metadata){
   console.log(metadata);
 });</code></pre>
+            </td>
+        </tr>
+        <tr>
+            <td><code>query()</code></td>
+            <td><code>this</code></td>
+            <td>
+                Returns a new <a href="{{assets}}api-reference/tasks/query.html"><code>L.esri.Tasks.Query</code></a> object that can be used to query this service.
+<pre class="js"><code>imageService.query()
+            .within(latlngbounds)
+            .run(function(error, featureCollection, response){
+              console.log(featureCollection);
+            });</code></pre>
             </td>
         </tr>
     </tbody>

@@ -5,7 +5,7 @@ layout: documentation.hbs
 
 # {{page.data.title}}
 
-Inherits from [`L.esri.Layers.RasterLayer`]({{assets}}api-reference/layers/raster-layer.html)
+<!-- Inherits from [`L.esri.Layers.RasterLayer`]({{assets}}api-reference/layers/raster-layer.html) -->
 
 Render and visualize Map Services from ArcGIS Online and ArcGIS Server. L.esri.Layers.DynamicMapLayer also supports custom popups and identification of features.
 
@@ -172,6 +172,19 @@ Option | Type | Default | Description
             .run(function(error, featureCollection){
               console.log(featureCollection);
             });</code></pre>
+            </td>
+        </tr>
+        <tr>
+            <td><code>query()</code></td>
+            <td><code>this</code></td>
+            <td>
+                Returns a new <a href="{{assets}}api-reference/tasks/query.html"><code>L.esri.Tasks.Query</code></a> object that can be used to query this service.
+<pre class="js"><code>mapService.query()
+        .layer(0)
+        .within(latlngbounds)
+        .run(function(error, featureCollection, response){
+          console.log(featureCollection);
+        });</code></pre>
             </td>
         </tr>
     </tbody>
