@@ -62,12 +62,15 @@ L.esri.Layers.HeatmapFeatureLayer = L.esri.Layers.FeatureManager.extend({
     this.heat.redraw();
   },
 
-  removeLayers: function(ids){
+  removeLayers: function(ids, permanent){
     var newLatLngs = [];
     for (var i = ids.length - 1; i >= 0; i--) {
       var id = ids[i];
       if(this._active[id]){
         delete this._active[id];
+      }
+      if(this._cache[id] && permanent){
+        delete this._cache[id];
       }
     }
 

@@ -90,35 +90,14 @@ L.esri.Layers.FeatureLayer = L.esri.Layers.FeatureManager.extend({
 
         // style the layer
         this.resetStyle(newLayer.feature.id);
+
+        this.fire('createfeature', {
+          feature: newLayer.feature
+        });
+
         // add the layer if it is within the time bounds or our layer is not time enabled
         if(!this.options.timeField || (this.options.timeField && this._featureWithinTimeRange(geojson)) ){
           this._map.addLayer(newLayer);
-        }
-      }
-    }
-  },
-
-  cellEnter: function(bounds, coords){
-    var key = this._cellCoordsToKey(coords);
-    var layers = this._cache[key];
-    if(layers){
-      for (var i = layers.length - 1; i >= 0; i--) {
-        var layer = this.getFeature(layers[i]);
-        if(!this._map.hasLayer(layer)){
-          this._map.addLayer(layer);
-        }
-      }
-    }
-  },
-
-  cellLeave: function(bounds, coords){
-    var key = this._cellCoordsToKey(coords);
-    var layers = this._cache[key];
-    if(layers){
-      for (var i = layers.length - 1; i >= 0; i--) {
-        var layer = this.getFeature(layers[i]);
-        if(this._map.hasLayer(layer)){
-          this._map.removeLayer(layer);
         }
       }
     }
@@ -128,16 +107,27 @@ L.esri.Layers.FeatureLayer = L.esri.Layers.FeatureManager.extend({
     for (var i = ids.length - 1; i >= 0; i--) {
       var layer = this._layers[ids[i]];
       if(layer){
+        this.fire('addfeature', {
+          feature: layer.feature
+        });
         this._map.addLayer(layer);
       }
     }
   },
 
-  removeLayers: function(ids){
+  removeLayers: function(ids, permanent){
     for (var i = ids.length - 1; i >= 0; i--) {
-      var layer = this._layers[ids[i]];
+      var id = ids[i];
+      var layer = this._layers[id];
       if(layer){
+        this.fire('removefeature', {
+          feature: layer.feature,
+          permanent: permanent
+        });
         this._map.removeLayer(layer);
+      }
+      if(layer && permanent){
+        delete this._layers[id];
       }
     }
   },

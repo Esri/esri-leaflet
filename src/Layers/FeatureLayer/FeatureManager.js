@@ -45,7 +45,6 @@
         this._timeIndex = new BinarySearchIndex();
       }
 
-      this._cache = {};
       this._currentSnapshot = []; // cache of what layers should be active
       this._activeRequests = 0;
     },
@@ -105,12 +104,9 @@
       }, this);
     },
 
-    _addFeatures: function(features, coords){
-      this._cache[coords] = this._cache[coords] || [];
-
+    _addFeatures: function(features){
       for (var i = features.length - 1; i >= 0; i--) {
         var id = features[i].id;
-        this._cache[coords].push(id);
         this._currentSnapshot.push(id);
       }
 
@@ -349,10 +345,7 @@
     deleteFeature: function(id, callback, context){
       return this._service.deleteFeature(id, function(error, response){
         if(!error && response.objectId){
-          this.removeLayers([response.objectId]);
-          if(this._layers){
-            delete this._layers[id];
-          }
+          this.removeLayers([response.objectId], true);
         }
         if(callback){
           callback.call(context, error, response);

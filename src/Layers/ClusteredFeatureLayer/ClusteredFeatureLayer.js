@@ -78,6 +78,10 @@ L.esri.Layers.ClusteredFeatureLayer = L.esri.Layers.FeatureManager.extend({
           this.options.onEachFeature(newLayer.feature, newLayer);
         }
 
+        this.fire('createfeature', {
+          feature: newLayer.feature
+        });
+
         // add the layer if it is within the time bounds or our layer is not time enabled
         if(!this.options.timeField || (this.options.timeField && this._featureWithinTimeRange(geojson)) ){
           markers.push(newLayer);
@@ -94,16 +98,27 @@ L.esri.Layers.ClusteredFeatureLayer = L.esri.Layers.FeatureManager.extend({
     var layersToAdd = [];
     for (var i = ids.length - 1; i >= 0; i--) {
       var layer = this._layers[ids[i]];
+      this.fire('addfeature', {
+        feature: layer.feature
+      });
       layersToAdd.push(layer);
     }
     this.cluster.addLayers(layersToAdd);
   },
 
-  removeLayers: function(ids){
+  removeLayers: function(ids, permanent){
     var layersToRemove = [];
     for (var i = ids.length - 1; i >= 0; i--) {
-      var layer = this._layers[ids[i]];
+      var id = ids[i];
+      var layer = this._layers[id];
+      this.fire('removefeature', {
+        feature: layer.feature,
+        permanent: permanent
+      });
       layersToRemove.push(layer);
+      if(this._layers[id] && permanent){
+        delete this._layers[id];
+      }
     }
     this.cluster.removeLayers(layersToRemove);
   },

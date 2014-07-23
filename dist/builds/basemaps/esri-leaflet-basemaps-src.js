@@ -1,4 +1,4 @@
-/*! Esri-Leaflet - v0.0.1-beta.5 - 2014-06-17
+/*! esri-leaflet - v0.0.1-beta.5 - 2014-07-23
 *   Copyright (c) 2014 Environmental Systems Research Institute, Inc.
 *   Apache License*/
 L.esri = {
@@ -64,6 +64,7 @@ L.esri = {
       if (httpRequest.readyState === 4) {
         try {
           response = JSON.parse(httpRequest.responseText);
+
         } catch(e) {
           response = null;
           error = {
@@ -287,7 +288,7 @@ L.esri = {
         },
         ShadedReliefLabels: {
           urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places_Alternate/MapServer/tile/{z}/{y}/{x}',
-//          pane: 'esri-label',
+          //pane: 'esri-label',
           options: {
             minZoom: 1,
             maxZoom: 12,

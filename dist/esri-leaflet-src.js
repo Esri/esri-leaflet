@@ -1,4 +1,4 @@
-/*! Esri-Leaflet - v0.0.1-beta.5 - 2014-06-17
+/*! esri-leaflet - v0.0.1-beta.5 - 2014-07-23
 *   Copyright (c) 2014 Environmental Systems Research Institute, Inc.
 *   Apache License*/
 L.esri = {
@@ -434,6 +434,7 @@ L.esri = {
       if (httpRequest.readyState === 4) {
         try {
           response = JSON.parse(httpRequest.responseText);
+
         } catch(e) {
           response = null;
           error = {
@@ -541,7 +542,7 @@ L.esri.Services.Service = L.Class.extend({
     this.url = L.esri.Util.cleanUrl(url);
     this._requestQueue = [];
     this._authenticating = false;
-    options =  L.Util.setOptions(this, options);
+    L.Util.setOptions(this, options);
   },
 
   get: function (path, params, callback, context) {
@@ -663,7 +664,10 @@ L.esri.Services.FeatureLayer = L.esri.Services.Service.extend({
     return this.post('addFeatures', {
       features: [feature]
     }, function(error, response){
-      callback.call(this, error || response.addResults[0].error, response.addResults[0]);
+      var result = (response && response.addResults) ? response.addResults[0] : undefined;
+      if(callback){
+        callback.call(this, error || response.addResults[0].error, result);
+      }
     }, context);
   },
 
@@ -672,7 +676,10 @@ L.esri.Services.FeatureLayer = L.esri.Services.Service.extend({
     return this.post('updateFeatures', {
       features: [feature]
     }, function(error, response){
-      callback.call(context, error || response.updateResults[0].error, response.updateResults[0]);
+      var result = (response && response.updateResults) ? response.updateResults[0] : undefined;
+      if(callback){
+        callback.call(context, error || response.updateResults[0].error, result);
+      }
     }, context);
   },
 
@@ -680,7 +687,10 @@ L.esri.Services.FeatureLayer = L.esri.Services.Service.extend({
     return this.post('deleteFeatures', {
       objectIds: id
     }, function(error, response){
-      callback.call(context, error || response.deleteResults[0].error, response.deleteResults[0]);
+      var result = (response && response.deleteResults) ? response.deleteResults[0] : undefined;
+      if(callback){
+        callback.call(context, error || response.deleteResults[0].error, result);
+      }
     }, context);
   }
 
@@ -693,12 +703,155 @@ L.esri.Services.MapService = L.esri.Services.Service.extend({
 
   identify: function () {
     return new L.esri.Tasks.Identify(this);
+  },
+
+  find: function () {
+    return new L.esri.Tasks.Find(this);
+  },
+
+  query: function () {
+    return new L.esri.Tasks.Query(this);
   }
 
 });
 
 L.esri.Services.mapService = function(url, params){
   return new L.esri.Services.MapService(url, params);
+};
+L.esri.Services.ImageService = L.esri.Services.Service.extend({
+  // @TODO: Add identify in the future
+  //
+  query: function () {
+    return new L.esri.Tasks.Query(this);
+  }
+
+});
+
+L.esri.Services.imageService = function(url, params){
+  return new L.esri.Services.ImageService(url, params);
+};
+L.esri.Tasks.Find = L.Class.extend({
+
+  initialize: function (endpoint) {
+    if (endpoint.url && endpoint.get) {
+      this._service = endpoint;
+      this.url = endpoint.url;
+    } else {
+      this.url = L.esri.Util.cleanUrl(endpoint);
+    }
+
+    this._params = {
+      sr: 4326,
+      contains: true,
+      returnGeometry: true,
+      returnZ: true,
+      returnM: false
+    };
+  },
+
+  text: function (text) {
+    this._params.searchText = text;
+    return this;
+  },
+
+  contains: function (contains) {
+    this._params.contains = contains;
+    return this;
+  },
+
+  fields: function (fields) {
+    this._params.searchFields = (this._params.searchFields) ? this._params.searchFields + ',' : '';
+    if (L.Util.isArray(fields)) {
+      this._params.searchFields += fields.join(',');
+    } else {
+      this._params.searchFields += fields;
+    }
+    return this;
+  },
+
+  spatialReference: function (spatialReference) {
+    this._params.sr = spatialReference;
+    return this;
+  },
+
+  layerDefs: function (id, where) {
+    this._params.layerDefs = (this._params.layerDefs) ? this._params.layerDefs + ';' : '';
+    this._params.layerDefs += ([id, where]).join(':');
+    return this;
+  },
+
+  layers: function (layers) {
+    if (L.Util.isArray(layers)) {
+      this._params.layers = layers.join(',');
+    } else {
+      this._params.layers = layers;
+    }
+    return this;
+  },
+
+  returnGeometry: function (returnGeometry) {
+    this._params.returnGeometry = returnGeometry;
+    return this;
+  },
+
+  maxAllowableOffset: function (num) {
+    this._params.maxAllowableOffset = num;
+    return this;
+  },
+
+  precision: function (num) {
+    this._params.geometryPrecision = num;
+    return this;
+  },
+
+  dynamicLayers: function (dynamicLayers) {
+    this._params.dynamicLayers = dynamicLayers;
+    return this;
+  },
+
+  returnZ: function (returnZ) {
+    this._params.returnZ = returnZ;
+    return this;
+  },
+
+  returnM: function (returnM) {
+    this._params.returnM = returnM;
+    return this;
+  },
+
+  gdbVersion: function (string) {
+    this._params.gdbVersion = string;
+    return this;
+  },
+
+  simplify: function(map, factor){
+    var mapWidth = Math.abs(map.getBounds().getWest() - map.getBounds().getEast());
+    this._params.maxAllowableOffset = (mapWidth / map.getSize().y) * factor;
+    return this;
+  },
+
+  token: function (token) {
+    this._params.token = token;
+    return this;
+  },
+
+  run: function (callback, context) {
+    this._request(function(error, response){
+      callback.call(context, error, (response && L.esri.Util.responseToFeatureCollection(response)), response);
+    }, context);
+  },
+
+  _request: function (callback, context) {
+    if(this._service){
+      this._service.get('find', this._params, callback, context);
+    } else {
+      L.esri.get(this.url + 'find', this._params, callback, context);
+    }
+  }
+});
+
+L.esri.Tasks.find = function (url, params) {
+  return new L.esri.Tasks.Find(url, params);
 };
 L.esri.Tasks.Identify = L.Class.extend({
 
@@ -713,7 +866,8 @@ L.esri.Tasks.Identify = L.Class.extend({
     this._params = {
       sr: 4326,
       layers: 'all',
-      tolerance: 3
+      tolerance: 3,
+      returnGeometry: true
     };
   },
 
@@ -749,6 +903,11 @@ L.esri.Tasks.Identify = L.Class.extend({
 
   precision: function(num){
     this._params.geometryPrecision = num;
+    return this;
+  },
+
+  returnGeometry: function (returnGeometry) {
+    this._params.returnGeometry = returnGeometry;
     return this;
   },
 
@@ -798,7 +957,11 @@ L.esri.Tasks.Query = L.Class.extend({
       this.url = L.esri.Util.cleanUrl(endpoint);
     }
 
+    this._originalUrl = this.url;
+    this._urlPrefix = '';
+
     this._params = {
+      returnGeometry: true,
       where: '1=1',
       outSr: 4326,
       outFields: '*'
@@ -809,9 +972,11 @@ L.esri.Tasks.Query = L.Class.extend({
     this._params.geometry = L.esri.Util.boundsToExtent(bounds);
     this._params.geometryType = 'esriGeometryEnvelope';
     this._params.spatialRel = 'esriSpatialRelIntersects';
+    this._params.inSr = 4326;
     return this;
   },
 
+  // only valid for Feature Services running on ArcGIS Server 10.3 or ArcGIS Online
   nearby: function(latlng, radius){
     this._params.geometry = ([latlng.lng,latlng.lat]).join(',');
     this._params.geometryType = 'esriGeometryPoint';
@@ -842,13 +1007,22 @@ L.esri.Tasks.Query = L.Class.extend({
     return this;
   },
 
-  fields: function(array){
-    this._params.outFields = array.join(',');
+  fields: function (fields) {
+    if (L.Util.isArray(fields)) {
+      this._params.outFields = fields.join(',');
+    } else {
+      this._params.outFields = fields;
+    }
     return this;
   },
 
   precision: function(num){
     this._params.geometryPrecision = num;
+    return this;
+  },
+
+  returnGeometry: function (returnGeometry) {
+    this._params.returnGeometry = returnGeometry;
     return this;
   },
 
@@ -901,12 +1075,26 @@ L.esri.Tasks.Query = L.Class.extend({
     return this;
   },
 
+  // only valid for Feature Services running on ArcGIS Server 10.3 or ArcGIS Online
   bounds: function(callback, context){
     this._cleanParams();
     this._params.returnExtentOnly = true;
     this._request(function(error, response){
       callback.call(context, error, (response && response.extent && L.esri.Util.extentToBounds(response.extent)), response);
     }, context);
+    return this;
+  },
+
+  // only valid for image services
+  pixelSize: function(point){
+    point = L.point(point);
+    this._params.pixelSize = ([point.x,point.y]).join(',');
+    return this;
+  },
+
+  // only valid for map services
+  layer: function(layer){
+    this._urlPrefix = layer + '/';
     return this;
   },
 
@@ -918,9 +1106,9 @@ L.esri.Tasks.Query = L.Class.extend({
 
   _request: function(callback, context){
     if(this._service){
-      this._service.get('query', this._params, callback, context);
+      this._service.get(this._urlPrefix +'query', this._params, callback, context);
     } else {
-      L.esri.get(this.url + 'query', this._params, callback, context);
+      L.esri.get(this.url + this._urlPrefix + 'query', this._params, callback, context);
     }
   }
 
@@ -1058,7 +1246,7 @@ L.esri.Tasks.query = function(url, params){
         },
         ShadedReliefLabels: {
           urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places_Alternate/MapServer/tile/{z}/{y}/{x}',
-//          pane: 'esri-label',
+          //pane: 'esri-label',
           options: {
             minZoom: 1,
             maxZoom: 12,
@@ -1196,28 +1384,13 @@ L.esri.Tasks.query = function(url, params){
 
 })(L);
 /* globals L */
-
-L.esri.Layers.DynamicMapLayer = L.Class.extend({
-
+L.esri.Layers.RasterLayer =  L.Class.extend({
   includes: L.Mixin.Events,
 
   options: {
     opacity: 1,
     position: 'front',
-    updateInterval: 150,
-    layers: false,
-    layerDefs: false,
-    timeOptions: false,
-    format: 'png24',
-    transparent: true,
     f: 'image'
-  },
-
-  initialize: function (url, options) {
-    this.url = L.esri.Util.cleanUrl(url);
-    this._service = new L.esri.Services.MapService(this.url, options);
-    this._service.on('authenticationrequired requeststart requestend requesterror requestsuccess', this._propagateEvent, this);
-    L.Util.setOptions(this, options);
   },
 
   onAdd: function (map) {
@@ -1229,11 +1402,6 @@ L.esri.Layers.DynamicMapLayer = L.Class.extend({
       var sr = map.options.crs.code.split(':')[1];
       this.options.bboxSR = sr;
       this.options.imageSR = sr;
-    }
-
-    if(this._popup){
-      this._map.on('click', this._getPopupData, this);
-      this._map.on('dblclick', this._resetPopupState, this);
     }
 
     // @TODO remove at Leaflet 0.8
@@ -1267,11 +1435,9 @@ L.esri.Layers.DynamicMapLayer = L.Class.extend({
   },
 
   getEvents: function(){
-    var events = {
+    return {
       moveend: this._update
     };
-
-    return events;
   },
 
   bringToFront: function(){
@@ -1288,6 +1454,138 @@ L.esri.Layers.DynamicMapLayer = L.Class.extend({
       this._currentImage.bringToBack();
     }
     return this;
+  },
+
+  getOpacity: function(){
+    return this.options.opacity;
+  },
+
+  setOpacity: function(opacity){
+    this.options.opacity = opacity;
+    this._currentImage.setOpacity(opacity);
+    return this;
+  },
+
+  getTimeRange: function(){
+    return [this.options.from, this.options.to];
+  },
+
+  setTimeRange: function(from, to){
+    this.options.from = from;
+    this.options.to = to;
+    this._update();
+    return this;
+  },
+
+  metadata: function(callback, context){
+    this._service.metadata(callback, context);
+    return this;
+  },
+
+  authenticate: function(token){
+    this._service.authenticate(token);
+    return this;
+  },
+
+  _renderImage: function(url, bounds){
+    var image = new L.ImageOverlay(url, bounds, {
+      opacity: 0
+    }).addTo(this._map);
+
+    image.once('load', function(e){
+      var newImage = e.target;
+      var oldImage = this._currentImage;
+
+      if(newImage._bounds.equals(bounds)){
+        this._currentImage = newImage;
+
+        if(this.options.position === 'front'){
+          this.bringToFront();
+        } else {
+          this.bringToBack();
+        }
+
+        this._currentImage.setOpacity(this.options.opacity);
+
+        if(oldImage){
+          this._map.removeLayer(oldImage);
+        }
+      } else {
+        this._map.removeLayer(newImage);
+      }
+
+      this.fire('load', {
+        bounds: bounds
+      });
+
+    }, this);
+
+    this.fire('loading', {
+      bounds: bounds
+    });
+  },
+
+  _update: function () {
+    if(!this._map){
+      return;
+    }
+
+    var zoom = this._map.getZoom();
+    var bounds = this._map.getBounds();
+
+    if(this._animatingZoom){
+      return;
+    }
+
+    if (this._map._panTransition && this._map._panTransition._inProgress) {
+      return;
+    }
+
+    if (zoom > this.options.maxZoom || zoom < this.options.minZoom) {
+      return;
+    }
+    var params = this._buildExportParams();
+    this._requestExport(params, bounds);
+  },
+
+  // from https://github.com/Leaflet/Leaflet/blob/v0.7.2/src/layer/FeatureGroup.js
+  // @TODO remove at Leaflet 0.8
+  _propagateEvent: function (e) {
+    e = L.extend({
+      layer: e.target,
+      target: this
+    }, e);
+    this.fire(e.type, e);
+  }
+});
+
+
+/* globals L */
+L.esri.Layers.DynamicMapLayer = L.esri.Layers.RasterLayer.extend({
+
+  options: {
+    updateInterval: 150,
+    layers: false,
+    layerDefs: false,
+    timeOptions: false,
+    format: 'png24',
+    transparent: true
+  },
+
+  initialize: function (url, options) {
+    this.url = L.esri.Util.cleanUrl(url);
+    this._service = new L.esri.Services.MapService(this.url, options);
+    this._service.on('authenticationrequired requeststart requestend requesterror requestsuccess', this._propagateEvent, this);
+    L.Util.setOptions(this, options);
+  },
+
+  onAdd: function(map){
+    L.esri.Layers.RasterLayer.prototype.onAdd.call(this, map);
+
+    if(this._popup){
+      this._map.on('click', this._getPopupData, this);
+      this._map.on('dblclick', this._resetPopupState, this);
+    }
   },
 
   bindPopup: function(fn, popupOptions){
@@ -1309,16 +1607,6 @@ L.esri.Layers.DynamicMapLayer = L.Class.extend({
       this._map.off('dblclick', this._resetPopupState, this);
     }
     this._popup = false;
-    return this;
-  },
-
-  getOpacity: function(){
-    return this.options.opacity;
-  },
-
-  setOpacity: function(opacity){
-    this.options.opacity = opacity;
-    this._currentImage.setOpacity(opacity);
     return this;
   },
 
@@ -1352,29 +1640,16 @@ L.esri.Layers.DynamicMapLayer = L.Class.extend({
     return this;
   },
 
-  getTimeRange: function(){
-    return [this.options.from, this.options.to];
-  },
-
-  setTimeRange: function(from, to){
-    this.options.from = from;
-    this.options.to = to;
-    this._update();
-    return this;
-  },
-
-  metadata: function(callback, context){
-    this._service.metadata(callback, context);
-    return this;
+  query: function(){
+    return this._service.query();
   },
 
   identify: function(){
     return this._service.identify();
   },
 
-  authenticate: function(token){
-    this._service.authenticate(token);
-    return this;
+  find: function(){
+    return this._service.find();
   },
 
   _getPopupData: function(e){
@@ -1451,65 +1726,7 @@ L.esri.Layers.DynamicMapLayer = L.Class.extend({
     return params;
   },
 
-  _renderImage: function(url, bounds){
-    var image = new L.ImageOverlay(url, bounds, {
-      opacity: 0
-    }).addTo(this._map);
-
-    image.once('load', function(e){
-      var newImage = e.target;
-      var oldImage = this._currentImage;
-
-      if(newImage._bounds.equals(bounds)){
-        this._currentImage = newImage;
-
-        if(this.options.position === 'front'){
-          this.bringToFront();
-        } else {
-          this.bringToBack();
-        }
-
-        this._currentImage.setOpacity(this.options.opacity);
-
-        if(oldImage){
-          this._map.removeLayer(oldImage);
-        }
-      } else {
-        this._map.removeLayer(newImage);
-      }
-
-      this.fire('load', {
-        bounds: bounds
-      });
-
-    }, this);
-
-    this.fire('loading', {
-      bounds: bounds
-    });
-  },
-
-  _update: function () {
-    if(!this._map){
-      return;
-    }
-
-    var zoom = this._map.getZoom();
-    var bounds = this._map.getBounds();
-
-    if(this._animatingZoom){
-      return;
-    }
-
-    if (this._map._panTransition && this._map._panTransition._inProgress) {
-      return;
-    }
-
-    if (zoom > this.options.maxZoom || zoom < this.options.minZoom) {
-      return;
-    }
-    var params = this._buildExportParams();
-
+  _requestExport: function (params, bounds) {
     if(this.options.f === 'json'){
       this._service.get('export', params, function(error, response){
         this._renderImage(response.href, bounds);
@@ -1518,16 +1735,6 @@ L.esri.Layers.DynamicMapLayer = L.Class.extend({
       params.f = 'image';
       this._renderImage(this.url + 'export' + L.Util.getParamString(params), bounds);
     }
-  },
-
-  // from https://github.com/Leaflet/Leaflet/blob/v0.7.2/src/layer/FeatureGroup.js
-  // @TODO remove at Leaflet 0.8
-  _propagateEvent: function (e) {
-    e = L.extend({
-      layer: e.target,
-      target: this
-    }, e);
-    this.fire(e.type, e);
   }
 });
 
@@ -1539,6 +1746,91 @@ L.esri.Layers.dynamicMapLayer = function(key, options){
 
 L.esri.dynamicMapLayer = function(key, options){
   return new L.esri.Layers.DynamicMapLayer(key, options);
+};
+/* globals L */
+L.esri.Layers.ImageMapLayer = L.esri.Layers.RasterLayer.extend({
+
+  options: {
+    updateInterval: 150,
+    format: 'jpgpng'
+  },
+
+  query: function(){
+    return this._service.query();
+  },
+
+  initialize: function (url, options) {
+    this.url = L.esri.Util.cleanUrl(url);
+    this._service = new L.esri.Services.ImageService(this.url, options);
+    this._service.on('authenticationrequired requeststart requestend requesterror requestsuccess', this._propagateEvent, this);
+    L.Util.setOptions(this, options);
+  },
+
+  _buildExportParams: function () {
+    var bounds = this._map.getBounds();
+    var size = this._map.getSize();
+    var ne = this._map.options.crs.project(bounds._northEast);
+    var sw = this._map.options.crs.project(bounds._southWest);
+
+    var params = {
+      bbox: [sw.x, sw.y, ne.x, ne.y].join(','),
+      size: size.x + ',' + size.y,
+      format: this.options.format,
+      bboxSR: this.options.bboxSR,
+      imageSR: this.options.imageSR
+    };
+
+    if(this.options.from && this.options.to){
+      params.time = this.options.from.valueOf() + ',' + this.options.to.valueOf();
+    }
+
+    if(this.options.pixelType){
+      params.pixelType = this.options.pixelType;
+    }
+
+    if(this.options.noDataInterpretation){
+      params.noDataInterpretation = this.options.noDataInterpretation;
+    }
+
+    if(this.options.interpolation){
+      params.interpolation = this.options.interpolation;
+    }
+
+    if(this.options.compressionQuality){
+      params.compressionQuality = this.options.compressionQuality;
+    }
+
+    if(this.options.bandIds){
+      params.bandIds = this.options.bandIds;
+    }
+
+    if(this._service.options.token) {
+      params.token = this._service.options.token;
+    }
+
+    return params;
+  },
+
+  _requestExport: function (params, bounds) {
+    if(this.options.f === 'json'){
+      this._service.get('exportImage', params, function(error, response){
+        this._renderImage(response.href, bounds);
+      }, this);
+    } else {
+      params.f = 'image';
+      this._renderImage(this.url + 'exportImage' + L.Util.getParamString(params), bounds);
+    }
+  }
+});
+
+L.esri.ImageMapLayer = L.esri.Layers.ImageMapLayer;
+
+L.esri.Layers.imageMapLayer = function(key, options){
+  return new L.esri.Layers.ImageMapLayer(key, options);
+};
+
+L.esri.imageMapLayer = function (key, options){
+  return new L.esri.Layers.ImageMapLayer(key, options);
 };
 /* globals L */
 
@@ -2229,23 +2521,35 @@ L.esri.Layers.FeatureGrid = L.Class.extend({
 
     addFeature: function(feature, callback, context){
       this._service.addFeature(feature, function(error, response){
-        this.refresh();
-        callback.call(context, error, response);
+        if(!error){
+          this.refresh();
+        }
+        if(callback){
+          callback.call(context, error, response);
+        }
       }, this);
       return this;
     },
 
     updateFeature: function(feature, callback, context){
       return this._service.updateFeature(feature, function(error, response){
-        this.refresh();
-        callback.call(context, error, response);
+        if(!error){
+          this.refresh();
+        }
+        if(callback){
+          callback.call(context, error, response);
+        }
       }, this);
     },
 
     deleteFeature: function(id, callback, context){
       return this._service.deleteFeature(id, function(error, response){
-        this.removeLayers([response.objectId]);
-        callback.call(context, error, response);
+        if(!error && response.objectId){
+          this.removeLayers([response.objectId], true);
+        }
+        if(callback){
+          callback.call(context, error, response);
+        }
       }, this);
     }
   });
@@ -2403,6 +2707,11 @@ L.esri.Layers.FeatureLayer = L.esri.Layers.FeatureManager.extend({
 
         // style the layer
         this.resetStyle(newLayer.feature.id);
+
+        this.fire('createfeature', {
+          feature: newLayer.feature
+        });
+
         // add the layer if it is within the time bounds or our layer is not time enabled
         if(!this.options.timeField || (this.options.timeField && this._featureWithinTimeRange(geojson)) ){
           this._map.addLayer(newLayer);
@@ -2415,12 +2724,7 @@ L.esri.Layers.FeatureLayer = L.esri.Layers.FeatureManager.extend({
     var key = this._cellCoordsToKey(coords);
     var layers = this._cache[key];
     if(layers){
-      for (var i = layers.length - 1; i >= 0; i--) {
-        var layer = this.getFeature(layers[i]);
-        if(!this._map.hasLayer(layer)){
-          this._map.addLayer(layer);
-        }
-      }
+      this.addLayers(layers);
     }
   },
 
@@ -2428,12 +2732,7 @@ L.esri.Layers.FeatureLayer = L.esri.Layers.FeatureManager.extend({
     var key = this._cellCoordsToKey(coords);
     var layers = this._cache[key];
     if(layers){
-      for (var i = layers.length - 1; i >= 0; i--) {
-        var layer = this.getFeature(layers[i]);
-        if(this._map.hasLayer(layer)){
-          this._map.removeLayer(layer);
-        }
-      }
+      this.removeLayers(layers);
     }
   },
 
@@ -2441,16 +2740,27 @@ L.esri.Layers.FeatureLayer = L.esri.Layers.FeatureManager.extend({
     for (var i = ids.length - 1; i >= 0; i--) {
       var layer = this._layers[ids[i]];
       if(layer){
+        this.fire('addfeature', {
+          feature: layer.feature
+        });
         this._map.addLayer(layer);
       }
     }
   },
 
-  removeLayers: function(ids){
+  removeLayers: function(ids, permanent){
     for (var i = ids.length - 1; i >= 0; i--) {
-      var layer = this._layers[ids[i]];
+      var id = ids[i];
+      var layer = this._layers[id];
       if(layer){
+        this.fire('removefeature', {
+          feature: layer.feature,
+          permanent: permanent
+        });
         this._map.removeLayer(layer);
+      }
+      if(layer && permanent){
+        delete this._layers[id];
       }
     }
   },
