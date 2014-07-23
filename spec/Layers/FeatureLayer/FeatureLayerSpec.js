@@ -50,6 +50,22 @@ describe('L.esri.Layers.FeatureLayer', function () {
     layer.createLayers(features);
   });
 
+  it('should fire a createfeature event', function(done){
+    layer = L.esri.featureLayer('http://services.arcgis.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0', {
+      timeField: 'time',
+      pointToLayer: function(feature, latlng){
+        return L.circleMarker(latlng);
+      }
+    }).addTo(map);
+
+    layer.on('createfeature', function(e){
+      expect(e.feature.id).to.equal(2);
+      done();
+    });
+
+    layer.createLayers(features);
+  });
+
   it('should have an alias at L.esri.Layers.featureLayer', function(){
     var layer = L.esri.Layers.featureLayer('http://services.arcgis.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0');
     expect(layer).to.be.an.instanceof(L.esri.Layers.FeatureLayer);
@@ -66,11 +82,26 @@ describe('L.esri.Layers.FeatureLayer', function () {
     expect(map.hasLayer(layer.getFeature(2))).to.equal(true);
   });
 
+  it('should fire a removefeature event', function(){
+    layer.on('removefeature', function(e){
+      expect(e.feature.id).to.equal(1);
+    });
+    layer.removeLayers([1]);
+  });
+
   it('should add features back to a map', function(){
     layer.removeLayers([1]);
     layer.addLayers([1]);
     expect(map.hasLayer(layer.getFeature(1))).to.equal(true);
     expect(map.hasLayer(layer.getFeature(2))).to.equal(true);
+  });
+
+  it('should fire a addfeature event', function(){
+    layer.on('addfeature', function(e){
+      expect(e.feature.id).to.equal(1);
+    });
+    layer.removeLayers([1]);
+    layer.addLayers([1]);
   });
 
   it('should readd features back to a map', function(){
@@ -194,19 +225,6 @@ describe('L.esri.Layers.FeatureLayer', function () {
 
     expect(layer.getFeature(1).options.fill).to.equal('red');
     expect(layer.getFeature(2).options.fill).to.equal('red');
-  });
-
-  it('should add features to the map when their cell enters the view', function(){
-    layer._cache['1:1'] = [1];
-    map.removeLayer(layer.getFeature(1));
-    layer.cellEnter(null, L.point([1,1]));
-    expect(map.hasLayer(layer.getFeature(1))).to.equal(true);
-  });
-
-  it('should remove features to the map when their cell leaves the view', function(){
-    layer._cache['1:1'] = [1];
-    layer.cellLeave(null, L.point([1,1]));
-    expect(map.hasLayer(layer.getFeature(1))).to.equal(false);
   });
 
   it('should propagate events from individual features', function(){

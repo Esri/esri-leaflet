@@ -61,12 +61,27 @@ describe('L.esri.Layers.ClusteredFeatureLayer', function () {
     expect(layer.cluster.hasLayer(layer.getFeature(2))).to.equal(true);
   });
 
+  it('should fire a removefeature event', function(){
+    layer.on('removefeature', function(e){
+      expect(e.feature.id).to.equal(1);
+    });
+    layer.removeLayers([1]);
+  });
+
   it('should add features back to a cluster', function(){
     layer.removeLayers([1]);
     layer.addLayers([1]);
 
     expect(layer.cluster.hasLayer(layer.getFeature(1))).to.equal(true);
     expect(layer.cluster.hasLayer(layer.getFeature(2))).to.equal(true);
+  });
+
+  it('should fire a addfeature event', function(){
+    layer.on('addfeature', function(e){
+      expect(e.feature.id).to.equal(1);
+    });
+    layer.removeLayers([1]);
+    layer.addLayers([1]);
   });
 
   it('should not add features outside the time range', function(){
