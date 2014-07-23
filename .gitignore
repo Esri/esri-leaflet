@@ -27,3 +27,6 @@ working
 
 # Docs Build
 site/build
+
+# Built Files
+dist/**/*.js
