@@ -40,6 +40,7 @@ Option | Type | Default | Description
 `position` | `String` | `'front'` | Position of the layer relative to other overlays.
 `proxy` | `String` | `false` | URL of an [ArcGIS API for JavaScript proxies](https://developers.arcgis.com/javascript/jshelp/ags_proxy.html) or [ArcGIS Resource Proxies](https://github.com/Esri/resource-proxy) to use for proxying POST requests.
 `useCors` | `Boolean` | `true` | If this service should use CORS when making GET requests.
+`renderingRule` | `Object` | `undefined` | A JSON representation of a [raster function](http://resources.arcgis.com/en/help/arcgis-rest-api/#/Raster_function_objects/02r3000000rv000000/)
 
 ### Methods
 
@@ -80,7 +81,7 @@ Option | Type | Default | Description
         <tr>
             <td><code>setTimeRange({{{param 'Date' 'from'}}}, {{{param 'Date' 'to'}}})</code></td>
             <td><code>this</code></td>
-            <td>Redraws the layer with he passed time range.</td>
+            <td>Redraws the layer with the passed time range.</td>
         </tr>
         <tr>
             <td><code>metadata({{{param 'Function' 'callback'}}}, {{{param 'Object' 'context'}}})</code></td>
@@ -91,6 +92,16 @@ Option | Type | Default | Description
   console.log(metadata);
 });</code></pre>
             </td>
+        </tr>
+        <tr>
+            <td><code>getRenderingRule()</code></td>
+            <td><code>Object</code></td>
+            <td>Returns the current rendering rule of the layer.</td>
+        </tr>
+        <tr>
+            <td><code>setRenderingRule({{{param 'Object' 'renderingRule'}}})</code></td>
+            <td><code>this</code></td>
+            <td>Redraws the layer with the passed rendering rule.</td>
         </tr>
     </tbody>
 </table>

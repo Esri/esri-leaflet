@@ -13,6 +13,15 @@ L.esri.Layers.ImageMapLayer = L.esri.Layers.RasterLayer.extend({
     L.Util.setOptions(this, options);
   },
 
+  setRenderingRule: function(renderingRule) {
+    this.options.renderingRule = renderingRule;
+    this._update();
+  },
+
+  getRenderingRule: function() {
+    return this.options.renderingRule;
+  },
+
   _buildExportParams: function () {
     var bounds = this._map.getBounds();
     var size = this._map.getSize();
@@ -53,6 +62,10 @@ L.esri.Layers.ImageMapLayer = L.esri.Layers.RasterLayer.extend({
 
     if(this._service.options.token) {
       params.token = this._service.options.token;
+    }
+
+    if(this.options.renderingRule) {
+      params.renderingRule = JSON.stringify(this.options.renderingRule);
     }
 
     return params;
