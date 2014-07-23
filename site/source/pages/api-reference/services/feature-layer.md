@@ -53,7 +53,7 @@ Inherits from [`L.esri.Service`]({{assets}}api-reference/services/service.html)
 <pre class="js"><code>featureLayer.query()
             .within(latlngbounds)
             .where("Direction = 'WEST'")
-            .run(function(error, featureCollection){
+            .run(function(error, featureCollection, response){
               console.log(featureCollection);
             });</code></pre>
             </td>

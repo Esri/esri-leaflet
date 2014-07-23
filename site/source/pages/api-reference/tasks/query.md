@@ -5,7 +5,9 @@ layout: documentation.hbs
 
 # {{page.data.title}}
 
-`L.esri.Tasks.Query` is an abstraction for the query API that exists on Feature Layers and Map Services. It provides a chainable API for building request parameters and executing queries.
+`L.esri.Tasks.Query` is an abstraction for the query API that exists on Feature Layers Map Services and Image Services. It provides a chainable API for building request parameters and executing queries.
+
+**Note** Depending on the type of service you are querying (Feature Layer, Map Service, Image Service) and the version of ArcGIS Server that hosts the service some of these options my not be available.
 
 ### Constructor
 
@@ -46,7 +48,7 @@ layout: documentation.hbs
         <tr>
             <td><code>nearby({{{param 'LatLng' 'latlng' 'http://leafletjs.com/reference.html#latlng'}}}, {{{param 'Integer' 'distance'}}})</code></td>
             <td><code>this</code></td>
-            <td>Queries features a given distance in meters around a <a href="http://leafletjs.com/reference.html#latlng">LatLng</a>.</td>
+            <td>Queries features a given distance in meters around a <a href="http://leafletjs.com/reference.html#latlng">LatLng</a>. <small>Only available for Feature Layers hosted on ArcGIS Online.</small></td>
         </tr>
         <tr>
             <td><code>where({{{param 'String' 'where'}}})</code></td>
@@ -56,17 +58,17 @@ layout: documentation.hbs
         <tr>
             <td><code>offset({{{param 'Integer' 'offset'}}})</code></td>
             <td><code>this</code></td>
-            <td>Define the offset of the results, when combined with `limit` can be used for paging. Available only for Feature Services hosted on ArcGIS Online.</td>
+            <td>Define the offset of the results, when combined with `limit` can be used for paging. <small>Only available for Feature Layers hosted on ArcGIS Online.</small></td>
         </tr>
         <tr>
             <td><code>limit({{{param 'Integer' 'limit'}}})</code></td>
             <td><code>this</code></td>
-            <td>Limit the number of results returned by this query, when combined with `offset` can be used for paging. Available only for Feature Services hosted on ArcGIS Online.</td>
+            <td>Limit the number of results returned by this query, when combined with `offset` can be used for paging. <small>Only available for Feature Layers hosted on ArcGIS Online.</small></td>
         </tr>
         <tr>
             <td><code>between({{{param 'Date' 'from'}}}, {{{param 'Date' 'to'}}})</code></td>
             <td><code>this</code></td>
-            <td>Queries features within a given time range.</td>
+            <td>Queries features within a given time range. <small>Only available for Layers/Services with `timeInfo` in their metadata.</small></td>
         </tr>
         <tr>
             <td><code>fields({{{param 'Array' 'fields'}}} or {{{param 'String' 'fields'}}})</code></td>
@@ -104,6 +106,16 @@ layout: documentation.hbs
             <td>Adds a token to this request if the service requires authentication. Will be added automatically if used with a service.</td>
         </tr>
         <tr>
+            <td><code>layer({{{param 'String or Integer' 'layer'}}})</code></td>
+            <td><code>this</code></td>
+            <td>Used to select which layer inside a Map Service to perform the query on. <small>Only available for Map Services.</small></td>
+        </tr>
+        <tr>
+            <td><code>pixelSize({{{param 'Point' 'point' 'http://leafletjs.com/reference.html#point'}}})</code></td>
+            <td><code>this</code></td>
+            <td>Override the default pixelSize when querying an Image Service. <small>Only available for Image Services.</small></td>
+        </tr>
+        <tr>
             <td><code>run({{{param 'Function' 'callback'}}}, {{{param 'Object' 'context'}}})</code></td>
             <td><code>this</code></td>
             <td>Exectues the query request with the current parameters, features will be passed to <code>callback</code> as a <a href="http://geojson.org/geojson-spec.html#feature-collection-objects">GeoJSON FeatureCollection</a>. Accepts an optional function context.</td>
@@ -121,7 +133,7 @@ layout: documentation.hbs
         <tr>
             <td><code>bounds({{{param 'Function' 'callback'}}}, {{{param 'Object' 'context'}}})</code></td>
             <td><code>this</code></td>
-            <td>Exectues the query request with the current parameters, passing only the <a href="http://leafletjs.com/reference.html#latlngbounds"><code>LatLngBounds</code></a> of all features the query to callback<code>callback</code>. Accepts an optional function context.</td>
+            <td>Exectues the query request with the current parameters, passing only the <a href="http://leafletjs.com/reference.html#latlngbounds"><code>LatLngBounds</code></a> of all features the query to callback<code>callback</code>. Accepts an optional function context. <small>Only available for Feature Layers hosted on ArcGIS Online.</small></td>
         </tr>
     </tbody>
 </table>
