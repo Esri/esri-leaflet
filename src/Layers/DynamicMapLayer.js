@@ -78,6 +78,10 @@ L.esri.Layers.DynamicMapLayer = L.esri.Layers.RasterLayer.extend({
     return this;
   },
 
+  query: function(){
+    return this._service.query();
+  },
+
   identify: function(){
     return this._service.identify();
   },

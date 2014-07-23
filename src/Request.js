@@ -49,6 +49,7 @@
       if (httpRequest.readyState === 4) {
         try {
           response = JSON.parse(httpRequest.responseText);
+
         } catch(e) {
           response = null;
           error = {

@@ -217,8 +217,8 @@ describe('L.esri.Layers.DynamicMapLayer', function () {
       done();
     });
 
-    layer.setTimeRange(new Date('January 9 2014'), new Date('January 12 2014'));
-    expect(layer.getTimeRange()).to.deep.equal([new Date('January 9 2014'), new Date('January 12 2014')]);
+    layer.setTimeRange(new Date('January 9 2014 GMT-0800'), new Date('January 12 2014 GMT-0800'));
+    expect(layer.getTimeRange()).to.deep.equal([new Date('January 9 2014 GMT-0800'), new Date('January 12 2014 GMT-0800')]);
     layer.addTo(map);
     server.respond();
   });
@@ -233,8 +233,8 @@ describe('L.esri.Layers.DynamicMapLayer', function () {
       done();
     });
 
-    layer.setTimeRange(new Date('January 9 2014'), new Date('January 12 2014'));
-    expect(layer.getTimeRange()).to.deep.equal([new Date('January 9 2014'), new Date('January 12 2014')]);
+    layer.setTimeRange(new Date('January 9 2014 GMT-0800'), new Date('January 12 2014 GMT-0800'));
+    expect(layer.getTimeRange()).to.deep.equal([new Date('January 9 2014 GMT-0800'), new Date('January 12 2014 GMT-0800')]);
     layer.setTimeOptions({ foo: 'bar' });
     expect(layer.getTimeOptions()).to.deep.equal({ foo: 'bar' });
     layer.addTo(map);

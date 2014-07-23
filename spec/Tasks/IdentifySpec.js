@@ -110,8 +110,8 @@ describe('L.esri.Tasks.Identify', function () {
   it('should identify features in a given time range', function(done){
     server.respondWith('GET', url + 'identify?sr=4326&layers=all&tolerance=3&returnGeometry=true&imageDisplay=500%2C500%2C96&mapExtent=-122.66535758972167%2C45.50624163368495%2C-122.65462875366211%2C45.51376023843158&geometry=-122.66%2C45.51&geometryType=esriGeometryPoint&time=1357027200000%2C1388563200000&f=json', JSON.stringify(sampleResponse));
 
-    var start = new Date('January 1 2013');
-    var end = new Date('January 1 2014');
+    var start = new Date('January 1 2013 GMT-0800');
+    var end = new Date('January 1 2014 GMT-0800');
 
     task.between(start, end).run(function(error, featureCollection, raw){
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);

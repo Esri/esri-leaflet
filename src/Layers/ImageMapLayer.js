@@ -6,6 +6,10 @@ L.esri.Layers.ImageMapLayer = L.esri.Layers.RasterLayer.extend({
     format: 'jpgpng'
   },
 
+  query: function(){
+    return this._service.query();
+  },
+
   initialize: function (url, options) {
     this.url = L.esri.Util.cleanUrl(url);
     this._service = new L.esri.Services.ImageService(this.url, options);

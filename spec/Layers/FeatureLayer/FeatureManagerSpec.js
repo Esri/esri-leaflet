@@ -81,7 +81,7 @@ describe('L.esri.Layers.FeatureManager', function () {
       'OBJECTID': 1,
       'Name': 'Site 1',
       'Type': 'Active',
-      'Time': new Date('January 1 2014').valueOf()
+      'Time': new Date('January 1 2014 GMT-0800').valueOf()
     },
     'geometry': {
       'x': -122.673339,
@@ -97,7 +97,7 @@ describe('L.esri.Layers.FeatureManager', function () {
       'OBJECTID': 2,
       'Name': 'Site 2',
       'Type': 'Inactive',
-      'Time': new Date('January 15 2014').valueOf()
+      'Time': new Date('January 15 2014 GMT-0800').valueOf()
     },
     'geometry': {
       'x': -122.673342,
@@ -113,7 +113,7 @@ describe('L.esri.Layers.FeatureManager', function () {
       'OBJECTID': 3,
       'Name': 'Site 3',
       'Type': 'Active',
-      'Time': new Date('January 12 2014').valueOf()
+      'Time': new Date('January 12 2014 GMT-0800').valueOf()
     },
     'geometry': {
       'x': -122.629394,
@@ -129,8 +129,8 @@ describe('L.esri.Layers.FeatureManager', function () {
       'OBJECTID': 4,
       'Name': 'Site 4',
       'Type': 'Inactive',
-      'StartTime': new Date('January 10 2014').valueOf(),
-      'EndTime': new Date('January 11 2014').valueOf()
+      'StartTime': new Date('January 10 2014 GMT-0800').valueOf(),
+      'EndTime': new Date('January 11 2014 GMT-0800').valueOf()
     },
     'geometry': {
       'x': -122.673342,
@@ -146,8 +146,8 @@ describe('L.esri.Layers.FeatureManager', function () {
       'OBJECTID': 5,
       'Name': 'Site 5',
       'Type': 'Active',
-      'StartTime': new Date('January 14 2014').valueOf(),
-      'EndTime': new Date('January 15 2014').valueOf()
+      'StartTime': new Date('January 14 2014 GMT-0800').valueOf(),
+      'EndTime': new Date('January 15 2014 GMT-0800').valueOf()
     },
     'geometry': {
       'x': -122.629394,
@@ -163,8 +163,8 @@ describe('L.esri.Layers.FeatureManager', function () {
       'OBJECTID': 6,
       'Name': 'Site 6',
       'Type': 'Active',
-      'StartTime': new Date('January 14 2014').valueOf(),
-      'EndTime': new Date('January 15 2014').valueOf()
+      'StartTime': new Date('January 14 2014 GMT-0800').valueOf(),
+      'EndTime': new Date('January 15 2014 GMT-0800').valueOf()
     },
     'geometry': {
       'rings': [
@@ -216,7 +216,7 @@ describe('L.esri.Layers.FeatureManager', function () {
           'OBJECTID': 2,
           'Name': 'Site 2',
           'Type': 'Inactive',
-          'Time': new Date('January 15 2014').valueOf()
+          'Time': new Date('January 15 2014 GMT-0800').valueOf()
         },
         'id': 2
       },
@@ -230,7 +230,7 @@ describe('L.esri.Layers.FeatureManager', function () {
           'OBJECTID': 1,
           'Name': 'Site 1',
           'Type': 'Active',
-          'Time': new Date('January 1 2014').valueOf()
+          'Time': new Date('January 1 2014 GMT-0800').valueOf()
         },
         'id': 1
       }
@@ -266,12 +266,12 @@ describe('L.esri.Layers.FeatureManager', function () {
 
     server.respond();
 
-    layer.setTimeRange(new Date('January 11 2014'), new Date('January 13 2014'));
+    layer.setTimeRange(new Date('January 11 2014 GMT-0800'), new Date('January 13 2014 GMT-0800'));
 
     expect(layer.removeLayers).to.have.been.calledWith([2]);
     expect(layer.addLayers).to.have.been.calledWith([3]);
 
-    layer.setTimeRange(new Date('January 14 2014'), new Date('January 16 2014'));
+    layer.setTimeRange(new Date('January 14 2014 GMT-0800'), new Date('January 16 2014 GMT-0800'));
 
     expect(layer.removeLayers).to.have.been.calledWith([3]);
     expect(layer.addLayers).to.have.been.calledWith([2]);
@@ -284,7 +284,7 @@ describe('L.esri.Layers.FeatureManager', function () {
       objectIdFieldName: 'OBJECTID'
     }));
 
-    layer.setTimeRange(new Date('Dec 1 2013'), new Date('January 10 2014'));
+    layer.setTimeRange(new Date('Dec 1 2013 GMT-0800'), new Date('January 10 2014 GMT-0800'));
 
     layer.addTo(map);
 
@@ -300,7 +300,7 @@ describe('L.esri.Layers.FeatureManager', function () {
         'OBJECTID': 1,
         'Name': 'Site 1',
         'Type': 'Active',
-        'Time': new Date('January 1 2014').valueOf()
+        'Time': new Date('January 1 2014 GMT-0800').valueOf()
       },
       'id': 1
     }]);
@@ -311,7 +311,7 @@ describe('L.esri.Layers.FeatureManager', function () {
       objectIdFieldName: 'OBJECTID'
     }));
 
-    layer.setTimeRange(new Date('January 14 2014'), new Date('January 16 2014'));
+    layer.setTimeRange(new Date('January 14 2014 GMT-0800'), new Date('January 16 2014 GMT-0800'));
 
     server.respond();
 
@@ -327,7 +327,7 @@ describe('L.esri.Layers.FeatureManager', function () {
         'OBJECTID': 2,
         'Name': 'Site 2',
         'Type': 'Inactive',
-        'Time': new Date('January 15 2014').valueOf()
+        'Time': new Date('January 15 2014 GMT-0800').valueOf()
       },
       'id': 2
     }]);
@@ -351,12 +351,12 @@ describe('L.esri.Layers.FeatureManager', function () {
 
     server.respond();
 
-    layer.setTimeRange(new Date('January 9 2014'), new Date('January 12 2014'));
+    layer.setTimeRange(new Date('January 9 2014 GMT-0800'), new Date('January 12 2014 GMT-0800'));
 
     expect(layer.removeLayers).to.have.been.calledWith([5]);
     expect(layer.addLayers).to.have.been.calledWith([4, 4]);
 
-    layer.setTimeRange(new Date('January 13 2014'), new Date('January 16 2014'));
+    layer.setTimeRange(new Date('January 13 2014 GMT-0800'), new Date('January 16 2014 GMT-0800'));
 
     expect(layer.removeLayers).to.have.been.calledWith([4, 4]);
     expect(layer.addLayers).to.have.been.calledWith([5, 5]);
@@ -376,7 +376,7 @@ describe('L.esri.Layers.FeatureManager', function () {
       objectIdFieldName: 'OBJECTID'
     }));
 
-    layer.setTimeRange(new Date('January 9 2014'), new Date('January 12 2014'));
+    layer.setTimeRange(new Date('January 9 2014 GMT-0800'), new Date('January 12 2014 GMT-0800'));
     layer.addTo(map);
 
     server.respond();
@@ -391,8 +391,8 @@ describe('L.esri.Layers.FeatureManager', function () {
         'OBJECTID': 4,
         'Name': 'Site 4',
         'Type': 'Inactive',
-        'StartTime': new Date('January 10 2014').valueOf(),
-        'EndTime': new Date('January 11 2014').valueOf()
+        'StartTime': new Date('January 10 2014 GMT-0800').valueOf(),
+        'EndTime': new Date('January 11 2014 GMT-0800').valueOf()
       },
       'type': 'Feature'
     }]);
@@ -403,7 +403,7 @@ describe('L.esri.Layers.FeatureManager', function () {
       objectIdFieldName: 'OBJECTID'
     }));
 
-    layer.setTimeRange(new Date('January 13 2014'), new Date('January 16 2014'));
+    layer.setTimeRange(new Date('January 13 2014 GMT-0800'), new Date('January 16 2014 GMT-0800'));
 
     server.respond();
 
@@ -419,8 +419,8 @@ describe('L.esri.Layers.FeatureManager', function () {
         'OBJECTID': 5,
         'Name': 'Site 5',
         'Type': 'Active',
-        'StartTime': new Date('January 14 2014').valueOf(),
-        'EndTime': new Date('January 15 2014').valueOf()
+        'StartTime': new Date('January 14 2014 GMT-0800').valueOf(),
+        'EndTime': new Date('January 15 2014 GMT-0800').valueOf()
       },
       'type': 'Feature'
     }]);
@@ -454,7 +454,7 @@ describe('L.esri.Layers.FeatureManager', function () {
         'OBJECTID': 1,
         'Name': 'Site 1',
         'Type': 'Active',
-        'Time': new Date('January 1 2014').valueOf()
+        'Time': new Date('January 1 2014 GMT-0800').valueOf()
       },
       'id': 1
     }]);
@@ -474,14 +474,14 @@ describe('L.esri.Layers.FeatureManager', function () {
         'OBJECTID': 2,
         'Name': 'Site 2',
         'Type': 'Inactive',
-        'Time': new Date('January 15 2014').valueOf()
+        'Time': new Date('January 15 2014 GMT-0800').valueOf()
       },
       'id': 2
     }]);
   });
 
   it('should return true for features with a single time field in the current time range', function(){
-    layer.setTimeRange(new Date('Dec 1 2013'), new Date('January 10 2014'));
+    layer.setTimeRange(new Date('Dec 1 2013 GMT-0800'), new Date('January 10 2014 GMT-0800'));
 
     expect(layer._featureWithinTimeRange({
       'type': 'Feature',
@@ -493,7 +493,7 @@ describe('L.esri.Layers.FeatureManager', function () {
         'OBJECTID': 1,
         'Name': 'Site 1',
         'Type': 'Active',
-        'Time': new Date('January 1 2014').valueOf()
+        'Time': new Date('January 1 2014 GMT-0800').valueOf()
       },
       'id': 1
     })).to.equal(true);
@@ -508,7 +508,7 @@ describe('L.esri.Layers.FeatureManager', function () {
         'OBJECTID': 2,
         'Name': 'Site 2',
         'Type': 'Inactive',
-        'Time': new Date('January 15 2014').valueOf()
+        'Time': new Date('January 15 2014 GMT-0800').valueOf()
       },
       'id': 2
     })).not.to.equal(true);
@@ -516,8 +516,8 @@ describe('L.esri.Layers.FeatureManager', function () {
 
   it('should return true for features with a single feature with start and end time fields in the current time range', function(){
     var layer = new L.esri.Layers.FeatureManager(url, {
-      from: new Date('Dec 1 2013'),
-      to: new Date('January 12 2014'),
+      from: new Date('Dec 1 2013 GMT-0800'),
+      to: new Date('January 12 2014 GMT-0800'),
       timeField: {
         start: 'StartTime',
         end: 'EndTime'
@@ -534,8 +534,8 @@ describe('L.esri.Layers.FeatureManager', function () {
         'OBJECTID': 1,
         'Name': 'Site 1',
         'Type': 'Active',
-        'StartTime': new Date('January 10 2014').valueOf(),
-        'EndTime': new Date('January 11 2014').valueOf()
+        'StartTime': new Date('January 10 2014 GMT-0800').valueOf(),
+        'EndTime': new Date('January 11 2014 GMT-0800').valueOf()
       },
       'id': 1
     })).to.equal(true);
@@ -550,8 +550,8 @@ describe('L.esri.Layers.FeatureManager', function () {
         'OBJECTID': 2,
         'Name': 'Site 2',
         'Type': 'Inactive',
-        'StartTime': new Date('January 14 2014').valueOf(),
-        'EndTime': new Date('January 15 2014').valueOf()
+        'StartTime': new Date('January 14 2014 GMT-0800').valueOf(),
+        'EndTime': new Date('January 15 2014 GMT-0800').valueOf()
       },
       'id': 2
     })).to.equal(false);
@@ -568,16 +568,16 @@ describe('L.esri.Layers.FeatureManager', function () {
         'OBJECTID': 1,
         'Name': 'Site 1',
         'Type': 'Active',
-        'StartTime': new Date('January 10 2014').valueOf(),
-        'EndTime': new Date('January 11 2014').valueOf()
+        'StartTime': new Date('January 10 2014 GMT-0800').valueOf(),
+        'EndTime': new Date('January 11 2014 GMT-0800').valueOf()
       },
       'id': 1
     })).to.equal(true);
   });
 
   it('should be able to get the time range', function(){
-    layer.setTimeRange(new Date('January 13 2014'), new Date('January 16 2014'));
-    expect(layer.getTimeRange()).to.deep.equal([new Date('January 13 2014'), new Date('January 16 2014')]);
+    layer.setTimeRange(new Date('January 13 2014 GMT-0800'), new Date('January 16 2014 GMT-0800'));
+    expect(layer.getTimeRange()).to.deep.equal([new Date('January 13 2014 GMT-0800'), new Date('January 16 2014 GMT-0800')]);
   });
 
   it('should be able to get the where', function(){
@@ -727,8 +727,8 @@ describe('L.esri.Layers.FeatureManager', function () {
         'OBJECTID': 6,
         'Name': 'Site 6',
         'Type': 'Active',
-        'StartTime': new Date('January 14 2014').valueOf(),
-        'EndTime': new Date('January 15 2014').valueOf()
+        'StartTime': new Date('January 14 2014 GMT-0800').valueOf(),
+        'EndTime': new Date('January 15 2014 GMT-0800').valueOf()
       },
       'id': 6
     }]);

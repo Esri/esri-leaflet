@@ -163,8 +163,8 @@ describe('L.esri.Layers.ImageMapLayer', function () {
       done();
     });
 
-    layer.setTimeRange(new Date('January 9 2014'), new Date('January 12 2014'));
-    expect(layer.getTimeRange()).to.deep.equal([new Date('January 9 2014'), new Date('January 12 2014')]);
+    layer.setTimeRange(new Date('January 9 2014 GMT-0800'), new Date('January 12 2014 GMT-0800'));
+    expect(layer.getTimeRange()).to.deep.equal([new Date('January 9 2014 GMT-0800'), new Date('January 12 2014 GMT-0800')]);
     layer.addTo(map);
     server.respond();
   });

@@ -9,6 +9,9 @@ L.esri.Tasks.Query = L.Class.extend({
       this.url = L.esri.Util.cleanUrl(endpoint);
     }
 
+    this._originalUrl = this.url;
+    this._urlPrefix = '';
+
     this._params = {
       returnGeometry: true,
       where: '1=1',
@@ -25,6 +28,7 @@ L.esri.Tasks.Query = L.Class.extend({
     return this;
   },
 
+  // only valid for Feature Services running on ArcGIS Server 10.3 or ArcGIS Online
   nearby: function(latlng, radius){
     this._params.geometry = ([latlng.lng,latlng.lat]).join(',');
     this._params.geometryType = 'esriGeometryPoint';
@@ -123,12 +127,26 @@ L.esri.Tasks.Query = L.Class.extend({
     return this;
   },
 
+  // only valid for Feature Services running on ArcGIS Server 10.3 or ArcGIS Online
   bounds: function(callback, context){
     this._cleanParams();
     this._params.returnExtentOnly = true;
     this._request(function(error, response){
       callback.call(context, error, (response && response.extent && L.esri.Util.extentToBounds(response.extent)), response);
     }, context);
+    return this;
+  },
+
+  // only valid for image services
+  pixelSize: function(point){
+    point = L.point(point);
+    this._params.pixelSize = ([point.x,point.y]).join(',');
+    return this;
+  },
+
+  // only valid for map services
+  layer: function(layer){
+    this._urlPrefix = layer + '/';
     return this;
   },
 
@@ -140,9 +158,9 @@ L.esri.Tasks.Query = L.Class.extend({
 
   _request: function(callback, context){
     if(this._service){
-      this._service.get('query', this._params, callback, context);
+      this._service.get(this._urlPrefix +'query', this._params, callback, context);
     } else {
-      L.esri.get(this.url + 'query', this._params, callback, context);
+      L.esri.get(this.url + this._urlPrefix + 'query', this._params, callback, context);
     }
   }
 

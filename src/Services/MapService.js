@@ -6,6 +6,10 @@ L.esri.Services.MapService = L.esri.Services.Service.extend({
 
   find: function () {
     return new L.esri.Tasks.Find(this);
+  },
+
+  query: function () {
+    return new L.esri.Tasks.Query(this);
   }
 
 });
