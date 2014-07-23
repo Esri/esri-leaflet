@@ -13,6 +13,19 @@ L.esri.Layers.ImageMapLayer = L.esri.Layers.RasterLayer.extend({
     L.Util.setOptions(this, options);
   },
 
+  setPixelType: function (types) {
+    if (L.Util.isArray(types)) {
+      this._params.pixelType = types.join(',');
+    } else {
+      this._params.pixelType = types;
+    }
+    return this;
+  },
+
+  getPixelType: function () {
+    return this.options.pixelType;
+  },
+
   _buildExportParams: function () {
     var bounds = this._map.getBounds();
     var size = this._map.getSize();
@@ -27,31 +40,31 @@ L.esri.Layers.ImageMapLayer = L.esri.Layers.RasterLayer.extend({
       imageSR: this.options.imageSR
     };
 
-    if(this.options.from && this.options.to){
+    if (this.options.from && this.options.to){
       params.time = this.options.from.valueOf() + ',' + this.options.to.valueOf();
     }
 
-    if(this.options.pixelType){
+    if (this.options.pixelType){
       params.pixelType = this.options.pixelType;
     }
 
-    if(this.options.noDataInterpretation){
+    if (this.options.noDataInterpretation){
       params.noDataInterpretation = this.options.noDataInterpretation;
     }
 
-    if(this.options.interpolation){
+    if (this.options.interpolation){
       params.interpolation = this.options.interpolation;
     }
 
-    if(this.options.compressionQuality){
+    if (this.options.compressionQuality){
       params.compressionQuality = this.options.compressionQuality;
     }
 
-    if(this.options.bandIds){
+    if (this.options.bandIds){
       params.bandIds = this.options.bandIds;
     }
 
-    if(this._service.options.token) {
+    if (this._service.options.token) {
       params.token = this._service.options.token;
     }
 
@@ -59,7 +72,7 @@ L.esri.Layers.ImageMapLayer = L.esri.Layers.RasterLayer.extend({
   },
 
   _requestExport: function (params, bounds) {
-    if(this.options.f === 'json'){
+    if (this.options.f === 'json') {
       this._service.get('exportImage', params, function(error, response){
         this._renderImage(response.href, bounds);
       }, this);
