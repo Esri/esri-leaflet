@@ -83,6 +83,26 @@ Option | Type | Default | Description
             <td>Redraws the layer with he passed time range.</td>
         </tr>
         <tr>
+            <td><code>getBandIds()</code></td>
+            <td><code>String</code></td>
+            <td>Returns the current band value(s).</td>
+        </tr>
+        <tr>
+            <td><code>setBandIds({{{param 'Array' 'bandIds'}}} or {{{param 'String' 'bandIds'}}})</code></td>
+            <td><code>this</code></td>
+            <td>Specify a single band to export, or you can change the band combination (red, green, blue) by specifying the band number.</td>
+        </tr>
+        <tr>
+            <td><code>getPixelType()</code></td>
+            <td><code>String</code></td>
+            <td>Returns the current pixel type.</td>
+        </tr>
+        <tr>
+            <td><code>setPixelType({{{param 'String' 'pixelType'}}})</code></td>
+            <td><code>this</code></td>
+            <td>The pixel type, also known as data type, pertains to the type of values stored in the raster, such as signed integer, unsigned integer, or floating point. Integers are whole numbers, whereas floating points have decimals. Values: 'C128' | 'C64' | 'F32' | 'F64' | 'S16' | 'S32' | 'S8' | 'U1' | 'U16' | 'U2' | 'U32' | 'U4' | 'U8' | 'UNKNOWN'</td>
+        </tr>
+        <tr>
             <td><code>metadata({{{param 'Function' 'callback'}}}, {{{param 'Object' 'context'}}})</code></td>
             <td><code>this</code></td>
             <td>
@@ -106,6 +126,8 @@ Option | Type | Default | Description
 
 ### Example
 
+#### Simple Image Layer
+
 ```js
 var map = L.map('map').setView([ 38.83,-98.5], 7);
 
@@ -117,4 +139,16 @@ L.esri.imageMapLayer(url, {
   opacity : 0.25
 }).addTo(map);
 
+```
+
+#### Infrared image layer using bandIds property
+
+```js
+var map = L.map('map').setView([43.50, -120.23], 7);
+
+L.esri.basemapLayer('Imagery').addTo(map);
+
+L.esri.imageMapLayer('http://imagery.oregonexplorer.info/arcgis/rest/services/NAIP_2011/NAIP_2011_Dynamic/ImageServer')
+      .setBandIds('3,0,1')
+      .addTo(map);
 ```

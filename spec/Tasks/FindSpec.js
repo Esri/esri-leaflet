@@ -105,7 +105,7 @@ describe('L.esri.Tasks.Find', function () {
     server.restore();
   });
 
-  it('should find features with provided layer id and searchText', function(done){
+  it('should find features with provided layer id and search text', function(done){
     server.respondWith('GET', url + 'find?sr=4326&contains=true&returnGeometry=true&returnZ=true&returnM=false&layers=0&searchText=Site&f=json', JSON.stringify(sampleResponse));
 
     task.layers('0').text('Site').run(function(error, featureCollection, raw){
@@ -129,7 +129,7 @@ describe('L.esri.Tasks.Find', function () {
     server.respond();
   });
 
-  it('should find an exact match for the searchText', function(done){
+  it('should find an exact match for the search text', function(done){
     server.respondWith('GET', url + 'find?sr=4326&contains=false&returnGeometry=true&returnZ=true&returnM=false&layers=0&searchText=Site&f=json', JSON.stringify(sampleResponse));
 
     task.layers('0').text('Site').contains(false).run(function(error, featureCollection, raw){
