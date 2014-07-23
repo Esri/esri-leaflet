@@ -349,10 +349,7 @@
     deleteFeature: function(id, callback, context){
       return this._service.deleteFeature(id, function(error, response){
         if(!error && response.objectId){
-          this.removeLayers([response.objectId]);
-          if(this._layers){
-            delete this._layers[id];
-          }
+          this.removeLayers([response.objectId], true);
         }
         if(callback){
           callback.call(context, error, response);

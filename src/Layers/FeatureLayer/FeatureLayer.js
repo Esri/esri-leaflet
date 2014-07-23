@@ -133,11 +133,15 @@ L.esri.Layers.FeatureLayer = L.esri.Layers.FeatureManager.extend({
     }
   },
 
-  removeLayers: function(ids){
+  removeLayers: function(ids, permanent){
     for (var i = ids.length - 1; i >= 0; i--) {
-      var layer = this._layers[ids[i]];
+      var id = ids[i];
+      var layer = this._layers[id];
       if(layer){
         this._map.removeLayer(layer);
+      }
+      if(layer && permanent){
+        delete this._layers[id];
       }
     }
   },
