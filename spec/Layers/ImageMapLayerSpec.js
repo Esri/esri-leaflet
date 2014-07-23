@@ -169,6 +169,54 @@ describe('L.esri.Layers.ImageMapLayer', function () {
     server.respond();
   });
 
+  it('should get and set bandIds as an array param', function(done){
+    server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockImageService\/ImageServer\/exportImage\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&format=jpgpng&bboxSR=3857&imageSR=3857&bandIds=3%2C0%2C1&f=json/), JSON.stringify({
+      href: 'http://placehold.it/500&text=WithBandIds'
+    }));
+
+    layer.once('load', function(){
+      expect(layer._currentImage._url).to.equal('http://placehold.it/500&text=WithBandIds');
+      done();
+    });
+
+    layer.setBandIds([3,0,1]);
+    expect(layer.getBandIds()).to.deep.equal('3,0,1');
+    layer.addTo(map);
+    server.respond();
+  });
+
+  it('should get and set bandIds as a string param', function(done){
+    server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockImageService\/ImageServer\/exportImage\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&format=jpgpng&bboxSR=3857&imageSR=3857&bandIds=3%2C0%2C1&f=json/), JSON.stringify({
+      href: 'http://placehold.it/500&text=WithBandIds'
+    }));
+
+    layer.once('load', function(){
+      expect(layer._currentImage._url).to.equal('http://placehold.it/500&text=WithBandIds');
+      done();
+    });
+
+    layer.setBandIds('3,0,1');
+    expect(layer.getBandIds()).to.deep.equal('3,0,1');
+    layer.addTo(map);
+    server.respond();
+  });
+
+  it('should get and set pixelType', function(done){
+    server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockImageService\/ImageServer\/exportImage\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&format=jpgpng&bboxSR=3857&imageSR=3857&pixelType=U8&f=json/), JSON.stringify({
+      href: 'http://placehold.it/500&text=WithPixelType'
+    }));
+
+    layer.once('load', function(){
+      expect(layer._currentImage._url).to.equal('http://placehold.it/500&text=WithPixelType');
+      done();
+    });
+
+    layer.setPixelType('U8');
+    expect(layer.getPixelType()).to.deep.equal('U8');
+    layer.addTo(map);
+    server.respond();
+  });
+
   it('should be able to request an image directly from the export service', function(){
     layer = L.esri.imageMapLayer(url);
     var spy = sinon.spy(layer, '_renderImage');
