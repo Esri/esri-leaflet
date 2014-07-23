@@ -320,6 +320,16 @@ module.exports = function(grunt) {
           }
         ]
       }
+    },
+
+    releaseable: {
+      release: {
+        options: {
+          remote: 'upstream',
+          dryRun: grunt.option('dryRun') ? grunt.option('dryRun') : false,
+          silent: false,
+        }
+      }
     }
   });
 
@@ -331,11 +341,13 @@ module.exports = function(grunt) {
 
   // Development Tasks
   grunt.registerTask('default', ['concurrent:dev']);
-  grunt.registerTask('build', ['jshint', 'karma:coverage','concat', 'uglify']);
-  grunt.registerTask('test', ['karma:run']);
+  grunt.registerTask('build', ['jshint', 'karma:coverage', 'concat', 'uglify']);
+  grunt.registerTask('test', ['jshint', 'karma:run']);
+  grunt.registerTask('prepublish', ['concat', 'uglify']);
+  grunt.registerTask('release', ['releaseable', 's3']);
 
   // Documentation Site Tasks
-  grunt.registerTask('docs', ['assemble:dev', 'sass', 'copy', 'connect:docs', 'watch']);
+  grunt.registerTask('docs', ['assemble:dev', 'concat', 'uglify', 'sass', 'copy', 'connect:docs', 'watch']);
 
   // Documentation Site Tasks
   grunt.registerTask('docs:build', ['assemble:build', 'imagemin','sass', 'gh-pages']);

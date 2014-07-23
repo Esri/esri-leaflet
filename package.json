@@ -1,6 +1,6 @@
 {
   "name": "esri-leaflet",
-  "version": "0.0.1-beta.5",
+  "version": "0.0.1-beta.6",
   "description": "Leaflet plugins for consuming ArcGIS Online and ArcGIS Server services",
   "main": "dist/esri-leaflet.js",
   "devDependencies": {
@@ -29,9 +29,11 @@
     "karma-chai-sinon": "^0.1.3",
     "assemble": "^0.4.37",
     "load-grunt-tasks": "^0.4.0",
-    "highlight.js": "^8.0.0"
+    "highlight.js": "^8.0.0",
+    "grunt-releaseable": "0.0.8"
   },
   "scripts": {
+    "prepublish": "node -e \"require('grunt').tasks(['prepublish']);\"",
     "start": "node -e \"require('grunt').tasks(['default']);\"",
     "test": "node -e \"require('grunt').tasks(['test']);\""
   },
