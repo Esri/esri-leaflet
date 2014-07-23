@@ -39,6 +39,8 @@ Option | Type | Default | Description
 `opacity` | `Number` | `1` | Opacity of the layer. Should be a value between 0 and 1.
 `position` | `String` | `'front'` | Position of the layer relative to other overlays.
 `proxy` | `String` | `false` | URL of an [ArcGIS API for JavaScript proxies](https://developers.arcgis.com/javascript/jshelp/ags_proxy.html) or [ArcGIS Resource Proxies](https://github.com/Esri/resource-proxy) to use for proxying POST requests.
+`bandIds` | `String` | `undefined` | If there are multiple bands, you can specify a single band to export.
+`pixelType` | `String` | `undefined` | Leave `pixelType` as unspecified, or `UNKNOWN`, in most exportImage use cases, unless such `pixelType` is desired. Possible values: `C128`, `C64`, `F32`, `F64`, `S16`, `S32`, `S8`, `U1`, `U16`, `U2`, `U32`, `U4`, `U8`, `UNKNOWN`.
 `useCors` | `Boolean` | `true` | If this service should use CORS when making GET requests.
 
 ### Methods
@@ -100,7 +102,7 @@ Option | Type | Default | Description
         <tr>
             <td><code>setPixelType({{{param 'String' 'pixelType'}}})</code></td>
             <td><code>this</code></td>
-            <td>The pixel type, also known as data type, pertains to the type of values stored in the raster, such as signed integer, unsigned integer, or floating point. Integers are whole numbers, whereas floating points have decimals. Values: 'C128' | 'C64' | 'F32' | 'F64' | 'S16' | 'S32' | 'S8' | 'U1' | 'U16' | 'U2' | 'U32' | 'U4' | 'U8' | 'UNKNOWN'</td>
+            <td>The pixel type, also known as data type, pertains to the type of values stored in the raster, such as signed integer, unsigned integer, or floating point. Possible values: `C128`, `C64`, `F32`, `F64`, `S16`, `S32`, `S8`, `U1`, `U16`, `U2`, `U32`, `U4`, `U8`, `UNKNOWN`.</td>
         </tr>
         <tr>
             <td><code>metadata({{{param 'Function' 'callback'}}}, {{{param 'Object' 'context'}}})</code></td>
