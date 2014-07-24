@@ -43,6 +43,7 @@ Option | Type | Default | Description
 `pixelType` | `String` | `undefined` | Leave `pixelType` as unspecified, or `UNKNOWN`, in most exportImage use cases, unless such `pixelType` is desired. Possible values: `C128`, `C64`, `F32`, `F64`, `S16`, `S32`, `S8`, `U1`, `U16`, `U2`, `U32`, `U4`, `U8`, `UNKNOWN`.
 `useCors` | `Boolean` | `true` | If this service should use CORS when making GET requests.
 `renderingRule` | `Object` | `undefined` | A JSON representation of a [raster function](http://resources.arcgis.com/en/help/arcgis-rest-api/#/Raster_function_objects/02r3000000rv000000/)
+`mosaicRule` | `Object` | `undefined` | A JSON representation of a [mosaic rule](http://resources.arcgis.com/en/help/arcgis-rest-api/#/Mosaic_rule_objects/02r3000000s4000000/)
 
 ### Methods
 
@@ -141,6 +142,16 @@ Option | Type | Default | Description
             <td><code>setRenderingRule({{{param 'Object' 'renderingRule'}}})</code></td>
             <td><code>this</code></td>
             <td>Redraws the layer with the passed rendering rule.</td>
+        </tr>
+        <tr>
+            <td><code>getMosaicRule()</code></td>
+            <td><code>Object</code></td>
+            <td>Returns the current mosaic rule of the layer.</td>
+        </tr>
+        <tr>
+            <td><code>setMosaicRule({{{param 'Object' 'mosaicRule'}}})</code></td>
+            <td><code>this</code></td>
+            <td>Redraws the layer with the passed mosaic rule.</td>
         </tr>
     </tbody>
 </table>

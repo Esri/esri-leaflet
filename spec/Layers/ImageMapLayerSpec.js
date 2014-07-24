@@ -169,6 +169,22 @@ describe('L.esri.Layers.ImageMapLayer', function () {
     server.respond();
   });
 
+  it('should get and set mosaic rule', function(done){
+    server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockImageService\/ImageServer\/exportImage\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&format=jpgpng&bboxSR=3857&imageSR=3857&mosaicRule=%7B%22mosaicMethod%22%3A%22esriMosaicLockRaster%22%2C%22lockRasterIds%22%3A%5B8%5D%7D&f=json/), JSON.stringify({
+      href: 'http://placehold.it/500&text=WithMosaicRule'
+    }));
+
+    layer.once('load', function(){
+      expect(layer._currentImage._url).to.equal('http://placehold.it/500&text=WithMosaicRule');
+      done();
+    });
+
+    layer.setMosaicRule({mosaicMethod:'esriMosaicLockRaster','lockRasterIds':[8]});
+    expect(layer.getMosaicRule()).to.deep.equal({mosaicMethod:'esriMosaicLockRaster','lockRasterIds':[8]});
+    layer.addTo(map);
+    server.respond();
+  });
+
   it('should get and set time ranges', function(done){
     server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockImageService\/ImageServer\/exportImage\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&format=jpgpng&bboxSR=3857&imageSR=3857&time=1389254400000%2C1389513600000&f=json/), JSON.stringify({
       href: 'http://placehold.it/500&text=WithTime'

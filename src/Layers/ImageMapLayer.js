@@ -50,6 +50,16 @@ L.esri.Layers.ImageMapLayer = L.esri.Layers.RasterLayer.extend({
     return this.options.renderingRule;
   },
 
+  setMosaicRule: function(mosaicRule) {
+    this.options.mosaicRule = mosaicRule;
+    this._update();
+  },
+
+  getMosaicRule: function() {
+    return this.options.mosaicRule;
+  },
+
+
   _buildExportParams: function () {
     var bounds = this._map.getBounds();
     var size = this._map.getSize();
@@ -94,6 +104,10 @@ L.esri.Layers.ImageMapLayer = L.esri.Layers.RasterLayer.extend({
 
     if(this.options.renderingRule) {
       params.renderingRule = JSON.stringify(this.options.renderingRule);
+    }
+
+    if(this.options.mosaicRule) {
+      params.mosaicRule = JSON.stringify(this.options.mosaicRule);
     }
 
     return params;
