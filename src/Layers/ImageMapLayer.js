@@ -19,6 +19,7 @@ L.esri.Layers.ImageMapLayer = L.esri.Layers.RasterLayer.extend({
 
   setPixelType: function (pixelType) {
     this.options.pixelType = pixelType;
+    this._update();
     return this;
   },
 
@@ -32,11 +33,21 @@ L.esri.Layers.ImageMapLayer = L.esri.Layers.RasterLayer.extend({
     } else {
       this.options.bandIds = bandIds;
     }
+    this._update();
     return this;
   },
 
   getBandIds: function () {
     return this.options.bandIds;
+  },
+
+  setRenderingRule: function(renderingRule) {
+    this.options.renderingRule = renderingRule;
+    this._update();
+  },
+
+  getRenderingRule: function() {
+    return this.options.renderingRule;
   },
 
   _buildExportParams: function () {
@@ -79,6 +90,10 @@ L.esri.Layers.ImageMapLayer = L.esri.Layers.RasterLayer.extend({
 
     if (this._service.options.token) {
       params.token = this._service.options.token;
+    }
+
+    if(this.options.renderingRule) {
+      params.renderingRule = JSON.stringify(this.options.renderingRule);
     }
 
     return params;
