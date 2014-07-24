@@ -1,0 +1,22 @@
+---
+title: ImageMapLayer MosaicRule
+description: Display an Image Service from ArcGIS Online or ArcGIS Server and apply a mosaic rule to dynamically control how the service combines rasters into a mosaic. This sample shows world temperature using the 8th raster only (August of 1950). More information about Image Services can be found in the <a href="/esri-leaflet/api-reference/layers/image-map-layer.html">L.esri.Layers.ImageMapLayer</a> documentation.
+layout: example.hbs
+---
+
+<div id="map"></div>
+
+<script>
+    var mosaicRule = {
+        mosaicMethod:'esriMosaicLockRaster',
+        lockRasterIds:[8]
+    };
+
+    var map = L.map('map').setView([30,0], 2);
+
+    L.esri.imageMapLayer('http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/World/Temperature/ImageServer', {
+      mosaicRule: mosaicRule
+    }).addTo(map);
+
+    L.esri.basemapLayer('Gray').addTo(map);
+</script>
