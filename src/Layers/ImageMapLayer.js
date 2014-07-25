@@ -31,7 +31,7 @@ L.esri.Layers.ImageMapLayer = L.esri.Layers.RasterLayer.extend({
     if (L.Util.isArray(bandIds)) {
       this.options.bandIds = bandIds.join(',');
     } else {
-      this.options.bandIds = bandIds;
+      this.options.bandIds = bandIds.toString();
     }
     this._update();
     return this;
@@ -39,6 +39,27 @@ L.esri.Layers.ImageMapLayer = L.esri.Layers.RasterLayer.extend({
 
   getBandIds: function () {
     return this.options.bandIds;
+  },
+
+  setNoData: function (noData, noDataInterpretation) {
+    if (L.Util.isArray(noData)) {
+      this.options.noData = noData.join(',');
+    } else {
+      this.options.noData = noData.toString();
+    }
+    if (noDataInterpretation) {
+      this.options.noDataInterpretation = noDataInterpretation;
+    }
+    this._update();
+    return this;
+  },
+
+  getNoData: function () {
+    return this.options.noData;
+  },
+
+  getNoDataInterpretation: function () {
+    return this.options.noDataInterpretation;
   },
 
   setRenderingRule: function(renderingRule) {
@@ -82,10 +103,6 @@ L.esri.Layers.ImageMapLayer = L.esri.Layers.RasterLayer.extend({
       params.pixelType = this.options.pixelType;
     }
 
-    if (this.options.noDataInterpretation) {
-      params.noDataInterpretation = this.options.noDataInterpretation;
-    }
-
     if (this.options.interpolation) {
       params.interpolation = this.options.interpolation;
     }
@@ -96,6 +113,14 @@ L.esri.Layers.ImageMapLayer = L.esri.Layers.RasterLayer.extend({
 
     if (this.options.bandIds) {
       params.bandIds = this.options.bandIds;
+    }
+
+    if (this.options.noData) {
+      params.noData = this.options.noData;
+    }
+
+    if (this.options.noDataInterpretation) {
+      params.noDataInterpretation = this.options.noDataInterpretation;
     }
 
     if (this._service.options.token) {
