@@ -39,7 +39,9 @@ Option | Type | Default | Description
 `opacity` | `Number` | `1` | Opacity of the layer. Should be a value between 0 and 1.
 `position` | `String` | `'front'` | Position of the layer relative to other overlays.
 `proxy` | `String` | `false` | URL of an [ArcGIS API for JavaScript proxies](https://developers.arcgis.com/javascript/jshelp/ags_proxy.html) or [ArcGIS Resource Proxies](https://github.com/Esri/resource-proxy) to use for proxying POST requests.
-`bandIds` | `String` | `undefined` | If there are multiple bands, you can specify a single band to export.
+`bandIds` | `String` | `undefined` | If there are multiple bands, you can specify which bands to export.
+`noData` | `Number` | `undefined` | The pixel value representing no information.
+`noDataInterpretation` | `String` | `undefined` | Interpretation of the `noData` setting.
 `pixelType` | `String` | `undefined` | Leave `pixelType` as unspecified, or `UNKNOWN`, in most exportImage use cases, unless such `pixelType` is desired. Possible values: `C128`, `C64`, `F32`, `F64`, `S16`, `S32`, `S8`, `U1`, `U16`, `U2`, `U32`, `U4`, `U8`, `UNKNOWN`.
 `useCors` | `Boolean` | `true` | If this service should use CORS when making GET requests.
 `renderingRule` | `Object` | `undefined` | A JSON representation of a [raster function](http://resources.arcgis.com/en/help/arcgis-rest-api/#/Raster_function_objects/02r3000000rv000000/)
@@ -95,6 +97,21 @@ Option | Type | Default | Description
             <td><code>setBandIds({{{param 'Array' 'bandIds'}}} or {{{param 'String' 'bandIds'}}})</code></td>
             <td><code>this</code></td>
             <td>Specify a single band to export, or you can change the band combination (red, green, blue) by specifying the band number.</td>
+        </tr>
+        <tr>
+            <td><code>getNoData()</code></td>
+            <td><code>String</code></td>
+            <td>Returns the current no data value.</td>
+        </tr>
+        <tr>
+            <td><code>setNoData({{{param 'Array' 'noData'}}} or {{{param 'Number' 'noData'}}}, {{{param 'String' 'noDataInterpretation'}}})</code></td>
+            <td><code>this</code></td>
+            <td>Specify a single value, or an array of values to treat as no data. No data will values will be rendered transparent.<br />The optional `noDataInterpretation` can be either `esriNoDataMatchAny` | `esriNoDataMatchAll`. The default is `esriNoDataMatchAny` when `noData` is a number, and `esriNoDataMatchAll` when noData is an array. See <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Export_Image/02r3000000wm000000/">Image Service Export Image documentation</a> for more details</td>
+        </tr>
+        <tr>
+            <td><code>getNoDataInterpretation()</code></td>
+            <td><code>String</code></td>
+            <td>Returns the current no data interpretation value.</td>
         </tr>
         <tr>
             <td><code>getPixelType()</code></td>

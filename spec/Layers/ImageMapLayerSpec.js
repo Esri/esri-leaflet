@@ -233,6 +233,54 @@ describe('L.esri.Layers.ImageMapLayer', function () {
     server.respond();
   });
 
+  it('should get and set noData as a numeric param', function(done){
+    server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockImageService\/ImageServer\/exportImage\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&format=jpgpng&bboxSR=3857&imageSR=3857&noData=0&f=json/), JSON.stringify({
+      href: 'http://placehold.it/500&text=WithNoData'
+    }));
+
+    layer.once('load', function(){
+      expect(layer._currentImage._url).to.equal('http://placehold.it/500&text=WithNoData');
+      done();
+    });
+
+    layer.setNoData(0);
+    expect(layer.getNoData()).to.equal('0');
+    layer.addTo(map);
+    server.respond();
+  });
+
+  it('should get and set noData as an array', function(done){
+    server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockImageService\/ImageServer\/exportImage\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&format=jpgpng&bboxSR=3857&imageSR=3857&noData=58%2C128%2C187&f=json/), JSON.stringify({
+      href: 'http://placehold.it/500&text=WithNoDataArray'
+    }));
+
+    layer.once('load', function(){
+      expect(layer._currentImage._url).to.equal('http://placehold.it/500&text=WithNoDataArray');
+      done();
+    });
+
+    layer.setNoData([58,128,187]);
+    expect(layer.getNoData()).to.deep.equal('58,128,187');
+    layer.addTo(map);
+    server.respond();
+  });
+
+  it('should get and set noDataInterpretation', function(done){
+    server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockImageService\/ImageServer\/exportImage\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&format=jpgpng&bboxSR=3857&imageSR=3857&noData=0&noDataInterpretation=esriNoDataMatchAll&f=json/), JSON.stringify({
+      href: 'http://placehold.it/500&text=WithNoDataInterpretation'
+    }));
+
+    layer.once('load', function(){
+      expect(layer._currentImage._url).to.equal('http://placehold.it/500&text=WithNoDataInterpretation');
+      done();
+    });
+
+    layer.setNoData(0, 'esriNoDataMatchAll');
+    expect(layer.getNoDataInterpretation()).to.equal('esriNoDataMatchAll');
+    layer.addTo(map);
+    server.respond();
+  });
+
   it('should get and set pixelType', function(done){
     server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockImageService\/ImageServer\/exportImage\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&format=jpgpng&bboxSR=3857&imageSR=3857&pixelType=U8&f=json/), JSON.stringify({
       href: 'http://placehold.it/500&text=WithPixelType'
