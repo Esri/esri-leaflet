@@ -18,7 +18,7 @@ Esri Leaflet is currently hosted on Amazon Cloudfront to make it easily availabl
 #### Standard Build
 
 ```xml
-<script src="https://cdn-geoweb.s3.amazonaws.com/esri-leaflet/0.0.1-beta.5/esri-leaflet.js"></script>
+<script src="//cdn-geoweb.s3.amazonaws.com/esri-leaflet/0.0.1-beta.5/esri-leaflet.js"></script>
 ```
 
 #### Other Builds
