@@ -5,7 +5,7 @@ layout: example.hbs
 ---
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/proj4js/2.0.0/proj4.js"></script>
-<script src="https://cdn.rawgit.com/kartena/Proj4Leaflet/0.7.0/src/proj4leaflet.js"></script>
+<script src="//cdn.rawgit.com/kartena/Proj4Leaflet/0.7.0/src/proj4leaflet.js"></script>
 
 <div id="map"></div>
 
@@ -37,7 +37,7 @@ layout: example.hbs
     crs: crs
   }).setView([40.381, -111.859], 5);
 
-  L.esri.tiledMapLayer('http://mapserv.utah.gov/arcgis/rest/services/BaseMaps/Terrain/MapServer', {
+  L.esri.tiledMapLayer('//mapserv.utah.gov/arcgis/rest/services/BaseMaps/Terrain/MapServer', {
     maxZoom: 14,
     minZoom: 0,
     continuousWorld: true,

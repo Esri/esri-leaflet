@@ -10,7 +10,7 @@ layout: example.hbs
 <script src="https://cdn.rawgit.com/Leaflet/Leaflet.markercluster/v0.4.0/dist/leaflet.markercluster.js"></script>
 
 <!-- Load Clustered Feature Layer from CDN -->
-<script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/0.0.1-beta.5/esri-leaflet-clustered-feature-layer.js"></script>
+<script src="//cdn-geoweb.s3.amazonaws.com/esri-leaflet/0.0.1-beta.5/esri-leaflet-clustered-feature-layer.js"></script>
 
 <style>
   .cluster {
@@ -97,37 +97,37 @@ layout: example.hbs
   // Define some icons that represent our bus stops
   var icons = {
     north: L.icon({
-      iconUrl: 'http://esri.github.io/esri-leaflet/img/bus-stop-north.png',
-      iconRetinaUrl: 'http://esri.github.io/esri-leaflet/img/bus-stop-north@2x.png',
+      iconUrl: 'https://esri.github.io/esri-leaflet/img/bus-stop-north.png',
+      iconRetinaUrl: 'https://esri.github.io/esri-leaflet/img/bus-stop-north@2x.png',
       iconSize: [27, 31],
       iconAnchor: [13.5, 17.5],
-      popupAnchor: [0, -11],
+      popupAnchor: [0, -11]
     }),
     south: L.icon({
-      iconUrl: 'http://esri.github.io/esri-leaflet/img/bus-stop-south.png',
-      iconRetinaUrl: 'http://esri.github.io/esri-leaflet/img/bus-stop-south@2x.png',
+      iconUrl: 'https://esri.github.io/esri-leaflet/img/bus-stop-south.png',
+      iconRetinaUrl: 'https://esri.github.io/esri-leaflet/img/bus-stop-south@2x.png',
       iconSize: [27, 31],
       iconAnchor: [13.5, 13.5],
-      popupAnchor: [0, -11],
+      popupAnchor: [0, -11]
     }),
     east: L.icon({
-      iconUrl: 'http://esri.github.io/esri-leaflet/img/bus-stop-east.png',
-      iconRetinaUrl: 'http://esri.github.io/esri-leaflet/img/bus-stop-east@2x.png',
+      iconUrl: 'https://esri.github.io/esri-leaflet/img/bus-stop-east.png',
+      iconRetinaUrl: 'https://esri.github.io/esri-leaflet/img/bus-stop-east@2x.png',
       iconSize: [31, 27],
       iconAnchor: [13.5, 17.5],
-      popupAnchor: [0, -11],
+      popupAnchor: [0, -11]
     }),
     west: L.icon({
-      iconUrl: 'http://esri.github.io/esri-leaflet/img/bus-stop-west.png',
-      iconRetinaUrl: 'http://esri.github.io/esri-leaflet/img/bus-stop-west@2x.png',
+      iconUrl: 'https://esri.github.io/esri-leaflet/img/bus-stop-west.png',
+      iconRetinaUrl: 'https://esri.github.io/esri-leaflet/img/bus-stop-west@2x.png',
       iconSize: [31, 27],
       iconAnchor: [17.5, 13.5],
-      popupAnchor: [0, -11],
-    }),
+      popupAnchor: [0, -11]
+    })
   };
 
   // create a new cluster layer
-  var stops = L.esri.clusteredFeatureLayer('http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0', {
+  var stops = L.esri.clusteredFeatureLayer('//services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0', {
     spiderfyOnMaxZoom:false,
     disableClusteringAtZoom: 16,
     polygonOptions: {

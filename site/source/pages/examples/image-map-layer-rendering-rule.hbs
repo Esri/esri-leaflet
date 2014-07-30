@@ -8,17 +8,18 @@ layout: example.hbs
 
 <script>
     var renderingRule = {
-        "rasterFunction":"Hillshade",
+        "rasterFunction": "Hillshade",
         "rasterFunctionArguments": {
             "Azimuth":215,
             "Altitude":60,
             "ZFactor":30.3
-        },"variableName":"DEM"
+        },
+        "variableName":"DEM"
     };
 
     var map = L.map('map').setView([36.230577, -118.253147], 10);
 
-    L.esri.imageMapLayer('http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Earthquakes/CaliforniaDEM/ImageServer', {
+    L.esri.imageMapLayer('//sampleserver3.arcgisonline.com/ArcGIS/rest/services/Earthquakes/CaliforniaDEM/ImageServer', {
       renderingRule: renderingRule
     }).addTo(map);
 

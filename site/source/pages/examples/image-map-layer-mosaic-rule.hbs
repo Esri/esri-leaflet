@@ -8,13 +8,13 @@ layout: example.hbs
 
 <script>
     var mosaicRule = {
-        mosaicMethod:'esriMosaicLockRaster',
-        lockRasterIds:[8]
+        mosaicMethod: 'esriMosaicLockRaster',
+        lockRasterIds: [8]
     };
 
     var map = L.map('map').setView([30,0], 2);
 
-    L.esri.imageMapLayer('http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/World/Temperature/ImageServer', {
+    L.esri.imageMapLayer('//sampleserver3.arcgisonline.com/ArcGIS/rest/services/World/Temperature/ImageServer', {
       mosaicRule: mosaicRule
     }).addTo(map);
 
