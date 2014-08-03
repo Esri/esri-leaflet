@@ -97,6 +97,14 @@ describe('L.esri.Layers.ImageMapLayer', function () {
     server.respond();
   });
 
+  it('should expose the identify method on the underlying service', function(){
+    var spy = sinon.spy(layer._service, 'identify');
+    var identify = layer.identify();
+    expect(spy).to.have.been.calledWith(layer.service);
+    expect(identify).to.be.an.instanceof(L.esri.Tasks.ImageServiceIdentify);
+    expect(identify._service).to.equal(layer._service);
+  });
+
   it('should propagate events from the service', function(){
     server.respondWith('GET', 'http://services.arcgis.com/mock/arcgis/rest/services/MockImageService/ImageServer&f=json', JSON.stringify({
       currentVersion: 10.2

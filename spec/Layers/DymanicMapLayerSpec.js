@@ -126,7 +126,7 @@ describe('L.esri.Layers.DynamicMapLayer', function () {
     expect(spy).to.have.been.calledWith('foo');
   });
 
-  it('should expose the query method on the underlying service', function(){
+  it('should expose the identify method on the underlying service', function(){
     var spy = sinon.spy(layer._service, 'identify');
     var identify = layer.identify();
     expect(spy).to.have.been.calledWith(layer.service);

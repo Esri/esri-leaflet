@@ -10,6 +10,10 @@ L.esri.Layers.ImageMapLayer = L.esri.Layers.RasterLayer.extend({
     return this._service.query();
   },
 
+  identify: function(){
+    return this._service.identify();
+  },
+
   initialize: function (url, options) {
     this.url = L.esri.Util.cleanUrl(url);
     this._service = new L.esri.Services.ImageService(this.url, options);
