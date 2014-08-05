@@ -14,7 +14,8 @@
       timeField: false,
       timeFilterMode: 'server',
       simplifyFactor: 0,
-      precision: 6
+      precision: 6,
+      inSR:4326
     },
 
     /**
