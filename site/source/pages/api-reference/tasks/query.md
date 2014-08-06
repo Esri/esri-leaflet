@@ -108,12 +108,12 @@ layout: documentation.hbs
         <tr>
             <td><code>layer({{{param 'String or Integer' 'layer'}}})</code></td>
             <td><code>this</code></td>
-            <td>Used to select which layer inside a Map Service to perform the query on. <small>Only available for Map Services.</small></td>
+            <td>Used to select which layer inside a Map Service to perform the query on. <br><small>Only available for Map Services.</small></td>
         </tr>
         <tr>
             <td><code>pixelSize({{{param 'Point' 'point' 'http://leafletjs.com/reference.html#point'}}})</code></td>
             <td><code>this</code></td>
-            <td>Override the default pixelSize when querying an Image Service. <small>Only available for Image Services.</small></td>
+            <td>Override the default pixelSize when querying an Image Service. <br><small>Only available for Image Services.</small></td>
         </tr>
         <tr>
             <td><code>run({{{param 'Function' 'callback'}}}, {{{param 'Object' 'context'}}})</code></td>
