@@ -92,7 +92,8 @@ module.exports = function(grunt) {
           'src/Layers/TiledMapLayer.js',
           'src/Layers/FeatureLayer/FeatureGrid.js',
           'src/Layers/FeatureLayer/FeatureManager.js',
-          'src/Layers/FeatureLayer/FeatureLayer.js'
+          'src/Layers/FeatureLayer/FeatureLayer.js',
+          'src/Controls/Logo.js'
         ],
         dest: 'dist/esri-leaflet-src.js'
       },
@@ -109,7 +110,8 @@ module.exports = function(grunt) {
         src: [
           'src/EsriLeaflet.js',
           'src/Request.js',
-          'src/Layers/BasemapLayer.js'
+          'src/Layers/BasemapLayer.js',
+          '/src/Controls/Logo.js'
         ],
         dest: 'dist/builds/basemaps/esri-leaflet-basemaps-src.js'
       },

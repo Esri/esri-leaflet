@@ -14,7 +14,7 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       'http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css',
-      'http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js',
+      'http://cdn.leafletjs.com/leaflet-0.7.3/leaflet-src.js',
       'http://cdn-geoweb.s3.amazonaws.com/Leaflet.heat/0.1.1/leaflet-heat.js',
       'http://cdn-geoweb.s3.amazonaws.com/Leaflet.markercluster/0.4.0/leaflet.markercluster-src.js',
       'spec/**/*Spec.js',
@@ -37,7 +37,8 @@ module.exports = function(config) {
       'src/Services/ImageService.js',
       'src/Tasks/Query.js',
       'src/Tasks/Identify.js',
-      'src/Tasks/Find.js'
+      'src/Tasks/Find.js',
+      'src/Controls/Logo.js'
     ],
 
     // list of files to exclude
