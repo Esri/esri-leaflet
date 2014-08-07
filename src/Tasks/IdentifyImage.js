@@ -25,6 +25,33 @@ L.esri.Tasks.IdentifyImage = L.esri.Tasks.Identify.extend({
     return this;
   },
 
+  setMosaicRule: function(mosaicRule) {
+    this._params.mosaicRule = mosaicRule;
+    return this;
+  },
+
+  getMosaicRule: function() {
+    return this._params.mosaicRule;
+  },
+
+  setRenderingRule: function(renderingRule) {
+    this._params.renderingRule = renderingRule;
+    return this;
+  },
+
+  getRenderingRule: function() {
+    return this._params.renderingRule;
+  },
+
+  setPixelSize: function(pixelSize) {
+    this._params.pixelSize = pixelSize.join ? pixelSize.join(',') : pixelSize;
+    return this;
+  },
+
+  getPixelSize: function() {
+    return this._params.pixelSize;
+  },
+
   run: function (callback, context){
     var _this = this;
     this._request(function(error, response){
@@ -39,6 +66,12 @@ L.esri.Tasks.IdentifyImage = L.esri.Tasks.Identify.extend({
         'geometry': {
           'type': 'Point',
           'coordinates': [response.location.x, response.location.y]
+        },
+        'crs': {
+          'type': 'EPSG',
+          'properties': {
+            'code': response.location.spatialReference.wkid
+          }
         },
         'properties': {
           'OBJECTID': response.objectId,
