@@ -24,6 +24,12 @@ L.esri.Tasks.IdentifyFeatures = L.esri.Tasks.Identify.extend({
     return this;
   },
 
+  at: function(latlng){
+    this._params.geometry = ([latlng.lng, latlng.lat]).join(',');
+    this._params.geometryType = 'esriGeometryPoint';
+    return this;
+  },
+
   layerDef: function (id, where){
     this._params.layerDefs = (this._params.layerDefs) ? this._params.layerDefs + ';' : '';
     this._params.layerDefs += ([id, where]).join(':');

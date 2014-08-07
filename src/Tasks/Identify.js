@@ -1,11 +1,5 @@
 L.esri.Tasks.Identify = L.Class.extend({
 
-  at: function(latlng){
-    this._params.geometry = ([latlng.lng, latlng.lat]).join(',');
-    this._params.geometryType = 'esriGeometryPoint';
-    return this;
-  },
-
   between: function(start, end){
     this._params.time = ([start.valueOf(), end.valueOf()]).join(',');
     return this;

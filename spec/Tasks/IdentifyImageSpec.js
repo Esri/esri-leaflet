@@ -68,7 +68,7 @@ describe('L.esri.Tasks.IdentifyImage', function () {
   });
 
   it('should identify a pixel value at location', function(done){
-    server.respondWith('GET', url + 'identify?sr=4326&returnGeometry=false&geometry=-122.66%2C45.51&geometryType=esriGeometryPoint&f=json', JSON.stringify(sampleResponse));
+    server.respondWith('GET', url + 'identify?returnGeometry=false&geometry=%7B%22x%22%3A-122.66%2C%22y%22%3A45.51%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPoint&f=json', JSON.stringify(sampleResponse));
 
     task.run(function(error, results, raw){
       expect(results).to.deep.equal(sampleResults);

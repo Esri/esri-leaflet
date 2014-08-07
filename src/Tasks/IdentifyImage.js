@@ -9,9 +9,20 @@ L.esri.Tasks.IdentifyImage = L.esri.Tasks.Identify.extend({
     }
 
     this._params = {
-      sr: 4326,
       returnGeometry: false
     };
+  },
+
+  at: function(latlng){
+    this._params.geometry = JSON.stringify({
+      x: latlng.lng,
+      y: latlng.lat,
+      spatialReference:{
+        wkid: 4326
+      }
+    });
+    this._params.geometryType = 'esriGeometryPoint';
+    return this;
   },
 
   run: function (callback, context){
