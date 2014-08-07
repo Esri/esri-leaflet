@@ -69,7 +69,7 @@ Is you have Feature Services published on ArcGIS online you can create a static 
             <td><code>identify()</code></td>
             <td><code>this</code></td>
             <td>
-                Returns a new <a href=""><code>L.esri.services.Identify</code></a> object that can be used to identify features on this layer. Your callback function will be passed a GeoJSON FeatureCollection with the results or an error.
+                Returns a new <a href="/api-reference/tasks/identify-features.html"><code>L.esri.services.IdentifyFeatures</code></a> object that can be used to identify features on this layer. Your callback function will be passed a GeoJSON FeatureCollection with the results or an error.
 <pre class="js"><code>featureLayer.identify()
             .at(latlng, latlngbounds, 5)
             .run(function(error, featureCollection){

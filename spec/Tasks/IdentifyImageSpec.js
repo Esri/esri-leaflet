@@ -1,4 +1,4 @@
-describe('L.esri.Tasks.ImageServiceIdentify', function () {
+describe('L.esri.Tasks.IdentifyImage', function () {
   function createMap(){
     // create container
     var container = document.createElement('div');
@@ -60,7 +60,7 @@ describe('L.esri.Tasks.ImageServiceIdentify', function () {
 
   beforeEach(function(){
     server = sinon.fakeServer.create();
-    task = L.esri.Tasks.imageServiceIdentify(url).at(latlng);
+    task = L.esri.Tasks.identifyImage(url).at(latlng);
   });
 
   afterEach(function(){

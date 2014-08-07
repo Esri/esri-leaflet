@@ -101,7 +101,7 @@ describe('L.esri.Layers.ImageMapLayer', function () {
     var spy = sinon.spy(layer._service, 'identify');
     var identify = layer.identify();
     expect(spy).to.have.been.calledWith(layer.service);
-    expect(identify).to.be.an.instanceof(L.esri.Tasks.ImageServiceIdentify);
+    expect(identify).to.be.an.instanceof(L.esri.Tasks.IdentifyImage);
     expect(identify._service).to.equal(layer._service);
   });
 

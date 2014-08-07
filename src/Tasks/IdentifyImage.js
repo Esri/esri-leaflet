@@ -1,4 +1,4 @@
-L.esri.Tasks.ImageServiceIdentify = L.Class.extend({
+L.esri.Tasks.IdentifyImage = L.Class.extend({
 
   initialize: function(endpoint){
     if(endpoint.url && endpoint.get){
@@ -112,6 +112,6 @@ L.esri.Tasks.ImageServiceIdentify = L.Class.extend({
 
 });
 
-L.esri.Tasks.imageServiceIdentify = function(url, params){
-  return new L.esri.Tasks.ImageServiceIdentify(url, params);
+L.esri.Tasks.identifyImage = function(url, params){
+  return new L.esri.Tasks.IdentifyImage(url, params);
 };

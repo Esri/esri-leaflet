@@ -5,7 +5,7 @@ L.esri.Services.ImageService = L.esri.Services.Service.extend({
   },
 
   identify: function() {
-    return new L.esri.Tasks.ImageServiceIdentify(this);
+    return new L.esri.Tasks.IdentifyImage(this);
   }
 });
 

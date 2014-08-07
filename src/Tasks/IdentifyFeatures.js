@@ -1,4 +1,4 @@
-L.esri.Tasks.Identify = L.Class.extend({
+L.esri.Tasks.IdentifyFeatures = L.Class.extend({
 
   initialize: function(endpoint){
     if(endpoint.url && endpoint.get){
@@ -88,6 +88,6 @@ L.esri.Tasks.Identify = L.Class.extend({
 
 });
 
-L.esri.Tasks.identify = function(url, params){
-  return new L.esri.Tasks.Identify(url, params);
+L.esri.Tasks.identifyFeatures = function(url, params){
+  return new L.esri.Tasks.IdentifyFeatures(url, params);
 };
