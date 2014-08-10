@@ -178,10 +178,10 @@ L.esri.Layers.DynamicMapLayer = L.esri.Layers.RasterLayer.extend({
 
 L.esri.DynamicMapLayer = L.esri.Layers.DynamicMapLayer;
 
-L.esri.Layers.dynamicMapLayer = function(key, options){
-  return new L.esri.Layers.DynamicMapLayer(key, options);
+L.esri.Layers.dynamicMapLayer = function(url, options){
+  return new L.esri.Layers.DynamicMapLayer(url, options);
 };
 
-L.esri.dynamicMapLayer = function(key, options){
-  return new L.esri.Layers.DynamicMapLayer(key, options);
+L.esri.dynamicMapLayer = function(url, options){
+  return new L.esri.Layers.DynamicMapLayer(url, options);
 };
