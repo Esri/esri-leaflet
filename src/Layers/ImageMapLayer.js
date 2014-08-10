@@ -152,10 +152,10 @@ L.esri.Layers.ImageMapLayer = L.esri.Layers.RasterLayer.extend({
 
 L.esri.ImageMapLayer = L.esri.Layers.ImageMapLayer;
 
-L.esri.Layers.imageMapLayer = function (key, options) {
-  return new L.esri.Layers.ImageMapLayer(key, options);
+L.esri.Layers.imageMapLayer = function (url, options) {
+  return new L.esri.Layers.ImageMapLayer(url, options);
 };
 
-L.esri.imageMapLayer = function (key, options) {
-  return new L.esri.Layers.ImageMapLayer(key, options);
+L.esri.imageMapLayer = function (url, options) {
+  return new L.esri.Layers.ImageMapLayer(url, options);
 };
