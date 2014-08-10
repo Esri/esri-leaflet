@@ -85,10 +85,10 @@ L.esri.Layers.HeatmapFeatureLayer = L.esri.Layers.FeatureManager.extend({
 
 L.esri.HeatmapFeatureLayer = L.esri.Layers.HeatmapFeatureLayer;
 
-L.esri.Layers.heatmapFeatureLayer = function(key, options){
-  return new L.esri.Layers.HeatmapFeatureLayer(key, options);
+L.esri.Layers.heatmapFeatureLayer = function(url, options){
+  return new L.esri.Layers.HeatmapFeatureLayer(url, options);
 };
 
-L.esri.heatmapFeatureLayer = function(key, options){
-  return new L.esri.Layers.heatmapFeatureLayer(key, options);
+L.esri.heatmapFeatureLayer = function(url, options){
+  return new L.esri.Layers.heatmapFeatureLayer(url, options);
 };
