@@ -17,37 +17,6 @@ L.esri.Layers.DynamicMapLayer = L.esri.Layers.RasterLayer.extend({
     L.Util.setOptions(this, options);
   },
 
-  onAdd: function(map){
-    L.esri.Layers.RasterLayer.prototype.onAdd.call(this, map);
-
-    if(this._popup){
-      this._map.on('click', this._getPopupData, this);
-      this._map.on('dblclick', this._resetPopupState, this);
-    }
-  },
-
-  bindPopup: function(fn, popupOptions){
-    this._shouldRenderPopup = false;
-    this._lastClick = false;
-    this._popup = L.popup(popupOptions);
-    this._popupFunction = fn;
-    if(this._map){
-      this._map.on('click', this._getPopupData, this);
-      this._map.on('dblclick', this._resetPopupState, this);
-    }
-    return this;
-  },
-
-  unbindPopup: function(){
-    if(this._map){
-      this._map.closePopup(this._popup);
-      this._map.off('click', this._getPopupData, this);
-      this._map.off('dblclick', this._resetPopupState, this);
-    }
-    this._popup = false;
-    return this;
-  },
-
   getLayers: function(){
     return this.options.layers;
   },
@@ -107,21 +76,6 @@ L.esri.Layers.DynamicMapLayer = L.esri.Layers.RasterLayer.extend({
 
     // set the flags to show the popup
     this._shouldRenderPopup = true;
-    this._lastClick = e.latlng;
-  },
-
-  _renderPopup: function(latlng, error, featureCollection, response){
-    if(this._shouldRenderPopup && this._lastClick.equals(latlng)){
-      //add the popup to the map where the mouse was clicked at
-      var content = this._popupFunction(error, featureCollection, response);
-      if (content) {
-        this._popup.setLatLng(latlng).setContent(content).openOn(this._map);
-      }
-    }
-  },
-
-  _resetPopupState: function(e){
-    this._shouldRenderPopup = false;
     this._lastClick = e.latlng;
   },
 

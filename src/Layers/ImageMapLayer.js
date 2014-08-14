@@ -84,6 +84,34 @@ L.esri.Layers.ImageMapLayer = L.esri.Layers.RasterLayer.extend({
     return this.options.mosaicRule;
   },
 
+  _getPopupData: function(e){
+    var callback = L.Util.bind(function(error, results, response) {
+      setTimeout(L.Util.bind(function(){
+        this._renderPopup(e.latlng, error, results, response);
+      }, this), 300);
+    }, this);
+
+    var identifyRequest = this.identify().at(e.latlng);
+
+    // @TODO: set mosaic rule, I'm pretty sure you always want this
+    // to be set for identify task if it is set for layer
+    // if (this.options.mosaicRule) {
+    //   identifyRequest.setMosaicRule(this.options.mosaicRule).returnGeometry(true);
+    //   // TODO: return catalog items too!
+    // }
+
+    // @TODO: set rendering rule? Not sure,
+    // sometimes you want raw pixel values
+    // if (this.options.renderingRule) {
+    //   identifyRequest.setRenderingRule(this.options.renderingRule);
+    // }
+
+    identifyRequest.run(callback);
+
+    // set the flags to show the popup
+    this._shouldRenderPopup = true;
+    this._lastClick = e.latlng;
+  },
 
   _buildExportParams: function () {
     var bounds = this._map.getBounds();
