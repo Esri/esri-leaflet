@@ -78,13 +78,16 @@ layout: documentation.hbs
             <td><code>Object</code></td>
             <td>Returns the current pixel size of the task.</td>
         </tr>
-        <!-- @TODO: document the retrunGeometry and other catalog related params once implemented -->
-<!--         <tr>
+        <tr>
+            <td><code>returnCatalogItems({{{param 'Boolean' 'returnCatalogItems'}}})</code></td>
+            <td><code>this</code></td>
+            <td>Indicates whether or not to return raster catalog items. Set it to `false` when catalog items are not needed to improve the identify operation's performance significantly. When set to `false`, neither the geometry nor attributes of catalog items will be returned. Default is `false`.</td>
+        </tr>
+        <tr>
             <td><code>returnGeometry({{{param 'Boolean' 'returnGeometry'}}})</code></td>
             <td><code>this</code></td>
-            <td>Return geometry with results. Default is `false`.</td>
+            <td>Return catalog footprints (geometry) with catalog item results. Default is `false`.</td>
         </tr>
- -->
         <tr>
             <td><code>token({{{param 'String' 'token'}}})</code></td>
             <td><code>this</code></td>

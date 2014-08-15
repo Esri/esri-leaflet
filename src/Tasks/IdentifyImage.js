@@ -52,6 +52,11 @@ L.esri.Tasks.IdentifyImage = L.esri.Tasks.Identify.extend({
     return this._params.pixelSize;
   },
 
+  returnCatalogItems: function (returnCatalogItems) {
+    this._params.returnCatalogItems = returnCatalogItems;
+    return this;
+  },
+
   run: function (callback, context){
     var _this = this;
     this._request(function(error, response){
@@ -59,18 +64,24 @@ L.esri.Tasks.IdentifyImage = L.esri.Tasks.Identify.extend({
     }, context);
   },
 
+  // get pixel data and return as geoJSON point
+  // populate catalog items (if any)
+  // @TODO: merging in any catalogItemVisibilities as a propery of each feature
   _responseToGeoJSON: function(response) {
+    var location = response.location;
+    var catalogItems = response.catalogItems;
+    var catalogItemVisibilities = response.catalogItemVisibilities;
     var geoJSON =  {
       'pixel': {
         'type': 'Feature',
         'geometry': {
           'type': 'Point',
-          'coordinates': [response.location.x, response.location.y]
+          'coordinates': [location.x, location.y]
         },
         'crs': {
           'type': 'EPSG',
           'properties': {
-            'code': response.location.spatialReference.wkid
+            'code': location.spatialReference.wkid
           }
         },
         'properties': {
@@ -79,14 +90,19 @@ L.esri.Tasks.IdentifyImage = L.esri.Tasks.Identify.extend({
           'value': response.value
         },
         'id': response.objectId
-      },
-      // @TODO: populate catalog items (if any)
-      // merging in any catalogItemVisibilities as a propery of each feature
-      'catalogItems': {
-        'type': 'FeatureCollection',
-        'features': []
       }
     };
+    if (response.properties && response.properties.Values) {
+      geoJSON.pixel.properties.values = response.properties.Values;
+    }
+    if (catalogItems && catalogItems.features) {
+      geoJSON.catalogItems = L.esri.Util.responseToFeatureCollection(catalogItems);
+      if (catalogItemVisibilities && catalogItemVisibilities.length === geoJSON.catalogItems.features.length) {
+        for (var i = catalogItemVisibilities.length - 1; i >= 0; i--) {
+          geoJSON.catalogItems.features[i].properties.catalogItemVisibility = catalogItemVisibilities[i];
+        }
+      }
+    }
     return geoJSON;
   }
 
