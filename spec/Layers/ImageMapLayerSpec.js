@@ -191,6 +191,28 @@ describe('L.esri.Layers.ImageMapLayer', function () {
     expect(spy).to.have.been.calledWith('dblclick', layer._resetPopupState, layer);
   });
 
+  it('should bind a popup to a layer with a mosaic rule', function(){
+    server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockImageService\/ImageServer\/identify\?returnGeometry=false&geometry=%7B%22x%22%3A-?\d+.\d+%2C%22y%22%3A-?\d+.\d+%2C%22spatialReference%22%3A%7B%22wkid%22%3A\d+%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A%22esriMosaicLockRaster%22%2C%22lockRasterIds%22%3A%5B8%5D%7D&f=json/), JSON.stringify(sampleResponse));
+
+    layer.bindPopup(function(error, results){
+      return 'Pixel value: ' + results.pixel.properties.value;
+    });
+
+    layer.addTo(map);
+    layer.setMosaicRule({mosaicMethod:'esriMosaicLockRaster','lockRasterIds':[8]});
+
+    map.fire('click', {
+      latlng: map.getCenter()
+    });
+
+    server.respond();
+
+    clock.tick(301);
+
+    expect(layer._popup.getContent()).to.equal('Pixel value: -17.5575');
+    expect(layer._popup.getLatLng()).to.equal(map.getCenter());
+  });
+
   it('should propagate events from the service', function(){
     server.respondWith('GET', 'http://services.arcgis.com/mock/arcgis/rest/services/MockImageService/ImageServer&f=json', JSON.stringify({
       currentVersion: 10.2
@@ -258,7 +280,7 @@ describe('L.esri.Layers.ImageMapLayer', function () {
     });
 
     layer.setRenderingRule({rasterFunction : 'RFTAspectColor'});
-    expect(layer.getRenderingRule()).to.deep.equal({"rasterFunction" : "RFTAspectColor"});
+    expect(layer.getRenderingRule()).to.deep.equal({'rasterFunction' : 'RFTAspectColor'});
     layer.addTo(map);
     server.respond();
   });

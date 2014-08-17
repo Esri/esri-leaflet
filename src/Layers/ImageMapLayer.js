@@ -93,12 +93,11 @@ L.esri.Layers.ImageMapLayer = L.esri.Layers.RasterLayer.extend({
 
     var identifyRequest = this.identify().at(e.latlng);
 
-    // @TODO: set mosaic rule, I'm pretty sure you always want this
-    // to be set for identify task if it is set for layer
-    // if (this.options.mosaicRule) {
-    //   identifyRequest.setMosaicRule(this.options.mosaicRule).returnGeometry(true);
-    //   // TODO: return catalog items too!
-    // }
+    // set mosaic rule for identify task if it is set for layer
+    if (this.options.mosaicRule) {
+      identifyRequest.setMosaicRule(this.options.mosaicRule);
+      // @TODO: force return catalog items too?
+    }
 
     // @TODO: set rendering rule? Not sure,
     // sometimes you want raw pixel values

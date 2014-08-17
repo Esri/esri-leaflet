@@ -66,7 +66,7 @@ L.esri.Tasks.IdentifyImage = L.esri.Tasks.Identify.extend({
 
   // get pixel data and return as geoJSON point
   // populate catalog items (if any)
-  // @TODO: merging in any catalogItemVisibilities as a propery of each feature
+  // merging in any catalogItemVisibilities as a propery of each feature
   _responseToGeoJSON: function(response) {
     var location = response.location;
     var catalogItems = response.catalogItems;
