@@ -69,6 +69,22 @@ Option | Type | Default | Description
             <td>Redraws this layer above all other overlay layers.</td>
         </tr>
         <tr>
+            <td><code>bindPopup({{{param 'Function' 'fn'}}}, {{{param 'PopupOptions' 'popupOptions' 'http://leafletjs.com/reference.html#popup-options'}}})</code></td>
+            <td><code>this</code></td>
+            <td>
+                Uses the provided function to create a popup that will identify pixel value(s) whenever the map is clicked. Your function will be passed an object with a `pixel` property that is a <a href="http://geojson.org/geojson-spec.html#point">GeoJSON Point</a> with the pixel value(s) at the clicked location and should return the appropriate HTML. If you do not want to open the popup when there are no results, return <code>false</code>.
+<pre class="js"><code>imageMapLayer.bindPopup(function(err, identifyResults, response){
+    var value = results.pixel.properties.value;;
+    return (value) ? 'Pixel value: ' + value : false;
+});</code></pre>
+            </td>
+        </tr>
+        <tr>
+            <td><code>unbindPopup()</code></td>
+            <td><code>this</code></td>
+            <td>Removes a popup previously bound with <code>bindPopup</code>.</td>
+        </tr>
+        <tr>
             <td><code>getOpacity()</code></td>
             <td><code>Float</code></td>
             <td>Returns the current opacity of the layer.</td>

@@ -18,6 +18,22 @@ describe('L.esri.Layers.ImageMapLayer', function () {
   var map;
   var clock;
 
+  var sampleResponse = {
+    'objectId' : 0,
+    'name' : 'Pixel',
+    'value' : '-17.5575',
+    'location' :
+    {
+      'x': -122.81,
+      'y': 45.48,
+      'spatialReference' : {
+        'wkid': 4326
+      }
+    }, 'properties' : null,
+    'catalogItems' : null,
+    'catalogItemVisibilities' : []
+  };
+
   beforeEach(function(){
     clock = sinon.useFakeTimers();
     server = sinon.fakeServer.create();
@@ -97,6 +113,106 @@ describe('L.esri.Layers.ImageMapLayer', function () {
     server.respond();
   });
 
+  it('should expose the identify method on the underlying service', function(){
+    var spy = sinon.spy(layer._service, 'identify');
+    var identify = layer.identify();
+    expect(spy).to.have.been.calledWith(layer.service);
+    expect(identify).to.be.an.instanceof(L.esri.Tasks.IdentifyImage);
+    expect(identify._service).to.equal(layer._service);
+  });
+
+  it('should bind a popup to the layer', function(){
+    server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockImageService\/ImageServer\/identify\?returnGeometry=false&geometry=%7B%22x%22%3A-?\d+.\d+%2C%22y%22%3A-?\d+.\d+%2C%22spatialReference%22%3A%7B%22wkid%22%3A\d+%7D%7D&geometryType=esriGeometryPoint&f=json/), JSON.stringify(sampleResponse));
+
+    layer.bindPopup(function(error, results){
+      return 'Pixel value: ' + results.pixel.properties.value;
+    });
+
+    layer.addTo(map);
+
+    map.fire('click', {
+      latlng: map.getCenter()
+    });
+
+    server.respond();
+
+    clock.tick(301);
+
+    expect(layer._popup.getContent()).to.equal('Pixel value: -17.5575');
+    expect(layer._popup.getLatLng()).to.equal(map.getCenter());
+  });
+
+  it('should bind a popup to the layer if the layer is already on a map', function(){
+     server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockImageService\/ImageServer\/identify\?returnGeometry=false&geometry=%7B%22x%22%3A-?\d+.\d+%2C%22y%22%3A-?\d+.\d+%2C%22spatialReference%22%3A%7B%22wkid%22%3A\d+%7D%7D&geometryType=esriGeometryPoint&f=json/), JSON.stringify(sampleResponse));
+
+    layer.addTo(map);
+
+    layer.bindPopup(function(error, results){
+      return 'Pixel value: ' + results.pixel.properties.value;
+    });
+
+    map.fire('click', {
+      latlng: map.getCenter()
+    });
+
+    server.respond();
+
+    clock.tick(301);
+
+    expect(layer._popup.getContent()).to.equal('Pixel value: -17.5575');
+    expect(layer._popup.getLatLng()).to.equal(map.getCenter());
+  });
+
+  it('should unbind a popup from the layer', function(){
+    var spy = sinon.spy(map, 'off');
+    layer.addTo(map);
+    layer.bindPopup(function(error, results){
+      return 'Pixel value: ' + results.pixel.properties.value;
+    });
+
+    layer.unbindPopup();
+
+    expect(layer._popup).to.equal(false);
+    expect(spy).to.have.been.calledWith('click', layer._getPopupData, layer);
+    expect(spy).to.have.been.calledWith('dblclick', layer._resetPopupState, layer);
+  });
+
+  it('should unbind the popup events when the layer is removed', function(){
+    var spy = sinon.spy(map, 'off');
+
+    layer.addTo(map);
+    layer.bindPopup(function(error, results){
+      return 'Pixel value: ' + results.pixel.properties.value;
+    });
+
+    map.removeLayer(layer);
+
+    expect(spy).to.have.been.calledWith('click', layer._getPopupData, layer);
+    expect(spy).to.have.been.calledWith('dblclick', layer._resetPopupState, layer);
+  });
+
+  it('should bind a popup to a layer with a mosaic rule', function(){
+    server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockImageService\/ImageServer\/identify\?returnGeometry=false&geometry=%7B%22x%22%3A-?\d+.\d+%2C%22y%22%3A-?\d+.\d+%2C%22spatialReference%22%3A%7B%22wkid%22%3A\d+%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A%22esriMosaicLockRaster%22%2C%22lockRasterIds%22%3A%5B8%5D%7D&f=json/), JSON.stringify(sampleResponse));
+
+    layer.bindPopup(function(error, results){
+      return 'Pixel value: ' + results.pixel.properties.value;
+    });
+
+    layer.addTo(map);
+    layer.setMosaicRule({mosaicMethod:'esriMosaicLockRaster','lockRasterIds':[8]});
+
+    map.fire('click', {
+      latlng: map.getCenter()
+    });
+
+    server.respond();
+
+    clock.tick(301);
+
+    expect(layer._popup.getContent()).to.equal('Pixel value: -17.5575');
+    expect(layer._popup.getLatLng()).to.equal(map.getCenter());
+  });
+
   it('should propagate events from the service', function(){
     server.respondWith('GET', 'http://services.arcgis.com/mock/arcgis/rest/services/MockImageService/ImageServer&f=json', JSON.stringify({
       currentVersion: 10.2
@@ -164,7 +280,7 @@ describe('L.esri.Layers.ImageMapLayer', function () {
     });
 
     layer.setRenderingRule({rasterFunction : 'RFTAspectColor'});
-    expect(layer.getRenderingRule()).to.deep.equal({"rasterFunction" : "RFTAspectColor"});
+    expect(layer.getRenderingRule()).to.deep.equal({'rasterFunction' : 'RFTAspectColor'});
     layer.addTo(map);
     server.respond();
   });
