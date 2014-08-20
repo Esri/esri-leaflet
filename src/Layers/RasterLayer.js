@@ -71,6 +71,10 @@ L.esri.Layers.RasterLayer =  L.Class.extend({
     return this;
   },
 
+  getAttribution: function () {
+    return this.options.attribution;
+  },
+
   getOpacity: function(){
     return this.options.opacity;
   },

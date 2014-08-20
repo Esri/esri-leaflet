@@ -61,6 +61,10 @@
       return L.esri.Layers.FeatureGrid.prototype.onRemove.call(this, map);
     },
 
+    getAttribution: function () {
+      return this.options.attribution;
+    },
+
     /**
      * Feature Managment
      */
