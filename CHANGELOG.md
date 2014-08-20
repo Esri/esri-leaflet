@@ -1,5 +1,30 @@
 # Changelog
 
+## Beta 6
+
+#### Breaking Changes
+
+No Breaking Changes!
+
+#### Changes
+* Logo position can now be controlled by using the `logoPosition` option on `L.esri.BasemapLayer` https://github.com/Esri/esri-leaflet/issues/210
+* Logo can now be hidden entirely and readded to the map with the `L.esri.Controls.Logo` class. **If you use Esris map tiles you must display the Esri Logo!**
+* Fix a regression from Beta 4 where features could not be loaded from ArcGIS Server if they were in non-mercator references. https://github.com/Esri/esri-leaflet/issues/283 https://github.com/Esri/esri-leaflet/pull/322
+* The `addFeature`, `removeFeature`, `updateFeature` methods will no longer throw errors when callbacks are omitted. https://github.com/Esri/esri-leaflet/issues/285
+* `deleteFeature` now properly removes the feature from the map so it will now appear after zooming or panning. https://github.com/Esri/esri-leaflet/issues/284
+* New `createfeature`, `addfeature` and `removefeature` events on `L.esri.FeatureLayer`. https://github.com/Esri/esri-leaflet/issues/282
+* `L.esri.Tasks.Query` now supports Map Services and Image Services with the new `query.layer(id)` and `query.pixelSize(point)` params respectivly
+* New `L.esri.Tasks.Find` task for searching feature text in Map Services https://github.com/Esri/esri-leaflet/pull/287. Thanks @rdjurasaj-usgs!
+* Support for image services via `L.esri.Layers.ImageMapLayer`. Thanks @rdjurasaj-usgs and @tomwayson
+* `L.esri.Tasks.IdentifyImage` for identifying images. Thanks @tomwayson.
+
+#### Misc
+* [New example]() showing integration with [Leaflet.label]()
+* [New example]() for parsing [Feature Collections]() from ArcGIS Online.
+* * Travis CI is now running tests https://github.com/Esri/esri-leaflet/pull/271
+* Build are no longer saved in the `/dist` folder. https://github.com/Esri/esri-leaflet/pull/307
+* [Development Roadmap]() has been updated.
+
 ## Beta 5
 
 #### Breaking Changes
