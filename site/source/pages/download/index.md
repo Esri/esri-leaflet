@@ -53,22 +53,23 @@ Esri Leaflet is also built into several smaller components and plugins for speci
 
 A summary of what features exist in which builds.
 
-| Feature | Standard | Core | MapService | FeatureLayer | Basemaps | ClusteredFeatureLayer | HeatmapFeatureLayer |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| Size    | 39.9kb | 7.7kb | 20.17kb | 23kb | 8.3kb | 3.2kb | 1.5kb |
-| Gzipped | 6.56kb | 1.6kb | 3.45kb | 4.3kb | 1.5kb | 0.6kb | 0.3kb |
-| `L.esri.Request` | &#10003; | &#10003; | &#10003; | &#10003; | &#10003; | | |
-| `L.esri.Util` | &#10003; | &#10003; | &#10003; | &#10003; | | | |
-| `L.esri.Services.Service` | &#10003; | &#10003; | &#10003; | &#10003; | | | |
-| `L.esri.Services.MapService` | &#10003; | | &#10003; | | | | |
-| `L.esri.Services.FeatureLayer` | &#10003; | | | &#10003; | | | |
-| `L.esri.Tasks.Query` | &#10003; | | | &#10003; | | | |
-| `L.esri.Tasks.Identify` | &#10003; | | &#10003; | | | | |
-| `L.esri.Tasks.Find` | &#10003; | | &#10003; | | | | |
-| `L.esri.Layers.FeatureLayer` | &#10003; | | | &#10003; | | | |
-| `L.esri.Layers.ImageMapLayer` | &#10003; | | &#10003; | | | | |
-| `L.esri.Layers.DynamicMapLayer` | &#10003; | | &#10003; | | | | |
-| `L.esri.Layers.TiledMapLayer` | &#10003; | | &#10003; | | | | |
-| `L.esri.Layers.BasemapLayer` | &#10003; | | | | &#10003; | | |
-| `L.esri.Layers.ClusteredFeatureLayer` | | | | | | &#10003; | |
-| `L.esri.Layers.HeatMapFeatureLayer` | | | | | | | &#10003; |
+| Feature                                | Standard | Core     | MapService | ImageService | FeatureLayer | Basemaps | ClusteredFeatureLayer | HeatmapFeatureLayer |
+| -------------------------------------- | -------- | -------- | ---------- | ------------ | ------------ | -------- | --------------------- | ------------------- |
+| Size                                   | 41.8kb   | 7.7kb    | 20.1kb     | 17.5kb       | 23.3kb       | 8.9kb    | 3.4kb                 | 1.5kb               |
+| Gzipped                                | 6.9kb    | 1.6kb    | 3.5kb      | 3.2kb        | 4.3kb        | 1.6kb    | 0.6kb                 | 0.3kb               |
+| `L.esri.Request`                       | &#10003; | &#10003; | &#10003;   | &#10003;     | &#10003;     | &#10003; |                       |                     |
+| `L.esri.Util`                          | &#10003; | &#10003; | &#10003;   | &#10003;     | &#10003;     |          |                       |                     |
+| `L.esri.Services.Service`              | &#10003; | &#10003; | &#10003;   | &#10003;     | &#10003;     |          |                       |                     |
+| `L.esri.Services.MapService`           | &#10003; |          | &#10003;   |              |              |          |                       |                     |
+| `L.esri.Services.FeatureLayer`         | &#10003; |          |            |              | &#10003;     |          |                       |                     |
+| `L.esri.Tasks.Query`                   | &#10003; |          | &#10003;   | &#10003;     | &#10003;     |          |                       |                     |
+| `L.esri.Tasks.Find`                    | &#10003; |          | &#10003;   |              |              |          |                       |                     |
+| `L.esri.Tasks.IdentifyFeatures`        | &#10003; |          | &#10003;   |              |              |          |                       |                     |
+| `L.esri.Tasks.IdentifyImage`           | &#10003; |          |            | &#10003;     |              |          |                       |                     |
+| `L.esri.Layers.FeatureLayer`           | &#10003; |          |            |              | &#10003;     |          |                       |                     |
+| `L.esri.Layers.ImageMapLayer`          | &#10003; |          |            | &#10003;     |              |          |                       |                     |
+| `L.esri.Layers.DynamicMapLayer`        | &#10003; |          | &#10003;   |              |              |          |                       |                     |
+| `L.esri.Layers.TiledMapLayer`          | &#10003; |          | &#10003;   |              |              |          |                       |                     |
+| `L.esri.Layers.BasemapLayer`           | &#10003; |          |            |              |              | &#10003; |                       |                     |
+| `L.esri.Layers.ClusteredFeatureLayer`  |          |          |            |              |              |          | &#10003;              |                     |
+| `L.esri.Layers.HeatMapFeatureLayer`    |          |          |            |              |              |          |                       |                     |

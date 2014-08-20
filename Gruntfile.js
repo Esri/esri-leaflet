@@ -84,7 +84,9 @@ module.exports = function(grunt) {
           'src/Services/FeatureLayer.js',
           'src/Services/MapService.js',
           'src/Services/ImageService.js',
-          'src/Tasks/**/*.js',
+          'src/Tasks/Identify.js',
+          'src/Tasks/IdentifyImage.js',
+          'src/Tasks/IdentifyFeatures.js',
           'src/Layers/BasemapLayer.js',
           'src/Layers/RasterLayer.js',
           'src/Layers/DynamicMapLayer.js',
@@ -122,16 +124,30 @@ module.exports = function(grunt) {
           'src/Request.js',
           'src/Services/Service.js',
           'src/Services/MapService.js',
-          'src/Services/ImageService.js',
           'src/Tasks/Identify.js',
+          'src/Tasks/IdentifyFeatures.js',
           'src/Tasks/Query.js',
           'src/Tasks/Find.js',
           'src/Layers/RasterLayer.js',
           'src/Layers/DynamicMapLayer.js',
-          'src/Layers/ImageMapLayer.js',
           'src/Layers/TiledMapLayer.js'
         ],
         dest: 'dist/builds/map-service/esri-leaflet-map-service-src.js'
+      },
+      imageservice: {
+        src: [
+          'src/EsriLeaflet.js',
+          'src/Util.js',
+          'src/Request.js',
+          'src/Services/Service.js',
+          'src/Services/ImageService.js',
+          'src/Tasks/Query.js',
+          'src/Tasks/Identify.js',
+          'src/Tasks/Identify/IdentifyImage.js',
+          'src/Layers/RasterLayer.js',
+          'src/Layers/ImageMapLayer.js'
+        ],
+        dest: 'dist/builds/image-service/esri-leaflet-image-service-src.js'
       },
       featureservice: {
         src: [
@@ -185,6 +201,9 @@ module.exports = function(grunt) {
           ],
           'dist/builds/map-service/esri-leaflet-map-service.js': [
             'dist/builds/map-service/esri-leaflet-map-service-src.js'
+          ],
+          'dist/builds/image-service/esri-leaflet-image-service.js': [
+            'dist/builds/image-service/esri-leaflet-image-service-src.js'
           ],
           'dist/builds/feature-layer/esri-leaflet-feature-layer.js': [
             'dist/builds/feature-layer/esri-leaflet-feature-layer-src.js'

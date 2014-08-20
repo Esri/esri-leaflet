@@ -1,5 +1,5 @@
 L.esri = {
-  VERSION: '0.0.1-beta.5',
+  VERSION: '0.0.1-beta.6',
   Layers: {},
   Services: {},
   Controls: {},
