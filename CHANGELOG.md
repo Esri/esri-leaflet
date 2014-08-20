@@ -19,11 +19,10 @@ No Breaking Changes!
 * `L.esri.Tasks.IdentifyImage` for identifying images. Thanks @tomwayson.
 
 #### Misc
-* [New example]() showing integration with [Leaflet.label]()
-* [New example]() for parsing [Feature Collections]() from ArcGIS Online.
+* [New example](esri.github.io/esri-leaflet/examples/parse-feature-collection.html) for parsing [Feature Collections](http://resources.arcgis.com/en/help/arcgis-rest-api/#/featureCollection/02r30000003m000000/) from ArcGIS Online.
 * * Travis CI is now running tests https://github.com/Esri/esri-leaflet/pull/271
 * Build are no longer saved in the `/dist` folder. https://github.com/Esri/esri-leaflet/pull/307
-* [Development Roadmap]() has been updated.
+* [Development Roadmap](https://github.com/Esri/esri-leaflet/wiki/Roadmap) has been updated.
 
 ## Beta 5
 
