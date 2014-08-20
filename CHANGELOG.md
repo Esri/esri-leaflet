@@ -4,7 +4,7 @@
 
 #### Breaking Changes
 
-No Breaking Changes!
+* `L.esri.Tasks.Identify` has been renamed to `L.esri.Tasks.IdentifyFeatures`. This is to reduce confusion with `L.esri.Tasks.IdentifyImage` and to clearly deliniate what these 2 classes do.
 
 #### Changes
 * Logo position can now be controlled by using the `logoPosition` option on `L.esri.BasemapLayer` https://github.com/Esri/esri-leaflet/issues/210

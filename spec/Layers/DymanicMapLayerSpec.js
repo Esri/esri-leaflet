@@ -63,6 +63,14 @@ describe('L.esri.Layers.DynamicMapLayer', function () {
     expect(L.esri.Layers.dynamicMapLayer(url)).to.be.instanceof(L.esri.Layers.DynamicMapLayer);
   });
 
+ it('should display an attribution if one was passed', function(){
+    L.esri.Layers.dynamicMapLayer(url, {
+      attribution: 'Esri'
+    }).addTo(map);
+
+    expect(map.attributionControl._container.innerText).to.contain('Esri');
+ });
+
   it('will fire a loading event when it starts loading', function(done){
     layer.on('loading', function(e){
       expect(e.type).to.equal('loading');
