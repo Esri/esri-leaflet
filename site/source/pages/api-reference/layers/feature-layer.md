@@ -15,13 +15,13 @@ Here is a sample Feature Service URL
 http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Neighborhoods_pdx/
 ```
 
-FeatureServer` note that it ends in `/FeatureService`. This particular service contains only 1 Feature Layer 
+This particular service contains only one Feature Layer. Here is the Feature Layer URL 
 
 ```
 http://services.arcgis.com/rOo16HdIMeOBI4Mb/ArcGIS/rest/services/Neighborhoods_pdx/FeatureServer/0
 ```
 
-Note that the Feature Layer url ends in `/FeatureService/{LAYER_ID}`.
+Note that the Feature Layer URL ends in `/FeatureServer/{LAYER_ID}`.
 
 You can create a new empty feature service witha  single layer on the [ArcGIS for Devleopers website](https://developers.arcgis.com/en/hosted-data/#/new) or you can use ArcGIS Online to [create a Feature Service from a CSV or Shapefile](https://developers.arcgis.com/tools/csv-to-feature-service/).
 
