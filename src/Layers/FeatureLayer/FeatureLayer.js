@@ -213,10 +213,10 @@ L.esri.Layers.FeatureLayer = L.esri.Layers.FeatureManager.extend({
 
 L.esri.FeatureLayer = L.esri.Layers.FeatureLayer;
 
-L.esri.Layers.featureLayer = function(key, options){
-  return new L.esri.Layers.FeatureLayer(key, options);
+L.esri.Layers.featureLayer = function(url, options){
+  return new L.esri.Layers.FeatureLayer(url, options);
 };
 
-L.esri.featureLayer = function(key, options){
-  return new L.esri.Layers.FeatureLayer(key, options);
+L.esri.featureLayer = function(url, options){
+  return new L.esri.Layers.FeatureLayer(url, options);
 };

@@ -20,7 +20,7 @@ More information about Feature Layers can be found in the [`L.esri.Layers.Featur
     </thead>
     <tbody>
         <tr>
-            <td><code class="nobr">new L.esri.Layers.ClusteredFeatureLayer({{{param 'String' 'key'}}}, {{{param 'Object' 'options'}}})</code><br><br><code class="nobr">L.esri.Layers.clusteredFeatureLayer({{{param 'String' 'key'}}}, {{{param 'Object' 'options'}}})</code><br><br><code class="nobr">new L.esri.ClusteredFeatureLayer({{{param 'String' 'key'}}}, {{{param 'Object' 'options'}}})</code><br><br><code class="nobr">L.esri.clusteredFeatureLayer({{{param 'String' 'key'}}}, {{{param 'Object' 'options'}}})</code></td>
+            <td><code class="nobr">new L.esri.Layers.ClusteredFeatureLayer({{{param 'String' 'url'}}}, {{{param 'Object' 'options'}}})</code><br><br><code class="nobr">L.esri.Layers.clusteredFeatureLayer({{{param 'String' 'url'}}}, {{{param 'Object' 'options'}}})</code><br><br><code class="nobr">new L.esri.ClusteredFeatureLayer({{{param 'String' 'url'}}}, {{{param 'Object' 'options'}}})</code><br><br><code class="nobr">L.esri.clusteredFeatureLayer({{{param 'String' 'url'}}}, {{{param 'Object' 'options'}}})</code></td>
             <td><code>url</code> should be the URL to the Feature Layer.</td>
         </tr>
     </tbody>

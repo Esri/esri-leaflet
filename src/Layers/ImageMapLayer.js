@@ -19,6 +19,7 @@ L.esri.Layers.ImageMapLayer = L.esri.Layers.RasterLayer.extend({
 
   setPixelType: function (pixelType) {
     this.options.pixelType = pixelType;
+    this._update();
     return this;
   },
 
@@ -30,14 +31,55 @@ L.esri.Layers.ImageMapLayer = L.esri.Layers.RasterLayer.extend({
     if (L.Util.isArray(bandIds)) {
       this.options.bandIds = bandIds.join(',');
     } else {
-      this.options.bandIds = bandIds;
+      this.options.bandIds = bandIds.toString();
     }
+    this._update();
     return this;
   },
 
   getBandIds: function () {
     return this.options.bandIds;
   },
+
+  setNoData: function (noData, noDataInterpretation) {
+    if (L.Util.isArray(noData)) {
+      this.options.noData = noData.join(',');
+    } else {
+      this.options.noData = noData.toString();
+    }
+    if (noDataInterpretation) {
+      this.options.noDataInterpretation = noDataInterpretation;
+    }
+    this._update();
+    return this;
+  },
+
+  getNoData: function () {
+    return this.options.noData;
+  },
+
+  getNoDataInterpretation: function () {
+    return this.options.noDataInterpretation;
+  },
+
+  setRenderingRule: function(renderingRule) {
+    this.options.renderingRule = renderingRule;
+    this._update();
+  },
+
+  getRenderingRule: function() {
+    return this.options.renderingRule;
+  },
+
+  setMosaicRule: function(mosaicRule) {
+    this.options.mosaicRule = mosaicRule;
+    this._update();
+  },
+
+  getMosaicRule: function() {
+    return this.options.mosaicRule;
+  },
+
 
   _buildExportParams: function () {
     var bounds = this._map.getBounds();
@@ -61,10 +103,6 @@ L.esri.Layers.ImageMapLayer = L.esri.Layers.RasterLayer.extend({
       params.pixelType = this.options.pixelType;
     }
 
-    if (this.options.noDataInterpretation) {
-      params.noDataInterpretation = this.options.noDataInterpretation;
-    }
-
     if (this.options.interpolation) {
       params.interpolation = this.options.interpolation;
     }
@@ -77,8 +115,24 @@ L.esri.Layers.ImageMapLayer = L.esri.Layers.RasterLayer.extend({
       params.bandIds = this.options.bandIds;
     }
 
+    if (this.options.noData) {
+      params.noData = this.options.noData;
+    }
+
+    if (this.options.noDataInterpretation) {
+      params.noDataInterpretation = this.options.noDataInterpretation;
+    }
+
     if (this._service.options.token) {
       params.token = this._service.options.token;
+    }
+
+    if(this.options.renderingRule) {
+      params.renderingRule = JSON.stringify(this.options.renderingRule);
+    }
+
+    if(this.options.mosaicRule) {
+      params.mosaicRule = JSON.stringify(this.options.mosaicRule);
     }
 
     return params;
@@ -98,10 +152,10 @@ L.esri.Layers.ImageMapLayer = L.esri.Layers.RasterLayer.extend({
 
 L.esri.ImageMapLayer = L.esri.Layers.ImageMapLayer;
 
-L.esri.Layers.imageMapLayer = function (key, options) {
-  return new L.esri.Layers.ImageMapLayer(key, options);
+L.esri.Layers.imageMapLayer = function (url, options) {
+  return new L.esri.Layers.ImageMapLayer(url, options);
 };
 
-L.esri.imageMapLayer = function (key, options) {
-  return new L.esri.Layers.ImageMapLayer(key, options);
+L.esri.imageMapLayer = function (url, options) {
+  return new L.esri.Layers.ImageMapLayer(url, options);
 };
