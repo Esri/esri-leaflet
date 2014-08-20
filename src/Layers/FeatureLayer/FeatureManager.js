@@ -84,6 +84,8 @@
       }
 
       this._buildQuery(bounds).run(function(error, featureCollection, response){
+        
+
         if(response && response.exceededTransferLimit){
           this.fire('drawlimitexceeded');
         }
@@ -92,6 +94,7 @@
         this._activeRequests--;
 
         if(!error && featureCollection.features.length){
+          this.setFieldAliases(response.fieldAliases)
           this._addFeatures(featureCollection.features, coords);
         }
 

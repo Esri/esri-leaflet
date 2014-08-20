@@ -15,6 +15,7 @@ L.esri.Layers.FeatureLayer = L.esri.Layers.FeatureManager.extend({
 
     this._layers = {};
     this._leafletIds = {};
+    this._fieldAliases = {};
     this._key = 'c'+(Math.random() * 1e9).toString(36).replace('.', '_');
   },
 
@@ -152,6 +153,15 @@ L.esri.Layers.FeatureLayer = L.esri.Layers.FeatureManager.extend({
       this.setFeatureStyle(layer.feature.id, style);
     }, this);
     return this;
+  },
+
+  setFieldAliases: function (fieldAliases) {
+    this._fieldAliases = fieldAliases;
+    return this;
+  },
+
+  getFieldAlias: function (fieldName) {
+    return this._fieldAliases[fieldName];
   },
 
   setFeatureStyle: function (id, style) {
