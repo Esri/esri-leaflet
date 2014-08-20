@@ -84,6 +84,8 @@ module.exports = function(grunt) {
           'src/Services/FeatureLayer.js',
           'src/Services/MapService.js',
           'src/Services/ImageService.js',
+          'src/Tasks/Query.js',
+          'src/Tasks/Find.js',
           'src/Tasks/Identify.js',
           'src/Tasks/IdentifyImage.js',
           'src/Tasks/IdentifyFeatures.js',
