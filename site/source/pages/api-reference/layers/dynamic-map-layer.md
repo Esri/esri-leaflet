@@ -72,7 +72,7 @@ Option | Type | Default | Description
             <td><code>bindPopup({{{param 'Function' 'fn'}}}, {{{param 'PopupOptions' 'popupOptions' 'http://leafletjs.com/reference.html#popup-options'}}})</code></td>
             <td><code>this</code></td>
             <td>
-                Uses the provided function to create a popup that will identify features whenever the map is clicked. Your function will be passed a <a href="http://geojson.org/geojson-spec.html#feature-collection-objects">GeoJSON FeatureCollection</a> of teh features at the clicked location and should return the appropriate HTML. If you do not want to open the popup when there are no results, return <code>false</code>.
+                Uses the provided function to create a popup that will identify features whenever the map is clicked. Your function will be passed a <a href="http://geojson.org/geojson-spec.html#feature-collection-objects">GeoJSON FeatureCollection</a> of the features at the clicked location and should return the appropriate HTML. If you do not want to open the popup when there are no results, return <code>false</code>.
 <pre class="js"><code>dynamicMapLayer.bindPopup(function(err, features, response){
     var count = featureCollection.features.length;
     return (count) ? count + ' features' : false;
@@ -153,7 +153,7 @@ Option | Type | Default | Description
             <td><code>identify()</code></td>
             <td><code>this</code></td>
             <td>
-                Returns a new <a href="/api-reference/tasks/identify.html"><code>L.esri.services.Identify</code></a> object that can be used to identify features on this layer. Your callback function will be passed a <a href="http://geojson.org/geojson-spec.html#feature-collection-objects">GeoJSON FeatureCollection</a> with the results or an error.
+                Returns a new <a href="/api-reference/tasks/identify-features.html"><code>L.esri.services.IdentifyFeatures</code></a> object that can be used to identify features on this layer. Your callback function will be passed a <a href="http://geojson.org/geojson-spec.html#feature-collection-objects">GeoJSON FeatureCollection</a> with the results or an error.
 <pre class="js"><code>dynamicMapLayer.identify()
             .at(latlng, latlngbounds, 5)
             .run(function(error, featureCollection){

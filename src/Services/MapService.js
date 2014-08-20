@@ -1,7 +1,7 @@
 L.esri.Services.MapService = L.esri.Services.Service.extend({
 
   identify: function () {
-    return new L.esri.Tasks.Identify(this);
+    return new L.esri.Tasks.identifyFeatures(this);
   },
 
   find: function () {

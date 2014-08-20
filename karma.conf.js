@@ -37,6 +37,8 @@ module.exports = function(config) {
       'src/Services/ImageService.js',
       'src/Tasks/Query.js',
       'src/Tasks/Identify.js',
+      'src/Tasks/IdentifyFeatures.js',
+      'src/Tasks/IdentifyImage.js',
       'src/Tasks/Find.js',
       'src/Controls/Logo.js'
     ],

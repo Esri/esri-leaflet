@@ -1,4 +1,4 @@
-describe('L.esri.Tasks.Identify', function () {
+describe('L.esri.Tasks.IdentifyFeatures', function () {
   function createMap(){
     // create container
     var container = document.createElement('div');
@@ -63,7 +63,7 @@ describe('L.esri.Tasks.Identify', function () {
 
   beforeEach(function(){
     server = sinon.fakeServer.create();
-    task = L.esri.Tasks.identify(url).on(map).at(latlng);
+    task = L.esri.Tasks.identifyFeatures(url).on(map).at(latlng);
   });
 
   afterEach(function(){

@@ -1,11 +1,11 @@
 ---
-title: L.esri.Tasks.Identify
+title: L.esri.Tasks.IdentifyFeatures
 layout: documentation.hbs
 ---
 
 # {{page.data.title}}
 
-`L.esri.Tasks.Identify` is an abstraction for the Identify API that exists on Map Services. It provides a chainable API for building request parameters and executing the request.
+`L.esri.Tasks.IdentifyFeatures` is an abstraction for the Identify API that exists on Map Services. It provides a chainable API for building request parameters and executing the request.
 
 ### Constructor
 
@@ -18,10 +18,10 @@ layout: documentation.hbs
     </thead>
     <tbody>
         <tr>
-            <td><code class='nobr'>new L.esri.Tasks.Identify({{{param 'MapService' 'endpoint' '../../api-reference/services/map-service.html'}}})</code><br><br>
-            <code>L.esri.Tasks.identify({{{param 'MapService' 'endpoint' '../../api-reference/services/map-service.html'}}})</code><br><br>
-            <code>new L.esri.Tasks.Identify({{{param 'String' 'endpoint'}}})</code><br><br>
-            <code>L.esri.Tasks.identify({{{param 'String' 'endpoint'}}})</code><br></td>
+            <td><code class='nobr'>new L.esri.Tasks.IdentifyFeatures({{{param 'MapService' 'endpoint' '../../api-reference/services/map-service.html'}}})</code><br><br>
+            <code>L.esri.Tasks.identifyFeatures({{{param 'MapService' 'endpoint' '../../api-reference/services/map-service.html'}}})</code><br><br>
+            <code>new L.esri.Tasks.IdentifyFeatures({{{param 'String' 'endpoint'}}})</code><br><br>
+            <code>L.esri.Tasks.identifyFeatures({{{param 'String' 'endpoint'}}})</code><br></td>
             <td>The `endpoint` parameter is the service that you want to identify either an  ArcGIS Server or ArcGIS Online service. You can also pass the URL to a service directly as a string. See [service URLs](#service-urls) for more information on how to find these URLs.</td>
         </tr>
     </tbody>
@@ -101,7 +101,7 @@ layout: documentation.hbs
 ```js
 var map = new L.Map('map').setView([ 45.543, -122.621 ], 5);
 
-L.esri.Tasks.identify('http://sampleserver6.arcgisonline.com/arcgis/rest/services/WorldTimeZones/MapServer')
+L.esri.Tasks.identifyFeatures('http://sampleserver6.arcgisonline.com/arcgis/rest/services/WorldTimeZones/MapServer')
             .on(map)
             .at([45.543, -122.621])
             .layers('visible:1')

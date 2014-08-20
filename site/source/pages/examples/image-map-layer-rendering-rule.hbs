@@ -1,6 +1,6 @@
 ---
 title: ImageMapLayer RenderingRule
-description: Display an Image Service from ArcGIS Online or ArcGIS Server and apply a rendering rule to dynamically modify the display of the raster dataset. Rendering rules are created using a pre-defined set of <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Raster_function_objects/02r3000000rv000000/">raster functions</a> contained in the ArcGIS Server 10 REST API. This sample shows how to work with the slope and shaded relief raster functions. More information about Image Services can be found in the <a href="/esri-leaflet/api-reference/layers/image-map-layer.html">L.esri.Layers.ImageMapLayer</a> documentation.
+description: Display an Image Service from ArcGIS Online or ArcGIS Server and apply a rendering rule to dynamically modify the display of the raster dataset. Rendering rules are created using a pre-defined set of <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Raster_function_objects/02r3000000rv000000/">raster functions</a> contained in the ArcGIS Server 10 REST API. This example shows a raster image generated from raw LIDAR (Light Detection and Ranging) data rendered with a hillshade. More information about Image Services can be found in the <a href="/esri-leaflet/api-reference/layers/image-map-layer.html">L.esri.Layers.ImageMapLayer</a> documentation.
 layout: example.hbs
 ---
 
@@ -12,15 +12,16 @@ layout: example.hbs
         "rasterFunctionArguments": {
             "Azimuth":215,
             "Altitude":60,
-            "ZFactor":30.3
+            "ZFactor":1
         },"variableName":"DEM"
     };
 
-    var map = L.map('map').setView([36.230577, -118.253147], 10);
+    var map = L.map('map').setView([33.741114, -116.184826], 17);
 
-    L.esri.imageMapLayer('http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Earthquakes/CaliforniaDEM/ImageServer', {
+    L.esri.basemapLayer('Imagery').addTo(map);
+
+    L.esri.imageMapLayer('http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Earthquakes/SanAndreasLidar/ImageServer', {
       renderingRule: renderingRule
     }).addTo(map);
 
-    L.esri.basemapLayer('Gray').addTo(map);
 </script>
