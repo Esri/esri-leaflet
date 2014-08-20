@@ -1,0 +1,39 @@
+---
+title: Feature Collection Parsing
+description: Parse a feature collection contained in a webmap to GeoJSON.
+layout: example.hbs
+---
+
+<div id="map"></div>
+
+<script>
+  var map = L.map('map');
+
+  L.esri.basemapLayer('Topographic').addTo(map);
+
+  L.esri.get('http://www.arcgis.com/sharing/content/items/62914b2820c24d4e95710ebae77937cb/data', {}, function (error, response) {
+    var features = response.operationalLayers[0].featureCollection.layers[0].featureSet.features;
+    var idField = response.operationalLayers[0].featureCollection.layers[0].layerDefinition.objectIdField;
+
+    // empty geojson feature collection
+    var featureCollection = {
+      type: 'FeatureCollection',
+      features: []
+    };
+
+    for (var i = features.length - 1; i >= 0; i--) {
+      // convert ArcGIS Feature to GeoJSON Feature
+      var feature = L.esri.Util.arcgisToGeojson(features[i], idField);
+
+      // unproject the web mercator coordinates to lat/lng
+      var latlng = L.Projection.Mercator.unproject(L.point(feature.geometry.coordinates));
+      feature.geometry.coordinates = [latlng.lng, latlng.lat];
+
+      featureCollection.features.push(feature);
+    }
+
+    var geojson = L.geoJson(featureCollection).addTo(map);
+
+    map.fitBounds(geojson.getBounds());
+  });
+</script>
