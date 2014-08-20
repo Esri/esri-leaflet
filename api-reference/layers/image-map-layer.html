@@ -8,7 +8,7 @@
   <meta charset="utf-8">
 
   
-    <title>L.esri.Layers.DynamicMapLayer | Esri Leaflet</title>
+    <title>L.esri.Layers.ImageMapLayer | Esri Leaflet</title>
   
 
   
@@ -121,11 +121,11 @@
 </aside>
 
 <div class="main-content">
-  <h1 id="l-esri-layers-dynamicmaplayer">L.esri.Layers.DynamicMapLayer</h1>
+  <h1 id="l-esri-layers-imagemaplayer">L.esri.Layers.ImageMapLayer</h1>
 <!-- Inherits from [`L.esri.Layers.RasterLayer`](../../../../esri-leaflet/api-reference/layers/raster-layer.html) -->
 
-<p>Render and visualize Map Services from ArcGIS Online and ArcGIS Server. L.esri.Layers.DynamicMapLayer also supports custom popups and identification of features.</p>
-<p>Map Servers are a way to expose the contents that make up a map as a web service and can expose different capabilites for exporting tiles images, querying and identifying features and more.</p>
+<p>Render and visualize Image Services from ArcGIS Online and ArcGIS Server.</p>
+<p>Image Services provide access to raster data through a web service.</p>
 <h3 id="constructor">Constructor</h3>
 <table>
     <thead>
@@ -136,14 +136,14 @@
     </thead>
     <tbody>
         <tr>
-            <td><code class="nobr">new L.esri.Layers.DynamicMapLayer(<nobr class="param"><span>&lt;String&gt;</span> <code>url</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br><code class="nobr">L.esri.Layers.dynamicMapLayer(<nobr class="param"><span>&lt;String&gt;</span> <code>url</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br><code class="nobr">new L.esri.DynamicMapLayer(<nobr class="param"><span>&lt;String&gt;</span> <code>url</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br><code class="nobr">L.esri.dynamicMapLayer(<nobr class="param"><span>&lt;String&gt;</span> <code>url</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code></td>
-            <td><code>url</code> should be the URL to the Map Service hosted the tiles. The <code>options</code> parameter can accept the same options as <a href="http://leafletjs.com/reference.html#tilelayer"><code>L.TileLayer</code></a></td>
+            <td><code class="nobr">new L.esri.Layers.ImageMapLayer(<nobr class="param"><span>&lt;String&gt;</span> <code>url</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br><code class="nobr">L.esri.Layers.imageMapLayer(<nobr class="param"><span>&lt;String&gt;</span> <code>url</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br><code class="nobr">new L.esri.ImageMapLayer(<nobr class="param"><span>&lt;String&gt;</span> <code>url</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br><code class="nobr">L.esri.dimageMapLayer(<nobr class="param"><span>&lt;String&gt;</span> <code>url</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code></td>
+            <td><code>url</code> should be the URL to the Image Service hosted the tiles. The <code>options</code> parameter can accept the same options as <a href="http://leafletjs.com/reference.html#tilelayer"><code>L.TileLayer</code></a></td>
         </tr>
     </tbody>
 </table>
 
 <h3 id="options">Options</h3>
-<p><code>L.esri.DynamicMapLayer</code> also accepts all the options you can pass to <a href="http://leafletjs.com/reference.html#imageoverlay"><code>L.ImageOverlay</code></a>.</p>
+<p><code>L.esri.ImageMapLayer</code> also accepts all the options you can pass to <a href="http://leafletjs.com/reference.html#imageoverlay"><code>L.ImageOverlay</code></a>.</p>
 <table>
 <thead>
 <tr>
@@ -157,44 +157,14 @@
 <tr>
 <td><code>format</code></td>
 <td><code>String</code></td>
-<td><code>&#39;png24&#39;</code></td>
+<td><code>&#39;jpegpng&#39;</code></td>
 <td>Output format of the image.</td>
-</tr>
-<tr>
-<td><code>transparent</code></td>
-<td><code>Boolean</code></td>
-<td><code>true</code></td>
-<td>Allow the server to produce transparent images.</td>
 </tr>
 <tr>
 <td><code>f</code></td>
 <td><code>String</code></td>
 <td><code>&#39;image&#39;</code></td>
 <td>Server response content type.</td>
-</tr>
-<tr>
-<td><code>bboxSR</code></td>
-<td><code>Integer</code></td>
-<td><code>4326</code></td>
-<td>Spatial reference of the bounding box to generate the image with. If you don&#39;t know what this is don&#39;t change it.</td>
-</tr>
-<tr>
-<td><code>imageSR</code></td>
-<td><code>Integer</code></td>
-<td><code>3857</code></td>
-<td>Spatial reference of the output image. If you don&#39;t know what this is don&#39;t change it.</td>
-</tr>
-<tr>
-<td><code>layers</code></td>
-<td><code>Array</code></td>
-<td><code>&#39;&#39;</code></td>
-<td>An array of Layer IDs like <code>[3,4,5]</code> to show from the service.</td>
-</tr>
-<tr>
-<td><code>layerDefs</code></td>
-<td><code>String</code> <code>Object</code></td>
-<td><code>&#39;&#39;</code></td>
-<td>A string representing a query to run against the service before the image is rendered. This can be a string like <code>&quot;STATE_NAME=&#39;Kansas&#39; and POP2007&gt;25000&quot;</code> or an object mapping different queries to specific layers <code>{5:&quot;STATE_NAME=&#39;Kansas&#39;&quot;, 4:&quot;STATE_NAME=&#39;Kansas&#39;}</code>.</td>
 </tr>
 <tr>
 <td><code>opacity</code></td>
@@ -209,22 +179,52 @@
 <td>Position of the layer relative to other overlays.</td>
 </tr>
 <tr>
-<td><code>token</code></td>
-<td><code>String</code></td>
-<td><code>null</code></td>
-<td>If you pass a token in your options it will included in all requests to the service. See <a href="#working-with-authenticated-services">working with authenticated services</a> for more information.</td>
-</tr>
-<tr>
 <td><code>proxy</code></td>
 <td><code>String</code></td>
 <td><code>false</code></td>
 <td>URL of an <a href="https://developers.arcgis.com/javascript/jshelp/ags_proxy.html">ArcGIS API for JavaScript proxies</a> or <a href="https://github.com/Esri/resource-proxy">ArcGIS Resource Proxies</a> to use for proxying POST requests.</td>
 </tr>
 <tr>
+<td><code>bandIds</code></td>
+<td><code>String</code></td>
+<td><code>undefined</code></td>
+<td>If there are multiple bands, you can specify which bands to export.</td>
+</tr>
+<tr>
+<td><code>noData</code></td>
+<td><code>Number</code></td>
+<td><code>undefined</code></td>
+<td>The pixel value representing no information.</td>
+</tr>
+<tr>
+<td><code>noDataInterpretation</code></td>
+<td><code>String</code></td>
+<td><code>undefined</code></td>
+<td>Interpretation of the <code>noData</code> setting.</td>
+</tr>
+<tr>
+<td><code>pixelType</code></td>
+<td><code>String</code></td>
+<td><code>undefined</code></td>
+<td>Leave <code>pixelType</code> as unspecified, or <code>UNKNOWN</code>, in most exportImage use cases, unless such <code>pixelType</code> is desired. Possible values: <code>C128</code>, <code>C64</code>, <code>F32</code>, <code>F64</code>, <code>S16</code>, <code>S32</code>, <code>S8</code>, <code>U1</code>, <code>U16</code>, <code>U2</code>, <code>U32</code>, <code>U4</code>, <code>U8</code>, <code>UNKNOWN</code>.</td>
+</tr>
+<tr>
 <td><code>useCors</code></td>
 <td><code>Boolean</code></td>
 <td><code>true</code></td>
 <td>If this service should use CORS when making GET requests.</td>
+</tr>
+<tr>
+<td><code>renderingRule</code></td>
+<td><code>Object</code></td>
+<td><code>undefined</code></td>
+<td>A JSON representation of a <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Raster_function_objects/02r3000000rv000000/">raster function</a></td>
+</tr>
+<tr>
+<td><code>mosaicRule</code></td>
+<td><code>Object</code></td>
+<td><code>undefined</code></td>
+<td>A JSON representation of a <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Mosaic_rule_objects/02r3000000s4000000/">mosaic rule</a></td>
 </tr>
 </tbody>
 </table>
@@ -252,10 +252,10 @@
             <td><code>bindPopup(<nobr class="param"><span>&lt;Function&gt;</span> <code>fn</code></nobr>, <nobr class="param"><span>&lt;<a href="http://leafletjs.com/reference.html#popup-options">PopupOptions</a>&gt;</span> <code>popupOptions</code></nobr>)</code></td>
             <td><code>this</code></td>
             <td>
-                Uses the provided function to create a popup that will identify features whenever the map is clicked. Your function will be passed a <a href="http://geojson.org/geojson-spec.html#feature-collection-objects">GeoJSON FeatureCollection</a> of the features at the clicked location and should return the appropriate HTML. If you do not want to open the popup when there are no results, return <code>false</code>.
-<pre class="js"><code>dynamicMapLayer.bindPopup(function(err, features, response){
-    var count = featureCollection.features.length;
-    return (count) ? count + &#39; features&#39; : false;
+                Uses the provided function to create a popup that will identify pixel value(s) whenever the map is clicked. Your function will be passed an object with a <code>pixel</code> property that is a <a href="http://geojson.org/geojson-spec.html#point">GeoJSON Point</a> with the pixel value(s) at the clicked location and should return the appropriate HTML. If you do not want to open the popup when there are no results, return <code>false</code>.
+<pre class="js"><code>imageMapLayer.bindPopup(function(err, identifyResults, response){
+    var value = results.pixel.properties.value;;
+    return (value) ? &#39;Pixel value: &#39; + value : false;
 });</code></pre>
             </td>
         </tr>
@@ -275,26 +275,6 @@
             <td>Sets the opacity of the layer.</td>
         </tr>
         <tr>
-            <td><code>getLayers()</code></td>
-            <td><code>Array</code></td>
-            <td>Returns the array of layers on the MapService that are being shown.</td>
-        </tr>
-        <tr>
-            <td><code>setLayers(<nobr class="param"><span>&lt;Array&gt;</span> <code>layers</code></nobr>)</code></td>
-            <td><code>this</code></td>
-            <td>Redraws the layer to show the passed array of layer ids.</td>
-        </tr>
-        <tr>
-            <td><code>getLayerDefs()</code></td>
-            <td><code>Object</code></td>
-            <td>Returns the current layer definition(s) being used for rendering.</td>
-        </tr>
-        <tr>
-            <td><code>setLayerDefs(<nobr class="param"><span>&lt;<a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Export_Map/02r3000000v7000000/">Object</a>&gt;</span> <code>layerDefs</code></nobr>)</code></td>
-            <td><code>this</code></td>
-            <td>Redraws the layer with the new layer definitions. Corresponds to the <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Export_Map/02r3000000v7000000/">layerDefs</a> option on the export API.</td>
-        </tr>
-        <tr>
             <td><code>getTimeRange()</code></td>
             <td><code>Array</code></td>
             <td>Returns the current time range being used for rendering.</td>
@@ -302,27 +282,42 @@
         <tr>
             <td><code>setTimeRange(<nobr class="param"><span>&lt;Date&gt;</span> <code>from</code></nobr>, <nobr class="param"><span>&lt;Date&gt;</span> <code>to</code></nobr>)</code></td>
             <td><code>this</code></td>
-            <td>Redraws the layer with he passed time range.</td>
+            <td>Redraws the layer with the passed time range.</td>
         </tr>
         <tr>
-            <td><code>getTimeOptions()</code></td>
-            <td><code>Object</code></td>
-            <td>Returns the current time options being used for rendering.</td>
+            <td><code>getBandIds()</code></td>
+            <td><code>String</code></td>
+            <td>Returns the current band value(s).</td>
         </tr>
         <tr>
-            <td><code>setTimeOptions(<nobr class="param"><span>&lt;<a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Export_Map/02r3000000v7000000/">Object</a>&gt;</span> <code>timeOptions</code></nobr>)</code></td>
+            <td><code>setBandIds(<nobr class="param"><span>&lt;Array&gt;</span> <code>bandIds</code></nobr> or <nobr class="param"><span>&lt;String&gt;</span> <code>bandIds</code></nobr>)</code></td>
             <td><code>this</code></td>
-            <td>Sets the current time options being used to render the layer. Corresponds to the <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Export_Map/02r3000000v7000000/">layerTimeOptions</a> option on the export API.</td>
+            <td>Specify a single band to export, or you can change the band combination (red, green, blue) by specifying the band number.</td>
         </tr>
         <tr>
-            <td><code>metadata(<nobr class="param"><span>&lt;Function&gt;</span> <code>callback</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>context</code></nobr>)</code></td>
+            <td><code>getNoData()</code></td>
+            <td><code>String</code></td>
+            <td>Returns the current no data value.</td>
+        </tr>
+        <tr>
+            <td><code>setNoData(<nobr class="param"><span>&lt;Array&gt;</span> <code>noData</code></nobr> or <nobr class="param"><span>&lt;Number&gt;</span> <code>noData</code></nobr>, <nobr class="param"><span>&lt;String&gt;</span> <code>noDataInterpretation</code></nobr>)</code></td>
             <td><code>this</code></td>
-            <td>
-                Requests metadata about this Feature Layer. Callback will be called with <code>error</code> and <code>metadata</code>.
-<pre class="js"><code>dynamicMapLayer.metadata(function(error, metadata){
-  console.log(metadata);
-});</code></pre>
-            </td>
+            <td>Specify a single value, or an array of values to treat as no data. No data will values will be rendered transparent.<br />The optional <code>noDataInterpretation</code> can be either <code>esriNoDataMatchAny</code> | <code>esriNoDataMatchAll</code>. The default is <code>esriNoDataMatchAny</code> when <code>noData</code> is a number, and <code>esriNoDataMatchAll</code> when noData is an array. See <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Export_Image/02r3000000wm000000/">Image Service Export Image documentation</a> for more details</td>
+        </tr>
+        <tr>
+            <td><code>getNoDataInterpretation()</code></td>
+            <td><code>String</code></td>
+            <td>Returns the current no data interpretation value.</td>
+        </tr>
+        <tr>
+            <td><code>getPixelType()</code></td>
+            <td><code>String</code></td>
+            <td>Returns the current pixel type.</td>
+        </tr>
+        <tr>
+            <td><code>setPixelType(<nobr class="param"><span>&lt;String&gt;</span> <code>pixelType</code></nobr>)</code></td>
+            <td><code>this</code></td>
+            <td>The pixel type, also known as data type, pertains to the type of values stored in the raster, such as signed integer, unsigned integer, or floating point. Possible values: <code>C128</code>, <code>C64</code>, <code>F32</code>, <code>F64</code>, <code>S16</code>, <code>S32</code>, <code>S8</code>, <code>U1</code>, <code>U16</code>, <code>U2</code>, <code>U32</code>, <code>U4</code>, <code>U8</code>, <code>UNKNOWN</code>.</td>
         </tr>
         <tr>
             <td><code>authenticate(<nobr class="param"><span>&lt;String&gt;</span> <code>token</code></nobr>)</code></td>
@@ -330,28 +325,13 @@
             <td>Authenticates this service with a new token and runs any pending requests that required a token.</td>
         </tr>
         <tr>
-            <td><code>identify()</code></td>
+            <td><code>metadata(<nobr class="param"><span>&lt;Function&gt;</span> <code>callback</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>context</code></nobr>)</code></td>
             <td><code>this</code></td>
             <td>
-                Returns a new <a href="/api-reference/tasks/identify-features.html"><code>L.esri.services.IdentifyFeatures</code></a> object that can be used to identify features on this layer. Your callback function will be passed a <a href="http://geojson.org/geojson-spec.html#feature-collection-objects">GeoJSON FeatureCollection</a> with the results or an error.
-<pre class="js"><code>dynamicMapLayer.identify()
-            .at(latlng, latlngbounds, 5)
-            .run(function(error, featureCollection){
-              console.log(featureCollection);
-            });</code></pre>
-            </td>
-        </tr>
-        <tr>
-            <td><code>find()</code></td>
-            <td><code>this</code></td>
-            <td>
-                Returns a new <a href="/api-reference/tasks/find.html"><code>L.esri.services.Find</code></a> object that can be used to find features. Your callback function will be passed a <a href="http://geojson.org/geojson-spec.html#feature-collection-objects">GeoJSON FeatureCollection</a> with the results or an error.
-<pre class="js"><code>dynamicMapLayer.find()
-            .layers(&#39;18&#39;)
-            .searchText(&#39;Colorado&#39;)
-            .run(function(error, featureCollection){
-              console.log(featureCollection);
-            });</code></pre>
+                Requests metadata about this Feature Layer. Callback will be called with <code>error</code> and <code>metadata</code>.
+<pre class="js"><code>featureLayer.metadata(function(error, metadata){
+  console.log(metadata);
+});</code></pre>
             </td>
         </tr>
         <tr>
@@ -359,13 +339,32 @@
             <td><code>this</code></td>
             <td>
                 Returns a new <a href="../../../../esri-leaflet/api-reference/tasks/query.html"><code>L.esri.Tasks.Query</code></a> object that can be used to query this service.
-<pre class="js"><code>mapService.query()
-        .layer(0)
-        .within(latlngbounds)
-        .run(function(error, featureCollection, response){
-          console.log(featureCollection);
-        });</code></pre>
+<pre class="js"><code>imageService.query()
+            .within(latlngbounds)
+            .run(function(error, featureCollection, response){
+              console.log(featureCollection);
+            });</code></pre>
             </td>
+        </tr>
+        <tr>
+            <td><code>getRenderingRule()</code></td>
+            <td><code>Object</code></td>
+            <td>Returns the current rendering rule of the layer.</td>
+        </tr>
+        <tr>
+            <td><code>setRenderingRule(<nobr class="param"><span>&lt;Object&gt;</span> <code>renderingRule</code></nobr>)</code></td>
+            <td><code>this</code></td>
+            <td>Redraws the layer with the passed rendering rule.</td>
+        </tr>
+        <tr>
+            <td><code>getMosaicRule()</code></td>
+            <td><code>Object</code></td>
+            <td>Returns the current mosaic rule of the layer.</td>
+        </tr>
+        <tr>
+            <td><code>setMosaicRule(<nobr class="param"><span>&lt;Object&gt;</span> <code>mosaicRule</code></nobr>)</code></td>
+            <td><code>this</code></td>
+            <td>Redraws the layer with the passed mosaic rule.</td>
         </tr>
     </tbody>
 </table>
@@ -392,19 +391,28 @@
 </tr>
 </tbody>
 </table>
-<p><code>L.esri.Layer.DynamicMapLayer</code> also fires all  <a href="../../../../esri-leaflet/api-reference/services/map-service.html"><code>L.esri.Service.MapService</code></a> events.</p>
+<p><code>L.esri.Layer.ImageMapLayer</code> also fires all  <a href="../../../../esri-leaflet/api-reference/services/image-service.html"><code>L.esri.Service.ImageService</code></a> events.</p>
 <h3 id="example">Example</h3>
+<h4 id="simple-image-layer">Simple Image Layer</h4>
 <pre><code class="language-js"><span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([ <span class="number">38.83</span>,-<span class="number">98.5</span>], <span class="number">7</span>);
 
 L.esri.basemapLayer(<span class="string">'Gray'</span>).addTo(map);
 
-<span class="keyword">var</span> url = <span class="string">"http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Petroleum/KGS_OilGasFields_Kansas/MapServer"</span>;
+<span class="keyword">var</span> url = <span class="string">"http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/World/MODIS/ImageServer"</span>;
 
-L.esri.dynamicMapLayer(url, {
+L.esri.imageMapLayer(url, {
   opacity : <span class="number">0.25</span>
 }).addTo(map);</code></pre>
+<h4 id="infrared-image-layer-using-bandids-property">Infrared image layer using bandIds property</h4>
+<pre><code class="language-js"><span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">43.50</span>, -<span class="number">120.23</span>], <span class="number">7</span>);
 
-  <p><a href="http://github.com/esri/esri-leaflet/edit/master/site/source/pages/api-reference/layers/dynamic-map-layer.md">Edit this page on GitHub</a></p>
+L.esri.basemapLayer(<span class="string">'Imagery'</span>).addTo(map);
+
+L.esri.imageMapLayer(<span class="string">'http://imagery.oregonexplorer.info/arcgis/rest/services/NAIP_2011/NAIP_2011_Dynamic/ImageServer'</span>)
+      .setBandIds(<span class="string">'3,0,1'</span>)
+      .addTo(map);</code></pre>
+
+  <p><a href="http://github.com/esri/esri-leaflet/edit/master/site/source/pages/api-reference/layers/image-map-layer.md">Edit this page on GitHub</a></p>
 </div>
   <div style='clear:both;'></div>
 </div>

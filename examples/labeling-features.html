@@ -8,11 +8,11 @@
   <meta charset="utf-8">
 
   
-    <title>ArcGIS Online OAuth | Esri Leaflet</title>
+    <title>Labeling Features | Esri Leaflet</title>
   
 
   
-    <meta name="description" content="Authenticate ArcGIS Online users with OAuth 2.0 to access user information, private resources and premium services.">
+    <meta name="description" content="This demo shows how to add text labels to features. &lt;strong&gt;This does not performat automatic label placement!&lt;/strong&gt; This demo only shows static text labeling and labels will collide at different zoom levels.">
   
 
   <meta name="description" content="Esri Leaflet">
@@ -160,81 +160,78 @@
 
 <div class="example-content">
 <div class="wrap">
-  <h1>ArcGIS Online OAuth</h1>
-  <p>Authenticate ArcGIS Online users with OAuth 2.0 to access user information, private resources and premium services.</p>
+  <h1>Labeling Features</h1>
+  <p>This demo shows how to add text labels to features. <strong>This does not performat automatic label placement!</strong> This demo only shows static text labeling and labels will collide at different zoom levels.</p>
 </div>
 <div id="map-wrapper">
   
 
 <style>
-  #auth {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    z-index: 10;
-    background: white;
-    padding: 1em;
-    box-shadow: 0 1px 5px rgba(0,0,0,0.65);
-    border-radius: 4px;
+  .label {
+    font-weight: 700;
+    text-transform: uppercase;
+    text-align: center;
+    margin-top: -1em;
   }
 
-  #auth input {
-    display: inline-block;
-    border: 1px solid #999;
-    font-size: 14px;
-    border-radius: 4px;
-    height: 28px;
-    line-height: 28px;
+  .label div {
+    position: relative;
+    left: -50%;
+    text-shadow: 0px 2px 1px rgba(255,255,255,0.85);
   }
 </style>
 
 <div id="map"></div>
-<div id="auth">
-  <a href="#" id="sign-in">Sign In</a>
-</div>
 
 <script>
-  var clientID = 'FxeCTSwkrA9yqVGS';
-  var accessToken;
-  var callbacks = [];
-  var callbackPage = 'http://esri.github.io/esri-leaflet/examples/oauth/callback.html';
+  var map = L.map('map').setView([45.526, -122.667], 15);
 
-  var authPane = document.getElementById('auth');
-  var signInButton = document.getElementById('sign-in');
+  L.esri.basemapLayer('Gray').addTo(map);
 
-  // this function will open a window and start the oauth process
-  function oauth(callback) {
-    if(accessToken){
-      callback(accessToken);
-    } else {
-      callbacks.push(callback);
-      window.open('https://www.arcgis.com/sharing/oauth2/authorize?client_id='+clientID+'&response_type=token&expiration=20160&redirect_uri=' + window.encodeURIComponent(callbackPage), 'oauth-window', 'height=400,width=600,menubar=no,location=yes,resizable=yes,scrollbars=yes,status=yes');
+  var neighborhoods = new L.esri.FeatureLayer('http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Neighborhoods_pdx/FeatureServer/0', {
+    style: function() {
+      return {
+        color: '#5B7CBA',
+        weight: 2
+      };
     }
-  }
+  }).addTo(map);
 
-  // this function will be called when the oauth process is complete
-  window.oauthCallback = function(token) {
-    L.esri.get('https://arcgis.com/sharing/rest/portals/self', {
-      token: token
-    }, function(error, response){
-      authPane.innerHTML = '<label>Hi '+response.user.username+' your token is <input value="'+token+'"></label>';
-    });
-  };
+  var labels = {};
 
-  signInButton.addEventListener('click', function(e){
-    oauth();
-    e.preventDefault();
+  neighborhoods.on('createfeature', function(e){
+    var id = e.feature.id;
+    var feature = neighborhoods.getFeature(id);
+    var center = feature.getBounds().getCenter();
+    var label = L.marker(center, {
+      icon: new L.DivIcon({
+        iconSize: null,
+        className: 'label',
+        html: '<div>' + e.feature.properties.NAME + '</div>'
+      })
+    }).addTo(map);
+    labels[id] = label;
   });
 
-  // make a new map and basemap
-  var map = new L.Map('map').setView([39.36, -96.19], 4);
-  L.esri.basemapLayer('Gray').addTo(map);
+  neighborhoods.on('addfeature', function(e){
+    var label = labels[e.feature.id];
+    if(label){
+      label.addTo(map);
+    }
+  });
+
+  neighborhoods.on('removefeature', function(e){
+    var label = labels[e.feature.id];
+    if(label){
+      map.removeLayer(label);
+    }
+  });
 </script>
 </div>
 <pre><code class="language-xml"><span class="tag">&lt;<span class="title">html</span>&gt;</span>
 <span class="tag">&lt;<span class="title">head</span>&gt;</span>
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">utf-8</span> /&gt;</span>
-  <span class="tag">&lt;<span class="title">title</span>&gt;</span>ArcGIS Online OAuth<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Labeling Features<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">name</span>=<span class="value">'viewport'</span> <span class="attribute">content</span>=<span class="value">'initial-scale=1,maximum-scale=1,user-scalable=no'</span> /&gt;</span>
 
   <span class="comment">&lt;!-- Load Leaflet from CDN--&gt;</span>
@@ -252,75 +249,72 @@
 <span class="tag">&lt;<span class="title">body</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css">
-  <span class="id">#auth</span> <span class="rules">{
-    <span class="rule"><span class="attribute">position</span>:<span class="value"> absolute</span></span>;
-    <span class="rule"><span class="attribute">top</span>:<span class="value"> <span class="number">10</span>px</span></span>;
-    <span class="rule"><span class="attribute">right</span>:<span class="value"> <span class="number">10</span>px</span></span>;
-    <span class="rule"><span class="attribute">z-index</span>:<span class="value"> <span class="number">10</span></span></span>;
-    <span class="rule"><span class="attribute">background</span>:<span class="value"> white</span></span>;
-    <span class="rule"><span class="attribute">padding</span>:<span class="value"> <span class="number">1</span>em</span></span>;
-    <span class="rule"><span class="attribute">box-shadow</span>:<span class="value"> <span class="number">0</span> <span class="number">1</span>px <span class="number">5</span>px <span class="function">rgba(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0.65</span>)</span></span></span>;
-    <span class="rule"><span class="attribute">border-radius</span>:<span class="value"> <span class="number">4</span>px</span></span>;
+  <span class="class">.label</span> <span class="rules">{
+    <span class="rule"><span class="attribute">font-weight</span>:<span class="value"> <span class="number">700</span></span></span>;
+    <span class="rule"><span class="attribute">text-transform</span>:<span class="value"> uppercase</span></span>;
+    <span class="rule"><span class="attribute">text-align</span>:<span class="value"> center</span></span>;
+    <span class="rule"><span class="attribute">margin-top</span>:<span class="value"> -<span class="number">1</span>em</span></span>;
   <span class="rule">}</span></span>
 
-  <span class="id">#auth</span> <span class="tag">input</span> <span class="rules">{
-    <span class="rule"><span class="attribute">display</span>:<span class="value"> inline-block</span></span>;
-    <span class="rule"><span class="attribute">border</span>:<span class="value"> <span class="number">1</span>px solid <span class="hexcolor">#999</span></span></span>;
-    <span class="rule"><span class="attribute">font-size</span>:<span class="value"> <span class="number">14</span>px</span></span>;
-    <span class="rule"><span class="attribute">border-radius</span>:<span class="value"> <span class="number">4</span>px</span></span>;
-    <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">28</span>px</span></span>;
-    <span class="rule"><span class="attribute">line-height</span>:<span class="value"> <span class="number">28</span>px</span></span>;
+  <span class="class">.label</span> <span class="tag">div</span> <span class="rules">{
+    <span class="rule"><span class="attribute">position</span>:<span class="value"> relative</span></span>;
+    <span class="rule"><span class="attribute">left</span>:<span class="value"> -<span class="number">50</span>%</span></span>;
+    <span class="rule"><span class="attribute">text-shadow</span>:<span class="value"> <span class="number">0</span>px <span class="number">2</span>px <span class="number">1</span>px <span class="function">rgba(<span class="number">255</span>,<span class="number">255</span>,<span class="number">255</span>,<span class="number">0.85</span>)</span></span></span>;
   <span class="rule">}</span></span>
 </span><span class="tag">&lt;/<span class="title">style</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
-<span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"auth"</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"#"</span> <span class="attribute">id</span>=<span class="value">"sign-in"</span>&gt;</span>Sign In<span class="tag">&lt;/<span class="title">a</span>&gt;</span>
-<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
-  <span class="keyword">var</span> clientID = <span class="string">'FxeCTSwkrA9yqVGS'</span>;
-  <span class="keyword">var</span> accessToken;
-  <span class="keyword">var</span> callbacks = [];
-  <span class="keyword">var</span> callbackPage = <span class="string">'http://esri.github.io/esri-leaflet/examples/oauth/callback.html'</span>;
+  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">45.526</span>, -<span class="number">122.667</span>], <span class="number">15</span>);
 
-  <span class="keyword">var</span> authPane = document.getElementById(<span class="string">'auth'</span>);
-  <span class="keyword">var</span> signInButton = document.getElementById(<span class="string">'sign-in'</span>);
+  L.esri.basemapLayer(<span class="string">'Gray'</span>).addTo(map);
 
-  <span class="comment">// this function will open a window and start the oauth process</span>
-  <span class="function"><span class="keyword">function</span> <span class="title">oauth</span><span class="params">(callback)</span> {</span>
-    <span class="keyword">if</span>(accessToken){
-      callback(accessToken);
-    } <span class="keyword">else</span> {
-      callbacks.push(callback);
-      window.open(<span class="string">'https://www.arcgis.com/sharing/oauth2/authorize?client_id='</span>+clientID+<span class="string">'&amp;response_type=token&amp;expiration=20160&amp;redirect_uri='</span> + window.encodeURIComponent(callbackPage), <span class="string">'oauth-window'</span>, <span class="string">'height=400,width=600,menubar=no,location=yes,resizable=yes,scrollbars=yes,status=yes'</span>);
+  <span class="keyword">var</span> neighborhoods = <span class="keyword">new</span> L.esri.FeatureLayer(<span class="string">'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Neighborhoods_pdx/FeatureServer/0'</span>, {
+    style: <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+      <span class="keyword">return</span> {
+        color: <span class="string">'#5B7CBA'</span>,
+        weight: <span class="number">2</span>
+      };
     }
-  }
+  }).addTo(map);
 
-  <span class="comment">// this function will be called when the oauth process is complete</span>
-  window.oauthCallback = <span class="function"><span class="keyword">function</span><span class="params">(token)</span> {</span>
-    L.esri.get(<span class="string">'https://arcgis.com/sharing/rest/portals/self'</span>, {
-      token: token
-    }, <span class="function"><span class="keyword">function</span><span class="params">(error, response)</span>{</span>
-      authPane.innerHTML = <span class="string">'&lt;label&gt;Hi '</span>+response.user.username+<span class="string">' your token is &lt;input value="'</span>+token+<span class="string">'"&gt;&lt;/label&gt;'</span>;
-    });
-  };
+  <span class="keyword">var</span> labels = {};
 
-  signInButton.addEventListener(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span><span class="params">(e)</span>{</span>
-    oauth();
-    e.preventDefault();
+  neighborhoods.on(<span class="string">'createfeature'</span>, <span class="function"><span class="keyword">function</span><span class="params">(e)</span>{</span>
+    <span class="keyword">var</span> id = e.feature.id;
+    <span class="keyword">var</span> feature = neighborhoods.getFeature(id);
+    <span class="keyword">var</span> center = feature.getBounds().getCenter();
+    <span class="keyword">var</span> label = L.marker(center, {
+      icon: <span class="keyword">new</span> L.DivIcon({
+        iconSize: <span class="literal">null</span>,
+        className: <span class="string">'label'</span>,
+        html: <span class="string">'&lt;div&gt;'</span> + e.feature.properties.NAME + <span class="string">'&lt;/div&gt;'</span>
+      })
+    }).addTo(map);
+    labels[id] = label;
   });
 
-  <span class="comment">// make a new map and basemap</span>
-  <span class="keyword">var</span> map = <span class="keyword">new</span> L.Map(<span class="string">'map'</span>).setView([<span class="number">39.36</span>, -<span class="number">96.19</span>], <span class="number">4</span>);
-  L.esri.basemapLayer(<span class="string">'Gray'</span>).addTo(map);
+  neighborhoods.on(<span class="string">'addfeature'</span>, <span class="function"><span class="keyword">function</span><span class="params">(e)</span>{</span>
+    <span class="keyword">var</span> label = labels[e.feature.id];
+    <span class="keyword">if</span>(label){
+      label.addTo(map);
+    }
+  });
+
+  neighborhoods.on(<span class="string">'removefeature'</span>, <span class="function"><span class="keyword">function</span><span class="params">(e)</span>{</span>
+    <span class="keyword">var</span> label = labels[e.feature.id];
+    <span class="keyword">if</span>(label){
+      map.removeLayer(label);
+    }
+  });
 </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 <span class="tag">&lt;/<span class="title">body</span>&gt;</span>
 <span class="tag">&lt;/<span class="title">html</span>&gt;</span></code></pre>
 
 <div class="wrap">
-  <p><a href="http://github.com/esri/esri-leaflet/edit/master/site/source/pages/examples/arcgis-online-auth.hbs">Edit this sample on GitHub</a></p>
+  <p><a href="http://github.com/esri/esri-leaflet/edit/master/site/source/pages/examples/labeling-features.hbs">Edit this sample on GitHub</a></p>
 </div>
 </div>
   <div style='clear:both;'></div>

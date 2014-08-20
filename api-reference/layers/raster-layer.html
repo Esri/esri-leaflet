@@ -8,7 +8,7 @@
   <meta charset="utf-8">
 
   
-    <title>L.esri.Layers.TiledMapLayer | Esri Leaflet</title>
+    <title>L.esri.Layers.RasterLayer | Esri Leaflet</title>
   
 
   
@@ -121,27 +121,8 @@
 </aside>
 
 <div class="main-content">
-  <h1 id="l-esri-layers-tiledmaplayer">L.esri.Layers.TiledMapLayer</h1>
-<p>Inherits from <a href="http://leafletjs.com/reference.html#tilelayer"><code>L.TileLayer</code></a></p>
-<p>Access tiles from ArcGIS Online and ArcGIS Server as well as visualize and identify features on them.</p>
-<p>Is you have Feature Services published on ArcGIS online you can create a static set of tiles using your Feature Service. You can find details on that process on the <a href="http://doc.arcgis.com/en/arcgis-online/share-maps/publish-tiles.htm#ESRI_SECTION1_F68FCBD33BD54117B23232D41A762E89">ArcGIS Online Help</a></p>
-<p><strong>Your map service must be published using the Web Mercator Auxiliary Sphere tiling scheme (WKID 102100/3857) and the default scale option used by Google Maps, Bing Maps and <a href="http://resources.arcgis.com/en/help/arcgisonline-content/index.html#//011q00000002000000">ArcGIS Online</a>. Esri Leaflet will not support any other spatial reference for tile layers.</strong></p>
-<h3 id="constructor">Constructor</h3>
-<table>
-    <thead>
-        <tr>
-            <th>Constructor</th>
-            <th>Description</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td><code class="nobr">new L.esri.Layers.TiledMapLayer(<nobr class="param"><span>&lt;String&gt;</span> <code>url</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br><code class="nobr">L.esri.Layers.tiledMapLayer(<nobr class="param"><span>&lt;String&gt;</span> <code>url</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br><code class="nobr">new L.esri.TiledMapLayer(<nobr class="param"><span>&lt;String&gt;</span> <code>url</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br><code class="nobr">L.esri.tiledMapLayer(<nobr class="param"><span>&lt;String&gt;</span> <code>url</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code></td>
-            <td><code>url</code> should be the URL to the Map Service hosted the tiles. The <code>options</code> parameter can accept the same options as <a href="http://leafletjs.com/reference.html#tilelayer"><code>L.TileLayer</code></a></td>
-        </tr>
-    </tbody>
-</table>
-
+  <h1 id="l-esri-layers-rasterlayer">L.esri.Layers.RasterLayer</h1>
+<p>A generic class representing an image layer. This class can be extended to provide support for making export requests from ArcGIS REST services.</p>
 <h3 id="options">Options</h3>
 <table>
 <thead>
@@ -154,20 +135,25 @@
 </thead>
 <tbody>
 <tr>
-<td><code>proxy</code></td>
+<td><code>f</code></td>
 <td><code>String</code></td>
-<td><code>false</code></td>
-<td>URL of an <a href="https://developers.arcgis.com/javascript/jshelp/ags_proxy.html">ArcGIS API for JavaScript proxies</a> or <a href="https://github.com/Esri/resource-proxy">ArcGIS Resource Proxies</a> to use for proxying POST requests.</td>
+<td><code>&#39;image&#39;</code></td>
+<td>Server response content type.</td>
 </tr>
 <tr>
-<td><code>useCors</code></td>
-<td><code>Boolean</code></td>
-<td><code>true</code></td>
-<td>If this service should use CORS when making GET requests.</td>
+<td><code>opacity</code></td>
+<td><code>Number</code></td>
+<td><code>1</code></td>
+<td>Opacity of the layer. Should be a value between 0 and 1.</td>
+</tr>
+<tr>
+<td><code>position</code></td>
+<td><code>String</code></td>
+<td><code>&#39;front&#39;</code></td>
+<td>Position of the layer relative to other overlays.</td>
 </tr>
 </tbody>
 </table>
-<p><code>L.esri.TiledMapLayer</code> also accepts all <a href="http://leafletjs.com/reference.html#tilelayer-options"><code>L.TileLayer</code></a> options.</p>
 <h3 id="methods">Methods</h3>
 <table>
     <thead>
@@ -179,12 +165,37 @@
     </thead>
     <tbody>
         <tr>
-            <td><code>authenticate(&lt;String&gt; token)</code></td>
+            <td><code>bringToBack()</code></td>
             <td><code>this</code></td>
-            <td>Authenticates this service with a new token and runs any pending requests that required a token.</td>
+            <td>Redraws this layer below all other overlay layers.</td>
         </tr>
         <tr>
-            <td><code>metadata(&lt;Function&gt; callback, &lt;Object&gt; context)</code></td>
+            <td><code>bringToFront()</code></td>
+            <td><code>this</code></td>
+            <td>Redraws this layer above all other overlay layers.</td>
+        </tr>
+        <tr>
+            <td><code>getOpacity()</code></td>
+            <td><code>Float</code></td>
+            <td>Returns the current opacity of the layer.</td>
+        </tr>
+        <tr>
+            <td><code>setOpacity(<nobr class="param"><span>&lt;Float&gt;</span> <code>opacity</code></nobr>)</code></td>
+            <td><code>this</code></td>
+            <td>Sets the opacity of the layer.</td>
+        </tr>
+        <tr>
+            <td><code>getTimeRange()</code></td>
+            <td><code>Array</code></td>
+            <td>Returns the current time range being used for rendering.</td>
+        </tr>
+        <tr>
+            <td><code>setTimeRange(<nobr class="param"><span>&lt;Date&gt;</span> <code>from</code></nobr>, <nobr class="param"><span>&lt;Date&gt;</span> <code>to</code></nobr>)</code></td>
+            <td><code>this</code></td>
+            <td>Redraws the layer with he passed time range.</td>
+        </tr>
+        <tr>
+            <td><code>metadata(<nobr class="param"><span>&lt;Function&gt;</span> <code>callback</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>context</code></nobr>)</code></td>
             <td><code>this</code></td>
             <td>
                 Requests metadata about this Feature Layer. Callback will be called with <code>error</code> and <code>metadata</code>.
@@ -194,31 +205,37 @@
             </td>
         </tr>
         <tr>
-            <td><code>identify()</code></td>
+            <td><code>authenticate(<nobr class="param"><span>&lt;String&gt;</span> <code>token</code></nobr>)</code></td>
             <td><code>this</code></td>
-            <td>
-                Returns a new <a href="/api-reference/tasks/identify-features.html"><code>L.esri.services.IdentifyFeatures</code></a> object that can be used to identify features on this layer. Your callback function will be passed a GeoJSON FeatureCollection with the results or an error.
-<pre class="js"><code>featureLayer.identify()
-            .at(latlng, latlngbounds, 5)
-            .run(function(error, featureCollection){
-              console.log(featureCollection);
-            });</code></pre>
-            </td>
+            <td>Authenticates this service with a new token and runs any pending requests that required a token.</td>
         </tr>
     </tbody>
 </table>
 
-<p><code>L.esri.BasemapLayer</code> inherits all methods from <a href="http://leafletjs.com/reference.html#tilelayer"><code>L.TileLayer</code></a>.</p>
 <h3 id="events">Events</h3>
-<p><code>L.esri.TiledMapLayer</code> fires all  <a href="http://leafletjs.com/reference.html#tilelayer"><code>L.TileLayer</code></a> events.</p>
-<h3 id="example">Example</h3>
-<pre><code class="language-js"><span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">37.7614</span>, -<span class="number">122.3911</span>], <span class="number">12</span>);
+<table>
+<thead>
+<tr>
+<th>Event</th>
+<th>Data</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>loading</code></td>
+<td><a href="../../../../esri-leaflet/api-reference/events.html#loading-event">&lt;<code>LoadingEvent</code>&gt;</a></td>
+<td>Fires when new features start loading.</td>
+</tr>
+<tr>
+<td><code>load</code></td>
+<td><a href="../../../../esri-leaflet/api-reference/events.html#load-event">&lt;<code>LoadEvent</code>&gt;</a></td>
+<td>Fires when all features in the current bounds of the map have loaded.</td>
+</tr>
+</tbody>
+</table>
 
-L.esri.tiledMapLayer(<span class="string">"http://services.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer"</span>, {
-  maxZoom: <span class="number">15</span>
-}).addTo(map);</code></pre>
-
-  <p><a href="http://github.com/esri/esri-leaflet/edit/master/site/source/pages/api-reference/layers/tiled-map-layer.md">Edit this page on GitHub</a></p>
+  <p><a href="http://github.com/esri/esri-leaflet/edit/master/site/source/pages/api-reference/layers/raster-layer.md">Edit this page on GitHub</a></p>
 </div>
   <div style='clear:both;'></div>
 </div>

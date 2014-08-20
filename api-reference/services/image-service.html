@@ -8,7 +8,7 @@
   <meta charset="utf-8">
 
   
-    <title>L.esri.Layers.TiledMapLayer | Esri Leaflet</title>
+    <title>L.esri.Services.ImageService | Esri Leaflet</title>
   
 
   
@@ -121,11 +121,9 @@
 </aside>
 
 <div class="main-content">
-  <h1 id="l-esri-layers-tiledmaplayer">L.esri.Layers.TiledMapLayer</h1>
-<p>Inherits from <a href="http://leafletjs.com/reference.html#tilelayer"><code>L.TileLayer</code></a></p>
-<p>Access tiles from ArcGIS Online and ArcGIS Server as well as visualize and identify features on them.</p>
-<p>Is you have Feature Services published on ArcGIS online you can create a static set of tiles using your Feature Service. You can find details on that process on the <a href="http://doc.arcgis.com/en/arcgis-online/share-maps/publish-tiles.htm#ESRI_SECTION1_F68FCBD33BD54117B23232D41A762E89">ArcGIS Online Help</a></p>
-<p><strong>Your map service must be published using the Web Mercator Auxiliary Sphere tiling scheme (WKID 102100/3857) and the default scale option used by Google Maps, Bing Maps and <a href="http://resources.arcgis.com/en/help/arcgisonline-content/index.html#//011q00000002000000">ArcGIS Online</a>. Esri Leaflet will not support any other spatial reference for tile layers.</strong></p>
+  <h1 id="l-esri-services-imageservice">L.esri.Services.ImageService</h1>
+<p>Inherits from <a href="../../../../esri-leaflet/api-reference/services/service.html"><code>L.esri.Service</code></a></p>
+<p><code>L.esri.Services.ImageService</code> is an abstraction interacting with Image Services running on ArcGIS Online and ArcGIS server that allows you to make requests to the API, as well as query and identify features on the service.</p>
 <h3 id="constructor">Constructor</h3>
 <table>
     <thead>
@@ -136,38 +134,16 @@
     </thead>
     <tbody>
         <tr>
-            <td><code class="nobr">new L.esri.Layers.TiledMapLayer(<nobr class="param"><span>&lt;String&gt;</span> <code>url</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br><code class="nobr">L.esri.Layers.tiledMapLayer(<nobr class="param"><span>&lt;String&gt;</span> <code>url</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br><code class="nobr">new L.esri.TiledMapLayer(<nobr class="param"><span>&lt;String&gt;</span> <code>url</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br><code class="nobr">L.esri.tiledMapLayer(<nobr class="param"><span>&lt;String&gt;</span> <code>url</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code></td>
-            <td><code>url</code> should be the URL to the Map Service hosted the tiles. The <code>options</code> parameter can accept the same options as <a href="http://leafletjs.com/reference.html#tilelayer"><code>L.TileLayer</code></a></td>
+            <td><code class="nobr">new L.esri.Services.ImageService(<nobr class="param"><span>&lt;String&gt;</span> <code>url</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br><code class="nobr">L.esri.Services.imageService(<nobr class="param"><span>&lt;String&gt;</span> <code>url</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code></td>
+            <td>The <code>url</code> parameter is the URL to the ArcGIS Server or ArcGIS Online map service you would like to consume.</td>
         </tr>
     </tbody>
 </table>
 
 <h3 id="options">Options</h3>
-<table>
-<thead>
-<tr>
-<th>Option</th>
-<th>Type</th>
-<th>Default</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>proxy</code></td>
-<td><code>String</code></td>
-<td><code>false</code></td>
-<td>URL of an <a href="https://developers.arcgis.com/javascript/jshelp/ags_proxy.html">ArcGIS API for JavaScript proxies</a> or <a href="https://github.com/Esri/resource-proxy">ArcGIS Resource Proxies</a> to use for proxying POST requests.</td>
-</tr>
-<tr>
-<td><code>useCors</code></td>
-<td><code>Boolean</code></td>
-<td><code>true</code></td>
-<td>If this service should use CORS when making GET requests.</td>
-</tr>
-</tbody>
-</table>
-<p><code>L.esri.TiledMapLayer</code> also accepts all <a href="http://leafletjs.com/reference.html#tilelayer-options"><code>L.TileLayer</code></a> options.</p>
+<p><code>L.esri.Services.ImageService</code> accepts all <a href="../../../../esri-leaflet/api-reference/services/service.html"><code>L.esri.Services.Service</code></a> options.</p>
+<h3 id="events">Events</h3>
+<p><code>L.esri.Services.ImageService</code> fires all  <a href="../../../../esri-leaflet/api-reference/services/service.html"><code>L.esri.Services.service</code></a> events.</p>
 <h3 id="methods">Methods</h3>
 <table>
     <thead>
@@ -179,28 +155,13 @@
     </thead>
     <tbody>
         <tr>
-            <td><code>authenticate(&lt;String&gt; token)</code></td>
-            <td><code>this</code></td>
-            <td>Authenticates this service with a new token and runs any pending requests that required a token.</td>
-        </tr>
-        <tr>
-            <td><code>metadata(&lt;Function&gt; callback, &lt;Object&gt; context)</code></td>
+            <td><code>query()</code></td>
             <td><code>this</code></td>
             <td>
-                Requests metadata about this Feature Layer. Callback will be called with <code>error</code> and <code>metadata</code>.
-<pre class="js"><code>featureLayer.metadata(function(error, metadata){
-  console.log(metadata);
-});</code></pre>
-            </td>
-        </tr>
-        <tr>
-            <td><code>identify()</code></td>
-            <td><code>this</code></td>
-            <td>
-                Returns a new <a href="/api-reference/tasks/identify-features.html"><code>L.esri.services.IdentifyFeatures</code></a> object that can be used to identify features on this layer. Your callback function will be passed a GeoJSON FeatureCollection with the results or an error.
-<pre class="js"><code>featureLayer.identify()
-            .at(latlng, latlngbounds, 5)
-            .run(function(error, featureCollection){
+                Returns a new <a href="../../../../esri-leaflet/api-reference/tasks/query.html"><code>L.esri.Tasks.Query</code></a> object that can be used to query this service.
+<pre class="js"><code>imageService.query()
+            .within(latlngbounds)
+            .run(function(error, featureCollection, response){
               console.log(featureCollection);
             });</code></pre>
             </td>
@@ -208,17 +169,10 @@
     </tbody>
 </table>
 
-<p><code>L.esri.BasemapLayer</code> inherits all methods from <a href="http://leafletjs.com/reference.html#tilelayer"><code>L.TileLayer</code></a>.</p>
-<h3 id="events">Events</h3>
-<p><code>L.esri.TiledMapLayer</code> fires all  <a href="http://leafletjs.com/reference.html#tilelayer"><code>L.TileLayer</code></a> events.</p>
 <h3 id="example">Example</h3>
-<pre><code class="language-js"><span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">37.7614</span>, -<span class="number">122.3911</span>], <span class="number">12</span>);
+<p>No examples.</p>
 
-L.esri.tiledMapLayer(<span class="string">"http://services.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer"</span>, {
-  maxZoom: <span class="number">15</span>
-}).addTo(map);</code></pre>
-
-  <p><a href="http://github.com/esri/esri-leaflet/edit/master/site/source/pages/api-reference/layers/tiled-map-layer.md">Edit this page on GitHub</a></p>
+  <p><a href="http://github.com/esri/esri-leaflet/edit/master/site/source/pages/api-reference/services/image-service.md">Edit this page on GitHub</a></p>
 </div>
   <div style='clear:both;'></div>
 </div>

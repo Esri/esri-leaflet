@@ -91,6 +91,8 @@
     <a href="../../../../esri-leaflet/api-reference/layers/basemap-layer.html">BasemapLayer</a>
     <a href="../../../../esri-leaflet/api-reference/layers/tiled-map-layer.html">TiledMapLayer</a>
     <a href="../../../../esri-leaflet/api-reference/layers/dynamic-map-layer.html">DynamicMapLayer</a>
+    <a href="../../../../esri-leaflet/api-reference/layers/image-map-layer.html">ImageMapLayer</a>
+    <!-- <a href="../../../../esri-leaflet/api-reference/layers/raster-layer.html">RasterLayer</a> -->
     <a href="../../../../esri-leaflet/api-reference/layers/feature-layer.html">FeatureLayer</a>
     <a href="../../../../esri-leaflet/api-reference/layers/clustered-feature-layer.html">ClusteredFeatureLayer</a>
     <a href="../../../../esri-leaflet/api-reference/layers/heatmap-feature-layer.html">HeatmapFeatureLayer</a>
@@ -100,13 +102,16 @@
   <nav>
     <a href="../../../../esri-leaflet/api-reference/services/feature-layer.html">FeatureLayer</a>
     <a href="../../../../esri-leaflet/api-reference/services/map-service.html">MapService</a>
+    <a href="../../../../esri-leaflet/api-reference/services/image-service.html">ImageService</a>
     <a href="../../../../esri-leaflet/api-reference/services/service.html">Service</a>
   </nav>
 
   <h5>L.esri.Tasks</h5>
   <nav>
-    <a href="../../../../esri-leaflet/api-reference/tasks/identify.html">Identify</a>
+    <a href="../../../../esri-leaflet/api-reference/tasks/identify-features.html">Identify Features</a>
+    <a href="../../../../esri-leaflet/api-reference/tasks/identify-image.html">Identify Image</a>
     <a href="../../../../esri-leaflet/api-reference/tasks/query.html">Query</a>
+    <a href="../../../../esri-leaflet/api-reference/tasks/find.html">Find</a>
   </nav>
 
   <h5>Misc.</h5>
@@ -117,7 +122,8 @@
 
 <div class="main-content">
   <h1 id="l-esri-tasks-query">L.esri.Tasks.Query</h1>
-<p><code>L.esri.Tasks.Query</code> is an abstraction for the query API that exists on Feature Layers and Map Services. It provides a chainable API for building request parameters and executing queries.</p>
+<p><code>L.esri.Tasks.Query</code> is an abstraction for the query API that exists on Feature Layers Map Services and Image Services. It provides a chainable API for building request parameters and executing queries.</p>
+<p><strong>Note</strong> Depending on the type of service you are querying (Feature Layer, Map Service, Image Service) and the version of ArcGIS Server that hosts the service some of these options my not be available.</p>
 <h3 id="constructor">Constructor</h3>
 <table>
     <thead>
@@ -155,7 +161,7 @@
         <tr>
             <td><code>nearby(<nobr class="param"><span>&lt;<a href="http://leafletjs.com/reference.html#latlng">LatLng</a>&gt;</span> <code>latlng</code></nobr>, <nobr class="param"><span>&lt;Integer&gt;</span> <code>distance</code></nobr>)</code></td>
             <td><code>this</code></td>
-            <td>Queries features a given distance in meters around a <a href="http://leafletjs.com/reference.html#latlng">LatLng</a>.</td>
+            <td>Queries features a given distance in meters around a <a href="http://leafletjs.com/reference.html#latlng">LatLng</a>. <small>Only available for Feature Layers hosted on ArcGIS Online.</small></td>
         </tr>
         <tr>
             <td><code>where(<nobr class="param"><span>&lt;String&gt;</span> <code>where</code></nobr>)</code></td>
@@ -165,22 +171,27 @@
         <tr>
             <td><code>offset(<nobr class="param"><span>&lt;Integer&gt;</span> <code>offset</code></nobr>)</code></td>
             <td><code>this</code></td>
-            <td>Define the offset of the results, when combined with <code>limit</code> can be used for paging. Available only for Feature Services hosted on ArcGIS Online.</td>
+            <td>Define the offset of the results, when combined with <code>limit</code> can be used for paging. <small>Only available for Feature Layers hosted on ArcGIS Online.</small></td>
         </tr>
         <tr>
             <td><code>limit(<nobr class="param"><span>&lt;Integer&gt;</span> <code>limit</code></nobr>)</code></td>
             <td><code>this</code></td>
-            <td>Limit the number of results returned by this query, when combined with <code>offset</code> can be used for paging. Available only for Feature Services hosted on ArcGIS Online.</td>
+            <td>Limit the number of results returned by this query, when combined with <code>offset</code> can be used for paging. <small>Only available for Feature Layers hosted on ArcGIS Online.</small></td>
         </tr>
         <tr>
             <td><code>between(<nobr class="param"><span>&lt;Date&gt;</span> <code>from</code></nobr>, <nobr class="param"><span>&lt;Date&gt;</span> <code>to</code></nobr>)</code></td>
             <td><code>this</code></td>
-            <td>Queries features within a given time range.</td>
+            <td>Queries features within a given time range. <small>Only available for Layers/Services with <code>timeInfo</code> in their metadata.</small></td>
         </tr>
         <tr>
-            <td><code>fields(<nobr class="param"><span>&lt;Array&gt;</span> <code>fields</code></nobr>)</code></td>
+            <td><code>fields(<nobr class="param"><span>&lt;Array&gt;</span> <code>fields</code></nobr> or <nobr class="param"><span>&lt;String&gt;</span> <code>fields</code></nobr>)</code></td>
             <td><code>this</code></td>
             <td>An array of associated fields to request for each feature.</td>
+        </tr>
+        <tr>
+            <td><code>returnGeometry(<nobr class="param"><span>&lt;Boolean&gt;</span> <code>returnGeometry</code></nobr>)</code></td>
+            <td><code>this</code></td>
+            <td>Return geometry with results. Default is <code>true</code>.</td>
         </tr>
         <tr>
             <td><code>simplify(<nobr class="param"><span>&lt;<a href="http://leafletjs.com/reference.html#map">Map</a>&gt;</span> <code>map</code></nobr>,  <nobr class="param"><span>&lt;Integer&gt;</span> <code>factor</code></nobr>)</code></td>
@@ -208,6 +219,16 @@
             <td>Adds a token to this request if the service requires authentication. Will be added automatically if used with a service.</td>
         </tr>
         <tr>
+            <td><code>layer(<nobr class="param"><span>&lt;String or Integer&gt;</span> <code>layer</code></nobr>)</code></td>
+            <td><code>this</code></td>
+            <td>Used to select which layer inside a Map Service to perform the query on. <br><small>Only available for Map Services.</small></td>
+        </tr>
+        <tr>
+            <td><code>pixelSize(<nobr class="param"><span>&lt;<a href="http://leafletjs.com/reference.html#point">Point</a>&gt;</span> <code>point</code></nobr>)</code></td>
+            <td><code>this</code></td>
+            <td>Override the default pixelSize when querying an Image Service. <br><small>Only available for Image Services.</small></td>
+        </tr>
+        <tr>
             <td><code>run(<nobr class="param"><span>&lt;Function&gt;</span> <code>callback</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>context</code></nobr>)</code></td>
             <td><code>this</code></td>
             <td>Exectues the query request with the current parameters, features will be passed to <code>callback</code> as a <a href="http://geojson.org/geojson-spec.html#feature-collection-objects">GeoJSON FeatureCollection</a>. Accepts an optional function context.</td>
@@ -225,7 +246,7 @@
         <tr>
             <td><code>bounds(<nobr class="param"><span>&lt;Function&gt;</span> <code>callback</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>context</code></nobr>)</code></td>
             <td><code>this</code></td>
-            <td>Exectues the query request with the current parameters, passing only the <a href="http://leafletjs.com/reference.html#latlngbounds"><code>LatLngBounds</code></a> of all features the query to callback<code>callback</code>. Accepts an optional function context.</td>
+            <td>Exectues the query request with the current parameters, passing only the <a href="http://leafletjs.com/reference.html#latlngbounds"><code>LatLngBounds</code></a> of all features the query to callback<code>callback</code>. Accepts an optional function context. <small>Only available for Feature Layers hosted on ArcGIS Online.</small></td>
         </tr>
     </tbody>
 </table>

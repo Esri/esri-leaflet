@@ -91,6 +91,8 @@
     <a href="../../../../esri-leaflet/api-reference/layers/basemap-layer.html">BasemapLayer</a>
     <a href="../../../../esri-leaflet/api-reference/layers/tiled-map-layer.html">TiledMapLayer</a>
     <a href="../../../../esri-leaflet/api-reference/layers/dynamic-map-layer.html">DynamicMapLayer</a>
+    <a href="../../../../esri-leaflet/api-reference/layers/image-map-layer.html">ImageMapLayer</a>
+    <!-- <a href="../../../../esri-leaflet/api-reference/layers/raster-layer.html">RasterLayer</a> -->
     <a href="../../../../esri-leaflet/api-reference/layers/feature-layer.html">FeatureLayer</a>
     <a href="../../../../esri-leaflet/api-reference/layers/clustered-feature-layer.html">ClusteredFeatureLayer</a>
     <a href="../../../../esri-leaflet/api-reference/layers/heatmap-feature-layer.html">HeatmapFeatureLayer</a>
@@ -100,13 +102,16 @@
   <nav>
     <a href="../../../../esri-leaflet/api-reference/services/feature-layer.html">FeatureLayer</a>
     <a href="../../../../esri-leaflet/api-reference/services/map-service.html">MapService</a>
+    <a href="../../../../esri-leaflet/api-reference/services/image-service.html">ImageService</a>
     <a href="../../../../esri-leaflet/api-reference/services/service.html">Service</a>
   </nav>
 
   <h5>L.esri.Tasks</h5>
   <nav>
-    <a href="../../../../esri-leaflet/api-reference/tasks/identify.html">Identify</a>
+    <a href="../../../../esri-leaflet/api-reference/tasks/identify-features.html">Identify Features</a>
+    <a href="../../../../esri-leaflet/api-reference/tasks/identify-image.html">Identify Image</a>
     <a href="../../../../esri-leaflet/api-reference/tasks/query.html">Query</a>
+    <a href="../../../../esri-leaflet/api-reference/tasks/find.html">Find</a>
   </nav>
 
   <h5>Misc.</h5>
@@ -121,9 +126,9 @@
 <p>Feature Layers are provided by Feature Services which can contain multupile layers. Feature Layers expose vector geographic information as a web service that can be visualized, styled, queried and edited.</p>
 <p>Here is a sample Feature Service URL </p>
 <pre><code>http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Neighborhoods_pdx/</code></pre>
-<p>FeatureServer<code>note that it ends in</code>/FeatureService`. This particular service contains only 1 Feature Layer </p>
+<p>This particular service contains only one Feature Layer. Here is the Feature Layer URL </p>
 <pre><code>http://services.arcgis.com/rOo16HdIMeOBI4Mb/ArcGIS/rest/services/Neighborhoods_pdx/FeatureServer/0</code></pre>
-<p>Note that the Feature Layer url ends in <code>/FeatureService/{LAYER_ID}</code>.</p>
+<p>Note that the Feature Layer URL ends in <code>/FeatureServer/{LAYER_ID}</code>.</p>
 <p>You can create a new empty feature service witha  single layer on the <a href="https://developers.arcgis.com/en/hosted-data/#/new">ArcGIS for Devleopers website</a> or you can use ArcGIS Online to <a href="https://developers.arcgis.com/tools/csv-to-feature-service/">create a Feature Service from a CSV or Shapefile</a>.</p>
 <h3 id="constructor">Constructor</h3>
 <table>
@@ -135,7 +140,7 @@
     </thead>
     <tbody>
         <tr>
-            <td><code class="nobr">new L.esri.Layers.FeatureLayer(<nobr class="param"><span>&lt;String&gt;</span> <code>key</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br><code class="nobr">L.esri.Layers.featureLayer(<nobr class="param"><span>&lt;String&gt;</span> <code>key</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br><code class="nobr">new L.esri.FeatureLayer(<nobr class="param"><span>&lt;String&gt;</span> <code>key</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br><code class="nobr">L.esri.featureLayer(<nobr class="param"><span>&lt;String&gt;</span> <code>key</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code></td>
+            <td><code class="nobr">new L.esri.Layers.FeatureLayer(<nobr class="param"><span>&lt;String&gt;</span> <code>url</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br><code class="nobr">L.esri.Layers.featureLayer(<nobr class="param"><span>&lt;String&gt;</span> <code>url</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br><code class="nobr">new L.esri.FeatureLayer(<nobr class="param"><span>&lt;String&gt;</span> <code>url</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br><code class="nobr">L.esri.featureLayer(<nobr class="param"><span>&lt;String&gt;</span> <code>url</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code></td>
             <td><code>url</code> should be the URL to the Feature Layer.</td>
         </tr>
     </tbody>
@@ -217,7 +222,7 @@
             <td>URL of an <a href="https://developers.arcgis.com/javascript/jshelp/ags_proxy.html">ArcGIS API for JavaScript proxies</a> or <a href="https://github.com/Esri/resource-proxy">ArcGIS Resource Proxies</a> to use for proxying POST requests.</td>
         </tr>
         <tr>
-            <td><code>useCORS</code></td>
+            <td><code>useCors</code></td>
             <td><code>Boolean</code></td>
             <td>If this service should use CORS when making GET requests.</td>
         </tr>
@@ -243,6 +248,21 @@
 <td><code>load</code></td>
 <td><a href="../../../../esri-leaflet/api-reference/events.html#load-event">&lt;<code>LoadEvent</code>&gt;</a></td>
 <td>Fires when all features in the current bounds of the map have loaded.</td>
+</tr>
+<tr>
+<td><code>createfeature</code></td>
+<td><a href="../../../../esri-leaflet/api-reference/events.html#feature-create">&lt;<code>CreateFeatureEvent</code>&gt;</a></td>
+<td>Fired when a feature from the Feature Layer is loaded for the first time.</td>
+</tr>
+<tr>
+<td><code>removefeature</code></td>
+<td><a href="../../../../esri-leaflet/api-reference/events.html#feature-remove">&lt;<code>RemoveFeatureEvent</code>&gt;</a></td>
+<td>Fired when a feature on the layer is removed from the map.</td>
+</tr>
+<tr>
+<td><code>addfeature</code></td>
+<td><a href="../../../../esri-leaflet/api-reference/events.html#feature-add">&lt;<code>AddFeatureEvent</code>&gt;</a></td>
+<td>Fired when a previously removed feature is added back to the map.</td>
 </tr>
 </tbody>
 </table>

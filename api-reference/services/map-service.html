@@ -91,6 +91,8 @@
     <a href="../../../../esri-leaflet/api-reference/layers/basemap-layer.html">BasemapLayer</a>
     <a href="../../../../esri-leaflet/api-reference/layers/tiled-map-layer.html">TiledMapLayer</a>
     <a href="../../../../esri-leaflet/api-reference/layers/dynamic-map-layer.html">DynamicMapLayer</a>
+    <a href="../../../../esri-leaflet/api-reference/layers/image-map-layer.html">ImageMapLayer</a>
+    <!-- <a href="../../../../esri-leaflet/api-reference/layers/raster-layer.html">RasterLayer</a> -->
     <a href="../../../../esri-leaflet/api-reference/layers/feature-layer.html">FeatureLayer</a>
     <a href="../../../../esri-leaflet/api-reference/layers/clustered-feature-layer.html">ClusteredFeatureLayer</a>
     <a href="../../../../esri-leaflet/api-reference/layers/heatmap-feature-layer.html">HeatmapFeatureLayer</a>
@@ -100,13 +102,16 @@
   <nav>
     <a href="../../../../esri-leaflet/api-reference/services/feature-layer.html">FeatureLayer</a>
     <a href="../../../../esri-leaflet/api-reference/services/map-service.html">MapService</a>
+    <a href="../../../../esri-leaflet/api-reference/services/image-service.html">ImageService</a>
     <a href="../../../../esri-leaflet/api-reference/services/service.html">Service</a>
   </nav>
 
   <h5>L.esri.Tasks</h5>
   <nav>
-    <a href="../../../../esri-leaflet/api-reference/tasks/identify.html">Identify</a>
+    <a href="../../../../esri-leaflet/api-reference/tasks/identify-features.html">Identify Features</a>
+    <a href="../../../../esri-leaflet/api-reference/tasks/identify-image.html">Identify Image</a>
     <a href="../../../../esri-leaflet/api-reference/tasks/query.html">Query</a>
+    <a href="../../../../esri-leaflet/api-reference/tasks/find.html">Find</a>
   </nav>
 
   <h5>Misc.</h5>
@@ -141,25 +146,63 @@
 <p><code>L.esri.Services.MapService</code> fires all  <a href="../../../../esri-leaflet/api-reference/services/service.html"><code>L.esri.Services.service</code></a> events.</p>
 <h3 id="methods">Methods</h3>
 <table>
-<thead>
-<tr>
-<th>Method</th>
-<th>Returns</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>identify()</code></td>
-<td><code>this</code></td>
-<td>Returns a new <a href="../../../../esri-leaflet/api-reference/tasks/query.html"><code>L.esri.Tasks.Identify()</code></a> object bound to this service.</td>
-</tr>
-</tbody>
+    <thead>
+        <tr>
+            <th>Method</th>
+            <th>Returns</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>query()</code></td>
+            <td><code>this</code></td>
+            <td>
+                Returns a new <a href="../../../../esri-leaflet/api-reference/tasks/query.html"><code>L.esri.Tasks.Query</code></a> object that can be used to query this service.
+<pre class="js"><code>mapService.query()
+        .layer(0)
+        .within(latlngbounds)
+        .run(function(error, featureCollection, response){
+          console.log(featureCollection);
+        });</code></pre>
+            </td>
+        </tr>
+        <tr>
+            <td><code>identify()</code></td>
+            <td><code>this</code></td>
+            <td>
+                Returns a new <a href="../../../../esri-leaflet/api-reference/tasks/identify.html"><code>L.esri.Tasks.Identify</code></a> object that can be used to identify features contained within this service.
+<pre class="js"><code>mapService.identify()
+        .on(map)
+        .at(latlng)
+        .run(function(error, featureCollection, response){
+            console.log(featureCollection)
+        });</code></pre>
+            </td>
+        </tr>
+        <tr>
+            <td><code>find()</code></td>
+            <td><code>this</code></td>
+            <td>
+                Returns a new <a href="../../../../esri-leaflet/api-reference/tasks/find.html"><code>L.esri.Tasks.Find</code></a> object that can be used to find features by text.
+<pre class="js"><code>mapService.find()
+        .layers(&#39;18&#39;)
+        .text(&#39;Colorado&#39;)
+        .fields(&#39;name&#39;)
+        .run(function(error, featureCollection, response){
+            console.log(featureCollection)
+        });</code></pre>
+            </td>
+        </tr>
+
+    </tbody>
 </table>
+
 <h3 id="example">Example</h3>
+<h4 id="identify-task">Identify task</h4>
 <pre><code class="language-js"><span class="keyword">var</span> map = <span class="keyword">new</span> L.Map(<span class="string">'map'</span>).setView([ <span class="number">45.543</span>, -<span class="number">122.621</span> ], <span class="number">5</span>);
 
-<span class="keyword">var</span> service = L.esri.Services.MapService(<span class="string">'http://sampleserver6.arcgisonline.com/arcgis/rest/services/WorldTimeZones/MapServer'</span>);
+<span class="keyword">var</span> service = L.esri.Services.mapService(<span class="string">'http://sampleserver6.arcgisonline.com/arcgis/rest/services/WorldTimeZones/MapServer'</span>);
 
 service.identify()
     .on(map)
@@ -167,6 +210,16 @@ service.identify()
     .layers(<span class="string">'visible:1'</span>)
     .run(<span class="function"><span class="keyword">function</span><span class="params">(error, featureCollection, response)</span>{</span>
         console.log(<span class="string">"UTC Offset: "</span> + featureCollection.features[<span class="number">0</span>].properties.ZONE);
+    });</code></pre>
+<h4 id="find-task">Find task</h4>
+<pre><code class="language-js"><span class="keyword">var</span> service = L.esri.Services.mapService(<span class="string">'http://services.nationalmap.gov/arcgis/rest/services/govunits/MapServer'</span>);
+
+service.find()
+    .layers(<span class="string">'18'</span>)
+    .searchText(<span class="string">'Colorado'</span>)
+    .searchFields(<span class="string">'GNIS_NAME'</span>)
+    .run(<span class="function"><span class="keyword">function</span><span class="params">(error, featureCollection, response)</span>{</span>
+        console.log(<span class="string">'Found GNIS ID: '</span> + featureCollection.features[<span class="number">0</span>].properties.GNIS_ID + <span class="string">' for the state of '</span> + featureCollection.features[<span class="number">0</span>].properties.STATE_NAME);
     });</code></pre>
 
   <p><a href="http://github.com/esri/esri-leaflet/edit/master/site/source/pages/api-reference/services/map-service.md">Edit this page on GitHub</a></p>

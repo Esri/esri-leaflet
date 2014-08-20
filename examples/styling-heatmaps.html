@@ -90,21 +90,6 @@
     <a href="../../../esri-leaflet/examples/retina-basemap.html">Retina Basemap</a>
   </nav>
 
-  <h5>Tile Layers</h5>
-  <nav>
-    <a href="../../../esri-leaflet/examples/tile-layer-1.html">Tiles from a Map Service #1</a>
-    <a href="../../../esri-leaflet/examples/tile-layer-2.html">Tiles from a Map Service #2</a>
-    <a href="../../../esri-leaflet/examples/non-mercator-projection.html">Non-mercator tiles</a>
-  </nav>
-
-  <h5>Dynamic Map Layer</h5>
-  <nav>
-    <a href="../../../esri-leaflet/examples/simple-dynamic-map-layer.html">Simple DynamicMapLayer</a>
-    <a href="../../../esri-leaflet/examples/identifying-features.html">Identifying Features</a>
-    <a href="../../../esri-leaflet/examples/customizing-popups.html">Custom popups</a>
-    <a href="../../../esri-leaflet/examples/visualizing-time-on-dynamic-map-layer.html">Time Ranges</a>
-  </nav>
-
   <h5>Feature Layers</h5>
   <nav>
     <a href="../../../esri-leaflet/examples/simple-feature-layer.html">Simple FeatureLayer</a>
@@ -116,11 +101,38 @@
     <a href="../../../esri-leaflet/examples/querying-feature-layers-2.html">Querying features #2</a>
     <a href="../../../esri-leaflet/examples/simplifying-complex-features.html">Simplifying complex features</a>
     <a href="../../../esri-leaflet/examples/zooming-to-all-features.html">Zoom to all features</a>
+    <a href="../../../esri-leaflet/examples/labeling-features.html">Labeling Features</a>
     <a href="../../../esri-leaflet/examples/custering-feature-layers.html">Clustering points</a>
     <a href="../../../esri-leaflet/examples/styling-clusters.html">Styling clusters</a>
     <a href="../../../esri-leaflet/examples/visualize-points-as-a-heatmap.html">Points as a heatmap</a>
     <a href="../../../esri-leaflet/examples/styling-heatmaps.html">Styling heatmaps</a>
     <a href="../../../esri-leaflet/examples/visualizing-time-with-feature-layer.html">Time enabled services</a>
+  </nav>
+
+  <h5>Tile Layers</h5>
+  <nav>
+    <a href="../../../esri-leaflet/examples/tile-layer-1.html">Tiles from a Map Service #1</a>
+    <a href="../../../esri-leaflet/examples/tile-layer-2.html">Tiles from a Map Service #2</a>
+    <a href="../../../esri-leaflet/examples/non-mercator-projection.html">Non-mercator tiles</a>
+  </nav>
+
+  <h5>Dynamic Map Layer</h5>
+  <nav>
+    <a href="../../../esri-leaflet/examples/simple-dynamic-map-layer.html">Simple DynamicMapLayer</a>
+    <a href="../../../esri-leaflet/examples/identifying-features.html">Identifying Features</a>
+    <a href="../../../esri-leaflet/examples/finding-features.html">Finding Features</a>
+    <a href="../../../esri-leaflet/examples/customizing-popups.html">Custom popups</a>
+    <a href="../../../esri-leaflet/examples/visualizing-time-on-dynamic-map-layer.html">Time Ranges</a>
+  </nav>
+
+  <h5>Image Map Layer</h5>
+  <nav>
+    <a href="../../../esri-leaflet/examples/simple-image-map-layer.html">Simple ImageMapLayer</a>
+    <a href="../../../esri-leaflet/examples/infrared-imagery.html">Infrared Imagery using BandIDs</a>
+    <a href="../../../esri-leaflet/examples/image-map-layer-rendering-rule.html">Rendering Rule</a>
+    <a href="../../../esri-leaflet/examples/identifying-imagery.html">Identify Imagery</a>
+    <a href="../../../esri-leaflet/examples/image-map-layer-mosaic-rule.html">Mosaic Rule</a>
+    <a href="../../../esri-leaflet/examples/imagery-popups.html">Custom popups</a>
   </nav>
 
   <h5>Authentication</h5>
@@ -140,6 +152,7 @@
   <h5>Misc.</h5>
   <nav>
     <a href="../../../esri-leaflet/examples/getting-service-metadata.html">Getting service metadata</a>
+    <a href="../../../esri-leaflet/examples/parse-feature-collection.html">Parsing Feature Collections</a>
   </nav>
 
 </aside>
@@ -157,7 +170,7 @@
 <script src="https://rawgit.com/Leaflet/Leaflet.heat/gh-pages/dist/leaflet-heat.js"></script>
 
 <!-- Load Heatmap Feature Layer from CDN -->
-<script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/0.0.1-beta.5/esri-leafelt-heatmap-feature-layer.js"></script>
+<script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/0.0.1-beta.5/esri-leaflet-heatmap-feature-layer.js"></script>
 
 <div id="map"></div>
 
@@ -203,7 +216,7 @@
 <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://rawgit.com/Leaflet/Leaflet.heat/gh-pages/dist/leaflet-heat.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 <span class="comment">&lt;!-- Load Heatmap Feature Layer from CDN --&gt;</span>
-<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/0.0.1-beta.5/esri-leafelt-heatmap-feature-layer.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/0.0.1-beta.5/esri-leaflet-heatmap-feature-layer.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 
