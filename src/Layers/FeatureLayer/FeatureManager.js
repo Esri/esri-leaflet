@@ -84,8 +84,6 @@
       }
 
       this._buildQuery(bounds).run(function(error, featureCollection, response){
-        
-
         if(response && response.exceededTransferLimit){
           this.fire('drawlimitexceeded');
         }

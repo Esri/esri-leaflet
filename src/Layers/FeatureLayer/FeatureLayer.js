@@ -160,6 +160,10 @@ L.esri.Layers.FeatureLayer = L.esri.Layers.FeatureManager.extend({
     return this;
   },
 
+  getFieldAliases: function () {
+    return this._fieldAliases;
+  },
+
   getFieldAlias: function (fieldName) {
     return this._fieldAliases[fieldName];
   },
