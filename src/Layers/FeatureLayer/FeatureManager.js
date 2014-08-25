@@ -92,6 +92,9 @@
         this._activeRequests--;
 
         if(!error && featureCollection.features.length){
+          if(response.fieldAliases){
+            this.setFieldAliases(response.fieldAliases);
+          }
           this._addFeatures(featureCollection.features, coords);
         }
 
