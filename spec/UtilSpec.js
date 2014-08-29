@@ -661,7 +661,7 @@ describe('L.esri.Util', function () {
         [ [-83,35],[-83,41],[-74,41],[-74,35],[-83,35] ]
       ]
     ];
-    console.log(JSON.stringify(expected), JSON.stringify(output.coordinates));
+
     expect(output.coordinates).to.deep.equal(expected);
     expect(output.type).to.deep.equal('MultiPolygon');
   });
