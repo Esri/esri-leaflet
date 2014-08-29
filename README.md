@@ -78,6 +78,8 @@ If you are interested in contributing to Esri Leaflet or are interetsed in seein
 * [I want to contribute. How can I help?](https://github.com/Esri/esri-leaflet/wiki/FAQ#i-want-to-contribute-how-can-i-help)
 * [I built something with Esri Leaflet can I show you?](https://github.com/Esri/esri-leaflet/wiki/FAQ#i-built-something-with-esri-leaflet-can-i-show-you)
 * [I built a reusable component (layer type, api wrapper, ui control ect...) can I contribute it to Esri Leaflet?](i-built-a-reusable-component-layer-type-api-wrapper-ui-control-ect-can-i-contribute-it-to-esri-leaflet)
+* [What are the terms of use for Esri map tiles?](#what-are-the-terms-of-use-for-esri-map-tiles)
+* [Which services require authentication?](#which-services-require-authentication)
 * [What are some good Leaflet Plugins?](https://github.com/Esri/esri-leaflet/wiki/FAQ#what-are-some-good-leaflet-plugins)
 
 ### Projects Using Esri Leaflet
