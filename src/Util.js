@@ -107,6 +107,9 @@
   function convertRingsToGeoJSON(rings){
     var outerRings = [];
     var holes = [];
+    var x; // iterator
+    var outerRing; // current outer ring being evaluated
+    var hole; // current hole being evaluated
 
     // for each ring
     for (var r = 0; r < rings.length; r++) {
@@ -123,30 +126,54 @@
       }
     }
 
+    console.log('holes', holes.length);
+    console.log('rings', outerRings.length);
+
+    var uncontainedHoles = [];
+
     // while there are holes left...
     while(holes.length){
       // pop a hole off out stack
-      var hole = holes.pop();
-      var matched = false;
+      hole = holes.pop();
 
       // loop over all outer rings and see if they contain our hole.
-      for (var x = outerRings.length - 1; x >= 0; x--) {
-        var outerRing = outerRings[x][0];
+      var contained = false;
+      for (x = outerRings.length - 1; x >= 0; x--) {
+        outerRing = outerRings[x][0];
         if(coordinatesContainCoordinates(outerRing, hole)){
           // the hole is contained push it into our polygon
           outerRings[x].push(hole);
-
-          // we matched the hole
-          matched = true;
-
-          // stop checking to see if other outer rings contian this hole
+          contained = true;
           break;
         }
       }
 
-      // no outer rings contain this hole turn it into and outer ring (reverse it)
-      if(!matched){
-        outerRings.push([ hole.reverse() ]);
+      // ring is not contained in any outer ring
+      // sometimes this happens https://github.com/Esri/esri-leaflet/issues/320
+      if(!contained){
+        uncontainedHoles.push(hole);
+      }
+    }
+
+    // if we couldn't match any holes using contains we can try intersects...
+    while(uncontainedHoles.length){
+      // pop a hole off out stack
+      hole = uncontainedHoles.pop();
+
+      // loop over all outer rings and see if any intersect our hole.
+      var intersects = false;
+      for (x = outerRings.length - 1; x >= 0; x--) {
+        outerRing = outerRings[x][0];
+        if(arrayIntersectsArray(outerRing, hole)){
+          // the hole is contained push it into our polygon
+          outerRings[x].push(hole);
+          intersects = true;
+          break;
+        }
+      }
+
+      if(!intersects) {
+        outerRings.push([hole.reverse()]);
       }
     }
 
