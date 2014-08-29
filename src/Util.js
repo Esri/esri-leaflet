@@ -126,9 +126,6 @@
       }
     }
 
-    console.log('holes', holes.length);
-    console.log('rings', outerRings.length);
-
     var uncontainedHoles = [];
 
     // while there are holes left...
