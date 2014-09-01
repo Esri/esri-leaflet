@@ -653,15 +653,16 @@ describe('L.esri.Util', function () {
     };
 
     var output = L.esri.Util.arcgisToGeojson(input);
-
-    expect(output.coordinates).to.deep.equal([
+    var expected = [
       [
         [ [-122.63,45.52],[-122.57,45.53],[-122.52,45.5],[-122.49,45.48],[-122.64,45.49],[-122.63,45.52],[-122.63,45.52] ]
       ],
       [
         [ [-83,35],[-83,41],[-74,41],[-74,35],[-83,35] ]
       ]
-    ]);
+    ];
+
+    expect(output.coordinates).to.deep.equal(expected);
     expect(output.type).to.deep.equal('MultiPolygon');
   });
 
@@ -708,7 +709,7 @@ describe('L.esri.Util', function () {
     expect(output.type).to.deep.equal('MultiPolygon');
   });
 
-  it('should parse an ArcGIS MultiPolygon with holes in web mercator to a GeoJSON MultiPolygon', function(){
+  it('should parse an ArcGIS MultiPolygon with holes to a GeoJSON MultiPolygon', function(){
     var input = {
       'type':'polygon',
       'rings':[
@@ -734,6 +735,24 @@ describe('L.esri.Util', function () {
       ]
     ]);
     expect(output.type).to.deep.equal('MultiPolygon');
+  });
+
+  it('should still parse holes outside the outer rings', function(){
+    var input = {
+      "rings": [
+        [ [-122.45,45.63], [-122.45,45.68], [-122.39,45.68], [-122.39,45.63], [-122.45,45.63] ],
+        [ [-122.46,45.64], [-122.4,45.64], [-122.4,45.66], [-122.46,45.66], [-122.46,45.64] ]
+      ]
+    }
+
+    var output = L.esri.Util.arcgisToGeojson(input);
+
+    var expected = [
+      [ [-122.45,45.63], [-122.45,45.68], [-122.39,45.68], [-122.39,45.63], [-122.45,45.63] ],
+      [ [-122.46,45.64], [-122.4,45.64], [-122.4,45.66], [-122.46,45.66], [-122.46,45.64] ]
+    ];
+
+    expect(output.coordinates).to.deep.equal(expected);
   });
 
   it('should parse an ArcGIS Feature into a GeoJSON Feature', function(){
