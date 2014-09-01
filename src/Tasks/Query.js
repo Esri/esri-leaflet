@@ -1,109 +1,98 @@
-L.esri.Tasks.Query = L.Class.extend({
+L.esri.Tasks.Query = L.esri.Tasks.Task.extend({
 
-  initialize: function(endpoint){
+  path: 'query',
 
-    if(endpoint.url && endpoint.get){
-      this._service = endpoint;
-      this.url = endpoint.url;
-    } else {
-      this.url = L.esri.Util.cleanUrl(endpoint);
-    }
-
-    this._originalUrl = this.url;
-    this._urlPrefix = '';
-
-    this._params = {
-      returnGeometry: true,
-      where: '1=1',
-      outSr: 4326,
-      outFields: '*'
-    };
+  params: {
+    returnGeometry: true,
+    where: '1=1',
+    outSr: 4326,
+    outFields: '*'
   },
 
   within: function(bounds){
-    this._params.geometry = L.esri.Util.boundsToExtent(bounds);
-    this._params.geometryType = 'esriGeometryEnvelope';
-    this._params.spatialRel = 'esriSpatialRelIntersects';
-    this._params.inSr = 4326;
+    this.params.geometry = L.esri.Util.boundsToExtent(bounds);
+    this.params.geometryType = 'esriGeometryEnvelope';
+    this.params.spatialRel = 'esriSpatialRelIntersects';
+    this.params.inSr = 4326;
     return this;
   },
 
   // only valid for Feature Services running on ArcGIS Server 10.3 or ArcGIS Online
   nearby: function(latlng, radius){
-    this._params.geometry = ([latlng.lng,latlng.lat]).join(',');
-    this._params.geometryType = 'esriGeometryPoint';
-    this._params.spatialRel = 'esriSpatialRelIntersects';
-    this._params.units = 'esriSRUnit_Meter';
-    this._params.distance = radius;
-    this._params.inSr = 4326;
+    this.params.geometry = ([latlng.lng,latlng.lat]).join(',');
+    this.params.geometryType = 'esriGeometryPoint';
+    this.params.spatialRel = 'esriSpatialRelIntersects';
+    this.params.units = 'esriSRUnit_Meter';
+    this.params.distance = radius;
+    this.params.inSr = 4326;
     return this;
   },
 
   where: function(string){
-    this._params.where = string.replace(/"/g, '\'');
+    this.params.where = string.replace(/"/g, '\'');
     return this;
   },
 
   offset: function(offset){
-    this._params.offset = offset;
+    this.params.offset = offset;
     return this;
   },
 
   limit: function(limit){
-    this._params.limit = limit;
+    this.params.limit = limit;
     return this;
   },
 
   between: function(start, end){
-    this._params.time = ([start.valueOf(), end.valueOf()]).join();
+    this.params.time = ([start.valueOf(), end.valueOf()]).join();
     return this;
   },
 
   fields: function (fields) {
     if (L.Util.isArray(fields)) {
-      this._params.outFields = fields.join(',');
+      this.params.outFields = fields.join(',');
     } else {
-      this._params.outFields = fields;
+      this.params.outFields = fields;
     }
     return this;
   },
 
   precision: function(num){
-    this._params.geometryPrecision = num;
+    this.params.geometryPrecision = num;
     return this;
   },
 
   returnGeometry: function (returnGeometry) {
-    this._params.returnGeometry = returnGeometry;
+    this.params.returnGeometry = returnGeometry;
     return this;
   },
 
   simplify: function(map, factor){
     var mapWidth = Math.abs(map.getBounds().getWest() - map.getBounds().getEast());
-    this._params.maxAllowableOffset = (mapWidth / map.getSize().y) * factor;
+    this.params.maxAllowableOffset = (mapWidth / map.getSize().y) * factor;
     return this;
   },
 
   orderBy: function(fieldName, order){
     order = order || 'ASC';
-    this._params.orderByFields = (this._params.orderByFields) ? this._params.orderByFields + ',' : '';
-    this._params.orderByFields += ([fieldName, order]).join(' ');
+    this.params.orderByFields = (this.params.orderByFields) ? this.params.orderByFields + ',' : '';
+    this.params.orderByFields += ([fieldName, order]).join(' ');
     return this;
   },
 
   featureIds: function(ids){
-    this._params.objectIds = ids.join(',');
+    this.params.objectIds = ids.join(',');
     return this;
   },
 
   token: function(token){
-    this._params.token = token;
+    this.params.token = token;
     return this;
   },
 
   run: function(callback, context){
     this._cleanParams();
-    this._request(function(error, response){
+    this.request(function(error, response){
       callback.call(context, error, (response && L.esri.Util.responseToFeatureCollection(response)), response);
     }, context);
     return this;
@@ -111,8 +100,8 @@ L.esri.Tasks.Query = L.Class.extend({
 
   count: function(callback, context){
     this._cleanParams();
-    this._params.returnCountOnly = true;
-    this._request(function(error, response){
+    this.params.returnCountOnly = true;
+    this.request(function(error, response){
       callback.call(this, error, (response && response.count), response);
     }, context);
     return this;
@@ -120,8 +109,8 @@ L.esri.Tasks.Query = L.Class.extend({
 
   ids: function(callback, context){
     this._cleanParams();
-    this._params.returnIdsOnly = true;
-    this._request(function(error, response){
+    this.params.returnIdsOnly = true;
+    this.request(function(error, response){
       callback.call(this, error, (response && response.objectIds), response);
     }, context);
     return this;
@@ -130,8 +119,8 @@ L.esri.Tasks.Query = L.Class.extend({
   // only valid for Feature Services running on ArcGIS Server 10.3 or ArcGIS Online
   bounds: function(callback, context){
     this._cleanParams();
-    this._params.returnExtentOnly = true;
-    this._request(function(error, response){
+    this.params.returnExtentOnly = true;
+    this.request(function(error, response){
       callback.call(context, error, (response && response.extent && L.esri.Util.extentToBounds(response.extent)), response);
     }, context);
     return this;
@@ -140,28 +129,20 @@ L.esri.Tasks.Query = L.Class.extend({
   // only valid for image services
   pixelSize: function(point){
     point = L.point(point);
-    this._params.pixelSize = ([point.x,point.y]).join(',');
+    this.params.pixelSize = ([point.x,point.y]).join(',');
     return this;
   },
 
   // only valid for map services
   layer: function(layer){
-    this._urlPrefix = layer + '/';
+    this.path = layer + '/query';
     return this;
   },
 
   _cleanParams: function(){
-    delete this._params.returnIdsOnly;
-    delete this._params.returnExtentOnly;
-    delete this._params.returnCountOnly;
-  },
-
-  _request: function(callback, context){
-    if(this._service){
-      this._service.get(this._urlPrefix +'query', this._params, callback, context);
-    } else {
-      L.esri.get(this.url + this._urlPrefix + 'query', this._params, callback, context);
-    }
+    delete this.params.returnIdsOnly;
+    delete this.params.returnExtentOnly;
+    delete this.params.returnCountOnly;
   }
 
 });

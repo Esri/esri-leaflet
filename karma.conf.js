@@ -35,6 +35,7 @@ module.exports = function(config) {
       'src/Services/FeatureLayer.js',
       'src/Services/MapService.js',
       'src/Services/ImageService.js',
+      'src/Tasks/Task.js',
       'src/Tasks/Query.js',
       'src/Tasks/Identify.js',
       'src/Tasks/IdentifyFeatures.js',

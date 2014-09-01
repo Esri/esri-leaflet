@@ -1,120 +1,104 @@
-L.esri.Tasks.Find = L.Class.extend({
+L.esri.Tasks.Find = L.esri.Tasks.Task.extend({
+  path: 'find',
 
-  initialize: function (endpoint) {
-    if (endpoint.url && endpoint.get) {
-      this._service = endpoint;
-      this.url = endpoint.url;
-    } else {
-      this.url = L.esri.Util.cleanUrl(endpoint);
-    }
-
-    this._params = {
-      sr: 4326,
-      contains: true,
-      returnGeometry: true,
-      returnZ: true,
-      returnM: false
-    };
+  params: {
+    sr: 4326,
+    contains: true,
+    returnGeometry: true,
+    returnZ: true,
+    returnM: false
   },
 
   text: function (text) {
-    this._params.searchText = text;
+    this.params.searchText = text;
     return this;
   },
 
   contains: function (contains) {
-    this._params.contains = contains;
+    this.params.contains = contains;
     return this;
   },
 
   fields: function (fields) {
-    this._params.searchFields = (this._params.searchFields) ? this._params.searchFields + ',' : '';
+    this.params.searchFields = (this.params.searchFields) ? this.params.searchFields + ',' : '';
     if (L.Util.isArray(fields)) {
-      this._params.searchFields += fields.join(',');
+      this.params.searchFields += fields.join(',');
     } else {
-      this._params.searchFields += fields;
+      this.params.searchFields += fields;
     }
     return this;
   },
 
   spatialReference: function (spatialReference) {
-    this._params.sr = spatialReference;
+    this.params.sr = spatialReference;
     return this;
   },
 
   layerDefs: function (id, where) {
-    this._params.layerDefs = (this._params.layerDefs) ? this._params.layerDefs + ';' : '';
-    this._params.layerDefs += ([id, where]).join(':');
+    this.params.layerDefs = (this.params.layerDefs) ? this.params.layerDefs + ';' : '';
+    this.params.layerDefs += ([id, where]).join(':');
     return this;
   },
 
   layers: function (layers) {
     if (L.Util.isArray(layers)) {
-      this._params.layers = layers.join(',');
+      this.params.layers = layers.join(',');
     } else {
-      this._params.layers = layers;
+      this.params.layers = layers;
     }
     return this;
   },
 
   returnGeometry: function (returnGeometry) {
-    this._params.returnGeometry = returnGeometry;
+    this.params.returnGeometry = returnGeometry;
     return this;
   },
 
   maxAllowableOffset: function (num) {
-    this._params.maxAllowableOffset = num;
+    this.params.maxAllowableOffset = num;
     return this;
   },
 
   precision: function (num) {
-    this._params.geometryPrecision = num;
+    this.params.geometryPrecision = num;
     return this;
   },
 
   dynamicLayers: function (dynamicLayers) {
-    this._params.dynamicLayers = dynamicLayers;
+    this.params.dynamicLayers = dynamicLayers;
     return this;
   },
 
   returnZ: function (returnZ) {
-    this._params.returnZ = returnZ;
+    this.params.returnZ = returnZ;
     return this;
   },
 
   returnM: function (returnM) {
-    this._params.returnM = returnM;
+    this.params.returnM = returnM;
     return this;
   },
 
   gdbVersion: function (string) {
-    this._params.gdbVersion = string;
+    this.params.gdbVersion = string;
     return this;
   },
 
   simplify: function(map, factor){
     var mapWidth = Math.abs(map.getBounds().getWest() - map.getBounds().getEast());
-    this._params.maxAllowableOffset = (mapWidth / map.getSize().y) * factor;
+    this.params.maxAllowableOffset = (mapWidth / map.getSize().y) * factor;
     return this;
   },
 
   token: function (token) {
-    this._params.token = token;
+    this.params.token = token;
     return this;
   },
 
   run: function (callback, context) {
-    this._request(function(error, response){
+    this.request(function(error, response){
       callback.call(context, error, (response && L.esri.Util.responseToFeatureCollection(response)), response);
     }, context);
-  },
-
-  _request: function (callback, context) {
-    if(this._service){
-      this._service.get('find', this._params, callback, context);
-    } else {
-      L.esri.get(this.url + 'find', this._params, callback, context);
-    }
   }
 });
 
