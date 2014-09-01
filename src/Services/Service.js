@@ -22,6 +22,10 @@ L.esri.Services.Service = L.Class.extend({
     return this._request('post', path, params, callback, context);
   },
 
+  request: function (path, params, callback, context) {
+    return this._request('request', path, params, callback, context);
+  },
+
   metadata: function (callback, context) {
     return this._request('get', '', {}, callback, context);
   },
@@ -50,8 +54,7 @@ L.esri.Services.Service = L.Class.extend({
       this._requestQueue.push([method, path, params, callback, context]);
     } else {
       var url = (this.options.proxy) ? this.options.proxy + '?' + this.url + path : this.url + path;
-
-      if(method === 'get' && !this.options.useCors){
+      if((method === 'get' || method === 'request') && !this.options.useCors){
         return L.esri.Request.get.JSONP(url, params, wrappedCallback);
       } else {
         return L.esri[method](url, params, wrappedCallback);

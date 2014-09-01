@@ -1,65 +1,55 @@
 L.esri.Tasks.IdentifyImage = L.esri.Tasks.Identify.extend({
-
-  initialize: function(endpoint){
-    if(endpoint.url && endpoint.get){
-      this._service = endpoint;
-      this.url = endpoint.url;
-    } else {
-      this.url = L.esri.Util.cleanUrl(endpoint);
-    }
-
-    this._params = {
-      returnGeometry: false
-    };
+  params: {
+    returnGeometry: false
   },
 
   at: function(latlng){
-    this._params.geometry = JSON.stringify({
+    this.params.geometry = JSON.stringify({
       x: latlng.lng,
       y: latlng.lat,
       spatialReference:{
         wkid: 4326
       }
     });
-    this._params.geometryType = 'esriGeometryPoint';
+    this.params.geometryType = 'esriGeometryPoint';
     return this;
   },
 
   setMosaicRule: function(mosaicRule) {
-    this._params.mosaicRule = mosaicRule;
+    this.params.mosaicRule = mosaicRule;
     return this;
   },
 
   getMosaicRule: function() {
-    return this._params.mosaicRule;
+    return this.params.mosaicRule;
   },
 
   setRenderingRule: function(renderingRule) {
-    this._params.renderingRule = renderingRule;
+    this.params.renderingRule = renderingRule;
     return this;
   },
 
   getRenderingRule: function() {
-    return this._params.renderingRule;
+    return this.params.renderingRule;
   },
 
   setPixelSize: function(pixelSize) {
-    this._params.pixelSize = pixelSize.join ? pixelSize.join(',') : pixelSize;
+    this.params.pixelSize = pixelSize.join ? pixelSize.join(',') : pixelSize;
     return this;
   },
 
   getPixelSize: function() {
-    return this._params.pixelSize;
+    return this.params.pixelSize;
   },
 
   returnCatalogItems: function (returnCatalogItems) {
-    this._params.returnCatalogItems = returnCatalogItems;
+    this.params.returnCatalogItems = returnCatalogItems;
     return this;
   },
 
   run: function (callback, context){
     var _this = this;
-    this._request(function(error, response){
+    this.request(function(error, response){
       callback.call(context, error, (response && _this._responseToGeoJSON(response)), response);
     }, context);
   },

@@ -1,26 +1,19 @@
-L.esri.Tasks.Identify = L.Class.extend({
+L.esri.Tasks.Identify = L.esri.Tasks.Task.extend({
+  path: 'identify',
 
   between: function(start, end){
-    this._params.time = ([start.valueOf(), end.valueOf()]).join(',');
+    this.params.time = ([start.valueOf(), end.valueOf()]).join(',');
     return this;
   },
 
   returnGeometry: function (returnGeometry) {
-    this._params.returnGeometry = returnGeometry;
+    this.params.returnGeometry = returnGeometry;
     return this;
   },
 
   token: function(token){
-    this._params.token = token;
+    this.params.token = token;
     return this;
-  },
-
-  _request: function(callback, context){
-    if(this._service){
-      this._service.get('identify', this._params, callback, context);
-    } else {
-      L.esri.get(this.url + 'identify', this._params, callback, context);
-    }
   }
 
 });
