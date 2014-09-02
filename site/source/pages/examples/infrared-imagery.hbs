@@ -1,15 +1,15 @@
 ---
-title: Simple ImageMapLayer
-description: Display an Image Service from ArcGIS Online or ArcGIS Server.  More information about Map Services can be found in the <a href="/esri-leaflet/api-reference/layers/image-map-layer.html">L.esri.Layers.ImageMapLayer</a> documentation.
+title: Infrared Imagery using BandIDs
+description: Display NAIP imagery from an ArcGIS image service and use the band IDs parameter to show the near infrared band in a false color composite. Vegetated areas are highlighted in red. More information about Image Services can be found in the <a href="/esri-leaflet/api-reference/layers/image-map-layer.html">L.esri.Layers.ImageMapLayer</a> documentation.
 layout: example.hbs
 ---
 
 <div id="map"></div>
 
 <script>
-  var map = L.map('map').setView([43.50, -120.23], 7);
+  var map = L.map('map').setView([43.415, -124.228], 13);
 
-  L.esri.basemapLayer('Imagery').addTo(map);
+  L.esri.basemapLayer('Gray').addTo(map);
 
   L.esri.imageMapLayer('http://imagery.oregonexplorer.info/arcgis/rest/services/NAIP_2011/NAIP_2011_Dynamic/ImageServer')
         .setBandIds('3,0,1')
