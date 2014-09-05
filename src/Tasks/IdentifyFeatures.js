@@ -1,7 +1,7 @@
 L.esri.Tasks.IdentifyFeatures = L.esri.Tasks.Identify.extend({
   setters: {
     'layers': 'layers',
-    'precision': 'precision',
+    'precision': 'geometryPrecision',
     'tolerance': 'tolerance'
   },
 

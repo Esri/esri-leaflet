@@ -1,4 +1,13 @@
 L.esri.Tasks.Query = L.esri.Tasks.Task.extend({
+  setters: {
+    'offset': 'offset',
+    'limit': 'limit',
+    'outFields': 'fields[]',
+    'precision': 'geometryPrecision',
+    'featureIds': 'objectIds[]',
+    'returnGeometry': 'returnGeometry',
+    'token': 'token'
+  },
 
   path: 'query',
 
@@ -33,16 +42,6 @@ L.esri.Tasks.Query = L.esri.Tasks.Task.extend({
     return this;
   },
 
-  offset: function(offset){
-    this.params.offset = offset;
-    return this;
-  },
-
-  limit: function(limit){
-    this.params.limit = limit;
-    return this;
-  },
-
   between: function(start, end){
     this.params.time = ([start.valueOf(), end.valueOf()]).join();
     return this;
@@ -57,16 +56,6 @@ L.esri.Tasks.Query = L.esri.Tasks.Task.extend({
     return this;
   },
 
-  precision: function(num){
-    this.params.geometryPrecision = num;
-    return this;
-  },
-
-  returnGeometry: function (returnGeometry) {
-    this.params.returnGeometry = returnGeometry;
-    return this;
-  },
-
   simplify: function(map, factor){
     var mapWidth = Math.abs(map.getBounds().getWest() - map.getBounds().getEast());
     this.params.maxAllowableOffset = (mapWidth / map.getSize().y) * factor;
@@ -77,11 +66,6 @@ L.esri.Tasks.Query = L.esri.Tasks.Task.extend({
     order = order || 'ASC';
     this.params.orderByFields = (this.params.orderByFields) ? this.params.orderByFields + ',' : '';
     this.params.orderByFields += ([fieldName, order]).join(' ');
-    return this;
-  },
-
-  featureIds: function(ids){
-    this.params.objectIds = ids.join(',');
     return this;
   },
 
