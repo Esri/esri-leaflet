@@ -9,6 +9,12 @@ L.esri.Tasks.Task = L.Class.extend({
 
     this.params = L.Util.extend({}, this.params);
   },
+  token: function(token){
+    if(this._service){
+      this._service.authenticate(token);
+    }
+    return this;
+  },
   request: function(callback, context){
     if(this._service){
       return this._service.request(this.path, this.params, callback, context);

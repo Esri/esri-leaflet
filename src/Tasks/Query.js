@@ -85,11 +85,6 @@ L.esri.Tasks.Query = L.esri.Tasks.Task.extend({
     return this;
   },
 
-  token: function(token){
-    this.params.token = token;
-    return this;
-  },
-
   run: function(callback, context){
     this._cleanParams();
     return this.request(function(error, response){

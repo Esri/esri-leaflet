@@ -9,11 +9,5 @@ L.esri.Tasks.Identify = L.esri.Tasks.Task.extend({
   returnGeometry: function (returnGeometry) {
     this.params.returnGeometry = returnGeometry;
     return this;
-  },
-
-  token: function(token){
-    this.params.token = token;
-    return this;
   }
-
 });

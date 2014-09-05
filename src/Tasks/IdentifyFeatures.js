@@ -1,4 +1,10 @@
 L.esri.Tasks.IdentifyFeatures = L.esri.Tasks.Identify.extend({
+  setters: {
+    'layers': 'layers',
+    'precision': 'precision',
+    'tolerance': 'tolerance'
+  },
+
   params: {
     sr: 4326,
     layers: 'all',
@@ -26,24 +32,9 @@ L.esri.Tasks.IdentifyFeatures = L.esri.Tasks.Identify.extend({
     return this;
   },
 
-  layers: function (string){
-    this.params.layers = string;
-    return this;
-  },
-
-  precision: function(num){
-    this.params.geometryPrecision = num;
-    return this;
-  },
-
   simplify: function(map, factor){
     var mapWidth = Math.abs(map.getBounds().getWest() - map.getBounds().getEast());
     this.params.maxAllowableOffset = (mapWidth / map.getSize().y) * (1 - factor);
-    return this;
-  },
-
-  tolerance: function(tolerance){
-    this.params.tolerance = tolerance;
     return this;
   },
 

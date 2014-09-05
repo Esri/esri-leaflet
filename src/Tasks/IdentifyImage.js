@@ -1,4 +1,9 @@
 L.esri.Tasks.IdentifyImage = L.esri.Tasks.Identify.extend({
+  setters: {
+    'setMosaicRule': 'mosaicRule',
+    'setRenderingRule': 'renderingRule',
+    'returnCatalogItems': 'returnCatalogItems'
+  },
   params: {
     returnGeometry: false
   },
@@ -15,18 +20,8 @@ L.esri.Tasks.IdentifyImage = L.esri.Tasks.Identify.extend({
     return this;
   },
 
-  setMosaicRule: function(mosaicRule) {
-    this.params.mosaicRule = mosaicRule;
-    return this;
-  },
-
   getMosaicRule: function() {
     return this.params.mosaicRule;
-  },
-
-  setRenderingRule: function(renderingRule) {
-    this.params.renderingRule = renderingRule;
-    return this;
   },
 
   getRenderingRule: function() {
@@ -40,11 +35,6 @@ L.esri.Tasks.IdentifyImage = L.esri.Tasks.Identify.extend({
 
   getPixelSize: function() {
     return this.params.pixelSize;
-  },
-
-  returnCatalogItems: function (returnCatalogItems) {
-    this.params.returnCatalogItems = returnCatalogItems;
-    return this;
   },
 
   run: function (callback, context){
