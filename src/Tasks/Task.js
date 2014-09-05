@@ -1,4 +1,26 @@
 L.esri.Tasks.Task = L.Class.extend({
+  generateSetter: function(param, context){
+    var isArray = param.match(/([a-zA-Z]+)\[\]/);
+
+    param = (isArray) ? isArray[1] : param;
+
+    if(isArray){
+      return L.Util.bind(function(value){
+        // this.params[param] = (this.params[param]) ? this.params[param] + ',' : '';
+        if (L.Util.isArray(value)) {
+          this.params[param] = value.join(',');
+        } else {
+          this.params[param] = value;
+        }
+        return this;
+      }, context);
+    } else {
+      return L.Util.bind(function(value){
+        this.params[param] = value;
+        return this;
+      }, context);
+    }
+  },
   initialize: function(endpoint){
     if(endpoint.url && endpoint.get){
       this._service = endpoint;
@@ -8,6 +30,11 @@ L.esri.Tasks.Task = L.Class.extend({
     }
 
     this.params = L.Util.extend({}, this.params);
+
+    for (var setter in this.setters){
+      var param = this.setters[setter];
+      this[setter] = this.generateSetter(param, this);
+    }
   },
   request: function(callback, context){
     if(this._service){

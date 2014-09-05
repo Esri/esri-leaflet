@@ -114,6 +114,9 @@ describe('L.esri.Tasks.Find', function () {
       done();
     });
 
+    console.log(request.url);
+    console.log(url + 'find?sr=4326&contains=true&returnGeometry=true&returnZ=true&returnM=false&layers=0&searchText=Site&f=json');
+
     expect(request).to.be.an.instanceof(XMLHttpRequest);
 
     server.respond();

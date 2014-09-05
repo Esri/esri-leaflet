@@ -1,4 +1,22 @@
 L.esri.Tasks.Find = L.esri.Tasks.Task.extend({
+  setters: {
+    // method name > param name
+    'contains': 'contains',
+    'text': 'searchText',
+    'fields': 'searchFields[]', // denote an array or single string
+    'spatialReference': 'spatialReference',
+    'sr': 'spatialReference',
+    'layers': 'layers[]',
+    'returnGeometry': 'returnGeometry',
+    'maxAllowableOffset': 'maxAllowableOffset',
+    'precision': 'geometryPrecision',
+    'dynamicLayers': 'dynamicLayers',
+    'returnZ' : 'returnZ',
+    'returnM' : 'returnM',
+    'gdbVersion' : 'gdbVersion',
+    'token' : 'token'
+  },
+
   path: 'find',
 
   params: {
@@ -9,89 +27,15 @@ L.esri.Tasks.Find = L.esri.Tasks.Task.extend({
     returnM: false
   },
 
-  text: function (text) {
-    this.params.searchText = text;
-    return this;
-  },
-
-  contains: function (contains) {
-    this.params.contains = contains;
-    return this;
-  },
-
-  fields: function (fields) {
-    this.params.searchFields = (this.params.searchFields) ? this.params.searchFields + ',' : '';
-    if (L.Util.isArray(fields)) {
-      this.params.searchFields += fields.join(',');
-    } else {
-      this.params.searchFields += fields;
-    }
-    return this;
-  },
-
-  spatialReference: function (spatialReference) {
-    this.params.sr = spatialReference;
-    return this;
-  },
-
   layerDefs: function (id, where) {
     this.params.layerDefs = (this.params.layerDefs) ? this.params.layerDefs + ';' : '';
     this.params.layerDefs += ([id, where]).join(':');
     return this;
   },
 
-  layers: function (layers) {
-    if (L.Util.isArray(layers)) {
-      this.params.layers = layers.join(',');
-    } else {
-      this.params.layers = layers;
-    }
-    return this;
-  },
-
-  returnGeometry: function (returnGeometry) {
-    this.params.returnGeometry = returnGeometry;
-    return this;
-  },
-
-  maxAllowableOffset: function (num) {
-    this.params.maxAllowableOffset = num;
-    return this;
-  },
-
-  precision: function (num) {
-    this.params.geometryPrecision = num;
-    return this;
-  },
-
-  dynamicLayers: function (dynamicLayers) {
-    this.params.dynamicLayers = dynamicLayers;
-    return this;
-  },
-
-  returnZ: function (returnZ) {
-    this.params.returnZ = returnZ;
-    return this;
-  },
-
-  returnM: function (returnM) {
-    this.params.returnM = returnM;
-    return this;
-  },
-
-  gdbVersion: function (string) {
-    this.params.gdbVersion = string;
-    return this;
-  },
-
   simplify: function(map, factor){
     var mapWidth = Math.abs(map.getBounds().getWest() - map.getBounds().getEast());
     this.params.maxAllowableOffset = (mapWidth / map.getSize().y) * factor;
-    return this;
-  },
-
-  token: function (token) {
-    this.params.token = token;
     return this;
   },
 
