@@ -33,7 +33,8 @@ describe('L.esri.Layers.FeatureManager', function () {
     });
 
     layer = new MockLayer(url, {
-      timeField: 'Time'
+      timeField: 'Time',
+      attribution: 'Esri'
     });
   });
 
@@ -187,6 +188,11 @@ describe('L.esri.Layers.FeatureManager', function () {
     expect(map.hasLayer(layer)).to.equal(true);
   });
 
+  it('should display an attribution if one was passed', function(){
+    layer.addTo(map);
+    expect(map.attributionControl._container.innerText).to.contain('Esri');
+  });
+
   it('should be able to remove itself to a map', function(){
     layer.addTo(map);
     map.removeLayer(layer);
@@ -235,6 +241,7 @@ describe('L.esri.Layers.FeatureManager', function () {
         'id': 1
       }
     ]);
+
   });
 
   it('should fire a drawlimitexceeded event when there are more features then can be requested', function(done){

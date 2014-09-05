@@ -76,8 +76,8 @@
       var paramString = serialize(params);
       var httpRequest = createRequest(callback, context);
 
-      if(url + '?' + paramString > 2000){
-        httpRequest.open('GET', url + '?' + serialize(params), true);
+      if((url + '?' + paramString).length < 2000){
+        httpRequest.open('GET', url + '?' + paramString);
         httpRequest.send(null);
       } else {
         httpRequest.open('POST', url);

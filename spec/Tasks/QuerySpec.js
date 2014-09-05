@@ -208,11 +208,13 @@ describe('L.esri.Tasks.Query', function () {
   it('should query features', function(done){
     server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&f=json', JSON.stringify(sampleQueryResponse));
 
-    task.run(function(error, featureCollection, raw){
+    var request = task.run(function(error, featureCollection, raw){
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleQueryResponse);
       done();
     });
+
+    expect(request).to.be.an.instanceof(XMLHttpRequest);
 
     server.respond();
   });
@@ -391,11 +393,13 @@ describe('L.esri.Tasks.Query', function () {
   it('should query bounds', function(done){
     server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&returnExtentOnly=true&f=json', JSON.stringify(sampleExtentResponse));
 
-    task.bounds(function(error, latlngbounds, raw){
+    var request = task.bounds(function(error, latlngbounds, raw){
       expect(latlngbounds).to.deep.equal(bounds);
       expect(raw).to.deep.equal(sampleExtentResponse);
       done();
     });
+
+    expect(request).to.be.an.instanceof(XMLHttpRequest);
 
     server.respond();
   });
@@ -403,11 +407,13 @@ describe('L.esri.Tasks.Query', function () {
   it('should query count', function(done){
     server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&returnCountOnly=true&f=json', JSON.stringify(sampleCountResponse));
 
-    task.count(function(error, count, raw){
+    var request = task.count(function(error, count, raw){
       expect(count).to.equal(1);
       expect(raw).to.deep.equal(sampleCountResponse);
       done();
     });
+
+    expect(request).to.be.an.instanceof(XMLHttpRequest);
 
     server.respond();
   });
@@ -415,11 +421,13 @@ describe('L.esri.Tasks.Query', function () {
   it('should query ids', function(done){
     server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&returnIdsOnly=true&f=json', JSON.stringify(sampleIdsResponse));
 
-    task.ids(function(error, ids, raw){
+    var request = task.ids(function(error, ids, raw){
       expect(ids).to.deep.equal([1,2]);
       expect(raw).to.deep.equal(sampleIdsResponse);
       done();
     });
+
+    expect(request).to.be.an.instanceof(XMLHttpRequest);
 
     server.respond();
   });
@@ -429,11 +437,13 @@ describe('L.esri.Tasks.Query', function () {
 
     var service = new L.esri.Services.FeatureLayer(featureLayerUrl);
 
-    service.query().run(function(error, featureCollection, raw){
+    var request = service.query().run(function(error, featureCollection, raw){
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleQueryResponse);
       done();
     });
+
+    expect(request).to.be.an.instanceof(XMLHttpRequest);
 
     server.respond();
   });
@@ -457,11 +467,13 @@ describe('L.esri.Tasks.Query', function () {
 
     var service = new L.esri.Services.MapService(imageServiceUrl);
 
-    service.query().pixelSize([1, 1]).run(function(error, featureCollection, raw){
+    var request = service.query().pixelSize([1, 1]).run(function(error, featureCollection, raw){
       expect(featureCollection).to.deep.equal(sampleImageServiceCollection);
       expect(raw).to.deep.equal(sampleImageServiceQueryResponse);
       done();
     });
+
+    expect(request).to.be.an.instanceof(XMLHttpRequest);
 
     server.respond();
   });
