@@ -48,10 +48,9 @@ L.esri.Tasks.IdentifyImage = L.esri.Tasks.Identify.extend({
   },
 
   run: function (callback, context){
-    var _this = this;
-    this.request(function(error, response){
-      callback.call(context, error, (response && _this._responseToGeoJSON(response)), response);
-    }, context);
+    return this.request(function(error, response){
+      callback.call(context, error, (response && this._responseToGeoJSON(response)), response);
+    }, this);
   },
 
   // get pixel data and return as geoJSON point

@@ -96,7 +96,7 @@ L.esri.Tasks.Find = L.esri.Tasks.Task.extend({
   },
 
   run: function (callback, context) {
-    this.request(function(error, response){
+    return this.request(function(error, response){
       callback.call(context, error, (response && L.esri.Util.responseToFeatureCollection(response)), response);
     }, context);
   }

@@ -11,9 +11,9 @@ L.esri.Tasks.Task = L.Class.extend({
   },
   request: function(callback, context){
     if(this._service){
-      this._service.request(this.path, this.params, callback, context);
+      return this._service.request(this.path, this.params, callback, context);
     } else {
-      L.esri.request(this.url + this.path, this.params, callback, context);
+      return L.esri.request(this.url + this.path, this.params, callback, context);
     }
   }
 });

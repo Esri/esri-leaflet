@@ -92,38 +92,34 @@ L.esri.Tasks.Query = L.esri.Tasks.Task.extend({
 
   run: function(callback, context){
     this._cleanParams();
-    this.request(function(error, response){
+    return this.request(function(error, response){
       callback.call(context, error, (response && L.esri.Util.responseToFeatureCollection(response)), response);
     }, context);
-    return this;
   },
 
   count: function(callback, context){
     this._cleanParams();
     this.params.returnCountOnly = true;
-    this.request(function(error, response){
+    return this.request(function(error, response){
       callback.call(this, error, (response && response.count), response);
     }, context);
-    return this;
   },
 
   ids: function(callback, context){
     this._cleanParams();
     this.params.returnIdsOnly = true;
-    this.request(function(error, response){
+    return this.request(function(error, response){
       callback.call(this, error, (response && response.objectIds), response);
     }, context);
-    return this;
   },
 
   // only valid for Feature Services running on ArcGIS Server 10.3 or ArcGIS Online
   bounds: function(callback, context){
     this._cleanParams();
     this.params.returnExtentOnly = true;
-    this.request(function(error, response){
+    return this.request(function(error, response){
       callback.call(context, error, (response && response.extent && L.esri.Util.extentToBounds(response.extent)), response);
     }, context);
-    return this;
   },
 
   // only valid for image services
