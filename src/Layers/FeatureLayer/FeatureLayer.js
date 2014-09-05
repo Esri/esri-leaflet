@@ -35,6 +35,12 @@ L.esri.Layers.FeatureLayer = L.esri.Layers.FeatureManager.extend({
     return L.esri.Layers.FeatureManager.prototype.onRemove.call(this, map);
   },
 
+  createNewLayer: function(geojson){
+    // @TODO Leaflet 0.8
+    //newLayer = L.GeoJSON.geometryToLayer(geojson, this.options);
+    return L.GeoJSON.geometryToLayer(geojson, this.options.pointToLayer, L.GeoJSON.coordsToLatLng, this.options);
+  },
+
   /**
    * Feature Managment Methods
    */
@@ -55,7 +61,7 @@ L.esri.Layers.FeatureLayer = L.esri.Layers.FeatureManager.extend({
         // @TODO Leaflet 0.8
         //newLayer = L.GeoJSON.geometryToLayer(geojson, this.options);
 
-        var updateGeo = L.GeoJSON.geometryToLayer(geojson, this.options.pointToLayer, L.GeoJSON.coordsToLatLng, this.options);
+        var updateGeo = this.createNewLayer(geojson);
         layer.setLatLngs(updateGeo.getLatLngs());
       }
 
@@ -63,7 +69,7 @@ L.esri.Layers.FeatureLayer = L.esri.Layers.FeatureManager.extend({
         // @TODO Leaflet 0.8
         //newLayer = L.GeoJSON.geometryToLayer(geojson, this.options);
 
-        newLayer = L.GeoJSON.geometryToLayer(geojson, this.options.pointToLayer, L.GeoJSON.coordsToLatLng, this.options);
+        newLayer =  this.createNewLayer(geojson);
         newLayer.feature = geojson;
         newLayer.defaultOptions = newLayer.options;
         newLayer._leaflet_id = this._key + '_' + geojson.id;
