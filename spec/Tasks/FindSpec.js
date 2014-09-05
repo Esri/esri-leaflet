@@ -108,11 +108,13 @@ describe('L.esri.Tasks.Find', function () {
   it('should find features with provided layer id and search text', function(done){
     server.respondWith('GET', url + 'find?sr=4326&contains=true&returnGeometry=true&returnZ=true&returnM=false&layers=0&searchText=Site&f=json', JSON.stringify(sampleResponse));
 
-    task.layers('0').text('Site').run(function(error, featureCollection, raw){
+    var request = task.layers('0').text('Site').run(function(error, featureCollection, raw){
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleResponse);
       done();
     });
+
+    expect(request).to.be.an.instanceof(XMLHttpRequest);
 
     server.respond();
   });
@@ -182,11 +184,13 @@ describe('L.esri.Tasks.Find', function () {
 
     server.respondWith('GET', url + 'find?sr=4326&contains=true&returnGeometry=true&returnZ=true&returnM=false&layers=0&searchText=Site&f=json', JSON.stringify(sampleResponse));
 
-    service.find().layers('0').text('Site').run(function(error, featureCollection, raw){
+    var request = service.find().layers('0').text('Site').run(function(error, featureCollection, raw){
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleResponse);
       done();
     });
+
+    expect(request).to.be.an.instanceof(XMLHttpRequest);
 
     server.respond();
   });

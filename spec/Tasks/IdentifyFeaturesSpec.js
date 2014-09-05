@@ -73,11 +73,13 @@ describe('L.esri.Tasks.IdentifyFeatures', function () {
   it('should identify features', function(done){
     server.respondWith('GET', url + 'identify?sr=4326&layers=all&tolerance=3&returnGeometry=true&imageDisplay=500%2C500%2C96&mapExtent=-122.66535758972167%2C45.50624163368495%2C-122.65462875366211%2C45.51376023843158&geometry=-122.66%2C45.51&geometryType=esriGeometryPoint&f=json', JSON.stringify(sampleResponse));
 
-    task.run(function(error, featureCollection, raw){
+    var request = task.run(function(error, featureCollection, raw){
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleResponse);
       done();
     });
+
+    expect(request).to.be.an.instanceof(XMLHttpRequest);
 
     server.respond();
   });
@@ -187,11 +189,13 @@ describe('L.esri.Tasks.IdentifyFeatures', function () {
 
     server.respondWith('GET', url + 'identify?sr=4326&layers=all&tolerance=3&returnGeometry=true&imageDisplay=500%2C500%2C96&mapExtent=-122.66535758972167%2C45.50624163368495%2C-122.65462875366211%2C45.51376023843158&geometry=-122.66%2C45.51&geometryType=esriGeometryPoint&f=json', JSON.stringify(sampleResponse));
 
-    service.identify().on(map).at(latlng).run(function(error, featureCollection, raw){
+    var request = service.identify().on(map).at(latlng).run(function(error, featureCollection, raw){
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleResponse);
       done();
     });
+
+    expect(request).to.be.an.instanceof(XMLHttpRequest);
 
     server.respond();
   });

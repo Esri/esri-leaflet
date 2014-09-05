@@ -75,9 +75,9 @@
     request: function(url, params, callback, context){
       var paramString = serialize(params);
       var httpRequest = createRequest(callback, context);
-      var getUrl = url + '?' + paramString;
-      if(getUrl.length < 2000){
-        httpRequest.open('GET', url + '?' + serialize(params), true);
+
+      if((url + '?' + paramString).length < 2000){
+        httpRequest.open('GET', url + '?' + paramString);
         httpRequest.send(null);
       } else {
         httpRequest.open('POST', url);
@@ -158,6 +158,7 @@
   // Always use XMLHttpRequest for posts
   L.esri.post = L.esri.Request.post.XMLHTTP;
 
+  // expose a common request method the uses GET\POST based on request length
   L.esri.request = L.esri.Request.request;
 
 })(L);

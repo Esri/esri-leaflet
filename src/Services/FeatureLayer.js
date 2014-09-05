@@ -25,6 +25,7 @@ L.esri.Services.FeatureLayer = L.esri.Services.Service.extend({
 
   updateFeature: function(feature, callback, context) {
     feature = L.esri.Util.geojsonToArcGIS(feature, this.options.idAttribute);
+
     return this.post('updateFeatures', {
       features: [feature]
     }, function(error, response){
