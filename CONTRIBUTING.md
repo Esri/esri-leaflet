@@ -2,7 +2,9 @@ Esri welcomes contributions from anyone and everyone. Please see our [guidelines
 
 ### Before filing an issue
 
-Please take a look at previous issues that resolve common problems https://github.com/Esri/esri-leaflet/issues?labels=FAQ&milestone=&page=1&state=closed.
+Please take a look at [previous issues](https://github.com/Esri/esri-leaflet/issues?labels=FAQ&milestone=&page=1&state=closed) that resolve common problems.
+
+You can also post issues on the [GIS Stackexchange](http://gis.stackexchange.com/questions/ask?tags=esri-leaflet,leaflet) an/or the [Esri Leaflet place](https://geonet.esri.com/discussion/create.jspa?sr=pmenu&containerID=1841&containerType=700&tags=esri-leaflet,leaflet) on GeoNet.
 
 ### I want to contribute, what should I work on?
 
