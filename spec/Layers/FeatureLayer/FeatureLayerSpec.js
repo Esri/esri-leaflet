@@ -209,22 +209,50 @@ describe('L.esri.Layers.FeatureLayer', function () {
 
   it('should change styles on features with an object', function(){
     layer.setStyle({
-      fill: 'red'
+      color: 'red'
     });
 
-    expect(layer.getFeature(1).options.fill).to.equal('red');
-    expect(layer.getFeature(2).options.fill).to.equal('red');
+    expect(layer.getFeature(1).options.color).to.equal('red');
+    expect(layer.getFeature(2).options.color).to.equal('red');
+
+    layer.createLayers([{
+      type: 'Feature',
+      id: 3,
+      geometry: {
+        type: 'LineString',
+        coordinates: [[-122, 45], [-121, 40]]
+      },
+      properties: {
+        time: new Date('Febuary 24 2014').valueOf()
+      }
+    }]);
+
+    expect(layer.getFeature(3).options.color).to.equal('red');
   });
 
-  it('should change styles on feautres with a function', function(){
+  it('should change styles on features with a function', function(){
     layer.setStyle(function(){
       return {
-        fill: 'red'
+        color: 'red'
       };
     });
 
-    expect(layer.getFeature(1).options.fill).to.equal('red');
-    expect(layer.getFeature(2).options.fill).to.equal('red');
+    expect(layer.getFeature(1).options.color).to.equal('red');
+    expect(layer.getFeature(2).options.color).to.equal('red');
+
+    layer.createLayers([{
+      type: 'Feature',
+      id: 3,
+      geometry: {
+        type: 'LineString',
+        coordinates: [[-122, 45], [-121, 40]]
+      },
+      properties: {
+        time: new Date('Febuary 24 2014').valueOf()
+      }
+    }]);
+
+    expect(layer.getFeature(3).options.color).to.equal('red');
   });
 
   it('should propagate events from individual features', function(){
