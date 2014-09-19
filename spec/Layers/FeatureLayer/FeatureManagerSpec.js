@@ -410,12 +410,14 @@ describe('L.esri.Layers.FeatureManager', function () {
       objectIdFieldName: 'OBJECTID'
     }));
 
-    layer.setTimeRange(new Date('January 13 2014 GMT-0800'), new Date('January 16 2014 GMT-0800'));
+    var callback = sinon.spy();
+
+    layer.setTimeRange(new Date('January 13 2014 GMT-0800'), new Date('January 16 2014 GMT-0800'), callback);
 
     server.respond();
 
+    expect(callback).to.have.been.called;
     expect(layer.removeLayers).to.have.been.calledWith([4, 4]);
-
     expect(layer.createLayers).to.have.been.calledWith([{
       'geometry': {
         'type': 'Point',
@@ -466,10 +468,13 @@ describe('L.esri.Layers.FeatureManager', function () {
       'id': 1
     }]);
 
-    layer.setWhere('Type="Inactive"');
+    var callback = sinon.spy();
+
+    layer.setWhere('Type="Inactive"', callback);
 
     server.respond();
 
+    expect(callback).to.have.been.called;
     expect(layer.removeLayers).to.have.been.calledWith([1]);
     expect(layer.createLayers).to.have.been.calledWith([{
       'type': 'Feature',

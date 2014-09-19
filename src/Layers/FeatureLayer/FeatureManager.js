@@ -141,9 +141,6 @@
      */
 
     setWhere: function(where, callback, context){
-      for (var x = this._pendingRequests.length - 1; x >= 0; x--) {
-        this._pendingRequests[x].abort();
-      }
 
       this.options.where = (where && where.length) ? where : '1=1';
 
@@ -155,6 +152,7 @@
         if(error){
           requestError = error;
         }
+
         if(featureCollection){
           for (var i = featureCollection.features.length - 1; i >= 0; i--) {
             newShapshot.push(featureCollection.features[i].id);
@@ -181,10 +179,8 @@
         pendingRequests++;
         var coords = this._keyToCellCoords(key);
         var bounds = this._cellCoordsToBounds(coords);
-        var request = this._requestFeatures(bounds, key, requestCallback);
-        this._pendingRequests.push(request);
+        this._requestFeatures(bounds, key, requestCallback);
       }
-
 
       return this;
     },
@@ -202,10 +198,6 @@
     },
 
     setTimeRange: function(from, to, callback, context){
-      for (var x = this._pendingRequests.length - 1; x >= 0; x--) {
-        this._pendingRequests[x].abort();
-      }
-
       var oldFrom = this.options.from;
       var oldTo = this.options.to;
       var pendingRequests = 0;
@@ -218,7 +210,7 @@
 
         pendingRequests--;
 
-        if(pendingRequests <= 0 && callback){
+        if(callback && pendingRequests <= 0){
           callback.call(context, requestError);
         }
       }, this);
@@ -233,8 +225,7 @@
           pendingRequests++;
           var coords = this._keyToCellCoords(key);
           var bounds = this._cellCoordsToBounds(coords);
-          var request = this._requestFeatures(bounds, key, requestCallback);
-          this._pendingRequests.push(request);
+          this._requestFeatures(bounds, key, requestCallback);
         }
       }
     },
