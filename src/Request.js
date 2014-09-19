@@ -46,10 +46,10 @@
     httpRequest.onreadystatechange = function(){
       var response;
       var error;
+
       if (httpRequest.readyState === 4) {
         try {
           response = JSON.parse(httpRequest.responseText);
-
         } catch(e) {
           response = null;
           error = {
@@ -146,7 +146,15 @@
 
         callbacks++;
 
-        return L.esri._callback[callbackId];
+        return {
+          id: callbackId,
+          abort: function(){
+            L.esri._callback[callbackId]({
+              code: 500,
+              message: 'Could not parse response as JSON.'
+            });
+          }
+        };
       }
     }
 
