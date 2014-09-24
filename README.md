@@ -65,7 +65,7 @@ A full [API Reference](http://esri.github.io/esri-leaflet/api-reference/) and pl
 
 If you are interested in contributing to Esri Leaflet or are interetsed in seeing what is coming up next checkout the [development roadmap](https://github.com/Esri/esri-leaflet/wiki/Roadmap).
 
-### Freqently Asked Questions
+### Frequently Asked Questions
 
 * [Will Esri Leaflet replace the ArcGIS API for JavaScript?](https://github.com/Esri/esri-leaflet/wiki/FAQ#will-esri-leaflet-replace-the-arcgis-api-for-javascript)
 * [What are the goals of Esri Leaflet?](https://github.com/Esri/esri-leaflet/wiki/FAQ#what-are-the-goals-of-esri-leaflet)
