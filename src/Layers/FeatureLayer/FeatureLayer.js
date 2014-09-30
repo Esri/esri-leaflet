@@ -84,7 +84,7 @@ L.esri.Layers.FeatureLayer = L.esri.Layers.FeatureManager.extend({
 
         // bind a popup if we have one
         if(this._popup && newLayer.bindPopup){
-          newLayer.bindPopup(this._popup(newLayer.feature, newLayer));
+          newLayer.bindPopup(this._popup(newLayer.feature, newLayer), this._popupOptions);
         }
 
         if(this.options.onEachFeature){
@@ -177,6 +177,7 @@ L.esri.Layers.FeatureLayer = L.esri.Layers.FeatureManager.extend({
 
   bindPopup: function (fn, options) {
     this._popup = fn;
+    this._popupOptions = options;
     for (var i in this._layers) {
       var layer = this._layers[i];
       var popupContent = this._popup(layer.feature, layer);
@@ -188,7 +189,16 @@ L.esri.Layers.FeatureLayer = L.esri.Layers.FeatureManager.extend({
   unbindPopup: function () {
     this._popup =  false;
     for (var i in this._layers) {
-      this._layers[i].unbindPopup();
+      var layer = this._layers[i];
+      if (layer.unbindPopup) {
+        layer.unbindPopup();
+      } else if (layer.getLayers) {
+        var groupLayers = layer.getLayers();
+        for (var j in groupLayers) {
+          var gLayer = groupLayers[j];
+          gLayer.unbindPopup();
+        }
+      }
     }
     return this;
   },
