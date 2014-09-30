@@ -154,6 +154,7 @@ L.esri.Layers.FeatureLayer = L.esri.Layers.FeatureManager.extend({
   },
 
   setStyle: function (style) {
+    this.options.style = style;
     this.eachFeature(function (layer) {
       this.setFeatureStyle(layer.feature.id, style);
     }, this);
