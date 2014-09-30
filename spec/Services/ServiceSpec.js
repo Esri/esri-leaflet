@@ -33,7 +33,7 @@ describe('L.esri.Service', function () {
       done();
     });
 
-    request({foo:'bar'});
+    L.esri._callback[request.id]({foo:'bar'});
   });
 
   it('should make POST requests', function(done){

@@ -47,6 +47,7 @@
 
       this._currentSnapshot = []; // cache of what layers should be active
       this._activeRequests = 0;
+      this._pendingRequests = [];
     },
 
     /**
@@ -83,7 +84,7 @@
         });
       }
 
-      this._buildQuery(bounds).run(function(error, featureCollection, response){
+      return this._buildQuery(bounds).run(function(error, featureCollection, response){
         if(response && response.exceededTransferLimit){
           this.fire('drawlimitexceeded');
         }
@@ -139,12 +140,19 @@
      * Where Methods
      */
 
-    setWhere: function(where){
+    setWhere: function(where, callback, context){
+
       this.options.where = (where && where.length) ? where : '1=1';
+
       var oldSnapshot = [];
       var newShapshot = [];
       var pendingRequests = 0;
+      var requestError = null;
       var requestCallback = L.Util.bind(function(error, featureCollection){
+        if(error){
+          requestError = error;
+        }
+
         if(featureCollection){
           for (var i = featureCollection.features.length - 1; i >= 0; i--) {
             newShapshot.push(featureCollection.features[i].id);
@@ -157,6 +165,9 @@
           this._currentSnapshot = newShapshot;
           this.removeLayers(oldSnapshot);
           this.addLayers(newShapshot);
+          if(callback) {
+            callback.call(context, requestError);
+          }
         }
       }, this);
 
@@ -186,12 +197,22 @@
       return [this.options.from, this.options.to];
     },
 
-    setTimeRange: function(from, to){
+    setTimeRange: function(from, to, callback, context){
       var oldFrom = this.options.from;
       var oldTo = this.options.to;
-
-      var requestCallback = L.Util.bind(function(){
+      var pendingRequests = 0;
+      var requestError = null;
+      var requestCallback = L.Util.bind(function(error){
+        if(error){
+          requestError = error;
+        }
         this._filterExistingFeatures(oldFrom, oldTo, from, to);
+
+        pendingRequests--;
+
+        if(callback && pendingRequests <= 0){
+          callback.call(context, requestError);
+        }
       }, this);
 
       this.options.from = from;
@@ -201,6 +222,7 @@
 
       if(this.options.timeFilterMode === 'server') {
         for(var key in this._activeCells){
+          pendingRequests++;
           var coords = this._keyToCellCoords(key);
           var bounds = this._cellCoordsToBounds(coords);
           this._requestFeatures(bounds, key, requestCallback);

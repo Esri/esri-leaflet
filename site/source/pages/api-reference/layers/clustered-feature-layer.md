@@ -195,9 +195,9 @@ In additon to these events `L.esri.FeatureLayer` also fires the following [Mouse
             <td>Returns the current `where` setting</td>
         </tr>
         <tr>
-            <td><code>setWhere({{{param 'String' 'where'}}})</code></td>
+            <td><code>setWhere({{{param 'String' 'where'}}}, {{{param 'Function' 'callback'}}}, {{{param 'Object' 'context'}}})</code></td>
             <td><code>this</code></td>
-            <td>Sets the new `where` option and refreshes the layer to reflect the new <code>where</code> filter.</td>
+            <td>Sets the new `where` option and refreshes the layer to reflect the new <code>where</code> filter. Accepts an optional callback and function context.</td>
         </tr>
         <tr>
             <td><code>getTimeRange()</code></td>
@@ -205,9 +205,9 @@ In additon to these events `L.esri.FeatureLayer` also fires the following [Mouse
             <td>Returns the current time range as an array like <code>[from, to]</code></td>
         </tr>
         <tr>
-            <td><code>setTimeRange({{{param 'Date' 'from'}}}, {{{param 'Date' 'to'}}})</code></td>
+            <td><code>setTimeRange({{{param 'Date' 'from'}}}, {{{param 'Date' 'to'}}}, , {{{param 'Function' 'callback'}}}, {{{param 'Object' 'context'}}})</code></td>
             <td><code>this</code></td>
-            <td>Sets the current time filter applied to features. An optional callback is run upon completion only if <code>timeFilterMode</code> is set to <code>'server'</code>.</td>
+            <td>Sets the current time filter applied to features. An optional callback is run upon completion if <code>timeFilterMode</code> is set to <code>'server'</code>. Also accepts function context as the last argument.</td>
         </tr>
         <tr>
             <td><code>authenticate({{{param 'String' 'token'}}})</code></td>
