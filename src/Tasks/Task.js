@@ -1,7 +1,6 @@
 L.esri.Tasks.Task = L.Class.extend({
 
   options: {
-    proxy: false,
     useCors: true
   },
 
