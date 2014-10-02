@@ -7,11 +7,11 @@
 <head>
   <meta charset="utf-8">
 
-  
-    <title>L.esri.Services.FeatureLayer | Esri Leaflet</title>
-  
 
-  
+    <title>L.esri.Services.FeatureLayer | Esri Leaflet</title>
+
+
+
 
   <meta name="description" content="Esri Leaflet">
   <meta name="viewport" content="width=device-width">
@@ -74,10 +74,10 @@
     </div>
     <div id="background-map" class="background-map"></div>
 
-  
+
 
 <div class="container white">
-  
+
 
 <aside class="sidebar">
   <h5>L.esri</h5>
@@ -123,7 +123,7 @@
 <div class="main-content">
   <h1 id="l-esri-services-featurelayer">L.esri.Services.FeatureLayer</h1>
 <p>Inherits from <a href="../../../../esri-leaflet/api-reference/services/service.html"><code>L.esri.Service</code></a></p>
-<p><code>L.esri.Services.FeatureLayer</code> is an abstraction interacting with Feature Layers running on ArcGIS Online and ArcGIS server that allows you to make requests to the API, as well as query, add, update and remove features from the service.</p>
+<p><code>L.esri.Services.FeatureLayer</code> is an abstraction for interacting with Feature Layers running on ArcGIS Online and ArcGIS Server that allows you to make requests to the API, as well as query, add, update and remove features from the service.</p>
 <h3 id="constructor">Constructor</h3>
 <table>
     <thead>
@@ -159,12 +159,13 @@
             <td><code>this</code></td>
             <td>
                 Returns a new <a href="../../../../esri-leaflet/api-reference/tasks/query.html"><code>L.esri.Tasks.Query</code></a> object that can be used to query this layer.
-<pre class="js"><code>featureLayer.query()
-            .within(latlngbounds)
-            .where(&quot;Direction = &#39;WEST&#39;&quot;)
-            .run(function(error, featureCollection, response){
-              console.log(featureCollection);
-            });</code></pre>
+<pre class="js"><code>
+featureLayer.query()
+  .within(latlngbounds)
+  .where(&quot;Direction = &#39;WEST&#39;&quot;)
+  .run(function(error, featureCollection, response){
+    console.log(featureCollection);
+});</code></pre>
             </td>
         </tr>
         <tr>
