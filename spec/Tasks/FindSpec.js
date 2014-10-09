@@ -196,21 +196,14 @@ describe('L.esri.Tasks.Find', function () {
   });
 
   it('should use JSONP to execute without a service', function(done){
-    //var task = L.esri.Tasks.find(url);
-    var newTask = L.esri.Tasks.find(url, {useCors:false});
-    //newTask.options.useCors = false;
+    var myTask = L.esri.Tasks.find(url, {useCors:false});
 
-    // server.respondWith('GET', url + 'find?sr=4326&contains=true&returnGeometry=true&returnZ=true&returnM=false&layers=0&searchText=Site&f=json', JSON.stringify(sampleResponse));
+    var request = myTask.layers('0').text('Site').run(function(error, featureCollection, raw){
+      expect(featureCollection).to.deep.equal(sampleFeatureCollection);
+      expect(raw).to.deep.equal(sampleResponse);
+      done();
+    });
 
-    // var request = newTask.layers('0').text('Site').run(function(error, featureCollection, raw){
-    //   //expect(featureCollection).to.deep.equal(sampleFeatureCollection);
-    //   //expect(raw).to.deep.equal(sampleResponse);
-    //   expect(0).to.deep.equal(0);
-    //   done();
-    // });
-
-    // //expect(request).to.be.an.instanceof(XMLHttpRequest);
-
-    // server.respond();
+    L.esri._callback[request.id](sampleResponse);
   });
 });

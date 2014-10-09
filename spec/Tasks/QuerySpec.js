@@ -493,8 +493,6 @@ describe('L.esri.Tasks.Query', function () {
   });
 
   it('query tasks without services should make GET requests w/ JSONP', function(done){
-    server.respondWith('GET', mapServiceUrl + '0/query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&f=json', JSON.stringify(sampleMapServiceQueryResponse));
-
     var queryTask = new L.esri.Tasks.Query(mapServiceUrl + '0');
     queryTask.options.useCors = false;
 
