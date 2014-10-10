@@ -11,7 +11,7 @@ layout: example.hbs
 
   L.esri.basemapLayer('Topographic').addTo(map);
 
-  L.esri.get('http://www.arcgis.com/sharing/content/items/62914b2820c24d4e95710ebae77937cb/data', {}, function (error, response) {
+  L.esri.get('//www.arcgis.com/sharing/content/items/62914b2820c24d4e95710ebae77937cb/data', {}, function (error, response) {
     var features = response.operationalLayers[0].featureCollection.layers[0].featureSet.features;
     var idField = response.operationalLayers[0].featureCollection.layers[0].layerDefinition.objectIdField;
 

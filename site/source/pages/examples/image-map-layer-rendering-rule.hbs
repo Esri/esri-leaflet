@@ -8,12 +8,13 @@ layout: example.hbs
 
 <script>
     var renderingRule = {
-        "rasterFunction":"Hillshade",
-        "rasterFunctionArguments": {
-            "Azimuth":215,
-            "Altitude":60,
-            "ZFactor":1
-        },"variableName":"DEM"
+        'rasterFunction': 'Hillshade',
+        'rasterFunctionArguments': {
+            'Azimuth': 215,
+            'Altitude': 60,
+            'ZFactor': 1
+        },
+        'variableName': 'DEM'
     };
 
     var map = L.map('map').setView([33.741114, -116.184826], 17);

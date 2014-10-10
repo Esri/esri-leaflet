@@ -8,7 +8,7 @@ layout: example.hbs
 <script src="https://rawgit.com/Leaflet/Leaflet.heat/gh-pages/dist/leaflet-heat.js"></script>
 
 <!-- Load Heatmap Feature Layer from CDN -->
-<script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/0.0.1-beta.5/esri-leaflet-heatmap-feature-layer.js"></script>
+<script src="//cdn-geoweb.s3.amazonaws.com/esri-leaflet/0.0.1-beta.6/esri-leaflet-heatmap-feature-layer.js"></script>
 
 <div id="map"></div>
 
@@ -17,7 +17,7 @@ layout: example.hbs
 
   L.esri.basemapLayer('Gray').addTo(map);
 
-  L.esri.heatmapFeatureLayer('http://services.arcgis.com/rOo16HdIMeOBI4Mb/ArcGIS/rest/services/Graffiti_Reports/FeatureServer/0', {
+  L.esri.heatmapFeatureLayer('//services.arcgis.com/rOo16HdIMeOBI4Mb/ArcGIS/rest/services/Graffiti_Reports/FeatureServer/0', {
     radius: 14,
     gradient: {
       0.2: '#ffffb2',
