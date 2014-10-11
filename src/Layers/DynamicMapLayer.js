@@ -70,6 +70,8 @@ L.esri.Layers.DynamicMapLayer = L.esri.Layers.RasterLayer.extend({
 
     if(this.options.layers){
       identifyRequest.layers('visible:' + this.options.layers.join(','));
+    } else {
+      identifyRequest.layers('visible');
     }
 
     identifyRequest.run(callback);
