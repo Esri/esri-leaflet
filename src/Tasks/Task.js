@@ -25,7 +25,7 @@ L.esri.Tasks.Task = L.Class.extend({
 
   initialize: function(endpoint){
     // endpoint can be either a url to an ArcGIS Rest Service or an instance of L.esri.Service
-    if(endpoint instanceof L.esri.Service){
+    if(endpoint instanceof L.esri.Services.Service){
       this._service = endpoint;
       this.url = endpoint.url;
     } else {
