@@ -7,11 +7,11 @@
 <head>
   <meta charset="utf-8">
 
-  
-    <title>L.esri.Layers.ImageMapLayer | Esri Leaflet</title>
-  
 
-  
+    <title>L.esri.Layers.ImageMapLayer | Esri Leaflet</title>
+
+
+
 
   <meta name="description" content="Esri Leaflet">
   <meta name="viewport" content="width=device-width">
@@ -74,10 +74,10 @@
     </div>
     <div id="background-map" class="background-map"></div>
 
-  
+
 
 <div class="container white">
-  
+
 
 <aside class="sidebar">
   <h5>L.esri</h5>
@@ -253,9 +253,11 @@
             <td><code>this</code></td>
             <td>
                 Uses the provided function to create a popup that will identify pixel value(s) whenever the map is clicked. Your function will be passed an object with a <code>pixel</code> property that is a <a href="http://geojson.org/geojson-spec.html#point">GeoJSON Point</a> with the pixel value(s) at the clicked location and should return the appropriate HTML. If you do not want to open the popup when there are no results, return <code>false</code>.
-<pre class="js"><code>imageMapLayer.bindPopup(function(err, identifyResults, response){
-    var value = results.pixel.properties.value;;
-    return (value) ? &#39;Pixel value: &#39; + value : false;
+<pre class="js"><code>imageMapLayer.bindPopup(
+    function(err, identifyResults, response){
+      var value = results.pixel.properties.value;;
+      return (value) ?
+      &#39;Pixel value: &#39; + value : false;
 });</code></pre>
             </td>
         </tr>
@@ -339,11 +341,13 @@
             <td><code>this</code></td>
             <td>
                 Returns a new <a href="../../../../esri-leaflet/api-reference/tasks/query.html"><code>L.esri.Tasks.Query</code></a> object that can be used to query this service.
-<pre class="js"><code>imageService.query()
-            .within(latlngbounds)
-            .run(function(error, featureCollection, response){
-              console.log(featureCollection);
-            });</code></pre>
+<pre class="js"><code>
+imageService.query()
+  .within(latlngbounds)
+   .run(
+   function(error, featureCollection, response){
+     console.log(featureCollection);
+   });</code></pre>
             </td>
         </tr>
         <tr>

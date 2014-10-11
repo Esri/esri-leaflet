@@ -7,11 +7,11 @@
 <head>
   <meta charset="utf-8">
 
-  
-    <title>L.esri.Tasks.Find | Esri Leaflet</title>
-  
 
-  
+    <title>L.esri.Tasks.Find | Esri Leaflet</title>
+
+
+
 
   <meta name="description" content="Esri Leaflet">
   <meta name="viewport" content="width=device-width">
@@ -74,10 +74,10 @@
     </div>
     <div id="background-map" class="background-map"></div>
 
-  
+
 
 <div class="container white">
-  
+
 
 <aside class="sidebar">
   <h5>L.esri</h5>
@@ -122,7 +122,7 @@
 
 <div class="main-content">
   <h1 id="l-esri-tasks-find">L.esri.Tasks.Find</h1>
-<p><code>L.esri.Tasks.Find</code> is an abstraction for the find API that exists on Map Services. It provides a chainable API for building request parameters and executing find tasks.</p>
+<p><code>L.esri.Tasks.Find</code> is an abstraction for the find API included in Map Services. It provides a chainable API for building request parameters and executing find tasks.</p>
 <h3 id="constructor">Constructor</h3>
 <table>
     <thead>
@@ -139,7 +139,7 @@
                 <code>new L.esri.Tasks.Find(<nobr class="param"><span>&lt;String&gt;</span> <code>endpoint</code></nobr>)</code><br><br>
                 <code>L.esri.Tasks.find(<nobr class="param"><span>&lt;String&gt;</span> <code>endpoint</code></nobr>)</code>
             </td>
-            <td>The <code>endpoint</code> parameter is the service that you want to find either an  ArcGIS Server or ArcGIS Online service. You can also pass the URL to a service directly as a string. See <a href="#service-urls">service URLs</a> for more information on how to find these URLs.</td>
+            <td>The <code>endpoint</code> parameter is the ArcGIS Server Map Service that you want to search for features. You can also pass the URL to a service directly as a string. See <a href="#service-urls">service URLs</a> for more information on how to find these URLs.</td>
         </tr>
     </tbody>
 </table>
@@ -227,7 +227,7 @@
         <tr>
             <td><code>run(<nobr class="param"><span>&lt;Function&gt;</span> <code>callback</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>context</code></nobr>)</code></td>
             <td><code>this</code></td>
-            <td>Exectues the find request with the current parameters, features will be passed to <code>callback</code> as a <a href="http://geojson.org/geojson-spec.html#feature-collection-objects">GeoJSON FeatureCollection</a>. Accepts an optional function context.</td>
+            <td>Executes the find request with the current parameters, features will be passed to <code>callback</code> as a <a href="http://geojson.org/geojson-spec.html#feature-collection-objects">GeoJSON FeatureCollection</a>. Accepts an optional function context.</td>
         </tr>
     </tbody>
 </table>

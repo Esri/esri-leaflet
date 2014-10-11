@@ -7,11 +7,11 @@
 <head>
   <meta charset="utf-8">
 
-  
-    <title>Request | Esri Leaflet</title>
-  
 
-  
+    <title>Request | Esri Leaflet</title>
+
+
+
 
   <meta name="description" content="Esri Leaflet">
   <meta name="viewport" content="width=device-width">
@@ -74,10 +74,10 @@
     </div>
     <div id="background-map" class="background-map"></div>
 
-  
+
 
 <div class="container white">
-  
+
 
 <aside class="sidebar">
   <h5>L.esri</h5>
@@ -122,11 +122,11 @@
 
 <div class="main-content">
   <h1 id="l-esri-request">L.esri.Request</h1>
-<p>Generic methods for GET and POST requests to ArcGIS Online or ArcGIS Server resources. These methods will handle serializing the input parameters and the parsing of the response into a response and error property similar to Node JS.</p>
-<p>GET requests will be made with <code>XMLHttpRequest</code> (via CORS) if the browser supports it and will fallback to JSONP. POST requests will always me made with <code>XMLHttpRequest</code> (via CORS) but the <a href="https://developers.arcgis.com/javascript/jshelp/ags_proxy.html">ArcGIS API for JavaScript proxies</a> and the <a href="https://github.com/Esri/resource-proxy">ArcGIS Resource Proxies</a> are support via <a href="../../../esri-leaflet/api-reference/services/service.html"><code>L.esri.Services.Service</code></a>.</p>
+<p>Generic methods for GET and POST requests to ArcGIS Online or ArcGIS Server resources. These methods will handle serializing the input parameters and parsing of the response into a response and error property similar to Node JS.</p>
+<p>GET requests will be made with <code>XMLHttpRequest</code> (via CORS) if the browser supports it and will fallback to JSONP. POST requests will always me made with <code>XMLHttpRequest</code> (via CORS) but ArcGIS Resource Proxies</a> are also supported via <a href="../../../esri-leaflet/api-reference/services/service.html"><code>L.esri.Services.Service</code></a>.</p>
 <h3 id="l-esri-get-url-params-callback-">L.esri.get(url, params, callback)</h3>
-<p>Execute a GET request via `XMLHttpRequest&#39; (via CORS) or JSON depending on what is available in the browser.</p>
-<p><strong>Note</strong>: ArcGIS server before 10.1 does not have CORS support enabled by default. You can either enable CORSon your server or tell Esri Leaflet to always use JSONP requests with <code>L.esri.get = L.esri.Request.get.JSONP;</code> After you load Esri leaflet but before your own scripts.</p>
+<p>Execute a GET request via `XMLHttpRequest&#39; (via CORS) or JSONP depending on what is available in the browser.</p>
+<p><strong>Note</strong>: ArcGIS server before 10.1 does not have CORS support enabled by default. You can either enable CORS on your server or tell Esri Leaflet to always use JSONP requests with <code>L.esri.get = L.esri.Request.get.JSONP;</code> after you load Esri Leaflet but before calling your own scripts.  It is also possible to define CORS support for individual Services via the option {useCors}.</p>
 <h4 id="params">Params</h4>
 <table>
 <thead>
@@ -169,7 +169,7 @@
 });</code></pre>
 <h3 id="l-esri-post-url-params-callback-">L.esri.post(url, params, callback)</h3>
 <p>Execute a POST request via `XMLHttpRequest&#39; (via CORS).</p>
-<p>This request is made via <code>XMLHttpRequest</code> which cannot make cross domain requests in IE 8 and 9. Esri Leaflet supports both the <a href="https://developers.arcgis.com/javascript/jshelp/ags_proxy.html">ArcGIS API for JavaScript proxies</a> and the <a href="https://github.com/Esri/resource-proxy">ArcGIS Resource Proxies</a> which can be hosted on your server and used with the <a href="../../../esri-leaflet/api-reference/services/service.html"><code>L.esri.Services.Service</code></a> classes to work around this issue.</p>
+<p>This request is made via <code>XMLHttpRequest</code> which cannot make cross domain requests in IE 8 and 9. Esri Leaflet supports <a href="https://github.com/Esri/resource-proxy">ArcGIS Resource Proxies</a> which can be hosted on your server and used with the <a href="../../../esri-leaflet/api-reference/services/service.html"><code>L.esri.Services.Service</code></a> classes to work around this issue.</p>
 <table>
 <thead>
 <tr>
