@@ -18,14 +18,21 @@ layout: documentation.hbs
     </thead>
     <tbody>
         <tr>
-            <td><code class='nobr'>new L.esri.Tasks.IdentifyFeatures({{{param 'MapService' 'endpoint' '../../api-reference/services/map-service.html'}}})</code><br><br>
-            <code>L.esri.Tasks.identifyFeatures({{{param 'MapService' 'endpoint' '../../api-reference/services/map-service.html'}}})</code><br><br>
-            <code>new L.esri.Tasks.IdentifyFeatures({{{param 'String' 'endpoint'}}})</code><br><br>
-            <code>L.esri.Tasks.identifyFeatures({{{param 'String' 'endpoint'}}})</code><br></td>
+            <td><code class='nobr'>new L.esri.Tasks.IdentifyFeatures({{{param 'MapService' 'endpoint' '../../api-reference/services/map-service.html'}}}, {{{param 'Object' 'options'}}})</code><br><br>
+            <code>L.esri.Tasks.identifyFeatures({{{param 'MapService' 'endpoint' '../../api-reference/services/map-service.html'}}}, {{{param 'Object' 'options'}}})</code><br><br>
+            <code>new L.esri.Tasks.IdentifyFeatures({{{param 'String' 'endpoint'}}}, {{{param 'Object' 'options'}}})</code><br><br>
+            <code>L.esri.Tasks.identifyFeatures({{{param 'String' 'endpoint'}}}, {{{param 'Object' 'options'}}})</code><br></td>
             <td>The `endpoint` parameter is the service that you want to identify either an  ArcGIS Server or ArcGIS Online service. You can also pass the URL to a service directly as a string. See [service URLs](#service-urls) for more information on how to find these URLs.</td>
         </tr>
     </tbody>
 </table>
+
+### Options
+
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `proxy` | `String` | `false` | URL of an [ArcGIS API for JavaScript proxies](https://developers.arcgis.com/javascript/jshelp/ags_proxy.html) or [ArcGIS Resource Proxies](https://github.com/Esri/resource-proxy) to use for proxying POST requests. |
+| `useCors` | `Boolean` | `true` | If this service should use CORS when making GET requests. |
 
 ### Methods
 
