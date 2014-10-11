@@ -1,4 +1,5 @@
 L.esri.Tasks.Task = L.Class.extend({
+  //Generate a method for each methodName:paramName in the setters for this task.
   generateSetter: function(param, context){
     var isArray = param.match(/([a-zA-Z]+)\[\]/);
 
@@ -21,16 +22,20 @@ L.esri.Tasks.Task = L.Class.extend({
       }, context);
     }
   },
+
   initialize: function(endpoint){
-    if(endpoint.url && endpoint.get){
+    // endpoint can be either a url to an ArcGIS Rest Service or an instance of L.esri.Service
+    if(endpoint instanceof L.esri.Service){
       this._service = endpoint;
       this.url = endpoint.url;
     } else {
       this.url = L.esri.Util.cleanUrl(endpoint);
     }
 
+    // clone default params into this object
     this.params = L.Util.extend({}, this.params || {});
 
+    // generate setter methods based on the setters object implimented a child class
     if(this.setters){
       for (var setter in this.setters){
         var param = this.setters[setter];
@@ -38,6 +43,7 @@ L.esri.Tasks.Task = L.Class.extend({
       }
     }
   },
+
   token: function(token){
     if(this._service){
       this._service.authenticate(token);
@@ -46,6 +52,7 @@ L.esri.Tasks.Task = L.Class.extend({
     }
     return this;
   },
+
   request: function(callback, context){
     if(this._service){
       return this._service.request(this.path, this.params, callback, context);

@@ -4,6 +4,7 @@ L.esri.Tasks.IdentifyImage = L.esri.Tasks.Identify.extend({
     'setRenderingRule': 'renderingRule',
     'returnCatalogItems': 'returnCatalogItems'
   },
+
   params: {
     returnGeometry: false
   },

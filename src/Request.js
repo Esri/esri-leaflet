@@ -148,6 +148,7 @@
 
         return {
           id: callbackId,
+          url: script.src,
           abort: function(){
             L.esri._callback[callbackId]({
               code: 500,
