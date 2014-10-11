@@ -194,4 +194,16 @@ describe('L.esri.Tasks.Find', function () {
 
     server.respond();
   });
+
+  it('should use JSONP to execute without a service', function(done){
+    var myTask = L.esri.Tasks.find(url, {useCors:false});
+
+    var request = myTask.layers('0').text('Site').run(function(error, featureCollection, raw){
+      expect(featureCollection).to.deep.equal(sampleFeatureCollection);
+      expect(raw).to.deep.equal(sampleResponse);
+      done();
+    });
+
+    L.esri._callback[request.id](sampleResponse);
+  });
 });

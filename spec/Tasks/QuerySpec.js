@@ -478,4 +478,70 @@ describe('L.esri.Tasks.Query', function () {
     server.respond();
   });
 
+  it('should make GET queries with no service', function(done){
+    server.respondWith('GET', mapServiceUrl + '0/query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&f=json', JSON.stringify(sampleMapServiceQueryResponse));
+
+    var queryTask = new L.esri.Tasks.Query(mapServiceUrl + '0');
+
+    var request = queryTask.where("1=1").run(function(error, featureCollection, raw){
+      expect(featureCollection).to.deep.equal(sampleMapServiceCollection);
+      expect(raw).to.deep.equal(sampleMapServiceQueryResponse);
+      done();
+    });
+
+    server.respond();
+  });
+
+  it('query tasks without services should make GET requests w/ JSONP', function(done){
+    var queryTask = new L.esri.Tasks.Query(mapServiceUrl + '0');
+    queryTask.options.useCors = false;
+
+    var request = queryTask.where("1=1").run(function(error, featureCollection, raw){
+      expect(featureCollection).to.deep.equal(sampleMapServiceCollection);
+      expect(raw).to.deep.equal(sampleMapServiceQueryResponse);
+      done();
+    });
+
+    L.esri._callback[request.id](sampleMapServiceQueryResponse);
+  });
+
+  it('query tasks without services should make POST requests', function(done){
+    server.respondWith('POST', mapServiceUrl + '0/query', JSON.stringify(sampleMapServiceQueryResponse));
+    var queryTask = new L.esri.Tasks.Query(mapServiceUrl + '0');
+    var request = queryTask.where(
+      "this is a dumb way to make sure the request is more than 2000 characters" +
+      "this is a dumb way to make sure the request is more than 2000 characters" +
+      "this is a dumb way to make sure the request is more than 2000 characters" +
+      "this is a dumb way to make sure the request is more than 2000 characters" +
+      "this is a dumb way to make sure the request is more than 2000 characters" +
+      "this is a dumb way to make sure the request is more than 2000 characters" +
+      "this is a dumb way to make sure the request is more than 2000 characters" +
+      "this is a dumb way to make sure the request is more than 2000 characters" +
+      "this is a dumb way to make sure the request is more than 2000 characters" +
+      "this is a dumb way to make sure the request is more than 2000 characters" +
+      "this is a dumb way to make sure the request is more than 2000 characters" +
+      "this is a dumb way to make sure the request is more than 2000 characters" +
+      "this is a dumb way to make sure the request is more than 2000 characters" +
+      "this is a dumb way to make sure the request is more than 2000 characters" +
+      "this is a dumb way to make sure the request is more than 2000 characters" +
+      "this is a dumb way to make sure the request is more than 2000 characters" +
+      "this is a dumb way to make sure the request is more than 2000 characters" +
+      "this is a dumb way to make sure the request is more than 2000 characters" +
+      "this is a dumb way to make sure the request is more than 2000 characters" +
+      "this is a dumb way to make sure the request is more than 2000 characters" +
+      "this is a dumb way to make sure the request is more than 2000 characters" +
+      "this is a dumb way to make sure the request is more than 2000 characters" +
+      "this is a dumb way to make sure the request is more than 2000 characters" +
+      "this is a dumb way to make sure the request is more than 2000 characters" +
+      "this is a dumb way to make sure the request is more than 2000 characters" +
+      "this is a dumb way to make sure the request is more than 2000 characters").
+      run(function(error, featureCollection, raw){
+        expect(featureCollection).to.deep.equal(sampleMapServiceCollection);
+        expect(raw).to.deep.equal(sampleMapServiceQueryResponse);
+        done();
+    });
+
+    server.respond();
+  });
+
 });

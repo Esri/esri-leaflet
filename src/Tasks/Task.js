@@ -1,4 +1,9 @@
 L.esri.Tasks.Task = L.Class.extend({
+
+  options: {
+    useCors: true
+  },
+
   generateSetter: function(param, context){
     var isArray = param.match(/([a-zA-Z]+)\[\]/);
 
@@ -21,7 +26,7 @@ L.esri.Tasks.Task = L.Class.extend({
       }, context);
     }
   },
-  initialize: function(endpoint){
+  initialize: function(endpoint, options){
     if(endpoint.url && endpoint.get){
       this._service = endpoint;
       this.url = endpoint.url;
@@ -37,6 +42,8 @@ L.esri.Tasks.Task = L.Class.extend({
         this[setter] = this.generateSetter(param, this);
       }
     }
+
+    L.Util.setOptions(this, options);
   },
   token: function(token){
     if(this._service){
@@ -50,7 +57,15 @@ L.esri.Tasks.Task = L.Class.extend({
     if(this._service){
       return this._service.request(this.path, this.params, callback, context);
     } else {
-      return L.esri.request(this.url + this.path, this.params, callback, context);
+      return this._request('request', this.path, this.params, callback, context);
+    }
+  },
+  _request: function(method, path, params, callback, context){
+    var url = (this.options.proxy) ? this.options.proxy + '?' + this.url + path : this.url + path;
+    if((method === 'get' || method === 'request') && !this.options.useCors){
+      return L.esri.Request.get.JSONP(url, params, callback, context);
+    } else{
+      return L.esri[method](url, params, callback, context);
     }
   }
 });
