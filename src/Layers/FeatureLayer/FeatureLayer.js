@@ -35,6 +35,12 @@ L.esri.Layers.FeatureLayer = L.esri.Layers.FeatureManager.extend({
     return L.esri.Layers.FeatureManager.prototype.onRemove.call(this, map);
   },
 
+  createNewLayer: function(geojson){
+    // @TODO Leaflet 0.8
+    //newLayer = L.GeoJSON.geometryToLayer(geojson, this.options);
+    return L.GeoJSON.geometryToLayer(geojson, this.options.pointToLayer, L.GeoJSON.coordsToLatLng, this.options);
+  },
+
   /**
    * Feature Managment Methods
    */
@@ -55,7 +61,7 @@ L.esri.Layers.FeatureLayer = L.esri.Layers.FeatureManager.extend({
         // @TODO Leaflet 0.8
         //newLayer = L.GeoJSON.geometryToLayer(geojson, this.options);
 
-        var updateGeo = L.GeoJSON.geometryToLayer(geojson, this.options.pointToLayer, L.GeoJSON.coordsToLatLng, this.options);
+        var updateGeo = this.createNewLayer(geojson);
         layer.setLatLngs(updateGeo.getLatLngs());
       }
 
@@ -63,7 +69,7 @@ L.esri.Layers.FeatureLayer = L.esri.Layers.FeatureManager.extend({
         // @TODO Leaflet 0.8
         //newLayer = L.GeoJSON.geometryToLayer(geojson, this.options);
 
-        newLayer = L.GeoJSON.geometryToLayer(geojson, this.options.pointToLayer, L.GeoJSON.coordsToLatLng, this.options);
+        newLayer =  this.createNewLayer(geojson);
         newLayer.feature = geojson;
         newLayer.defaultOptions = newLayer.options;
         newLayer._leaflet_id = this._key + '_' + geojson.id;
@@ -78,7 +84,7 @@ L.esri.Layers.FeatureLayer = L.esri.Layers.FeatureManager.extend({
 
         // bind a popup if we have one
         if(this._popup && newLayer.bindPopup){
-          newLayer.bindPopup(this._popup(newLayer.feature, newLayer));
+          newLayer.bindPopup(this._popup(newLayer.feature, newLayer), this._popupOptions);
         }
 
         if(this.options.onEachFeature){
@@ -148,6 +154,7 @@ L.esri.Layers.FeatureLayer = L.esri.Layers.FeatureManager.extend({
   },
 
   setStyle: function (style) {
+    this.options.style = style;
     this.eachFeature(function (layer) {
       this.setFeatureStyle(layer.feature.id, style);
     }, this);
@@ -171,6 +178,7 @@ L.esri.Layers.FeatureLayer = L.esri.Layers.FeatureManager.extend({
 
   bindPopup: function (fn, options) {
     this._popup = fn;
+    this._popupOptions = options;
     for (var i in this._layers) {
       var layer = this._layers[i];
       var popupContent = this._popup(layer.feature, layer);
@@ -182,7 +190,16 @@ L.esri.Layers.FeatureLayer = L.esri.Layers.FeatureManager.extend({
   unbindPopup: function () {
     this._popup =  false;
     for (var i in this._layers) {
-      this._layers[i].unbindPopup();
+      var layer = this._layers[i];
+      if (layer.unbindPopup) {
+        layer.unbindPopup();
+      } else if (layer.getLayers) {
+        var groupLayers = layer.getLayers();
+        for (var j in groupLayers) {
+          var gLayer = groupLayers[j];
+          gLayer.unbindPopup();
+        }
+      }
     }
     return this;
   },

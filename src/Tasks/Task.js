@@ -1,4 +1,10 @@
 L.esri.Tasks.Task = L.Class.extend({
+
+  options: {
+    useCors: true,
+    proxy: false
+  },
+
   //Generate a method for each methodName:paramName in the setters for this task.
   generateSetter: function(param, context){
     var isArray = param.match(/([a-zA-Z]+)\[\]/);
@@ -23,7 +29,7 @@ L.esri.Tasks.Task = L.Class.extend({
     }
   },
 
-  initialize: function(endpoint){
+  initialize: function(endpoint, options){
     // endpoint can be either a url to an ArcGIS Rest Service or an instance of L.esri.Service
     if(endpoint instanceof L.esri.Services.Service){
       this._service = endpoint;
@@ -42,6 +48,8 @@ L.esri.Tasks.Task = L.Class.extend({
         this[setter] = this.generateSetter(param, this);
       }
     }
+
+    L.Util.setOptions(this, options);
   },
 
   token: function(token){
@@ -57,7 +65,16 @@ L.esri.Tasks.Task = L.Class.extend({
     if(this._service){
       return this._service.request(this.path, this.params, callback, context);
     } else {
-      return L.esri.request(this.url + this.path, this.params, callback, context);
+      return this._request('request', this.path, this.params, callback, context);
+    }
+  },
+
+  _request: function(method, path, params, callback, context){
+    var url = (this.options.proxy) ? this.options.proxy + '?' + this.url + path : this.url + path;
+    if((method === 'get' || method === 'request') && !this.options.useCors){
+      return L.esri.Request.get.JSONP(url, params, callback, context);
+    } else{
+      return L.esri[method](url, params, callback, context);
     }
   }
 });

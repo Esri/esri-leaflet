@@ -9,9 +9,9 @@
     "grunt-gh-pages": "^0.8.1",
     "grunt-s3": "^0.2.0-alpha.3",
     "grunt-contrib-jshint": "^0.4.3",
-    "grunt-contrib-uglify": "^0.2.0",
+    "grunt-contrib-uglify": "^0.6.0",
     "grunt-contrib-watch": "^0.6.1",
-    "grunt-contrib-concat": "^0.3.0",
+    "grunt-contrib-concat": "^0.5.0",
     "grunt-contrib-connect": "^0.4.1",
     "grunt-contrib-sass": "^0.7.3",
     "grunt-contrib-imagemin": "^0.7.1",
@@ -43,5 +43,7 @@
   ],
   "license": "Apache",
   "readmeFilename": "README.md",
-  "dependencies": {}
+  "dependencies": {
+    "leaflet": "^0.7.0"
+  }
 }

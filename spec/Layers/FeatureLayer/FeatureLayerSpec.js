@@ -39,6 +39,18 @@ describe('L.esri.Layers.FeatureLayer', function () {
     }
   }];
 
+  var multiPolygon = [({
+      type : 'Feature',
+      id: 1,
+      geometry: {
+        type: 'MultiPolygon',
+        coordinates: [[[[-95, 43], [-95, 50], [-90, 50], [-91, 42], [-95, 43]]], [[[-89, 42], [-89, 50], [-80, 50], [-80, 42]]]]
+      },
+      properties: {
+        time: new Date('Febuary 1 2014').valueOf()
+      }
+  })];
+
   beforeEach(function(){
     layer = L.esri.featureLayer('http://services.arcgis.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0', {
       timeField: 'time',
@@ -183,6 +195,28 @@ describe('L.esri.Layers.FeatureLayer', function () {
     expect(layer.getFeature(3)._popup.getContent()).to.equal('ID: 3');
   });
 
+  it('should preserve popup options when binding popup to new or existing features', function(){
+    layer.bindPopup(function(feature){
+      return 'ID: ' + feature.id;
+    }, {minWidth: 500});
+
+    layer.createLayers([{
+      type: 'Feature',
+      id: 3,
+      geometry: {
+        type: 'Point',
+        coordinates: [-123, 46]
+      },
+      properties: {
+        time: new Date('Febuary 24 2014').valueOf()
+      }
+    }]);
+
+    expect(layer.getFeature(1)._popup.options.minWidth).to.equal(500);
+    expect(layer.getFeature(2)._popup.options.minWidth).to.equal(500);
+    expect(layer.getFeature(3)._popup.options.minWidth).to.equal(500);
+  });
+
   it('should unbind popups on features', function(){
     layer.bindPopup(function(feature){
       return 'ID: ' + feature.id;
@@ -190,6 +224,18 @@ describe('L.esri.Layers.FeatureLayer', function () {
     layer.unbindPopup();
     expect(layer.getFeature(1)._popup).to.equal(null);
     expect(layer.getFeature(2)._popup).to.equal(null);
+  });
+
+  it('should unbind popups on multi polygon features', function(){
+    layer = L.esri.featureLayer('http://services.arcgis.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0', { timeField: 'time' }).addTo(map);
+
+    layer.createLayers(multiPolygon);
+    layer.bindPopup(function(feature){
+      return 'ID: ' + feature.id;
+    });
+    layer.unbindPopup();
+    expect(layer.getFeature(1).getLayers()[0]._popup).to.equal(null);
+    expect(layer.getFeature(1).getLayers()[1]._popup).to.equal(null);
   });
 
   it('should iterate over each feature', function(){
@@ -209,22 +255,50 @@ describe('L.esri.Layers.FeatureLayer', function () {
 
   it('should change styles on features with an object', function(){
     layer.setStyle({
-      fill: 'red'
+      color: 'red'
     });
 
-    expect(layer.getFeature(1).options.fill).to.equal('red');
-    expect(layer.getFeature(2).options.fill).to.equal('red');
+    expect(layer.getFeature(1).options.color).to.equal('red');
+    expect(layer.getFeature(2).options.color).to.equal('red');
+
+    layer.createLayers([{
+      type: 'Feature',
+      id: 3,
+      geometry: {
+        type: 'LineString',
+        coordinates: [[-122, 45], [-121, 40]]
+      },
+      properties: {
+        time: new Date('Febuary 24 2014').valueOf()
+      }
+    }]);
+
+    expect(layer.getFeature(3).options.color).to.equal('red');
   });
 
-  it('should change styles on feautres with a function', function(){
+  it('should change styles on features with a function', function(){
     layer.setStyle(function(){
       return {
-        fill: 'red'
+        color: 'red'
       };
     });
 
-    expect(layer.getFeature(1).options.fill).to.equal('red');
-    expect(layer.getFeature(2).options.fill).to.equal('red');
+    expect(layer.getFeature(1).options.color).to.equal('red');
+    expect(layer.getFeature(2).options.color).to.equal('red');
+
+    layer.createLayers([{
+      type: 'Feature',
+      id: 3,
+      geometry: {
+        type: 'LineString',
+        coordinates: [[-122, 45], [-121, 40]]
+      },
+      properties: {
+        time: new Date('Febuary 24 2014').valueOf()
+      }
+    }]);
+
+    expect(layer.getFeature(3).options.color).to.equal('red');
   });
 
   it('should propagate events from individual features', function(){

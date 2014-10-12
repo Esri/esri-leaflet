@@ -27,7 +27,3 @@ working
 
 # Docs Build
 site/build
-
-# Built Files
-dist/**/*.js
-dist/**/*.map

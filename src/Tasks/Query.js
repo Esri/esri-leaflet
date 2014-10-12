@@ -69,6 +69,11 @@ L.esri.Tasks.Query = L.esri.Tasks.Task.extend({
     return this;
   },
 
+  returnGeometry: function(bool){
+    this.params.returnGeometry = bool;
+    return this;
+  },
+
   run: function(callback, context){
     this._cleanParams();
     return this.request(function(error, response){

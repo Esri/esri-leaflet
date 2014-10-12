@@ -2,10 +2,16 @@
 
 ## Beta 7
 
+#### Changes
+* `L.esri.Task` now accepts `proxy` and `useCors` like L.esri.Service.
+* Esri Leaflet can now be used in Common JS (browserify) and AMD (Dojo, RequierJS) module loaders.
+* Source maps
+
 #### Breaking Changes
 
 * Task methods that accecpt callbacks (like `run` or `bounds`) now return and instance of `XMLHttpRequest` as opposed to the task or service.
-* 
+* `bindPopup` on `L.esri.DynamicMapLayer` now identifies only visible features by default rather then all features.
+* All API requests inside of layers, tasks and services will now switch between GET and POST automatically when the request size exceeds 2000 characters. This improves IE compatibility but means that for long requests (like complex `where` clauses or long lists of IDs) you may need to setup an instance of https://github.com/Esri/resource-proxy and use the `proxy` option.
 
 #### Changes
 
@@ -87,7 +93,7 @@
 #### Changes
 
 * Authentication for ClusteredFeatureLayer https://github.com/Esri/esri-leaflet/commit/d23ddd99ee86bb7255e4d89b6cf3f339a441c88b
-* Removed Terraformer as a dependency to cut down on build size and complexity. The neccessary * * * Terraformer methods have been ported into L.esri.Util. This cuts a whomping 15kb from the build!
+* Removed Terraformer as a dependency to cut down on build size and complexity. The neccessary Terraformer methods have been ported into L.esri.Util. This cuts a whomping 15kb from the build!
 * Fix for DynamicMapLayer that is outside of min/max zoom levels https://github.com/Esri/esri-leaflet/commit/0d2c2c36ed6ccbad96e0ab24c24cc48f43079ade
 * Fix for layerDefs in DynamicMapLayer https://github.com/Esri/esri-leaflet/commit/1375bbf2768ba0fb6806f51c09a3d6fa192521d9
 * Add HeatmapFeatureLayer based on Leaflet.heat

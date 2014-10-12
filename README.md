@@ -65,7 +65,7 @@ A full [API Reference](http://esri.github.io/esri-leaflet/api-reference/) and pl
 
 If you are interested in contributing to Esri Leaflet or are interetsed in seeing what is coming up next checkout the [development roadmap](https://github.com/Esri/esri-leaflet/wiki/Roadmap).
 
-### Freqently Asked Questions
+### Frequently Asked Questions
 
 * [Will Esri Leaflet replace the ArcGIS API for JavaScript?](https://github.com/Esri/esri-leaflet/wiki/FAQ#will-esri-leaflet-replace-the-arcgis-api-for-javascript)
 * [What are the goals of Esri Leaflet?](https://github.com/Esri/esri-leaflet/wiki/FAQ#what-are-the-goals-of-esri-leaflet)
@@ -81,6 +81,10 @@ If you are interested in contributing to Esri Leaflet or are interetsed in seein
 * [What are the terms of use for Esri map tiles?](#what-are-the-terms-of-use-for-esri-map-tiles)
 * [Which services require authentication?](#which-services-require-authentication)
 * [What are some good Leaflet Plugins?](https://github.com/Esri/esri-leaflet/wiki/FAQ#what-are-some-good-leaflet-plugins)
+
+Please take a look at [previous issues](https://github.com/Esri/esri-leaflet/issues?labels=FAQ&milestone=&page=1&state=closed) that resolve common problems.
+
+You can also ask questions on the [GIS Stackexchange](http://gis.stackexchange.com/questions/ask?tags=esri-leaflet,leaflet) an/or the [Esri Leaflet place](https://geonet.esri.com/discussion/create.jspa?sr=pmenu&containerID=1841&containerType=700&tags=esri-leaflet,leaflet) on GeoNet.
 
 ### Projects Using Esri Leaflet
 
@@ -121,6 +125,10 @@ Make Sure you have the [Grunt CLI](http://gruntjs.com/getting-started) installed
 
 Find a bug or want to request a new feature?  Please let us know by submitting an [issue](https://github.com/Esri/esri-leaflet/issues).
 
+Please take a look at [previous issues](https://github.com/Esri/esri-leaflet/issues?labels=FAQ&milestone=&page=1&state=closed) that resolve common problems.
+
+You can also post issues on the [GIS Stackexchange](http://gis.stackexchange.com/questions/ask?tags=esri-leaflet,leaflet) an/or the [Esri Leaflet place](https://geonet.esri.com/discussion/create.jspa?sr=pmenu&containerID=1841&containerType=700&tags=esri-leaflet,leaflet) on GeoNet.
+
 ### Contributing
 
 Esri welcomes contributions from anyone and everyone. Please see our [guidelines for contributing](https://github.com/Esri/esri-leaflet/blob/master/CONTRIBUTING.md).
@@ -144,7 +152,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-A copy of the license is available in the repository's [license.txt]( https://raw.github.com/Esri/esri-leaflet/master/license.txt) file.
+A copy of the license is available in the repository's [LICENSE](./LICENSE) file.
 
 [](Esri Tags: ArcGIS Web Mapping Leaflet)
 [](Esri Language: JavaScript)
