@@ -11,6 +11,22 @@ All builds of Esri Leaflet are available for download on [GitHub](https://github
 <a href="https://github.com/Esri/esri-leaflet/releases/download/v1.0.0-rc.1/esri-leaflet-v1.0.0-rc.1.zip" class="btn">Current Release</a>
 <a href="https://github.com/Esri/esri-leaflet/releases/" class="btn">Past Releases</a>
 
+# NPM
+
+Esri Leaflet is also [available on NPM](https://www.npmjs.org/package/esri-leaflet) and can be installed with the following command.
+
+```bash
+npm install esri-leaflet --save
+```
+
+# Bower
+
+Esri Leaflet is also [available on Bower](http://bower.io/search/?q=esri-leaflet) and can be installed with the following command.
+
+```bash
+bower install esri-leaflet
+```
+
 # CDN
 
 Esri Leaflet is currently hosted on Amazon Cloudfront to make it easily available. After the beta period it will be available on [jsDelivr](http://www.jsdelivr.com/).
