@@ -17,6 +17,9 @@ module.exports = function(grunt) {
                   '  //define a common js module that relies on \'leaflet\'\n' +
                   '  } else if (typeof module === \'object\' && typeof module.exports === \'object\') {\n' +
                   '    module.exports = factory(require(\'leaflet\'));\n' +
+                  '  }\n\n' +
+                  '  if(typeof window !== \'undefined\' && window.L){\n' +
+                  '    factory(window.L);\n' +
                   '  }\n' +
                   '}(function (L) {\n';
 

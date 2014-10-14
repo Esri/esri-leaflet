@@ -1,5 +1,5 @@
 var EsriLeaflet = {
-  VERSION: '0.0.1-beta.6',
+  VERSION: '0.0.1-beta.7',
   Layers: {},
   Services: {},
   Controls: {},
@@ -11,6 +11,6 @@ var EsriLeaflet = {
   }
 };
 
-if(window.L) {
+if(typeof window !== 'undefined' && window.L){
   window.L.esri = EsriLeaflet;
 }

@@ -76,7 +76,7 @@ You can create a new empty feature service witha  single layer on the [ArcGIS fo
         <tr>
             <td><code>fields</code></td>
             <td><code>Array</code></td>
-            <td>An array of metadata names to pull from the service. Includes all fields by default.</td>
+            <td>An array of metadata names to pull from the service. Includes all fields by default. You should always specifcy the name of the unique id for the service. Usually either `'FID'` or `'OBJECTID'`.</td>
         </tr>
         <tr>
             <td><code>from</code></td>

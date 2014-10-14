@@ -10,7 +10,6 @@
   "nonew": true,
   "quotmark": true,
   "undef": true,
-  "unused": true,
   "trailing": true,
   "boss": false,
   "funcscope": false,
