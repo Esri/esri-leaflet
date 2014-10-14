@@ -1,17 +1,17 @@
-L.esri.Services.FeatureLayer = L.esri.Services.Service.extend({
+EsriLeaflet.Services.FeatureLayer = EsriLeaflet.Services.Service.extend({
 
   options: {
     idAttribute: 'OBJECTID'
   },
 
   query: function(){
-    return new L.esri.Tasks.Query(this);
+    return new EsriLeaflet.Tasks.Query(this);
   },
 
   addFeature: function(feature, callback, context) {
     delete feature.id;
 
-    feature = L.esri.Util.geojsonToArcGIS(feature);
+    feature = EsriLeaflet.Util.geojsonToArcGIS(feature);
 
     return this.post('addFeatures', {
       features: [feature]
@@ -24,7 +24,7 @@ L.esri.Services.FeatureLayer = L.esri.Services.Service.extend({
   },
 
   updateFeature: function(feature, callback, context) {
-    feature = L.esri.Util.geojsonToArcGIS(feature, this.options.idAttribute);
+    feature = EsriLeaflet.Util.geojsonToArcGIS(feature, this.options.idAttribute);
 
     return this.post('updateFeatures', {
       features: [feature]
@@ -49,6 +49,6 @@ L.esri.Services.FeatureLayer = L.esri.Services.Service.extend({
 
 });
 
-L.esri.Services.featureLayer = function(url, options) {
-  return new L.esri.Services.FeatureLayer(url, options);
+EsriLeaflet.Services.featureLayer = function(url, options) {
+  return new EsriLeaflet.Services.FeatureLayer(url, options);
 };

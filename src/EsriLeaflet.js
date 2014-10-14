@@ -1,4 +1,4 @@
-L.esri = {
+var EsriLeaflet = {
   VERSION: '0.0.1-beta.6',
   Layers: {},
   Services: {},
@@ -10,3 +10,7 @@ L.esri = {
     pointerEvents: document.documentElement.style.pointerEvents === ''
   }
 };
+
+if(window.L) {
+  window.L.esri = EsriLeaflet;
+}

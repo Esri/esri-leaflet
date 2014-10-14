@@ -1,4 +1,4 @@
-L.esri.Tasks.Find = L.esri.Tasks.Task.extend({
+EsriLeaflet.Tasks.Find = EsriLeaflet.Tasks.Task.extend({
   setters: {
     // method name > param name
     'contains': 'contains',
@@ -41,11 +41,11 @@ L.esri.Tasks.Find = L.esri.Tasks.Task.extend({
 
   run: function (callback, context) {
     return this.request(function(error, response){
-      callback.call(context, error, (response && L.esri.Util.responseToFeatureCollection(response)), response);
+      callback.call(context, error, (response && EsriLeaflet.Util.responseToFeatureCollection(response)), response);
     }, context);
   }
 });
 
-L.esri.Tasks.find = function (url, params) {
-  return new L.esri.Tasks.Find(url, params);
+EsriLeaflet.Tasks.find = function (url, params) {
+  return new EsriLeaflet.Tasks.Find(url, params);
 };

@@ -1,4 +1,4 @@
-L.esri.Tasks.IdentifyImage = L.esri.Tasks.Identify.extend({
+EsriLeaflet.Tasks.IdentifyImage = EsriLeaflet.Tasks.Identify.extend({
   setters: {
     'setMosaicRule': 'mosaicRule',
     'setRenderingRule': 'renderingRule',
@@ -76,7 +76,7 @@ L.esri.Tasks.IdentifyImage = L.esri.Tasks.Identify.extend({
       geoJSON.pixel.properties.values = response.properties.Values;
     }
     if (catalogItems && catalogItems.features) {
-      geoJSON.catalogItems = L.esri.Util.responseToFeatureCollection(catalogItems);
+      geoJSON.catalogItems = EsriLeaflet.Util.responseToFeatureCollection(catalogItems);
       if (catalogItemVisibilities && catalogItemVisibilities.length === geoJSON.catalogItems.features.length) {
         for (var i = catalogItemVisibilities.length - 1; i >= 0; i--) {
           geoJSON.catalogItems.features[i].properties.catalogItemVisibility = catalogItemVisibilities[i];
@@ -88,6 +88,6 @@ L.esri.Tasks.IdentifyImage = L.esri.Tasks.Identify.extend({
 
 });
 
-L.esri.Tasks.identifyImage = function(url, params){
-  return new L.esri.Tasks.IdentifyImage(url, params);
+EsriLeaflet.Tasks.identifyImage = function(url, params){
+  return new EsriLeaflet.Tasks.IdentifyImage(url, params);
 };

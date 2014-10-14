@@ -502,7 +502,7 @@ describe('L.esri.Tasks.Query', function () {
       done();
     });
 
-    L.esri._callback[request.id](sampleMapServiceQueryResponse);
+    window._EsriLeafletCallbacks[request.id](sampleMapServiceQueryResponse);
   });
 
   it('query tasks without services should make POST requests', function(done){

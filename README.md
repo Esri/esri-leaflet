@@ -108,11 +108,6 @@ Make Sure you have the [Grunt CLI](http://gruntjs.com/getting-started) installed
 
 * [Leaflet](http://leaflet.com) version 0.7 or higher is required but the latest version is recommended.
 
-### Optional Dependencies
-* [Leaflet.markercluster](https://github.com/Leaflet/Leaflet.markercluster) - for `L.esri.ClusteredFeatureLayer`
-* [Leaflet.heat](https://github.com/Leaflet/Leaflet.heat) - only for `L.esri.HeatmapLayer`.
-* [Esri Leaflet Geocoder](https://github.com/Esri/esri-leaflet-geocoder) - for geocoding functionality.
-
 ### Resources
 
 * [Importing Data Into Feature Services](https://developers.arcgis.com/tools/csv-to-feature-service/)

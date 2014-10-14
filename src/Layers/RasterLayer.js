@@ -1,5 +1,4 @@
-/* globals L */
-L.esri.Layers.RasterLayer =  L.Class.extend({
+EsriLeaflet.Layers.RasterLayer =  L.Class.extend({
   includes: L.Mixin.Events,
 
   options: {
@@ -220,4 +219,3 @@ L.esri.Layers.RasterLayer =  L.Class.extend({
     this.fire(e.type, e);
   }
 });
-

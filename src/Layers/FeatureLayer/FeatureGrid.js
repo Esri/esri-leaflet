@@ -1,4 +1,4 @@
-L.esri.Layers.FeatureGrid = L.Class.extend({
+EsriLeaflet.Layers.FeatureGrid = L.Class.extend({
 
   includes: L.Mixin.Events,
 

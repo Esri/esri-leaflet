@@ -1,5 +1,4 @@
-/* globals L */
-L.esri.Layers.DynamicMapLayer = L.esri.Layers.RasterLayer.extend({
+EsriLeaflet.Layers.DynamicMapLayer = EsriLeaflet.Layers.RasterLayer.extend({
 
   options: {
     updateInterval: 150,
@@ -11,8 +10,8 @@ L.esri.Layers.DynamicMapLayer = L.esri.Layers.RasterLayer.extend({
   },
 
   initialize: function (url, options) {
-    this.url = L.esri.Util.cleanUrl(url);
-    this._service = new L.esri.Services.MapService(this.url, options);
+    this.url = EsriLeaflet.Util.cleanUrl(url);
+    this._service = new EsriLeaflet.Services.MapService(this.url, options);
     this._service.on('authenticationrequired requeststart requestend requesterror requestsuccess', this._propagateEvent, this);
     L.Util.setOptions(this, options);
   },
@@ -132,12 +131,12 @@ L.esri.Layers.DynamicMapLayer = L.esri.Layers.RasterLayer.extend({
   }
 });
 
-L.esri.DynamicMapLayer = L.esri.Layers.DynamicMapLayer;
+EsriLeaflet.DynamicMapLayer = EsriLeaflet.Layers.DynamicMapLayer;
 
-L.esri.Layers.dynamicMapLayer = function(url, options){
-  return new L.esri.Layers.DynamicMapLayer(url, options);
+EsriLeaflet.Layers.dynamicMapLayer = function(url, options){
+  return new EsriLeaflet.Layers.DynamicMapLayer(url, options);
 };
 
-L.esri.dynamicMapLayer = function(url, options){
-  return new L.esri.Layers.DynamicMapLayer(url, options);
+EsriLeaflet.dynamicMapLayer = function(url, options){
+  return new EsriLeaflet.Layers.DynamicMapLayer(url, options);
 };

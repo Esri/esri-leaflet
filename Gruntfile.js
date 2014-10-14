@@ -3,6 +3,109 @@ var fs = require('fs');
 module.exports = function(grunt) {
   var browsers = grunt.option('browser') ? grunt.option('browser').split(',') : ['PhantomJS'];
 
+  var copyright = '/*! <%= pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today(\'yyyy-mm-dd\') %>\n' +
+                  '*   Copyright (c) <%= grunt.template.today(\'yyyy\') %> Environmental Systems Research Institute, Inc.\n' +
+                  '*   Apache License' +
+                  '*/\n';
+
+  var umdHeader = '(function (factory) {\n' +
+                  '  //define an AMD module that relies on \'leaflet\'\n' +
+                  '  if (typeof define === \'function\' && define.amd) {\n' +
+                  '    define([\'leaflet\'], function (L) {\n' +
+                  '      return factory(L);\n' +
+                  '    });\n' +
+                  '  //define a common js module that relies on \'leaflet\'\n' +
+                  '  } else if (typeof module === \'object\' && typeof module.exports === \'object\') {\n' +
+                  '    module.exports = factory(require(\'leaflet\'));\n' +
+                  '  }\n' +
+                  '}(function (L) {\n';
+
+  var umdFooter = '\n\n  return EsriLeaflet;\n' +
+                  '}));';
+
+  var complete = [
+    'src/EsriLeaflet.js',
+    'src/Util.js',
+    'src/Request.js',
+    'src/Services/Service.js',
+    'src/Services/FeatureLayer.js',
+    'src/Services/MapService.js',
+    'src/Services/ImageService.js',
+    'src/Tasks/Task.js',
+    'src/Tasks/Query.js',
+    'src/Tasks/Find.js',
+    'src/Tasks/Identify.js',
+    'src/Tasks/IdentifyImage.js',
+    'src/Tasks/IdentifyFeatures.js',
+    'src/Layers/BasemapLayer.js',
+    'src/Layers/RasterLayer.js',
+    'src/Layers/DynamicMapLayer.js',
+    'src/Layers/ImageMapLayer.js',
+    'src/Layers/TiledMapLayer.js',
+    'src/Layers/FeatureLayer/FeatureGrid.js',
+    'src/Layers/FeatureLayer/FeatureManager.js',
+    'src/Layers/FeatureLayer/FeatureLayer.js',
+    'src/Controls/Logo.js'
+  ];
+
+  var core = [
+    'src/EsriLeaflet.js',
+    'src/Util.js',
+    'src/Request.js',
+    'src/Tasks/Task.js',
+    'src/Services/Service.js'
+  ];
+
+  var basemaps = [
+    'src/EsriLeaflet.js',
+    'src/Request.js',
+    'src/Layers/BasemapLayer.js',
+    'src/Controls/Logo.js'
+  ];
+
+  var mapservice = [
+    'src/EsriLeaflet.js',
+    'src/Util.js',
+    'src/Request.js',
+    'src/Services/Service.js',
+    'src/Services/MapService.js',
+    'src/Tasks/Task.js',
+    'src/Tasks/Identify.js',
+    'src/Tasks/IdentifyFeatures.js',
+    'src/Tasks/Query.js',
+    'src/Tasks/Find.js',
+    'src/Layers/RasterLayer.js',
+    'src/Layers/DynamicMapLayer.js',
+    'src/Layers/TiledMapLayer.js'
+  ];
+
+  var imageservice = [
+    'src/EsriLeaflet.js',
+    'src/Util.js',
+    'src/Request.js',
+    'src/Services/Service.js',
+    'src/Services/ImageService.js',
+    'src/Tasks/Task.js',
+    'src/Tasks/Query.js',
+    'src/Tasks/Identify.js',
+    'src/Tasks/Identify/IdentifyImage.js',
+    'src/Layers/RasterLayer.js',
+    'src/Layers/ImageMapLayer.js'
+  ];
+
+  var featureservice = [
+    'src/EsriLeaflet.js',
+    'src/Util.js',
+    'src/Request.js',
+    'src/Services/Service.js',
+    'src/Services/FeatureLayer.js',
+    'src/Tasks/Task.js',
+    'src/Tasks/Query.js',
+    'src/Layers/FeatureLayer/FeatureGrid.js',
+    'src/Layers/FeatureLayer/FeatureManager.js',
+    'src/Layers/FeatureLayer/FeatureLayer.js'
+  ];
+
   // Project configuration.
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
@@ -70,119 +173,32 @@ module.exports = function(grunt) {
       options: {
         sourceMap: true,
         separator: '\n\n',
-        banner: "/*! <%= pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today(\"yyyy-mm-dd\") %>\n" +
-                "*   Copyright (c) <%= grunt.template.today(\"yyyy\") %> Environmental Systems Research Institute, Inc.\n" +
-                "*   Apache License" +
-                "*/\n" +
-                "(function (factory) {\n" +
-                "  //define an AMD module that relies on 'leaflet'\n" +
-                "  if (typeof define === 'function' && define.amd) {\n" +
-                "    define(['leaflet'], function (L) {\n" +
-                "      return (exports = factory(L));\n" +
-                "    });\n" +
-                "  //define a common js module that relies on 'leaflet'\n" +
-                "  } else if (typeof module === 'object' && typeof module.exports === 'object') {\n" +
-                "    module.exports = factory(require('leaflet'));\n" +
-                "  // attach your plugin to the global Leaflet variable if it exists\n" +
-                "  } else if(window.L) {\n" +
-                "    window.L.YourPlugin = factory(L);\n" +
-                "  }\n" +
-                "}(function (L) {\n",
-        footer: "\n\n  return L.esri;\n" +
-                "}));",
+        banner: copyright + umdHeader,
+        footer: umdFooter,
       },
       complete: {
-        src: [
-          'src/EsriLeaflet.js',
-          'src/Util.js',
-          'src/Request.js',
-          'src/Services/Service.js',
-          'src/Services/FeatureLayer.js',
-          'src/Services/MapService.js',
-          'src/Services/ImageService.js',
-          'src/Tasks/Task.js',
-          'src/Tasks/Query.js',
-          'src/Tasks/Find.js',
-          'src/Tasks/Identify.js',
-          'src/Tasks/IdentifyImage.js',
-          'src/Tasks/IdentifyFeatures.js',
-          'src/Layers/BasemapLayer.js',
-          'src/Layers/RasterLayer.js',
-          'src/Layers/DynamicMapLayer.js',
-          'src/Layers/ImageMapLayer.js',
-          'src/Layers/TiledMapLayer.js',
-          'src/Layers/FeatureLayer/FeatureGrid.js',
-          'src/Layers/FeatureLayer/FeatureManager.js',
-          'src/Layers/FeatureLayer/FeatureLayer.js',
-          'src/Controls/Logo.js'
-        ],
+        src: complete,
         dest: 'dist/esri-leaflet-src.js'
       },
       core: {
-        src: [
-          'src/EsriLeaflet.js',
-          'src/Util.js',
-          'src/Request.js',
-          'src/Tasks/Task.js',
-          'src/Services/Service.js'
-        ],
+        src: core,
         dest: 'dist/builds/core/esri-leaflet-core-src.js'
       },
       basemaps: {
-        src: [
-          'src/EsriLeaflet.js',
-          'src/Request.js',
-          'src/Layers/BasemapLayer.js',
-          'src/Controls/Logo.js'
-        ],
+        src: basemaps,
         dest: 'dist/builds/basemaps/esri-leaflet-basemaps-src.js'
       },
       mapservice: {
-        src: [
-          'src/EsriLeaflet.js',
-          'src/Util.js',
-          'src/Request.js',
-          'src/Services/Service.js',
-          'src/Services/MapService.js',
-          'src/Tasks/Task.js',
-          'src/Tasks/Identify.js',
-          'src/Tasks/IdentifyFeatures.js',
-          'src/Tasks/Query.js',
-          'src/Tasks/Find.js',
-          'src/Layers/RasterLayer.js',
-          'src/Layers/DynamicMapLayer.js',
-          'src/Layers/TiledMapLayer.js'
-        ],
+        src: mapservice,
         dest: 'dist/builds/map-service/esri-leaflet-map-service-src.js'
       },
       imageservice: {
-        src: [
-
-        ],
+        src: imageservice,
         dest: 'dist/builds/image-service/esri-leaflet-image-service-src.js'
       },
       featureservice: {
-        src: [
-          'src/EsriLeaflet.js',
-          'src/Util.js',
-          'src/Request.js',
-          'src/Services/Service.js',
-          'src/Services/FeatureLayer.js',
-          'src/Tasks/Task.js',
-          'src/Tasks/Query.js',
-          'src/Layers/FeatureLayer/FeatureGrid.js',
-          'src/Layers/FeatureLayer/FeatureManager.js',
-          'src/Layers/FeatureLayer/FeatureLayer.js'
-        ],
+        src: featureservice,
         dest: 'dist/builds/feature-layer/esri-leaflet-feature-layer-src.js'
-      },
-      cluster: {
-        src: ['src/Layers/ClusteredFeatureLayer/ClusteredFeatureLayer.js'],
-        dest: 'dist/builds/clustered-feature-layer/esri-leaflet-clustered-feature-layer-src.js'
-      },
-      heat: {
-        src: ['src/Layers/HeatMapFeatureLayer/HeatMapFeatureLayer.js'],
-        dest: 'dist/builds/heatmap-feature-layer/esri-leaflet-heatmap-feature-layer-src.js'
       }
     },
 
@@ -195,112 +211,17 @@ module.exports = function(grunt) {
         },
         preserveComments: 'some',
         report: 'gzip',
-        banner: "/*! <%= pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today(\"yyyy-mm-dd\") %>\n" +
-                "*   Copyright (c) <%= grunt.template.today(\"yyyy\") %> Environmental Systems Research Institute, Inc.\n" +
-                "*   Apache License" +
-                "*/\n" +
-                "(function (factory) {\n" +
-                "  //define an AMD module that relies on 'leaflet'\n" +
-                "  if (typeof define === 'function' && define.amd) {\n" +
-                "    define(['leaflet'], function (L) {\n" +
-                "      return (exports = factory(L));\n" +
-                "    });\n" +
-                "  //define a common js module that relies on 'leaflet'\n" +
-                "  } else if (typeof module === 'object' && typeof module.exports === 'object') {\n" +
-                "    module.exports = factory(require('leaflet'));\n" +
-                "  // attach your plugin to the global Leaflet variable if it exists\n" +
-                "  } else if(window.L) {\n" +
-                "    window.L.YourPlugin = factory(L);\n" +
-                "  }\n" +
-                "}(function (L) {\n",
-        footer: "\n\n  return L.esri;\n" +
-                "}));",
+        banner: copyright + umdHeader,
+        footer: umdFooter,
       },
       dist: {
         files: {
-          'dist/esri-leaflet.js': [
-            'src/EsriLeaflet.js',
-            'src/Util.js',
-            'src/Request.js',
-            'src/Services/Service.js',
-            'src/Services/FeatureLayer.js',
-            'src/Services/MapService.js',
-            'src/Services/ImageService.js',
-            'src/Tasks/Task.js',
-            'src/Tasks/Query.js',
-            'src/Tasks/Find.js',
-            'src/Tasks/Identify.js',
-            'src/Tasks/IdentifyImage.js',
-            'src/Tasks/IdentifyFeatures.js',
-            'src/Layers/BasemapLayer.js',
-            'src/Layers/RasterLayer.js',
-            'src/Layers/DynamicMapLayer.js',
-            'src/Layers/ImageMapLayer.js',
-            'src/Layers/TiledMapLayer.js',
-            'src/Layers/FeatureLayer/FeatureGrid.js',
-            'src/Layers/FeatureLayer/FeatureManager.js',
-            'src/Layers/FeatureLayer/FeatureLayer.js',
-            'src/Controls/Logo.js'
-          ],
-          'dist/builds/core/esri-leaflet-core.js': [
-            'src/EsriLeaflet.js',
-            'src/Util.js',
-            'src/Request.js',
-            'src/Tasks/Task.js',
-            'src/Services/Service.js'
-          ],
-          'dist/builds/basemaps/esri-leaflet-basemaps.js': [
-            'src/EsriLeaflet.js',
-            'src/Request.js',
-            'src/Layers/BasemapLayer.js',
-            'src/Controls/Logo.js'
-          ],
-          'dist/builds/map-service/esri-leaflet-map-service.js': [
-            'src/EsriLeaflet.js',
-            'src/Util.js',
-            'src/Request.js',
-            'src/Services/Service.js',
-            'src/Services/MapService.js',
-            'src/Tasks/Task.js',
-            'src/Tasks/Identify.js',
-            'src/Tasks/IdentifyFeatures.js',
-            'src/Tasks/Query.js',
-            'src/Tasks/Find.js',
-            'src/Layers/RasterLayer.js',
-            'src/Layers/DynamicMapLayer.js',
-            'src/Layers/TiledMapLayer.js'
-          ],
-          'dist/builds/image-service/esri-leaflet-image-service.js': [
-            'src/EsriLeaflet.js',
-            'src/Util.js',
-            'src/Request.js',
-            'src/Services/Service.js',
-            'src/Services/ImageService.js',
-            'src/Tasks/Task.js',
-            'src/Tasks/Query.js',
-            'src/Tasks/Identify.js',
-            'src/Tasks/Identify/IdentifyImage.js',
-            'src/Layers/RasterLayer.js',
-            'src/Layers/ImageMapLayer.js'
-          ],
-          'dist/builds/feature-layer/esri-leaflet-feature-layer.js': [
-            'src/EsriLeaflet.js',
-            'src/Util.js',
-            'src/Request.js',
-            'src/Services/Service.js',
-            'src/Services/FeatureLayer.js',
-            'src/Tasks/Task.js',
-            'src/Tasks/Query.js',
-            'src/Layers/FeatureLayer/FeatureGrid.js',
-            'src/Layers/FeatureLayer/FeatureManager.js',
-            'src/Layers/FeatureLayer/FeatureLayer.js'
-          ],
-          'dist/builds/clustered-feature-layer/esri-leaflet-clustered-feature-layer.js': [
-            'src/Layers/ClusteredFeatureLayer/ClusteredFeatureLayer.js'
-          ],
-          'dist/builds/heatmap-feature-layer/esri-leaflet-heatmap-feature-layer.js': [
-            'src/Layers/HeatMapFeatureLayer/HeatMapFeatureLayer.js'
-          ],
+          'dist/esri-leaflet.js': complete,
+          'dist/builds/core/esri-leaflet-core.js': core,
+          'dist/builds/basemaps/esri-leaflet-basemaps.js': basemaps,
+          'dist/builds/map-service/esri-leaflet-map-service.js': mapservice,
+          'dist/builds/image-service/esri-leaflet-image-service.js': imageservice,
+          'dist/builds/feature-layer/esri-leaflet-feature-layer.js': featureservice
         }
       }
     },
@@ -380,8 +301,6 @@ module.exports = function(grunt) {
         files: [
           { src: 'dist/esri-leaflet.js', dest: 'site/build/js/esri-leaflet.js'},
           { src: 'dist/esri-leaflet-src.js', dest: 'site/build/js/esri-leaflet-src.js'},
-          { src: 'dist/builds/heatmap-feature-layer/esri-leaflet-heatmap-feature-layer-src.js', dest: 'site/build/js/heatmap-feature-layer-src.js'},
-          { src: 'dist/builds/clustered-feature-layer/esri-leaflet-clustered-feature-layer-src.js', dest: 'site/build/js/clustered-feature-layer-src.js'},
           { src: 'site/source/js/script.js', dest: 'site/build/js/script.js'}
         ]
       }

@@ -1,4 +1,4 @@
-L.esri.Services.Service = L.Class.extend({
+EsriLeaflet.Services.Service = L.Class.extend({
 
   includes: L.Mixin.Events,
 
@@ -8,7 +8,7 @@ L.esri.Services.Service = L.Class.extend({
   },
 
   initialize: function (url, options) {
-    this.url = L.esri.Util.cleanUrl(url);
+    this.url = EsriLeaflet.Util.cleanUrl(url);
     this._requestQueue = [];
     this._authenticating = false;
     L.Util.setOptions(this, options);
@@ -56,9 +56,9 @@ L.esri.Services.Service = L.Class.extend({
     } else {
       var url = (this.options.proxy) ? this.options.proxy + '?' + this.url + path : this.url + path;
       if((method === 'get' || method === 'request') && !this.options.useCors){
-        return L.esri.Request.get.JSONP(url, params, wrappedCallback);
+        return EsriLeaflet.Request.get.JSONP(url, params, wrappedCallback);
       } else {
-        return L.esri[method](url, params, wrappedCallback);
+        return EsriLeaflet[method](url, params, wrappedCallback);
       }
     }
   },
@@ -116,6 +116,6 @@ L.esri.Services.Service = L.Class.extend({
 
 });
 
-L.esri.Services.service = function(url, params){
-  return new L.esri.Services.Service(url, params);
+EsriLeaflet.Services.service = function(url, params){
+  return new EsriLeaflet.Services.Service(url, params);
 };

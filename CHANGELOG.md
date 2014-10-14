@@ -3,13 +3,21 @@
 ## Beta 7
 
 #### Changes
-* `L.esri.Task` now accepts `proxy` and `useCors` like L.esri.Service.
-* Esri Leaflet can now be used in Common JS (browserify) and AMD (Dojo, RequierJS) module loaders.
-* Source maps
+* `L.esri.Task` now accepts `proxy` and `useCors` like `L.esri.Service`. https://github.com/Esri/esri-leaflet/pull/359
+* Esri Leaflet can now be used in Common JS (browserify) and AMD (Dojo, RequierJS) module loaders. Examples will be coming soon.
+* Source maps are now built and distributed along with the distribution files to aid in debugging. To learn how to use the source maps [Treehouse](http://blog.teamtreehouse.com/introduction-source-maps) and [HTML5Rocks](http://www.html5rocks.com/en/tutorials/developertools/sourcemaps/) have excellent resources.
+* `L.esri.ClusteredFeatureLayer` has been moved to its own repository. https://github.com/Esri/esri-leaflet-clustered-feature-layer
+* `L.esri.HeatmapFeatureLayer` has been moved to its own repository. https://github.com/Esri/esri-leaflet-heatmap-feature-layer
+* An edgecase when converting ArcGIS > GeoJSON has been resolved https://github.com/Esri/esri-leaflet/pull/340
+* `popupOptions` are now properly presvered https://github.com/Esri/esri-leaflet/pull/348
+* `setStyle` now permanently overrides the style in `options.style`. https://github.com/Esri/esri-leaflet/pull/349
+* `setWhere` and `setTimeRange` now take callbacks. https://github.com/Esri/esri-leaflet/pull/354
+* You can now abort JSONP requests with request.abort() just like with `XMLHttpRequest`. https://github.com/Esri/esri-leaflet/pull/354
+* `returnGeometry` can now be set on `L.esri.Tasks.Query` https://github.com/Esri/esri-leaflet/pull/358
 
 #### Breaking Changes
 
-* Task methods that accecpt callbacks (like `run` or `bounds`) now return and instance of `XMLHttpRequest` as opposed to the task or service.
+* Task methods that accecpt callbacks (like `run` or `bounds`) now return an instance of `XMLHttpRequest` as opposed to the task or service.
 * `bindPopup` on `L.esri.DynamicMapLayer` now identifies only visible features by default rather then all features.
 * All API requests inside of layers, tasks and services will now switch between GET and POST automatically when the request size exceeds 2000 characters. This improves IE compatibility but means that for long requests (like complex `where` clauses or long lists of IDs) you may need to setup an instance of https://github.com/Esri/resource-proxy and use the `proxy` option.
 

@@ -1,4 +1,4 @@
-L.esri.Tasks.Query = L.esri.Tasks.Task.extend({
+EsriLeaflet.Tasks.Query = EsriLeaflet.Tasks.Task.extend({
   setters: {
     'offset': 'offset',
     'limit': 'limit',
@@ -19,7 +19,7 @@ L.esri.Tasks.Query = L.esri.Tasks.Task.extend({
   },
 
   within: function(bounds){
-    this.params.geometry = L.esri.Util.boundsToExtent(bounds);
+    this.params.geometry = EsriLeaflet.Util.boundsToExtent(bounds);
     this.params.geometryType = 'esriGeometryEnvelope';
     this.params.spatialRel = 'esriSpatialRelIntersects';
     this.params.inSr = 4326;
@@ -77,7 +77,7 @@ L.esri.Tasks.Query = L.esri.Tasks.Task.extend({
   run: function(callback, context){
     this._cleanParams();
     return this.request(function(error, response){
-      callback.call(context, error, (response && L.esri.Util.responseToFeatureCollection(response)), response);
+      callback.call(context, error, (response && EsriLeaflet.Util.responseToFeatureCollection(response)), response);
     }, context);
   },
 
@@ -102,7 +102,7 @@ L.esri.Tasks.Query = L.esri.Tasks.Task.extend({
     this._cleanParams();
     this.params.returnExtentOnly = true;
     return this.request(function(error, response){
-      callback.call(context, error, (response && response.extent && L.esri.Util.extentToBounds(response.extent)), response);
+      callback.call(context, error, (response && response.extent && EsriLeaflet.Util.extentToBounds(response.extent)), response);
     }, context);
   },
 
@@ -127,6 +127,6 @@ L.esri.Tasks.Query = L.esri.Tasks.Task.extend({
 
 });
 
-L.esri.Tasks.query = function(url, params){
-  return new L.esri.Tasks.Query(url, params);
+EsriLeaflet.Tasks.query = function(url, params){
+  return new EsriLeaflet.Tasks.Query(url, params);
 };

@@ -1,8 +1,8 @@
-(function(L){
+(function(EsriLeaflet){
 
   var tileProtocol = (window.location.protocol !== 'https:') ? 'http:' : 'https:';
 
-  L.esri.Layers.BasemapLayer = L.TileLayer.extend({
+  EsriLeaflet.Layers.BasemapLayer = L.TileLayer.extend({
     statics: {
       TILES: {
         Streets: {
@@ -192,8 +192,8 @@
       // set the config variable with the appropriate config object
       if (typeof key === 'object' && key.urlTemplate && key.options){
         config = key;
-      } else if(typeof key === 'string' && L.esri.BasemapLayer.TILES[key]){
-        config = L.esri.BasemapLayer.TILES[key];
+      } else if(typeof key === 'string' && EsriLeaflet.BasemapLayer.TILES[key]){
+        config = EsriLeaflet.BasemapLayer.TILES[key];
       } else {
         throw new Error('L.esri.BasemapLayer: Invalid parameter. Use one of "Streets", "Topographic", "Oceans", "OceansLabels", "NationalGeographic", "Gray", "GrayLabels", "DarkGray", "DarkGrayLabels", "Imagery", "ImageryLabels", "ImageryTransportation", "ShadedRelief", "ShadedReliefLabels", "Terrain" or "TerrainLabels"');
       }
@@ -211,12 +211,12 @@
     },
     onAdd: function(map){
       if(!this.options.hideLogo){
-        this._logo = new L.esri.Controls.Logo({
+        this._logo = new EsriLeaflet.Controls.Logo({
           position: this.options.logoPosition
         }).addTo(map);
       }
 
-      // if(this.options.pane && L.esri.Support.pointerEvents){
+      // if(this.options.pane && EsriLeaflet.Support.pointerEvents){
       //   this._initPane();
       // }
 
@@ -245,7 +245,7 @@
     //   }
     // },
     _getAttributionData: function(url){
-      L.esri.get(url, {}, function(error, attributions){
+      EsriLeaflet.get(url, {}, function(error, attributions){
         this._attributions = [];
         for (var c = 0; c < attributions.contributors.length; c++) {
           var contributor = attributions.contributors[c];
@@ -294,14 +294,14 @@
     }
   });
 
-  L.esri.BasemapLayer = L.esri.Layers.BasemapLayer;
+  EsriLeaflet.BasemapLayer = EsriLeaflet.Layers.BasemapLayer;
 
-  L.esri.Layers.basemapLayer = function(key, options){
-    return new L.esri.Layers.BasemapLayer(key, options);
+  EsriLeaflet.Layers.basemapLayer = function(key, options){
+    return new EsriLeaflet.Layers.BasemapLayer(key, options);
   };
 
-  L.esri.basemapLayer = function(key, options){
-    return new L.esri.Layers.BasemapLayer(key, options);
+  EsriLeaflet.basemapLayer = function(key, options){
+    return new EsriLeaflet.Layers.BasemapLayer(key, options);
   };
 
-})(L);
+})(EsriLeaflet);

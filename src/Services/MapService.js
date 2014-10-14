@@ -1,19 +1,19 @@
-L.esri.Services.MapService = L.esri.Services.Service.extend({
+EsriLeaflet.Services.MapService = EsriLeaflet.Services.Service.extend({
 
   identify: function () {
-    return new L.esri.Tasks.identifyFeatures(this);
+    return new EsriLeaflet.Tasks.identifyFeatures(this);
   },
 
   find: function () {
-    return new L.esri.Tasks.Find(this);
+    return new EsriLeaflet.Tasks.Find(this);
   },
 
   query: function () {
-    return new L.esri.Tasks.Query(this);
+    return new EsriLeaflet.Tasks.Query(this);
   }
 
 });
 
-L.esri.Services.mapService = function(url, params){
-  return new L.esri.Services.MapService(url, params);
+EsriLeaflet.Services.mapService = function(url, params){
+  return new EsriLeaflet.Services.MapService(url, params);
 };

@@ -1,14 +1,14 @@
-L.esri.Services.ImageService = L.esri.Services.Service.extend({
+EsriLeaflet.Services.ImageService = EsriLeaflet.Services.Service.extend({
 
   query: function () {
-    return new L.esri.Tasks.Query(this);
+    return new EsriLeaflet.Tasks.Query(this);
   },
 
   identify: function() {
-    return new L.esri.Tasks.IdentifyImage(this);
+    return new EsriLeaflet.Tasks.IdentifyImage(this);
   }
 });
 
-L.esri.Services.imageService = function(url, params){
-  return new L.esri.Services.ImageService(url, params);
+EsriLeaflet.Services.imageService = function(url, params){
+  return new EsriLeaflet.Services.ImageService(url, params);
 };

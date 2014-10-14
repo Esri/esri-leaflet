@@ -204,6 +204,6 @@ describe('L.esri.Tasks.Find', function () {
       done();
     });
 
-    L.esri._callback[request.id](sampleResponse);
+    window._EsriLeafletCallbacks[request.id](sampleResponse);
   });
 });

@@ -1,4 +1,4 @@
-L.esri.Tasks.Task = L.Class.extend({
+EsriLeaflet.Tasks.Task = L.Class.extend({
 
   options: {
     useCors: true,
@@ -30,12 +30,12 @@ L.esri.Tasks.Task = L.Class.extend({
   },
 
   initialize: function(endpoint, options){
-    // endpoint can be either a url to an ArcGIS Rest Service or an instance of L.esri.Service
-    if(endpoint instanceof L.esri.Services.Service){
+    // endpoint can be either a url to an ArcGIS Rest Service or an instance of EsriLeaflet.Service
+    if(endpoint instanceof EsriLeaflet.Services.Service){
       this._service = endpoint;
       this.url = endpoint.url;
     } else {
-      this.url = L.esri.Util.cleanUrl(endpoint);
+      this.url = EsriLeaflet.Util.cleanUrl(endpoint);
     }
 
     // clone default params into this object
@@ -72,9 +72,9 @@ L.esri.Tasks.Task = L.Class.extend({
   _request: function(method, path, params, callback, context){
     var url = (this.options.proxy) ? this.options.proxy + '?' + this.url + path : this.url + path;
     if((method === 'get' || method === 'request') && !this.options.useCors){
-      return L.esri.Request.get.JSONP(url, params, callback, context);
+      return EsriLeaflet.Request.get.JSONP(url, params, callback, context);
     } else{
-      return L.esri[method](url, params, callback, context);
+      return EsriLeaflet[method](url, params, callback, context);
     }
   }
 });

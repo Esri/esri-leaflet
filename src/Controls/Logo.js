@@ -1,4 +1,4 @@
-L.esri.Controls.Logo = L.Control.extend({
+EsriLeaflet.Controls.Logo = L.Control.extend({
   options: {
     position: 'bottomright',
     marginTop: 0,
@@ -17,6 +17,6 @@ L.esri.Controls.Logo = L.Control.extend({
   }
 });
 
-L.esri.Controls.logo = function(options){
+EsriLeaflet.Controls.logo = function(options){
   return new L.esri.Controls.Logo(options);
 };

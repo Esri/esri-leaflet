@@ -1,6 +1,6 @@
-(function(L){
+(function(EsriLeaflet){
 
-  L.esri.Layers.FeatureManager = L.esri.Layers.FeatureGrid.extend({
+  EsriLeaflet.Layers.FeatureManager = EsriLeaflet.Layers.FeatureGrid.extend({
 
     /**
      * Options
@@ -22,13 +22,13 @@
      */
 
     initialize: function (url, options) {
-      L.esri.Layers.FeatureGrid.prototype.initialize.call(this, options);
+      EsriLeaflet.Layers.FeatureGrid.prototype.initialize.call(this, options);
 
       options = L.setOptions(this, options);
 
-      this.url = L.esri.Util.cleanUrl(url);
+      this.url = EsriLeaflet.Util.cleanUrl(url);
 
-      this._service = new L.esri.Services.FeatureLayer(this.url, options);
+      this._service = new EsriLeaflet.Services.FeatureLayer(this.url, options);
 
       // Leaflet 0.8 change to new propagation
       this._service.on('authenticationrequired requeststart requestend requesterror requestsuccess', function (e) {
@@ -55,11 +55,11 @@
      */
 
     onAdd: function(map){
-      return L.esri.Layers.FeatureGrid.prototype.onAdd.call(this, map);
+      return EsriLeaflet.Layers.FeatureGrid.prototype.onAdd.call(this, map);
     },
 
     onRemove: function(map){
-      return L.esri.Layers.FeatureGrid.prototype.onRemove.call(this, map);
+      return EsriLeaflet.Layers.FeatureGrid.prototype.onRemove.call(this, map);
     },
 
     getAttribution: function () {
@@ -440,4 +440,4 @@
     this.values = this.values.concat(items);
   };
 
-}(L));
+})(EsriLeaflet);

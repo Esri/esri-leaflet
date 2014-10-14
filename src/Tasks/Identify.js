@@ -1,4 +1,4 @@
-L.esri.Tasks.Identify = L.esri.Tasks.Task.extend({
+EsriLeaflet.Tasks.Identify = EsriLeaflet.Tasks.Task.extend({
   path: 'identify',
 
   between: function(start, end){

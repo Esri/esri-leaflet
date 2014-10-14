@@ -1,6 +1,4 @@
-/* globals L */
-
-L.esri.Layers.TiledMapLayer = L.TileLayer.extend({
+EsriLeaflet.Layers.TiledMapLayer = L.TileLayer.extend({
   initialize: function(url, options){
     options = L.Util.setOptions(this, options);
 

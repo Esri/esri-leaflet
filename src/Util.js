@@ -1,4 +1,4 @@
-(function(L){
+(function(EsriLeaflet){
 
   // shallow object clone for feature properties and attributes
   // from http://jsperf.com/cloning-an-object/2
@@ -12,14 +12,6 @@
     return target;
   }
 
-  // checks if the first and last points of a ring are equal and closes the ring
-  function closeRing(coordinates) {
-    if (!pointsEqual(coordinates[0], coordinates[coordinates.length - 1])) {
-      coordinates.push(coordinates[0]);
-    }
-    return coordinates;
-  }
-
   // checks if 2 x,y points are equal
   function pointsEqual(a, b) {
     for (var i = 0; i < a.length; i++) {
@@ -30,6 +22,13 @@
     return true;
   }
 
+  // checks if the first and last points of a ring are equal and closes the ring
+  function closeRing(coordinates) {
+    if (!pointsEqual(coordinates[0], coordinates[coordinates.length - 1])) {
+      coordinates.push(coordinates[0]);
+    }
+    return coordinates;
+  }
 
   // determine if polygon ring coordinates are clockwise. clockwise signifies outer ring, counter-clockwise an inner ring
   // or hole. this logic was found at http://stackoverflow.com/questions/1165647/how-to-determine-if-a-list-of-polygon-
@@ -230,14 +229,14 @@
   }
 
   // convert an extent (ArcGIS) to LatLngBounds (Leaflet)
-  L.esri.Util.extentToBounds = function(extent){
+  EsriLeaflet.Util.extentToBounds = function(extent){
     var sw = new L.LatLng(extent.ymin, extent.xmin);
     var ne = new L.LatLng(extent.ymax, extent.xmax);
     return new L.LatLngBounds(sw, ne);
   };
 
   // convert an LatLngBounds (Leaflet) to extent (ArcGIS)
-  L.esri.Util.boundsToExtent = function(bounds) {
+  EsriLeaflet.Util.boundsToExtent = function(bounds) {
     return {
       'xmin': bounds.getSouthWest().lng,
       'ymin': bounds.getSouthWest().lat,
@@ -249,7 +248,7 @@
     };
   };
 
-  L.esri.Util.arcgisToGeojson = function (arcgis, idAttribute){
+  EsriLeaflet.Util.arcgisToGeojson = function (arcgis, idAttribute){
     var geojson = {};
 
     if(typeof arcgis.x === 'number' && typeof arcgis.y === 'number'){
@@ -278,7 +277,7 @@
 
     if(arcgis.geometry || arcgis.attributes) {
       geojson.type = 'Feature';
-      geojson.geometry = (arcgis.geometry) ? L.esri.Util.arcgisToGeojson(arcgis.geometry) : null;
+      geojson.geometry = (arcgis.geometry) ? EsriLeaflet.Util.arcgisToGeojson(arcgis.geometry) : null;
       geojson.properties = (arcgis.attributes) ? clone(arcgis.attributes) : null;
       if(arcgis.attributes) {
         geojson.id =  arcgis.attributes[idAttribute] || arcgis.attributes.OBJECTID || arcgis.attributes.FID;
@@ -289,7 +288,7 @@
   };
 
   // GeoJSON -> ArcGIS
-  L.esri.Util.geojsonToArcGIS = function(geojson, idAttribute){
+  EsriLeaflet.Util.geojsonToArcGIS = function(geojson, idAttribute){
     idAttribute = idAttribute || 'OBJECTID';
     var spatialReference = { wkid: 4326 };
     var result = {};
@@ -323,7 +322,7 @@
       break;
     case 'Feature':
       if(geojson.geometry) {
-        result.geometry = L.esri.Util.geojsonToArcGIS(geojson.geometry, idAttribute);
+        result.geometry = EsriLeaflet.Util.geojsonToArcGIS(geojson.geometry, idAttribute);
       }
       result.attributes = (geojson.properties) ? clone(geojson.properties) : {};
       if(geojson.id){
@@ -333,13 +332,13 @@
     case 'FeatureCollection':
       result = [];
       for (i = 0; i < geojson.features.length; i++){
-        result.push(L.esri.Util.geojsonToArcGIS(geojson.features[i], idAttribute));
+        result.push(EsriLeaflet.Util.geojsonToArcGIS(geojson.features[i], idAttribute));
       }
       break;
     case 'GeometryCollection':
       result = [];
       for (i = 0; i < geojson.geometries.length; i++){
-        result.push(L.esri.Util.geojsonToArcGIS(geojson.geometries[i], idAttribute));
+        result.push(EsriLeaflet.Util.geojsonToArcGIS(geojson.geometries[i], idAttribute));
       }
       break;
     }
@@ -347,7 +346,7 @@
     return result;
   };
 
-  L.esri.Util.responseToFeatureCollection = function(response, idAttribute){
+  EsriLeaflet.Util.responseToFeatureCollection = function(response, idAttribute){
     var objectIdField;
 
     if(idAttribute){
@@ -372,7 +371,7 @@
     var features = response.features || response.results;
     if(features.length){
       for (var i = features.length - 1; i >= 0; i--) {
-        featureCollection.features.push(L.esri.Util.arcgisToGeojson(features[i], objectIdField));
+        featureCollection.features.push(EsriLeaflet.Util.arcgisToGeojson(features[i], objectIdField));
       }
     }
 
@@ -380,7 +379,7 @@
   };
 
     // trim whitespace and add a tailing slash is needed to a url
-  L.esri.Util.cleanUrl = function(url){
+  EsriLeaflet.Util.cleanUrl = function(url){
     url = url.replace(/\s\s*/g, '');
 
     //add a trailing slash to the url if the user omitted it
@@ -391,4 +390,4 @@
     return url;
   };
 
-})(L);
+})(EsriLeaflet);

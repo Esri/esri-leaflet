@@ -55,7 +55,7 @@ describe('L.esri.Request', function () {
       foo: 'bar'
     });
 
-    L.esri._callback[request.id](sampleResponse);
+    window._EsriLeafletCallbacks[request.id](sampleResponse);
   });
 
   it('should callback with an error on non-JSON reponses', function(done){
@@ -69,7 +69,7 @@ describe('L.esri.Request', function () {
       done();
     });
 
-    L.esri._callback[request.id]('foo');
+    window._EsriLeafletCallbacks[request.id]('foo');
   });
 
   it('should callback with an error when an error is recived from the server', function(done){
@@ -78,7 +78,7 @@ describe('L.esri.Request', function () {
       done();
     });
 
-    L.esri._callback[request.id](sampleError);
+    window._EsriLeafletCallbacks[request.id](sampleError);
   });
 
   it('should be able to make a POST request with CORS', function(done){

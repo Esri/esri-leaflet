@@ -1,4 +1,4 @@
-L.esri.Layers.FeatureLayer = L.esri.Layers.FeatureManager.extend({
+EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
 
   statics: {
     EVENTS: 'click dblclick mouseover mouseout mousemove contextmenu popupopen popupclose'
@@ -9,7 +9,7 @@ L.esri.Layers.FeatureLayer = L.esri.Layers.FeatureManager.extend({
    */
 
   initialize: function (url, options) {
-    L.esri.Layers.FeatureManager.prototype.initialize.call(this, url, options);
+    EsriLeaflet.Layers.FeatureManager.prototype.initialize.call(this, url, options);
 
     options = L.setOptions(this, options);
 
@@ -23,7 +23,7 @@ L.esri.Layers.FeatureLayer = L.esri.Layers.FeatureManager.extend({
    */
 
   onAdd: function(map){
-    return L.esri.Layers.FeatureManager.prototype.onAdd.call(this, map);
+    return EsriLeaflet.Layers.FeatureManager.prototype.onAdd.call(this, map);
   },
 
   onRemove: function(map){
@@ -32,7 +32,7 @@ L.esri.Layers.FeatureLayer = L.esri.Layers.FeatureManager.extend({
       map.removeLayer(this._layers[i]);
     }
 
-    return L.esri.Layers.FeatureManager.prototype.onRemove.call(this, map);
+    return EsriLeaflet.Layers.FeatureManager.prototype.onRemove.call(this, map);
   },
 
   createNewLayer: function(geojson){
@@ -80,7 +80,7 @@ L.esri.Layers.FeatureLayer = L.esri.Layers.FeatureManager.extend({
         // @TODO Leaflet 0.8
         // newLayer.addEventParent(this);
 
-        newLayer.on(L.esri.Layers.FeatureLayer.EVENTS, this._propagateEvent, this);
+        newLayer.on(EsriLeaflet.Layers.FeatureLayer.EVENTS, this._propagateEvent, this);
 
         // bind a popup if we have one
         if(this._popup && newLayer.bindPopup){
@@ -228,12 +228,12 @@ L.esri.Layers.FeatureLayer = L.esri.Layers.FeatureManager.extend({
   }
 });
 
-L.esri.FeatureLayer = L.esri.Layers.FeatureLayer;
+EsriLeaflet.FeatureLayer = EsriLeaflet.Layers.FeatureLayer;
 
-L.esri.Layers.featureLayer = function(url, options){
-  return new L.esri.Layers.FeatureLayer(url, options);
+EsriLeaflet.Layers.featureLayer = function(url, options){
+  return new EsriLeaflet.Layers.FeatureLayer(url, options);
 };
 
-L.esri.featureLayer = function(url, options){
-  return new L.esri.Layers.FeatureLayer(url, options);
+EsriLeaflet.featureLayer = function(url, options){
+  return new EsriLeaflet.Layers.FeatureLayer(url, options);
 };

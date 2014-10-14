@@ -1,5 +1,4 @@
-/* globals L */
-L.esri.Layers.ImageMapLayer = L.esri.Layers.RasterLayer.extend({
+EsriLeaflet.Layers.ImageMapLayer = EsriLeaflet.Layers.RasterLayer.extend({
 
   options: {
     updateInterval: 150,
@@ -15,8 +14,8 @@ L.esri.Layers.ImageMapLayer = L.esri.Layers.RasterLayer.extend({
   },
 
   initialize: function (url, options) {
-    this.url = L.esri.Util.cleanUrl(url);
-    this._service = new L.esri.Services.ImageService(this.url, options);
+    this.url = EsriLeaflet.Util.cleanUrl(url);
+    this._service = new EsriLeaflet.Services.ImageService(this.url, options);
     this._service.on('authenticationrequired requeststart requestend requesterror requestsuccess', this._propagateEvent, this);
     L.Util.setOptions(this, options);
   },
@@ -181,12 +180,12 @@ L.esri.Layers.ImageMapLayer = L.esri.Layers.RasterLayer.extend({
   }
 });
 
-L.esri.ImageMapLayer = L.esri.Layers.ImageMapLayer;
+EsriLeaflet.ImageMapLayer = EsriLeaflet.Layers.ImageMapLayer;
 
-L.esri.Layers.imageMapLayer = function (url, options) {
-  return new L.esri.Layers.ImageMapLayer(url, options);
+EsriLeaflet.Layers.imageMapLayer = function (url, options) {
+  return new EsriLeaflet.Layers.ImageMapLayer(url, options);
 };
 
-L.esri.imageMapLayer = function (url, options) {
-  return new L.esri.Layers.ImageMapLayer(url, options);
+EsriLeaflet.imageMapLayer = function (url, options) {
+  return new EsriLeaflet.Layers.ImageMapLayer(url, options);
 };

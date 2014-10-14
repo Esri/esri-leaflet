@@ -1,4 +1,4 @@
-L.esri.Tasks.IdentifyFeatures = L.esri.Tasks.Identify.extend({
+EsriLeaflet.Tasks.IdentifyFeatures = EsriLeaflet.Tasks.Identify.extend({
   setters: {
     'layers': 'layers',
     'precision': 'geometryPrecision',
@@ -13,7 +13,7 @@ L.esri.Tasks.IdentifyFeatures = L.esri.Tasks.Identify.extend({
   },
 
   on: function(map){
-    var extent = L.esri.Util.boundsToExtent(map.getBounds());
+    var extent = EsriLeaflet.Util.boundsToExtent(map.getBounds());
     var size = map.getSize();
     this.params.imageDisplay = [size.x, size.y, 96].join(',');
     this.params.mapExtent=([extent.xmin, extent.ymin, extent.xmax, extent.ymax]).join(',');
@@ -40,12 +40,12 @@ L.esri.Tasks.IdentifyFeatures = L.esri.Tasks.Identify.extend({
 
   run: function (callback, context){
     return this.request(function(error, response){
-      callback.call(context, error, (response && L.esri.Util.responseToFeatureCollection(response)), response);
+      callback.call(context, error, (response && EsriLeaflet.Util.responseToFeatureCollection(response)), response);
     }, context);
   }
 
 });
 
-L.esri.Tasks.identifyFeatures = function(url, params){
-  return new L.esri.Tasks.IdentifyFeatures(url, params);
+EsriLeaflet.Tasks.identifyFeatures = function(url, params){
+  return new EsriLeaflet.Tasks.IdentifyFeatures(url, params);
 };
