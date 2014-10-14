@@ -8,11 +8,11 @@
   <meta charset="utf-8">
 
   
-    <title>Simple ImageMapLayer | Esri Leaflet</title>
+    <title>Infrared Imagery using BandIDs | Esri Leaflet</title>
   
 
   
-    <meta name="description" content="Display an Image Service from ArcGIS Online or ArcGIS Server.  More information about Map Services can be found in the &lt;a href=&quot;/esri-leaflet/api-reference/layers/image-map-layer.html&quot;&gt;L.esri.Layers.ImageMapLayer&lt;/a&gt; documentation.">
+    <meta name="description" content="Display NAIP imagery from an ArcGIS image service and use the band IDs parameter to show the near infrared band in a false color composite. Vegetated areas are highlighted in red. More information about Image Services can be found in the &lt;a href=&quot;/esri-leaflet/api-reference/layers/image-map-layer.html&quot;&gt;L.esri.Layers.ImageMapLayer&lt;/a&gt; documentation.">
   
 
   <meta name="description" content="Esri Leaflet">
@@ -30,26 +30,12 @@
   <!-- stylesheet -->
   <link rel="stylesheet" href="../../../esri-leaflet/css/style.css">
 
-  <!-- cluster -->
-  <link rel="stylesheet" type="text/css" href="http://cdn-geoweb.s3.amazonaws.com/Leaflet.markercluster/0.4.0/MarkerCluster.css">
-  <link rel="stylesheet" type="text/css" href="http://cdn-geoweb.s3.amazonaws.com/Leaflet.markercluster/0.4.0/MarkerCluster.Default.css">
-
   <!-- leaflet -->
   <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
-  <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet-src.js"></script>
-
-  <!-- leaflet plugins -->
-  <script src="http://cdn-geoweb.s3.amazonaws.com/Leaflet.heat/0.1.1/leaflet-heat.js"></script>
-  <script src="http://cdn-geoweb.s3.amazonaws.com/Leaflet.markercluster/0.4.0/leaflet.markercluster-src.js"></script>
+  <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
 
   <!-- esri leaflet -->
-  <script src="../../../esri-leaflet/js/esri-leaflet-src.js"></script>
-  <script src="../../../esri-leaflet/js/heatmap-feature-layer-src.js"></script>
-  <script src="../../../esri-leaflet/js/clustered-feature-layer-src.js"></script>
-
-  <!-- esri leaflet geocoder -->
-  <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.3/esri-leaflet-geocoder.js"></script>
-  <link rel="stylesheet" type="text/css" href="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.3/esri-leaflet-geocoder.css">
+  <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.1/esri-leaflet.js"></script>
 
   <!-- Google Analytics -->
   <script>
@@ -160,8 +146,8 @@
 
 <div class="example-content">
 <div class="wrap">
-  <h1>Simple ImageMapLayer</h1>
-  <p>Display an Image Service from ArcGIS Online or ArcGIS Server.  More information about Map Services can be found in the <a href="/esri-leaflet/api-reference/layers/image-map-layer.html">L.esri.Layers.ImageMapLayer</a> documentation.</p>
+  <h1>Infrared Imagery using BandIDs</h1>
+  <p>Display NAIP imagery from an ArcGIS image service and use the band IDs parameter to show the near infrared band in a false color composite. Vegetated areas are highlighted in red. More information about Image Services can be found in the <a href="/esri-leaflet/api-reference/layers/image-map-layer.html">L.esri.Layers.ImageMapLayer</a> documentation.</p>
 </div>
 <div id="map-wrapper">
   
@@ -169,9 +155,9 @@
 <div id="map"></div>
 
 <script>
-  var map = L.map('map').setView([43.50, -120.23], 7);
+  var map = L.map('map').setView([43.415, -124.228], 13);
 
-  L.esri.basemapLayer('Imagery').addTo(map);
+  L.esri.basemapLayer('Gray').addTo(map);
 
   L.esri.imageMapLayer('http://imagery.oregonexplorer.info/arcgis/rest/services/NAIP_2011/NAIP_2011_Dynamic/ImageServer')
         .setBandIds('3,0,1')
@@ -181,7 +167,7 @@
 <pre><code class="language-xml"><span class="tag">&lt;<span class="title">html</span>&gt;</span>
 <span class="tag">&lt;<span class="title">head</span>&gt;</span>
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">utf-8</span> /&gt;</span>
-  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Simple ImageMapLayer<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Infrared Imagery using BandIDs<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">name</span>=<span class="value">'viewport'</span> <span class="attribute">content</span>=<span class="value">'initial-scale=1,maximum-scale=1,user-scalable=no'</span> /&gt;</span>
 
   <span class="comment">&lt;!-- Load Leaflet from CDN--&gt;</span>
@@ -189,7 +175,7 @@
   <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
   <span class="comment">&lt;!-- Load Esri Leaflet from CDN --&gt;</span>
-  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/0.0.1-beta.5/esri-leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.1/esri-leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
   <span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css">
     <span class="tag">body</span> <span class="rules">{<span class="rule"><span class="attribute">margin</span>:<span class="value"><span class="number">0</span></span></span>;<span class="rule"><span class="attribute">padding</span>:<span class="value"><span class="number">0</span></span></span>;<span class="rule">}</span></span>
@@ -201,9 +187,9 @@
 <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
-  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">43.50</span>, -<span class="number">120.23</span>], <span class="number">7</span>);
+  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">43.415</span>, -<span class="number">124.228</span>], <span class="number">13</span>);
 
-  L.esri.basemapLayer(<span class="string">'Imagery'</span>).addTo(map);
+  L.esri.basemapLayer(<span class="string">'Gray'</span>).addTo(map);
 
   L.esri.imageMapLayer(<span class="string">'http://imagery.oregonexplorer.info/arcgis/rest/services/NAIP_2011/NAIP_2011_Dynamic/ImageServer'</span>)
         .setBandIds(<span class="string">'3,0,1'</span>)

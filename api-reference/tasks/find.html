@@ -7,11 +7,11 @@
 <head>
   <meta charset="utf-8">
 
-
+  
     <title>L.esri.Tasks.Find | Esri Leaflet</title>
+  
 
-
-
+  
 
   <meta name="description" content="Esri Leaflet">
   <meta name="viewport" content="width=device-width">
@@ -28,26 +28,12 @@
   <!-- stylesheet -->
   <link rel="stylesheet" href="../../../../esri-leaflet/css/style.css">
 
-  <!-- cluster -->
-  <link rel="stylesheet" type="text/css" href="http://cdn-geoweb.s3.amazonaws.com/Leaflet.markercluster/0.4.0/MarkerCluster.css">
-  <link rel="stylesheet" type="text/css" href="http://cdn-geoweb.s3.amazonaws.com/Leaflet.markercluster/0.4.0/MarkerCluster.Default.css">
-
   <!-- leaflet -->
   <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
-  <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet-src.js"></script>
-
-  <!-- leaflet plugins -->
-  <script src="http://cdn-geoweb.s3.amazonaws.com/Leaflet.heat/0.1.1/leaflet-heat.js"></script>
-  <script src="http://cdn-geoweb.s3.amazonaws.com/Leaflet.markercluster/0.4.0/leaflet.markercluster-src.js"></script>
+  <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
 
   <!-- esri leaflet -->
-  <script src="../../../../esri-leaflet/js/esri-leaflet-src.js"></script>
-  <script src="../../../../esri-leaflet/js/heatmap-feature-layer-src.js"></script>
-  <script src="../../../../esri-leaflet/js/clustered-feature-layer-src.js"></script>
-
-  <!-- esri leaflet geocoder -->
-  <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.3/esri-leaflet-geocoder.js"></script>
-  <link rel="stylesheet" type="text/css" href="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.3/esri-leaflet-geocoder.css">
+  <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.1/esri-leaflet.js"></script>
 
   <!-- Google Analytics -->
   <script>
@@ -74,16 +60,16 @@
     </div>
     <div id="background-map" class="background-map"></div>
 
-
+  
 
 <div class="container white">
-
+  
 
 <aside class="sidebar">
   <h5>L.esri</h5>
   <nav>
     <a href="../../../../esri-leaflet/api-reference/request.html">Request</a>
-    <a href="../../../../esri-leaflet/api-reference/util.html">Util</a>
+    <a href="../../../../esri-leaflet/api-reference/utils.html">Utils</a>
   </nav>
 
   <h5>L.esri.Layers</h5>
@@ -122,7 +108,7 @@
 
 <div class="main-content">
   <h1 id="l-esri-tasks-find">L.esri.Tasks.Find</h1>
-<p><code>L.esri.Tasks.Find</code> is an abstraction for the find API included in Map Services. It provides a chainable API for building request parameters and executing find tasks.</p>
+<p><code>L.esri.Tasks.Find</code> is an abstraction for the find API that exists on Map Services. It provides a chainable API for building request parameters and executing find tasks.</p>
 <h3 id="constructor">Constructor</h3>
 <table>
     <thead>
@@ -134,16 +120,41 @@
     <tbody>
         <tr>
             <td>
-                <code class='nobr'>new L.esri.Tasks.Find(<nobr class="param"><span>&lt;<a href="../../api-reference/services/service.html">MapService</a>&gt;</span> <code>endpoint</code></nobr>)</code><br><br>
-                <code>L.esri.Tasks.find(<nobr class="param"><span>&lt;<a href="../../api-reference/services/service.html">MapService</a>&gt;</span> <code>endpoint</code></nobr>)</code><br><br>
-                <code>new L.esri.Tasks.Find(<nobr class="param"><span>&lt;String&gt;</span> <code>endpoint</code></nobr>)</code><br><br>
-                <code>L.esri.Tasks.find(<nobr class="param"><span>&lt;String&gt;</span> <code>endpoint</code></nobr>)</code>
+                <code class='nobr'>new L.esri.Tasks.Find(<nobr class="param"><span>&lt;<a href="../../api-reference/services/service.html">MapService</a>&gt;</span> <code>endpoint</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br>
+                <code>L.esri.Tasks.find(<nobr class="param"><span>&lt;<a href="../../api-reference/services/service.html">MapService</a>&gt;</span> <code>endpoint</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br>
+                <code>new L.esri.Tasks.Find(<nobr class="param"><span>&lt;String&gt;</span> <code>endpoint</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br>
+                <code>L.esri.Tasks.find(<nobr class="param"><span>&lt;String&gt;</span> <code>endpoint</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code>
             </td>
-            <td>The <code>endpoint</code> parameter is the ArcGIS Server Map Service that you want to search for features. You can also pass the URL to a service directly as a string. See <a href="#service-urls">service URLs</a> for more information on how to find these URLs.</td>
+            <td>The <code>endpoint</code> parameter is the service that you want to find either an  ArcGIS Server or ArcGIS Online service. You can also pass the URL to a service directly as a string. See <a href="#service-urls">service URLs</a> for more information on how to find these URLs.</td>
         </tr>
     </tbody>
 </table>
 
+<h3 id="options">Options</h3>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>proxy</code></td>
+<td><code>String</code></td>
+<td><code>false</code></td>
+<td>URL of an <a href="https://developers.arcgis.com/javascript/jshelp/ags_proxy.html">ArcGIS API for JavaScript proxies</a> or <a href="https://github.com/Esri/resource-proxy">ArcGIS Resource Proxies</a> to use for proxying POST requests.</td>
+</tr>
+<tr>
+<td><code>useCors</code></td>
+<td><code>Boolean</code></td>
+<td><code>true</code></td>
+<td>If this service should use CORS when making GET requests.</td>
+</tr>
+</tbody>
+</table>
 <h3 id="methods">Methods</h3>
 <table>
     <thead>
@@ -227,7 +238,7 @@
         <tr>
             <td><code>run(<nobr class="param"><span>&lt;Function&gt;</span> <code>callback</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>context</code></nobr>)</code></td>
             <td><code>this</code></td>
-            <td>Executes the find request with the current parameters, features will be passed to <code>callback</code> as a <a href="http://geojson.org/geojson-spec.html#feature-collection-objects">GeoJSON FeatureCollection</a>. Accepts an optional function context.</td>
+            <td>Exectues the find request with the current parameters, features will be passed to <code>callback</code> as a <a href="http://geojson.org/geojson-spec.html#feature-collection-objects">GeoJSON FeatureCollection</a>. Accepts an optional function context.</td>
         </tr>
     </tbody>
 </table>

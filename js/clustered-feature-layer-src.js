@@ -1,4 +1,4 @@
-/*! esri-leaflet - v0.0.1-beta.6 - 2014-08-20
+/*! esri-leaflet - v0.0.1-beta.6 - 2014-09-18
 *   Copyright (c) 2014 Environmental Systems Research Institute, Inc.
 *   Apache License*/
 L.esri.Layers.ClusteredFeatureLayer = L.esri.Layers.FeatureManager.extend({

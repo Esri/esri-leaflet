@@ -7,11 +7,11 @@
 <head>
   <meta charset="utf-8">
 
-
+  
     <title>Request | Esri Leaflet</title>
+  
 
-
-
+  
 
   <meta name="description" content="Esri Leaflet">
   <meta name="viewport" content="width=device-width">
@@ -28,26 +28,12 @@
   <!-- stylesheet -->
   <link rel="stylesheet" href="../../../esri-leaflet/css/style.css">
 
-  <!-- cluster -->
-  <link rel="stylesheet" type="text/css" href="http://cdn-geoweb.s3.amazonaws.com/Leaflet.markercluster/0.4.0/MarkerCluster.css">
-  <link rel="stylesheet" type="text/css" href="http://cdn-geoweb.s3.amazonaws.com/Leaflet.markercluster/0.4.0/MarkerCluster.Default.css">
-
   <!-- leaflet -->
   <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
-  <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet-src.js"></script>
-
-  <!-- leaflet plugins -->
-  <script src="http://cdn-geoweb.s3.amazonaws.com/Leaflet.heat/0.1.1/leaflet-heat.js"></script>
-  <script src="http://cdn-geoweb.s3.amazonaws.com/Leaflet.markercluster/0.4.0/leaflet.markercluster-src.js"></script>
+  <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
 
   <!-- esri leaflet -->
-  <script src="../../../esri-leaflet/js/esri-leaflet-src.js"></script>
-  <script src="../../../esri-leaflet/js/heatmap-feature-layer-src.js"></script>
-  <script src="../../../esri-leaflet/js/clustered-feature-layer-src.js"></script>
-
-  <!-- esri leaflet geocoder -->
-  <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.3/esri-leaflet-geocoder.js"></script>
-  <link rel="stylesheet" type="text/css" href="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.3/esri-leaflet-geocoder.css">
+  <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.1/esri-leaflet.js"></script>
 
   <!-- Google Analytics -->
   <script>
@@ -74,16 +60,16 @@
     </div>
     <div id="background-map" class="background-map"></div>
 
-
+  
 
 <div class="container white">
-
+  
 
 <aside class="sidebar">
   <h5>L.esri</h5>
   <nav>
     <a href="../../../esri-leaflet/api-reference/request.html">Request</a>
-    <a href="../../../esri-leaflet/api-reference/util.html">Util</a>
+    <a href="../../../esri-leaflet/api-reference/utils.html">Utils</a>
   </nav>
 
   <h5>L.esri.Layers</h5>
@@ -122,11 +108,55 @@
 
 <div class="main-content">
   <h1 id="l-esri-request">L.esri.Request</h1>
-<p>Generic methods for GET and POST requests to ArcGIS Online or ArcGIS Server resources. These methods will handle serializing the input parameters and parsing of the response into a response and error property similar to Node JS.</p>
-<p>GET requests will be made with <code>XMLHttpRequest</code> (via CORS) if the browser supports it and will fallback to JSONP. POST requests will always me made with <code>XMLHttpRequest</code> (via CORS) but ArcGIS Resource Proxies</a> are also supported via <a href="../../../esri-leaflet/api-reference/services/service.html"><code>L.esri.Services.Service</code></a>.</p>
+<p>Generic methods for GET and POST requests to ArcGIS Online or ArcGIS Server resources. These methods will handle serializing the input parameters and the parsing of the response into a response and error property similar to Node JS.</p>
+<p>GET requests will be made with <code>XMLHttpRequest</code> (via CORS) if the browser supports it and will fallback to JSONP. POST requests will always me made with <code>XMLHttpRequest</code> (via CORS) but the <a href="https://developers.arcgis.com/javascript/jshelp/ags_proxy.html">ArcGIS API for JavaScript proxies</a> and the <a href="https://github.com/Esri/resource-proxy">ArcGIS Resource Proxies</a> are support via <a href="../../../esri-leaflet/api-reference/services/service.html"><code>L.esri.Services.Service</code></a>.</p>
+<p>If you are using a version of ArcGIS Server before 10.1 your server does not support CORS by default. Either enable CORS support on your server, documentation is available at <a href="http://enable-cors.org/">http://enable-cors.org/</a>. If you cannot or do not want to enable CORS on your server the following code will make all requests default to JSONP.</p>
+<pre><code class="language-js">L.esri.get = L.esri.Request.get.JSONP;</code></pre>
+<h3 id="l-esri-request-url-params-callback-">L.esri.request(url, params, callback);</h3>
+<p>Executues a GET or POST via <code>XMLHttpRequest</code> or JSONP request depending on the capibilities of the browser and the length of the request. GET is used when the browser supports CORS and the request url is less then 2000 characters. POST is used when the browser supports CORS and the request exceeds 2000 characters. JSONP is used when the request is less then 2000 characters and the browser does not support CORS.</p>
+<h4 id="params">Params</h4>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>url</code></td>
+<td><code>String</code></td>
+<td>The URL to request.</td>
+</tr>
+<tr>
+<td><code>params</code></td>
+<td><code>Object</code></td>
+<td>The parameters to send as a query string.</td>
+</tr>
+<tr>
+<td><code>callback</code></td>
+<td><code>Function</code></td>
+<td>Function to run when the request completes, will be passed <code>error</code> and <code>response</code>.</td>
+</tr>
+<tr>
+<td><code>context</code></td>
+<td><code>Object</code></td>
+<td>Optional function context for the callback.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="example">Example</h4>
+<pre><code class="language-js">L.esri.request(<span class="string">'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Heritage_Trees_Portland/FeatureServer/0'</span>, {}, <span class="function"><span class="keyword">function</span><span class="params">(error, response)</span>{</span>
+  <span class="keyword">if</span>(error){
+    console.log(error);
+  } <span class="keyword">else</span> {
+    console.log(response.name);
+  }
+});</code></pre>
 <h3 id="l-esri-get-url-params-callback-">L.esri.get(url, params, callback)</h3>
-<p>Execute a GET request via `XMLHttpRequest&#39; (via CORS) or JSONP depending on what is available in the browser.</p>
-<p><strong>Note</strong>: ArcGIS server before 10.1 does not have CORS support enabled by default. You can either enable CORS on your server or tell Esri Leaflet to always use JSONP requests with <code>L.esri.get = L.esri.Request.get.JSONP;</code> after you load Esri Leaflet but before calling your own scripts.  It is also possible to define CORS support for individual Services via the option {useCors}.</p>
+<p>Execute a GET request via `XMLHttpRequest&#39; (via CORS) or JSON depending on what is available in the browser.</p>
+<p><strong>Note</strong>: ArcGIS server before 10.1 does not have CORS support enabled by default. You can either enable CORS on your server or tell Esri Leaflet to always use JSONP requests with <code>L.esri.get = L.esri.Request.get.JSONP;</code> After you load Esri leaflet but before your own scripts.</p>
 <h4 id="params">Params</h4>
 <table>
 <thead>
@@ -169,7 +199,7 @@
 });</code></pre>
 <h3 id="l-esri-post-url-params-callback-">L.esri.post(url, params, callback)</h3>
 <p>Execute a POST request via `XMLHttpRequest&#39; (via CORS).</p>
-<p>This request is made via <code>XMLHttpRequest</code> which cannot make cross domain requests in IE 8 and 9. Esri Leaflet supports <a href="https://github.com/Esri/resource-proxy">ArcGIS Resource Proxies</a> which can be hosted on your server and used with the <a href="../../../esri-leaflet/api-reference/services/service.html"><code>L.esri.Services.Service</code></a> classes to work around this issue.</p>
+<p>This request is made via <code>XMLHttpRequest</code> which cannot make cross domain requests in IE 8 and 9. Esri Leaflet supports both the <a href="https://developers.arcgis.com/javascript/jshelp/ags_proxy.html">ArcGIS API for JavaScript proxies</a> and the <a href="https://github.com/Esri/resource-proxy">ArcGIS Resource Proxies</a> which can be hosted on your server and used with the <a href="../../../esri-leaflet/api-reference/services/service.html"><code>L.esri.Services.Service</code></a> classes to work around this issue.</p>
 <table>
 <thead>
 <tr>

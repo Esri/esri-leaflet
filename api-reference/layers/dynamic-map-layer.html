@@ -7,11 +7,11 @@
 <head>
   <meta charset="utf-8">
 
-
+  
     <title>L.esri.Layers.DynamicMapLayer | Esri Leaflet</title>
+  
 
-
-
+  
 
   <meta name="description" content="Esri Leaflet">
   <meta name="viewport" content="width=device-width">
@@ -28,26 +28,12 @@
   <!-- stylesheet -->
   <link rel="stylesheet" href="../../../../esri-leaflet/css/style.css">
 
-  <!-- cluster -->
-  <link rel="stylesheet" type="text/css" href="http://cdn-geoweb.s3.amazonaws.com/Leaflet.markercluster/0.4.0/MarkerCluster.css">
-  <link rel="stylesheet" type="text/css" href="http://cdn-geoweb.s3.amazonaws.com/Leaflet.markercluster/0.4.0/MarkerCluster.Default.css">
-
   <!-- leaflet -->
   <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
-  <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet-src.js"></script>
-
-  <!-- leaflet plugins -->
-  <script src="http://cdn-geoweb.s3.amazonaws.com/Leaflet.heat/0.1.1/leaflet-heat.js"></script>
-  <script src="http://cdn-geoweb.s3.amazonaws.com/Leaflet.markercluster/0.4.0/leaflet.markercluster-src.js"></script>
+  <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
 
   <!-- esri leaflet -->
-  <script src="../../../../esri-leaflet/js/esri-leaflet-src.js"></script>
-  <script src="../../../../esri-leaflet/js/heatmap-feature-layer-src.js"></script>
-  <script src="../../../../esri-leaflet/js/clustered-feature-layer-src.js"></script>
-
-  <!-- esri leaflet geocoder -->
-  <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.3/esri-leaflet-geocoder.js"></script>
-  <link rel="stylesheet" type="text/css" href="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.3/esri-leaflet-geocoder.css">
+  <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.1/esri-leaflet.js"></script>
 
   <!-- Google Analytics -->
   <script>
@@ -74,16 +60,16 @@
     </div>
     <div id="background-map" class="background-map"></div>
 
-
+  
 
 <div class="container white">
-
+  
 
 <aside class="sidebar">
   <h5>L.esri</h5>
   <nav>
     <a href="../../../../esri-leaflet/api-reference/request.html">Request</a>
-    <a href="../../../../esri-leaflet/api-reference/util.html">Util</a>
+    <a href="../../../../esri-leaflet/api-reference/utils.html">Utils</a>
   </nav>
 
   <h5>L.esri.Layers</h5>
@@ -125,7 +111,7 @@
 <!-- Inherits from [`L.esri.Layers.RasterLayer`](../../../../esri-leaflet/api-reference/layers/raster-layer.html) -->
 
 <p>Render and visualize Map Services from ArcGIS Online and ArcGIS Server. L.esri.Layers.DynamicMapLayer also supports custom popups and identification of features.</p>
-<p>Map Services are a way to expose the contents of a map as a web service and expose capabilites for exporting tile images, querying and identifying features and more.</p>
+<p>Map Servers are a way to expose the contents that make up a map as a web service and can expose different capabilites for exporting tiles images, querying and identifying features and more.</p>
 <h3 id="constructor">Constructor</h3>
 <table>
     <thead>
@@ -200,7 +186,7 @@
 <td><code>opacity</code></td>
 <td><code>Number</code></td>
 <td><code>1</code></td>
-<td>Opacity of the layer. Should be a value between 0 (completely transparent) and 1 (completely opaque).</td>
+<td>Opacity of the layer. Should be a value between 0 and 1.</td>
 </tr>
 <tr>
 <td><code>position</code></td>
@@ -333,7 +319,7 @@
             <td><code>identify()</code></td>
             <td><code>this</code></td>
             <td>
-                Returns a new <a href="/api-reference/tasks/identify-features.html"><code>L.esri.services.IdentifyFeatures</code></a> object that can be used to identify features on this layer. Your callback function will be passed a <a href="http://geojson.org/geojson-spec.html#feature-collection-objects">GeoJSON FeatureCollection</a> with the results or an error.
+                Returns a new <a href="../../../../esri-leaflet//api-reference/tasks/identify-features.html"><code>L.esri.services.IdentifyFeatures</code></a> object that can be used to identify features on this layer. Your callback function will be passed a <a href="http://geojson.org/geojson-spec.html#feature-collection-objects">GeoJSON FeatureCollection</a> with the results or an error.
 <pre class="js"><code>dynamicMapLayer.identify()
             .at(latlng, latlngbounds, 5)
             .run(function(error, featureCollection){
@@ -345,7 +331,7 @@
             <td><code>find()</code></td>
             <td><code>this</code></td>
             <td>
-                Returns a new <a href="/api-reference/tasks/find.html"><code>L.esri.services.Find</code></a> object that can be used to find features. Your callback function will be passed a <a href="http://geojson.org/geojson-spec.html#feature-collection-objects">GeoJSON FeatureCollection</a> with the results or an error.
+                Returns a new <a href="../../../../esri-leaflet//api-reference/tasks/find.html"><code>L.esri.services.Find</code></a> object that can be used to find features. Your callback function will be passed a <a href="http://geojson.org/geojson-spec.html#feature-collection-objects">GeoJSON FeatureCollection</a> with the results or an error.
 <pre class="js"><code>dynamicMapLayer.find()
             .layers(&#39;18&#39;)
             .searchText(&#39;Colorado&#39;)

@@ -7,11 +7,11 @@
 <head>
   <meta charset="utf-8">
 
-
+  
     <title>Utilities | Esri Leaflet</title>
+  
 
-
-
+  
 
   <meta name="description" content="Esri Leaflet">
   <meta name="viewport" content="width=device-width">
@@ -28,26 +28,12 @@
   <!-- stylesheet -->
   <link rel="stylesheet" href="../../../esri-leaflet/css/style.css">
 
-  <!-- cluster -->
-  <link rel="stylesheet" type="text/css" href="http://cdn-geoweb.s3.amazonaws.com/Leaflet.markercluster/0.4.0/MarkerCluster.css">
-  <link rel="stylesheet" type="text/css" href="http://cdn-geoweb.s3.amazonaws.com/Leaflet.markercluster/0.4.0/MarkerCluster.Default.css">
-
   <!-- leaflet -->
   <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
-  <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet-src.js"></script>
-
-  <!-- leaflet plugins -->
-  <script src="http://cdn-geoweb.s3.amazonaws.com/Leaflet.heat/0.1.1/leaflet-heat.js"></script>
-  <script src="http://cdn-geoweb.s3.amazonaws.com/Leaflet.markercluster/0.4.0/leaflet.markercluster-src.js"></script>
+  <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
 
   <!-- esri leaflet -->
-  <script src="../../../esri-leaflet/js/esri-leaflet-src.js"></script>
-  <script src="../../../esri-leaflet/js/heatmap-feature-layer-src.js"></script>
-  <script src="../../../esri-leaflet/js/clustered-feature-layer-src.js"></script>
-
-  <!-- esri leaflet geocoder -->
-  <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.3/esri-leaflet-geocoder.js"></script>
-  <link rel="stylesheet" type="text/css" href="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.3/esri-leaflet-geocoder.css">
+  <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.1/esri-leaflet.js"></script>
 
   <!-- Google Analytics -->
   <script>
@@ -74,16 +60,16 @@
     </div>
     <div id="background-map" class="background-map"></div>
 
-
+  
 
 <div class="container white">
-
+  
 
 <aside class="sidebar">
   <h5>L.esri</h5>
   <nav>
     <a href="../../../esri-leaflet/api-reference/request.html">Request</a>
-    <a href="../../../esri-leaflet/api-reference/util.html">Util</a>
+    <a href="../../../esri-leaflet/api-reference/utils.html">Utils</a>
   </nav>
 
   <h5>L.esri.Layers</h5>
@@ -121,7 +107,7 @@
 </aside>
 
 <div class="main-content">
-  <h1 id="l-esri-utils">L.esri.Util</h1>
+  <h1 id="l-esri-utils">L.esri.Utils</h1>
 <p>Utility methods used internally by Esri Leaflet. These methods are useful for converting data between ArcGIS and Leaflet formats.</p>
 <table>
     <thead>
@@ -135,15 +121,15 @@
         <tr>
             <td><code>extentToBounds(<nobr class="param"><span>&lt;<a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Geometry_Objects/02r3000000n1000000/">Extent</a>&gt;</span> <code>extent</code></nobr>)</code></td>
             <td><code><a href="http://leafletjs.com/reference.html#latlngbounds">LatLngBounds</a></code></td>
-            <td>Converts an ArcGIS Extent object to a Leaflet <a href="http://leafletjs.com/reference.html#latlngbounds">LatLngBounds</a> object.</td>
+            <td>Converts ArcGIS Extent objects to Leaflet <a href="http://leafletjs.com/reference.html#latlngbounds">LatLngBounds</a> objects.</td>
         </tr>
         <tr>
             <td><code>boundsToExtent(<nobr class="param"><span>&lt;<a href="http://leafletjs.com/reference.html#latlngbounds">LatLngBounds</a>&gt;</span> <code>bounds</code></nobr>)</code></td>
             <td><code><a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Geometry_Objects/02r3000000n1000000/">Extent</a></code></td>
-            <td>Converts a Leaflet <a href="http://leafletjs.com/reference.html#latlngbounds">LatLngBounds</a> object to an ArcGIS Extent object.</td>
+            <td>Converts Leaflet <a href="http://leafletjs.com/reference.html#latlngbounds">LatLngBounds</a> objects to ArcGIS Extent objects.</td>
         </tr>
         <tr>
-            <td><code>arcgisToGeojson(<nobr class="param"><span>&lt;<a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Geometry_Objects/02r3000000n1000000/">ArcGIS Geometry</a>&gt;</span> <code>arcgis</code></nobr>,<nobr class="param"><span>&lt;String&gt;</span> <code>idAttribute</code></nobr>)</code><br><code>arcgisToGeojson(<nobr class="param"><span>&lt;<a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Feature_object/02r3000000n8000000/">ArcGIS Feature</a>&gt;</span> <code>arcgis</code>,</nobr>,<nobr class="param"><span>&lt;String&gt;</span> <code>idAttribute</code></nobr>)</code></td>
+            <td><code>arcgisToGeojson(<nobr class="param"><span>&lt;<a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Geometry_Objects/02r3000000n1000000/">ArcGIS Geometry</a>&gt;</span> <code>arcgis</code></nobr>)</code><br><code>arcgisToGeojson(<nobr class="param"><span>&lt;<a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Feature_object/02r3000000n8000000/">ArcGIS Feature</a>&gt;</span> <code>arcgis</code></nobr>)</code></td>
             <td><code><a href="http://geojson.org/geojson-spec.html#geojson-objects">GeoJSON</a></code></td>
             <td>Converts <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Geometry_Objects/02r3000000n1000000/">ArcGIS Geometry Objects</a> or <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Feature_object/02r3000000n8000000/">ArcGIS Feature Objects</a> objects to <a href="http://geojson.org/geojson-spec.html#geojson-objects">GeoJSON</a>. If you pass a GeoJSON Feature or FeatureCollection you should also pass <code>idAttribute</code> to assign a property from the feature attributes to the ID of the GeoJSON Feature, <code>&#39;OBJECTID&#39;</code> or <code>&#39;FID&#39;</code> attributes by default.</td>
         </tr>

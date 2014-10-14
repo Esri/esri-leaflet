@@ -28,26 +28,12 @@
   <!-- stylesheet -->
   <link rel="stylesheet" href="../../../../esri-leaflet/css/style.css">
 
-  <!-- cluster -->
-  <link rel="stylesheet" type="text/css" href="http://cdn-geoweb.s3.amazonaws.com/Leaflet.markercluster/0.4.0/MarkerCluster.css">
-  <link rel="stylesheet" type="text/css" href="http://cdn-geoweb.s3.amazonaws.com/Leaflet.markercluster/0.4.0/MarkerCluster.Default.css">
-
   <!-- leaflet -->
   <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
-  <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet-src.js"></script>
-
-  <!-- leaflet plugins -->
-  <script src="http://cdn-geoweb.s3.amazonaws.com/Leaflet.heat/0.1.1/leaflet-heat.js"></script>
-  <script src="http://cdn-geoweb.s3.amazonaws.com/Leaflet.markercluster/0.4.0/leaflet.markercluster-src.js"></script>
+  <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
 
   <!-- esri leaflet -->
-  <script src="../../../../esri-leaflet/js/esri-leaflet-src.js"></script>
-  <script src="../../../../esri-leaflet/js/heatmap-feature-layer-src.js"></script>
-  <script src="../../../../esri-leaflet/js/clustered-feature-layer-src.js"></script>
-
-  <!-- esri leaflet geocoder -->
-  <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.3/esri-leaflet-geocoder.js"></script>
-  <link rel="stylesheet" type="text/css" href="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.3/esri-leaflet-geocoder.css">
+  <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.1/esri-leaflet.js"></script>
 
   <!-- Google Analytics -->
   <script>
@@ -83,7 +69,7 @@
   <h5>L.esri</h5>
   <nav>
     <a href="../../../../esri-leaflet/api-reference/request.html">Request</a>
-    <a href="../../../../esri-leaflet/api-reference/util.html">Util</a>
+    <a href="../../../../esri-leaflet/api-reference/utils.html">Utils</a>
   </nav>
 
   <h5>L.esri.Layers</h5>
@@ -242,10 +228,10 @@
             <td><code>String</code></td>
             <td>Returns the current <code>where</code> setting</td>
         </tr>
-        <tr>
-            <td><code>setWhere(<nobr class="param"><span>&lt;String&gt;</span> <code>where</code></nobr>)</code></td>
+                <tr>
+            <td><code>setWhere(<nobr class="param"><span>&lt;String&gt;</span> <code>where</code></nobr>, <nobr class="param"><span>&lt;Function&gt;</span> <code>callback</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>context</code></nobr>)</code></td>
             <td><code>this</code></td>
-            <td>Sets the new <code>where</code> option and refreshes the layer to reflect the new <code>where</code> filter.</td>
+            <td>Sets the new <code>where</code> option and refreshes the layer to reflect the new <code>where</code> filter. Accepts an optional callback and function context.</td>
         </tr>
         <tr>
             <td><code>getTimeRange()</code></td>
@@ -253,9 +239,9 @@
             <td>Returns the current time range as an array like <code>[from, to]</code></td>
         </tr>
         <tr>
-            <td><code>setTimeRange(<nobr class="param"><span>&lt;Date&gt;</span> <code>from</code></nobr>, <nobr class="param"><span>&lt;Date&gt;</span> <code>to</code></nobr>)</code></td>
+            <td><code>setTimeRange(<nobr class="param"><span>&lt;Date&gt;</span> <code>from</code></nobr>, <nobr class="param"><span>&lt;Date&gt;</span> <code>to</code></nobr>, , <nobr class="param"><span>&lt;Function&gt;</span> <code>callback</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>context</code></nobr>)</code></td>
             <td><code>this</code></td>
-            <td>Sets the current time filter applied to features. An optional callback is run upon completion only if <code>timeFilterMode</code> is set to <code>&#39;server&#39;</code>.</td>
+            <td>Sets the current time filter applied to features. An optional callback is run upon completion if <code>timeFilterMode</code> is set to <code>&#39;server&#39;</code>. Also accepts function context as the last argument.</td>
         </tr>
         <tr>
             <td><code>authenticate(<nobr class="param"><span>&lt;String&gt;</span> <code>token</code></nobr>)</code></td>
