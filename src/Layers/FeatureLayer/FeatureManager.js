@@ -30,6 +30,20 @@
 
       this._service = new EsriLeaflet.Services.FeatureLayer(this.url, options);
 
+      //use case insensitive regex to look for common fieldnames used for indexing
+      /*global console */
+      if (this.options.fields[0] !== '*'){
+        var oidCheck = false;
+        for (var i = 0; i < this.options.fields.length; i++){
+          if (this.options.fields[i].match(/^(OBJECTID|FID|OID|ID)$/i)){
+            oidCheck = true;
+          }
+        }
+        if (oidCheck === false && console && console.warn){
+          console.warn('no known esriFieldTypeOID field detected in fields Array.  Please add an attribute field containing unique IDs to ensure the layer can be drawn correctly.');
+        }
+      }
+
       // Leaflet 0.8 change to new propagation
       this._service.on('authenticationrequired requeststart requestend requesterror requestsuccess', function (e) {
         e = L.extend({
