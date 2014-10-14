@@ -151,9 +151,9 @@
           id: callbackId,
           url: script.src,
           abort: function(){
-            EsriLeaflet._callback[callbackId]({
-              code: 500,
-              message: 'Could not parse response as JSON.'
+            window._EsriLeafletCallbacks._callback[callbackId]({
+              code: 0,
+              message: 'Request aborted.'
             });
           }
         };
