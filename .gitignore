@@ -24,6 +24,8 @@ coverage
 
 # Debugging Files
 working
+debug/*.html
+!debug/sample.html
 
 # Docs Build
 site/build
