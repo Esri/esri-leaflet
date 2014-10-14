@@ -13,12 +13,12 @@ layout: example.hbs
   L.esri.basemapLayer('Gray').addTo(map);
   L.esri.basemapLayer('GrayLabels').addTo(map);
 
-  L.esri.featureLayer('http://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_Congressional_Districts/FeatureServer/0', {
+  L.esri.featureLayer('//services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_Congressional_Districts/FeatureServer/0', {
     simplifyFactor: 0.75,
     style: function (feature) {
-      if(feature.properties.PARTY === 'Democrat'){
+      if (feature.properties.PARTY === 'Democrat') {
         return {color: 'blue', weight: 2 };
-      } else if(feature.properties.PARTY === 'Republican'){
+      } else if (feature.properties.PARTY === 'Republican') {
         return { color: 'red', weight: 2 };
       } else {
         return { color: 'white', weight: 2 };

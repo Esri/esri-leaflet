@@ -24,7 +24,7 @@ layout: example.hbs
     height: 28px;
     line-height: 28px;
   }
-  #time-ranges input[type='submit'] {
+  #time-ranges input[type="submit"] {
     box-sizing: content-box;
     padding: 0 1em;
     text-transform: uppercase;
@@ -40,11 +40,11 @@ layout: example.hbs
   <form action="#" id="form">
     <label for="from">
       From
-      <input id='from' type="date" value='1930-01-01' name='from'>
+      <input id="from" type="date" value="1930-01-01" name="from">
     </label>
     <label for="to">
       To
-      <input  id='to' type="date" value='1950-12-31' name='to'>
+      <input  id="to" type="date" value="1950-12-31" name="to">
     </label>
     <input type="submit" value="Update">
   </form>
@@ -67,7 +67,7 @@ layout: example.hbs
     to: new Date(endTimeInput.value)
   }).addTo(map);
 
-  timeForm.addEventListener('submit', function updateTimeRange(e){
+  timeForm.addEventListener('submit', function updateTimeRange (e) {
     oilWells.setTimeRange(new Date(startTimeInput.value), new Date(endTimeInput.value));
     e.preventDefault();
   });

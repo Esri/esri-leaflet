@@ -27,7 +27,7 @@ layout: example.hbs
     height: 28px;
     line-height: 28px;
   }
-  #time-ranges input[type='submit'] {
+  #time-ranges input[type="submit"] {
     box-sizing: content-box;
     padding: 0 1em;
     text-transform: uppercase;
@@ -43,11 +43,11 @@ layout: example.hbs
   <form action="#" id="form">
     <label for="from">
       From
-      <input id='from' type="date" value='2011-01-01' name='from'>
+      <input id="from" type="date" value="2011-01-01" name="from">
     </label>
     <label for="to">
       To
-      <input  id='to' type="date" value='2011-03-31' name='to'>
+      <input  id="to" type="date" value="2011-03-31" name="to">
     </label>
     <input type="submit" value="Update">
   </form>
@@ -63,14 +63,14 @@ layout: example.hbs
   L.esri.basemapLayer('Gray').addTo(map);
   L.esri.basemapLayer('GrayLabels').addTo(map);
 
-  var reports = L.esri.heatmapFeatureLayer('http://services.arcgis.com/rOo16HdIMeOBI4Mb/ArcGIS/rest/services/Graffiti_Reports/FeatureServer/0', {
+  var reports = L.esri.heatmapFeatureLayer('//services.arcgis.com/rOo16HdIMeOBI4Mb/ArcGIS/rest/services/Graffiti_Reports/FeatureServer/0', {
     timeField: 'CreatedDate',
     from: new Date(startTimeInput.value),
     to: new Date(endTimeInput.value),
     radius: 12
   }).addTo(map);
 
-  timeForm.addEventListener('submit', function updateTimeRange(e){
+  timeForm.addEventListener('submit', function updateTimeRange (e) {
     reports.setTimeRange(new Date(startTimeInput.value), new Date(endTimeInput.value));
     e.preventDefault();
   });
