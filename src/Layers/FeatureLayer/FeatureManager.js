@@ -31,15 +31,16 @@
       this._service = new L.esri.Services.FeatureLayer(this.url, options);
 
       //use case insensitive regex to look for common fieldnames used for indexing
-      if (this.options.fields[0] != "*"){
+      /*global console */
+      if (this.options.fields[0] !== '*'){
         var oidCheck = false;
-        for (i = 0; i < this.options.fields.length; i++){
+        for (var i = 0; i < this.options.fields.length; i++){
           if (this.options.fields[i].match(/^(OBJECTID|FID|OID|ID)$/i)){
             oidCheck = true;
           }
         }
         if (oidCheck === false && console && console.warn){
-          console.warn("no known 'esriFieldTypeOID' field detected in fields Array.  Please add an attribute field containing unique IDs to ensure the layer can be drawn correctly.");
+          console.warn('no known esriFieldTypeOID field detected in fields Array.  Please add an attribute field containing unique IDs to ensure the layer can be drawn correctly.');
         }
       }
 
