@@ -31,7 +31,7 @@ EsriLeaflet.Tasks.Task = L.Class.extend({
 
   initialize: function(endpoint, options){
     // endpoint can be either a url to an ArcGIS Rest Service or an instance of EsriLeaflet.Service
-    if(endpoint instanceof EsriLeaflet.Services.Service){
+    if(endpoint.url && endpoint.request){
       this._service = endpoint;
       this.url = endpoint.url;
     } else {

@@ -208,6 +208,7 @@ module.exports = function(grunt) {
     uglify: {
       options: {
         sourceMap: true,
+        sourceMapIncludeSources: true,
         wrap: false,
         mangle: {
           except: ['L']
