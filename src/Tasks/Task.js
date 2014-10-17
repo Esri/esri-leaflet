@@ -1,8 +1,8 @@
 EsriLeaflet.Tasks.Task = L.Class.extend({
 
   options: {
-    useCors: true,
-    proxy: false
+    proxy: false,
+    useCors: EsriLeaflet.Support.CORS
   },
 
   //Generate a method for each methodName:paramName in the setters for this task.

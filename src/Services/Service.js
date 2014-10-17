@@ -4,7 +4,7 @@ EsriLeaflet.Services.Service = L.Class.extend({
 
   options: {
     proxy: false,
-    useCors: true
+    useCors: EsriLeaflet.Support.CORS
   },
 
   initialize: function (url, options) {
@@ -55,6 +55,7 @@ EsriLeaflet.Services.Service = L.Class.extend({
       return;
     } else {
       var url = (this.options.proxy) ? this.options.proxy + '?' + this.url + path : this.url + path;
+
       if((method === 'get' || method === 'request') && !this.options.useCors){
         return EsriLeaflet.Request.get.JSONP(url, params, wrappedCallback);
       } else {

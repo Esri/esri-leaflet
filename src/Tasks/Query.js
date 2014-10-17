@@ -38,7 +38,7 @@ EsriLeaflet.Tasks.Query = EsriLeaflet.Tasks.Task.extend({
   },
 
   where: function(string){
-    this.params.where = string.replace(/"/g, '\'');
+    this.params.where = string.replace(/"/g, "\'");
     return this;
   },
 

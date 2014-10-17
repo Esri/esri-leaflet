@@ -78,14 +78,29 @@
     request: function(url, params, callback, context){
       var paramString = serialize(params);
       var httpRequest = createRequest(callback, context);
+      var requestLength = (url + '?' + paramString).length;
 
-      if((url + '?' + paramString).length < 2000){
+      // request is less then 2000 characters and the browser supports CORS, make GET request with XMLHttpRequest
+      if(requestLength <= 2000 && L.esri.Support.CORS){
         httpRequest.open('GET', url + '?' + paramString);
         httpRequest.send(null);
-      } else {
+
+      // request is less more then 2000 characters and the browser supports CORS, make POST request with XMLHttpRequest
+      } else if (requestLength > 2000 && L.esri.Support.CORS){
         httpRequest.open('POST', url);
         httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         httpRequest.send(paramString);
+
+      // request is less more then 2000 characters and the browser does not support CORS, make a JSONP request
+      } else if(requestLength <= 2000 && !L.esri.Support.CORS){
+        return L.esri.Request.get.JSONP(url, params, callback, context);
+
+      // request is longer then 2000 characters and the browser does not support CORS, log a warning
+      } else {
+        if(console && console.warn){
+          console.warn('a request to ' + url + ' was longer then 2000 characters and this browser cannot make a cross-domain post request. Please use a proxy http://esri.github.io/esri-leaflet/api-reference/request.html')
+          return;
+        }
       }
 
       return httpRequest;
