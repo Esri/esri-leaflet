@@ -24,6 +24,7 @@ describe('L.esri.Tasks.IdentifyImage', function () {
   var map = createMap();
 
   var latlng = map.getCenter();
+  var rawLatlng = [45.51, -122.66];
 
   var url = 'http://services.arcgis.com/mock/arcgis/rest/services/MockImageService/ImageServer/';
 
@@ -351,6 +352,20 @@ describe('L.esri.Tasks.IdentifyImage', function () {
     server.respondWith('GET', url + 'identify?returnGeometry=false&geometry=%7B%22x%22%3A-122.66%2C%22y%22%3A45.51%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPoint&f=json', JSON.stringify(sampleResponse));
 
     var request = task.run(function(error, results, raw){
+      expect(results).to.deep.equal(sampleResults);
+      expect(raw).to.deep.equal(sampleResponse);
+      done();
+    });
+
+    expect(request).to.be.an.instanceof(XMLHttpRequest);
+
+    server.respond();
+  });
+
+  it('should identify a pixel value at location with simple LatLng', function(done){
+    server.respondWith('GET', url + 'identify?returnGeometry=false&geometry=%7B%22x%22%3A-122.66%2C%22y%22%3A45.51%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPoint&f=json', JSON.stringify(sampleResponse));
+
+    var request = task.at(rawLatlng).run(function(error, results, raw){
       expect(results).to.deep.equal(sampleResults);
       expect(raw).to.deep.equal(sampleResponse);
       done();
