@@ -28,6 +28,7 @@ EsriLeaflet.Tasks.Query = EsriLeaflet.Tasks.Task.extend({
 
   // only valid for Feature Services running on ArcGIS Server 10.3 or ArcGIS Online
   nearby: function(latlng, radius){
+    latlng = L.latLng(latlng);
     this.params.geometry = ([latlng.lng,latlng.lat]).join(',');
     this.params.geometryType = 'esriGeometryPoint';
     this.params.spatialRel = 'esriSpatialRelIntersects';

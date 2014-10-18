@@ -10,6 +10,7 @@ EsriLeaflet.Tasks.IdentifyImage = EsriLeaflet.Tasks.Identify.extend({
   },
 
   at: function(latlng){
+    latlng = L.latLng(latlng);
     this.params.geometry = JSON.stringify({
       x: latlng.lng,
       y: latlng.lat,
