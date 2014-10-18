@@ -390,4 +390,29 @@
     return url;
   };
 
+  EsriLeaflet.Util.geojsonTypeToArcGIS = function (geoJsonType) {
+    var arcgisGeometryType;
+    switch (geoJsonType) {
+    case 'Point':
+      arcgisGeometryType = 'esriGeometryPoint';
+      break;
+    case 'MultiPoint':
+      arcgisGeometryType = 'esriGeometryMultipoint';
+      break;
+    case 'LineString':
+      arcgisGeometryType = 'esriGeometryPolyline';
+      break;
+    case 'MultiLineString':
+      arcgisGeometryType = 'esriGeometryPolyline';
+      break;
+    case 'Polygon':
+      arcgisGeometryType = 'esriGeometryPolygon';
+      break;
+    case 'MultiPolygon':
+      arcgisGeometryType = 'esriGeometryPolygon';
+      break;
+    }
+    return arcgisGeometryType;
+  };
+
 })(EsriLeaflet);
