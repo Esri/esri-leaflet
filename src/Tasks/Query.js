@@ -169,7 +169,7 @@ EsriLeaflet.Tasks.Query = EsriLeaflet.Tasks.Task.extend({
     }
 
     if ( geometry instanceof L.GeoJSON ) {
-      //reassign geometry to the GeoJSON value  (just assuming only one feature is present at this point)
+      //reassign geometry to the GeoJSON value  (we are assuming that only one feature is present)
       geometry = geometry.getLayers()[0].feature.geometry;
       this.params.geometry = EsriLeaflet.Util.geojsonToArcGIS(geometry);
       this.params.geometryType = EsriLeaflet.Util.geojsonTypeToArcGIS(geometry.type);
@@ -178,26 +178,16 @@ EsriLeaflet.Tasks.Query = EsriLeaflet.Tasks.Task.extend({
     if ( geometry.type === 'Feature' ) {
       // get the geometry of the geojson feature
       geometry = geometry.geometry;
-      this.params.geometry = EsriLeaflet.Util.geojsonToArcGIS(geometry);
-      this.params.geometryType = EsriLeaflet.Util.geojsonTypeToArcGIS(geometry.type);
     }
 
-    if ( geometry.type === 'Point' ) {
+    if ( geometry.type === 'Point' ||  geometry.type === 'LineString' || geometry.type === 'Polygon') {
       this.params.geometry = EsriLeaflet.Util.geojsonToArcGIS(geometry);
       this.params.geometryType = EsriLeaflet.Util.geojsonTypeToArcGIS(geometry.type);
       return;
     }
-
-    if ( geometry.type === 'LineString' ) {
-      this.params.geometry = EsriLeaflet.Util.geojsonToArcGIS(geometry);
-      this.params.geometryType = EsriLeaflet.Util.geojsonTypeToArcGIS(geometry.type);
-      return;
-    }
-
-    if ( geometry.type === 'Polygon' ) {
-      this.params.geometry = EsriLeaflet.Util.geojsonToArcGIS(geometry);
-      this.params.geometryType = EsriLeaflet.Util.geojsonTypeToArcGIS(geometry.type);
-      return;
+    /*global console */
+    if(console && console.warn) {
+      console.warn('invalid geometry passed to spatial query. Should be an L.LatLngBounds or GeoJSON Point Line or Polygon');
     }
 
     return;
