@@ -1,5 +1,17 @@
 # Changelog
 
+## Release Candidate 2
+
+#### Changes
+
+* Fixed IE 8 and 9 support that was broken in RC 1.
+* Fixed sourcemaps by embedding source files inside the maps.
+* Fix a bug when aborting JSONP requests
+* Other small fixes for plugin support
+* Added `contains`, `overlaps` and `intersects` to `L.esri.Tasks.Query`.
+* Spatial methods on `L.esri.Tasks.Query` can now accept the follwoing Leaflet types, `L.Marker`, `L.Polygon`, `L.Polyline`, `L.LatLng`, `L.LatLngBounds` and `L.GeoJSON`. It can also accept valid GeoJSON Point, Polyline, Polygon and GeoJSON Feautre objects containing Point, Polyline, Polygon.
+* Most methods that accept `L.LatLng` and `L.LatLngBounds` now accept the simple [lat,lng] or [[lat,lng], [lat,lng]] forms.
+
 ## Release Candidate 1
 
 #### Changes

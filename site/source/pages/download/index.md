@@ -8,7 +8,7 @@ class: no-sidebar
 
 All builds of Esri Leaflet are available for download on [GitHub](https://github.com/Esri/esri-leaflet/releases/).
 
-<a href="https://github.com/Esri/esri-leaflet/releases/download/v1.0.0-rc.1/esri-leaflet-v1.0.0-rc.1.zip" class="btn">Current Release</a>
+<a href="https://github.com/Esri/esri-leaflet/releases/download/v1.0.0-rc.2/esri-leaflet-v1.0.0-rc.2.zip" class="btn">Current Release</a>
 <a href="https://github.com/Esri/esri-leaflet/releases/" class="btn">Past Releases</a>
 
 # NPM
@@ -34,7 +34,7 @@ Esri Leaflet is currently hosted on Amazon Cloudfront to make it easily availabl
 #### Standard Build
 
 ```xml
-<script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.1/esri-leaflet.js"></script>
+<script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.2/esri-leaflet.js"></script>
 ```
 
 #### Other Builds
@@ -43,22 +43,22 @@ Esri Leaflet is also built into several smaller components and plugins for speci
 
 ```xml
 <!-- Core Build -->
-<script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.1/esri-leaflet-core.js"></script>
+<script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.2/esri-leaflet-core.js"></script>
 
 <!-- Basemaps Only Build -->
-<script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.1/esri-leaflet-basemaps.js"></script>
+<script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.2/esri-leaflet-basemaps.js"></script>
 
 <!-- Feature Layer Only Build -->
-<script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.1/esri-leaflet-feature-layer.js"></script>
+<script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.2/esri-leaflet-feature-layer.js"></script>
 
 <!-- Map Service Only Build -->
-<script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.1/esri-leaflet-map-service.js"></script>
+<script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.2/esri-leaflet-map-service.js"></script>
 
 <!-- Heatmap Feature Layer -->
-<script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-heatmap-feature-layer/1.0.0-rc.1/esri-leaflet-heatmap-feature-layer.js"></script>
+<script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-heatmap-feature-layer/1.0.0-rc.2/esri-leaflet-heatmap-feature-layer.js"></script>
 
 <!-- Clustered Feature Layer -->
-<script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-clustered-feature-layer/1.0.0-rc.1/esri-leaflet-clustered-feature-layer.js"></script>
+<script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-clustered-feature-layer/1.0.0-rc.2/esri-leaflet-clustered-feature-layer.js"></script>
 
 <!-- Geocoding Control -->
 <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.5/esri-leaflet-geocoder.js"></script>
@@ -71,8 +71,8 @@ A summary of what features exist in which builds.
 
 | Feature                                | Standard | Core     | MapService | ImageService | FeatureLayer | Basemaps |
 | -------------------------------------- | -------- | -------- | ---------- | ------------ | ------------ | -------- |
-| Size                                   | 47.7kb   | 9.9kb    | 21.7kb     | 19.2kb       | 25.8kb       | 10.4kb   |
-| Gzipped                                | 11.8kb   | 3.5kb    | 6.1kb      | 5.7kb        | 7.7kb        | 3.1kb    |
+| Size                                   | 49.7kb   | 10.7kb   | 23.7kb     | 21.1kb       | 27.7kb       | 10.8kb   |
+| Gzipped                                | 12.3kb   | 3.8kb    | 6.6kb      | 6.2kb        | 8.2kb        | 3.3kb    |
 | `L.esri.Request`                       | &#10003; | &#10003; | &#10003;   | &#10003;     | &#10003;     | &#10003; |
 | `L.esri.Util`                          | &#10003; | &#10003; | &#10003;   | &#10003;     | &#10003;     |          |
 | `L.esri.Services.Service`              | &#10003; | &#10003; | &#10003;   | &#10003;     | &#10003;     |          |

@@ -48,9 +48,24 @@ layout: documentation.hbs
     </thead>
     <tbody>
         <tr>
-            <td><code>within({{{param 'LatLngBounds' 'bounds' 'http://leafletjs.com/reference.html#latlngbounds'}}})</code></td>
+            <td><code>within({{{param 'Geometry' 'geometry'}}})</code></td>
             <td><code>this</code></td>
-            <td>Queries features with the given <a href="http://leafletjs.com/reference.html#latlngbounds">LatLngBounds</a> object.</td>
+            <td>Queries features from the service within (fully contained by) the passed geometry object. `geometry` can be an instance of `L.Marker`, `L.Polygon`, `L.Polyline`, `L.LatLng`, `L.LatLngBounds` and `L.GeoJSON`. It can also accept valid GeoJSON Point, Polyline, Polygon objects and GeoJSON Feature objects containing Point, Polyline, Polygon.</td>
+        </tr>
+        <tr>
+            <td><code>contains({{{param 'Geometry' 'geometry'}}})</code></td>
+            <td><code>this</code></td>
+            <td>Queries features from the service that fully contain the passed geometry object. `geometry` can be an instance of `L.Marker`, `L.Polygon`, `L.Polyline`, `L.LatLng`, `L.LatLngBounds` and `L.GeoJSON`. It can also accept valid GeoJSON Point, Polyline, Polygon objects and GeoJSON Feature objects containing Point, Polyline, Polygon.</td>
+        </tr>
+        <tr>
+            <td><code>intersects({{{param 'Geometry' 'geometry'}}})</code></td>
+            <td><code>this</code></td>
+            <td>Queries features from the service that intersect (touch anywhere) the passed geometry object. `geometry` can be an instance of `L.Marker`, `L.Polygon`, `L.Polyline`, `L.LatLng`, `L.LatLngBounds` and `L.GeoJSON`. It can also accept valid GeoJSON Point, Polyline, Polygon objects and GeoJSON Feature objects containing Point, Polyline, Polygon.</td>
+        </tr>
+        <tr>
+            <td><code>overlap({{{param 'Geometry' 'geometry'}}})</code></td>
+            <td><code>this</code></td>
+            <td>Queries features from the service that overlap (touch but are not fully contained by) the passed geometry object. `geometry` can be an instance of `L.Marker`, `L.Polygon`, `L.Polyline`, `L.LatLng`, `L.LatLngBounds` and `L.GeoJSON`. It can also accept valid GeoJSON Point, Polyline, Polygon objects and GeoJSON Feature objects containing Point, Polyline, Polygon.</td>
         </tr>
         <tr>
             <td><code>nearby({{{param 'LatLng' 'latlng' 'http://leafletjs.com/reference.html#latlng'}}}, {{{param 'Integer' 'distance'}}})</code></td>
