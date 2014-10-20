@@ -19,6 +19,22 @@ describe('L.esri.Tasks.Query', function () {
 
   var bounds = L.latLngBounds([[45.5, -122.66],[ 45.51, -122.65]]);
   var latlng = L.latLng(45.51, -122.66);
+  var rawLatlng = [45.51, -122.66];
+
+  var rawBounds = [[45.5, -122.66],[ 45.51, -122.65]];
+  var rawLatLng = [45.51, -122.66];
+
+  var rawGeoJsonPolygon = {
+    "type": "Polygon",
+    "coordinates": [[
+      [-97,39],[-97,41],[-94,41],[-94,39],[-97,39]
+    ]]
+  };
+
+  var rawGeoJsonFeature = {"type": "Feature"}
+  rawGeoJsonFeature.geometry = rawGeoJsonPolygon;
+
+  var geoJsonPolygon = L.geoJson(rawGeoJsonPolygon);
 
   var featureLayerUrl = 'http://services.arcgis.com/mock/arcgis/rest/services/MockFeatureService/FeatureServer/0/';
   var mapServiceUrl = 'http://services.arcgis.com/mock/arcgis/rest/services/MockMapService/MapServer/';
@@ -231,10 +247,374 @@ describe('L.esri.Tasks.Query', function () {
     server.respond();
   });
 
+  it('should query features within bounds passed as an array', function(done){
+    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&geometry=%7B%22xmin%22%3A-122.66%2C%22ymin%22%3A45.5%2C%22xmax%22%3A-122.65%2C%22ymax%22%3A45.51%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&inSr=4326&f=json', JSON.stringify(sampleQueryResponse));
+
+    task.within(rawBounds).run(function(error, featureCollection, raw){
+      expect(featureCollection).to.deep.equal(sampleFeatureCollection);
+      expect(raw).to.deep.equal(sampleQueryResponse);
+      done();
+    });
+
+    server.respond();
+  });
+
+  it('should query features within geojson geometry', function(done){
+    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelIntersects&inSr=4326&f=json', JSON.stringify(sampleQueryResponse));
+
+    task.within(rawGeoJsonPolygon).run(function(error, featureCollection, raw){
+      expect(featureCollection).to.deep.equal(sampleFeatureCollection);
+      expect(raw).to.deep.equal(sampleQueryResponse);
+      done();
+    });
+
+    server.respond();
+  });
+
+  it('should query features within geojson feature', function(done){
+    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelIntersects&inSr=4326&f=json', JSON.stringify(sampleQueryResponse));
+
+    task.within(rawGeoJsonFeature).run(function(error, featureCollection, raw){
+      expect(featureCollection).to.deep.equal(sampleFeatureCollection);
+      expect(raw).to.deep.equal(sampleQueryResponse);
+      done();
+    });
+
+    server.respond();
+  });
+
+  it('should query features within leaflet geojson object', function(done){
+    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelIntersects&inSr=4326&f=json', JSON.stringify(sampleQueryResponse));
+
+    task.within(geoJsonPolygon).run(function(error, featureCollection, raw){
+      expect(featureCollection).to.deep.equal(sampleFeatureCollection);
+      expect(raw).to.deep.equal(sampleQueryResponse);
+      done();
+    });
+
+    server.respond();
+  });
+
+  it('should query features that intersect bounds', function(done){
+    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&geometry=%7B%22xmin%22%3A-122.66%2C%22ymin%22%3A45.5%2C%22xmax%22%3A-122.65%2C%22ymax%22%3A45.51%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&inSr=4326&f=json', JSON.stringify(sampleQueryResponse));
+
+    task.intersects(bounds).run(function(error, featureCollection, raw){
+      expect(featureCollection).to.deep.equal(sampleFeatureCollection);
+      expect(raw).to.deep.equal(sampleQueryResponse);
+      done();
+    });
+
+    server.respond();
+  });
+
+  it('should query features that intersect bounds passed as an array', function(done){
+    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&geometry=%7B%22xmin%22%3A-122.66%2C%22ymin%22%3A45.5%2C%22xmax%22%3A-122.65%2C%22ymax%22%3A45.51%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&inSr=4326&f=json', JSON.stringify(sampleQueryResponse));
+
+    task.intersects(rawBounds).run(function(error, featureCollection, raw){
+      expect(featureCollection).to.deep.equal(sampleFeatureCollection);
+      expect(raw).to.deep.equal(sampleQueryResponse);
+      done();
+    });
+
+    server.respond();
+  });
+
+  it('should query features that intersect geojson geometry', function(done){
+    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelIntersects&inSr=4326&f=json', JSON.stringify(sampleQueryResponse));
+
+    task.intersects(rawGeoJsonPolygon).run(function(error, featureCollection, raw){
+      expect(featureCollection).to.deep.equal(sampleFeatureCollection);
+      expect(raw).to.deep.equal(sampleQueryResponse);
+      done();
+    });
+
+    server.respond();
+  });
+
+  it('should query features that intersect geojson feature', function(done){
+    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelIntersects&inSr=4326&f=json', JSON.stringify(sampleQueryResponse));
+
+    task.intersects(rawGeoJsonFeature).run(function(error, featureCollection, raw){
+      expect(featureCollection).to.deep.equal(sampleFeatureCollection);
+      expect(raw).to.deep.equal(sampleQueryResponse);
+      done();
+    });
+
+    server.respond();
+  });
+
+  it('should query features that intersect leaflet geojson object', function(done){
+    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelIntersects&inSr=4326&f=json', JSON.stringify(sampleQueryResponse));
+
+    task.intersects(geoJsonPolygon).run(function(error, featureCollection, raw){
+      expect(featureCollection).to.deep.equal(sampleFeatureCollection);
+      expect(raw).to.deep.equal(sampleQueryResponse);
+      done();
+    });
+
+    server.respond();
+  });
+
+  it('should query features that contain bounds', function(done){
+    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&geometry=%7B%22xmin%22%3A-122.66%2C%22ymin%22%3A45.5%2C%22xmax%22%3A-122.65%2C%22ymax%22%3A45.51%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelContains&inSr=4326&f=json', JSON.stringify(sampleQueryResponse));
+
+    task.contains(bounds).run(function(error, featureCollection, raw){
+      expect(featureCollection).to.deep.equal(sampleFeatureCollection);
+      expect(raw).to.deep.equal(sampleQueryResponse);
+      done();
+    });
+
+    server.respond();
+  });
+
+  it('should query features that contain bounds passed as an array', function(done){
+    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&geometry=%7B%22xmin%22%3A-122.66%2C%22ymin%22%3A45.5%2C%22xmax%22%3A-122.65%2C%22ymax%22%3A45.51%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelContains&inSr=4326&f=json', JSON.stringify(sampleQueryResponse));
+
+    task.contains(rawBounds).run(function(error, featureCollection, raw){
+      expect(featureCollection).to.deep.equal(sampleFeatureCollection);
+      expect(raw).to.deep.equal(sampleQueryResponse);
+      done();
+    });
+
+    server.respond();
+  });
+
+  it('should query features that contain geojson geometry', function(done){
+    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelContains&inSr=4326&f=json', JSON.stringify(sampleQueryResponse));
+
+    task.contains(rawGeoJsonPolygon).run(function(error, featureCollection, raw){
+      expect(featureCollection).to.deep.equal(sampleFeatureCollection);
+      expect(raw).to.deep.equal(sampleQueryResponse);
+      done();
+    });
+
+    server.respond();
+  });
+
+  it('should query features that contain geojson feature', function(done){
+    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelContains&inSr=4326&f=json', JSON.stringify(sampleQueryResponse));
+
+    task.contains(rawGeoJsonFeature).run(function(error, featureCollection, raw){
+      expect(featureCollection).to.deep.equal(sampleFeatureCollection);
+      expect(raw).to.deep.equal(sampleQueryResponse);
+      done();
+    });
+
+    server.respond();
+  });
+
+  it('should query features that contain leaflet geojson object', function(done){
+    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelContains&inSr=4326&f=json', JSON.stringify(sampleQueryResponse));
+
+    task.contains(geoJsonPolygon).run(function(error, featureCollection, raw){
+      expect(featureCollection).to.deep.equal(sampleFeatureCollection);
+      expect(raw).to.deep.equal(sampleQueryResponse);
+      done();
+    });
+
+    server.respond();
+  });
+
+  it('should query features that cross bounds', function(done){
+    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&geometry=%7B%22xmin%22%3A-122.66%2C%22ymin%22%3A45.5%2C%22xmax%22%3A-122.65%2C%22ymax%22%3A45.51%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelCrosses&inSr=4326&f=json', JSON.stringify(sampleQueryResponse));
+
+    task.crosses(bounds).run(function(error, featureCollection, raw){
+      expect(featureCollection).to.deep.equal(sampleFeatureCollection);
+      expect(raw).to.deep.equal(sampleQueryResponse);
+      done();
+    });
+
+    server.respond();
+  });
+
+  it('should query features that cross bounds passed as an array', function(done){
+    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&geometry=%7B%22xmin%22%3A-122.66%2C%22ymin%22%3A45.5%2C%22xmax%22%3A-122.65%2C%22ymax%22%3A45.51%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelCrosses&inSr=4326&f=json', JSON.stringify(sampleQueryResponse));
+
+    task.crosses(rawBounds).run(function(error, featureCollection, raw){
+      expect(featureCollection).to.deep.equal(sampleFeatureCollection);
+      expect(raw).to.deep.equal(sampleQueryResponse);
+      done();
+    });
+
+    server.respond();
+  });
+
+  it('should query features that cross geojson geometry', function(done){
+    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelCrosses&inSr=4326&f=json', JSON.stringify(sampleQueryResponse));
+
+    task.crosses(rawGeoJsonPolygon).run(function(error, featureCollection, raw){
+      expect(featureCollection).to.deep.equal(sampleFeatureCollection);
+      expect(raw).to.deep.equal(sampleQueryResponse);
+      done();
+    });
+
+    server.respond();
+  });
+
+  it('should query features that cross geojson feature', function(done){
+    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelCrosses&inSr=4326&f=json', JSON.stringify(sampleQueryResponse));
+
+    task.crosses(rawGeoJsonFeature).run(function(error, featureCollection, raw){
+      expect(featureCollection).to.deep.equal(sampleFeatureCollection);
+      expect(raw).to.deep.equal(sampleQueryResponse);
+      done();
+    });
+
+    server.respond();
+  });
+
+  it('should query features that cross leaflet geojson object', function(done){
+    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelCrosses&inSr=4326&f=json', JSON.stringify(sampleQueryResponse));
+
+    task.crosses(geoJsonPolygon).run(function(error, featureCollection, raw){
+      expect(featureCollection).to.deep.equal(sampleFeatureCollection);
+      expect(raw).to.deep.equal(sampleQueryResponse);
+      done();
+    });
+
+    server.respond();
+  });
+
+  it('should query features that touch bounds', function(done){
+    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&geometry=%7B%22xmin%22%3A-122.66%2C%22ymin%22%3A45.5%2C%22xmax%22%3A-122.65%2C%22ymax%22%3A45.51%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelTouches&inSr=4326&f=json', JSON.stringify(sampleQueryResponse));
+
+    task.touches(bounds).run(function(error, featureCollection, raw){
+      expect(featureCollection).to.deep.equal(sampleFeatureCollection);
+      expect(raw).to.deep.equal(sampleQueryResponse);
+      done();
+    });
+
+    server.respond();
+  });
+
+  it('should query features that touch bounds passed as an array', function(done){
+    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&geometry=%7B%22xmin%22%3A-122.66%2C%22ymin%22%3A45.5%2C%22xmax%22%3A-122.65%2C%22ymax%22%3A45.51%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelTouches&inSr=4326&f=json', JSON.stringify(sampleQueryResponse));
+
+    task.touches(rawBounds).run(function(error, featureCollection, raw){
+      expect(featureCollection).to.deep.equal(sampleFeatureCollection);
+      expect(raw).to.deep.equal(sampleQueryResponse);
+      done();
+    });
+
+    server.respond();
+  });
+
+  it('should query features that touch geojson geometry', function(done){
+    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelTouches&inSr=4326&f=json', JSON.stringify(sampleQueryResponse));
+
+    task.touches(rawGeoJsonPolygon).run(function(error, featureCollection, raw){
+      expect(featureCollection).to.deep.equal(sampleFeatureCollection);
+      expect(raw).to.deep.equal(sampleQueryResponse);
+      done();
+    });
+
+    server.respond();
+  });
+
+  it('should query features that touch geojson feature', function(done){
+    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelTouches&inSr=4326&f=json', JSON.stringify(sampleQueryResponse));
+
+    task.touches(rawGeoJsonFeature).run(function(error, featureCollection, raw){
+      expect(featureCollection).to.deep.equal(sampleFeatureCollection);
+      expect(raw).to.deep.equal(sampleQueryResponse);
+      done();
+    });
+
+    server.respond();
+  });
+
+  it('should query features that touch leaflet geojson object', function(done){
+    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelTouches&inSr=4326&f=json', JSON.stringify(sampleQueryResponse));
+
+    task.touches(geoJsonPolygon).run(function(error, featureCollection, raw){
+      expect(featureCollection).to.deep.equal(sampleFeatureCollection);
+      expect(raw).to.deep.equal(sampleQueryResponse);
+      done();
+    });
+
+    server.respond();
+  });
+
+  //
+
+  it('should query features that overlap bounds', function(done){
+    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&geometry=%7B%22xmin%22%3A-122.66%2C%22ymin%22%3A45.5%2C%22xmax%22%3A-122.65%2C%22ymax%22%3A45.51%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelOverlaps&inSr=4326&f=json', JSON.stringify(sampleQueryResponse));
+
+    task.overlaps(bounds).run(function(error, featureCollection, raw){
+      expect(featureCollection).to.deep.equal(sampleFeatureCollection);
+      expect(raw).to.deep.equal(sampleQueryResponse);
+      done();
+    });
+
+    server.respond();
+  });
+
+  it('should query features that overlap bounds passed as an array', function(done){
+    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&geometry=%7B%22xmin%22%3A-122.66%2C%22ymin%22%3A45.5%2C%22xmax%22%3A-122.65%2C%22ymax%22%3A45.51%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelOverlaps&inSr=4326&f=json', JSON.stringify(sampleQueryResponse));
+
+    task.overlaps(rawBounds).run(function(error, featureCollection, raw){
+      expect(featureCollection).to.deep.equal(sampleFeatureCollection);
+      expect(raw).to.deep.equal(sampleQueryResponse);
+      done();
+    });
+
+    server.respond();
+  });
+
+  it('should query features that overlap geojson geometry', function(done){
+    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelOverlaps&inSr=4326&f=json', JSON.stringify(sampleQueryResponse));
+
+    task.overlaps(rawGeoJsonPolygon).run(function(error, featureCollection, raw){
+      expect(featureCollection).to.deep.equal(sampleFeatureCollection);
+      expect(raw).to.deep.equal(sampleQueryResponse);
+      done();
+    });
+
+    server.respond();
+  });
+
+  it('should query features that overlap geojson feature', function(done){
+    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelOverlaps&inSr=4326&f=json', JSON.stringify(sampleQueryResponse));
+
+    task.overlaps(rawGeoJsonFeature).run(function(error, featureCollection, raw){
+      expect(featureCollection).to.deep.equal(sampleFeatureCollection);
+      expect(raw).to.deep.equal(sampleQueryResponse);
+      done();
+    });
+
+    server.respond();
+  });
+
+  it('should query features that overlap leaflet geojson object', function(done){
+    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelOverlaps&inSr=4326&f=json', JSON.stringify(sampleQueryResponse));
+
+    task.overlaps(geoJsonPolygon).run(function(error, featureCollection, raw){
+      expect(featureCollection).to.deep.equal(sampleFeatureCollection);
+      expect(raw).to.deep.equal(sampleQueryResponse);
+      done();
+    });
+
+    server.respond();
+  });
+
+  //
+
   it('should query features near a latlng', function(done){
     server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&geometry=-122.66%2C45.51&geometryType=esriGeometryPoint&spatialRel=esriSpatialRelIntersects&units=esriSRUnit_Meter&distance=500&inSr=4326&f=json', JSON.stringify(sampleQueryResponse));
 
     task.nearby(latlng, 500).run(function(error, featureCollection, raw){
+      expect(featureCollection).to.deep.equal(sampleFeatureCollection);
+      expect(raw).to.deep.equal(sampleQueryResponse);
+      done();
+    });
+
+    server.respond();
+  });
+
+  it('should query features near a simple latlng', function(done){
+    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&geometry=-122.66%2C45.51&geometryType=esriGeometryPoint&spatialRel=esriSpatialRelIntersects&units=esriSRUnit_Meter&distance=500&inSr=4326&f=json', JSON.stringify(sampleQueryResponse));
+
+    task.nearby(rawLatlng, 500).run(function(error, featureCollection, raw){
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleQueryResponse);
       done();

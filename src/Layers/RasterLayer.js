@@ -195,6 +195,7 @@ EsriLeaflet.Layers.RasterLayer =  L.Class.extend({
 
   // TODO: refactor these into raster layer
   _renderPopup: function(latlng, error, results, response){
+    latlng = L.latLng(latlng);
     if(this._shouldRenderPopup && this._lastClick.equals(latlng)){
       //add the popup to the map where the mouse was clicked at
       var content = this._popupFunction(error, results, response);

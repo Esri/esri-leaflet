@@ -19,6 +19,7 @@ describe('L.esri.Tasks.IdentifyFeatures', function () {
   var map = createMap();
 
   var latlng = map.getCenter();
+  var rawLatlng = [45.51, -122.66];
 
   var url = 'http://services.arcgis.com/mock/arcgis/rest/services/MockMapService/MapServer/';
 
@@ -190,6 +191,22 @@ describe('L.esri.Tasks.IdentifyFeatures', function () {
     server.respondWith('GET', url + 'identify?sr=4326&layers=all&tolerance=3&returnGeometry=true&imageDisplay=500%2C500%2C96&mapExtent=-122.66535758972167%2C45.50624163368495%2C-122.65462875366211%2C45.51376023843158&geometry=-122.66%2C45.51&geometryType=esriGeometryPoint&f=json', JSON.stringify(sampleResponse));
 
     var request = service.identify().on(map).at(latlng).run(function(error, featureCollection, raw){
+      expect(featureCollection).to.deep.equal(sampleFeatureCollection);
+      expect(raw).to.deep.equal(sampleResponse);
+      done();
+    });
+
+    expect(request).to.be.an.instanceof(XMLHttpRequest);
+
+    server.respond();
+  });
+
+  it('should use a service to execute the request with simple LatLng', function(done){
+    var service = L.esri.Services.mapService(url);
+
+    server.respondWith('GET', url + 'identify?sr=4326&layers=all&tolerance=3&returnGeometry=true&imageDisplay=500%2C500%2C96&mapExtent=-122.66535758972167%2C45.50624163368495%2C-122.65462875366211%2C45.51376023843158&geometry=-122.66%2C45.51&geometryType=esriGeometryPoint&f=json', JSON.stringify(sampleResponse));
+
+    var request = service.identify().on(map).at(rawLatlng).run(function(error, featureCollection, raw){
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleResponse);
       done();
