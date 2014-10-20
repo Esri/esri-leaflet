@@ -1,4 +1,4 @@
-/*! esri-leaflet - v1.0.0-rc.1 - 2014-10-14
+/*! esri-leaflet - v1.0.0-rc.2 - 2014-10-20
 *   Copyright (c) 2014 Environmental Systems Research Institute, Inc.
 *   Apache License*/
 (function (factory) {
@@ -16,8 +16,8 @@
     factory(window.L);
   }
 }(function (L) {
-var EsriLeaflet = {
-  VERSION: '0.0.1-beta.7',
+var EsriLeaflet = { //jshint ignore:line
+  VERSION: '1.0.0-rc.2',
   Layers: {},
   Services: {},
   Controls: {},
@@ -272,6 +272,7 @@ if(typeof window !== 'undefined' && window.L){
 
   // convert an LatLngBounds (Leaflet) to extent (ArcGIS)
   EsriLeaflet.Util.boundsToExtent = function(bounds) {
+    bounds = L.latLngBounds(bounds);
     return {
       'xmin': bounds.getSouthWest().lng,
       'ymin': bounds.getSouthWest().lat,
@@ -425,6 +426,31 @@ if(typeof window !== 'undefined' && window.L){
     return url;
   };
 
+  EsriLeaflet.Util.geojsonTypeToArcGIS = function (geoJsonType) {
+    var arcgisGeometryType;
+    switch (geoJsonType) {
+    case 'Point':
+      arcgisGeometryType = 'esriGeometryPoint';
+      break;
+    case 'MultiPoint':
+      arcgisGeometryType = 'esriGeometryMultipoint';
+      break;
+    case 'LineString':
+      arcgisGeometryType = 'esriGeometryPolyline';
+      break;
+    case 'MultiLineString':
+      arcgisGeometryType = 'esriGeometryPolyline';
+      break;
+    case 'Polygon':
+      arcgisGeometryType = 'esriGeometryPolygon';
+      break;
+    case 'MultiPolygon':
+      arcgisGeometryType = 'esriGeometryPolygon';
+      break;
+    }
+    return arcgisGeometryType;
+  };
+
 })(EsriLeaflet);
 
 (function(EsriLeaflet){
@@ -507,14 +533,29 @@ if(typeof window !== 'undefined' && window.L){
     request: function(url, params, callback, context){
       var paramString = serialize(params);
       var httpRequest = createRequest(callback, context);
+      var requestLength = (url + '?' + paramString).length;
 
-      if((url + '?' + paramString).length < 2000){
+      // request is less then 2000 characters and the browser supports CORS, make GET request with XMLHttpRequest
+      if(requestLength <= 2000 && L.esri.Support.CORS){
         httpRequest.open('GET', url + '?' + paramString);
         httpRequest.send(null);
-      } else {
+
+      // request is less more then 2000 characters and the browser supports CORS, make POST request with XMLHttpRequest
+      } else if (requestLength > 2000 && L.esri.Support.CORS){
         httpRequest.open('POST', url);
         httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         httpRequest.send(paramString);
+
+      // request is less more then 2000 characters and the browser does not support CORS, make a JSONP request
+      } else if(requestLength <= 2000 && !L.esri.Support.CORS){
+        return L.esri.Request.get.JSONP(url, params, callback, context);
+
+      // request is longer then 2000 characters and the browser does not support CORS, log a warning
+      } else {
+        if(console && console.warn){
+          console.warn('a request to ' + url + ' was longer then 2000 characters and this browser cannot make a cross-domain post request. Please use a proxy http://esri.github.io/esri-leaflet/api-reference/request.html');
+          return;
+        }
       }
 
       return httpRequest;
@@ -580,9 +621,9 @@ if(typeof window !== 'undefined' && window.L){
           id: callbackId,
           url: script.src,
           abort: function(){
-            EsriLeaflet._callback[callbackId]({
-              code: 500,
-              message: 'Could not parse response as JSON.'
+            window._EsriLeafletCallbacks._callback[callbackId]({
+              code: 0,
+              message: 'Request aborted.'
             });
           }
         };
@@ -607,7 +648,7 @@ EsriLeaflet.Services.Service = L.Class.extend({
 
   options: {
     proxy: false,
-    useCors: true
+    useCors: EsriLeaflet.Support.CORS
   },
 
   initialize: function (url, options) {
@@ -658,6 +699,7 @@ EsriLeaflet.Services.Service = L.Class.extend({
       return;
     } else {
       var url = (this.options.proxy) ? this.options.proxy + '?' + this.url + path : this.url + path;
+
       if((method === 'get' || method === 'request') && !this.options.useCors){
         return EsriLeaflet.Request.get.JSONP(url, params, wrappedCallback);
       } else {
@@ -816,8 +858,8 @@ EsriLeaflet.Services.imageService = function(url, params){
 EsriLeaflet.Tasks.Task = L.Class.extend({
 
   options: {
-    useCors: true,
-    proxy: false
+    proxy: false,
+    useCors: EsriLeaflet.Support.CORS
   },
 
   //Generate a method for each methodName:paramName in the setters for this task.
@@ -846,7 +888,7 @@ EsriLeaflet.Tasks.Task = L.Class.extend({
 
   initialize: function(endpoint, options){
     // endpoint can be either a url to an ArcGIS Rest Service or an instance of EsriLeaflet.Service
-    if(endpoint instanceof EsriLeaflet.Services.Service){
+    if(endpoint.url && endpoint.request){
       this._service = endpoint;
       this.url = endpoint.url;
     } else {
@@ -894,7 +936,6 @@ EsriLeaflet.Tasks.Task = L.Class.extend({
   }
 });
 
-
 EsriLeaflet.Tasks.Query = EsriLeaflet.Tasks.Task.extend({
   setters: {
     'offset': 'offset',
@@ -915,16 +956,45 @@ EsriLeaflet.Tasks.Query = EsriLeaflet.Tasks.Task.extend({
     outFields: '*'
   },
 
-  within: function(bounds){
-    this.params.geometry = EsriLeaflet.Util.boundsToExtent(bounds);
-    this.params.geometryType = 'esriGeometryEnvelope';
+  within: function(geometry){
+    this._setGeometry(geometry);
+    this.params.spatialRel = 'esriSpatialRelContains'; // will make code read layer within geometry, to the api this will reads geometry contains layer
+    return this;
+  },
+
+  intersects: function(geometry){
+    this._setGeometry(geometry);
     this.params.spatialRel = 'esriSpatialRelIntersects';
-    this.params.inSr = 4326;
+    return this;
+  },
+
+  contains: function(geometry){
+    this._setGeometry(geometry);
+    this.params.spatialRel = 'esriSpatialRelWithin'; // will make code read layer contains geometry, to the api this will reads geometry within layer
+    return this;
+  },
+
+  // crosses: function(geometry){
+  //   this._setGeometry(geometry);
+  //   this.params.spatialRel = 'esriSpatialRelCrosses';
+  //   return this;
+  // },
+
+  // touches: function(geometry){
+  //   this._setGeometry(geometry);
+  //   this.params.spatialRel = 'esriSpatialRelTouches';
+  //   return this;
+  // },
+
+  overlaps: function(geometry){
+    this._setGeometry(geometry);
+    this.params.spatialRel = 'esriSpatialRelOverlaps';
     return this;
   },
 
   // only valid for Feature Services running on ArcGIS Server 10.3 or ArcGIS Online
   nearby: function(latlng, radius){
+    latlng = L.latLng(latlng);
     this.params.geometry = ([latlng.lng,latlng.lat]).join(',');
     this.params.geometryType = 'esriGeometryPoint';
     this.params.spatialRel = 'esriSpatialRelIntersects';
@@ -935,7 +1005,7 @@ EsriLeaflet.Tasks.Query = EsriLeaflet.Tasks.Task.extend({
   },
 
   where: function(string){
-    this.params.where = string.replace(/"/g, '\'');
+    this.params.where = string.replace(/"/g, "\'"); // jshint ignore:line
     return this;
   },
 
@@ -1020,8 +1090,66 @@ EsriLeaflet.Tasks.Query = EsriLeaflet.Tasks.Task.extend({
     delete this.params.returnIdsOnly;
     delete this.params.returnExtentOnly;
     delete this.params.returnCountOnly;
-  }
+  },
 
+  _setGeometry: function(geometry) {
+    this.params.inSr = 4326;
+
+    // convert bounds to extent and finish
+    if ( geometry instanceof L.LatLngBounds ) {
+      // set geometry + geometryType
+      this.params.geometry = EsriLeaflet.Util.boundsToExtent(geometry);
+      this.params.geometryType = 'esriGeometryEnvelope';
+      return;
+    }
+
+    // convert L.Marker > L.LatLng
+    if(geometry.getLatLng){
+      geometry = geometry.getLatLng();
+    }
+
+    // convert L.LatLng to a geojson point and continue;
+    if (geometry instanceof L.LatLng) {
+      geometry = {
+        type: 'Point',
+        coordinates: [geometry.lng, geometry.lat]
+      };
+    }
+
+    // handle L.GeoJSON, pull out the first geometry
+    if ( geometry instanceof L.GeoJSON ) {
+      //reassign geometry to the GeoJSON value  (we are assuming that only one feature is present)
+      geometry = geometry.getLayers()[0].feature.geometry;
+      this.params.geometry = EsriLeaflet.Util.geojsonToArcGIS(geometry);
+      this.params.geometryType = EsriLeaflet.Util.geojsonTypeToArcGIS(geometry.type);
+    }
+
+    // Handle L.Polyline and L.Polygon
+    if (geometry.toGeoJSON) {
+      geometry = geometry.toGeoJSON();
+    }
+
+    // handle GeoJSON feature by pulling out the geometry
+    if ( geometry.type === 'Feature' ) {
+      // get the geometry of the geojson feature
+      geometry = geometry.geometry;
+    }
+
+    // confirm that our GeoJSON is a point, line or polygon
+    if ( geometry.type === 'Point' ||  geometry.type === 'LineString' || geometry.type === 'Polygon') {
+      this.params.geometry = EsriLeaflet.Util.geojsonToArcGIS(geometry);
+      this.params.geometryType = EsriLeaflet.Util.geojsonTypeToArcGIS(geometry.type);
+      return;
+    }
+
+    // warn the user if we havn't found a
+    /* global console */
+    if(console && console.warn) {
+      console.warn('invalid geometry passed to spatial query. Should be an L.LatLng, L.LatLngBounds or L.Marker or a GeoJSON Point Line or Polygon object');
+    }
+
+    return;
+  }
 });
 
 EsriLeaflet.Tasks.query = function(url, params){
@@ -1107,6 +1235,7 @@ EsriLeaflet.Tasks.IdentifyImage = EsriLeaflet.Tasks.Identify.extend({
   },
 
   at: function(latlng){
+    latlng = L.latLng(latlng);
     this.params.geometry = JSON.stringify({
       x: latlng.lng,
       y: latlng.lat,
@@ -1212,6 +1341,7 @@ EsriLeaflet.Tasks.IdentifyFeatures = EsriLeaflet.Tasks.Identify.extend({
   },
 
   at: function(latlng){
+    latlng = L.latLng(latlng);
     this.params.geometry = ([latlng.lng, latlng.lat]).join(',');
     this.params.geometryType = 'esriGeometryPoint';
     return this;
@@ -1746,6 +1876,7 @@ EsriLeaflet.Layers.RasterLayer =  L.Class.extend({
 
   // TODO: refactor these into raster layer
   _renderPopup: function(latlng, error, results, response){
+    latlng = L.latLng(latlng);
     if(this._shouldRenderPopup && this._lastClick.equals(latlng)){
       //add the popup to the map where the mouse was clicked at
       var content = this._popupFunction(error, results, response);
@@ -2607,7 +2738,7 @@ EsriLeaflet.Layers.FeatureGrid = L.Class.extend({
     },
 
     _buildQuery: function(bounds){
-      var query = this._service.query().within(bounds).where(this.options.where).fields(this.options.fields).precision(this.options.precision);
+      var query = this._service.query().intersects(bounds).where(this.options.where).fields(this.options.fields).precision(this.options.precision);
 
       if(this.options.simplifyFactor){
         query.simplify(this._map, this.options.simplifyFactor);
