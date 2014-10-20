@@ -1,6 +1,6 @@
 # Changelog
 
-## Beta 7
+## Release Candidate 1
 
 #### Changes
 * `L.esri.Task` now accepts `proxy` and `useCors` like `L.esri.Service`. https://github.com/Esri/esri-leaflet/pull/359
