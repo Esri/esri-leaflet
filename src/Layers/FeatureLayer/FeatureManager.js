@@ -137,7 +137,7 @@
     },
 
     _buildQuery: function(bounds){
-      var query = this._service.query().within(bounds).where(this.options.where).fields(this.options.fields).precision(this.options.precision);
+      var query = this._service.query().intersects(bounds).where(this.options.where).fields(this.options.fields).precision(this.options.precision);
 
       if(this.options.simplifyFactor){
         query.simplify(this._map, this.options.simplifyFactor);

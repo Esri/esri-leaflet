@@ -19,41 +19,38 @@ EsriLeaflet.Tasks.Query = EsriLeaflet.Tasks.Task.extend({
   },
 
   within: function(geometry){
-    return this.intersects(geometry);
+    this._setGeometry(geometry);
+    this.params.spatialRel = 'esriSpatialRelContains'; // will make code read layer within geometry, to the api this will reads geometry contains layer
+    return this;
   },
 
   intersects: function(geometry){
     this._setGeometry(geometry);
     this.params.spatialRel = 'esriSpatialRelIntersects';
-    this.params.inSr = 4326;
     return this;
   },
 
   contains: function(geometry){
     this._setGeometry(geometry);
-    this.params.spatialRel = 'esriSpatialRelContains';
-    this.params.inSr = 4326;
+    this.params.spatialRel = 'esriSpatialRelWithin'; // will make code read layer contains geometry, to the api this will reads geometry within layer
     return this;
   },
 
-  crosses: function(geometry){
-    this._setGeometry(geometry);
-    this.params.spatialRel = 'esriSpatialRelCrosses';
-    this.params.inSr = 4326;
-    return this;
-  },
+  // crosses: function(geometry){
+  //   this._setGeometry(geometry);
+  //   this.params.spatialRel = 'esriSpatialRelCrosses';
+  //   return this;
+  // },
 
-  touches: function(geometry){
-    this._setGeometry(geometry);
-    this.params.spatialRel = 'esriSpatialRelTouches';
-    this.params.inSr = 4326;
-    return this;
-  },
+  // touches: function(geometry){
+  //   this._setGeometry(geometry);
+  //   this.params.spatialRel = 'esriSpatialRelTouches';
+  //   return this;
+  // },
 
   overlaps: function(geometry){
     this._setGeometry(geometry);
     this.params.spatialRel = 'esriSpatialRelOverlaps';
-    this.params.inSr = 4326;
     return this;
   },
 
@@ -158,10 +155,9 @@ EsriLeaflet.Tasks.Query = EsriLeaflet.Tasks.Task.extend({
   },
 
   _setGeometry: function(geometry) {
-    if ( geometry.hasOwnProperty('length') ) {
-      geometry = L.latLngBounds(geometry);
-    }
+    this.params.inSr = 4326;
 
+    // convert bounds to extent and finish
     if ( geometry instanceof L.LatLngBounds ) {
       // set geometry + geometryType
       this.params.geometry = EsriLeaflet.Util.boundsToExtent(geometry);
@@ -169,6 +165,20 @@ EsriLeaflet.Tasks.Query = EsriLeaflet.Tasks.Task.extend({
       return;
     }
 
+    // convert L.Marker > L.LatLng
+    if(geometry.getLatLng){
+      geometry = geometry.getLatLng();
+    }
+
+    // convert L.LatLng to a geojson point and continue;
+    if (geometry instanceof L.LatLng) {
+      geometry = {
+        type: 'Point',
+        coordinates: [geometry.lng, geometry.lat]
+      };
+    }
+
+    // handle L.GeoJSON, pull out the first geometry
     if ( geometry instanceof L.GeoJSON ) {
       //reassign geometry to the GeoJSON value  (we are assuming that only one feature is present)
       geometry = geometry.getLayers()[0].feature.geometry;
@@ -176,19 +186,28 @@ EsriLeaflet.Tasks.Query = EsriLeaflet.Tasks.Task.extend({
       this.params.geometryType = EsriLeaflet.Util.geojsonTypeToArcGIS(geometry.type);
     }
 
+    // Handle L.Polyline and L.Polygon
+    if (geometry.toGeoJSON) {
+      geometry = geometry.toGeoJSON();
+    }
+
+    // handle GeoJSON feature by pulling out the geometry
     if ( geometry.type === 'Feature' ) {
       // get the geometry of the geojson feature
       geometry = geometry.geometry;
     }
 
+    // confirm that our GeoJSON is a point, line or polygon
     if ( geometry.type === 'Point' ||  geometry.type === 'LineString' || geometry.type === 'Polygon') {
       this.params.geometry = EsriLeaflet.Util.geojsonToArcGIS(geometry);
       this.params.geometryType = EsriLeaflet.Util.geojsonTypeToArcGIS(geometry.type);
       return;
     }
-    /*global console */
+
+    // warn the user if we havn't found a
+    /* global console */
     if(console && console.warn) {
-      console.warn('invalid geometry passed to spatial query. Should be an L.LatLngBounds or GeoJSON Point Line or Polygon');
+      console.warn('invalid geometry passed to spatial query. Should be an L.LatLng, L.LatLngBounds or L.Marker or a GeoJSON Point Line or Polygon object');
     }
 
     return;

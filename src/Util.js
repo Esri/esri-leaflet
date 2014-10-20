@@ -237,6 +237,7 @@
 
   // convert an LatLngBounds (Leaflet) to extent (ArcGIS)
   EsriLeaflet.Util.boundsToExtent = function(bounds) {
+    bounds = L.latLngBounds(bounds);
     return {
       'xmin': bounds.getSouthWest().lng,
       'ymin': bounds.getSouthWest().lat,
