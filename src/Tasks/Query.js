@@ -18,10 +18,41 @@ EsriLeaflet.Tasks.Query = EsriLeaflet.Tasks.Task.extend({
     outFields: '*'
   },
 
-  within: function(bounds){
-    this.params.geometry = EsriLeaflet.Util.boundsToExtent(bounds);
-    this.params.geometryType = 'esriGeometryEnvelope';
+  within: function(geometry){
+    return this.intersects(geometry);
+  },
+
+  intersects: function(geometry){
+    this._setGeometry(geometry);
     this.params.spatialRel = 'esriSpatialRelIntersects';
+    this.params.inSr = 4326;
+    return this;
+  },
+
+  contains: function(geometry){
+    this._setGeometry(geometry);
+    this.params.spatialRel = 'esriSpatialRelContains';
+    this.params.inSr = 4326;
+    return this;
+  },
+
+  crosses: function(geometry){
+    this._setGeometry(geometry);
+    this.params.spatialRel = 'esriSpatialRelCrosses';
+    this.params.inSr = 4326;
+    return this;
+  },
+
+  touches: function(geometry){
+    this._setGeometry(geometry);
+    this.params.spatialRel = 'esriSpatialRelTouches';
+    this.params.inSr = 4326;
+    return this;
+  },
+
+  overlaps: function(geometry){
+    this._setGeometry(geometry);
+    this.params.spatialRel = 'esriSpatialRelOverlaps';
     this.params.inSr = 4326;
     return this;
   },
@@ -124,8 +155,44 @@ EsriLeaflet.Tasks.Query = EsriLeaflet.Tasks.Task.extend({
     delete this.params.returnIdsOnly;
     delete this.params.returnExtentOnly;
     delete this.params.returnCountOnly;
-  }
+  },
 
+  _setGeometry: function(geometry) {
+    if ( geometry.hasOwnProperty('length') ) {
+      geometry = L.latLngBounds(geometry);
+    }
+
+    if ( geometry instanceof L.LatLngBounds ) {
+      // set geometry + geometryType
+      this.params.geometry = EsriLeaflet.Util.boundsToExtent(geometry);
+      this.params.geometryType = 'esriGeometryEnvelope';
+      return;
+    }
+
+    if ( geometry instanceof L.GeoJSON ) {
+      //reassign geometry to the GeoJSON value  (we are assuming that only one feature is present)
+      geometry = geometry.getLayers()[0].feature.geometry;
+      this.params.geometry = EsriLeaflet.Util.geojsonToArcGIS(geometry);
+      this.params.geometryType = EsriLeaflet.Util.geojsonTypeToArcGIS(geometry.type);
+    }
+
+    if ( geometry.type === 'Feature' ) {
+      // get the geometry of the geojson feature
+      geometry = geometry.geometry;
+    }
+
+    if ( geometry.type === 'Point' ||  geometry.type === 'LineString' || geometry.type === 'Polygon') {
+      this.params.geometry = EsriLeaflet.Util.geojsonToArcGIS(geometry);
+      this.params.geometryType = EsriLeaflet.Util.geojsonTypeToArcGIS(geometry.type);
+      return;
+    }
+    /*global console */
+    if(console && console.warn) {
+      console.warn('invalid geometry passed to spatial query. Should be an L.LatLngBounds or GeoJSON Point Line or Polygon');
+    }
+
+    return;
+  }
 });
 
 EsriLeaflet.Tasks.query = function(url, params){
