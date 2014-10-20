@@ -8,11 +8,11 @@
   <meta charset="utf-8">
 
   
-    <title>Identifying Imagery | Esri Leaflet</title>
+    <title>Spatial Queries on a Feature Layer | Esri Leaflet</title>
   
 
   
-    <meta name="description" content="Display an Image Service from ArcGIS Online or ArcGIS Server and get the pixel value at a specific location. This sample displays a didgital elevation model (DEM) for the state of California rendered with a hillshade (see &lt;a href=&quot;/esri-leaflet/examples/image-map-layer-rendering-rule.html&quot;&gt;ImageMapLayer RenderingRule sample&lt;/a&gt;). Clicking on map returns the raw DEM value for that location (elevation in meters). More information about Image Services can be found in the &lt;a href=&quot;/esri-leaflet/api-reference/tasks/identify-image.html&quot;&gt;L.esri.Tasks.IdentifyImage&lt;/a&gt; documentation.">
+    <meta name="description" content="Create detailed spatial queries like point within polygon or line intersects polygons with Feature Layer queries.">
   
 
   <meta name="description" content="Esri Leaflet">
@@ -147,66 +147,128 @@
 
 <div class="example-content">
 <div class="wrap">
-  <h1>Identifying Imagery</h1>
-  <p>Display an Image Service from ArcGIS Online or ArcGIS Server and get the pixel value at a specific location. This sample displays a didgital elevation model (DEM) for the state of California rendered with a hillshade (see <a href="/esri-leaflet/examples/image-map-layer-rendering-rule.html">ImageMapLayer RenderingRule sample</a>). Clicking on map returns the raw DEM value for that location (elevation in meters). More information about Image Services can be found in the <a href="/esri-leaflet/api-reference/tasks/identify-image.html">L.esri.Tasks.IdentifyImage</a> documentation.</p>
+  <h1>Spatial Queries on a Feature Layer</h1>
+  <p>Create detailed spatial queries like point within polygon or line intersects polygons with Feature Layer queries.</p>
 </div>
 <div id="map-wrapper">
   
 
 <style>
-  #pixelValue {
+  #panel {
     position: absolute;
     top: 10px;
     right: 10px;
     z-index: 10;
     background: white;
-    padding: 1em;
+    padding: 10px;
   }
 </style>
 
 <div id="map"></div>
-<div id="pixelValue" class="leaflet-bar">Click map for elevation</div>
 
+<div id="panel" class="leaflet-bar">
+  Neighborhoods
+  <select name="relation" id="relationSelect">
+    <option value="within">Within<options>
+    <option value="contains">Contains<options>
+    <option value="intersects">Intersects<options>
+    <option value="overlaps">Overlaps<options>
+  </select>
+  <select name="geometry" id="geometrySelect">
+    <option value="bounds">Bounds<options>
+    <option value="point">Point<options>
+    <option value="line">Line<options>
+    <option value="polygon">Polygon<options>
+  </select>
+</div>
 <script>
-    var renderingRule = {
-        "rasterFunction":"Hillshade",
-        "rasterFunctionArguments": {
-            "Azimuth":215,
-            "Altitude":60,
-            "ZFactor":1
-        },"variableName":"DEM"
+  var map = new L.Map("map").setView([45.525231693565054, -122.62836456298828], 11);
+
+  L.esri.basemapLayer("Topographic").addTo(map);
+
+  neighborhoods = L.esri.featureLayer("http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Neighborhoods_pdx/FeatureServer/0", {
+    style: {
+      color: 'gray',
+      weight: 1
+    }
+  }).addTo(map);
+
+  var bounds = L.latLngBounds([
+    [45.494555728818014, -122.69153594970703],
+    [45.538098589494005, -122.60845184326172]
+  ]);
+
+  var rect = L.rectangle(bounds, {
+    color: 'blue',
+    weight: 2
+  }).addTo(map);
+
+  var line = L.polyline([
+    [45.55925642651572, -122.61188507080078],
+    [45.50225636595613, -122.56278991699217],
+    [45.48324350868221, -122.62046813964844]
+  ], {
+    color: 'blue',
+    weight: 2
+  }).addTo(map);
+
+  var marker = L.marker([45.57103404296416, -122.68638610839842 ]).addTo(map);
+
+  var polygon = L.polygon([
+    [45.48926092988004, -122.73719787597655],
+    [45.48637264792543, -122.68844604492186],
+    [45.46253867087026, -122.68226623535156],
+    [45.441103561983795, -122.69359588623047],
+    [45.44471679159555, -122.7224349975586],
+    [45.46109386344247, -122.73822784423828],
+    [45.482521374942834, -122.7341079711914 ],
+    [45.48926092988004, -122.73719787597655]
+  ], {
+    color: 'blue',
+    weight: 2
+  }).addTo(map);
+
+  var geometries = {
+    bounds: bounds,
+    line: line,
+    polygon: polygon,
+    point: marker
+  };
+
+  var relationship = document.getElementById('relationSelect');
+  var geometry = document.getElementById('geometrySelect');
+
+  var previousIds = [];
+
+  function reset(){
+    for (var i = previousIds.length - 1; i >= 0; i--) {
+      neighborhoods.resetStyle(previousIds[i]);
     };
+  }
 
-    // sample server in this example is not CORS enabled, so use JSONP
-    L.esri.get = L.esri.Request.get.JSONP;
+  function query(){
+    reset();
 
-    var map = L.map('map').setView([36.230577, -118.253147], 10);
+    var inputGeometry = geometries[geometry.value];
 
-    L.esri.basemapLayer('Gray').addTo(map);
-
-    var hillshade = L.esri.imageMapLayer('http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Earthquakes/CaliforniaDEM/ImageServer', {
-      renderingRule: renderingRule
-    }).addTo(map);
-
-    var identifiedPixel;
-    var pane = document.getElementById('pixelValue');
-
-    map.on('click', function (e) {
-        if(identifiedPixel){
-            pane.innerText = 'Loading';
-        }
-        hillshade.identify().at(e.latlng).run(function(error, results){
-            identifiedPixel = results.pixel;
-            pane.innerText = identifiedPixel.properties.value + 'm';
-        });
+    neighborhoods.query()[relationship.value](inputGeometry).ids(function(error, ids){
+      previousIds = ids;
+      for (var i = ids.length - 1; i >= 0; i--) {
+        neighborhoods.setFeatureStyle(ids[i], { color: 'red', weight: 2 });
+      };
     });
+  }
 
+  geometry.addEventListener('change', query);
+  relationship.addEventListener('change', query);
+
+  query();
 </script>
 </div>
 <pre><code class="language-xml"><span class="tag">&lt;<span class="title">html</span>&gt;</span>
 <span class="tag">&lt;<span class="title">head</span>&gt;</span>
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">utf-8</span> /&gt;</span>
-  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Identifying Imagery<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Spatial Queries on a Feature Layer<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">name</span>=<span class="value">'viewport'</span> <span class="attribute">content</span>=<span class="value">'initial-scale=1,maximum-scale=1,user-scalable=no'</span> /&gt;</span>
 
   <span class="comment">&lt;!-- Load Leaflet from CDN--&gt;</span>
@@ -224,60 +286,122 @@
 <span class="tag">&lt;<span class="title">body</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css">
-  <span class="id">#pixelValue</span> <span class="rules">{
+  <span class="id">#panel</span> <span class="rules">{
     <span class="rule"><span class="attribute">position</span>:<span class="value"> absolute</span></span>;
     <span class="rule"><span class="attribute">top</span>:<span class="value"> <span class="number">10</span>px</span></span>;
     <span class="rule"><span class="attribute">right</span>:<span class="value"> <span class="number">10</span>px</span></span>;
     <span class="rule"><span class="attribute">z-index</span>:<span class="value"> <span class="number">10</span></span></span>;
     <span class="rule"><span class="attribute">background</span>:<span class="value"> white</span></span>;
-    <span class="rule"><span class="attribute">padding</span>:<span class="value"> <span class="number">1</span>em</span></span>;
+    <span class="rule"><span class="attribute">padding</span>:<span class="value"> <span class="number">10</span>px</span></span>;
   <span class="rule">}</span></span>
 </span><span class="tag">&lt;/<span class="title">style</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
-<span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"pixelValue"</span> <span class="attribute">class</span>=<span class="value">"leaflet-bar"</span>&gt;</span>Click map for elevation<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 
+<span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"panel"</span> <span class="attribute">class</span>=<span class="value">"leaflet-bar"</span>&gt;</span>
+  Neighborhoods
+  <span class="tag">&lt;<span class="title">select</span> <span class="attribute">name</span>=<span class="value">"relation"</span> <span class="attribute">id</span>=<span class="value">"relationSelect"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"within"</span>&gt;</span>Within<span class="tag">&lt;<span class="title">options</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"contains"</span>&gt;</span>Contains<span class="tag">&lt;<span class="title">options</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"intersects"</span>&gt;</span>Intersects<span class="tag">&lt;<span class="title">options</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"overlaps"</span>&gt;</span>Overlaps<span class="tag">&lt;<span class="title">options</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">select</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">select</span> <span class="attribute">name</span>=<span class="value">"geometry"</span> <span class="attribute">id</span>=<span class="value">"geometrySelect"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"bounds"</span>&gt;</span>Bounds<span class="tag">&lt;<span class="title">options</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"point"</span>&gt;</span>Point<span class="tag">&lt;<span class="title">options</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"line"</span>&gt;</span>Line<span class="tag">&lt;<span class="title">options</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"polygon"</span>&gt;</span>Polygon<span class="tag">&lt;<span class="title">options</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">select</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
-    <span class="keyword">var</span> renderingRule = {
-        <span class="string">"rasterFunction"</span>:<span class="string">"Hillshade"</span>,
-        <span class="string">"rasterFunctionArguments"</span>: {
-            <span class="string">"Azimuth"</span>:<span class="number">215</span>,
-            <span class="string">"Altitude"</span>:<span class="number">60</span>,
-            <span class="string">"ZFactor"</span>:<span class="number">1</span>
-        },<span class="string">"variableName"</span>:<span class="string">"DEM"</span>
+  <span class="keyword">var</span> map = <span class="keyword">new</span> L.Map(<span class="string">"map"</span>).setView([<span class="number">45.525231693565054</span>, -<span class="number">122.62836456298828</span>], <span class="number">11</span>);
+
+  L.esri.basemapLayer(<span class="string">"Topographic"</span>).addTo(map);
+
+  neighborhoods = L.esri.featureLayer(<span class="string">"http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Neighborhoods_pdx/FeatureServer/0"</span>, {
+    style: {
+      color: <span class="string">'gray'</span>,
+      weight: <span class="number">1</span>
+    }
+  }).addTo(map);
+
+  <span class="keyword">var</span> bounds = L.latLngBounds([
+    [<span class="number">45.494555728818014</span>, -<span class="number">122.69153594970703</span>],
+    [<span class="number">45.538098589494005</span>, -<span class="number">122.60845184326172</span>]
+  ]);
+
+  <span class="keyword">var</span> rect = L.rectangle(bounds, {
+    color: <span class="string">'blue'</span>,
+    weight: <span class="number">2</span>
+  }).addTo(map);
+
+  <span class="keyword">var</span> line = L.polyline([
+    [<span class="number">45.55925642651572</span>, -<span class="number">122.61188507080078</span>],
+    [<span class="number">45.50225636595613</span>, -<span class="number">122.56278991699217</span>],
+    [<span class="number">45.48324350868221</span>, -<span class="number">122.62046813964844</span>]
+  ], {
+    color: <span class="string">'blue'</span>,
+    weight: <span class="number">2</span>
+  }).addTo(map);
+
+  <span class="keyword">var</span> marker = L.marker([<span class="number">45.57103404296416</span>, -<span class="number">122.68638610839842</span> ]).addTo(map);
+
+  <span class="keyword">var</span> polygon = L.polygon([
+    [<span class="number">45.48926092988004</span>, -<span class="number">122.73719787597655</span>],
+    [<span class="number">45.48637264792543</span>, -<span class="number">122.68844604492186</span>],
+    [<span class="number">45.46253867087026</span>, -<span class="number">122.68226623535156</span>],
+    [<span class="number">45.441103561983795</span>, -<span class="number">122.69359588623047</span>],
+    [<span class="number">45.44471679159555</span>, -<span class="number">122.7224349975586</span>],
+    [<span class="number">45.46109386344247</span>, -<span class="number">122.73822784423828</span>],
+    [<span class="number">45.482521374942834</span>, -<span class="number">122.7341079711914</span> ],
+    [<span class="number">45.48926092988004</span>, -<span class="number">122.73719787597655</span>]
+  ], {
+    color: <span class="string">'blue'</span>,
+    weight: <span class="number">2</span>
+  }).addTo(map);
+
+  <span class="keyword">var</span> geometries = {
+    bounds: bounds,
+    line: line,
+    polygon: polygon,
+    point: marker
+  };
+
+  <span class="keyword">var</span> relationship = document.getElementById(<span class="string">'relationSelect'</span>);
+  <span class="keyword">var</span> geometry = document.getElementById(<span class="string">'geometrySelect'</span>);
+
+  <span class="keyword">var</span> previousIds = [];
+
+  <span class="function"><span class="keyword">function</span> <span class="title">reset</span><span class="params">()</span>{</span>
+    <span class="keyword">for</span> (<span class="keyword">var</span> i = previousIds.length - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) {
+      neighborhoods.resetStyle(previousIds[i]);
     };
+  }
 
-    <span class="comment">// sample server in this example is not CORS enabled, so use JSONP</span>
-    L.esri.get = L.esri.Request.get.JSONP;
+  <span class="function"><span class="keyword">function</span> <span class="title">query</span><span class="params">()</span>{</span>
+    reset();
 
-    <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">36.230577</span>, -<span class="number">118.253147</span>], <span class="number">10</span>);
+    <span class="keyword">var</span> inputGeometry = geometries[geometry.value];
 
-    L.esri.basemapLayer(<span class="string">'Gray'</span>).addTo(map);
-
-    <span class="keyword">var</span> hillshade = L.esri.imageMapLayer(<span class="string">'http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Earthquakes/CaliforniaDEM/ImageServer'</span>, {
-      renderingRule: renderingRule
-    }).addTo(map);
-
-    <span class="keyword">var</span> identifiedPixel;
-    <span class="keyword">var</span> pane = document.getElementById(<span class="string">'pixelValue'</span>);
-
-    map.on(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(e)</span> {</span>
-        <span class="keyword">if</span>(identifiedPixel){
-            pane.innerText = <span class="string">'Loading'</span>;
-        }
-        hillshade.identify().at(e.latlng).run(<span class="function"><span class="keyword">function</span><span class="params">(error, results)</span>{</span>
-            identifiedPixel = results.pixel;
-            pane.innerText = identifiedPixel.properties.value + <span class="string">'m'</span>;
-        });
+    neighborhoods.query()[relationship.value](inputGeometry).ids(<span class="function"><span class="keyword">function</span><span class="params">(error, ids)</span>{</span>
+      previousIds = ids;
+      <span class="keyword">for</span> (<span class="keyword">var</span> i = ids.length - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) {
+        neighborhoods.setFeatureStyle(ids[i], { color: <span class="string">'red'</span>, weight: <span class="number">2</span> });
+      };
     });
+  }
 
+  geometry.addEventListener(<span class="string">'change'</span>, query);
+  relationship.addEventListener(<span class="string">'change'</span>, query);
+
+  query();
 </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 <span class="tag">&lt;/<span class="title">body</span>&gt;</span>
 <span class="tag">&lt;/<span class="title">html</span>&gt;</span></code></pre>
 
 <div class="wrap">
-  <p><a href="http://github.com/esri/esri-leaflet/edit/master/site/source/pages/examples/identifying-imagery.hbs">Edit this sample on GitHub</a></p>
+  <p><a href="http://github.com/esri/esri-leaflet/edit/master/site/source/pages/examples/spatial-queries.hbs">Edit this sample on GitHub</a></p>
 </div>
 </div>
   <div style='clear:both;'></div>
