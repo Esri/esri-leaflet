@@ -19,6 +19,7 @@ describe('L.esri.Tasks.Query', function () {
 
   var bounds = L.latLngBounds([[45.5, -122.66],[ 45.51, -122.65]]);
   var latlng = L.latLng(45.51, -122.66);
+  var rawLatlng = [45.51, -122.66];
 
   var featureLayerUrl = 'http://services.arcgis.com/mock/arcgis/rest/services/MockFeatureService/FeatureServer/0/';
   var mapServiceUrl = 'http://services.arcgis.com/mock/arcgis/rest/services/MockMapService/MapServer/';
@@ -235,6 +236,18 @@ describe('L.esri.Tasks.Query', function () {
     server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&geometry=-122.66%2C45.51&geometryType=esriGeometryPoint&spatialRel=esriSpatialRelIntersects&units=esriSRUnit_Meter&distance=500&inSr=4326&f=json', JSON.stringify(sampleQueryResponse));
 
     task.nearby(latlng, 500).run(function(error, featureCollection, raw){
+      expect(featureCollection).to.deep.equal(sampleFeatureCollection);
+      expect(raw).to.deep.equal(sampleQueryResponse);
+      done();
+    });
+
+    server.respond();
+  });
+
+  it('should query features near a simple latlng', function(done){
+    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&geometry=-122.66%2C45.51&geometryType=esriGeometryPoint&spatialRel=esriSpatialRelIntersects&units=esriSRUnit_Meter&distance=500&inSr=4326&f=json', JSON.stringify(sampleQueryResponse));
+
+    task.nearby(rawLatlng, 500).run(function(error, featureCollection, raw){
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleQueryResponse);
       done();

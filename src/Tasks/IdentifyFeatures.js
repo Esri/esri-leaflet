@@ -21,6 +21,7 @@ EsriLeaflet.Tasks.IdentifyFeatures = EsriLeaflet.Tasks.Identify.extend({
   },
 
   at: function(latlng){
+    latlng = L.latLng(latlng);
     this.params.geometry = ([latlng.lng, latlng.lat]).join(',');
     this.params.geometryType = 'esriGeometryPoint';
     return this;
