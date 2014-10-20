@@ -303,8 +303,6 @@ module.exports = function(grunt) {
     copy: {
       assemble: {
         files: [
-          { src: 'dist/esri-leaflet.js', dest: 'site/build/js/esri-leaflet.js'},
-          { src: 'dist/esri-leaflet-src.js', dest: 'site/build/js/esri-leaflet-src.js'},
           { src: 'site/source/js/script.js', dest: 'site/build/js/script.js'}
         ]
       }
@@ -387,7 +385,7 @@ module.exports = function(grunt) {
   grunt.registerTask('docs', ['assemble:dev', 'concat', 'uglify', 'sass', 'copy', 'connect:docs', 'watch']);
 
   // Documentation Site Tasks
-  grunt.registerTask('docs:build', ['assemble:build', 'imagemin','sass', 'gh-pages']);
+  grunt.registerTask('docs:build', ['assemble:build', 'copy', 'imagemin','sass', 'gh-pages']);
 
   // Require all grunt modules
   require('load-grunt-tasks')(grunt, {pattern: ['grunt-*', 'assemble']});
