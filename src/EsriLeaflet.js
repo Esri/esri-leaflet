@@ -1,4 +1,4 @@
-var EsriLeaflet = {
+var EsriLeaflet = { //jshint ignore:line
   Layers: {},
   Services: {},
   Controls: {},
