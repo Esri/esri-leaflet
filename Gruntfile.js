@@ -399,9 +399,7 @@ module.exports = function(grunt) {
           dryRun: grunt.option('dryRun') ? grunt.option('dryRun') : false,
           silent: false
         },
-        src: [
-          'dist/**/*'
-        ]
+        src: [ 'dist/**/*' ]
       }
     }
   });
