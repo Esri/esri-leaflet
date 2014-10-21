@@ -16,7 +16,7 @@ EsriLeaflet.Layers.ImageMapLayer = EsriLeaflet.Layers.RasterLayer.extend({
   initialize: function (url, options) {
     this.url = EsriLeaflet.Util.cleanUrl(url);
     this._service = new EsriLeaflet.Services.ImageService(this.url, options);
-    this._service.on('authenticationrequired requeststart requestend requesterror requestsuccess', this._propagateEvent, this);
+    this._service.addEventParent(this);
     L.Util.setOptions(this, options);
   },
 

@@ -6,7 +6,7 @@ EsriLeaflet.Layers.TiledMapLayer = L.TileLayer.extend({
     this.url = L.esri.Util.cleanUrl(url);
     this.tileUrl = L.esri.Util.cleanUrl(url) + 'tile/{z}/{y}/{x}';
     this._service = new L.esri.Services.MapService(this.url, options);
-    this._service.on('authenticationrequired requeststart requestend requesterror requestsuccess', this._propagateEvent, this);
+    this._service.addEventParent(this);
 
     //if this is looking at the AGO tiles subdomain insert the subdomain placeholder
     if(this.tileUrl.match('://tiles.arcgisonline.com')){
@@ -30,16 +30,6 @@ EsriLeaflet.Layers.TiledMapLayer = L.TileLayer.extend({
   authenticate: function(token){
     this._service.authenticate(token);
     return this;
-  },
-
-  // from https://github.com/Leaflet/Leaflet/blob/v0.7.2/src/layer/FeatureGroup.js
-  // @TODO remove at Leaflet 0.8
-  _propagateEvent: function (e) {
-    e = L.extend({
-      layer: e.target,
-      target: this
-    }, e);
-    this.fire(e.type, e);
   }
 });
 

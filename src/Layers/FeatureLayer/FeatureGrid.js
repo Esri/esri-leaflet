@@ -1,6 +1,4 @@
-EsriLeaflet.Layers.FeatureGrid = L.Class.extend({
-
-  includes: L.Mixin.Events,
+EsriLeaflet.Layers.FeatureGrid = L.Layer.extend({
 
   options: {
     cellSize: 512,
@@ -13,10 +11,7 @@ EsriLeaflet.Layers.FeatureGrid = L.Class.extend({
 
   onAdd: function (map) {
     this._map = map;
-    this._update = L.Util.limitExecByInterval(this._update, this.options.updateInterval, this);
-
-    // @TODO remove for leaflet 0.8
-    this._map.addEventListener(this.getEvents(), this);
+    this._update = L.Util.throttle(this._update, this.options.updateInterval, this);
 
     this._reset();
     this._update();
@@ -54,8 +49,7 @@ EsriLeaflet.Layers.FeatureGrid = L.Class.extend({
     this._cellsToLoad = 0;
     this._cellsTotal = 0;
 
-    // @TODO enable at Leaflet 0.8
-    // this._cellNumBounds = this._getCellNumBounds();
+    this._cellNumBounds = this._getCellNumBounds();
 
     this._resetWrap();
   },
@@ -220,7 +214,7 @@ EsriLeaflet.Layers.FeatureGrid = L.Class.extend({
       this.fire('cellleave', {
         bounds: cell.bounds,
         coords: cell.coords
-      });
+      }, true);
     }
   },
 
@@ -236,7 +230,7 @@ EsriLeaflet.Layers.FeatureGrid = L.Class.extend({
       this.fire('cellleave', {
         bounds: bounds,
         coords: coords
-      });
+      }, true);
     }
   },
 
@@ -260,7 +254,7 @@ EsriLeaflet.Layers.FeatureGrid = L.Class.extend({
       this.fire('cellenter', {
         bounds: cell.bounds,
         coords: coords
-      });
+      }, true);
 
       this._activeCells[key] = cell;
     }
@@ -282,25 +276,23 @@ EsriLeaflet.Layers.FeatureGrid = L.Class.extend({
       this.fire('cellcreate', {
         bounds: cell.bounds,
         coords: coords
-      });
+      }, true);
     }
   },
 
   _wrapCoords: function (coords) {
     coords.x = this._wrapLng ? L.Util.wrapNum(coords.x, this._wrapLng) : coords.x;
     coords.y = this._wrapLat ? L.Util.wrapNum(coords.y, this._wrapLat) : coords.y;
-  }
+  },
 
   // get the global cell coordinates range for the current zoom
-  // @TODO enable at Leaflet 0.8
-  // _getCellNumBounds: function () {
-  //   // @TODO for Leaflet 0.8
-  //   // var bounds = this._map.getPixelWorldBounds(),
-  //   //     size = this._getCellSize();
-  //   //
-  //   // return bounds ? L.bounds(
-  //   //     bounds.min.divideBy(size).floor(),
-  //   //     bounds.max.divideBy(size).ceil().subtract([1, 1])) : null;
-  // }
+  _getCellNumBounds: function () {
+    var bounds = this._map.getPixelWorldBounds();
+    var size = this._getCellSize();
+
+    return bounds ? L.bounds(
+        bounds.min.divideBy(size).floor(),
+        bounds.max.divideBy(size).ceil().subtract([1, 1])) : null;
+  }
 
 });

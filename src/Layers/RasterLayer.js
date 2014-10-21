@@ -1,5 +1,4 @@
-EsriLeaflet.Layers.RasterLayer =  L.Class.extend({
-  includes: L.Mixin.Events,
+EsriLeaflet.Layers.RasterLayer =  L.Layer.extend({
 
   options: {
     opacity: 1,
@@ -10,16 +9,13 @@ EsriLeaflet.Layers.RasterLayer =  L.Class.extend({
   onAdd: function (map) {
     this._map = map;
 
-    this._update = L.Util.limitExecByInterval(this._update, this.options.updateInterval, this);
+    this._update = L.Util.throttle(this._update, this.options.updateInterval, this);
 
     if (map.options.crs && map.options.crs.code) {
       var sr = map.options.crs.code.split(':')[1];
       this.options.bboxSR = sr;
       this.options.imageSR = sr;
     }
-
-    // @TODO remove at Leaflet 0.8
-    this._map.addEventListener(this.getEvents(), this);
 
     this._update();
 
@@ -63,16 +59,6 @@ EsriLeaflet.Layers.RasterLayer =  L.Class.extend({
 
     // @TODO remove at Leaflet 0.8
     this._map.removeEventListener(this.getEvents(), this);
-  },
-
-  addTo: function(map){
-    map.addLayer(this);
-    return this;
-  },
-
-  removeFrom: function(map){
-    map.removeLayer(this);
-    return this;
   },
 
   getEvents: function(){
@@ -208,15 +194,5 @@ EsriLeaflet.Layers.RasterLayer =  L.Class.extend({
   _resetPopupState: function(e){
     this._shouldRenderPopup = false;
     this._lastClick = e.latlng;
-  },
-
-  // from https://github.com/Leaflet/Leaflet/blob/v0.7.2/src/layer/FeatureGroup.js
-  // @TODO remove at Leaflet 0.8
-  _propagateEvent: function (e) {
-    e = L.extend({
-      layer: e.target,
-      target: this
-    }, e);
-    this.fire(e.type, e);
   }
 });

@@ -46,7 +46,6 @@
           options: {
             hideLogo: true,
             logoPosition: 'bottomright',
-            //pane: 'esri-label',
             minZoom: 1,
             maxZoom: 16,
             subdomains: ['server', 'services']
@@ -79,7 +78,6 @@
           options: {
             hideLogo: true,
             logoPosition: 'bottomright',
-            //pane: 'esri-label',
             minZoom: 1,
             maxZoom: 10,
             subdomains: ['1', '2']
@@ -101,7 +99,6 @@
           options: {
             hideLogo: true,
             logoPosition: 'bottomright',
-            //pane: 'esri-label',
             minZoom: 1,
             maxZoom: 16,
             subdomains: ['server', 'services']
@@ -123,7 +120,6 @@
           options: {
             hideLogo: true,
             logoPosition: 'bottomright',
-            //pane: 'esri-label',
             minZoom: 1,
             maxZoom: 19,
             subdomains: ['server', 'services']
@@ -131,7 +127,6 @@
         },
         ImageryTransportation: {
           urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/Reference/World_Transportation/MapServer/tile/{z}/{y}/{x}',
-          //pane: 'esri-label',
           options: {
             hideLogo: true,
             logoPosition: 'bottomright',
@@ -156,7 +151,6 @@
           options: {
             hideLogo: true,
             logoPosition: 'bottomright',
-            //pane: 'esri-label',
             minZoom: 1,
             maxZoom: 12,
             subdomains: ['server', 'services']
@@ -178,7 +172,6 @@
           options: {
             hideLogo: true,
             logoPosition: 'bottomright',
-            //pane: 'esri-label',
             minZoom: 1,
             maxZoom: 13,
             subdomains: ['server', 'services']
@@ -216,10 +209,6 @@
         }).addTo(map);
       }
 
-      // if(this.options.pane && EsriLeaflet.Support.pointerEvents){
-      //   this._initPane();
-      // }
-
       L.TileLayer.prototype.onAdd.call(this, map);
 
       map.on('moveend', this._updateMapAttribution, this);
@@ -237,13 +226,6 @@
       var attribution = '<span class="esri-attributions" style="line-height:14px; vertical-align: -3px; text-overflow:ellipsis; white-space:nowrap; overflow:hidden; display:inline-block;">' + this.options.attribution + '</span>'/* + logo*/;
       return attribution;
     },
-    // _initPane: function(){
-    //   if(!this._map.getPane(this.options.pane)){
-    //     var pane = this._map.createPane(this.options.pane);
-    //     pane.style.pointerEvents = 'none';
-    //     pane.style.zIndex = 5;
-    //   }
-    // },
     _getAttributionData: function(url){
       EsriLeaflet.get(url, {}, function(error, attributions){
         this._attributions = [];
@@ -285,8 +267,10 @@
         }
         newAttributions = newAttributions.substr(2);
         var attributionElement = this._map.attributionControl._container.querySelector('.esri-attributions');
+
         attributionElement.innerHTML = newAttributions;
         attributionElement.style.maxWidth =  (this._map.getSize().x * 0.65) + 'px';
+
         this.fire('attributionupdated', {
           attribution: newAttributions
         });

@@ -153,6 +153,9 @@ describe('L.esri.Layers.DynamicMapLayer', function () {
     layer.on('requeststart', requeststartSpy);
     layer.on('requestend', requestendSpy);
 
+    layer.on('requeststart', requeststartSpy);
+    layer.on('requestend', requestendSpy);
+
     layer.metadata(function(){});
 
     server.respond();

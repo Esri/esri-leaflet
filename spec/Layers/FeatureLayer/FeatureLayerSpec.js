@@ -230,12 +230,14 @@ describe('L.esri.Layers.FeatureLayer', function () {
     layer = L.esri.featureLayer('http://services.arcgis.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0', { timeField: 'time' }).addTo(map);
 
     layer.createLayers(multiPolygon);
+
     layer.bindPopup(function(feature){
       return 'ID: ' + feature.id;
     });
+
     layer.unbindPopup();
-    expect(layer.getFeature(1).getLayers()[0]._popup).to.equal(null);
-    expect(layer.getFeature(1).getLayers()[1]._popup).to.equal(null);
+
+    expect(layer.getFeature(1)._popup).to.equal(null);
   });
 
   it('should iterate over each feature', function(){
@@ -307,7 +309,7 @@ describe('L.esri.Layers.FeatureLayer', function () {
 
     layer.getFeature(1).fire('click', {
       foo: 'bar'
-    });
+    }, true);
 
     expect(spy.getCall(0).args[0].foo).to.equal('bar');
     expect(spy.getCall(0).args[0].type).to.equal('click');

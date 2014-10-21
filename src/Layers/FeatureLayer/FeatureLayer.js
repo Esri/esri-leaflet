@@ -1,9 +1,5 @@
 EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
 
-  statics: {
-    EVENTS: 'click dblclick mouseover mouseout mousemove contextmenu popupopen popupclose'
-  },
-
   /**
    * Constructor
    */
@@ -14,8 +10,6 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
     options = L.setOptions(this, options);
 
     this._layers = {};
-    this._leafletIds = {};
-    this._key = 'c'+(Math.random() * 1e9).toString(36).replace('.', '_');
   },
 
   /**
@@ -36,9 +30,7 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
   },
 
   createNewLayer: function(geojson){
-    // @TODO Leaflet 0.8
-    //newLayer = L.GeoJSON.geometryToLayer(geojson, this.options);
-    return L.GeoJSON.geometryToLayer(geojson, this.options.pointToLayer, L.GeoJSON.coordsToLatLng, this.options);
+    return L.GeoJSON.geometryToLayer(geojson, this.options);
   },
 
   /**
@@ -58,29 +50,18 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
       }
 
       if (layer && layer.setLatLngs) {
-        // @TODO Leaflet 0.8
-        //newLayer = L.GeoJSON.geometryToLayer(geojson, this.options);
-
         var updateGeo = this.createNewLayer(geojson);
         layer.setLatLngs(updateGeo.getLatLngs());
       }
 
       if(!layer){
-        // @TODO Leaflet 0.8
-        //newLayer = L.GeoJSON.geometryToLayer(geojson, this.options);
 
         newLayer =  this.createNewLayer(geojson);
         newLayer.feature = geojson;
         newLayer.defaultOptions = newLayer.options;
-        newLayer._leaflet_id = this._key + '_' + geojson.id;
-
-        this._leafletIds[newLayer._leaflet_id] = geojson.id;
 
         // bubble events from layers to this
-        // @TODO Leaflet 0.8
-        // newLayer.addEventParent(this);
-
-        newLayer.on(EsriLeaflet.Layers.FeatureLayer.EVENTS, this._propagateEvent, this);
+        newLayer.addEventParent(this);
 
         // bind a popup if we have one
         if(this._popup && newLayer.bindPopup){
@@ -99,7 +80,7 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
 
         this.fire('createfeature', {
           feature: newLayer.feature
-        });
+        }, true);
 
         // add the layer if it is within the time bounds or our layer is not time enabled
         if(!this.options.timeField || (this.options.timeField && this._featureWithinTimeRange(geojson)) ){
@@ -115,7 +96,7 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
       if(layer){
         this.fire('addfeature', {
           feature: layer.feature
-        });
+        }, true);
         this._map.addLayer(layer);
       }
     }
@@ -129,7 +110,7 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
         this.fire('removefeature', {
           feature: layer.feature,
           permanent: permanent
-        });
+        }, true);
         this._map.removeLayer(layer);
       }
       if(layer && permanent){
@@ -217,14 +198,6 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
 
   getFeature: function (id) {
     return this._layers[id];
-  },
-
-  // from https://github.com/Leaflet/Leaflet/blob/v0.7.2/src/layer/FeatureGroup.js
-  // @TODO remove at Leaflet 0.8
-  _propagateEvent: function (e) {
-    e.layer = this._layers[this._leafletIds[e.target._leaflet_id]];
-    e.target = this;
-    this.fire(e.type, e);
   }
 });
 

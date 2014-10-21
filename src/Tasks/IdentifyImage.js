@@ -73,9 +73,11 @@ EsriLeaflet.Tasks.IdentifyImage = EsriLeaflet.Tasks.Identify.extend({
         'id': response.objectId
       }
     };
+
     if (response.properties && response.properties.Values) {
       geoJSON.pixel.properties.values = response.properties.Values;
     }
+
     if (catalogItems && catalogItems.features) {
       geoJSON.catalogItems = EsriLeaflet.Util.responseToFeatureCollection(catalogItems);
       if (catalogItemVisibilities && catalogItemVisibilities.length === geoJSON.catalogItems.features.length) {

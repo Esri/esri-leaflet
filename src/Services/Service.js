@@ -1,6 +1,4 @@
-EsriLeaflet.Services.Service = L.Class.extend({
-
-  includes: L.Mixin.Events,
+EsriLeaflet.Services.Service = L.Evented.extend({
 
   options: {
     proxy: false,
@@ -42,7 +40,7 @@ EsriLeaflet.Services.Service = L.Class.extend({
       url: this.url + path,
       params: params,
       method: method
-    });
+    }, true);
 
     var wrappedCallback = this._createServiceCallback(method, path, params, callback, context);
 
@@ -76,7 +74,7 @@ EsriLeaflet.Services.Service = L.Class.extend({
 
         this.fire('authenticationrequired', {
           authenticate: L.Util.bind(this.authenticate, this)
-        });
+        }, true);
       } else {
         callback.call(context, error, response);
 
@@ -87,21 +85,21 @@ EsriLeaflet.Services.Service = L.Class.extend({
             message: error.message,
             code: error.code,
             method: method
-          });
+          }, true);
         } else {
           this.fire('requestsuccess', {
             url: this.url + path,
             params: params,
             response: response,
             method: method
-          });
+          }, true);
         }
 
         this.fire('requestend', {
           url: this.url + path,
           params: params,
           method: method
-        });
+        }, true);
       }
     }, this);
   },
