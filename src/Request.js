@@ -37,7 +37,7 @@
   function createRequest(callback, context){
     var httpRequest = new XMLHttpRequest();
 
-    httpRequest.onerror = function() {
+    httpRequest.onerror = function(e) {
       callback.call(context, {
         error: {
           code: 500,

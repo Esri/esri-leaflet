@@ -190,7 +190,7 @@ describe('L.esri.Layers.FeatureManager', function () {
 
   it('should display an attribution if one was passed', function(){
     layer.addTo(map);
-    expect(map.attributionControl._container.innerText).to.contain('Esri');
+    expect(map.attributionControl._container.innerHTML).to.contain('Esri');
   });
 
   it('should be able to remove itself to a map', function(){
@@ -767,13 +767,5 @@ describe('L.esri.Layers.FeatureManager', function () {
 
     expect(requeststartSpy.callCount).to.be.above(0);
     expect(requestendSpy.callCount).to.be.above(0);
-  });
-
-  it('should display an attribution if one was passed', function(){
-    L.esri.Layers.imageMapLayer(url, {
-      attribution: 'Esri'
-    }).addTo(map);
-
-    expect(map.attributionControl._container.innerText).to.contain('Esri');
   });
 });

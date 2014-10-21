@@ -61,7 +61,7 @@ describe('L.esri.Layers.ImageMapLayer', function () {
       attribution: 'Esri'
     }).addTo(map);
 
-    expect(map.attributionControl._container.innerText).to.contain('Esri');
+    expect(map.attributionControl._container.innerHTML).to.contain('Esri');
   });
 
   it('will fire a loading event when it starts loading', function(done){

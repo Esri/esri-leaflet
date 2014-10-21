@@ -4,8 +4,8 @@ EsriLeaflet.Tasks.Find = EsriLeaflet.Tasks.Task.extend({
     'contains': 'contains',
     'text': 'searchText',
     'fields': 'searchFields[]', // denote an array or single string
-    'spatialReference': 'spatialReference',
-    'sr': 'spatialReference',
+    'spatialReference': 'sr',
+    'sr': 'sr',
     'layers': 'layers[]',
     'returnGeometry': 'returnGeometry',
     'maxAllowableOffset': 'maxAllowableOffset',

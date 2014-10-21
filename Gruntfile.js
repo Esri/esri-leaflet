@@ -109,6 +109,32 @@ module.exports = function(grunt) {
     'src/Layers/FeatureLayer/FeatureLayer.js'
   ];
 
+  var customLaunchers = {
+    sl_chrome: {
+      base: 'SauceLabs',
+      browserName: 'chrome',
+      platform: 'Windows 7',
+      version: '35'
+    },
+    sl_firefox: {
+      base: 'SauceLabs',
+      browserName: 'firefox',
+      version: '30'
+    },
+    sl_ios_safari: {
+      base: 'SauceLabs',
+      browserName: 'iphone',
+      platform: 'OS X 10.9',
+      version: '7.1'
+    },
+    sl_ie_11: {
+      base: 'SauceLabs',
+      browserName: 'internet explorer',
+      platform: 'Windows 8.1',
+      version: '11'
+    }
+  };
+
   // Project configuration.
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
@@ -249,6 +275,15 @@ module.exports = function(grunt) {
         singleRun: false,
         autoWatch: true,
         browsers: browsers
+      },
+      sauce: {
+        sauceLabs: {
+          testName: 'Esri Leaflet Unit Tests'
+        },
+        customLaunchers: customLaunchers,
+        browsers: Object.keys(customLaunchers),
+        reporters: ['progress', 'saucelabs'],
+        singleRun: true
       }
     },
 
@@ -380,6 +415,7 @@ module.exports = function(grunt) {
   grunt.registerTask('test', ['jshint', 'karma:run']);
   grunt.registerTask('prepublish', ['concat', 'uglify']);
   grunt.registerTask('release', ['releaseable', 's3']);
+  grunt.registerTask('test:sauce', ['karma:sauce']);
 
   // Documentation Site Tasks
   grunt.registerTask('docs', ['assemble:dev', 'concat', 'uglify', 'sass', 'copy', 'connect:docs', 'watch']);
