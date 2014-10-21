@@ -81,6 +81,7 @@ If you are interested in contributing to Esri Leaflet or are interetsed in seein
 * [What are the terms of use for Esri map tiles?](#what-are-the-terms-of-use-for-esri-map-tiles)
 * [Which services require authentication?](#which-services-require-authentication)
 * [What are some good Leaflet Plugins?](https://github.com/Esri/esri-leaflet/wiki/FAQ#what-are-some-good-leaflet-plugins)
+* [What browsers does Esri Leaflet support](https://github.com/Esri/esri-leaflet/wiki/FAQ#what-browsers-does-esri-leaflet-support)
 
 Please take a look at [previous issues](https://github.com/Esri/esri-leaflet/issues?labels=FAQ&milestone=&page=1&state=closed) that resolve common problems.
 
