@@ -12,7 +12,7 @@
   
 
   
-    <meta name="description" content="Create detailed spatial queries like point within polygon or line intersects polygons with Feature Layer queries.">
+    <meta name="description" content="Create detailed spatial queries like point within polygon or line intersects polygons with Feature Layer queries. Some combinations will not result in any features being highlighted.">
   
 
   <meta name="description" content="Esri Leaflet">
@@ -94,6 +94,7 @@
     <a href="../../../esri-leaflet/examples/visualize-points-as-a-heatmap.html">Points as a heatmap</a>
     <a href="../../../esri-leaflet/examples/styling-heatmaps.html">Styling heatmaps</a>
     <a href="../../../esri-leaflet/examples/visualizing-time-with-feature-layer.html">Time enabled services</a>
+    <a href="../../../esri-leaflet/examples/feature-layer-snapshot.html">Layer "snapshots"</a>
   </nav>
 
   <h5>Tile Layers</h5>
@@ -148,7 +149,7 @@
 <div class="example-content">
 <div class="wrap">
   <h1>Spatial Queries on a Feature Layer</h1>
-  <p>Create detailed spatial queries like point within polygon or line intersects polygons with Feature Layer queries.</p>
+  <p>Create detailed spatial queries like point within polygon or line intersects polygons with Feature Layer queries. Some combinations will not result in any features being highlighted.</p>
 </div>
 <div id="map-wrapper">
   
@@ -186,6 +187,7 @@
 
   L.esri.basemapLayer("Topographic").addTo(map);
 
+  // create our layer
   neighborhoods = L.esri.featureLayer("http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Neighborhoods_pdx/FeatureServer/0", {
     style: {
       color: 'gray',
@@ -193,16 +195,22 @@
     }
   }).addTo(map);
 
+  // create a bounds object to query against
   var bounds = L.latLngBounds([
     [45.494555728818014, -122.69153594970703],
     [45.538098589494005, -122.60845184326172]
   ]);
 
+  // create a marker object to query against
+  var marker = L.marker([45.57103404296416, -122.68638610839842 ]).addTo(map);
+
+  // create a rectangle to visualize the bounds
   var rect = L.rectangle(bounds, {
     color: 'blue',
     weight: 2
   }).addTo(map);
 
+  // create a line to query against
   var line = L.polyline([
     [45.55925642651572, -122.61188507080078],
     [45.50225636595613, -122.56278991699217],
@@ -212,8 +220,7 @@
     weight: 2
   }).addTo(map);
 
-  var marker = L.marker([45.57103404296416, -122.68638610839842 ]).addTo(map);
-
+  // create a polygon to query against
   var polygon = L.polygon([
     [45.48926092988004, -122.73719787597655],
     [45.48637264792543, -122.68844604492186],
@@ -228,6 +235,7 @@
     weight: 2
   }).addTo(map);
 
+  // collect geometries into an object so we can reference them later
   var geometries = {
     bounds: bounds,
     line: line,
@@ -235,22 +243,27 @@
     point: marker
   };
 
+  // get references to our <select> elements
   var relationship = document.getElementById('relationSelect');
   var geometry = document.getElementById('geometrySelect');
 
   var previousIds = [];
 
+  // reset all features back to their regularly defined styles
   function reset(){
     for (var i = previousIds.length - 1; i >= 0; i--) {
       neighborhoods.resetStyle(previousIds[i]);
     };
   }
 
+  // query the API and highlight features
   function query(){
     reset();
 
+    // lookup our input geometry
     var inputGeometry = geometries[geometry.value];
 
+    // query the service executing the selected relation with the selected input geometry
     neighborhoods.query()[relationship.value](inputGeometry).ids(function(error, ids){
       previousIds = ids;
       for (var i = ids.length - 1; i >= 0; i--) {
@@ -259,10 +272,15 @@
     });
   }
 
+  // query when an input changes
   geometry.addEventListener('change', query);
   relationship.addEventListener('change', query);
 
-  query();
+  // once all neighborhoods have loaded run the default query
+  neighborhoods.once('load', function(){
+    query();
+  });
+
 </script>
 </div>
 <pre><code class="language-xml"><span class="tag">&lt;<span class="title">html</span>&gt;</span>
@@ -318,6 +336,7 @@
 
   L.esri.basemapLayer(<span class="string">"Topographic"</span>).addTo(map);
 
+  <span class="comment">// create our layer</span>
   neighborhoods = L.esri.featureLayer(<span class="string">"http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Neighborhoods_pdx/FeatureServer/0"</span>, {
     style: {
       color: <span class="string">'gray'</span>,
@@ -325,16 +344,22 @@
     }
   }).addTo(map);
 
+  <span class="comment">// create a bounds object to query against</span>
   <span class="keyword">var</span> bounds = L.latLngBounds([
     [<span class="number">45.494555728818014</span>, -<span class="number">122.69153594970703</span>],
     [<span class="number">45.538098589494005</span>, -<span class="number">122.60845184326172</span>]
   ]);
 
+  <span class="comment">// create a marker object to query against</span>
+  <span class="keyword">var</span> marker = L.marker([<span class="number">45.57103404296416</span>, -<span class="number">122.68638610839842</span> ]).addTo(map);
+
+  <span class="comment">// create a rectangle to visualize the bounds</span>
   <span class="keyword">var</span> rect = L.rectangle(bounds, {
     color: <span class="string">'blue'</span>,
     weight: <span class="number">2</span>
   }).addTo(map);
 
+  <span class="comment">// create a line to query against</span>
   <span class="keyword">var</span> line = L.polyline([
     [<span class="number">45.55925642651572</span>, -<span class="number">122.61188507080078</span>],
     [<span class="number">45.50225636595613</span>, -<span class="number">122.56278991699217</span>],
@@ -344,8 +369,7 @@
     weight: <span class="number">2</span>
   }).addTo(map);
 
-  <span class="keyword">var</span> marker = L.marker([<span class="number">45.57103404296416</span>, -<span class="number">122.68638610839842</span> ]).addTo(map);
-
+  <span class="comment">// create a polygon to query against</span>
   <span class="keyword">var</span> polygon = L.polygon([
     [<span class="number">45.48926092988004</span>, -<span class="number">122.73719787597655</span>],
     [<span class="number">45.48637264792543</span>, -<span class="number">122.68844604492186</span>],
@@ -360,6 +384,7 @@
     weight: <span class="number">2</span>
   }).addTo(map);
 
+  <span class="comment">// collect geometries into an object so we can reference them later</span>
   <span class="keyword">var</span> geometries = {
     bounds: bounds,
     line: line,
@@ -367,22 +392,27 @@
     point: marker
   };
 
+  <span class="comment">// get references to our &lt;select&gt; elements</span>
   <span class="keyword">var</span> relationship = document.getElementById(<span class="string">'relationSelect'</span>);
   <span class="keyword">var</span> geometry = document.getElementById(<span class="string">'geometrySelect'</span>);
 
   <span class="keyword">var</span> previousIds = [];
 
+  <span class="comment">// reset all features back to their regularly defined styles</span>
   <span class="function"><span class="keyword">function</span> <span class="title">reset</span><span class="params">()</span>{</span>
     <span class="keyword">for</span> (<span class="keyword">var</span> i = previousIds.length - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) {
       neighborhoods.resetStyle(previousIds[i]);
     };
   }
 
+  <span class="comment">// query the API and highlight features</span>
   <span class="function"><span class="keyword">function</span> <span class="title">query</span><span class="params">()</span>{</span>
     reset();
 
+    <span class="comment">// lookup our input geometry</span>
     <span class="keyword">var</span> inputGeometry = geometries[geometry.value];
 
+    <span class="comment">// query the service executing the selected relation with the selected input geometry</span>
     neighborhoods.query()[relationship.value](inputGeometry).ids(<span class="function"><span class="keyword">function</span><span class="params">(error, ids)</span>{</span>
       previousIds = ids;
       <span class="keyword">for</span> (<span class="keyword">var</span> i = ids.length - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) {
@@ -391,10 +421,15 @@
     });
   }
 
+  <span class="comment">// query when an input changes</span>
   geometry.addEventListener(<span class="string">'change'</span>, query);
   relationship.addEventListener(<span class="string">'change'</span>, query);
 
-  query();
+  <span class="comment">// once all neighborhoods have loaded run the default query</span>
+  neighborhoods.once(<span class="string">'load'</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span>{</span>
+    query();
+  });
+
 </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 <span class="tag">&lt;/<span class="title">body</span>&gt;</span>
