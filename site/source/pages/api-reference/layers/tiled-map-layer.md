@@ -36,6 +36,7 @@ Is you have Feature Services published on ArcGIS online you can create a static 
 | --- | --- | --- | --- |
 | `proxy` | `String` | `false` | URL of an [ArcGIS API for JavaScript proxies](https://developers.arcgis.com/javascript/jshelp/ags_proxy.html) or [ArcGIS Resource Proxies](https://github.com/Esri/resource-proxy) to use for proxying POST requests. |
 | `useCors` | `Boolean` | `true` | If this service should use CORS when making GET requests. |
+| `token` | | `String` | `null` | Will use this tokent to authenticate all calls to the service.
 
 `L.esri.TiledMapLayer` also accepts all [`L.TileLayer`](http://leafletjs.com/reference.html#tilelayer-options) options.
 
