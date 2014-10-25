@@ -52,6 +52,8 @@ EsriLeaflet.Layers.RasterLayer =  L.Class.extend({
   },
 
   onRemove: function () {
+    this._map = null;
+
     if (this._currentImage) {
       this._map.removeLayer(this._currentImage);
     }
@@ -73,12 +75,6 @@ EsriLeaflet.Layers.RasterLayer =  L.Class.extend({
   removeFrom: function(map){
     map.removeLayer(this);
     return this;
-  },
-
-  getEvents: function(){
-    return {
-      moveend: this._update
-    };
   },
 
   bringToFront: function(){
@@ -133,41 +129,43 @@ EsriLeaflet.Layers.RasterLayer =  L.Class.extend({
   },
 
   _renderImage: function(url, bounds){
-    var image = new L.ImageOverlay(url, bounds, {
-      opacity: 0
-    }).addTo(this._map);
+    if(this._map){
+      var image = new L.ImageOverlay(url, bounds, {
+        opacity: 0
+      }).addTo(this._map);
 
-    image.once('load', function(e){
-      var newImage = e.target;
-      var oldImage = this._currentImage;
+      image.once('load', function(e){
+        var newImage = e.target;
+        var oldImage = this._currentImage;
 
-      if(newImage._bounds.equals(bounds)){
-        this._currentImage = newImage;
+        if(newImage._bounds.equals(bounds)){
+          this._currentImage = newImage;
 
-        if(this.options.position === 'front'){
-          this.bringToFront();
+          if(this.options.position === 'front'){
+            this.bringToFront();
+          } else {
+            this.bringToBack();
+          }
+
+          this._currentImage.setOpacity(this.options.opacity);
+
+          if(oldImage){
+            this._map.removeLayer(oldImage);
+          }
         } else {
-          this.bringToBack();
+          this._map.removeLayer(newImage);
         }
 
-        this._currentImage.setOpacity(this.options.opacity);
+        this.fire('load', {
+          bounds: bounds
+        });
 
-        if(oldImage){
-          this._map.removeLayer(oldImage);
-        }
-      } else {
-        this._map.removeLayer(newImage);
-      }
+      }, this);
 
-      this.fire('load', {
+      this.fire('loading', {
         bounds: bounds
       });
-
-    }, this);
-
-    this.fire('loading', {
-      bounds: bounds
-    });
+    }
   },
 
   _update: function () {
@@ -190,6 +188,7 @@ EsriLeaflet.Layers.RasterLayer =  L.Class.extend({
       return;
     }
     var params = this._buildExportParams();
+
     this._requestExport(params, bounds);
   },
 
