@@ -14,6 +14,10 @@ EsriLeaflet.Layers.TiledMapLayer = L.TileLayer.extend({
       options.subdomains = ['1', '2', '3', '4'];
     }
 
+    if(this.options.token) {
+      this.tileUrl += ('?token=' + this.options.token);
+    }
+
     // init layer by calling TileLayers initialize method
     L.TileLayer.prototype.initialize.call(this, this.tileUrl, options);
   },
@@ -28,6 +32,9 @@ EsriLeaflet.Layers.TiledMapLayer = L.TileLayer.extend({
   },
 
   authenticate: function(token){
+    var tokenQs = '?token=' + token;
+    this.tileUrl = (this.options.token) ? this.tileUrl.replace(/\?token=(.+)/g, tokenQs) : this.tileUrl + tokenQs;
+    this.options.token = token;
     this._service.authenticate(token);
     return this;
   },

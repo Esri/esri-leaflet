@@ -59,4 +59,30 @@ describe('L.esri.Layers.TiledMapLayer', function () {
     layer = L.esri.Layers.tiledMapLayer(url);
     expect(layer).to.be.instanceof(L.esri.Layers.TiledMapLayer);
   });
+
+  it('should use a token passed in options', function(){
+    layer = L.esri.tiledMapLayer(url, {
+      token: 'foo'
+    });
+
+    expect(layer.tileUrl).to.equal('http://services.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer/tile/{z}/{y}/{x}?token=foo');
+  });
+
+  it('should use a token passed with authenticate()', function(){
+    layer = L.esri.tiledMapLayer(url);
+
+    layer.authenticate('foo');
+
+    expect(layer.tileUrl).to.equal('http://services.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer/tile/{z}/{y}/{x}?token=foo');
+  });
+
+  it('should reauthenticate with a token authenticate()', function(){
+    layer = L.esri.tiledMapLayer(url, {
+      token: 'foo'
+    });
+
+    layer.authenticate('bar');
+
+    expect(layer.tileUrl).to.equal('http://services.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer/tile/{z}/{y}/{x}?token=bar');
+  });
 });

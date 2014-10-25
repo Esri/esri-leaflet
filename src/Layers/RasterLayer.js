@@ -18,8 +18,7 @@ EsriLeaflet.Layers.RasterLayer =  L.Class.extend({
       this.options.imageSR = sr;
     }
 
-    // @TODO remove at Leaflet 0.8
-    this._map.addEventListener(this.getEvents(), this);
+    map.on('moveend', this._update, this);
 
     this._update();
 
@@ -51,9 +50,7 @@ EsriLeaflet.Layers.RasterLayer =  L.Class.extend({
     return this;
   },
 
-  onRemove: function () {
-    this._map = null;
-
+  onRemove: function (map) {
     if (this._currentImage) {
       this._map.removeLayer(this._currentImage);
     }
@@ -63,8 +60,8 @@ EsriLeaflet.Layers.RasterLayer =  L.Class.extend({
       this._map.off('dblclick', this._resetPopupState, this);
     }
 
-    // @TODO remove at Leaflet 0.8
-    this._map.removeEventListener(this.getEvents(), this);
+    this._map.off('moveend', this._update, this);
+    this._map = null;
   },
 
   addTo: function(map){
