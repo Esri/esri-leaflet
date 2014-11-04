@@ -82,6 +82,7 @@ If you are interested in contributing to Esri Leaflet or are interetsed in seein
 * [Which services require authentication?](#which-services-require-authentication)
 * [What are some good Leaflet Plugins?](https://github.com/Esri/esri-leaflet/wiki/FAQ#what-are-some-good-leaflet-plugins)
 * [What browsers does Esri Leaflet support](https://github.com/Esri/esri-leaflet/wiki/FAQ#what-browsers-does-esri-leaflet-support)
+* [What versions of ArcGIS Server does Esri Leaflet support?](https://github.com/Esri/esri-leaflet/wiki/FAQ#what-versions-of-arcgis-server-does-esri-leaflet-support)
 
 Please take a look at [previous issues](https://github.com/Esri/esri-leaflet/issues?labels=FAQ&milestone=&page=1&state=closed) that resolve common problems.
 
