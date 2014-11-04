@@ -51,6 +51,7 @@ EsriLeaflet.Layers.RasterLayer =  L.Class.extend({
   },
 
   onRemove: function (map) {
+
     if (this._currentImage) {
       this._map.removeLayer(this._currentImage);
     }
@@ -134,7 +135,6 @@ EsriLeaflet.Layers.RasterLayer =  L.Class.extend({
       image.once('load', function(e){
         var newImage = e.target;
         var oldImage = this._currentImage;
-
         if(newImage._bounds.equals(bounds)){
           this._currentImage = newImage;
 
@@ -144,11 +144,16 @@ EsriLeaflet.Layers.RasterLayer =  L.Class.extend({
             this.bringToBack();
           }
 
-          this._currentImage.setOpacity(this.options.opacity);
+          if(this._map && this._currentImage._map){
+            this._currentImage.setOpacity(this.options.opacity);
+          } else {
+            this._currentImage._map.removeLayer(this._currentImage);
+          }
 
           if(oldImage){
             this._map.removeLayer(oldImage);
           }
+
         } else {
           this._map.removeLayer(newImage);
         }
