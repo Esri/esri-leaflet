@@ -20,6 +20,15 @@ EsriLeaflet.Layers.RasterLayer =  L.Class.extend({
 
     map.on('moveend', this._update, this);
 
+    // if we had an image loaded and it matches the
+    // current bounds show the image otherwise remove it
+    if(this._currentImage && this._currentImage._bounds.equals(this._map.getBounds())){
+      map.addLayer(this._currentImage);
+    } else {
+      map.removeLayer(this._currentImage);
+      this._currentImage = null;
+    }
+
     this._update();
 
     if(this._popup){
@@ -51,7 +60,6 @@ EsriLeaflet.Layers.RasterLayer =  L.Class.extend({
   },
 
   onRemove: function (map) {
-
     if (this._currentImage) {
       this._map.removeLayer(this._currentImage);
     }
@@ -128,13 +136,22 @@ EsriLeaflet.Layers.RasterLayer =  L.Class.extend({
 
   _renderImage: function(url, bounds){
     if(this._map){
+      // create a new image overlay and add it to the map
+      // to start loading the image
+      // opacity is 0 while the image is loading
       var image = new L.ImageOverlay(url, bounds, {
         opacity: 0
       }).addTo(this._map);
 
+      // once the image loads
       image.once('load', function(e){
         var newImage = e.target;
         var oldImage = this._currentImage;
+
+        // if the bounds of this image matches the bounds that
+        // _renderImage was called with and we have a map
+        // hide the old image if there is one and set the opacity
+        // of the new image otherwise remove the new image
         if(newImage._bounds.equals(bounds)){
           this._currentImage = newImage;
 
@@ -153,7 +170,6 @@ EsriLeaflet.Layers.RasterLayer =  L.Class.extend({
           if(oldImage){
             this._map.removeLayer(oldImage);
           }
-
         } else {
           this._map.removeLayer(newImage);
         }
