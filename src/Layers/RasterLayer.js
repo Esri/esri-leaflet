@@ -24,8 +24,8 @@ EsriLeaflet.Layers.RasterLayer =  L.Class.extend({
     // current bounds show the image otherwise remove it
     if(this._currentImage && this._currentImage._bounds.equals(this._map.getBounds())){
       map.addLayer(this._currentImage);
-    } else {
-      map.removeLayer(this._currentImage);
+    } else if(this._currentImage) {
+      this._map.removeLayer(this._currentImage);
       this._currentImage = null;
     }
 
@@ -167,8 +167,12 @@ EsriLeaflet.Layers.RasterLayer =  L.Class.extend({
             this._currentImage._map.removeLayer(this._currentImage);
           }
 
-          if(oldImage){
+          if(oldImage && this._map) {
             this._map.removeLayer(oldImage);
+          }
+
+          if(oldImage && oldImage._map){
+            oldImage._map.removeLayer(oldImage);
           }
         } else {
           this._map.removeLayer(newImage);
