@@ -108,7 +108,7 @@ Make Sure you have the [Grunt CLI](http://gruntjs.com/getting-started) installed
 
 ### Dependencies
 
-* [Leaflet](http://leaflet.com) version 0.7 or higher is required but the latest version is recommended.
+* [Leaflet](http://leafletjs.com) version 0.7 or higher is required but the latest version is recommended.
 
 ### Resources
 
