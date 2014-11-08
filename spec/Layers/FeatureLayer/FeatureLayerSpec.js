@@ -258,6 +258,22 @@ describe('L.esri.Layers.FeatureLayer', function () {
     expect(layer.getFeature(1).getLayers()[0].options.color).to.equal('black');
   });
 
+  it('should reset to default style on multi polygon features', function(){
+    layer = L.esri.featureLayer('http://services.arcgis.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0').addTo(map);
+
+    layer.createLayers(multiPolygon);
+
+    layer.setFeatureStyle(1, {
+      color: 'red'
+    });
+
+    expect(layer.getFeature(1).getLayers()[0].options.color).to.equal('red');
+
+    layer.resetStyle(1);
+
+    expect(layer.getFeature(1).getLayers()[0].options.color).to.equal('#0033ff');
+  });
+
   it('should iterate over each feature', function(){
     var spy = sinon.spy();
     layer.eachFeature(spy);
