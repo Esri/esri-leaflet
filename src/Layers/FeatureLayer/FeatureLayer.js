@@ -167,6 +167,14 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
     if (typeof style === 'function') {
       style = style(layer.feature);
     }
+
+    /*trap inability to access default style options from MultiLine/MultiPolygon
+    please revisit at Leaflet 1.0*/
+    else if (!style && !layer.defaultOptions) {
+      var dummyPath = new L.Path();
+      style = L.Path.prototype.options;
+    }
+
     if (layer.setStyle) {
       layer.setStyle(style);
     }
