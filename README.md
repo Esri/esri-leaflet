@@ -9,7 +9,7 @@ The goal of Esri Leaflet is **not** to replace the [ArcGIS API for JavaScript](h
 **Currently Esri Leaflet is in development and should be thought of as a beta or preview.**
 
 ### Demos
-There are [loads of demos](http://patrickarlt.github.io/esri-leaflet/examples/) showing the features of Esri Leaflet that will help you get started.
+There are [loads of demos](http://patrickarlt.github.io/esri-leaflet/examples/) showing many of the features of Esri Leaflet.
 
 ### Example
 Here is a quick example to get you started. Just change the paths to point to the proper libraries and go.
@@ -25,7 +25,7 @@ Here is a quick example to get you started. Just change the paths to point to th
     <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
 
     <!-- Load Esri Leaflet from CDN -->
-    <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/0.0.1-beta.5/esri-leaflet.js"></script>
+    <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.3/esri-leaflet.js"></script>
 
     <style>
       html, body,  #map {
@@ -63,7 +63,7 @@ A full [API Reference](http://esri.github.io/esri-leaflet/api-reference/) and pl
 
 ### Development Roadmap
 
-If you are interested in contributing to Esri Leaflet or are interetsed in seeing what is coming up next checkout the [development roadmap](https://github.com/Esri/esri-leaflet/wiki/Roadmap).
+If you are interested in contributing to Esri Leaflet or are interested in seeing what is coming up next checkout the [development roadmap](https://github.com/Esri/esri-leaflet/wiki/Roadmap).
 
 ### Frequently Asked Questions
 
@@ -86,7 +86,7 @@ If you are interested in contributing to Esri Leaflet or are interetsed in seein
 
 Please take a look at [previous issues](https://github.com/Esri/esri-leaflet/issues?labels=FAQ&milestone=&page=1&state=closed) that resolve common problems.
 
-You can also ask questions on the [GIS Stackexchange](http://gis.stackexchange.com/questions/ask?tags=esri-leaflet,leaflet) an/or the [Esri Leaflet place](https://geonet.esri.com/discussion/create.jspa?sr=pmenu&containerID=1841&containerType=700&tags=esri-leaflet,leaflet) on GeoNet.
+You can also ask questions on [GIS Stackexchange](http://gis.stackexchange.com/questions/ask?tags=esri-leaflet,leaflet) an/or the [Esri Leaflet place](https://geonet.esri.com/discussion/create.jspa?sr=pmenu&containerID=1841&containerType=700&tags=esri-leaflet,leaflet) on GeoNet.
 
 ### Projects Using Esri Leaflet
 
@@ -124,7 +124,7 @@ Find a bug or want to request a new feature?  Please let us know by submitting a
 
 Please take a look at [previous issues](https://github.com/Esri/esri-leaflet/issues?labels=FAQ&milestone=&page=1&state=closed) that resolve common problems.
 
-You can also post issues on the [GIS Stackexchange](http://gis.stackexchange.com/questions/ask?tags=esri-leaflet,leaflet) an/or the [Esri Leaflet place](https://geonet.esri.com/discussion/create.jspa?sr=pmenu&containerID=1841&containerType=700&tags=esri-leaflet,leaflet) on GeoNet.
+You can also post issues on [GIS Stackexchange](http://gis.stackexchange.com/questions/ask?tags=esri-leaflet,leaflet) an/or the [Esri Leaflet place](https://geonet.esri.com/discussion/create.jspa?sr=pmenu&containerID=1841&containerType=700&tags=esri-leaflet,leaflet) on GeoNet.
 
 ### Contributing
 
@@ -132,10 +132,10 @@ Esri welcomes contributions from anyone and everyone. Please see our [guidelines
 
 ### Credit
 
-`L.esri.DymanicMapLayer` was originally code from https://github.com/sanborn/leaflet-ags/blob/master/src/AGS.Layer.Dynamic.js
+`L.esri.DynamicMapLayer` was originally code from https://github.com/sanborn/leaflet-ags/blob/master/src/AGS.Layer.Dynamic.js
 
 ### Licensing
-Copyright 2013 Esri
+Copyright 2014 Esri
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
