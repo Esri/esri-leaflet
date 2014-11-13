@@ -208,12 +208,14 @@
       if(config.attributionUrl){
         this._getAttributionData(config.attributionUrl);
       }
+      this._logo = new EsriLeaflet.Controls.Logo({
+        position: this.options.logoPosition
+      });
     },
     onAdd: function(map){
-      if(!this.options.hideLogo){
-        this._logo = new EsriLeaflet.Controls.Logo({
-          position: this.options.logoPosition
-        }).addTo(map);
+      if(!this.options.hideLogo && !map._hasEsriLogo){
+        this._logo.addTo(map);
+        map._hasEsriLogo = true;
       }
 
       // if(this.options.pane && EsriLeaflet.Support.pointerEvents){
