@@ -110,6 +110,22 @@ Make Sure you have the [Grunt CLI](http://gruntjs.com/getting-started) installed
 
 * [Leaflet](http://leafletjs.com) version 0.7 or higher is required but the latest version is recommended.
 
+### Versioning
+ 
+For transparency into the release cycle and in striving to maintain backward compatibility, Esri Leaflet is maintained under the Semantic Versioning guidelines and will adhere to these rules whenever possible.
+
+Releases will be numbered with the following format:
+
+`<major>.<minor>.<patch>`
+
+And constructed with the following guidelines:
+
+* Breaking backward compatibility **bumps the major** while resetting minor and patch
+* New additions without breaking backward compatibility **bumps the minor** while resetting the patch
+* Bug fixes and misc changes **bumps only the patch**
+
+For more information on SemVer, please visit <http://semver.org/>.
+
 ### Resources
 
 * [Importing Data Into Feature Services](https://developers.arcgis.com/tools/csv-to-feature-service/)
@@ -132,7 +148,7 @@ Esri welcomes contributions from anyone and everyone. Please see our [guidelines
 
 ### Credit
 
-`L.esri.DynamicMapLayer` was originally code from https://github.com/sanborn/leaflet-ags/blob/master/src/AGS.Layer.Dynamic.js
+`L.esri.Layers.DynamicMapLayer` originally used code from https://github.com/sanborn/leaflet-ags/blob/master/src/AGS.Layer.Dynamic.js
 
 ### Licensing
 Copyright 2014 Esri
