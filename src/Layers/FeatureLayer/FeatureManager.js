@@ -133,6 +133,11 @@
         this._buildTimeIndexes(features);
       }
 
+      var zoom = this._map.getZoom();
+
+      if (zoom > this.options.maxZoom ||
+          zoom < this.options.minZoom) { return; }
+
       this.createLayers(features);
     },
 
