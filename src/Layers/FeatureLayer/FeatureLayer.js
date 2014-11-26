@@ -173,6 +173,7 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
     else if (!style && !layer.defaultOptions) {
       var dummyPath = new L.Path();
       style = L.Path.prototype.options;
+      style.fill = true; //not set by default
     }
 
     if (layer.setStyle) {
