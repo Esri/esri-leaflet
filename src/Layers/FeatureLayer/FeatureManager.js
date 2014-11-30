@@ -59,6 +59,7 @@
         this._timeIndex = new BinarySearchIndex();
       }
 
+      this._cache = {};
       this._currentSnapshot = []; // cache of what layers should be active
       this._activeRequests = 0;
       this._pendingRequests = [];
@@ -107,7 +108,10 @@
         this._activeRequests--;
 
         if(!error && featureCollection.features.length){
-          this._addFeatures(featureCollection.features, coords);
+          // schedule adding features until the next animation frame
+          EsriLeaflet.Util.requestAnimationFrame(L.Util.bind(function(){
+            this._addFeatures(featureCollection.features, coords);
+          }, this));
         }
 
         if(callback){
@@ -123,10 +127,18 @@
       }, this);
     },
 
-    _addFeatures: function(features){
+    _cacheKey: function (coords){
+      return coords.z + ':' + coords.x + ':' +coords.y;
+    },
+
+    _addFeatures: function(features, coords){
+      var key = this._cacheKey(coords);
+      this._cache[key] = this._cache[key] || [];
+
       for (var i = features.length - 1; i >= 0; i--) {
         var id = features[i].id;
         this._currentSnapshot.push(id);
+        this._cache[key].push(id);
       }
 
       if(this.options.timeField){
@@ -177,11 +189,15 @@
 
         if(pendingRequests <= 0){
           this._currentSnapshot = newShapshot;
-          this.removeLayers(oldSnapshot);
-          this.addLayers(newShapshot);
-          if(callback) {
-            callback.call(context, requestError);
-          }
+          // schedule adding features until the next animation frame
+          EsriLeaflet.Util.requestAnimationFrame(L.Util.bind(function(){
+            this.removeLayers(oldSnapshot);
+            this.addLayers(newShapshot);
+            if(callback) {
+              callback.call(context, requestError);
+            }
+          }, this));
+
         }
       }, this);
 
@@ -265,8 +281,11 @@
         }
       }
 
-      this.removeLayers(layersToRemove);
-      this.addLayers(layersToAdd);
+      // schedule adding features until the next animation frame
+      EsriLeaflet.Util.requestAnimationFrame(L.Util.bind(function(){
+        this.removeLayers(layersToRemove);
+        this.addLayers(layersToAdd);
+      }, this));
     },
 
     _getFeaturesInTimeRange: function(start, end){
