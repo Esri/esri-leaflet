@@ -48,7 +48,6 @@ EsriLeaflet.Layers.FeatureGrid = L.Class.extend({
   },
 
   _onZoom : function () {
-
     var zoom = this._map.getZoom();
 
     if (zoom > this.options.maxZoom ||
