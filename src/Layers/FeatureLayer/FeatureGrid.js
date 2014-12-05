@@ -30,7 +30,8 @@ EsriLeaflet.Layers.FeatureGrid = L.Class.extend({
   getEvents: function () {
     var events = {
       viewreset: this._reset,
-      moveend: this._update
+      moveend: this._update,
+      zoomend : this._onZoom
     };
 
     return events;
@@ -44,6 +45,20 @@ EsriLeaflet.Layers.FeatureGrid = L.Class.extend({
   removeFrom: function(map){
     map.removeLayer(this);
     return this;
+  },
+
+  _onZoom : function () {
+    var zoom = this._map.getZoom();
+
+    if (zoom > this.options.maxZoom ||
+        zoom < this.options.minZoom) {
+      this.removeFrom(this._map);
+      this._map.addEventListener('zoomend', this.getEvents().zoomend, this);
+    } else if (!this._map.hasLayer(this)) {
+      this._map.removeEventListener('zoomend', this.getEvents().zoomend, this);
+      this.addTo(this._map);
+    }
+
   },
 
   _reset: function () {
