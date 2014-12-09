@@ -36,7 +36,8 @@
   "scripts": {
     "prepublish": "node -e \"require('grunt').tasks(['prepublish']);\"",
     "start": "node -e \"require('grunt').tasks(['default']);\"",
-    "test": "node -e \"require('grunt').tasks(['test']);\""
+    "test": "node -e \"require('grunt').tasks(['test']);\"",
+    "postinstall": "node scripts/install.js"
   },
   "author": "Patrick Arlt <parlt@esri.com> (http://patrickarlt.com)",
   "contributors": [
@@ -45,6 +46,6 @@
   "license": "Apache",
   "readmeFilename": "README.md",
   "dependencies": {
-    "leaflet": "^0.7.0"
+    "leaflet": "git://github.com/Leaflet/Leaflet.git#master"
   }
 }
