@@ -8,11 +8,11 @@
   <meta charset="utf-8">
 
   
-    <title>Esri Leaflet Quickstart | Esri Leaflet</title>
+    <title>ImageMapLayer RenderingRule | Esri Leaflet</title>
   
 
   
-    <meta name="description" content="A quick template to get started with Esri Leaflet.">
+    <meta name="description" content="Display an Image Service from ArcGIS Online or ArcGIS Server and apply a rendering rule to dynamically modify the display of the raster dataset. Rendering rules are created using a pre-defined set of &lt;a href=&quot;http://resources.arcgis.com/en/help/arcgis-rest-api/#/Raster_function_objects/02r3000000rv000000/&quot;&gt;raster functions&lt;/a&gt; contained in the ArcGIS Server 10 REST API. This example shows a raster image generated from raw LIDAR (Light Detection and Ranging) data rendered with a hillshade. More information about Image Services can be found in the &lt;a href=&quot;/esri-leaflet/api-reference/layers/image-map-layer.html&quot;&gt;L.esri.Layers.ImageMapLayer&lt;/a&gt; documentation.">
   
 
   <meta name="description" content="Esri Leaflet">
@@ -148,8 +148,8 @@
 
 <div class="example-content">
 <div class="wrap">
-  <h1>Esri Leaflet Quickstart</h1>
-  <p>A quick template to get started with Esri Leaflet.</p>
+  <h1>ImageMapLayer RenderingRule</h1>
+  <p>Display an Image Service from ArcGIS Online or ArcGIS Server and apply a rendering rule to dynamically modify the display of the raster dataset. Rendering rules are created using a pre-defined set of <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Raster_function_objects/02r3000000rv000000/">raster functions</a> contained in the ArcGIS Server 10 REST API. This example shows a raster image generated from raw LIDAR (Light Detection and Ranging) data rendered with a hillshade. More information about Image Services can be found in the <a href="/esri-leaflet/api-reference/layers/image-map-layer.html">L.esri.Layers.ImageMapLayer</a> documentation.</p>
 </div>
 <div id="map-wrapper">
   
@@ -157,15 +157,29 @@
 <div id="map"></div>
 
 <script>
-  var map = L.map('map').setView([37.75, -122.23], 10);
-  console.log(L, L.esri);
-  L.esri.basemapLayer('Topographic').addTo(map);
+    var renderingRule = {
+        "rasterFunction":"Hillshade",
+        "rasterFunctionArguments": {
+            "Azimuth":215,
+            "Altitude":60,
+            "ZFactor":1
+        },"variableName":"DEM"
+    };
+
+    var map = L.map('map').setView([33.741114, -116.184826], 17);
+
+    L.esri.basemapLayer('Imagery').addTo(map);
+
+    L.esri.imageMapLayer('http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Earthquakes/SanAndreasLidar/ImageServer', {
+      renderingRule: renderingRule
+    }).addTo(map);
+
 </script>
 </div>
 <pre><code class="language-xml"><span class="tag">&lt;<span class="title">html</span>&gt;</span>
 <span class="tag">&lt;<span class="title">head</span>&gt;</span>
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">utf-8</span> /&gt;</span>
-  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Esri Leaflet Quickstart<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">title</span>&gt;</span>ImageMapLayer RenderingRule<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">name</span>=<span class="value">'viewport'</span> <span class="attribute">content</span>=<span class="value">'initial-scale=1,maximum-scale=1,user-scalable=no'</span> /&gt;</span>
 
   <span class="comment">&lt;!-- Load Leaflet from CDN--&gt;</span>
@@ -185,16 +199,30 @@
 <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
-  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">37.75</span>, -<span class="number">122.23</span>], <span class="number">10</span>);
-  console.log(L, L.esri);
-  L.esri.basemapLayer(<span class="string">'Topographic'</span>).addTo(map);
+    <span class="keyword">var</span> renderingRule = {
+        <span class="string">"rasterFunction"</span>:<span class="string">"Hillshade"</span>,
+        <span class="string">"rasterFunctionArguments"</span>: {
+            <span class="string">"Azimuth"</span>:<span class="number">215</span>,
+            <span class="string">"Altitude"</span>:<span class="number">60</span>,
+            <span class="string">"ZFactor"</span>:<span class="number">1</span>
+        },<span class="string">"variableName"</span>:<span class="string">"DEM"</span>
+    };
+
+    <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">33.741114</span>, -<span class="number">116.184826</span>], <span class="number">17</span>);
+
+    L.esri.basemapLayer(<span class="string">'Imagery'</span>).addTo(map);
+
+    L.esri.imageMapLayer(<span class="string">'http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Earthquakes/SanAndreasLidar/ImageServer'</span>, {
+      renderingRule: renderingRule
+    }).addTo(map);
+
 </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 <span class="tag">&lt;/<span class="title">body</span>&gt;</span>
 <span class="tag">&lt;/<span class="title">html</span>&gt;</span></code></pre>
 
 <div class="wrap">
-  <p><a href="http://github.com/esri/esri-leaflet/edit/master/site/source/pages/examples/index.hbs">Edit this sample on GitHub</a></p>
+  <p><a href="http://github.com/esri/esri-leaflet/edit/master/site/source/pages/examples/image-map-layer-rendering-rule.hbs">Edit this sample on GitHub</a></p>
 </div>
 </div>
   <div style='clear:both;'></div>

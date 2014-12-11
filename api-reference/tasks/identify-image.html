@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]> <html class="ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html class="ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html class="ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html class="ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="not-ie"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+
+  
+    <title>L.esri.Tasks.IdentifyImage | Esri Leaflet</title>
+  
+
+  
+
+  <meta name="description" content="Esri Leaflet">
+  <meta name="viewport" content="width=device-width">
+
+  <!--[if lt IE 9]>
+    <script src="//cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv-printshiv.js"></script>
+  <![endif]-->
+
+  <!-- google fonts -->
+  <link href='http://fonts.googleapis.com/css?family=Vollkorn:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="//brick.a.ssl.fastly.net/Source+Code+Pro:300">
+  <link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+
+  <!-- stylesheet -->
+  <link rel="stylesheet" href="../../../../esri-leaflet/css/style.css">
+
+  <!-- leaflet -->
+  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+  <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+
+  <!-- esri leaflet -->
+  <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.2/esri-leaflet.js"></script>
+
+  <!-- Google Analytics -->
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-44963317-3', 'auto');
+    ga('send', 'pageview');
+  </script>
+  <!-- End Google Analytics -->
+</head>
+<body>
+  <div class="page-content ">
+    <div class="container">
+      <a class="site-nav" href="../../../../esri-leaflet/" class="left logo">Esri Leaflet</a>
+      <nav class="right">
+        <a class="site-nav" href="../../../../esri-leaflet/examples/">Examples</a>
+        <a class="site-nav" href="../../../../esri-leaflet/api-reference/">API Reference</a>
+        <a class="site-nav" href="../../../../esri-leaflet/download/">Download</a>
+        <a class="site-nav" href="https://github.com/Esri/esri-leaflet">View on GitHub</a>
+      </nav>
+    </div>
+    <div id="background-map" class="background-map"></div>
+
+  
+
+<div class="container white">
+  
+
+<aside class="sidebar">
+  <h5>L.esri</h5>
+  <nav>
+    <a href="../../../../esri-leaflet/api-reference/request.html">Request</a>
+    <a href="../../../../esri-leaflet/api-reference/utils.html">Utils</a>
+  </nav>
+
+  <h5>L.esri.Layers</h5>
+  <nav>
+    <a href="../../../../esri-leaflet/api-reference/layers/basemap-layer.html">BasemapLayer</a>
+    <a href="../../../../esri-leaflet/api-reference/layers/tiled-map-layer.html">TiledMapLayer</a>
+    <a href="../../../../esri-leaflet/api-reference/layers/dynamic-map-layer.html">DynamicMapLayer</a>
+    <a href="../../../../esri-leaflet/api-reference/layers/image-map-layer.html">ImageMapLayer</a>
+    <!-- <a href="../../../../esri-leaflet/api-reference/layers/raster-layer.html">RasterLayer</a> -->
+    <a href="../../../../esri-leaflet/api-reference/layers/feature-layer.html">FeatureLayer</a>
+    <a href="../../../../esri-leaflet/api-reference/layers/clustered-feature-layer.html">ClusteredFeatureLayer</a>
+    <a href="../../../../esri-leaflet/api-reference/layers/heatmap-feature-layer.html">HeatmapFeatureLayer</a>
+  </nav>
+
+  <h5>L.esri.Services</h5>
+  <nav>
+    <a href="../../../../esri-leaflet/api-reference/services/feature-layer.html">FeatureLayer</a>
+    <a href="../../../../esri-leaflet/api-reference/services/map-service.html">MapService</a>
+    <a href="../../../../esri-leaflet/api-reference/services/image-service.html">ImageService</a>
+    <a href="../../../../esri-leaflet/api-reference/services/service.html">Service</a>
+  </nav>
+
+  <h5>L.esri.Tasks</h5>
+  <nav>
+    <a href="../../../../esri-leaflet/api-reference/tasks/identify-features.html">Identify Features</a>
+    <a href="../../../../esri-leaflet/api-reference/tasks/identify-image.html">Identify Image</a>
+    <a href="../../../../esri-leaflet/api-reference/tasks/query.html">Query</a>
+    <a href="../../../../esri-leaflet/api-reference/tasks/find.html">Find</a>
+  </nav>
+
+  <h5>Misc.</h5>
+  <nav>
+    <a href="../../../../esri-leaflet/api-reference/events.html">Events</a>
+  </nav>
+</aside>
+
+<div class="main-content">
+  <h1 id="l-esri-tasks-identifyimage">L.esri.Tasks.IdentifyImage</h1>
+<p><code>L.esri.Tasks.IdentifyImage</code> is an abstraction for the Identify API that exists on Image Services. It provides a chainable API for building request parameters and executing the request.</p>
+<h3 id="constructor">Constructor</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Constructor</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code class='nobr'>new L.esri.Tasks.IdentifyImage(<nobr class="param"><span>&lt;<a href="../../api-reference/services/image-service.html">ImageService</a>&gt;</span> <code>endpoint</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br>
+            <code>L.esri.Tasks.identifyImage(<nobr class="param"><span>&lt;<a href="../../api-reference/services/image-service.html">ImageService</a>&gt;</span> <code>endpoint</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br>
+            <code>new L.esri.Tasks.IdentifyImage(<nobr class="param"><span>&lt;String&gt;</span> <code>endpoint</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br>
+            <code>L.esri.Tasks.identifyImage(<nobr class="param"><span>&lt;String&gt;</span> <code>endpoint</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br></td>
+            <td>The <code>endpoint</code> parameter is the service that you want to identify either an  ArcGIS Server or ArcGIS Online service. You can also pass the URL to a service directly as a string. See <a href="#service-urls">service URLs</a> for more information on how to find these URLs.</td>
+        </tr>
+    </tbody>
+</table>
+
+<h3 id="options">Options</h3>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>proxy</code></td>
+<td><code>String</code></td>
+<td><code>false</code></td>
+<td>URL of an <a href="https://developers.arcgis.com/javascript/jshelp/ags_proxy.html">ArcGIS API for JavaScript proxies</a> or <a href="https://github.com/Esri/resource-proxy">ArcGIS Resource Proxies</a> to use for proxying POST requests.</td>
+</tr>
+<tr>
+<td><code>useCors</code></td>
+<td><code>Boolean</code></td>
+<td><code>true</code></td>
+<td>If this service should use CORS when making GET requests.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="methods">Methods</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Method</th>
+            <th>Returns</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>at(<nobr class="param"><span>&lt;<a href="http://leafletjs.com/reference.html#latlng">LatLng</a>&gt;</span> <code>latlng</code></nobr>)</code></td>
+            <td><code>this</code></td>
+            <td>Identifie the pixel value at a given <a href="http://leafletjs.com/reference.html#latlng">LatLng</a></td>
+        </tr>
+        <tr>
+            <td><code>between(<nobr class="param"><span>&lt;Date&gt;</span> <code>from</code></nobr>, <nobr class="param"><span>&lt;Date&gt;</span> <code>to</code></nobr>)</code></td>
+            <td><code>this</code></td>
+            <td>Identifies pixel values within a given time range.</td>
+        </tr>
+        <tr>
+            <td><code>getRenderingRule()</code></td>
+            <td><code>Object</code></td>
+            <td>Returns the current rendering rule of the task.</td>
+        </tr>
+        <tr>
+            <td><code>setRenderingRule(<nobr class="param"><span>&lt;Object&gt;</span> <code>renderingRule</code></nobr>)</code></td>
+            <td><code>this</code></td>
+            <td>Sets the rendering rule to apply when getting a pixel value.</td>
+        </tr>
+        <tr>
+            <td><code>getMosaicRule()</code></td>
+            <td><code>Object</code></td>
+            <td>Returns the current mosaic rule of the task.</td>
+        </tr>
+        <tr>
+            <td><code>setMosaicRule(<nobr class="param"><span>&lt;Object&gt;</span> <code>mosaicRule</code></nobr>)</code></td>
+            <td><code>this</code></td>
+            <td>Sets the mosaic rule to apply when getting a pixel value.</td>
+        </tr>
+        <tr>
+            <td><code>setPixelSize(<nobr class="param"><span>&lt;Array&gt;</span> <code>pixelSize</code></nobr> or <nobr class="param"><span>&lt;String&gt;</span> <code>pixelSize</code></nobr>)</code></td>
+            <td><code>this</code></td>
+            <td>Sets the pixel size to use when getting a pixel value. Either an array (<code>[x,y]</code>) or string (<code>&#39;x,y&#39;</code>). If not set, it will use the pixel size defined by the service.</td>
+        </tr>
+        <tr>
+            <td><code>getPixelSize()</code></td>
+            <td><code>Object</code></td>
+            <td>Returns the current pixel size of the task.</td>
+        </tr>
+        <tr>
+            <td><code>returnCatalogItems(<nobr class="param"><span>&lt;Boolean&gt;</span> <code>returnCatalogItems</code></nobr>)</code></td>
+            <td><code>this</code></td>
+            <td>Indicates whether or not to return raster catalog items. Set it to <code>false</code> when catalog items are not needed to improve the identify operation&#39;s performance significantly. When set to <code>false</code>, neither the geometry nor attributes of catalog items will be returned. Default is <code>false</code>.</td>
+        </tr>
+        <tr>
+            <td><code>returnGeometry(<nobr class="param"><span>&lt;Boolean&gt;</span> <code>returnGeometry</code></nobr>)</code></td>
+            <td><code>this</code></td>
+            <td>Return catalog footprints (geometry) with catalog item results. Default is <code>false</code>.</td>
+        </tr>
+        <tr>
+            <td><code>token(<nobr class="param"><span>&lt;String&gt;</span> <code>token</code></nobr>)</code></td>
+            <td><code>this</code></td>
+            <td>Adds a token to this request if the service requires authentication. Will be added automatically if used with a service.</td>
+        </tr>
+        <tr>
+            <td><code>run(<nobr class="param"><span>&lt;Function&gt;</span> <code>callback</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>context</code></nobr>)</code></td>
+            <td><code>this</code></td>
+            <td>Executes the identify request with the current parameters, identified pixel value will be passed to <code>callback</code> as a <a href="http://wiki.geojson.org/GeoJSON_draft_version_5#Point">GeoJSON Point</a>. Accepts an optional function context</td>
+        </tr>
+    </tbody>
+</table>
+
+<h3 id="example">Example</h3>
+<pre><code class="language-js"><span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">36.230577</span>, -<span class="number">118.253147</span>], <span class="number">10</span>);
+
+L.esri.Tasks.identifyImage(<span class="string">'http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Earthquakes/CaliforniaDEM/ImageServer'</span>)
+            .at([<span class="number">36.230577</span>, -<span class="number">118.253147</span>])
+            .pixelSize([<span class="number">30</span>,<span class="number">30</span>])
+            .run(<span class="function"><span class="keyword">function</span><span class="params">(error, identifyImageResponse, rawResponse)</span>{</span>
+                console.log(identifyImageResponse.pixel.properties.value);
+            });</code></pre>
+
+  <p><a href="http://github.com/esri/esri-leaflet/edit/master/site/source/pages/api-reference/tasks/identify-image.md">Edit this page on GitHub</a></p>
+</div>
+  <div style='clear:both;'></div>
+</div>
+<div class="container centered-text">
+  <p class="copyright">Esri Leaflet is a project from the <a href="http://pdx.esri.com">Esri PDX R&amp;D Center</a> and the <a href="https://github.com/Esri/esri-leaflet/graphs/contributors">Esri Community</a></p>
+</div>
+
+  </div>
+  <script src="../../../../esri-leaflet/js/script.js"></script>
+  </body>
+</html>

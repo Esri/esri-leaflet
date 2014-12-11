@@ -8,84 +8,71 @@
   <meta charset="utf-8">
 
   
-    <title>Esri Cedar</title>
+    <title>Esri Leaflet</title>
   
 
   
 
-  <meta name="description" content="Esri Cedar">
+  <meta name="description" content="Esri Leaflet">
   <meta name="viewport" content="width=device-width">
 
   <!--[if lt IE 9]>
     <script src="//cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv-printshiv.js"></script>
   <![endif]-->
 
+  <!-- google fonts -->
+  <link href='http://fonts.googleapis.com/css?family=Vollkorn:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="//brick.a.ssl.fastly.net/Source+Code+Pro:300">
+  <link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+
   <!-- stylesheet -->
   <link rel="stylesheet" href="../../esri-leaflet/css/style.css">
 
-  <!-- Cedar -->
+  <!-- leaflet -->
+  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+  <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
 
-  <!-- esri Cedar -->
-  <script src="http://cdn-geoweb.s3.amazonaws.com/esri-Cedar/1.0.0-rc.2/esri-Cedar.js"></script>
+  <!-- esri leaflet -->
+  <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.2/esri-leaflet.js"></script>
 
   <!-- Google Analytics -->
   <script>
-    // (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    // (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    // m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    // })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-    // ga('create', 'UA-44963317-3', 'auto');
-    // ga('send', 'pageview');
+    ga('create', 'UA-44963317-3', 'auto');
+    ga('send', 'pageview');
   </script>
   <!-- End Google Analytics -->
 </head>
 <body>
-  <nav class="navbar navbar-default" role="navigation">
-  <div class="container">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="../../esri-leaflet/">Esri Cedar</a>
+  <div class="page-content homepage">
+    <div class="container">
+      <a class="site-nav" href="../../esri-leaflet/" class="left logo">Esri Leaflet</a>
+      <nav class="right">
+        <a class="site-nav" href="../../esri-leaflet/examples/">Examples</a>
+        <a class="site-nav" href="../../esri-leaflet/api-reference/">API Reference</a>
+        <a class="site-nav" href="../../esri-leaflet/download/">Download</a>
+        <a class="site-nav" href="https://github.com/Esri/esri-leaflet">View on GitHub</a>
+      </nav>
     </div>
-
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="../../esri-leaflet/examples/">Examples</a></li>
-        <li><a href="../../esri-leaflet/api-reference/">Api Documentation</a></li>
-      </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
-
+    <div id="background-map" class="background-map"></div>
 
   
 
-<div class="container white">
-  
-
-<div class="row">
-  <div class="jumbotron">
-    <h1 class="center-text page-title">Cedar</h1>
-    <p class="large page-description">A lightweight set of charting tools for the ArcGIS platform.</p>
+<div class="homepage-copy">
+  <div class="modal">
+    <h1 class="center-text page-title">Esri Leaflet</h1>
+    <p class="large page-description">A lightweight set of tools for using ArcGIS services with Leaflet.</p>
+    <div class="center-text">
+      <a href="../../esri-leaflet/examples/" class="btn">Examples</a>
+      <a href="../../esri-leaflet/api-reference/" class="btn">API Reference</a>
+      <a href="../../esri-leaflet/download/" class="btn">Download</a>
+    </div>
   </div>
-  
-  <h2>Example 1</h2>
-  <p>Add Example</p>
-
 </div>
-
-  <div style='clear:both;'></div>
-</div>
-<div class="container centered-text">
-  <p class="copyright">Esri Cedar is a project from the <a href="http://dc.esri.com">Esri DC R&amp;D Center</a> </p>
-</div>
-
   </div>
   <script src="../../esri-leaflet/js/script.js"></script>
   </body>

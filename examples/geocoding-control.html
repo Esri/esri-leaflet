@@ -8,11 +8,11 @@
   <meta charset="utf-8">
 
   
-    <title>Esri Leaflet Quickstart | Esri Leaflet</title>
+    <title>Geocoding control | Esri Leaflet</title>
   
 
   
-    <meta name="description" content="A quick template to get started with Esri Leaflet.">
+    <meta name="description" content="Using the geocoding control to search for addresses and center the map. This demo relies of the &lt;a href=&quot;https://github.com/Esri/esri-leaflet-geocoder&quot;&gt;Esri Leaflet Geocoder&lt;/a&gt; plugin.">
   
 
   <meta name="description" content="Esri Leaflet">
@@ -148,24 +148,40 @@
 
 <div class="example-content">
 <div class="wrap">
-  <h1>Esri Leaflet Quickstart</h1>
-  <p>A quick template to get started with Esri Leaflet.</p>
+  <h1>Geocoding control</h1>
+  <p>Using the geocoding control to search for addresses and center the map. This demo relies of the <a href="https://github.com/Esri/esri-leaflet-geocoder">Esri Leaflet Geocoder</a> plugin.</p>
 </div>
 <div id="map-wrapper">
   
 
+<script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.5/esri-leaflet-geocoder.js"></script>
+<link rel="stylesheet" type="text/css" href="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.5/esri-leaflet-geocoder.css">
+
 <div id="map"></div>
 
 <script>
-  var map = L.map('map').setView([37.75, -122.23], 10);
-  console.log(L, L.esri);
-  L.esri.basemapLayer('Topographic').addTo(map);
+  var map = L.map('map').setView([40.91, -96.63], 4);
+
+  L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+  }).addTo(map);
+
+  var searchControl = new L.esri.Controls.Geosearch().addTo(map);
+
+  var results = new L.LayerGroup().addTo(map);
+
+  searchControl.on('results', function(data){
+    results.clearLayers();
+    for (var i = data.results.length - 1; i >= 0; i--) {
+      results.addLayer(L.marker(data.results[i].latlng));
+    }
+  });
 </script>
 </div>
 <pre><code class="language-xml"><span class="tag">&lt;<span class="title">html</span>&gt;</span>
 <span class="tag">&lt;<span class="title">head</span>&gt;</span>
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">utf-8</span> /&gt;</span>
-  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Esri Leaflet Quickstart<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Geocoding control<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">name</span>=<span class="value">'viewport'</span> <span class="attribute">content</span>=<span class="value">'initial-scale=1,maximum-scale=1,user-scalable=no'</span> /&gt;</span>
 
   <span class="comment">&lt;!-- Load Leaflet from CDN--&gt;</span>
@@ -182,19 +198,35 @@
 <span class="tag">&lt;/<span class="title">head</span>&gt;</span>
 <span class="tag">&lt;<span class="title">body</span>&gt;</span>
 
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.5/esri-leaflet-geocoder.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+<span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">type</span>=<span class="value">"text/css"</span> <span class="attribute">href</span>=<span class="value">"http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.5/esri-leaflet-geocoder.css"</span>&gt;</span>
+
 <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
-  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">37.75</span>, -<span class="number">122.23</span>], <span class="number">10</span>);
-  console.log(L, L.esri);
-  L.esri.basemapLayer(<span class="string">'Topographic'</span>).addTo(map);
+  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">40.91</span>, -<span class="number">96.63</span>], <span class="number">4</span>);
+
+  L.tileLayer(<span class="string">'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'</span>, {
+    attribution: <span class="string">'&amp;copy; &lt;a href="http://osm.org/copyright"&gt;OpenStreetMap&lt;/a&gt; contributors'</span>
+  }).addTo(map);
+
+  <span class="keyword">var</span> searchControl = <span class="keyword">new</span> L.esri.Controls.Geosearch().addTo(map);
+
+  <span class="keyword">var</span> results = <span class="keyword">new</span> L.LayerGroup().addTo(map);
+
+  searchControl.on(<span class="string">'results'</span>, <span class="function"><span class="keyword">function</span><span class="params">(data)</span>{</span>
+    results.clearLayers();
+    <span class="keyword">for</span> (<span class="keyword">var</span> i = data.results.length - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) {
+      results.addLayer(L.marker(data.results[i].latlng));
+    }
+  });
 </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 <span class="tag">&lt;/<span class="title">body</span>&gt;</span>
 <span class="tag">&lt;/<span class="title">html</span>&gt;</span></code></pre>
 
 <div class="wrap">
-  <p><a href="http://github.com/esri/esri-leaflet/edit/master/site/source/pages/examples/index.hbs">Edit this sample on GitHub</a></p>
+  <p><a href="http://github.com/esri/esri-leaflet/edit/master/site/source/pages/examples/geocoding-control.hbs">Edit this sample on GitHub</a></p>
 </div>
 </div>
   <div style='clear:both;'></div>

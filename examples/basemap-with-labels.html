@@ -8,11 +8,11 @@
   <meta charset="utf-8">
 
   
-    <title>Esri Leaflet Quickstart | Esri Leaflet</title>
+    <title>Basemap with labels | Esri Leaflet</title>
   
 
   
-    <meta name="description" content="A quick template to get started with Esri Leaflet.">
+    <meta name="description" content="Showing an ArcGIS Online basemap with a separate label layer.">
   
 
   <meta name="description" content="Esri Leaflet">
@@ -148,8 +148,8 @@
 
 <div class="example-content">
 <div class="wrap">
-  <h1>Esri Leaflet Quickstart</h1>
-  <p>A quick template to get started with Esri Leaflet.</p>
+  <h1>Basemap with labels</h1>
+  <p>Showing an ArcGIS Online basemap with a separate label layer.</p>
 </div>
 <div id="map-wrapper">
   
@@ -158,14 +158,16 @@
 
 <script>
   var map = L.map('map').setView([37.75, -122.23], 10);
-  console.log(L, L.esri);
-  L.esri.basemapLayer('Topographic').addTo(map);
+
+  L.esri.basemapLayer('Imagery').addTo(map);
+  L.esri.basemapLayer('ImageryLabels').addTo(map);
 </script>
+
 </div>
 <pre><code class="language-xml"><span class="tag">&lt;<span class="title">html</span>&gt;</span>
 <span class="tag">&lt;<span class="title">head</span>&gt;</span>
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">utf-8</span> /&gt;</span>
-  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Esri Leaflet Quickstart<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Basemap with labels<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">name</span>=<span class="value">'viewport'</span> <span class="attribute">content</span>=<span class="value">'initial-scale=1,maximum-scale=1,user-scalable=no'</span> /&gt;</span>
 
   <span class="comment">&lt;!-- Load Leaflet from CDN--&gt;</span>
@@ -186,15 +188,16 @@
 
 <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
   <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">37.75</span>, -<span class="number">122.23</span>], <span class="number">10</span>);
-  console.log(L, L.esri);
-  L.esri.basemapLayer(<span class="string">'Topographic'</span>).addTo(map);
+
+  L.esri.basemapLayer(<span class="string">'Imagery'</span>).addTo(map);
+  L.esri.basemapLayer(<span class="string">'ImageryLabels'</span>).addTo(map);
 </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 <span class="tag">&lt;/<span class="title">body</span>&gt;</span>
 <span class="tag">&lt;/<span class="title">html</span>&gt;</span></code></pre>
 
 <div class="wrap">
-  <p><a href="http://github.com/esri/esri-leaflet/edit/master/site/source/pages/examples/index.hbs">Edit this sample on GitHub</a></p>
+  <p><a href="http://github.com/esri/esri-leaflet/edit/master/site/source/pages/examples/basemap-with-labels.hbs">Edit this sample on GitHub</a></p>
 </div>
 </div>
   <div style='clear:both;'></div>

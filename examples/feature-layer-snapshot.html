@@ -8,11 +8,11 @@
   <meta charset="utf-8">
 
   
-    <title>Esri Leaflet Quickstart | Esri Leaflet</title>
+    <title>Loading a Feature Layer programatically | Esri Leaflet</title>
   
 
   
-    <meta name="description" content="A quick template to get started with Esri Leaflet.">
+    <meta name="description" content="Sometimes it is desirable to load a &quot;snapshot&quot; of a Feature Layer instead of loading it progressivly as you pan around the map. The approch is useful for smaller services.">
   
 
   <meta name="description" content="Esri Leaflet">
@@ -148,8 +148,8 @@
 
 <div class="example-content">
 <div class="wrap">
-  <h1>Esri Leaflet Quickstart</h1>
-  <p>A quick template to get started with Esri Leaflet.</p>
+  <h1>Loading a Feature Layer programatically</h1>
+  <p>Sometimes it is desirable to load a "snapshot" of a Feature Layer instead of loading it progressivly as you pan around the map. The approch is useful for smaller services.</p>
 </div>
 <div id="map-wrapper">
   
@@ -157,15 +157,32 @@
 <div id="map"></div>
 
 <script>
-  var map = L.map('map').setView([37.75, -122.23], 10);
-  console.log(L, L.esri);
-  L.esri.basemapLayer('Topographic').addTo(map);
+  var map = new L.Map("map").setView([45.525231693565054, -122.62836456298828], 11);
+
+  L.esri.basemapLayer("Topographic").addTo(map);
+
+  var neighborhoodsUrl = "http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Neighborhoods_pdx/FeatureServer/0";
+  var bikeParkingUrl = "http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Portland_Bicycle_Parking/FeatureServer/0";
+
+  // query a feature service for a neighborhood
+  L.esri.Tasks.query(neighborhoodsUrl).where("NAME='HOLLYWOOD'").run(function(error, neighborhoods){
+    // draw neighborhood on the map
+    var hollywood = L.geoJson(neighborhoods).addTo(map);
+
+    // fit map to boundry
+    map.fitBounds(hollywood.getBounds().pad(0.5));
+
+    // query all bike parking where BPSTYLE='STAPLE' inside our boundry
+    L.esri.Tasks.query(bikeParkingUrl).where("BPSTYLE='STAPLE'").within(hollywood).run(function(error, bikeParking){
+      L.geoJson(bikeParking).addTo(map);
+    });
+  });
 </script>
 </div>
 <pre><code class="language-xml"><span class="tag">&lt;<span class="title">html</span>&gt;</span>
 <span class="tag">&lt;<span class="title">head</span>&gt;</span>
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">utf-8</span> /&gt;</span>
-  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Esri Leaflet Quickstart<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Loading a Feature Layer programatically<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">name</span>=<span class="value">'viewport'</span> <span class="attribute">content</span>=<span class="value">'initial-scale=1,maximum-scale=1,user-scalable=no'</span> /&gt;</span>
 
   <span class="comment">&lt;!-- Load Leaflet from CDN--&gt;</span>
@@ -185,16 +202,33 @@
 <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
-  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">37.75</span>, -<span class="number">122.23</span>], <span class="number">10</span>);
-  console.log(L, L.esri);
-  L.esri.basemapLayer(<span class="string">'Topographic'</span>).addTo(map);
+  <span class="keyword">var</span> map = <span class="keyword">new</span> L.Map(<span class="string">"map"</span>).setView([<span class="number">45.525231693565054</span>, -<span class="number">122.62836456298828</span>], <span class="number">11</span>);
+
+  L.esri.basemapLayer(<span class="string">"Topographic"</span>).addTo(map);
+
+  <span class="keyword">var</span> neighborhoodsUrl = <span class="string">"http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Neighborhoods_pdx/FeatureServer/0"</span>;
+  <span class="keyword">var</span> bikeParkingUrl = <span class="string">"http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Portland_Bicycle_Parking/FeatureServer/0"</span>;
+
+  <span class="comment">// query a feature service for a neighborhood</span>
+  L.esri.Tasks.query(neighborhoodsUrl).where(<span class="string">"NAME='HOLLYWOOD'"</span>).run(<span class="function"><span class="keyword">function</span><span class="params">(error, neighborhoods)</span>{</span>
+    <span class="comment">// draw neighborhood on the map</span>
+    <span class="keyword">var</span> hollywood = L.geoJson(neighborhoods).addTo(map);
+
+    <span class="comment">// fit map to boundry</span>
+    map.fitBounds(hollywood.getBounds().pad(<span class="number">0.5</span>));
+
+    <span class="comment">// query all bike parking where BPSTYLE='STAPLE' inside our boundry</span>
+    L.esri.Tasks.query(bikeParkingUrl).where(<span class="string">"BPSTYLE='STAPLE'"</span>).within(hollywood).run(<span class="function"><span class="keyword">function</span><span class="params">(error, bikeParking)</span>{</span>
+      L.geoJson(bikeParking).addTo(map);
+    });
+  });
 </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 <span class="tag">&lt;/<span class="title">body</span>&gt;</span>
 <span class="tag">&lt;/<span class="title">html</span>&gt;</span></code></pre>
 
 <div class="wrap">
-  <p><a href="http://github.com/esri/esri-leaflet/edit/master/site/source/pages/examples/index.hbs">Edit this sample on GitHub</a></p>
+  <p><a href="http://github.com/esri/esri-leaflet/edit/master/site/source/pages/examples/feature-layer-snapshot.hbs">Edit this sample on GitHub</a></p>
 </div>
 </div>
   <div style='clear:both;'></div>

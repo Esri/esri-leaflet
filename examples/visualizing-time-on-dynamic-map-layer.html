@@ -8,11 +8,11 @@
   <meta charset="utf-8">
 
   
-    <title>Esri Leaflet Quickstart | Esri Leaflet</title>
+    <title>Time Ranges | Esri Leaflet</title>
   
 
   
-    <meta name="description" content="A quick template to get started with Esri Leaflet.">
+    <meta name="description" content="Using time to filter visualized information from a Map Service. Enter dates between 1930 and 1980. More information about Map Services can be found in the &lt;a href=&quot;/esri-leaflet/api-reference/layers/dynamic-map-layer.html&quot;&gt;L.esri.Layers.DynamicMapLayer&lt;/a&gt; documentation.">
   
 
   <meta name="description" content="Esri Leaflet">
@@ -148,24 +148,85 @@
 
 <div class="example-content">
 <div class="wrap">
-  <h1>Esri Leaflet Quickstart</h1>
-  <p>A quick template to get started with Esri Leaflet.</p>
+  <h1>Time Ranges</h1>
+  <p>Using time to filter visualized information from a Map Service. Enter dates between 1930 and 1980. More information about Map Services can be found in the <a href="/esri-leaflet/api-reference/layers/dynamic-map-layer.html">L.esri.Layers.DynamicMapLayer</a> documentation.</p>
 </div>
 <div id="map-wrapper">
   
 
+<!-- Load Leaflet.heat via rawgit.com, do not use in production -->
+<script src="https://rawgit.com/Leaflet/Leaflet.heat/gh-pages/dist/leaflet-heat.js"></script>
+
+<style>
+  #time-ranges {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 10;
+    padding: 1em;
+    background: white;
+  }
+  #time-ranges input {
+    display: inline-block;
+    border: 1px solid #999;
+    font-size: 14px;
+    border-radius: 4px;
+    height: 28px;
+    line-height: 28px;
+  }
+  #time-ranges input[type='submit'] {
+    box-sizing: content-box;
+    padding: 0 1em;
+    text-transform: uppercase;
+    color: white;
+    background: #5C7DB8;
+    border-color: #5C7DB8;
+  }
+</style>
+
 <div id="map"></div>
 
+<div id="time-ranges" class="leaflet-bar">
+  <form action="#" id="form">
+    <label for="from">
+      From
+      <input id='from' type="date" value='1930-01-01' name='from'>
+    </label>
+    <label for="to">
+      To
+      <input  id='to' type="date" value='1950-12-31' name='to'>
+    </label>
+    <input type="submit" value="Update">
+  </form>
+</div>
+
 <script>
-  var map = L.map('map').setView([37.75, -122.23], 10);
-  console.log(L, L.esri);
-  L.esri.basemapLayer('Topographic').addTo(map);
+  var timeForm = document.getElementById('form');
+  var startTimeInput = document.getElementById('from');
+  var endTimeInput = document.getElementById('to');
+
+  var map = L.map('map').setView([37.604,-101.15], 9);
+
+  L.esri.basemapLayer('Gray').addTo(map);
+  L.esri.basemapLayer('GrayLabels').addTo(map);
+
+  var oilWells = L.esri.dynamicMapLayer('http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Petroleum/KSWells/MapServer', {
+    useCors: false,
+    layers: [0],
+    from: new Date(startTimeInput.value),
+    to: new Date(endTimeInput.value)
+  }).addTo(map);
+
+  timeForm.addEventListener('submit', function updateTimeRange(e){
+    oilWells.setTimeRange(new Date(startTimeInput.value), new Date(endTimeInput.value));
+    e.preventDefault();
+  });
 </script>
 </div>
 <pre><code class="language-xml"><span class="tag">&lt;<span class="title">html</span>&gt;</span>
 <span class="tag">&lt;<span class="title">head</span>&gt;</span>
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">utf-8</span> /&gt;</span>
-  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Esri Leaflet Quickstart<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Time Ranges<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">name</span>=<span class="value">'viewport'</span> <span class="attribute">content</span>=<span class="value">'initial-scale=1,maximum-scale=1,user-scalable=no'</span> /&gt;</span>
 
   <span class="comment">&lt;!-- Load Leaflet from CDN--&gt;</span>
@@ -182,19 +243,80 @@
 <span class="tag">&lt;/<span class="title">head</span>&gt;</span>
 <span class="tag">&lt;<span class="title">body</span>&gt;</span>
 
+<span class="comment">&lt;!-- Load Leaflet.heat via rawgit.com, do not use in production --&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://rawgit.com/Leaflet/Leaflet.heat/gh-pages/dist/leaflet-heat.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+
+<span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css">
+  <span class="id">#time-ranges</span> <span class="rules">{
+    <span class="rule"><span class="attribute">position</span>:<span class="value"> absolute</span></span>;
+    <span class="rule"><span class="attribute">top</span>:<span class="value"> <span class="number">10</span>px</span></span>;
+    <span class="rule"><span class="attribute">right</span>:<span class="value"> <span class="number">10</span>px</span></span>;
+    <span class="rule"><span class="attribute">z-index</span>:<span class="value"> <span class="number">10</span></span></span>;
+    <span class="rule"><span class="attribute">padding</span>:<span class="value"> <span class="number">1</span>em</span></span>;
+    <span class="rule"><span class="attribute">background</span>:<span class="value"> white</span></span>;
+  <span class="rule">}</span></span>
+  <span class="id">#time-ranges</span> <span class="tag">input</span> <span class="rules">{
+    <span class="rule"><span class="attribute">display</span>:<span class="value"> inline-block</span></span>;
+    <span class="rule"><span class="attribute">border</span>:<span class="value"> <span class="number">1</span>px solid <span class="hexcolor">#999</span></span></span>;
+    <span class="rule"><span class="attribute">font-size</span>:<span class="value"> <span class="number">14</span>px</span></span>;
+    <span class="rule"><span class="attribute">border-radius</span>:<span class="value"> <span class="number">4</span>px</span></span>;
+    <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">28</span>px</span></span>;
+    <span class="rule"><span class="attribute">line-height</span>:<span class="value"> <span class="number">28</span>px</span></span>;
+  <span class="rule">}</span></span>
+  <span class="id">#time-ranges</span> <span class="tag">input</span><span class="attr_selector">[type='submit']</span> <span class="rules">{
+    <span class="rule"><span class="attribute">box-sizing</span>:<span class="value"> content-box</span></span>;
+    <span class="rule"><span class="attribute">padding</span>:<span class="value"> <span class="number">0</span> <span class="number">1</span>em</span></span>;
+    <span class="rule"><span class="attribute">text-transform</span>:<span class="value"> uppercase</span></span>;
+    <span class="rule"><span class="attribute">color</span>:<span class="value"> white</span></span>;
+    <span class="rule"><span class="attribute">background</span>:<span class="value"> <span class="hexcolor">#5C7DB8</span></span></span>;
+    <span class="rule"><span class="attribute">border-color</span>:<span class="value"> <span class="hexcolor">#5C7DB8</span></span></span>;
+  <span class="rule">}</span></span>
+</span><span class="tag">&lt;/<span class="title">style</span>&gt;</span>
+
 <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 
+<span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"time-ranges"</span> <span class="attribute">class</span>=<span class="value">"leaflet-bar"</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">form</span> <span class="attribute">action</span>=<span class="value">"#"</span> <span class="attribute">id</span>=<span class="value">"form"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">label</span> <span class="attribute">for</span>=<span class="value">"from"</span>&gt;</span>
+      From
+      <span class="tag">&lt;<span class="title">input</span> <span class="attribute">id</span>=<span class="value">'from'</span> <span class="attribute">type</span>=<span class="value">"date"</span> <span class="attribute">value</span>=<span class="value">'1930-01-01'</span> <span class="attribute">name</span>=<span class="value">'from'</span>&gt;</span>
+    <span class="tag">&lt;/<span class="title">label</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">label</span> <span class="attribute">for</span>=<span class="value">"to"</span>&gt;</span>
+      To
+      <span class="tag">&lt;<span class="title">input</span>  <span class="attribute">id</span>=<span class="value">'to'</span> <span class="attribute">type</span>=<span class="value">"date"</span> <span class="attribute">value</span>=<span class="value">'1950-12-31'</span> <span class="attribute">name</span>=<span class="value">'to'</span>&gt;</span>
+    <span class="tag">&lt;/<span class="title">label</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"submit"</span> <span class="attribute">value</span>=<span class="value">"Update"</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">form</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+
 <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
-  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">37.75</span>, -<span class="number">122.23</span>], <span class="number">10</span>);
-  console.log(L, L.esri);
-  L.esri.basemapLayer(<span class="string">'Topographic'</span>).addTo(map);
+  <span class="keyword">var</span> timeForm = document.getElementById(<span class="string">'form'</span>);
+  <span class="keyword">var</span> startTimeInput = document.getElementById(<span class="string">'from'</span>);
+  <span class="keyword">var</span> endTimeInput = document.getElementById(<span class="string">'to'</span>);
+
+  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">37.604</span>,-<span class="number">101.15</span>], <span class="number">9</span>);
+
+  L.esri.basemapLayer(<span class="string">'Gray'</span>).addTo(map);
+  L.esri.basemapLayer(<span class="string">'GrayLabels'</span>).addTo(map);
+
+  <span class="keyword">var</span> oilWells = L.esri.dynamicMapLayer(<span class="string">'http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Petroleum/KSWells/MapServer'</span>, {
+    useCors: <span class="literal">false</span>,
+    layers: [<span class="number">0</span>],
+    from: <span class="keyword">new</span> Date(startTimeInput.value),
+    to: <span class="keyword">new</span> Date(endTimeInput.value)
+  }).addTo(map);
+
+  timeForm.addEventListener(<span class="string">'submit'</span>, <span class="function"><span class="keyword">function</span> <span class="title">updateTimeRange</span><span class="params">(e)</span>{</span>
+    oilWells.setTimeRange(<span class="keyword">new</span> Date(startTimeInput.value), <span class="keyword">new</span> Date(endTimeInput.value));
+    e.preventDefault();
+  });
 </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 <span class="tag">&lt;/<span class="title">body</span>&gt;</span>
 <span class="tag">&lt;/<span class="title">html</span>&gt;</span></code></pre>
 
 <div class="wrap">
-  <p><a href="http://github.com/esri/esri-leaflet/edit/master/site/source/pages/examples/index.hbs">Edit this sample on GitHub</a></p>
+  <p><a href="http://github.com/esri/esri-leaflet/edit/master/site/source/pages/examples/visualizing-time-on-dynamic-map-layer.hbs">Edit this sample on GitHub</a></p>
 </div>
 </div>
   <div style='clear:both;'></div>

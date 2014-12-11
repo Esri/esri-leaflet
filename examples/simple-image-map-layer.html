@@ -8,11 +8,11 @@
   <meta charset="utf-8">
 
   
-    <title>Esri Leaflet Quickstart | Esri Leaflet</title>
+    <title>Simple ImageMapLayer | Esri Leaflet</title>
   
 
   
-    <meta name="description" content="A quick template to get started with Esri Leaflet.">
+    <meta name="description" content="Display an Image Service from ArcGIS Online or ArcGIS Server.  More information about Map Services can be found in the &lt;a href=&quot;/esri-leaflet/api-reference/layers/image-map-layer.html&quot;&gt;L.esri.Layers.ImageMapLayer&lt;/a&gt; documentation.">
   
 
   <meta name="description" content="Esri Leaflet">
@@ -148,8 +148,8 @@
 
 <div class="example-content">
 <div class="wrap">
-  <h1>Esri Leaflet Quickstart</h1>
-  <p>A quick template to get started with Esri Leaflet.</p>
+  <h1>Simple ImageMapLayer</h1>
+  <p>Display an Image Service from ArcGIS Online or ArcGIS Server.  More information about Map Services can be found in the <a href="/esri-leaflet/api-reference/layers/image-map-layer.html">L.esri.Layers.ImageMapLayer</a> documentation.</p>
 </div>
 <div id="map-wrapper">
   
@@ -157,15 +157,17 @@
 <div id="map"></div>
 
 <script>
-  var map = L.map('map').setView([37.75, -122.23], 10);
-  console.log(L, L.esri);
-  L.esri.basemapLayer('Topographic').addTo(map);
+    var map = L.map('map').setView([37.75, -122.23], 10);
+
+    L.esri.basemapLayer('Gray').addTo(map);
+
+    L.esri.imageMapLayer('http://raster.nationalmap.gov/arcgis/rest/services/Scanned_Maps/USGS_EROS_DRG_SCALE/ImageServer').addTo(map);
 </script>
 </div>
 <pre><code class="language-xml"><span class="tag">&lt;<span class="title">html</span>&gt;</span>
 <span class="tag">&lt;<span class="title">head</span>&gt;</span>
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">utf-8</span> /&gt;</span>
-  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Esri Leaflet Quickstart<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Simple ImageMapLayer<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">name</span>=<span class="value">'viewport'</span> <span class="attribute">content</span>=<span class="value">'initial-scale=1,maximum-scale=1,user-scalable=no'</span> /&gt;</span>
 
   <span class="comment">&lt;!-- Load Leaflet from CDN--&gt;</span>
@@ -185,16 +187,18 @@
 <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
-  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">37.75</span>, -<span class="number">122.23</span>], <span class="number">10</span>);
-  console.log(L, L.esri);
-  L.esri.basemapLayer(<span class="string">'Topographic'</span>).addTo(map);
+    <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">37.75</span>, -<span class="number">122.23</span>], <span class="number">10</span>);
+
+    L.esri.basemapLayer(<span class="string">'Gray'</span>).addTo(map);
+
+    L.esri.imageMapLayer(<span class="string">'http://raster.nationalmap.gov/arcgis/rest/services/Scanned_Maps/USGS_EROS_DRG_SCALE/ImageServer'</span>).addTo(map);
 </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 <span class="tag">&lt;/<span class="title">body</span>&gt;</span>
 <span class="tag">&lt;/<span class="title">html</span>&gt;</span></code></pre>
 
 <div class="wrap">
-  <p><a href="http://github.com/esri/esri-leaflet/edit/master/site/source/pages/examples/index.hbs">Edit this sample on GitHub</a></p>
+  <p><a href="http://github.com/esri/esri-leaflet/edit/master/site/source/pages/examples/simple-image-map-layer.hbs">Edit this sample on GitHub</a></p>
 </div>
 </div>
   <div style='clear:both;'></div>

@@ -8,11 +8,11 @@
   <meta charset="utf-8">
 
   
-    <title>Esri Leaflet Quickstart | Esri Leaflet</title>
+    <title>ArcGIS Server username/password | Esri Leaflet</title>
   
 
   
-    <meta name="description" content="A quick template to get started with Esri Leaflet.">
+    <meta name="description" content="Example showing authentication with ArcGIS Server via a username and password. In this example a username and password are hardcoded in.">
   
 
   <meta name="description" content="Esri Leaflet">
@@ -148,8 +148,8 @@
 
 <div class="example-content">
 <div class="wrap">
-  <h1>Esri Leaflet Quickstart</h1>
-  <p>A quick template to get started with Esri Leaflet.</p>
+  <h1>ArcGIS Server username/password</h1>
+  <p>Example showing authentication with ArcGIS Server via a username and password. In this example a username and password are hardcoded in.</p>
 </div>
 <div id="map-wrapper">
   
@@ -157,15 +157,39 @@
 <div id="map"></div>
 
 <script>
-  var map = L.map('map').setView([37.75, -122.23], 10);
-  console.log(L, L.esri);
+  var map = new L.Map('map').setView([34.326, -117.697], 12);
+
   L.esri.basemapLayer('Topographic').addTo(map);
+
+  function serverAuth(callback){
+    L.esri.post('http://sampleserver6.arcgisonline.com/arcgis/tokens/generateToken', {
+      username: 'user1',
+      password: 'user1',
+      f: 'json',
+      expiration: 86400,
+      client: 'referer',
+      referer: window.location.origin
+    }, callback);
+  }
+
+  serverAuth(function(error, response){
+    var dl = L.esri.dynamicMapLayer('http://sampleserver6.arcgisonline.com/arcgis/rest/services/Wildfire_secure_ac/MapServer', {
+      opacity: 1,
+      token:  response.token
+    }).addTo(map);
+
+    dl.on('authenticationrequired', function (e) {
+      serverAuth(function(error, response){
+        e.authenticate(response.token);
+      });
+    });
+  });
 </script>
 </div>
 <pre><code class="language-xml"><span class="tag">&lt;<span class="title">html</span>&gt;</span>
 <span class="tag">&lt;<span class="title">head</span>&gt;</span>
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">utf-8</span> /&gt;</span>
-  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Esri Leaflet Quickstart<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">title</span>&gt;</span>ArcGIS Server username/password<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">name</span>=<span class="value">'viewport'</span> <span class="attribute">content</span>=<span class="value">'initial-scale=1,maximum-scale=1,user-scalable=no'</span> /&gt;</span>
 
   <span class="comment">&lt;!-- Load Leaflet from CDN--&gt;</span>
@@ -185,16 +209,40 @@
 <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
-  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">37.75</span>, -<span class="number">122.23</span>], <span class="number">10</span>);
-  console.log(L, L.esri);
+  <span class="keyword">var</span> map = <span class="keyword">new</span> L.Map(<span class="string">'map'</span>).setView([<span class="number">34.326</span>, -<span class="number">117.697</span>], <span class="number">12</span>);
+
   L.esri.basemapLayer(<span class="string">'Topographic'</span>).addTo(map);
+
+  <span class="function"><span class="keyword">function</span> <span class="title">serverAuth</span><span class="params">(callback)</span>{</span>
+    L.esri.post(<span class="string">'http://sampleserver6.arcgisonline.com/arcgis/tokens/generateToken'</span>, {
+      username: <span class="string">'user1'</span>,
+      password: <span class="string">'user1'</span>,
+      f: <span class="string">'json'</span>,
+      expiration: <span class="number">86400</span>,
+      client: <span class="string">'referer'</span>,
+      referer: window.location.origin
+    }, callback);
+  }
+
+  serverAuth(<span class="function"><span class="keyword">function</span><span class="params">(error, response)</span>{</span>
+    <span class="keyword">var</span> dl = L.esri.dynamicMapLayer(<span class="string">'http://sampleserver6.arcgisonline.com/arcgis/rest/services/Wildfire_secure_ac/MapServer'</span>, {
+      opacity: <span class="number">1</span>,
+      token:  response.token
+    }).addTo(map);
+
+    dl.on(<span class="string">'authenticationrequired'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(e)</span> {</span>
+      serverAuth(<span class="function"><span class="keyword">function</span><span class="params">(error, response)</span>{</span>
+        e.authenticate(response.token);
+      });
+    });
+  });
 </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 <span class="tag">&lt;/<span class="title">body</span>&gt;</span>
 <span class="tag">&lt;/<span class="title">html</span>&gt;</span></code></pre>
 
 <div class="wrap">
-  <p><a href="http://github.com/esri/esri-leaflet/edit/master/site/source/pages/examples/index.hbs">Edit this sample on GitHub</a></p>
+  <p><a href="http://github.com/esri/esri-leaflet/edit/master/site/source/pages/examples/arcgis-server-auth.hbs">Edit this sample on GitHub</a></p>
 </div>
 </div>
   <div style='clear:both;'></div>

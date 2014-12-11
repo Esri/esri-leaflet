@@ -8,11 +8,11 @@
   <meta charset="utf-8">
 
   
-    <title>Esri Leaflet Quickstart | Esri Leaflet</title>
+    <title>Infrared Imagery using BandIDs | Esri Leaflet</title>
   
 
   
-    <meta name="description" content="A quick template to get started with Esri Leaflet.">
+    <meta name="description" content="Display NAIP imagery from an ArcGIS image service and use the band IDs parameter to show the near infrared band in a false color composite. Vegetated areas are highlighted in red. More information about Image Services can be found in the &lt;a href=&quot;/esri-leaflet/api-reference/layers/image-map-layer.html&quot;&gt;L.esri.Layers.ImageMapLayer&lt;/a&gt; documentation.">
   
 
   <meta name="description" content="Esri Leaflet">
@@ -148,8 +148,8 @@
 
 <div class="example-content">
 <div class="wrap">
-  <h1>Esri Leaflet Quickstart</h1>
-  <p>A quick template to get started with Esri Leaflet.</p>
+  <h1>Infrared Imagery using BandIDs</h1>
+  <p>Display NAIP imagery from an ArcGIS image service and use the band IDs parameter to show the near infrared band in a false color composite. Vegetated areas are highlighted in red. More information about Image Services can be found in the <a href="/esri-leaflet/api-reference/layers/image-map-layer.html">L.esri.Layers.ImageMapLayer</a> documentation.</p>
 </div>
 <div id="map-wrapper">
   
@@ -157,15 +157,19 @@
 <div id="map"></div>
 
 <script>
-  var map = L.map('map').setView([37.75, -122.23], 10);
-  console.log(L, L.esri);
-  L.esri.basemapLayer('Topographic').addTo(map);
+  var map = L.map('map').setView([43.415, -124.228], 13);
+
+  L.esri.basemapLayer('Gray').addTo(map);
+
+  L.esri.imageMapLayer('http://imagery.oregonexplorer.info/arcgis/rest/services/NAIP_2011/NAIP_2011_Dynamic/ImageServer')
+        .setBandIds('3,0,1')
+        .addTo(map);
 </script>
 </div>
 <pre><code class="language-xml"><span class="tag">&lt;<span class="title">html</span>&gt;</span>
 <span class="tag">&lt;<span class="title">head</span>&gt;</span>
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">utf-8</span> /&gt;</span>
-  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Esri Leaflet Quickstart<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Infrared Imagery using BandIDs<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">name</span>=<span class="value">'viewport'</span> <span class="attribute">content</span>=<span class="value">'initial-scale=1,maximum-scale=1,user-scalable=no'</span> /&gt;</span>
 
   <span class="comment">&lt;!-- Load Leaflet from CDN--&gt;</span>
@@ -185,16 +189,20 @@
 <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
-  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">37.75</span>, -<span class="number">122.23</span>], <span class="number">10</span>);
-  console.log(L, L.esri);
-  L.esri.basemapLayer(<span class="string">'Topographic'</span>).addTo(map);
+  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">43.415</span>, -<span class="number">124.228</span>], <span class="number">13</span>);
+
+  L.esri.basemapLayer(<span class="string">'Gray'</span>).addTo(map);
+
+  L.esri.imageMapLayer(<span class="string">'http://imagery.oregonexplorer.info/arcgis/rest/services/NAIP_2011/NAIP_2011_Dynamic/ImageServer'</span>)
+        .setBandIds(<span class="string">'3,0,1'</span>)
+        .addTo(map);
 </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 <span class="tag">&lt;/<span class="title">body</span>&gt;</span>
 <span class="tag">&lt;/<span class="title">html</span>&gt;</span></code></pre>
 
 <div class="wrap">
-  <p><a href="http://github.com/esri/esri-leaflet/edit/master/site/source/pages/examples/index.hbs">Edit this sample on GitHub</a></p>
+  <p><a href="http://github.com/esri/esri-leaflet/edit/master/site/source/pages/examples/infrared-imagery.hbs">Edit this sample on GitHub</a></p>
 </div>
 </div>
   <div style='clear:both;'></div>

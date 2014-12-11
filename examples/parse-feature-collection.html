@@ -8,11 +8,11 @@
   <meta charset="utf-8">
 
   
-    <title>Esri Leaflet Quickstart | Esri Leaflet</title>
+    <title>Feature Collection Parsing | Esri Leaflet</title>
   
 
   
-    <meta name="description" content="A quick template to get started with Esri Leaflet.">
+    <meta name="description" content="Parse a feature collection contained in a webmap to GeoJSON.">
   
 
   <meta name="description" content="Esri Leaflet">
@@ -148,8 +148,8 @@
 
 <div class="example-content">
 <div class="wrap">
-  <h1>Esri Leaflet Quickstart</h1>
-  <p>A quick template to get started with Esri Leaflet.</p>
+  <h1>Feature Collection Parsing</h1>
+  <p>Parse a feature collection contained in a webmap to GeoJSON.</p>
 </div>
 <div id="map-wrapper">
   
@@ -157,15 +157,41 @@
 <div id="map"></div>
 
 <script>
-  var map = L.map('map').setView([37.75, -122.23], 10);
-  console.log(L, L.esri);
+  var map = L.map('map');
+
   L.esri.basemapLayer('Topographic').addTo(map);
+
+  L.esri.get('http://www.arcgis.com/sharing/content/items/62914b2820c24d4e95710ebae77937cb/data', {}, function (error, response) {
+    var features = response.operationalLayers[0].featureCollection.layers[0].featureSet.features;
+    var idField = response.operationalLayers[0].featureCollection.layers[0].layerDefinition.objectIdField;
+
+    // empty geojson feature collection
+    var featureCollection = {
+      type: 'FeatureCollection',
+      features: []
+    };
+
+    for (var i = features.length - 1; i >= 0; i--) {
+      // convert ArcGIS Feature to GeoJSON Feature
+      var feature = L.esri.Util.arcgisToGeojson(features[i], idField);
+
+      // unproject the web mercator coordinates to lat/lng
+      var latlng = L.Projection.Mercator.unproject(L.point(feature.geometry.coordinates));
+      feature.geometry.coordinates = [latlng.lng, latlng.lat];
+
+      featureCollection.features.push(feature);
+    }
+
+    var geojson = L.geoJson(featureCollection).addTo(map);
+
+    map.fitBounds(geojson.getBounds());
+  });
 </script>
 </div>
 <pre><code class="language-xml"><span class="tag">&lt;<span class="title">html</span>&gt;</span>
 <span class="tag">&lt;<span class="title">head</span>&gt;</span>
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">utf-8</span> /&gt;</span>
-  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Esri Leaflet Quickstart<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Feature Collection Parsing<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">name</span>=<span class="value">'viewport'</span> <span class="attribute">content</span>=<span class="value">'initial-scale=1,maximum-scale=1,user-scalable=no'</span> /&gt;</span>
 
   <span class="comment">&lt;!-- Load Leaflet from CDN--&gt;</span>
@@ -185,16 +211,42 @@
 <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
-  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">37.75</span>, -<span class="number">122.23</span>], <span class="number">10</span>);
-  console.log(L, L.esri);
+  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>);
+
   L.esri.basemapLayer(<span class="string">'Topographic'</span>).addTo(map);
+
+  L.esri.get(<span class="string">'http://www.arcgis.com/sharing/content/items/62914b2820c24d4e95710ebae77937cb/data'</span>, {}, <span class="function"><span class="keyword">function</span> <span class="params">(error, response)</span> {</span>
+    <span class="keyword">var</span> features = response.operationalLayers[<span class="number">0</span>].featureCollection.layers[<span class="number">0</span>].featureSet.features;
+    <span class="keyword">var</span> idField = response.operationalLayers[<span class="number">0</span>].featureCollection.layers[<span class="number">0</span>].layerDefinition.objectIdField;
+
+    <span class="comment">// empty geojson feature collection</span>
+    <span class="keyword">var</span> featureCollection = {
+      type: <span class="string">'FeatureCollection'</span>,
+      features: []
+    };
+
+    <span class="keyword">for</span> (<span class="keyword">var</span> i = features.length - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) {
+      <span class="comment">// convert ArcGIS Feature to GeoJSON Feature</span>
+      <span class="keyword">var</span> feature = L.esri.Util.arcgisToGeojson(features[i], idField);
+
+      <span class="comment">// unproject the web mercator coordinates to lat/lng</span>
+      <span class="keyword">var</span> latlng = L.Projection.Mercator.unproject(L.point(feature.geometry.coordinates));
+      feature.geometry.coordinates = [latlng.lng, latlng.lat];
+
+      featureCollection.features.push(feature);
+    }
+
+    <span class="keyword">var</span> geojson = L.geoJson(featureCollection).addTo(map);
+
+    map.fitBounds(geojson.getBounds());
+  });
 </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 <span class="tag">&lt;/<span class="title">body</span>&gt;</span>
 <span class="tag">&lt;/<span class="title">html</span>&gt;</span></code></pre>
 
 <div class="wrap">
-  <p><a href="http://github.com/esri/esri-leaflet/edit/master/site/source/pages/examples/index.hbs">Edit this sample on GitHub</a></p>
+  <p><a href="http://github.com/esri/esri-leaflet/edit/master/site/source/pages/examples/parse-feature-collection.hbs">Edit this sample on GitHub</a></p>
 </div>
 </div>
   <div style='clear:both;'></div>

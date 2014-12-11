@@ -8,11 +8,11 @@
   <meta charset="utf-8">
 
   
-    <title>Esri Leaflet Quickstart | Esri Leaflet</title>
+    <title>Switching basemaps | Esri Leaflet</title>
   
 
   
-    <meta name="description" content="A quick template to get started with Esri Leaflet.">
+    <meta name="description" content="Switching between all available basemaps packaged with Esri Leaflet.">
   
 
   <meta name="description" content="Esri Leaflet">
@@ -148,24 +148,73 @@
 
 <div class="example-content">
 <div class="wrap">
-  <h1>Esri Leaflet Quickstart</h1>
-  <p>A quick template to get started with Esri Leaflet.</p>
+  <h1>Switching basemaps</h1>
+  <p>Switching between all available basemaps packaged with Esri Leaflet.</p>
 </div>
 <div id="map-wrapper">
   
+<style>
+  #basemaps-wrapper {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 10;
+    background: white;
+    padding: 10px;
+  }
+  #basemaps {
+    margin-bottom: 5px;
+  }
+</style>
 
 <div id="map"></div>
 
+<div id="basemaps-wrapper" class="leaflet-bar">
+  <select name="basemaps" id="basemaps">
+    <option value="Topographic">Topographic<options>
+    <option value="Streets">Streets</option>
+    <option value="NationalGeographic">National Geographic<options>
+    <option value="Oceans">Oceans<options>
+    <option value="Gray">Gray<options>
+    <option value="DarkGray">Dark Gray<options>
+    <option value="Imagery">Imagery<options>
+    <option value="ShadedRelief">Shaded Relief<options>
+  </select>
+</div>
+
 <script>
-  var map = L.map('map').setView([37.75, -122.23], 10);
-  console.log(L, L.esri);
-  L.esri.basemapLayer('Topographic').addTo(map);
+  var map = L.map('map').setView([-33.87, 150.77], 10);
+  var layer = L.esri.basemapLayer('Topographic').addTo(map);
+  var layerLabels;
+
+  function setBasemap(basemap) {
+    if (layer) {
+      map.removeLayer(layer);
+    }
+    layer = L.esri.basemapLayer(basemap);
+    map.addLayer(layer);
+    if (layerLabels) {
+      map.removeLayer(layerLabels);
+    }
+
+    if (basemap === 'ShadedRelief' || basemap === 'Oceans' || basemap === 'Gray' || basemap === 'DarkGray' || basemap === 'Imagery' || basemap === 'Terrain') {
+
+      layerLabels = L.esri.basemapLayer(basemap + 'Labels');
+      map.addLayer(layerLabels);
+    }
+  }
+
+  var basemaps = document.getElementById('basemaps');
+
+  basemaps.addEventListener('change', function(){
+    setBasemap(basemaps.value);
+  });
 </script>
 </div>
 <pre><code class="language-xml"><span class="tag">&lt;<span class="title">html</span>&gt;</span>
 <span class="tag">&lt;<span class="title">head</span>&gt;</span>
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">utf-8</span> /&gt;</span>
-  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Esri Leaflet Quickstart<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Switching basemaps<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">name</span>=<span class="value">'viewport'</span> <span class="attribute">content</span>=<span class="value">'initial-scale=1,maximum-scale=1,user-scalable=no'</span> /&gt;</span>
 
   <span class="comment">&lt;!-- Load Leaflet from CDN--&gt;</span>
@@ -182,19 +231,69 @@
 <span class="tag">&lt;/<span class="title">head</span>&gt;</span>
 <span class="tag">&lt;<span class="title">body</span>&gt;</span>
 
+<span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css">
+  <span class="id">#basemaps-wrapper</span> <span class="rules">{
+    <span class="rule"><span class="attribute">position</span>:<span class="value"> absolute</span></span>;
+    <span class="rule"><span class="attribute">top</span>:<span class="value"> <span class="number">10</span>px</span></span>;
+    <span class="rule"><span class="attribute">right</span>:<span class="value"> <span class="number">10</span>px</span></span>;
+    <span class="rule"><span class="attribute">z-index</span>:<span class="value"> <span class="number">10</span></span></span>;
+    <span class="rule"><span class="attribute">background</span>:<span class="value"> white</span></span>;
+    <span class="rule"><span class="attribute">padding</span>:<span class="value"> <span class="number">10</span>px</span></span>;
+  <span class="rule">}</span></span>
+  <span class="id">#basemaps</span> <span class="rules">{
+    <span class="rule"><span class="attribute">margin-bottom</span>:<span class="value"> <span class="number">5</span>px</span></span>;
+  <span class="rule">}</span></span>
+</span><span class="tag">&lt;/<span class="title">style</span>&gt;</span>
+
 <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 
+<span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"basemaps-wrapper"</span> <span class="attribute">class</span>=<span class="value">"leaflet-bar"</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">select</span> <span class="attribute">name</span>=<span class="value">"basemaps"</span> <span class="attribute">id</span>=<span class="value">"basemaps"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"Topographic"</span>&gt;</span>Topographic<span class="tag">&lt;<span class="title">options</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"Streets"</span>&gt;</span>Streets<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"NationalGeographic"</span>&gt;</span>National Geographic<span class="tag">&lt;<span class="title">options</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"Oceans"</span>&gt;</span>Oceans<span class="tag">&lt;<span class="title">options</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"Gray"</span>&gt;</span>Gray<span class="tag">&lt;<span class="title">options</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"DarkGray"</span>&gt;</span>Dark Gray<span class="tag">&lt;<span class="title">options</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"Imagery"</span>&gt;</span>Imagery<span class="tag">&lt;<span class="title">options</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"ShadedRelief"</span>&gt;</span>Shaded Relief<span class="tag">&lt;<span class="title">options</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">select</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+
 <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
-  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">37.75</span>, -<span class="number">122.23</span>], <span class="number">10</span>);
-  console.log(L, L.esri);
-  L.esri.basemapLayer(<span class="string">'Topographic'</span>).addTo(map);
+  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([-<span class="number">33.87</span>, <span class="number">150.77</span>], <span class="number">10</span>);
+  <span class="keyword">var</span> layer = L.esri.basemapLayer(<span class="string">'Topographic'</span>).addTo(map);
+  <span class="keyword">var</span> layerLabels;
+
+  <span class="function"><span class="keyword">function</span> <span class="title">setBasemap</span><span class="params">(basemap)</span> {</span>
+    <span class="keyword">if</span> (layer) {
+      map.removeLayer(layer);
+    }
+    layer = L.esri.basemapLayer(basemap);
+    map.addLayer(layer);
+    <span class="keyword">if</span> (layerLabels) {
+      map.removeLayer(layerLabels);
+    }
+
+    <span class="keyword">if</span> (basemap === <span class="string">'ShadedRelief'</span> || basemap === <span class="string">'Oceans'</span> || basemap === <span class="string">'Gray'</span> || basemap === <span class="string">'DarkGray'</span> || basemap === <span class="string">'Imagery'</span> || basemap === <span class="string">'Terrain'</span>) {
+
+      layerLabels = L.esri.basemapLayer(basemap + <span class="string">'Labels'</span>);
+      map.addLayer(layerLabels);
+    }
+  }
+
+  <span class="keyword">var</span> basemaps = document.getElementById(<span class="string">'basemaps'</span>);
+
+  basemaps.addEventListener(<span class="string">'change'</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span>{</span>
+    setBasemap(basemaps.value);
+  });
 </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 <span class="tag">&lt;/<span class="title">body</span>&gt;</span>
 <span class="tag">&lt;/<span class="title">html</span>&gt;</span></code></pre>
 
 <div class="wrap">
-  <p><a href="http://github.com/esri/esri-leaflet/edit/master/site/source/pages/examples/index.hbs">Edit this sample on GitHub</a></p>
+  <p><a href="http://github.com/esri/esri-leaflet/edit/master/site/source/pages/examples/switching-basemaps.hbs">Edit this sample on GitHub</a></p>
 </div>
 </div>
   <div style='clear:both;'></div>
