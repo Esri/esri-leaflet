@@ -160,11 +160,17 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
         var cacheKey = this._cacheKey(coords);
         var cellKey = this._cellCoordsToKey(coords);
         var layers = this._cache[cacheKey];
+        var mapBounds = this._map.getBounds();
         if(!this._activeCells[cellKey] && layers){
           for (i = layers.length - 1; i >= 0; i--) {
             var layer = this.getFeature(layers[i]);
-            if(this._map.hasLayer(layer)){
-              this._map.removeLayer(layer);
+            if(layer){
+              var hasLayer = this._map.hasLayer(layer);
+              var hadBounds = layer.getBounds;
+              var boundsInMap = mapBounds.intersects(layer.getBounds());
+              if(this._map.hasLayer(layer) && (!hadBounds || !(hadBounds && boundsInMap))){
+                this._map.removeLayer(layer);
+              }
             }
           }
 
