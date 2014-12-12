@@ -167,9 +167,11 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
             if(layer){
               var hasLayer = this._map.hasLayer(layer);
               var hadBounds = layer.getBounds;
-              var boundsInMap = mapBounds.intersects(layer.getBounds());
-              if(this._map.hasLayer(layer) && (!hadBounds || !(hadBounds && boundsInMap))){
-                this._map.removeLayer(layer);
+              if (hadBounds) {
+                var boundsInMap = mapBounds.intersects(layer.getBounds());
+                if(hasLayer && (!hadBounds || !(hadBounds && boundsInMap))){
+                  this._map.removeLayer(layer);
+                }
               }
             }
           }
