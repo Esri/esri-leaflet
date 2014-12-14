@@ -49,7 +49,6 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
     for (var i = features.length - 1; i >= 0; i--) {
 
       var geojson = features[i];
-
       var layer = this._layers[geojson.id];
       var newLayer;
 
