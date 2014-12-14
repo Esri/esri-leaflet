@@ -105,9 +105,20 @@ EsriLeaflet.Tasks.Query = EsriLeaflet.Tasks.Task.extend({
 
   run: function(callback, context){
     this._cleanParams();
-    return this.request(function(error, response){
-      callback.call(context, error, (response && EsriLeaflet.Util.responseToFeatureCollection(response)), response);
-    }, context);
+
+    // if the service is hosted on arcgis online request geojson directly
+    // if(EsriLeaflet.Util.isArcgisOnline(this.url)){
+    //   this.params.f = 'geojson';
+    //   return this.request(function queryCallback(error, response){
+    //     callback.call(context, error, response, response);
+    //   }, context);
+
+    // otherwise convert it in the callback then pass it on
+    // } else {
+      return this.request(function queryCallback(error, response){
+        callback.call(context, error, (response && EsriLeaflet.Util.responseToFeatureCollection(response)), response);
+      }, context);
+    // }
   },
 
   count: function(callback, context){
