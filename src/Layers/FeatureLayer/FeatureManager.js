@@ -134,6 +134,7 @@
       }
 
       var zoom = this._map.getZoom();
+      this._updateZoomRestrictions();
 
       if (zoom > this.options.maxZoom ||
           zoom < this.options.minZoom) { return; }

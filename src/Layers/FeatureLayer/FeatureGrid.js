@@ -47,6 +47,12 @@ EsriLeaflet.Layers.FeatureGrid = L.Class.extend({
     return this;
   },
 
+  _updateZoomRestrictions : function () {
+    if (this.options.maxZoom === 0) {
+      this.options.maxZoom = this._map.getMaxZoom();
+    }
+  },
+
   _onZoom : function () {
     var zoom = this._map.getZoom();
 
@@ -108,6 +114,8 @@ EsriLeaflet.Layers.FeatureGrid = L.Class.extend({
     var bounds = this._map.getPixelBounds(),
         zoom = this._map.getZoom(),
         cellSize = this._getCellSize();
+
+    this._updateZoomRestrictions();
 
     if (zoom > this.options.maxZoom ||
         zoom < this.options.minZoom) { return; }

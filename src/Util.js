@@ -379,7 +379,7 @@
     return featureCollection;
   };
 
-    // trim whitespace and add a tailing slash is needed to a url
+  // trim whitespace and add a tailing slash is needed to a url
   EsriLeaflet.Util.cleanUrl = function(url){
     url = url.replace(/\s\s*/g, '');
 
@@ -414,6 +414,19 @@
       break;
     }
     return arcgisGeometryType;
+  };
+
+  /*
+  this is an inversion of L.ICRS.scale()
+  and only valid for wkid:3857
+  */
+  EsriLeaflet.Util.scaleToLevel = function(scale){
+    if (scale === 0) {
+      return scale;
+    }
+    else {
+      return Math.log10(scale/256) / Math.log10(2);
+    }
   };
 
 })(EsriLeaflet);
