@@ -229,6 +229,7 @@
     onRemove: function(map){
       if(this._logo){
         map.removeControl(this._logo);
+        map._hasEsriLogo = false;
       }
 
       L.TileLayer.prototype.onRemove.call(this, map);
