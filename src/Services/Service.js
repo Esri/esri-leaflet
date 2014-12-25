@@ -11,7 +11,6 @@ EsriLeaflet.Services.Service = L.Class.extend({
     this.url = EsriLeaflet.Util.cleanUrl(options.url);
     this._requestQueue = [];
     this._authenticating = false;
-    //is it a problem that this includes options.url now?
     L.Util.setOptions(this, options);
   },
 

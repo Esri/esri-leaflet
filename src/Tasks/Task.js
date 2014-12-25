@@ -30,14 +30,12 @@ EsriLeaflet.Tasks.Task = L.Class.extend({
   },
 
   initialize: function(endpoint){
-    // options can be either a url to an ArcGIS Rest Service or an instance of EsriLeaflet.Service
+    // endpoint can be either be a url to an ArcGIS Rest Service (and other options) or an instance of EsriLeaflet.Service
     if(endpoint.request){
       this._service = endpoint;
       this.url = endpoint.options.url;
     } else {
-      //this is actually an options object
       this.url = EsriLeaflet.Util.cleanUrl(endpoint.url);
-      endpoint.url = EsriLeaflet.Util.cleanUrl(endpoint.url);
     }
 
     // clone default params into this object
