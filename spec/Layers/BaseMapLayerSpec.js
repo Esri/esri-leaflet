@@ -49,7 +49,7 @@ describe('L.esri.Layers.BasemapLayer', function () {
     for (var i = 0, len = testmaps.length; i < len; i++) {
       var name = testmaps[i];
       expect(L.esri.basemapLayer(name)).to.be.instanceof(L.esri.Layers.BasemapLayer);
-      expect(L.esri.basemapLayer(name)._url).to.eql(L.esri.BasemapLayer.TILES[name].urlTemplate);
+      expect(L.esri.basemapLayer(name)._url).to.eql(L.esri.BasemapLayer.TILES[name].options.url);
     }
   });
 

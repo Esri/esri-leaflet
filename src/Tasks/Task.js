@@ -37,6 +37,7 @@ EsriLeaflet.Tasks.Task = L.Class.extend({
     } else {
       //this is actually an options object
       this.url = EsriLeaflet.Util.cleanUrl(endpoint.url);
+      endpoint.url = EsriLeaflet.Util.cleanUrl(endpoint.url);
     }
 
     // clone default params into this object
@@ -50,7 +51,7 @@ EsriLeaflet.Tasks.Task = L.Class.extend({
       }
     }
 
-    L.Util.setOptions(this, endpoint.options);
+    L.Util.setOptions(this, endpoint);
   },
 
   token: function(token){

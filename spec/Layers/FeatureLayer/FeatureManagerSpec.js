@@ -32,7 +32,8 @@ describe('L.esri.Layers.FeatureManager', function () {
       removeLayers: sandbox.spy()
     });
 
-    layer = new MockLayer(url, {
+    layer = new MockLayer({
+      url: url,
       timeField: 'Time',
       attribution: 'Esri',
       minZoom : 1,
@@ -344,7 +345,8 @@ describe('L.esri.Layers.FeatureManager', function () {
   });
 
   it('should filter existing features with a start and end time field', function(){
-    layer = new MockLayer(url, {
+    layer = new MockLayer({
+      url: url,
       timeField: {
         start: 'StartTime',
         end: 'EndTime'
@@ -373,7 +375,8 @@ describe('L.esri.Layers.FeatureManager', function () {
   });
 
   it('should load more features  with a start and end time field', function(){
-    layer = new MockLayer(url, {
+    layer = new MockLayer({
+      url: url,
       timeField: {
         start: 'StartTime',
         end: 'EndTime'
@@ -530,7 +533,8 @@ describe('L.esri.Layers.FeatureManager', function () {
   });
 
   it('should return true for features with a single feature with start and end time fields in the current time range', function(){
-    var layer = new L.esri.Layers.FeatureManager(url, {
+    var layer = new L.esri.Layers.FeatureManager({
+      url: url,
       from: new Date('Dec 1 2013 GMT-0800'),
       to: new Date('January 12 2014 GMT-0800'),
       timeField: {
@@ -716,7 +720,8 @@ describe('L.esri.Layers.FeatureManager', function () {
       objectIdFieldName: 'OBJECTID',
     }));
 
-    var layer = new MockLayer('http://services.arcgis.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/', {
+    var layer = new MockLayer({
+      url: 'http://services.arcgis.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/',
       simplifyFactor: 0.5
     });
 
