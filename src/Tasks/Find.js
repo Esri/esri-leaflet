@@ -46,6 +46,6 @@ EsriLeaflet.Tasks.Find = EsriLeaflet.Tasks.Task.extend({
   }
 });
 
-EsriLeaflet.Tasks.find = function (url, params) {
-  return new EsriLeaflet.Tasks.Find(url, params);
+EsriLeaflet.Tasks.find = function (params) {
+  return new EsriLeaflet.Tasks.Find(params);
 };

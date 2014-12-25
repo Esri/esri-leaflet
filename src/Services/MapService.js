@@ -14,6 +14,6 @@ EsriLeaflet.Services.MapService = EsriLeaflet.Services.Service.extend({
 
 });
 
-EsriLeaflet.Services.mapService = function(url, params){
-  return new EsriLeaflet.Services.MapService(url, params);
+EsriLeaflet.Services.mapService = function(params){
+  return new EsriLeaflet.Services.MapService(params);
 };

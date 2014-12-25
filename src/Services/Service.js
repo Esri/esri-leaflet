@@ -7,10 +7,11 @@ EsriLeaflet.Services.Service = L.Class.extend({
     useCors: EsriLeaflet.Support.CORS
   },
 
-  initialize: function (url, options) {
-    this.url = EsriLeaflet.Util.cleanUrl(url);
+  initialize: function (options) {
+    this.url = EsriLeaflet.Util.cleanUrl(options.url);
     this._requestQueue = [];
     this._authenticating = false;
+    //is it a problem that this includes options.url now?
     L.Util.setOptions(this, options);
   },
 
@@ -117,6 +118,6 @@ EsriLeaflet.Services.Service = L.Class.extend({
 
 });
 
-EsriLeaflet.Services.service = function(url, params){
-  return new EsriLeaflet.Services.Service(url, params);
+EsriLeaflet.Services.service = function(params){
+  return new EsriLeaflet.Services.Service(params);
 };

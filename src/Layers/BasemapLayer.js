@@ -6,9 +6,9 @@
     statics: {
       TILES: {
         Streets: {
-          urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
           attributionUrl: 'https://static.arcgis.com/attribution/World_Street_Map',
           options: {
+            url: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
             hideLogo: false,
             logoPosition: 'bottomright',
             minZoom: 1,
@@ -18,9 +18,9 @@
           }
         },
         Topographic: {
-          urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',
           attributionUrl: 'https://static.arcgis.com/attribution/World_Topo_Map',
           options: {
+            url: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',
             hideLogo: false,
             logoPosition: 'bottomright',
             minZoom: 1,
@@ -30,9 +30,9 @@
           }
         },
         Oceans: {
-          urlTemplate: tileProtocol + '//{s}.arcgisonline.com/arcgis/rest/services/Ocean/World_Ocean_Base/MapServer/tile/{z}/{y}/{x}',
           attributionUrl: 'https://static.arcgis.com/attribution/Ocean_Basemap',
           options: {
+            url: tileProtocol + '//{s}.arcgisonline.com/arcgis/rest/services/Ocean/World_Ocean_Base/MapServer/tile/{z}/{y}/{x}',
             hideLogo: false,
             logoPosition: 'bottomright',
             minZoom: 1,
@@ -42,8 +42,8 @@
           }
         },
         OceansLabels: {
-          urlTemplate: tileProtocol + '//{s}.arcgisonline.com/arcgis/rest/services/Ocean/World_Ocean_Reference/MapServer/tile/{z}/{y}/{x}',
           options: {
+            url: tileProtocol + '//{s}.arcgisonline.com/arcgis/rest/services/Ocean/World_Ocean_Reference/MapServer/tile/{z}/{y}/{x}',
             hideLogo: true,
             logoPosition: 'bottomright',
             //pane: 'esri-label',
@@ -53,8 +53,8 @@
           }
         },
         NationalGeographic: {
-          urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}',
           options: {
+            url: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}',
             hideLogo: false,
             logoPosition: 'bottomright',
             minZoom: 1,
@@ -64,8 +64,8 @@
           }
         },
         DarkGray: {
-          urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}',
           options: {
+            url: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}',
             hideLogo: false,
             logoPosition: 'bottomright',
             minZoom: 1,
@@ -75,8 +75,8 @@
           }
         },
         DarkGrayLabels: {
-          urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}',
           options: {
+            url: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}',
             hideLogo: true,
             logoPosition: 'bottomright',
             //pane: 'esri-label',
@@ -86,8 +86,8 @@
           }
         },
         Gray: {
-          urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}',
           options: {
+            url: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}',
             hideLogo: false,
             logoPosition: 'bottomright',
             minZoom: 1,
@@ -97,19 +97,18 @@
           }
         },
         GrayLabels: {
-          urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}',
           options: {
+            url: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}',
             hideLogo: true,
             logoPosition: 'bottomright',
-            //pane: 'esri-label',
             minZoom: 1,
             maxZoom: 16,
             subdomains: ['server', 'services']
           }
         },
         Imagery: {
-          urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
           options: {
+            url: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
             hideLogo: false,
             logoPosition: 'bottomright',
             minZoom: 1,
@@ -119,20 +118,18 @@
           }
         },
         ImageryLabels: {
-          urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}',
           options: {
+            url: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}',
             hideLogo: true,
             logoPosition: 'bottomright',
-            //pane: 'esri-label',
             minZoom: 1,
             maxZoom: 19,
             subdomains: ['server', 'services']
           }
         },
         ImageryTransportation: {
-          urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/Reference/World_Transportation/MapServer/tile/{z}/{y}/{x}',
-          //pane: 'esri-label',
           options: {
+            url: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/Reference/World_Transportation/MapServer/tile/{z}/{y}/{x}',
             hideLogo: true,
             logoPosition: 'bottomright',
             minZoom: 1,
@@ -141,8 +138,8 @@
           }
         },
         ShadedRelief: {
-          urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}',
           options: {
+            url: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}',
             hideLogo: false,
             logoPosition: 'bottomright',
             minZoom: 1,
@@ -152,19 +149,18 @@
           }
         },
         ShadedReliefLabels: {
-          urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places_Alternate/MapServer/tile/{z}/{y}/{x}',
           options: {
+            url: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places_Alternate/MapServer/tile/{z}/{y}/{x}',
             hideLogo: true,
             logoPosition: 'bottomright',
-            //pane: 'esri-label',
             minZoom: 1,
             maxZoom: 12,
             subdomains: ['server', 'services']
           }
         },
         Terrain: {
-          urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/{z}/{y}/{x}',
           options: {
+            url: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/{z}/{y}/{x}',
             hideLogo: false,
             logoPosition: 'bottomright',
             minZoom: 1,
@@ -174,11 +170,10 @@
           }
         },
         TerrainLabels: {
-          urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/Reference/World_Reference_Overlay/MapServer/tile/{z}/{y}/{x}',
           options: {
+            url: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/Reference/World_Reference_Overlay/MapServer/tile/{z}/{y}/{x}',
             hideLogo: true,
             logoPosition: 'bottomright',
-            //pane: 'esri-label',
             minZoom: 1,
             maxZoom: 13,
             subdomains: ['server', 'services']
@@ -190,19 +185,21 @@
       var config;
 
       // set the config variable with the appropriate config object
-      if (typeof key === 'object' && key.urlTemplate && key.options){
+
+      //key.options.url??
+      if (typeof key === 'object' && key.options.url){
         config = key;
       } else if(typeof key === 'string' && EsriLeaflet.BasemapLayer.TILES[key]){
         config = EsriLeaflet.BasemapLayer.TILES[key];
       } else {
-        throw new Error('L.esri.BasemapLayer: Invalid parameter. Use one of "Streets", "Topographic", "Oceans", "OceansLabels", "NationalGeographic", "Gray", "GrayLabels", "DarkGray", "DarkGrayLabels", "Imagery", "ImageryLabels", "ImageryTransportation", "ShadedRelief", "ShadedReliefLabels", "Terrain" or "TerrainLabels"');
+        throw new Error('L.esri.BasemapLayer: Invalid parameter. Use either "Streets", "Topographic", "Oceans", "OceansLabels", "NationalGeographic", "Gray", "GrayLabels", "DarkGray", "DarkGrayLabels", "Imagery", "ImageryLabels", "ImageryTransportation", "ShadedRelief", "ShadedReliefLabels", "Terrain" or "TerrainLabels"');
       }
 
       // merge passed options into the config options
       var tileOptions = L.Util.extend(config.options, options);
 
       // call the initialize method on L.TileLayer to set everything up
-      L.TileLayer.prototype.initialize.call(this, config.urlTemplate, L.Util.setOptions(this, tileOptions));
+      L.TileLayer.prototype.initialize.call(this, L.Util.setOptions(this, tileOptions));
 
       // if this basemap requires dynamic attribution set it up
       if(config.attributionUrl){

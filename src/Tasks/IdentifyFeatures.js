@@ -47,6 +47,6 @@ EsriLeaflet.Tasks.IdentifyFeatures = EsriLeaflet.Tasks.Identify.extend({
 
 });
 
-EsriLeaflet.Tasks.identifyFeatures = function(url, params){
-  return new EsriLeaflet.Tasks.IdentifyFeatures(url, params);
+EsriLeaflet.Tasks.identifyFeatures = function(params){
+  return new EsriLeaflet.Tasks.IdentifyFeatures(params);
 };

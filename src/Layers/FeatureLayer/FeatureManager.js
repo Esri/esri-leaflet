@@ -21,14 +21,15 @@
      * Constructor
      */
 
-    initialize: function (url, options) {
+    initialize: function (options) {
       EsriLeaflet.Layers.FeatureGrid.prototype.initialize.call(this, options);
 
       options = L.setOptions(this, options);
 
-      this.url = EsriLeaflet.Util.cleanUrl(url);
+      //not sure if you can do this
+      options.url = EsriLeaflet.Util.cleanUrl(options.url);
 
-      this._service = new EsriLeaflet.Services.FeatureLayer(this.url, options);
+      this._service = new EsriLeaflet.Services.FeatureLayer(options);
 
       //use case insensitive regex to look for common fieldnames used for indexing
       /*global console */
