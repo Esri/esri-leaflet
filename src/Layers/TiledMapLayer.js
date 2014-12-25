@@ -3,9 +3,9 @@ EsriLeaflet.Layers.TiledMapLayer = L.TileLayer.extend({
     options = L.Util.setOptions(this, options);
 
     // set the urls
-    this.url = L.esri.Util.cleanUrl(options.url);
+    options.url = L.esri.Util.cleanUrl(options.url);
     this.tileUrl = L.esri.Util.cleanUrl(options.url) + 'tile/{z}/{y}/{x}';
-    this._service = new L.esri.Services.MapService(this.url, options);
+    this._service = new L.esri.Services.MapService(options);
     this._service.on('authenticationrequired requeststart requestend requesterror requestsuccess', this._propagateEvent, this);
 
     //if this is looking at the AGO tiles subdomain insert the subdomain placeholder
