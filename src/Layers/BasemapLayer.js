@@ -199,7 +199,7 @@
       var tileOptions = L.Util.extend(config.options, options);
 
       // call the initialize method on L.TileLayer to set everything up
-      L.TileLayer.prototype.initialize.call(this, L.Util.setOptions(this, tileOptions));
+      L.TileLayer.prototype.initialize.call(this, tileOptions.url, L.Util.setOptions(this, tileOptions));
 
       // if this basemap requires dynamic attribution set it up
       if(config.attributionUrl){

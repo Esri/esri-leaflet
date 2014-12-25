@@ -29,15 +29,14 @@ EsriLeaflet.Tasks.Task = L.Class.extend({
     }
   },
 
-  initialize: function(endpoint, options){
-    // endpoint can be either a url to an ArcGIS Rest Service or an instance of EsriLeaflet.Service
-
-    //not sure if this is right or not
-    if(options.url && endpoint.request){
+  initialize: function(endpoint){
+    // options can be either a url to an ArcGIS Rest Service or an instance of EsriLeaflet.Service
+    if(endpoint.url && endpoint.request){
       this._service = endpoint;
       this.url = endpoint.options.url;
     } else {
-      this.url = EsriLeaflet.Util.cleanUrl(options.url);
+      //this is actually an options object
+      this.url = EsriLeaflet.Util.cleanUrl(endpoint.url);
     }
 
     // clone default params into this object
@@ -51,7 +50,7 @@ EsriLeaflet.Tasks.Task = L.Class.extend({
       }
     }
 
-    L.Util.setOptions(this, options);
+    L.Util.setOptions(this, endpoint.options);
   },
 
   token: function(token){
