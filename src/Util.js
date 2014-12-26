@@ -393,7 +393,7 @@
 
   EsriLeaflet.Util.isArcgisOnline = function(url){
     return (/\.arcgis\.com/g).test(url);
-  }
+  };
 
   EsriLeaflet.Util.geojsonTypeToArcGIS = function (geoJsonType) {
     var arcgisGeometryType;

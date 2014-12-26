@@ -36,9 +36,9 @@ describe('L.esri.Tasks.Query', function () {
 
   var geoJsonPolygon = L.geoJson(rawGeoJsonPolygon);
 
-  var featureLayerUrl = 'http://services.arcgis.com/mock/arcgis/rest/services/MockFeatureService/FeatureServer/0/';
-  var mapServiceUrl = 'http://services.arcgis.com/mock/arcgis/rest/services/MockMapService/MapServer/';
-  var imageServiceUrl = 'http://services.arcgis.com/mock/arcgis/rest/services/MockImageService/ImageServer/';
+  var featureLayerUrl = 'http://gis.example.com/mock/arcgis/rest/services/MockFeatureService/FeatureServer/0/';
+  var mapServiceUrl = 'http://gis.example.com/mock/arcgis/rest/services/MockMapService/MapServer/';
+  var imageServiceUrl = 'http://gis.example.com/mock/arcgis/rest/services/MockImageService/ImageServer/';
 
   var sampleImageServiceQueryResponse = {
     'fieldAliases': {
@@ -739,6 +739,22 @@ describe('L.esri.Tasks.Query', function () {
         done();
     });
 
+    server.respond();
+  });
+
+  it('should query GeoJSON from ArcGIS Online', function(done){
+    task = L.esri.Tasks.query('http://services.arcgis.com/mock/arcgis/rest/services/MockFeatureService/FeatureServer/0/');
+
+    server.respondWith('GET', 'http://services.arcgis.com/mock/arcgis/rest/services/MockFeatureService/FeatureServer/0/query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&f=geojson', JSON.stringify(sampleFeatureCollection));
+
+    var request = task.run(function(error, featureCollection, raw){
+      expect(featureCollection).to.deep.equal(sampleFeatureCollection);
+      expect(raw).to.deep.equal(sampleFeatureCollection);
+      done();
+    });
+
+    expect(request).to.be.an.instanceof(XMLHttpRequest);
+    console.log(request.url);
     server.respond();
   });
 
