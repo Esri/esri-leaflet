@@ -52,7 +52,7 @@ describe('L.esri.Layers.FeatureLayer', function () {
   })];
 
   beforeEach(function(){
-    layer = L.esri.featureLayer('http://services.arcgis.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0', {
+    layer = L.esri.featureLayer('http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0', {
       timeField: 'time',
       pointToLayer: function(feature, latlng){
         return L.circleMarker(latlng);
@@ -63,7 +63,7 @@ describe('L.esri.Layers.FeatureLayer', function () {
   });
 
   it('should fire a createfeature event', function(done){
-    layer = L.esri.featureLayer('http://services.arcgis.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0', {
+    layer = L.esri.featureLayer('http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0', {
       timeField: 'time',
       pointToLayer: function(feature, latlng){
         return L.circleMarker(latlng);
@@ -79,7 +79,7 @@ describe('L.esri.Layers.FeatureLayer', function () {
   });
 
   it('should have an alias at L.esri.Layers.featureLayer', function(){
-    var layer = L.esri.Layers.featureLayer('http://services.arcgis.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0');
+    var layer = L.esri.Layers.featureLayer('http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0');
     expect(layer).to.be.an.instanceof(L.esri.Layers.FeatureLayer);
   });
 
@@ -227,7 +227,7 @@ describe('L.esri.Layers.FeatureLayer', function () {
   });
 
   it('should unbind popups on multi polygon features', function(){
-    layer = L.esri.featureLayer('http://services.arcgis.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0', { timeField: 'time' }).addTo(map);
+    layer = L.esri.featureLayer('http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0', { timeField: 'time' }).addTo(map);
 
     layer.createLayers(multiPolygon);
     layer.bindPopup(function(feature){
@@ -239,7 +239,7 @@ describe('L.esri.Layers.FeatureLayer', function () {
   });
 
   it('should reset style on multi polygon features', function(){
-    layer = L.esri.featureLayer('http://services.arcgis.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0', {
+    layer = L.esri.featureLayer('http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0', {
       style: {
         color: 'black'
       }
@@ -259,7 +259,7 @@ describe('L.esri.Layers.FeatureLayer', function () {
   });
 
   it('should reset to default style on multi polygon features', function(){
-    layer = L.esri.featureLayer('http://services.arcgis.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0').addTo(map);
+    layer = L.esri.featureLayer('http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0').addTo(map);
 
     layer.createLayers(multiPolygon);
 
@@ -294,7 +294,7 @@ describe('L.esri.Layers.FeatureLayer', function () {
 
   it('should run a function against every feature', function(){
     var spy = sinon.spy();
-    layer = L.esri.featureLayer('http://services.arcgis.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0', {
+    layer = L.esri.featureLayer('http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0', {
       onEachFeature: spy
     }).addTo(map);
     layer.createLayers(features);
