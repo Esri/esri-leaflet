@@ -21,10 +21,12 @@ describe('L.esri.Layers.FeatureManager', function () {
   var server;
   var MockLayer;
   var map = createMap();
+  var oldRaf;
 
   beforeEach(function(){
     server = sinon.fakeServer.create();
     sandbox = sinon.sandbox.create();
+    oldRaf = L.esri.Util.requestAnimationFrame;
 
     MockLayer = L.esri.Layers.FeatureManager.extend({
       createLayers: sandbox.spy(),
@@ -36,11 +38,16 @@ describe('L.esri.Layers.FeatureManager', function () {
       timeField: 'Time',
       attribution: 'Esri'
     });
+
+    L.esri.Util.requestAnimationFrame = function(cd){
+      cd();
+    };
   });
 
   afterEach(function(){
     server.restore();
     sandbox.restore();
+    L.esri.Util.requestAnimationFrame = oldRaf;
   });
 
   var fields = [
