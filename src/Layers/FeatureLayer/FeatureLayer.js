@@ -4,6 +4,10 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
     EVENTS: 'click dblclick mouseover mouseout mousemove contextmenu popupopen popupclose'
   },
 
+  options: {
+    cacheLayers: true
+  },
+
   /**
    * Constructor
    */
