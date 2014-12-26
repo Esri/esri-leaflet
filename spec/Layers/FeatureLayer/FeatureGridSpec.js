@@ -45,10 +45,10 @@ describe('L.esri.Layers.FeatureGrid', function () {
     map.zoomIn();
     clock.tick(1000);
     expect(grid.cellLeave.getCall(0).args[1].equals(L.point([0,0]))).to.equal(true);
-    expect(grid.createCell.getCall(1).args[1].equals(L.point([0,0]))).to.equal(true);
-    expect(grid.createCell.getCall(2).args[1].equals(L.point([1,0]))).to.equal(true);
-    expect(grid.createCell.getCall(3).args[1].equals(L.point([0,1]))).to.equal(true);
-    expect(grid.createCell.getCall(4).args[1].equals(L.point([1,1]))).to.equal(true);
+    expect(grid.createCell.getCall(1).args[1].equals(L.point([0,-1]))).to.equal(true);
+    expect(grid.createCell.getCall(2).args[1].equals(L.point([-1,0]))).to.equal(true);
+    expect(grid.createCell.getCall(3).args[1].equals(L.point([1,0]))).to.equal(true);
+    expect(grid.createCell.getCall(4).args[1].equals(L.point([0,1]))).to.equal(true);
   });
 
   it('should create cells when the map is panned', function(){

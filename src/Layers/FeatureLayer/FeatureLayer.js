@@ -23,11 +23,13 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
    */
 
   onAdd: function(map){
+    map.on('zoomstart zoomend', function(e){
+      this._zooming = (e.type === 'zoomstart');
+    }, this);
     return EsriLeaflet.Layers.FeatureManager.prototype.onAdd.call(this, map);
   },
 
   onRemove: function(map){
-
     for (var i in this._layers) {
       map.removeLayer(this._layers[i]);
     }
@@ -135,6 +137,53 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
       if(layer && permanent){
         delete this._layers[id];
       }
+    }
+  },
+
+  cellEnter: function(bounds, coords){
+    if(!this._zooming){
+      EsriLeaflet.Util.requestAnimationFrame(L.Util.bind(function(){
+        var cacheKey = this._cacheKey(coords);
+        var cellKey = this._cellCoordsToKey(coords);
+        var layers = this._cache[cacheKey];
+        if(this._activeCells[cellKey] && layers){
+          this.addLayers(layers);
+        }
+      }, this));
+    }
+  },
+
+  cellLeave: function(bounds, coords){
+    if(!this._zooming){
+      EsriLeaflet.Util.requestAnimationFrame(L.Util.bind(function(){
+        var i;
+        var cacheKey = this._cacheKey(coords);
+        var cellKey = this._cellCoordsToKey(coords);
+        var layers = this._cache[cacheKey];
+        var mapBounds = this._map.getBounds();
+        if(!this._activeCells[cellKey] && layers){
+          for (i = layers.length - 1; i >= 0; i--) {
+            var layer = this.getFeature(layers[i]);
+            if(layer){
+              var hasLayer = this._map.hasLayer(layer);
+              var hadBounds = layer.getBounds;
+              var boundsInMap = mapBounds.intersects(layer.getBounds());
+              if(this._map.hasLayer(layer) && (!hadBounds || !(hadBounds && boundsInMap))){
+                this._map.removeLayer(layer);
+              }
+            }
+          }
+
+          if(!this.options.cacheLayers){
+            for (i = layers.length - 1; i >= 0; i--) {
+              delete this._layers[layers[i]];
+            }
+            delete this._cache[cacheKey];
+            delete this._cells[cellKey];
+            delete this._activeCells[cellKey];
+          }
+        }
+      }, this));
     }
   },
 
