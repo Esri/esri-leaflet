@@ -1,5 +1,12 @@
 (function(EsriLeaflet){
 
+  // normalize request animation frame
+  var raf = window.requestAnimationFrame ||
+     window.webkitRequestAnimationFrame ||
+     window.mozRequestAnimationFrame ||
+     window.msRequestAnimationFrame ||
+     function(cb) { return window.setTimeout(cb, 1000 / 60); };
+
   // shallow object clone for feature properties and attributes
   // from http://jsperf.com/cloning-an-object/2
   function clone(obj) {
@@ -391,6 +398,10 @@
     return url;
   };
 
+  EsriLeaflet.Util.isArcgisOnline = function(url){
+    return (/\.arcgis\.com/g).test(url);
+  };
+
   EsriLeaflet.Util.geojsonTypeToArcGIS = function (geoJsonType) {
     var arcgisGeometryType;
     switch (geoJsonType) {
@@ -415,5 +426,7 @@
     }
     return arcgisGeometryType;
   };
+
+  EsriLeaflet.Util.requestAnimationFrame = L.Util.bind(raf, window);
 
 })(EsriLeaflet);
