@@ -47,7 +47,8 @@ describe('L.esri.Layers.DynamicMapLayer', function () {
     server.respondWith('GET',new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png24&transparent=true&bboxSR=3857&imageSR=3857&f=json/), JSON.stringify({
       href: 'http://placehold.it/500&text=Image1'
     }));
-    layer = L.esri.dynamicMapLayer(url, {
+    layer = L.esri.dynamicMapLayer({
+      url: url,
       f: 'json'
     });
     map = createMap();
@@ -60,11 +61,12 @@ describe('L.esri.Layers.DynamicMapLayer', function () {
   });
 
  it('should have a L.esri.Layers.dynamicMapLayer alias', function(){
-    expect(L.esri.Layers.dynamicMapLayer(url)).to.be.instanceof(L.esri.Layers.DynamicMapLayer);
+    expect(L.esri.Layers.dynamicMapLayer({url: url})).to.be.instanceof(L.esri.Layers.DynamicMapLayer);
   });
 
  it('should display an attribution if one was passed', function(){
-    L.esri.Layers.dynamicMapLayer(url, {
+    L.esri.Layers.dynamicMapLayer({
+      url: url,
       attribution: 'Esri'
     }).addTo(map);
 
@@ -282,7 +284,7 @@ describe('L.esri.Layers.DynamicMapLayer', function () {
   });
 
   it('should be able to request an image directly from the export service', function(){
-    layer = L.esri.dynamicMapLayer(url);
+    layer = L.esri.dynamicMapLayer({url: url});
     var spy = sinon.spy(layer, '_renderImage');
     layer.addTo(map);
     expect(spy.getCall(0).args[0]).to.match(new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png24&transparent=true&bboxSR=3857&imageSR=3857&f=image/));

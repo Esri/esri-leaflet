@@ -341,7 +341,7 @@ describe('L.esri.Tasks.IdentifyImage', function () {
 
   beforeEach(function(){
     server = sinon.fakeServer.create();
-    task = L.esri.Tasks.identifyImage(url).at(latlng);
+    task = L.esri.Tasks.identifyImage({url: url}).at(latlng);
   });
 
   afterEach(function(){

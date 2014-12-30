@@ -9,9 +9,10 @@ EsriLeaflet.Layers.DynamicMapLayer = EsriLeaflet.Layers.RasterLayer.extend({
     transparent: true
   },
 
-  initialize: function (url, options) {
-    this.url = EsriLeaflet.Util.cleanUrl(url);
-    this._service = new EsriLeaflet.Services.MapService(this.url, options);
+  initialize: function (options) {
+    //this.url = EsriLeaflet.Util.cleanUrl(url);
+    options.url = EsriLeaflet.Util.cleanUrl(options.url);
+    this._service = new EsriLeaflet.Services.MapService(options);
     this._service.on('authenticationrequired requeststart requestend requesterror requestsuccess', this._propagateEvent, this);
     L.Util.setOptions(this, options);
   },
@@ -126,17 +127,17 @@ EsriLeaflet.Layers.DynamicMapLayer = EsriLeaflet.Layers.RasterLayer.extend({
       }, this);
     } else {
       params.f = 'image';
-      this._renderImage(this.url + 'export' + L.Util.getParamString(params), bounds);
+      this._renderImage(this.options.url + 'export' + L.Util.getParamString(params), bounds);
     }
   }
 });
 
 EsriLeaflet.DynamicMapLayer = EsriLeaflet.Layers.DynamicMapLayer;
 
-EsriLeaflet.Layers.dynamicMapLayer = function(url, options){
-  return new EsriLeaflet.Layers.DynamicMapLayer(url, options);
+EsriLeaflet.Layers.dynamicMapLayer = function(options){
+  return new EsriLeaflet.Layers.DynamicMapLayer(options);
 };
 
-EsriLeaflet.dynamicMapLayer = function(url, options){
-  return new EsriLeaflet.Layers.DynamicMapLayer(url, options);
+EsriLeaflet.dynamicMapLayer = function(options){
+  return new EsriLeaflet.Layers.DynamicMapLayer(options);
 };

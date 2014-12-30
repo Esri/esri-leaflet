@@ -98,7 +98,7 @@ describe('L.esri.Tasks.Find', function () {
 
   beforeEach(function(){
     server = sinon.fakeServer.create();
-    task = L.esri.Tasks.find(url);
+    task = L.esri.Tasks.find({url: url});
   });
 
   afterEach(function(){
@@ -180,7 +180,7 @@ describe('L.esri.Tasks.Find', function () {
   });
 
   it('should use a service to execute the find task', function(done){
-    var service = L.esri.Services.mapService(url);
+    var service = L.esri.Services.mapService({url: url});
 
     server.respondWith('GET', url + 'find?sr=4326&contains=true&returnGeometry=true&returnZ=true&returnM=false&layers=0&searchText=Site&f=json', JSON.stringify(sampleResponse));
 
@@ -196,7 +196,10 @@ describe('L.esri.Tasks.Find', function () {
   });
 
   it('should use JSONP to execute without a service', function(done){
-    var myTask = L.esri.Tasks.find(url, {useCors:false});
+    var myTask = L.esri.Tasks.find({
+      url: url,
+      useCors:false
+    });
 
     var request = myTask.layers('0').text('Site').run(function(error, featureCollection, raw){
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);

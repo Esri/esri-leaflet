@@ -89,6 +89,6 @@ EsriLeaflet.Tasks.IdentifyImage = EsriLeaflet.Tasks.Identify.extend({
 
 });
 
-EsriLeaflet.Tasks.identifyImage = function(url, params){
-  return new EsriLeaflet.Tasks.IdentifyImage(url, params);
+EsriLeaflet.Tasks.identifyImage = function(params){
+  return new EsriLeaflet.Tasks.IdentifyImage(params);
 };

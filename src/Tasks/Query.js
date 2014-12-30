@@ -225,6 +225,6 @@ EsriLeaflet.Tasks.Query = EsriLeaflet.Tasks.Task.extend({
   }
 });
 
-EsriLeaflet.Tasks.query = function(url, params){
-  return new EsriLeaflet.Tasks.Query(url, params);
+EsriLeaflet.Tasks.query = function(params){
+  return new EsriLeaflet.Tasks.Query(params);
 };
