@@ -49,7 +49,7 @@ EsriLeaflet.Tasks.Task = L.Class.extend({
       }
     }
 
-    L.Util.setOptions(this, options);
+    L.Util.setOptions(this, endpoint);
   },
 
   token: function(token){
