@@ -81,7 +81,8 @@ describe('L.esri.Layers.FeatureLayer', function () {
   });
 
   it('should have an alias at L.esri.Layers.featureLayer', function(){
-    var layer = L.esri.Layers.featureLayer('http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0');
+    var layer = L.esri.Layers.featureLayer({
+      url: 'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0'});
     expect(layer).to.be.an.instanceof(L.esri.Layers.FeatureLayer);
   });
 

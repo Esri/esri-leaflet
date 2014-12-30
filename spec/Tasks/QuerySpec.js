@@ -743,7 +743,7 @@ describe('L.esri.Tasks.Query', function () {
   });
 
   it('should query GeoJSON from ArcGIS Online', function(done){
-    task = L.esri.Tasks.query('http://services.arcgis.com/mock/arcgis/rest/services/MockFeatureService/FeatureServer/0/');
+    task = L.esri.Tasks.query({url: 'http://services.arcgis.com/mock/arcgis/rest/services/MockFeatureService/FeatureServer/0/'});
 
     server.respondWith('GET', 'http://services.arcgis.com/mock/arcgis/rest/services/MockFeatureService/FeatureServer/0/query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&f=geojson', JSON.stringify(sampleFeatureCollection));
 
