@@ -162,22 +162,20 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
         var layers = this._cache[cacheKey];
         var mapBounds = this._map.getBounds();
         if(!this._activeCells[cellKey] && layers){
-          for (i = layers.length - 1; i >= 0; i--) {
-            var layer = this.getFeature(layers[i]);
-            if(layer){
-              var hasLayer = this._map.hasLayer(layer);
-              var hadBounds = layer.getBounds;
-              var boundsInMap = mapBounds.intersects(layer.getBounds());
-              if(this._map.hasLayer(layer) && (!hadBounds || !(hadBounds && boundsInMap))){
-                this._map.removeLayer(layer);
-              }
+          var removable = true;
+
+          for (var i = 0; i < layers.length; i++) {
+            var layer = this._layers[layers[i]];
+            if(layer && layer.getBounds && mapBounds.intersects(layer.getBounds())){
+              removable = false;
             }
+          };
+
+          if(removable){
+            this.removeLayers(layers, !this.options.cacheLayers);
           }
 
-          if(!this.options.cacheLayers){
-            for (i = layers.length - 1; i >= 0; i--) {
-              delete this._layers[layers[i]];
-            }
+          if(!this.options.cacheLayers && removable){
             delete this._cache[cacheKey];
             delete this._cells[cellKey];
             delete this._activeCells[cellKey];

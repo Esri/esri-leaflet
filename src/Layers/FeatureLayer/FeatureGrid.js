@@ -93,19 +93,20 @@ EsriLeaflet.Layers.FeatureGrid = L.Class.extend({
     var bounds = this._map.getPixelBounds(),
         zoom = this._map.getZoom(),
         cellSize = this._getCellSize(),
-        cellPadding = this._map.getSize().divideBy(2);
-        // cellPadding = [cellSize/2, cellSize/2];
+        cellPadding = [0,0]
 
     if (zoom > this.options.maxZoom ||
         zoom < this.options.minZoom) { return; }
 
     // cell coordinates range for the current view
-    var cellBounds = L.bounds(
-      bounds.min.subtract(cellPadding).divideBy(cellSize).floor(),
-      bounds.max.add(cellPadding).divideBy(cellSize).floor());
+    topLeft = bounds.min.subtract(cellPadding).divideBy(cellSize).floor();
 
+    topLeft.x = (topLeft.x) > 0 ? 0 : topLeft.x;
+    topLeft.y = (topLeft.y) > 0 ? 0 : topLeft.y;
 
-  // remove any present cells that are off the specified bounds
+    var cellBounds = L.bounds(topLeft, bounds.max.add(cellPadding).divideBy(cellSize).floor());
+
+    // remove any present cells that are off the specified bounds
     this._removeOtherCells(cellBounds);
     this._addCells(cellBounds);
   },
