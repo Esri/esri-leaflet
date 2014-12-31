@@ -7,11 +7,11 @@
 <head>
   <meta charset="utf-8">
 
-  
-    <title>L.esri.Tasks.IdentifyFeatures | Esri Leaflet</title>
-  
 
-  
+    <title>L.esri.Tasks.IdentifyFeatures | Esri Leaflet</title>
+
+
+
 
   <meta name="description" content="Esri Leaflet">
   <meta name="viewport" content="width=device-width">
@@ -60,10 +60,10 @@
     </div>
     <div id="background-map" class="background-map"></div>
 
-  
+
 
 <div class="container white">
-  
+
 
 <aside class="sidebar">
   <h5>L.esri</h5>
@@ -98,6 +98,7 @@
     <a href="../../../../esri-leaflet/api-reference/tasks/identify-image.html">Identify Image</a>
     <a href="../../../../esri-leaflet/api-reference/tasks/query.html">Query</a>
     <a href="../../../../esri-leaflet/api-reference/tasks/find.html">Find</a>
+    <a href="../../../../esri-leaflet/api-reference/tasks/task.html">Task</a>
   </nav>
 
   <h5>Misc.</h5>
@@ -123,7 +124,7 @@
             <code>L.esri.Tasks.identifyFeatures(<nobr class="param"><span>&lt;<a href="../../api-reference/services/map-service.html">MapService</a>&gt;</span> <code>endpoint</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br>
             <code>new L.esri.Tasks.IdentifyFeatures(<nobr class="param"><span>&lt;String&gt;</span> <code>endpoint</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br>
             <code>L.esri.Tasks.identifyFeatures(<nobr class="param"><span>&lt;String&gt;</span> <code>endpoint</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br></td>
-            <td>The <code>endpoint</code> parameter is the service that you want to identify either an  ArcGIS Server or ArcGIS Online service. You can also pass the URL to a service directly as a string. See <a href="#service-urls">service URLs</a> for more information on how to find these URLs.</td>
+            <td>The <code>endpoint</code> parameter is the ArcGIS Server or ArcGIS Online service that you want to identify features in. Alternatively, you can also pass the URL to a service directly within options. See <a href="#service-urls">service URLs</a> for more information on how to find these URLs.</td>
         </tr>
     </tbody>
 </table>
@@ -140,16 +141,22 @@
 </thead>
 <tbody>
 <tr>
+<td><code>url</code></td>
+<td><code>String</code></td>
+<td><code></code></td>
+<td>URL of the ArcGIS Server or ArcGIS Online service you would like to consume.</td>
+</tr>
+<tr>
 <td><code>proxy</code></td>
 <td><code>String</code></td>
 <td><code>false</code></td>
-<td>URL of an <a href="https://developers.arcgis.com/javascript/jshelp/ags_proxy.html">ArcGIS API for JavaScript proxies</a> or <a href="https://github.com/Esri/resource-proxy">ArcGIS Resource Proxies</a> to use for proxying POST requests.</td>
+<td>URL of an <a href="https://developers.arcgis.com/javascript/jshelp/ags_proxy.html">ArcGIS API for JavaScript proxy</a> or <a href="https://github.com/Esri/resource-proxy">ArcGIS Resource Proxy</a> to use for proxying POST requests.</td>
 </tr>
 <tr>
 <td><code>useCors</code></td>
 <td><code>Boolean</code></td>
 <td><code>true</code></td>
-<td>If this service should use CORS when making GET requests.</td>
+<td>If this task should use CORS when making GET requests.</td>
 </tr>
 </tbody>
 </table>
