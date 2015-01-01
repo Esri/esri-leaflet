@@ -4,14 +4,14 @@
 
 #### Breaking Changes
 
-* All Task and Service constructors now accept `url` as a value within options, rather than as a seperate  [#420](https://github.com/Esri/esri-leaflet/issues/420)
+* All `Task` and `Service` constructors now accept `url` as a value within options, rather than as a seperate parameter. [#420](https://github.com/Esri/esri-leaflet/issues/420)
 
 #### Changes
 
 * Fixed bug duplicate Esri logo bug [#427](https://github.com/Esri/esri-leaflet/issues/427)
 * GeoJSON is now requested directly from ArcGIS Online Hosted Feature Services [#418](https://github.com/Esri/esri-leaflet/issues/418)
 * other FeatureLayer performance improvements [#416](https://github.com/Esri/esri-leaflet/issues/416)
-* minZoom, maxZoom, [#413](https://github.com/Esri/esri-leaflet/issues/413) and cacheLayers were added as new FeatureLayer constructor options
+* `minZoom`, `maxZoom`, [#413](https://github.com/Esri/esri-leaflet/issues/413) and `cacheLayers` were added as new FeatureLayer constructor options
 * default fill is now specified for multipolygons [#406](https://github.com/Esri/esri-leaflet/issues/406)
 * dark gray basemap now utilizes our new production service [#399](https://github.com/Esri/esri-leaflet/issues/399)
 
@@ -32,7 +32,7 @@
 * Fixed a bug with `DynamicMapLayer` still rendering after being removed from the map. [#386](https://github.com/Esri/esri-leaflet/issues/386)
 * Fixed 404s on example site.
 * Fixed setting sr param on `L.esri.Tasks.Find` [#379](https://github.com/Esri/esri-leaflet/issues/379)
-* bower install esri-leaflet now works properly.
+* `bower install esri-leaflet` now works properly.
 
 ## Release Candidate 2
 
