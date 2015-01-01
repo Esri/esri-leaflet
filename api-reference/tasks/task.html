@@ -108,8 +108,8 @@
 </aside>
 
 <div class="main-content">
-  <h1 id="l-esri-service">L.esri.Services.Service</h1>
-<p>A generic class representing a hosted resource on ArcGIS Online or ArcGIS Server. This class can be extended to provide support for making requests as well as a standard for authentication and proxying.</p>
+  <h1 id="l-esri-service">L.esri.Tasks.Task</h1>
+<p>A generic class that provides the foundation for calling operations on ArcGIS Online and ArcGIS Server Services like query, find and identify.</p>
 <h3 id="constructor">Constructor</h3>
 <table>
     <thead>
@@ -120,7 +120,7 @@
     </thead>
     <tbody>
         <tr>
-            <td><code class="nobr">new L.esri.Services.Service(<nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br><code class="nobr">L.esri.Services.service(<nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code></td>
+            <td><code class="nobr">new L.esri.Tasks.Task(<nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br><code class="nobr">L.esri.Tasks.task(<nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code></td>
             <td>Options includes a <code>url</code> parameter which refers to the ArcGIS Server or ArcGIS Online service you would like to consume.</td>
         </tr>
     </tbody>
@@ -147,50 +147,13 @@
 <td><code>proxy</code></td>
 <td><code>String</code></td>
 <td><code>false</code></td>
-<td>URL of an <a href="https://developers.arcgis.com/javascript/jshelp/ags_proxy.html">ArcGIS API for JavaScript proxies</a> or <a href="https://github.com/Esri/resource-proxy">ArcGIS Resource Proxies</a> to use for proxying POST requests.</td>
+<td>URL of an <a href="https://developers.arcgis.com/javascript/jshelp/ags_proxy.html">ArcGIS API for JavaScript proxy</a> or <a href="https://github.com/Esri/resource-proxy">ArcGIS Resource Proxy</a> to use for proxying POST requests.</td>
 </tr>
 <tr>
 <td><code>useCors</code></td>
 <td><code>Boolean</code></td>
 <td><code>true</code></td>
-<td>If this service should use CORS when making GET requests.</td>
-</tr>
-</tbody>
-</table>
-<h3 id="events">Events</h3>
-<table>
-<thead>
-<tr>
-<th>Event</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>requeststart</code></td>
-<td><a href="../../../../esri-leaflet/api-reference/events.html#request-event">&lt;<code>RequestEvent</code>&gt;</a></td>
-<td>Fired when a request to the service begins.</td>
-</tr>
-<tr>
-<td><code>requestend</code></td>
-<td><a href="../../../../esri-leaflet/api-reference/events.html#request-event">&lt;<code>RequestEvent</code>&gt;</a></td>
-<td>Fired when a request to the service ends.</td>
-</tr>
-<tr>
-<td><code>requestsuccess</code></td>
-<td><a href="../../../../esri-leaflet/api-reference/events.html#request-success-event">&lt;<code>RequestSuccessEvent</code>&gt;</a></td>
-<td>Fired when a request to the service was successful.</td>
-</tr>
-<tr>
-<td><code>requesterror</code></td>
-<td><a href="../../../../esri-leaflet/api-reference/events.html#request-error-event">&lt;<code>RequestErrorEvent</code>&gt;</a></td>
-<td>Fired when a request to the service responsed with an error.</td>
-</tr>
-<tr>
-<td><code>authenticationrequired</code></td>
-<td><a href="../../../../esri-leaflet/api-reference/events.html#authentication-event">&lt;<code>AuthenticationEvent</code>&gt;</a></td>
-<td>This will be fired when a request to the service fails and requires authentication. See <a href="#working-with-authenticated-services">working with authenticated services</a> for more information.</td>
+<td>If this task should use CORS when making GET requests.</td>
 </tr>
 </tbody>
 </table>
@@ -205,24 +168,14 @@
     </thead>
     <tbody>
         <tr>
-            <td><code>get(<nobr class="param"><span>&lt;String&gt;</span> <code>url</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>params</code></nobr>, <nobr class="param"><span>&lt;Function&gt;</span> <code>callback</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>context</code></nobr>)</code></td>
+            <td><code>request(<nobr class="param"><span>&lt;String&gt;</span> <code>url</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>params</code></nobr>, <nobr class="param"><span>&lt;Function&gt;</span> <code>callback</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>context</code></nobr>)</code></td>
             <td><code>this</code></td>
-            <td>Makes a GET request to the service. The service's URL will be combined with the <code>path</code> option and parameters will be serialized to a query string. Accepts an optional function context for the callback.</td>
+            <td>Makes a request to the associated service. The service's URL will be combined with the <code>path</code> option and parameters will be serialized. Accepts an optional function context for the callback.</td>
         </tr>
         <tr>
-            <td><code>post(<nobr class="param"><span>&lt;String&gt;</span> <code>url</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>params</code></nobr>, <nobr class="param"><span>&lt;Function&gt;</span> <code>callback</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>context</code></nobr>)</code></td>
+            <td><code>token(<nobr class="param"><span>&lt;String&gt;</span> <code>token</code></nobr>)</code></td>
             <td><code>this</code></td>
-            <td>Makes a POST request to the service. The service's URL will be combined with the <code>path</code> option and parameters will be serialized. Accepts an optional function context for the callback.</td>
-        </tr>
-        <tr>
-            <td><code>metadata(<nobr class="param"><span>&lt;Function&gt;</span> <code>callback</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>context</code></nobr>)</code></td>
-            <td><code>this</code></td>
-            <td>Requests the metadata about the service. This is an alias for get(&quot;/&quot;, {}, callback, context).</td>
-        </tr>
-        <tr>
-            <td><code>authenticate(<nobr class="param"><span>&lt;String&gt;</span> <code>token</code></nobr>)</code></td>
-            <td><code>this</code></td>
-            <td>Authenticates this service with a new token and runs any pending requests that required a token.</td>
+            <td>Adds a token to this request if the service requires authentication. Will be added automatically if used with a service.</td>
         </tr>
     </tbody>
 </table>

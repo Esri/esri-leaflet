@@ -7,11 +7,11 @@
 <head>
   <meta charset="utf-8">
 
-  
-    <title>L.esri.Layers.FeatureLayer | Esri Leaflet</title>
-  
 
-  
+    <title>L.esri.Layers.FeatureLayer | Esri Leaflet</title>
+
+
+
 
   <meta name="description" content="Esri Leaflet">
   <meta name="viewport" content="width=device-width">
@@ -60,10 +60,10 @@
     </div>
     <div id="background-map" class="background-map"></div>
 
-  
+
 
 <div class="container white">
-  
+
 
 <aside class="sidebar">
   <h5>L.esri</h5>
@@ -98,6 +98,7 @@
     <a href="../../../../esri-leaflet/api-reference/tasks/identify-image.html">Identify Image</a>
     <a href="../../../../esri-leaflet/api-reference/tasks/query.html">Query</a>
     <a href="../../../../esri-leaflet/api-reference/tasks/find.html">Find</a>
+    <a href="../../../../esri-leaflet/api-reference/tasks/task.html">Task</a>
   </nav>
 
   <h5>Misc.</h5>
@@ -115,7 +116,7 @@
 <p>This particular service contains only one Feature Layer. Here is the Feature Layer URL </p>
 <pre><code>http://services.arcgis.com/rOo16HdIMeOBI4Mb/ArcGIS/rest/services/Neighborhoods_pdx/FeatureServer/0</code></pre>
 <p>Note that the Feature Layer URL ends in <code>/FeatureServer/{LAYER_ID}</code>.</p>
-<p>You can create a new empty feature service witha  single layer on the <a href="https://developers.arcgis.com/en/hosted-data/#/new">ArcGIS for Devleopers website</a> or you can use ArcGIS Online to <a href="https://developers.arcgis.com/tools/csv-to-feature-service/">create a Feature Service from a CSV or Shapefile</a>.</p>
+<p>You can create a new empty feature service with a single layer on the <a href="https://developers.arcgis.com/en/hosted-data/#/new">ArcGIS for Developers website</a> or you can use ArcGIS Online to <a href="https://developers.arcgis.com/tools/csv-to-feature-service/">create a Feature Service from a CSV or Shapefile</a>.</p>
 <h3 id="constructor">Constructor</h3>
 <table>
     <thead>
@@ -127,7 +128,7 @@
     <tbody>
         <tr>
             <td><code class="nobr">new L.esri.Layers.FeatureLayer(<nobr class="param"><span>&lt;String&gt;</span> <code>url</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br><code class="nobr">L.esri.Layers.featureLayer(<nobr class="param"><span>&lt;String&gt;</span> <code>url</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br><code class="nobr">new L.esri.FeatureLayer(<nobr class="param"><span>&lt;String&gt;</span> <code>url</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br><code class="nobr">L.esri.featureLayer(<nobr class="param"><span>&lt;String&gt;</span> <code>url</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code></td>
-            <td><code>url</code> should be the URL to the Feature Layer.</td>
+            <td>URL of the Feature Layer.</td>
         </tr>
     </tbody>
 </table>
@@ -196,6 +197,21 @@
             <td><code>precision</code></td>
             <td><code>Integer</code></td>
             <td>How many digits of precision to request from the server. <a href="http://en.wikipedia.org/wiki/Decimal_degrees">Wikipedia</a> has a great reference of digit precision to meters.</td>
+        </tr>
+        <tr>
+            <td><code>minZoom</code></td>
+            <td><code>Integer</code></td>
+            <td>Minimum zoom level of the map that features will display. example:  <code>minZoom:0</code></td>
+        </tr>
+        <tr>
+            <td><code>maxZoom</code></td>
+            <td><code>Integer</code></td>
+            <td>Maximum zoom level of the map that features will display. example:  <code>maxZoom:19</code></td>
+        </tr>
+        <tr>
+            <td><code>cacheLayers</code></td>
+            <td><code>true</code></td>
+            <td>turning off caching for features outside the viewport will preserve memory</td>
         </tr>
         <tr>
             <td><code>token</code></td>
