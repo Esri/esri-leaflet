@@ -2,9 +2,9 @@ EsriLeaflet.Tasks.Query = EsriLeaflet.Tasks.Task.extend({
   setters: {
     'offset': 'offset',
     'limit': 'limit',
-    'outFields': 'fields[]',
+    'fields': 'outFields',
     'precision': 'geometryPrecision',
-    'featureIds': 'objectIds[]',
+    'featureIds': 'objectIds',
     'returnGeometry': 'returnGeometry',
     'token': 'token'
   },
@@ -57,7 +57,7 @@ EsriLeaflet.Tasks.Query = EsriLeaflet.Tasks.Task.extend({
   // only valid for Feature Services running on ArcGIS Server 10.3 or ArcGIS Online
   nearby: function(latlng, radius){
     latlng = L.latLng(latlng);
-    this.params.geometry = ([latlng.lng,latlng.lat]).join(',');
+    this.params.geometry = [latlng.lng, latlng.lat];
     this.params.geometryType = 'esriGeometryPoint';
     this.params.spatialRel = 'esriSpatialRelIntersects';
     this.params.units = 'esriSRUnit_Meter';
@@ -72,16 +72,7 @@ EsriLeaflet.Tasks.Query = EsriLeaflet.Tasks.Task.extend({
   },
 
   between: function(start, end){
-    this.params.time = ([start.valueOf(), end.valueOf()]).join();
-    return this;
-  },
-
-  fields: function (fields) {
-    if (L.Util.isArray(fields)) {
-      this.params.outFields = fields.join(',');
-    } else {
-      this.params.outFields = fields;
-    }
+    this.params.time = [start.valueOf(), end.valueOf()];
     return this;
   },
 
@@ -98,24 +89,20 @@ EsriLeaflet.Tasks.Query = EsriLeaflet.Tasks.Task.extend({
     return this;
   },
 
-  returnGeometry: function(bool){
-    this.params.returnGeometry = bool;
-    return this;
-  },
-
   run: function(callback, context){
     this._cleanParams();
 
     // if the service is hosted on arcgis online request geojson directly
-    if(EsriLeaflet.Util.isArcgisOnline(this.url)){
+    if(EsriLeaflet.Util.isArcgisOnline(this.options.url)){
       this.params.f = 'geojson';
-      return this.request(function queryCallback(error, response){
+
+      return this.request(function(error, response){
         callback.call(context, error, response, response);
       }, context);
 
     // otherwise convert it in the callback then pass it on
     } else {
-      return this.request(function queryCallback(error, response){
+      return this.request(function(error, response){
         callback.call(context, error, (response && EsriLeaflet.Util.responseToFeatureCollection(response)), response);
       }, context);
     }
@@ -149,7 +136,7 @@ EsriLeaflet.Tasks.Query = EsriLeaflet.Tasks.Task.extend({
   // only valid for image services
   pixelSize: function(point){
     point = L.point(point);
-    this.params.pixelSize = ([point.x,point.y]).join(',');
+    this.params.pixelSize = [point.x,point.y];
     return this;
   },
 

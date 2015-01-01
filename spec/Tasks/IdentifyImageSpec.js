@@ -409,11 +409,13 @@ describe('L.esri.Tasks.IdentifyImage', function () {
   });
 
   it('should identify a pixel value with a pixel size array', function(done){
-    var pixelSize = [15,15];
+    var pixelSize = [15, 15];
+
     server.respondWith('GET', imageServiceUrl + 'identify?returnGeometry=false&geometry=%7B%22x%22%3A-122.66%2C%22y%22%3A45.51%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPoint&pixelSize=15%2C15&f=json', JSON.stringify(sampleResponse));
 
     task.setPixelSize(pixelSize);
-    expect(task.getPixelSize()).to.equal('15,15');
+
+    expect(task.getPixelSize()).to.equal(pixelSize);
 
     task.run(function(error, results, raw){
       expect(results).to.deep.equal(sampleResults);
@@ -426,6 +428,7 @@ describe('L.esri.Tasks.IdentifyImage', function () {
 
   it('should identify a pixel value with a pixel size string', function(done){
     var pixelSize = '1,1';
+
     server.respondWith('GET', imageServiceUrl + 'identify?returnGeometry=false&geometry=%7B%22x%22%3A-122.66%2C%22y%22%3A45.51%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPoint&pixelSize=1%2C1&f=json', JSON.stringify(sampleResponse));
 
     task.setPixelSize(pixelSize);

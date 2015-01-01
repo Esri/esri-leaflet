@@ -198,7 +198,7 @@ describe('L.esri.Tasks.Find', function () {
   it('should use JSONP to execute without a service', function(done){
     var myTask = L.esri.Tasks.find({
       url: mapServiceUrl,
-      useCors:false
+      useCors: false
     });
 
     var request = myTask.layers('0').text('Site').run(function(error, featureCollection, raw){
