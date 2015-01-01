@@ -24,11 +24,15 @@
     initialize: function (url, options) {
       EsriLeaflet.Layers.FeatureGrid.prototype.initialize.call(this, options);
 
+      if (!options){
+        var options = {};
+      }
+      options.url = EsriLeaflet.Util.cleanUrl(url);
       options = L.setOptions(this, options);
 
-      this.url = EsriLeaflet.Util.cleanUrl(url);
+      //this.url = EsriLeaflet.Util.cleanUrl(url);
 
-      this._service = new EsriLeaflet.Services.FeatureLayer(this.url, options);
+      this._service = new EsriLeaflet.Services.FeatureLayer(options);
 
       //use case insensitive regex to look for common fieldnames used for indexing
       /*global console */
