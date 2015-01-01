@@ -754,7 +754,7 @@ describe('L.esri.Tasks.Query', function () {
     });
 
     expect(request).to.be.an.instanceof(XMLHttpRequest);
-    console.log(request.url);
+
     server.respond();
   });
 

@@ -14,11 +14,8 @@ EsriLeaflet.Layers.ImageMapLayer = EsriLeaflet.Layers.RasterLayer.extend({
   },
 
   initialize: function (url, options) {
-    if (!options){
-      var options = {};
-    }
+    options = options || {};
     options.url = EsriLeaflet.Util.cleanUrl(url);
-    this.url = EsriLeaflet.Util.cleanUrl(url);
     this._service = new EsriLeaflet.Services.ImageService(options);
     this._service.on('authenticationrequired requeststart requestend requesterror requestsuccess', this._propagateEvent, this);
     L.Util.setOptions(this, options);
@@ -179,7 +176,7 @@ EsriLeaflet.Layers.ImageMapLayer = EsriLeaflet.Layers.RasterLayer.extend({
       }, this);
     } else {
       params.f = 'image';
-      this._renderImage(this.url + 'exportImage' + L.Util.getParamString(params), bounds);
+      this._renderImage(this.options.url + 'exportImage' + L.Util.getParamString(params), bounds);
     }
   }
 });

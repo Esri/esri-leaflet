@@ -160,7 +160,6 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
   cellLeave: function(bounds, coords){
     if(!this._zooming){
       EsriLeaflet.Util.requestAnimationFrame(L.Util.bind(function(){
-        var i;
         var cacheKey = this._cacheKey(coords);
         var cellKey = this._cellCoordsToKey(coords);
         var layers = this._cache[cacheKey];
@@ -173,7 +172,7 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
             if(layer && layer.getBounds && mapBounds.intersects(layer.getBounds())){
               removable = false;
             }
-          };
+          }
 
           if(removable){
             this.removeLayers(layers, !this.options.cacheLayers);

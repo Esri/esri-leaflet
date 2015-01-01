@@ -24,13 +24,9 @@
     initialize: function (url, options) {
       EsriLeaflet.Layers.FeatureGrid.prototype.initialize.call(this, options);
 
-      if (!options){
-        var options = {};
-      }
+      options = options || {};
       options.url = EsriLeaflet.Util.cleanUrl(url);
       options = L.setOptions(this, options);
-
-      //this.url = EsriLeaflet.Util.cleanUrl(url);
 
       this._service = new EsriLeaflet.Services.FeatureLayer(options);
 

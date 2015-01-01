@@ -1,9 +1,7 @@
 EsriLeaflet.Layers.TiledMapLayer = L.TileLayer.extend({
   initialize: function(url, options){
-    if (!options){
-      var options = {};
-    }
-    options.url = L.esri.Util.cleanUrl(url);
+    options = options || {};
+    options.url = EsriLeaflet.Util.cleanUrl(url);
     options = L.Util.setOptions(this, options);
 
     // set the urls
