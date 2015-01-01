@@ -7,7 +7,7 @@ layout: documentation.hbs
 
 `L.esri.Layer.FeatureLayer` is used to visualize and query vector geographic data hosted in ArcGIS Feature Layers. These layers are hosted as a part of Feature Services on either ArcGIS Online or ArcGIS Server.
 
-Feature Layers are provided by Feature Services which can contain multupile layers. Feature Layers expose vector geographic information as a web service that can be visualized, styled, queried and edited.
+Feature Layers are provided by Feature Services which can contain multiple layers. Feature Layers expose vector geographic information as a web service that can be visualized, styled, queried and edited.
 
 Here is a sample Feature Service URL 
 
@@ -23,7 +23,7 @@ http://services.arcgis.com/rOo16HdIMeOBI4Mb/ArcGIS/rest/services/Neighborhoods_p
 
 Note that the Feature Layer URL ends in `/FeatureServer/{LAYER_ID}`.
 
-You can create a new empty feature service witha  single layer on the [ArcGIS for Devleopers website](https://developers.arcgis.com/en/hosted-data/#/new) or you can use ArcGIS Online to [create a Feature Service from a CSV or Shapefile](https://developers.arcgis.com/tools/csv-to-feature-service/).
+You can create a new empty feature service with a single layer on the [ArcGIS for Developers website](https://developers.arcgis.com/en/hosted-data/#/new) or you can use ArcGIS Online to [create a Feature Service from a CSV or Shapefile](https://developers.arcgis.com/tools/csv-to-feature-service/).
 
 ### Constructor
 
@@ -72,6 +72,21 @@ You can create a new empty feature service witha  single layer on the [ArcGIS fo
             <td><code>where</code></td>
             <td><code>String</code></td>
             <td>A server side expression that will be evaluated to filter features. By default this will include all features in a service.</td>
+        </tr>
+        <tr>
+            <td><code>minZoom</code></td>
+            <td><code>Integer</code></td>
+            <td>Minimum zoom level of the map that features will display. example:  <code>minZoom:0</code></td>
+        </tr>
+        <tr>
+            <td><code>maxZoom</code></td>
+            <td><code>Integer</code></td>
+            <td>Maximum zoom level of the map that features will display. example:  <code>maxZoom:19</code></td>
+        </tr>
+        <tr>
+            <td><code>cacheLayers</code></td>
+            <td><code>Boolean</code></td>
+            <td>Will remove layers from the internal cache when they are removed from the map.</td>
         </tr>
         <tr>
             <td><code>fields</code></td>

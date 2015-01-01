@@ -7,7 +7,7 @@ layout: documentation.hbs
 
 Inherits from [`L.esri.Service`]({{assets}}api-reference/services/service.html)
 
-`L.esri.Services.FeatureLayer` is an abstraction interacting with Feature Layers running on ArcGIS Online and ArcGIS server that allows you to make requests to the API, as well as query, add, update and remove features from the service.
+`L.esri.Services.FeatureLayer` is an abstraction for interacting with Feature Layers running on ArcGIS Online and ArcGIS server that allows you to make requests to the API, as well as query, add, update and remove features from the service.
 
 ### Constructor
 
@@ -20,8 +20,8 @@ Inherits from [`L.esri.Service`]({{assets}}api-reference/services/service.html)
     </thead>
     <tbody>
         <tr>
-            <td><code class="nobr">new L.esri.Services.FeatureLayer({{{param 'String' 'url'}}}, {{{param 'Object' 'options'}}})</code><br><br><code class="nobr">L.esri.Services.featureLayer({{{param 'String' 'url'}}}, {{{param 'Object' 'options'}}})</code></td>
-            <td>The `url` parameter is the URL to the ArcGIS Server or ArcGIS Online feature layer you would like to consume.</td>
+            <td><code class="nobr">new L.esri.Services.FeatureLayer({{{param 'Object' 'options'}}})</code><br><br><code class="nobr">L.esri.Services.featureLayer({{{param 'Object' 'options'}}})</code></td>
+            <td><code>options</code> for confuguring the ArcGIS Server or ArcGIS Online feature layer you would like to consume. <code>options</code> must include a `url` option of the FeatureLayer you would like to consume.</td>
         </tr>
     </tbody>
 </table>
@@ -100,7 +100,9 @@ Inherits from [`L.esri.Service`]({{assets}}api-reference/services/service.html)
 
 ##### Adding Features
 ```js
-var service = L.esri.Services.featureLayer('http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Pubic_Feature_Service/FeatureServer/0');
+var service = L.esri.Services.featureLayer({
+    url: 'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Pubic_Feature_Service/FeatureServer/0'
+});
 
 var feature = {
     type: 'Feature',
@@ -125,7 +127,9 @@ service.addFeature(feature, function(error, response){
 ##### Updating Features
 
 ```js
-var service = L.esri.Services.featureLayer('http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Pubic_Feature_Service/FeatureServer/0');
+var service = L.esri.Services.featureLayer({ 
+    url:'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Pubic_Feature_Service/FeatureServer/0'
+});
 
 var feature = {
     type: 'Feature',
@@ -151,7 +155,9 @@ service.updateFeature(feature, function(error, response){
 ##### Deleting Features
 
 ```js
-var service = L.esri.Services.featureLayer('http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Pubic_Feature_Service/FeatureServer/0');
+var service = L.esri.Services.featureLayer({
+    url: 'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Pubic_Feature_Service/FeatureServer/0'
+});
 
 service.deleteFeature(2, function(error, response){
     if(error){
@@ -165,7 +171,9 @@ service.deleteFeature(2, function(error, response){
 ##### Querying Feautres
 
 ```js
-var service = L.esri.Services.featureLayer('http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Pubic_Feature_Service/FeatureServer/0');
+var service = L.esri.Services.featureLayer({
+    url: 'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Pubic_Feature_Service/FeatureServer/0'
+});
 
 service.query().where("name='Hello World'").run(function(error, featureCollection, response){
     console.log(featureCollection.features[0].properties.name);

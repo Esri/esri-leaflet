@@ -20,11 +20,13 @@ layout: documentation.hbs
     </thead>
     <tbody>
         <tr>
-            <td><code class='nobr'>new L.esri.Tasks.Query({{{param 'FeatureLayer' 'endpoint' '../../api-reference/services/feature-layer.html'}}}, {{{param 'Object' 'options'}}})</code><br><br>
-            <code>L.esri.Tasks.query({{{param 'FeatureLayer' 'endpoint' '../../api-reference/services/feature-layer.html'}}}, {{{param 'Object' 'options'}}})</code><br><br>
-            <code>new L.esri.Tasks.Query({{{param 'String' 'endpoint'}}}, {{{param 'Object' 'options'}}})</code><br><br>
-            <code>L.esri.Tasks.query({{{param 'String' 'endpoint'}}}, {{{param 'Object' 'options'}}})</code></td>
-            <td>The `endpoint` parameter is the service that you want to query either an  ArcGIS Server or ArcGIS Online service. You can also pass the URL to a service directly as a string. See [service URLs](#service-urls) for more information on how to find these URLs.</td>
+            <td><code class='nobr'>new L.esri.Tasks.Query({{{param 'FeatureLayer' 'endpoint' '../../api-reference/services/feature-layer.html'}}})</code><br><br>
+            <code>L.esri.Tasks.query({{{param 'FeatureLayer' 'endpoint' '../../api-reference/services/feature-layer.html'}}})</code><br><br>
+            <code class='nobr'>new L.esri.Tasks.Query({{{param 'MapService' 'endpoint' '../../api-reference/services/map-service.html'}}})</code><br><br>
+            <code>L.esri.Tasks.query({{{param 'MapService' 'endpoint' '../../api-reference/services/map-service.html'}}})</code><br><br>
+            <code>new L.esri.Tasks.Query({{{param 'Object' 'options'}}})</code><br><br>
+            <code>L.esri.Tasks.query({{{param 'Object' 'options'}}})</code></td>
+            <td>Accepts either an `options` object or an instance of <a href="{{assets}}/api-reference/services/map-service.html">MapService</a> or <a href="{{assets}}/api-reference/services/map-service.html">FeatureLayer</a>.</td>
         </tr>
     </tbody>
 </table>
@@ -33,6 +35,7 @@ layout: documentation.hbs
 
 | Option | Type | Default | Description |
 | --- | --- | --- | --- |
+| `url` | `String` | `''` | URL of the ArcGIS service you would like to consume. |
 | `proxy` | `String` | `false` | URL of an [ArcGIS API for JavaScript proxies](https://developers.arcgis.com/javascript/jshelp/ags_proxy.html) or [ArcGIS Resource Proxies](https://github.com/Esri/resource-proxy) to use for proxying POST requests. |
 | `useCors` | `Boolean` | `true` | If this service should use CORS when making GET requests. |
 
@@ -169,7 +172,9 @@ var southWest = L.latLng(45.51, -122.70);
 var northEast = L.latLng(45.52, -122.64);
 var bounds = L.latLngBounds(southWest, northEast);
 
-var query = L.esri.Tasks.query('http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0');
+var query = L.esri.Tasks.query({
+    url:'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0'
+});
 
 query.within(bounds);
 
@@ -184,7 +189,9 @@ query.run(function(error, featureCollection, response){
 var map = L.map('map').setView([41.64, -53.70], 3);
 L.esri.basemapLayer('Gray').addTo(map);
 
-var query = L.esri.Tasks.query('http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0');
+var query = L.esri.Tasks.query({
+    url: 'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0'
+});
 
 query.bounds(function(error, latLngBounds, response){
     map.fitBounds(latLngBounds);
@@ -196,7 +203,9 @@ query.bounds(function(error, latLngBounds, response){
 ```js
 var latlng = L.latLng(45.51, -122.70);
 
-var query = L.esri.Tasks.query('http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0');
+var query = L.esri.Tasks.query({
+    url:'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0'
+});
 
 query.nearby(latlng, 500);
 
@@ -210,7 +219,9 @@ query.run(function(error, featureCollection, response){
 ```js
 var latlng = L.latLng(45.51, -122.70);
 
-var query = L.esri.Tasks.query('http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0');
+var query = L.esri.Tasks.query({
+    url: 'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0'
+});
 
 query.nearby(latlng, 2000).where("direction='East'").orderBy('stop_id', 'ASC');
 
@@ -219,7 +230,6 @@ query.count(function(error, count, response){
 });
 
 query.ids(function(error, ids, response){
-  console.log(arguments);
     console.log(ids.join(', ') + 'match the provided parameters');
 });
 ```
@@ -231,7 +241,9 @@ var map = L.map('map').setView([41.64, -53.70], 3);
 L.esri.basemapLayer('Gray').addTo(map);
 
 
-var query = L.esri.Tasks.query('http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0');
+var query = L.esri.Tasks.query({
+    url:'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0'
+});
 
 query.where("zone_id='B'").bounds(function(error, latLngBounds, response){
     map.fitBounds(latLngBounds);

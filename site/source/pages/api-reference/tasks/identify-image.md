@@ -18,11 +18,11 @@ layout: documentation.hbs
     </thead>
     <tbody>
         <tr>
-            <td><code class='nobr'>new L.esri.Tasks.IdentifyImage({{{param 'ImageService' 'endpoint' '../../api-reference/services/image-service.html'}}}, {{{param 'Object' 'options'}}})</code><br><br>
-            <code>L.esri.Tasks.identifyImage({{{param 'ImageService' 'endpoint' '../../api-reference/services/image-service.html'}}}, {{{param 'Object' 'options'}}})</code><br><br>
-            <code>new L.esri.Tasks.IdentifyImage({{{param 'String' 'endpoint'}}}, {{{param 'Object' 'options'}}})</code><br><br>
-            <code>L.esri.Tasks.identifyImage({{{param 'String' 'endpoint'}}}, {{{param 'Object' 'options'}}})</code><br></td>
-            <td>The `endpoint` parameter is the service that you want to identify either an  ArcGIS Server or ArcGIS Online service. You can also pass the URL to a service directly as a string. See [service URLs](#service-urls) for more information on how to find these URLs.</td>
+            <td><code class='nobr'>new L.esri.Tasks.IdentifyImage({{{param 'ImageService' 'endpoint' '../../api-reference/services/map-service.html'}}})</code><br><br>
+            <code>L.esri.Tasks.identifyImage({{{param 'ImageService' 'endpoint' '../../api-reference/services/map-service.html'}}})</code><br><br>
+            <code>new L.esri.Tasks.IdentifyImage({{{param 'Object' 'options'}}})</code><br><br>
+            <code>L.esri.Tasks.identifyImage({{{param 'Object' 'options'}}})</code><br></td>
+            <td>Accepts either an `options` object or an instance of <a href="{{assets}}/api-reference/services/image-service.html"></a>.</td>
         </tr>
     </tbody>
 </table>
@@ -31,6 +31,7 @@ layout: documentation.hbs
 
 | Option | Type | Default | Description |
 | --- | --- | --- | --- |
+| `url` | `String` | `''` | URL of the ArcGIS service you would like to consume. |
 | `proxy` | `String` | `false` | URL of an [ArcGIS API for JavaScript proxies](https://developers.arcgis.com/javascript/jshelp/ags_proxy.html) or [ArcGIS Resource Proxies](https://github.com/Esri/resource-proxy) to use for proxying POST requests. |
 | `useCors` | `Boolean` | `true` | If this service should use CORS when making GET requests. |
 
@@ -113,10 +114,12 @@ layout: documentation.hbs
 ```js
 var map = L.map('map').setView([36.230577, -118.253147], 10);
 
-L.esri.Tasks.identifyImage('http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Earthquakes/CaliforniaDEM/ImageServer')
-            .at([36.230577, -118.253147])
-            .pixelSize([30,30])
-            .run(function(error, identifyImageResponse, rawResponse){
-                console.log(identifyImageResponse.pixel.properties.value);
-            });
+L.esri.Tasks.identifyImage({
+    url: 'http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Earthquakes/CaliforniaDEM/ImageServer'
+})
+.at([36.230577, -118.253147])
+.pixelSize([30,30])
+.run(function(error, identifyImageResponse, rawResponse){
+    console.log(identifyImageResponse.pixel.properties.value);
+});
 ```

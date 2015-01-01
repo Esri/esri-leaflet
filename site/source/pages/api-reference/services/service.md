@@ -18,7 +18,7 @@ A generic class representing a hosted resource on ArcGIS Online or ArcGIS Server
     </thead>
     <tbody>
         <tr>
-            <td><code class="nobr">new L.esri.Services.Service({{{param 'String' 'url'}}}, {{{param 'Object' 'options'}}})</code><br><br><code class="nobr">L.esri.Services.service({{{param 'String' 'url'}}}, {{{param 'Object' 'options'}}})</code></td>
+            <td><code class="nobr">new L.esri.Services.Service({{{param 'Object' 'options'}}})</code><br><br><code class="nobr">L.esri.Services.service({{{param 'Object' 'options'}}})</code></td>
             <td>The `url` parameter is the URL to the ArcGIS Server or ArcGIS Online service you would like to consume.</td>
         </tr>
     </tbody>
@@ -28,6 +28,7 @@ A generic class representing a hosted resource on ArcGIS Online or ArcGIS Server
 
 | Option | Type | Default | Description |
 | --- | --- | --- | --- |
+| `url` | `String` | `''` | URL of the ArcGIS service you would like to consume. |
 | `proxy` | `String` | `false` | URL of an [ArcGIS API for JavaScript proxies](https://developers.arcgis.com/javascript/jshelp/ags_proxy.html) or [ArcGIS Resource Proxies](https://github.com/Esri/resource-proxy) to use for proxying POST requests. |
 | `useCors` | `Boolean` | `true` | If this service should use CORS when making GET requests. |
 
@@ -55,12 +56,12 @@ A generic class representing a hosted resource on ArcGIS Online or ArcGIS Server
         <tr>
             <td><code>get({{{param 'String' 'url'}}}, {{{param 'Object' 'params'}}}, {{{param 'Function' 'callback'}}}, {{{param 'Object' 'context'}}})</code></td>
             <td><code>this</code></td>
-            <td>Makes a GET request to the service. The services URL will be combined with the `path` option and parameters will be serialized to a query string. Accepts an optional function context for the callback.</td>
+            <td>Makes a GET request to the service. The service's URL will be combined with the `path` option and parameters will be serialized to a query string. Accepts an optional function context for the callback.</td>
         </tr>
         <tr>
             <td><code>post({{{param 'String' 'url'}}}, {{{param 'Object' 'params'}}}, {{{param 'Function' 'callback'}}}, {{{param 'Object' 'context'}}})</code></td>
             <td><code>this</code></td>
-            <td>Makes a POST request to the service. The services URL will be combined with the `path` option and parameters will be serialized. Accepts an optional function context for the callback.</td>
+            <td>Makes a POST request to the service. The service's URL will be combined with the `path` option and parameters will be serialized. Accepts an optional function context for the callback.</td>
         </tr>
         <tr>
             <td><code>metadata({{{param 'Function' 'callback'}}}, {{{param 'Object' 'context'}}})</code></td>

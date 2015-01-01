@@ -20,8 +20,8 @@ Inherits from [`L.esri.Service`]({{assets}}api-reference/services/service.html)
     </thead>
     <tbody>
         <tr>
-            <td><code class="nobr">new L.esri.Services.MapService({{{param 'String' 'url'}}}, {{{param 'Object' 'options'}}})</code><br><br><code class="nobr">L.esri.Services.mapService({{{param 'String' 'url'}}}, {{{param 'Object' 'options'}}})</code></td>
-            <td>The `url` parameter is the URL to the ArcGIS Server or ArcGIS Online map service you would like to consume.</td>
+            <td><code class="nobr">new L.esri.Services.MapService({{{param 'Object' 'options'}}})</code><br><br><code class="nobr">L.esri.Services.mapService({{{param 'Object' 'options'}}})</code></td>
+            <td><code>options</code> for confuguring the ArcGIS Server or ArcGIS Online map service you would like to consume. <code>options</code> must include a `url` option of the MapService you would like to consume.</td>
         </tr>
     </tbody>
 </table>
@@ -109,7 +109,9 @@ service.identify()
 #### Find task
 
 ```js
-var service = L.esri.Services.mapService('http://services.nationalmap.gov/arcgis/rest/services/govunits/MapServer');
+var service = L.esri.Services.mapService({
+    url: 'http://services.nationalmap.gov/arcgis/rest/services/govunits/MapServer'
+});
 
 service.find()
     .layers('18')

@@ -20,8 +20,8 @@ Inherits from [`L.esri.Service`]({{assets}}api-reference/services/service.html)
     </thead>
     <tbody>
         <tr>
-            <td><code class="nobr">new L.esri.Services.ImageService({{{param 'String' 'url'}}}, {{{param 'Object' 'options'}}})</code><br><br><code class="nobr">L.esri.Services.imageService({{{param 'String' 'url'}}}, {{{param 'Object' 'options'}}})</code></td>
-            <td>The `url` parameter is the URL to the ArcGIS Server or ArcGIS Online map service you would like to consume.</td>
+            <td><code class="nobr">new L.esri.Services.ImageService({{{param 'Object' 'options'}}})</code><br><br><code class="nobr">L.esri.Services.imageService({{{param 'Object' 'options'}}})</code></td>
+            <td><code>options</code> for confuguring the ArcGIS Server or ArcGIS Online image service you would like to consume. <code>options</code> must include a `url` option of the FeatureLayer you would like to consume.</td>
         </tr>
     </tbody>
 </table>
