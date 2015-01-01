@@ -9,6 +9,6 @@ EsriLeaflet.Services.ImageService = EsriLeaflet.Services.Service.extend({
   }
 });
 
-EsriLeaflet.Services.imageService = function(url, params){
-  return new EsriLeaflet.Services.ImageService(url, params);
+EsriLeaflet.Services.imageService = function(params){
+  return new EsriLeaflet.Services.ImageService(params);
 };
