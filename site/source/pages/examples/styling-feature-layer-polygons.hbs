@@ -8,13 +8,14 @@ layout: example.hbs
 <div id="map"></div>
 
 <script>
-  var map = L.map('map').setView([ 38.696, -76.227], 9);
+  var map = L.map('map').setView([ 33.836, -118.22], 8);
 
   L.esri.basemapLayer('Gray').addTo(map);
   L.esri.basemapLayer('GrayLabels').addTo(map);
 
   L.esri.featureLayer('http://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_Congressional_Districts/FeatureServer/0', {
-    simplifyFactor: 0.75,
+    simplifyFactor: 0.5,
+    precision: 5,
     style: function (feature) {
       if(feature.properties.PARTY === 'Democrat'){
         return {color: 'blue', weight: 2 };
