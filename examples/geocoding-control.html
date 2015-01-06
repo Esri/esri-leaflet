@@ -133,6 +133,8 @@
   <h5>Geocoding</h5>
   <nav>
     <a href="../../../esri-leaflet/examples/geocoding-control.html">Geocoding control</a>
+    <a href="../../../esri-leaflet/examples/search-map-service.html">Searching map services</a>
+    <a href="../../../esri-leaflet/examples/search-feature-layer.html">Searching feature layers</a>
     <a href="../../../esri-leaflet/examples/center-map-on-address.html">Center the initial map state</a>
     <a href="../../../esri-leaflet/examples/reverse-geocoding.html">Reverse geocoding</a>
   </nav>
@@ -154,8 +156,9 @@
 <div id="map-wrapper">
   
 
-<script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.5/esri-leaflet-geocoder.js"></script>
-<link rel="stylesheet" type="text/css" href="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.5/esri-leaflet-geocoder.css">
+<script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/1.0.0-rc.3/esri-leaflet-geocoder.js"></script>
+<link rel="stylesheet" type="text/css" href="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/1.0.0-rc.3/esri-leaflet-geocoder.css">
+
 
 <div id="map"></div>
 
@@ -166,7 +169,7 @@
     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
   }).addTo(map);
 
-  var searchControl = new L.esri.Controls.Geosearch().addTo(map);
+  var searchControl = new L.esri.Geocoding.Controls.Geosearch().addTo(map);
 
   var results = new L.LayerGroup().addTo(map);
 
@@ -198,8 +201,9 @@
 <span class="tag">&lt;/<span class="title">head</span>&gt;</span>
 <span class="tag">&lt;<span class="title">body</span>&gt;</span>
 
-<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.5/esri-leaflet-geocoder.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
-<span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">type</span>=<span class="value">"text/css"</span> <span class="attribute">href</span>=<span class="value">"http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.5/esri-leaflet-geocoder.css"</span>&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/1.0.0-rc.3/esri-leaflet-geocoder.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+<span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">type</span>=<span class="value">"text/css"</span> <span class="attribute">href</span>=<span class="value">"http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/1.0.0-rc.3/esri-leaflet-geocoder.css"</span>&gt;</span>
+
 
 <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 
@@ -210,7 +214,7 @@
     attribution: <span class="string">'&amp;copy; &lt;a href="http://osm.org/copyright"&gt;OpenStreetMap&lt;/a&gt; contributors'</span>
   }).addTo(map);
 
-  <span class="keyword">var</span> searchControl = <span class="keyword">new</span> L.esri.Controls.Geosearch().addTo(map);
+  <span class="keyword">var</span> searchControl = <span class="keyword">new</span> L.esri.Geocoding.Controls.Geosearch().addTo(map);
 
   <span class="keyword">var</span> results = <span class="keyword">new</span> L.LayerGroup().addTo(map);
 
