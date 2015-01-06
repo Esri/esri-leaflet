@@ -7,13 +7,13 @@
 <head>
   <meta charset="utf-8">
 
-
+  
     <title>Simplifying complex features | Esri Leaflet</title>
+  
 
-
-
+  
     <meta name="description" content="Complex features can be simplified on the server for faster response times. Zoom in and watch as higher resolution vectors are loaded from the service. Hover over features for effects. More information about Feature Layers can be found in the &lt;a href=&quot;/esri-leaflet/api-reference/layers/feature-layer.html&quot;&gt;L.esri.Layers.FeatureLayer&lt;/a&gt; documentation.">
-
+  
 
   <meta name="description" content="Esri Leaflet">
   <meta name="viewport" content="width=device-width">
@@ -35,7 +35,7 @@
   <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
 
   <!-- esri leaflet -->
-  <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.4/esri-leaflet.js"></script>
+  <script src="/js/esri-leaflet.js"></script>
 
   <!-- Google Analytics -->
   <script>
@@ -62,10 +62,10 @@
     </div>
     <div id="background-map" class="background-map"></div>
 
-
+  
 
 <div class="container white">
-
+  
 
 <aside class="sidebar">
   <h5>Basemaps</h5>
@@ -152,7 +152,7 @@
   <p>Complex features can be simplified on the server for faster response times. Zoom in and watch as higher resolution vectors are loaded from the service. Hover over features for effects. More information about Feature Layers can be found in the <a href="/esri-leaflet/api-reference/layers/feature-layer.html">L.esri.Layers.FeatureLayer</a> documentation.</p>
 </div>
 <div id="map-wrapper">
-
+  
 
 <style>
   #info-pane {
@@ -174,7 +174,8 @@
   L.esri.basemapLayer('Gray').addTo(map);
 
   var zipcodes = L.esri.featureLayer('http://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_ZIP_Codes/FeatureServer/0', {
-    simplifyFactor: 0.25,
+    simplifyFactor: 0.35,
+    precision: 5,
     fields: ['FID', 'ZIP', 'PO_NAME'],
     style: function(feature) {
       return {
@@ -216,7 +217,7 @@
   <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
   <span class="comment">&lt;!-- Load Esri Leaflet from CDN --&gt;</span>
-  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.4/esri-leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"/js/esri-leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
   <span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css">
     <span class="tag">body</span> <span class="rules">{<span class="rule"><span class="attribute">margin</span>:<span class="value"><span class="number">0</span></span></span>;<span class="rule"><span class="attribute">padding</span>:<span class="value"><span class="number">0</span></span></span>;<span class="rule">}</span></span>
@@ -245,7 +246,8 @@
   L.esri.basemapLayer(<span class="string">'Gray'</span>).addTo(map);
 
   <span class="keyword">var</span> zipcodes = L.esri.featureLayer(<span class="string">'http://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_ZIP_Codes/FeatureServer/0'</span>, {
-    simplifyFactor: <span class="number">0.25</span>,
+    simplifyFactor: <span class="number">0.35</span>,
+    precision: <span class="number">5</span>,
     fields: [<span class="string">'FID'</span>, <span class="string">'ZIP'</span>, <span class="string">'PO_NAME'</span>],
     style: <span class="function"><span class="keyword">function</span><span class="params">(feature)</span> {</span>
       <span class="keyword">return</span> {

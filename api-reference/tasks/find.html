@@ -7,11 +7,11 @@
 <head>
   <meta charset="utf-8">
 
-
+  
     <title>L.esri.Tasks.Find | Esri Leaflet</title>
+  
 
-
-
+  
 
   <meta name="description" content="Esri Leaflet">
   <meta name="viewport" content="width=device-width">
@@ -33,7 +33,7 @@
   <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
 
   <!-- esri leaflet -->
-  <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.2/esri-leaflet.js"></script>
+  <script src="/js/esri-leaflet.js"></script>
 
   <!-- Google Analytics -->
   <script>
@@ -60,10 +60,10 @@
     </div>
     <div id="background-map" class="background-map"></div>
 
-
+  
 
 <div class="container white">
-
+  
 
 <aside class="sidebar">
   <h5>L.esri</h5>
@@ -94,11 +94,10 @@
 
   <h5>L.esri.Tasks</h5>
   <nav>
-    <a href="../../../../esri-leaflet/api-reference/tasks/identify-features.html">Identify Features</a>
-    <a href="../../../../esri-leaflet/api-reference/tasks/identify-image.html">Identify Image</a>
     <a href="../../../../esri-leaflet/api-reference/tasks/query.html">Query</a>
     <a href="../../../../esri-leaflet/api-reference/tasks/find.html">Find</a>
-    <a href="../../../../esri-leaflet/api-reference/tasks/task.html">Task</a>
+    <a href="../../../../esri-leaflet/api-reference/tasks/identify-features.html">Identify Features</a>
+    <a href="../../../../esri-leaflet/api-reference/tasks/identify-image.html">Identify Image</a>
   </nav>
 
   <h5>Misc.</h5>
@@ -121,12 +120,12 @@
     <tbody>
         <tr>
             <td>
-                <code class='nobr'>new L.esri.Tasks.Find(<nobr class="param"><span>&lt;<a href="../../api-reference/services/service.html">MapService</a>&gt;</span> <code>endpoint</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br>
-                <code>L.esri.Tasks.find(<nobr class="param"><span>&lt;<a href="../../api-reference/services/service.html">MapService</a>&gt;</span> <code>endpoint</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br>
-                <code>new L.esri.Tasks.Find(<nobr class="param"><span>&lt;String&gt;</span> <code>endpoint</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br>
-                <code>L.esri.Tasks.find(<nobr class="param"><span>&lt;String&gt;</span> <code>endpoint</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code>
+                <code class='nobr'>new L.esri.Tasks.Find(<nobr class="param"><span>&lt;<a href="../../api-reference/services/service.html">MapService</a>&gt;</span> <code>endpoint</code></nobr>)</code><br><br>
+                <code>L.esri.Tasks.find(<nobr class="param"><span>&lt;<a href="../../api-reference/services/service.html">MapService</a>&gt;</span> <code>endpoint</code></nobr>)</code><br><br>
+                <code>new L.esri.Tasks.Find(<nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br>
+                <code>L.esri.Tasks.find(<nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code>
             </td>
-            <td>The <code>endpoint</code> parameter refers to the ArcGIS Server or ArcGIS Online service that you want to find features in. Alternatively, you can also pass the URL to a service directly within options. See <a href="#service-urls">service URLs</a> for more information on how to find these URLs.</td>
+            <td>Accepts either an <code>options</code> object or an instance of <a href="../../../../esri-leaflet//api-reference/services/map-service.html">MapService</a>.</td>
         </tr>
     </tbody>
 </table>
@@ -145,20 +144,20 @@
 <tr>
 <td><code>url</code></td>
 <td><code>String</code></td>
-<td><code></code></td>
-<td>URL of the ArcGIS Server or ArcGIS Online service you would like to consume.</td>
+<td><code>&#39;&#39;</code></td>
+<td>URL of the ArcGIS service you would like to consume.</td>
 </tr>
 <tr>
 <td><code>proxy</code></td>
 <td><code>String</code></td>
 <td><code>false</code></td>
-<td>URL of an <a href="https://developers.arcgis.com/javascript/jshelp/ags_proxy.html">ArcGIS API for JavaScript proxy</a> or <a href="https://github.com/Esri/resource-proxy">ArcGIS Resource Proxy</a> to use for proxying POST requests.</td>
+<td>URL of an <a href="https://developers.arcgis.com/javascript/jshelp/ags_proxy.html">ArcGIS API for JavaScript proxies</a> or <a href="https://github.com/Esri/resource-proxy">ArcGIS Resource Proxies</a> to use for proxying POST requests.</td>
 </tr>
 <tr>
 <td><code>useCors</code></td>
 <td><code>Boolean</code></td>
 <td><code>true</code></td>
-<td>If this task should use CORS when making GET requests.</td>
+<td>If this service should use CORS when making GET requests.</td>
 </tr>
 </tbody>
 </table>
@@ -261,7 +260,9 @@ find.run(<span class="function"><span class="keyword">function</span><span class
     console.log(<span class="string">'GNIS Name: '</span> + featureCollection.features[<span class="number">0</span>].properties.GNIS_NAME);
 });</code></pre>
 <h5 id="finding-features-by-specified-search-field-name">Finding features by specified search field name</h5>
-<pre><code class="language-js"><span class="keyword">var</span> find = L.esri.Tasks.find(<span class="string">'http://services.nationalmap.gov/arcgis/rest/services/govunits/MapServer'</span>);
+<pre><code class="language-js"><span class="keyword">var</span> find = L.esri.Tasks.find({
+    url: <span class="string">'http://services.nationalmap.gov/arcgis/rest/services/govunits/MapServer'</span>
+});
 
 find.layers(<span class="string">'13'</span>)
     .text(<span class="string">'198133'</span>)

@@ -7,11 +7,11 @@
 <head>
   <meta charset="utf-8">
 
-
+  
     <title>L.esri.Tasks.Query | Esri Leaflet</title>
+  
 
-
-
+  
 
   <meta name="description" content="Esri Leaflet">
   <meta name="viewport" content="width=device-width">
@@ -33,7 +33,7 @@
   <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
 
   <!-- esri leaflet -->
-  <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.2/esri-leaflet.js"></script>
+  <script src="/js/esri-leaflet.js"></script>
 
   <!-- Google Analytics -->
   <script>
@@ -60,10 +60,10 @@
     </div>
     <div id="background-map" class="background-map"></div>
 
-
+  
 
 <div class="container white">
-
+  
 
 <aside class="sidebar">
   <h5>L.esri</h5>
@@ -94,11 +94,10 @@
 
   <h5>L.esri.Tasks</h5>
   <nav>
-    <a href="../../../../esri-leaflet/api-reference/tasks/identify-features.html">Identify Features</a>
-    <a href="../../../../esri-leaflet/api-reference/tasks/identify-image.html">Identify Image</a>
     <a href="../../../../esri-leaflet/api-reference/tasks/query.html">Query</a>
     <a href="../../../../esri-leaflet/api-reference/tasks/find.html">Find</a>
-    <a href="../../../../esri-leaflet/api-reference/tasks/task.html">Task</a>
+    <a href="../../../../esri-leaflet/api-reference/tasks/identify-features.html">Identify Features</a>
+    <a href="../../../../esri-leaflet/api-reference/tasks/identify-image.html">Identify Image</a>
   </nav>
 
   <h5>Misc.</h5>
@@ -121,11 +120,13 @@
     </thead>
     <tbody>
         <tr>
-            <td><code class='nobr'>new L.esri.Tasks.Query(<nobr class="param"><span>&lt;<a href="../../api-reference/services/feature-layer.html">FeatureLayer</a>&gt;</span> <code>endpoint</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br>
-            <code>L.esri.Tasks.query(<nobr class="param"><span>&lt;<a href="../../api-reference/services/feature-layer.html">FeatureLayer</a>&gt;</span> <code>endpoint</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br>
-            <code>new L.esri.Tasks.Query(<nobr class="param"><span>&lt;String&gt;</span> <code>endpoint</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br>
-            <code>L.esri.Tasks.query(<nobr class="param"><span>&lt;String&gt;</span> <code>endpoint</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code></td>
-            <td>The <code>endpoint</code> parameter is the ArcGIS Server or ArcGIS Online service that you want to query features in. Alternatively, you can also pass the URL to a service directly within options. See <a href="#service-urls">service URLs</a> for more information on how to find these URLs.</td>
+            <td><code class='nobr'>new L.esri.Tasks.Query(<nobr class="param"><span>&lt;<a href="../../api-reference/services/feature-layer.html">FeatureLayer</a>&gt;</span> <code>endpoint</code></nobr>)</code><br><br>
+            <code>L.esri.Tasks.query(<nobr class="param"><span>&lt;<a href="../../api-reference/services/feature-layer.html">FeatureLayer</a>&gt;</span> <code>endpoint</code></nobr>)</code><br><br>
+            <code class='nobr'>new L.esri.Tasks.Query(<nobr class="param"><span>&lt;<a href="../../api-reference/services/map-service.html">MapService</a>&gt;</span> <code>endpoint</code></nobr>)</code><br><br>
+            <code>L.esri.Tasks.query(<nobr class="param"><span>&lt;<a href="../../api-reference/services/map-service.html">MapService</a>&gt;</span> <code>endpoint</code></nobr>)</code><br><br>
+            <code>new L.esri.Tasks.Query(<nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br>
+            <code>L.esri.Tasks.query(<nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code></td>
+            <td>Accepts either an <code>options</code> object or an instance of <a href="../../../../esri-leaflet//api-reference/services/map-service.html">MapService</a> or <a href="../../../../esri-leaflet//api-reference/services/map-service.html">FeatureLayer</a>.</td>
         </tr>
     </tbody>
 </table>
@@ -144,20 +145,20 @@
 <tr>
 <td><code>url</code></td>
 <td><code>String</code></td>
-<td><code></code></td>
-<td>URL of the ArcGIS Server or ArcGIS Online service you would like to consume.</td>
+<td><code>&#39;&#39;</code></td>
+<td>URL of the ArcGIS service you would like to consume.</td>
 </tr>
 <tr>
 <td><code>proxy</code></td>
 <td><code>String</code></td>
 <td><code>false</code></td>
-<td>URL of an <a href="https://developers.arcgis.com/javascript/jshelp/ags_proxy.html">ArcGIS API for JavaScript proxy</a> or <a href="https://github.com/Esri/resource-proxy">ArcGIS Resource Proxy</a> to use for proxying POST requests.</td>
+<td>URL of an <a href="https://developers.arcgis.com/javascript/jshelp/ags_proxy.html">ArcGIS API for JavaScript proxies</a> or <a href="https://github.com/Esri/resource-proxy">ArcGIS Resource Proxies</a> to use for proxying POST requests.</td>
 </tr>
 <tr>
 <td><code>useCors</code></td>
 <td><code>Boolean</code></td>
 <td><code>true</code></td>
-<td>If this task should use CORS when making GET requests.</td>
+<td>If this service should use CORS when making GET requests.</td>
 </tr>
 </tbody>
 </table>
@@ -290,7 +291,9 @@
 <span class="keyword">var</span> northEast = L.latLng(<span class="number">45.52</span>, -<span class="number">122.64</span>);
 <span class="keyword">var</span> bounds = L.latLngBounds(southWest, northEast);
 
-<span class="keyword">var</span> query = L.esri.Tasks.query(<span class="string">'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0'</span>);
+<span class="keyword">var</span> query = L.esri.Tasks.query({
+    url:<span class="string">'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0'</span>
+});
 
 query.within(bounds);
 
@@ -301,7 +304,9 @@ query.run(<span class="function"><span class="keyword">function</span><span clas
 <pre><code class="language-js"><span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">41.64</span>, -<span class="number">53.70</span>], <span class="number">3</span>);
 L.esri.basemapLayer(<span class="string">'Gray'</span>).addTo(map);
 
-<span class="keyword">var</span> query = L.esri.Tasks.query(<span class="string">'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0'</span>);
+<span class="keyword">var</span> query = L.esri.Tasks.query({
+    url: <span class="string">'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0'</span>
+});
 
 query.bounds(<span class="function"><span class="keyword">function</span><span class="params">(error, latLngBounds, response)</span>{</span>
     map.fitBounds(latLngBounds);
@@ -309,7 +314,9 @@ query.bounds(<span class="function"><span class="keyword">function</span><span c
 <h5 id="querying-features-near-a-latlng">Querying features near a latlng</h5>
 <pre><code class="language-js"><span class="keyword">var</span> latlng = L.latLng(<span class="number">45.51</span>, -<span class="number">122.70</span>);
 
-<span class="keyword">var</span> query = L.esri.Tasks.query(<span class="string">'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0'</span>);
+<span class="keyword">var</span> query = L.esri.Tasks.query({
+    url:<span class="string">'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0'</span>
+});
 
 query.nearby(latlng, <span class="number">500</span>);
 
@@ -319,7 +326,9 @@ query.run(<span class="function"><span class="keyword">function</span><span clas
 <h5 id="combining-multiple-options">Combining multiple options</h5>
 <pre><code class="language-js"><span class="keyword">var</span> latlng = L.latLng(<span class="number">45.51</span>, -<span class="number">122.70</span>);
 
-<span class="keyword">var</span> query = L.esri.Tasks.query(<span class="string">'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0'</span>);
+<span class="keyword">var</span> query = L.esri.Tasks.query({
+    url: <span class="string">'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0'</span>
+});
 
 query.nearby(latlng, <span class="number">2000</span>).where(<span class="string">"direction='East'"</span>).orderBy(<span class="string">'stop_id'</span>, <span class="string">'ASC'</span>);
 
@@ -328,7 +337,6 @@ query.count(<span class="function"><span class="keyword">function</span><span cl
 });
 
 query.ids(<span class="function"><span class="keyword">function</span><span class="params">(error, ids, response)</span>{</span>
-  console.log(arguments);
     console.log(ids.join(<span class="string">', '</span>) + <span class="string">'match the provided parameters'</span>);
 });</code></pre>
 <h5 id="getting-the-bounds-of-the-query-result">Getting the bounds of the query result</h5>
@@ -336,7 +344,9 @@ query.ids(<span class="function"><span class="keyword">function</span><span clas
 L.esri.basemapLayer(<span class="string">'Gray'</span>).addTo(map);
 
 
-<span class="keyword">var</span> query = L.esri.Tasks.query(<span class="string">'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0'</span>);
+<span class="keyword">var</span> query = L.esri.Tasks.query({
+    url:<span class="string">'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0'</span>
+});
 
 query.where(<span class="string">"zone_id='B'"</span>).bounds(<span class="function"><span class="keyword">function</span><span class="params">(error, latLngBounds, response)</span>{</span>
     map.fitBounds(latLngBounds);

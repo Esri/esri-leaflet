@@ -7,13 +7,13 @@
 <head>
   <meta charset="utf-8">
 
-
+  
     <title>Non-mercator projection | Esri Leaflet</title>
+  
 
-
-
+  
     <meta name="description" content="Using non mercator tiles with &lt;code&gt;L.esri.Layers.TiledMapLayer&lt;/code&gt; with the &lt;a href=&quot;https://github.com/kartena/Proj4Leaflet&quot;&gt;Proj4Leaflet&lt;/a&gt; plugin. &lt;br&gt;&lt;br&gt; &lt;strong&gt;This demo should be implimented at your own risk. Esri Leaflet only supports tiles that have been published in Web Mercator Auxiliary Sphere tiling scheme (WKID 102100/3857) at the default scales and resolutions. Strong knowlage of projections, spatial references and tiling schemes is required for this.&lt;/strong&gt;">
-
+  
 
   <meta name="description" content="Esri Leaflet">
   <meta name="viewport" content="width=device-width">
@@ -35,7 +35,7 @@
   <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
 
   <!-- esri leaflet -->
-  <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.4/esri-leaflet.js"></script>
+  <script src="/js/esri-leaflet.js"></script>
 
   <!-- Google Analytics -->
   <script>
@@ -62,10 +62,10 @@
     </div>
     <div id="background-map" class="background-map"></div>
 
-
+  
 
 <div class="container white">
-
+  
 
 <aside class="sidebar">
   <h5>Basemaps</h5>
@@ -152,7 +152,7 @@
   <p>Using non mercator tiles with <code>L.esri.Layers.TiledMapLayer</code> with the <a href="https://github.com/kartena/Proj4Leaflet">Proj4Leaflet</a> plugin. <br><br> <strong>This demo should be implimented at your own risk. Esri Leaflet only supports tiles that have been published in Web Mercator Auxiliary Sphere tiling scheme (WKID 102100/3857) at the default scales and resolutions. Strong knowlage of projections, spatial references and tiling schemes is required for this.</strong></p>
 </div>
 <div id="map-wrapper">
-
+  
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/proj4js/2.0.0/proj4.js"></script>
 <script src="https://cdn.rawgit.com/kartena/Proj4Leaflet/0.7.0/src/proj4leaflet.js"></script>
@@ -161,12 +161,9 @@
 
 <script>
   /*
-  create new Proj4Leaflet CRS:
-
-  1. Proj4 and WKT definitions can be found at sites like http://epsg.io
-
-  2. appropriate values to supply to the resolution and origin constructor options can be found in the ArcGIS Server RESTful tile server endpoint (ex: http://mapserv.utah.gov/arcgis/rest/services/BaseMaps/Terrain/MapServer)
-
+    create new Proj4Leaflet CRS:
+    1. Proj4 and WKT definitions can be found at sites like http://epsg.io
+    2. appropriate values to supply to the resolution and origin constructor options can be found in the ArcGIS Server RESTful tile server endpoint (ex: http://mapserv.utah.gov/arcgis/rest/services/BaseMaps/Terrain/MapServer)
   */
   var crs = new L.Proj.CRS('EPSG:26912', '+proj=utm +zone=12 +ellps=GRS80 +datum=NAD83 +units=m +no_defs', {
     origin: [-5120900, 9998100],
@@ -189,13 +186,12 @@
     ]
   });
 
-  // pass crs into map constructor
   var map = new L.Map('map', {
     crs: crs
   }).setView([40.381, -111.859], 5);
 
   /*
-  the min/maxZoom values provided should match the actual cache thats been published.  this information can be retrieved from the service endpoint directly.
+    The min/maxZoom values provided should match the actual cache thats been published. This information can be retrieved from the service endpoint directly.
   */
   L.esri.tiledMapLayer('http://mapserv.utah.gov/arcgis/rest/services/BaseMaps/Terrain/MapServer', {
     maxZoom: 14,
@@ -216,7 +212,7 @@
   <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
   <span class="comment">&lt;!-- Load Esri Leaflet from CDN --&gt;</span>
-  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.4/esri-leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"/js/esri-leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
   <span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css">
     <span class="tag">body</span> <span class="rules">{<span class="rule"><span class="attribute">margin</span>:<span class="value"><span class="number">0</span></span></span>;<span class="rule"><span class="attribute">padding</span>:<span class="value"><span class="number">0</span></span></span>;<span class="rule">}</span></span>
@@ -231,9 +227,13 @@
 <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
-  <span class="comment">// create new Proj4Leaflet CRS</span>
+  <span class="comment">/*
+    create new Proj4Leaflet CRS:
+    1. Proj4 and WKT definitions can be found at sites like http://epsg.io
+    2. appropriate values to supply to the resolution and origin constructor options can be found in the ArcGIS Server RESTful tile server endpoint (ex: http://mapserv.utah.gov/arcgis/rest/services/BaseMaps/Terrain/MapServer)
+  */</span>
   <span class="keyword">var</span> crs = <span class="keyword">new</span> L.Proj.CRS(<span class="string">'EPSG:26912'</span>, <span class="string">'+proj=utm +zone=12 +ellps=GRS80 +datum=NAD83 +units=m +no_defs'</span>, {
-    transformation: <span class="keyword">new</span> L.Transformation(<span class="number">1</span>, <span class="number">5120900</span>, -<span class="number">1</span>, <span class="number">9998100</span>),
+    origin: [-<span class="number">5120900</span>, <span class="number">9998100</span>],
     resolutions: [
       <span class="number">4891.96999883583</span>,
       <span class="number">2445.98499994708</span>,
@@ -253,11 +253,13 @@
     ]
   });
 
-  <span class="comment">// pass crs into map constructor</span>
   <span class="keyword">var</span> map = <span class="keyword">new</span> L.Map(<span class="string">'map'</span>, {
     crs: crs
   }).setView([<span class="number">40.381</span>, -<span class="number">111.859</span>], <span class="number">5</span>);
 
+  <span class="comment">/*
+    The min/maxZoom values provided should match the actual cache thats been published. This information can be retrieved from the service endpoint directly.
+  */</span>
   L.esri.tiledMapLayer(<span class="string">'http://mapserv.utah.gov/arcgis/rest/services/BaseMaps/Terrain/MapServer'</span>, {
     maxZoom: <span class="number">14</span>,
     minZoom: <span class="number">0</span>,

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <!--[if lt IE 7 ]> <html class="ie6"> <![endif]-->
 <!--[if IE 7 ]>    <html class="ie7"> <![endif]-->
@@ -8,13 +7,13 @@
 <head>
   <meta charset="utf-8">
 
-
+  
     <title>ArcGIS Online OAuth | Esri Leaflet</title>
+  
 
-
-
+  
     <meta name="description" content="Authenticate ArcGIS Online users with OAuth 2.0 to access user information, private resources and premium services.">
-
+  
 
   <meta name="description" content="Esri Leaflet">
   <meta name="viewport" content="width=device-width">
@@ -36,7 +35,7 @@
   <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
 
   <!-- esri leaflet -->
-  <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.4/esri-leaflet.js"></script>
+  <script src="/js/esri-leaflet.js"></script>
 
   <!-- Google Analytics -->
   <script>
@@ -63,10 +62,10 @@
     </div>
     <div id="background-map" class="background-map"></div>
 
-
+  
 
 <div class="container white">
-
+  
 
 <aside class="sidebar">
   <h5>Basemaps</h5>
@@ -153,7 +152,7 @@
   <p>Authenticate ArcGIS Online users with OAuth 2.0 to access user information, private resources and premium services.</p>
 </div>
 <div id="map-wrapper">
-
+  
 
 <style>
   #auth {
@@ -197,7 +196,7 @@
       callback(accessToken);
     } else {
       callbacks.push(callback);
-      window.open('https://www.arcgis.com/sharing/oauth2/authorize?client_id='+clientID+'&response_type=token&expiration=20160&redirect_uri=' + window.encodeURIComponent(callbackPage), 'oauth-window', 'height=400,width=600,menubar=no,location=yes,resizable=yes,scrollbars=yes,status=yes');
+      window.open('https://www.arcgis.com/sharing/oauth2/authorize?client_id='+clientID+'&response_type=token&expiration=20160&redirect_uri=' + window.encodeURIComponent(callbackPage), 'oauth', 'height=400,width=600,menubar=no,location=yes,resizable=yes,scrollbars=yes,status=yes');
     }
   }
 
@@ -231,7 +230,7 @@
   <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
   <span class="comment">&lt;!-- Load Esri Leaflet from CDN --&gt;</span>
-  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.4/esri-leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"/js/esri-leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
   <span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css">
     <span class="tag">body</span> <span class="rules">{<span class="rule"><span class="attribute">margin</span>:<span class="value"><span class="number">0</span></span></span>;<span class="rule"><span class="attribute">padding</span>:<span class="value"><span class="number">0</span></span></span>;<span class="rule">}</span></span>
@@ -282,7 +281,7 @@
       callback(accessToken);
     } <span class="keyword">else</span> {
       callbacks.push(callback);
-      window.open(<span class="string">'https://www.arcgis.com/sharing/oauth2/authorize?client_id='</span>+clientID+<span class="string">'&amp;response_type=token&amp;expiration=20160&amp;redirect_uri='</span> + window.encodeURIComponent(callbackPage), <span class="string">'oauth-window'</span>, <span class="string">'height=400,width=600,menubar=no,location=yes,resizable=yes,scrollbars=yes,status=yes'</span>);
+      window.open(<span class="string">'https://www.arcgis.com/sharing/oauth2/authorize?client_id='</span>+clientID+<span class="string">'&amp;response_type=token&amp;expiration=20160&amp;redirect_uri='</span> + window.encodeURIComponent(callbackPage), <span class="string">'oauth'</span>, <span class="string">'height=400,width=600,menubar=no,location=yes,resizable=yes,scrollbars=yes,status=yes'</span>);
     }
   }
 

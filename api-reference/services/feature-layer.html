@@ -7,11 +7,11 @@
 <head>
   <meta charset="utf-8">
 
-
+  
     <title>L.esri.Services.FeatureLayer | Esri Leaflet</title>
+  
 
-
-
+  
 
   <meta name="description" content="Esri Leaflet">
   <meta name="viewport" content="width=device-width">
@@ -33,7 +33,7 @@
   <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
 
   <!-- esri leaflet -->
-  <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.2/esri-leaflet.js"></script>
+  <script src="/js/esri-leaflet.js"></script>
 
   <!-- Google Analytics -->
   <script>
@@ -60,10 +60,10 @@
     </div>
     <div id="background-map" class="background-map"></div>
 
-
+  
 
 <div class="container white">
-
+  
 
 <aside class="sidebar">
   <h5>L.esri</h5>
@@ -94,11 +94,10 @@
 
   <h5>L.esri.Tasks</h5>
   <nav>
-    <a href="../../../../esri-leaflet/api-reference/tasks/identify-features.html">Identify Features</a>
-    <a href="../../../../esri-leaflet/api-reference/tasks/identify-image.html">Identify Image</a>
     <a href="../../../../esri-leaflet/api-reference/tasks/query.html">Query</a>
     <a href="../../../../esri-leaflet/api-reference/tasks/find.html">Find</a>
-    <a href="../../../../esri-leaflet/api-reference/tasks/task.html">Task</a>
+    <a href="../../../../esri-leaflet/api-reference/tasks/identify-features.html">Identify Features</a>
+    <a href="../../../../esri-leaflet/api-reference/tasks/identify-image.html">Identify Image</a>
   </nav>
 
   <h5>Misc.</h5>
@@ -110,7 +109,7 @@
 <div class="main-content">
   <h1 id="l-esri-services-featurelayer">L.esri.Services.FeatureLayer</h1>
 <p>Inherits from <a href="../../../../esri-leaflet/api-reference/services/service.html"><code>L.esri.Service</code></a></p>
-<p><code>L.esri.Services.FeatureLayer</code> is an abstraction for interacting with Feature Layers running on ArcGIS Online and ArcGIS Server that allows you to make requests to the API, as well as query, add, update and remove features from the service.</p>
+<p><code>L.esri.Services.FeatureLayer</code> is an abstraction for interacting with Feature Layers running on ArcGIS Online and ArcGIS server that allows you to make requests to the API, as well as query, add, update and remove features from the service.</p>
 <h3 id="constructor">Constructor</h3>
 <table>
     <thead>
@@ -122,7 +121,7 @@
     <tbody>
         <tr>
             <td><code class="nobr">new L.esri.Services.FeatureLayer(<nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br><code class="nobr">L.esri.Services.featureLayer(<nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code></td>
-            <td>Options includes a <code>url</code> parameter which refers to the ArcGIS Server or ArcGIS Online service you would like to consume.</td>
+            <td><code>options</code> for confuguring the ArcGIS Server or ArcGIS Online feature layer you would like to consume. <code>options</code> must include a <code>url</code> option of the FeatureLayer you would like to consume.</td>
         </tr>
     </tbody>
 </table>
@@ -146,15 +145,12 @@
             <td><code>this</code></td>
             <td>
                 Returns a new <a href="../../../../esri-leaflet/api-reference/tasks/query.html"><code>L.esri.Tasks.Query</code></a> object that can be used to query this layer.
-<pre class="js">
-<code>
-featureLayer.query()
-  .within(latlngbounds)
-  .where(&quot;Direction = &#39;WEST&#39;&quot;)
-  .run(function(error, featureCollection, response){
-    console.log(featureCollection);
-  });
-</code></pre>
+<pre class="js"><code>featureLayer.query()
+            .within(latlngbounds)
+            .where(&quot;Direction = &#39;WEST&#39;&quot;)
+            .run(function(error, featureCollection, response){
+              console.log(featureCollection);
+            });</code></pre>
             </td>
         </tr>
         <tr>
@@ -196,7 +192,9 @@ featureLayer.query()
 <h3 id="examples">Examples</h3>
 <p><strong>Note</strong>: These examples use a public feature service on ArcGIS Online that required no authentication.</p>
 <h5 id="adding-features">Adding Features</h5>
-<pre><code class="language-js"><span class="keyword">var</span> service = L.esri.Services.featureLayer(<span class="string">'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Pubic_Feature_Service/FeatureServer/0'</span>);
+<pre><code class="language-js"><span class="keyword">var</span> service = L.esri.Services.featureLayer({
+    url: <span class="string">'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Pubic_Feature_Service/FeatureServer/0'</span>
+});
 
 <span class="keyword">var</span> feature = {
     type: <span class="string">'Feature'</span>,
@@ -217,7 +215,9 @@ service.addFeature(feature, <span class="function"><span class="keyword">functio
     }
 });</code></pre>
 <h5 id="updating-features">Updating Features</h5>
-<pre><code class="language-js"><span class="keyword">var</span> service = L.esri.Services.featureLayer(<span class="string">'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Pubic_Feature_Service/FeatureServer/0'</span>);
+<pre><code class="language-js"><span class="keyword">var</span> service = L.esri.Services.featureLayer({ 
+    url:<span class="string">'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Pubic_Feature_Service/FeatureServer/0'</span>
+});
 
 <span class="keyword">var</span> feature = {
     type: <span class="string">'Feature'</span>,
@@ -239,7 +239,9 @@ service.updateFeature(feature, <span class="function"><span class="keyword">func
     }
 });</code></pre>
 <h5 id="deleting-features">Deleting Features</h5>
-<pre><code class="language-js"><span class="keyword">var</span> service = L.esri.Services.featureLayer(<span class="string">'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Pubic_Feature_Service/FeatureServer/0'</span>);
+<pre><code class="language-js"><span class="keyword">var</span> service = L.esri.Services.featureLayer({
+    url: <span class="string">'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Pubic_Feature_Service/FeatureServer/0'</span>
+});
 
 service.deleteFeature(<span class="number">2</span>, <span class="function"><span class="keyword">function</span><span class="params">(error, response)</span>{</span>
     <span class="keyword">if</span>(error){
@@ -249,7 +251,9 @@ service.deleteFeature(<span class="number">2</span>, <span class="function"><spa
     }
 });</code></pre>
 <h5 id="querying-feautres">Querying Feautres</h5>
-<pre><code class="language-js"><span class="keyword">var</span> service = L.esri.Services.featureLayer(<span class="string">'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Pubic_Feature_Service/FeatureServer/0'</span>);
+<pre><code class="language-js"><span class="keyword">var</span> service = L.esri.Services.featureLayer({
+    url: <span class="string">'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Pubic_Feature_Service/FeatureServer/0'</span>
+});
 
 service.query().where(<span class="string">"name='Hello World'"</span>).run(<span class="function"><span class="keyword">function</span><span class="params">(error, featureCollection, response)</span>{</span>
     console.log(featureCollection.features[<span class="number">0</span>].properties.name);

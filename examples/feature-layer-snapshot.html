@@ -7,13 +7,13 @@
 <head>
   <meta charset="utf-8">
 
-
+  
     <title>Loading a Feature Layer programatically | Esri Leaflet</title>
+  
 
-
-
+  
     <meta name="description" content="Sometimes it is desirable to load a &quot;snapshot&quot; of a Feature Layer instead of loading it progressivly as you pan around the map. The approch is useful for smaller services.">
-
+  
 
   <meta name="description" content="Esri Leaflet">
   <meta name="viewport" content="width=device-width">
@@ -35,7 +35,7 @@
   <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
 
   <!-- esri leaflet -->
-  <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.4/esri-leaflet.js"></script>
+  <script src="/js/esri-leaflet.js"></script>
 
   <!-- Google Analytics -->
   <script>
@@ -62,10 +62,10 @@
     </div>
     <div id="background-map" class="background-map"></div>
 
-
+  
 
 <div class="container white">
-
+  
 
 <aside class="sidebar">
   <h5>Basemaps</h5>
@@ -152,7 +152,7 @@
   <p>Sometimes it is desirable to load a "snapshot" of a Feature Layer instead of loading it progressivly as you pan around the map. The approch is useful for smaller services.</p>
 </div>
 <div id="map-wrapper">
-
+  
 
 <div id="map"></div>
 
@@ -165,7 +165,9 @@
   var bikeParkingUrl = "http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Portland_Bicycle_Parking/FeatureServer/0";
 
   // query a feature service for a neighborhood
-  L.esri.Tasks.query(neighborhoodsUrl).where("NAME='HOLLYWOOD'").run(function(error, neighborhoods){
+  L.esri.Tasks.query({
+    url: neighborhoodsUrl
+  }).where("NAME='HOLLYWOOD'").run(function(error, neighborhoods){
     // draw neighborhood on the map
     var hollywood = L.geoJson(neighborhoods).addTo(map);
 
@@ -173,7 +175,9 @@
     map.fitBounds(hollywood.getBounds().pad(0.5));
 
     // query all bike parking where BPSTYLE='STAPLE' inside our boundry
-    L.esri.Tasks.query(bikeParkingUrl).where("BPSTYLE='STAPLE'").within(hollywood).run(function(error, bikeParking){
+    L.esri.Tasks.query({
+      url: bikeParkingUrl
+    }).where("BPSTYLE='STAPLE'").within(hollywood).run(function(error, bikeParking){
       L.geoJson(bikeParking).addTo(map);
     });
   });
@@ -190,7 +194,7 @@
   <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
   <span class="comment">&lt;!-- Load Esri Leaflet from CDN --&gt;</span>
-  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.4/esri-leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"/js/esri-leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
   <span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css">
     <span class="tag">body</span> <span class="rules">{<span class="rule"><span class="attribute">margin</span>:<span class="value"><span class="number">0</span></span></span>;<span class="rule"><span class="attribute">padding</span>:<span class="value"><span class="number">0</span></span></span>;<span class="rule">}</span></span>
@@ -210,7 +214,9 @@
   <span class="keyword">var</span> bikeParkingUrl = <span class="string">"http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Portland_Bicycle_Parking/FeatureServer/0"</span>;
 
   <span class="comment">// query a feature service for a neighborhood</span>
-  L.esri.Tasks.query(neighborhoodsUrl).where(<span class="string">"NAME='HOLLYWOOD'"</span>).run(<span class="function"><span class="keyword">function</span><span class="params">(error, neighborhoods)</span>{</span>
+  L.esri.Tasks.query({
+    url: neighborhoodsUrl
+  }).where(<span class="string">"NAME='HOLLYWOOD'"</span>).run(<span class="function"><span class="keyword">function</span><span class="params">(error, neighborhoods)</span>{</span>
     <span class="comment">// draw neighborhood on the map</span>
     <span class="keyword">var</span> hollywood = L.geoJson(neighborhoods).addTo(map);
 
@@ -218,7 +224,9 @@
     map.fitBounds(hollywood.getBounds().pad(<span class="number">0.5</span>));
 
     <span class="comment">// query all bike parking where BPSTYLE='STAPLE' inside our boundry</span>
-    L.esri.Tasks.query(bikeParkingUrl).where(<span class="string">"BPSTYLE='STAPLE'"</span>).within(hollywood).run(<span class="function"><span class="keyword">function</span><span class="params">(error, bikeParking)</span>{</span>
+    L.esri.Tasks.query({
+      url: bikeParkingUrl
+    }).where(<span class="string">"BPSTYLE='STAPLE'"</span>).within(hollywood).run(<span class="function"><span class="keyword">function</span><span class="params">(error, bikeParking)</span>{</span>
       L.geoJson(bikeParking).addTo(map);
     });
   });

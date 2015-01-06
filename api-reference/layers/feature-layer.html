@@ -7,11 +7,11 @@
 <head>
   <meta charset="utf-8">
 
-
+  
     <title>L.esri.Layers.FeatureLayer | Esri Leaflet</title>
+  
 
-
-
+  
 
   <meta name="description" content="Esri Leaflet">
   <meta name="viewport" content="width=device-width">
@@ -33,7 +33,7 @@
   <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
 
   <!-- esri leaflet -->
-  <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.2/esri-leaflet.js"></script>
+  <script src="/js/esri-leaflet.js"></script>
 
   <!-- Google Analytics -->
   <script>
@@ -60,10 +60,10 @@
     </div>
     <div id="background-map" class="background-map"></div>
 
-
+  
 
 <div class="container white">
-
+  
 
 <aside class="sidebar">
   <h5>L.esri</h5>
@@ -94,11 +94,10 @@
 
   <h5>L.esri.Tasks</h5>
   <nav>
-    <a href="../../../../esri-leaflet/api-reference/tasks/identify-features.html">Identify Features</a>
-    <a href="../../../../esri-leaflet/api-reference/tasks/identify-image.html">Identify Image</a>
     <a href="../../../../esri-leaflet/api-reference/tasks/query.html">Query</a>
     <a href="../../../../esri-leaflet/api-reference/tasks/find.html">Find</a>
-    <a href="../../../../esri-leaflet/api-reference/tasks/task.html">Task</a>
+    <a href="../../../../esri-leaflet/api-reference/tasks/identify-features.html">Identify Features</a>
+    <a href="../../../../esri-leaflet/api-reference/tasks/identify-image.html">Identify Image</a>
   </nav>
 
   <h5>Misc.</h5>
@@ -110,7 +109,7 @@
 <div class="main-content">
   <h1 id="l-esri-layers-featurelayer">L.esri.Layers.FeatureLayer</h1>
 <p><code>L.esri.Layer.FeatureLayer</code> is used to visualize and query vector geographic data hosted in ArcGIS Feature Layers. These layers are hosted as a part of Feature Services on either ArcGIS Online or ArcGIS Server.</p>
-<p>Feature Layers are provided by Feature Services which can contain multupile layers. Feature Layers expose vector geographic information as a web service that can be visualized, styled, queried and edited.</p>
+<p>Feature Layers are provided by Feature Services which can contain multiple layers. Feature Layers expose vector geographic information as a web service that can be visualized, styled, queried and edited.</p>
 <p>Here is a sample Feature Service URL </p>
 <pre><code>http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Neighborhoods_pdx/</code></pre>
 <p>This particular service contains only one Feature Layer. Here is the Feature Layer URL </p>
@@ -128,7 +127,7 @@
     <tbody>
         <tr>
             <td><code class="nobr">new L.esri.Layers.FeatureLayer(<nobr class="param"><span>&lt;String&gt;</span> <code>url</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br><code class="nobr">L.esri.Layers.featureLayer(<nobr class="param"><span>&lt;String&gt;</span> <code>url</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br><code class="nobr">new L.esri.FeatureLayer(<nobr class="param"><span>&lt;String&gt;</span> <code>url</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br><code class="nobr">L.esri.featureLayer(<nobr class="param"><span>&lt;String&gt;</span> <code>url</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code></td>
-            <td>URL of the Feature Layer.</td>
+            <td><code>url</code> should be the URL to the Feature Layer.</td>
         </tr>
     </tbody>
 </table>
@@ -164,6 +163,21 @@
             <td>A server side expression that will be evaluated to filter features. By default this will include all features in a service.</td>
         </tr>
         <tr>
+            <td><code>minZoom</code></td>
+            <td><code>Integer</code></td>
+            <td>Minimum zoom level of the map that features will display. example:  <code>minZoom:0</code></td>
+        </tr>
+        <tr>
+            <td><code>maxZoom</code></td>
+            <td><code>Integer</code></td>
+            <td>Maximum zoom level of the map that features will display. example:  <code>maxZoom:19</code></td>
+        </tr>
+        <tr>
+            <td><code>cacheLayers</code></td>
+            <td><code>Boolean</code></td>
+            <td>Will remove layers from the internal cache when they are removed from the map.</td>
+        </tr>
+        <tr>
             <td><code>fields</code></td>
             <td><code>Array</code></td>
             <td>An array of metadata names to pull from the service. Includes all fields by default. You should always specifcy the name of the unique id for the service. Usually either <code>&#39;FID&#39;</code> or <code>&#39;OBJECTID&#39;</code>.</td>
@@ -197,21 +211,6 @@
             <td><code>precision</code></td>
             <td><code>Integer</code></td>
             <td>How many digits of precision to request from the server. <a href="http://en.wikipedia.org/wiki/Decimal_degrees">Wikipedia</a> has a great reference of digit precision to meters.</td>
-        </tr>
-        <tr>
-            <td><code>minZoom</code></td>
-            <td><code>Integer</code></td>
-            <td>Minimum zoom level of the map that features will display. example:  <code>minZoom:0</code></td>
-        </tr>
-        <tr>
-            <td><code>maxZoom</code></td>
-            <td><code>Integer</code></td>
-            <td>Maximum zoom level of the map that features will display. example:  <code>maxZoom:19</code></td>
-        </tr>
-        <tr>
-            <td><code>cacheLayers</code></td>
-            <td><code>true</code></td>
-            <td>turning off caching for features outside the viewport will preserve memory</td>
         </tr>
         <tr>
             <td><code>token</code></td>

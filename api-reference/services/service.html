@@ -7,11 +7,11 @@
 <head>
   <meta charset="utf-8">
 
-
+  
     <title>L.esri.Services.Service | Esri Leaflet</title>
+  
 
-
-
+  
 
   <meta name="description" content="Esri Leaflet">
   <meta name="viewport" content="width=device-width">
@@ -33,7 +33,7 @@
   <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
 
   <!-- esri leaflet -->
-  <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.2/esri-leaflet.js"></script>
+  <script src="/js/esri-leaflet.js"></script>
 
   <!-- Google Analytics -->
   <script>
@@ -60,10 +60,10 @@
     </div>
     <div id="background-map" class="background-map"></div>
 
-
+  
 
 <div class="container white">
-
+  
 
 <aside class="sidebar">
   <h5>L.esri</h5>
@@ -94,11 +94,10 @@
 
   <h5>L.esri.Tasks</h5>
   <nav>
-    <a href="../../../../esri-leaflet/api-reference/tasks/identify-features.html">Identify Features</a>
-    <a href="../../../../esri-leaflet/api-reference/tasks/identify-image.html">Identify Image</a>
     <a href="../../../../esri-leaflet/api-reference/tasks/query.html">Query</a>
     <a href="../../../../esri-leaflet/api-reference/tasks/find.html">Find</a>
-    <a href="../../../../esri-leaflet/api-reference/tasks/task.html">Task</a>
+    <a href="../../../../esri-leaflet/api-reference/tasks/identify-features.html">Identify Features</a>
+    <a href="../../../../esri-leaflet/api-reference/tasks/identify-image.html">Identify Image</a>
   </nav>
 
   <h5>Misc.</h5>
@@ -108,7 +107,7 @@
 </aside>
 
 <div class="main-content">
-  <h1 id="l-esri-service">L.esri.Services.Service</h1>
+  <h1 id="l-esri-service">L.esri.Service</h1>
 <p>A generic class representing a hosted resource on ArcGIS Online or ArcGIS Server. This class can be extended to provide support for making requests as well as a standard for authentication and proxying.</p>
 <h3 id="constructor">Constructor</h3>
 <table>
@@ -121,7 +120,7 @@
     <tbody>
         <tr>
             <td><code class="nobr">new L.esri.Services.Service(<nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br><code class="nobr">L.esri.Services.service(<nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code></td>
-            <td>Options includes a <code>url</code> parameter which refers to the ArcGIS Server or ArcGIS Online service you would like to consume.</td>
+            <td>The <code>url</code> parameter is the URL to the ArcGIS Server or ArcGIS Online service you would like to consume.</td>
         </tr>
     </tbody>
 </table>
@@ -140,8 +139,8 @@
 <tr>
 <td><code>url</code></td>
 <td><code>String</code></td>
-<td><code></code></td>
-<td>URL of the ArcGIS Server or ArcGIS Online service you would like to consume.</td>
+<td><code>&#39;&#39;</code></td>
+<td>URL of the ArcGIS service you would like to consume.</td>
 </tr>
 <tr>
 <td><code>proxy</code></td>
@@ -207,12 +206,12 @@
         <tr>
             <td><code>get(<nobr class="param"><span>&lt;String&gt;</span> <code>url</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>params</code></nobr>, <nobr class="param"><span>&lt;Function&gt;</span> <code>callback</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>context</code></nobr>)</code></td>
             <td><code>this</code></td>
-            <td>Makes a GET request to the service. The service's URL will be combined with the <code>path</code> option and parameters will be serialized to a query string. Accepts an optional function context for the callback.</td>
+            <td>Makes a GET request to the service. The service&#39;s URL will be combined with the <code>path</code> option and parameters will be serialized to a query string. Accepts an optional function context for the callback.</td>
         </tr>
         <tr>
             <td><code>post(<nobr class="param"><span>&lt;String&gt;</span> <code>url</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>params</code></nobr>, <nobr class="param"><span>&lt;Function&gt;</span> <code>callback</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>context</code></nobr>)</code></td>
             <td><code>this</code></td>
-            <td>Makes a POST request to the service. The service's URL will be combined with the <code>path</code> option and parameters will be serialized. Accepts an optional function context for the callback.</td>
+            <td>Makes a POST request to the service. The service&#39;s URL will be combined with the <code>path</code> option and parameters will be serialized. Accepts an optional function context for the callback.</td>
         </tr>
         <tr>
             <td><code>metadata(<nobr class="param"><span>&lt;Function&gt;</span> <code>callback</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>context</code></nobr>)</code></td>
