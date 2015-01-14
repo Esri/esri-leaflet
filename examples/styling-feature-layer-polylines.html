@@ -175,7 +175,7 @@
 
   L.esri.basemapLayer('Streets').addTo(map);
 
-  var bikePaths = L.esri.featureLayer('http://services.arcgis.com/uCXeTVveQzP4IIcx/arcgis/rest/services/bike_rte/FeatureServer/0', {
+  var bikePaths = L.esri.featureLayer('http://services.arcgis.com/uCXeTVveQzP4IIcx/ArcGIS/rest/services/Bike_Routes/FeatureServer/0', {
     style: function (feature) {
       var c,o = 0.75;
       switch (feature.properties.BIKEMODE) {
@@ -266,7 +266,7 @@
 
   L.esri.basemapLayer(<span class="string">'Streets'</span>).addTo(map);
 
-  <span class="keyword">var</span> bikePaths = L.esri.featureLayer(<span class="string">'http://services.arcgis.com/uCXeTVveQzP4IIcx/arcgis/rest/services/bike_rte/FeatureServer/0'</span>, {
+  <span class="keyword">var</span> bikePaths = L.esri.featureLayer(<span class="string">'http://services.arcgis.com/uCXeTVveQzP4IIcx/ArcGIS/rest/services/Bike_Routes/FeatureServer/0'</span>, {
     style: <span class="function"><span class="keyword">function</span> <span class="params">(feature)</span> {</span>
       <span class="keyword">var</span> c,o = <span class="number">0.75</span>;
       <span class="keyword">switch</span> (feature.properties.BIKEMODE) {
