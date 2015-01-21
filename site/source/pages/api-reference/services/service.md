@@ -3,7 +3,7 @@ title: L.esri.Services.Service
 layout: documentation.hbs
 ---
 
-# L.esri.Service
+# L.esri.Services.Service
 
 A generic class representing a hosted resource on ArcGIS Online or ArcGIS Server. This class can be extended to provide support for making requests as well as a standard for authentication and proxying.
 
