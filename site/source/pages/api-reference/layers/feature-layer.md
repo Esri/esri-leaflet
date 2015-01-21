@@ -9,13 +9,13 @@ layout: documentation.hbs
 
 Feature Layers are provided by Feature Services which can contain multiple layers. Feature Layers expose vector geographic information as a web service that can be visualized, styled, queried and edited.
 
-Here is a sample Feature Service URL 
+Here is a sample Feature Service URL
 
 ```
 http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Neighborhoods_pdx/
 ```
 
-This particular service contains only one Feature Layer. Here is the Feature Layer URL 
+This particular service contains only one Feature Layer. Here is the Feature Layer URL
 
 ```
 http://services.arcgis.com/rOo16HdIMeOBI4Mb/ArcGIS/rest/services/Neighborhoods_pdx/FeatureServer/0
@@ -37,7 +37,7 @@ You can create a new empty feature service with a single layer on the [ArcGIS fo
     <tbody>
         <tr>
             <td><code class="nobr">new L.esri.Layers.FeatureLayer({{{param 'String' 'url'}}}, {{{param 'Object' 'options'}}})</code><br><br><code class="nobr">L.esri.Layers.featureLayer({{{param 'String' 'url'}}}, {{{param 'Object' 'options'}}})</code><br><br><code class="nobr">new L.esri.FeatureLayer({{{param 'String' 'url'}}}, {{{param 'Object' 'options'}}})</code><br><br><code class="nobr">L.esri.featureLayer({{{param 'String' 'url'}}}, {{{param 'Object' 'options'}}})</code></td>
-            <td><code>url</code> should be the URL to the Feature Layer.</td>
+            <td><code>url</code> URL of the Feature Layer.</td>
         </tr>
     </tbody>
 </table>
