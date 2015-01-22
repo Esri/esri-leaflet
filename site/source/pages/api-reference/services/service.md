@@ -5,7 +5,7 @@ layout: documentation.hbs
 
 # L.esri.Services.Service
 
-A generic class representing a hosted resource on ArcGIS Online or ArcGIS Server. This class can be extended to provide support for making requests as well as a standard for authentication and proxying.
+A generic class representing a hosted resource on ArcGIS Online or ArcGIS Server. This class can be extended to provide support for making requests and serves as a standard for authentication and proxying.
 
 ### Constructor
 
@@ -29,7 +29,7 @@ A generic class representing a hosted resource on ArcGIS Online or ArcGIS Server
 | Option | Type | Default | Description |
 | --- | --- | --- | --- |
 | `url` | `String` | `''` | URL of the ArcGIS service you would like to consume. |
-| `proxy` | `String` | `false` | URL of an [ArcGIS API for JavaScript proxies](https://developers.arcgis.com/javascript/jshelp/ags_proxy.html) or [ArcGIS Resource Proxies](https://github.com/Esri/resource-proxy) to use for proxying POST requests. |
+| `proxy` | `String` | `false` | URL of an [ArcGIS API for JavaScript proxy](https://developers.arcgis.com/javascript/jshelp/ags_proxy.html) or [ArcGIS Resource Proxy](https://github.com/Esri/resource-proxy) to use for proxying POST requests. |
 | `useCors` | `Boolean` | `true` | If this service should use CORS when making GET requests. |
 
 ### Events

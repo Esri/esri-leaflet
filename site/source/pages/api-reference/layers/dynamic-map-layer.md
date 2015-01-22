@@ -9,7 +9,7 @@ layout: documentation.hbs
 
 Render and visualize Map Services from ArcGIS Online and ArcGIS Server. L.esri.Layers.DynamicMapLayer also supports custom popups and identification of features.
 
-Map Servers are a way to expose the contents that make up a map as a web service and can expose different capabilites for exporting tiles images, querying and identifying features and more.
+Map Services are a way to expose the contents of a map as a web service and expose capabilites for exporting tile images, querying and identifying features and more.
 
 ### Constructor
 
@@ -41,10 +41,10 @@ Option | Type | Default | Description
 `imageSR` | `Integer` | `3857` | Spatial reference of the output image. If you don't know what this is don't change it.
 `layers` | `Array` | `''` | An array of Layer IDs like `[3,4,5]` to show from the service.
 `layerDefs` | `String` `Object` | `''` | A string representing a query to run against the service before the image is rendered. This can be a string like `"STATE_NAME='Kansas' and POP2007>25000"` or an object mapping different queries to specific layers `{5:"STATE_NAME='Kansas'", 4:"STATE_NAME='Kansas'}`.
-`opacity` | `Number` | `1` | Opacity of the layer. Should be a value between 0 and 1.
+`opacity` | `Number` | `1` | Opacity of the layer. Should be a value between 0 (completely transparent) and 1 (completely opaque).
 `position` | `String` | `'front'` | Position of the layer relative to other overlays.
 `token` | `String` | `null` | If you pass a token in your options it will included in all requests to the service. See [working with authenticated services](#working-with-authenticated-services) for more information.
-`proxy` | `String` | `false` | URL of an [ArcGIS API for JavaScript proxies](https://developers.arcgis.com/javascript/jshelp/ags_proxy.html) or [ArcGIS Resource Proxies](https://github.com/Esri/resource-proxy) to use for proxying POST requests.
+`proxy` | `String` | `false` | URL of an [ArcGIS API for JavaScript proxy](https://developers.arcgis.com/javascript/jshelp/ags_proxy.html) or [ArcGIS Resource Proxy](https://github.com/Esri/resource-proxy) to use for proxying POST requests.
 `useCors` | `Boolean` | `true` | If this service should use CORS when making GET requests.
 
 ### Methods

@@ -5,7 +5,7 @@ layout: documentation.hbs
 
 # {{page.data.title}}
 
-`L.esri.Tasks.IdentifyImage` is an abstraction for the Identify API that exists on Image Services. It provides a chainable API for building request parameters and executing the request.
+`L.esri.Tasks.IdentifyImage` is an abstraction for the Identify API found in Image Services. It provides a chainable API for building request parameters and executing the request.
 
 ### Constructor
 

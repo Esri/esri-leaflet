@@ -5,7 +5,7 @@ layout: documentation.hbs
 
 # {{page.data.title}}
 
-`L.esri.Layer.FeatureLayer` is used to visualize and query vector geographic data hosted in ArcGIS Feature Layers. These layers are hosted as a part of Feature Services on either ArcGIS Online or ArcGIS Server.
+`L.esri.Layer.FeatureLayer` is used to visualize and query vector geographic data hosted in both ArcGIS Online and published using ArcGIS Server.
 
 Feature Layers are provided by Feature Services which can contain multiple layers. Feature Layers expose vector geographic information as a web service that can be visualized, styled, queried and edited.
 
@@ -250,12 +250,14 @@ In additon to these events `L.esri.Layer.FeatureLayer` also fires the following 
             <td><code>this</code></td>
             <td>
                 Returns a new <a href=""><code>L.esri.services.Query</code></a> object that can be used to query this layer. Your callback function will be passed a <a href="http://geojson.org/geojson-spec.html#feature-collection-objects">GeoJSON FeatureCollection</a> with the results or an error.
-<pre class="js"><code>featureLayer.query()
-            .within(latlngbounds)
-            .where("Direction = 'WEST'")
-            .run(function(error, featureCollection){
-                console.log(featureCollection);
-            });</code></pre>
+<pre class="js"><code>
+featureLayer.query()
+  .within(latlngbounds)
+  .where("Direction = 'WEST'")
+  .run(function(error, featureCollection){
+    console.log(featureCollection);
+  });
+</code></pre>
             </td>
         </tr>
         <tr>

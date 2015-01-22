@@ -5,9 +5,9 @@ layout: documentation.hbs
 
 # {{page.data.title}}
 
-`L.esri.Tasks.Query` is an abstraction for the query API that exists on Feature Layers Map Services and Image Services. It provides a chainable API for building request parameters and executing queries.
+`L.esri.Tasks.Query` is an abstraction for the query API included in Feature Layers and Image Services. It provides a chainable API for building request parameters and executing queries.
 
-**Note** Depending on the type of service you are querying (Feature Layer, Map Service, Image Service) and the version of ArcGIS Server that hosts the service some of these options my not be available.
+**Note** Depending on the type of service you are querying (Feature Layer, Map Service, Image Service) and the version of ArcGIS Server that hosts the service some of these options may not be available.
 
 ### Constructor
 

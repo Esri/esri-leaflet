@@ -5,7 +5,7 @@ layout: documentation.hbs
 
 # {{page.data.title}}
 
-`L.esri.Tasks.IdentifyFeatures` is an abstraction for the Identify API that exists on Map Services. It provides a chainable API for building request parameters and executing the request.
+`L.esri.Tasks.IdentifyFeatures` is an abstraction for the Identify API found in Map Services. It provides a chainable API for building request parameters and executing the request.
 
 ### Constructor
 

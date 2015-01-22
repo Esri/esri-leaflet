@@ -5,7 +5,7 @@ layout: documentation.hbs
 
 # {{page.data.title}}
 
-`L.esri.Tasks.Find` is an abstraction for the find API that exists on Map Services. It provides a chainable API for building request parameters and executing find tasks.
+`L.esri.Tasks.Find` is an abstraction for the find API included in Map Services. It provides a chainable API for building request parameters and executing find tasks.
 
 ### Constructor
 
