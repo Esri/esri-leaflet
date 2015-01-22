@@ -3,7 +3,7 @@ title: Utilities
 layout: documentation.hbs
 ---
 
-# L.esri.Utils
+# L.esri.Util
 
 Utility methods used internally by Esri Leaflet. These methods are useful for converting data between ArcGIS and Leaflet formats.
 
