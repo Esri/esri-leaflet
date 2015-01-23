@@ -75,10 +75,11 @@ Option | Type | Default | Description
                 Uses the provided function to create a popup that will identify pixel value(s) whenever the map is clicked. Your function will be passed an object with a `pixel` property that is a <a href="http://geojson.org/geojson-spec.html#point">GeoJSON Point</a> with the pixel value(s) at the clicked location and should return the appropriate HTML. If you do not want to open the popup when there are no results, return <code>false</code>.
 
 <pre class="js"><code>
-imageMapLayer.bindPopup(function(err, identifyResults, response){
-  var value = results.pixel.properties.value;
-  return (value) ? 'Pixel value: ' + value : false;
-});</code></pre>
+imageMapLayer.bindPopup(
+  function(err, identifyResults, response){
+    var value = results.pixel.properties.value;
+    return (value) ? 'Pixel value: ' + value : false;
+  });</code></pre>
 
                 NOTE: by default, if the layer has a mosaic rule applied, then the same rule will be applied to the identify request. Conversely, if the layer has a rendering rule applied, that rule is **NOT** applied to the layer so that that the raw pixel value can be returned. If you need specific control over how these rules (and/or other identify parameters) are passed to the identify service, use <a href="{{assets}}api-reference/tasks/identify-image.html"><code>L.esri.Tasks.IdentifyImage</code></a>.
             </td>

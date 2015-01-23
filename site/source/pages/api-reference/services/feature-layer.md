@@ -49,9 +49,7 @@ Inherits from [`L.esri.Service`]({{assets}}api-reference/services/service.html)
             <td><code>query()</code></td>
             <td><code>this</code></td>
             <td>
-                Returns a new <a href="{{assets}}api-reference/tasks/query.html"><code>L.esri.Tasks.Query</code></a> object that can be used to query this layer.
-<pre class="js"><code>
-featureLayer.query()
+                Returns a new <a href="{{assets}}api-reference/tasks/query.html"><code>L.esri.Tasks.Query</code></a> object that can be used to query this layer.<pre class="js"><code>featureLayer.query()
   .within(latlngbounds)
   .where("Direction = 'WEST'")
   .run(function(error, featureCollection, response){

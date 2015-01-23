@@ -5,7 +5,7 @@ layout: documentation.hbs
 
 # {{page.data.title}}
 
-Quickly access Esri published map tiles from on ArcGIS Online in Leaflet.
+Quickly access Esri published map tiles from ArcGIS Online or ArcGIS Server in Leaflet.
 
 Inherits from [`L.TileLayer`](http://leafletjs.com/reference.html#tilelayer)
 
