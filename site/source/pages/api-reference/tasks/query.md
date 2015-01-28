@@ -5,9 +5,9 @@ layout: documentation.hbs
 
 # {{page.data.title}}
 
-`L.esri.Tasks.Query` is an abstraction for the query API that exists on Feature Layers Map Services and Image Services. It provides a chainable API for building request parameters and executing queries.
+`L.esri.Tasks.Query` is an abstraction for the query API included in Feature Layers and Image Services. It provides a chainable API for building request parameters and executing queries.
 
-**Note** Depending on the type of service you are querying (Feature Layer, Map Service, Image Service) and the version of ArcGIS Server that hosts the service some of these options my not be available.
+**Note** Depending on the type of service you are querying (Feature Layer, Map Service, Image Service) and the version of ArcGIS Server that hosts the service some of these options may not be available.
 
 ### Constructor
 
@@ -35,9 +35,9 @@ layout: documentation.hbs
 
 | Option | Type | Default | Description |
 | --- | --- | --- | --- |
-| `url` | `String` | `''` | URL of the ArcGIS service you would like to consume. |
-| `proxy` | `String` | `false` | URL of an [ArcGIS API for JavaScript proxies](https://developers.arcgis.com/javascript/jshelp/ags_proxy.html) or [ArcGIS Resource Proxies](https://github.com/Esri/resource-proxy) to use for proxying POST requests. |
-| `useCors` | `Boolean` | `true` | If this service should use CORS when making GET requests. |
+| `url` | `String` | `''` | URL of the ArcGIS Server or ArcGIS Online service you would like to consume. |
+| `proxy` | `String` | `false` | URL of an [ArcGIS API for JavaScript proxy](https://developers.arcgis.com/javascript/jshelp/ags_proxy.html) or [ArcGIS Resource Proxy](https://github.com/Esri/resource-proxy) to use for proxying POST requests. |
+| `useCors` | `Boolean` | `true` | If this task should use CORS when making GET requests. |
 
 ### Methods
 

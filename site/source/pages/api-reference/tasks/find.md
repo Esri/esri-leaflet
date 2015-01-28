@@ -5,7 +5,7 @@ layout: documentation.hbs
 
 # {{page.data.title}}
 
-`L.esri.Tasks.Find` is an abstraction for the find API that exists on Map Services. It provides a chainable API for building request parameters and executing find tasks.
+`L.esri.Tasks.Find` is an abstraction for the find API included in Map Services. It provides a chainable API for building request parameters and executing find tasks.
 
 ### Constructor
 
@@ -34,7 +34,7 @@ layout: documentation.hbs
 | Option | Type | Default | Description |
 | --- | --- | --- | --- |
 | `url` | `String` | `''` | URL of the ArcGIS service you would like to consume. |
-| `proxy` | `String` | `false` | URL of an [ArcGIS API for JavaScript proxies](https://developers.arcgis.com/javascript/jshelp/ags_proxy.html) or [ArcGIS Resource Proxies](https://github.com/Esri/resource-proxy) to use for proxying POST requests. |
+| `proxy` | `String` | `false` | URL of an [ArcGIS API for JavaScript proxy](https://developers.arcgis.com/javascript/jshelp/ags_proxy.html) or [ArcGIS Resource Proxy](https://github.com/Esri/resource-proxy) to use for proxying POST requests. |
 | `useCors` | `Boolean` | `true` | If this service should use CORS when making GET requests. |
 
 ### Methods
@@ -135,7 +135,7 @@ var find = L.esri.Tasks.find('http://services.nationalmap.gov/arcgis/rest/servic
 
 find.layers('18')
     .text('Colorado');
-           
+
 find.run(function(error, featureCollection, response){
     console.log('GNIS Name: ' + featureCollection.features[0].properties.GNIS_NAME);
 });

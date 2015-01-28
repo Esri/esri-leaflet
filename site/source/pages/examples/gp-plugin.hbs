@@ -1,0 +1,57 @@
+---
+title: Leverage a Geoprocessing Service
+description: This demo relies on the <a href="http://github.com/jgravois/esri-leaflet-gp/">Esri Leaflet GP</a> plugin.<br>More information about Geoprocessing Services can be found in the <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/index.html#/GP_Service/02r3000000rq000000/">ArcGIS REST</a> documentation.
+layout: example.hbs
+---
+
+
+<!-- we'll move to CDN soon -->
+<script src="https://dl.dropboxusercontent.com/u/59331579/0.7.3/esri-leaflet-gp-0.0.1-alpha.3.js"></script>
+
+<style>
+  #info-pane {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 10;
+    padding: 1em;
+    background: white;
+  }
+</style>
+
+<div id="map"></div>
+<div id="info-pane" class="leaflet-bar">
+  <label>
+  click on the map to calculate<br>5 and 10 minute drivetimes
+  </label>
+</div>
+
+<script type='text/javascript'>
+  var map = L.map('map').setView([37.78, -122.42], 12);
+
+  L.esri.basemapLayer('Gray').addTo(map);
+
+  var gpService = new L.esri.GP.Services.Geoprocessing({
+    url: "http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Network/ESRI_DriveTime_US/GPServer/CreateDriveTimePolygons",
+    useCors:false
+  });
+
+  var gpTask = gpService.createTask();
+
+  gpTask.setParam("Drive_Times", "1 2");
+
+  var driveTimes = new L.FeatureGroup();
+  map.addLayer(driveTimes);
+
+  map.on('click', function(evt){
+    document.getElementById('info-pane').innerHTML = 'working...';
+    driveTimes.clearLayers();
+    gpTask.setParam("Input_Location", evt.latlng)
+    gpTask.run(driveTimeCallback);
+  });
+
+  function driveTimeCallback(error, response, raw){
+    document.getElementById('info-pane').innerHTML = 'click on the map to calculate 1 and 2 minute drivetimes';
+    driveTimes.addLayer(L.geoJson(response));
+  }
+</script>
