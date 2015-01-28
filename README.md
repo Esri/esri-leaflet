@@ -94,11 +94,11 @@ You can also ask questions on [GIS Stackexchange](http://gis.stackexchange.com/q
 * [Geotrigger Faker](https://github.com/Esri/geotrigger-faker)
 * [ArcGIS for Developers](https://developers.arcgis.com/en/)
 
-Feel free to add your projects to this list!
+Feel free to add your own project to this list!
 
 ### Development Instructions
 
-Make Sure you have the [Grunt CLI](http://gruntjs.com/getting-started) installed.
+Make sure you have the [Grunt CLI](http://gruntjs.com/getting-started) installed.
 
 1. [Fork and clone Esri Leaflet](https://help.github.com/articles/fork-a-repo)
 2. `cd` into the `esri-leaflet` folder
@@ -111,7 +111,7 @@ Make Sure you have the [Grunt CLI](http://gruntjs.com/getting-started) installed
 * [Leaflet](http://leafletjs.com) version 0.7 or higher is required but the latest version is recommended.
 
 ### Versioning
- 
+
 For transparency into the release cycle and in striving to maintain backward compatibility, Esri Leaflet is maintained under the Semantic Versioning guidelines and will adhere to these rules whenever possible.
 
 Releases will be numbered with the following format:
@@ -151,7 +151,7 @@ Esri welcomes contributions from anyone and everyone. Please see our [guidelines
 `L.esri.Layers.DynamicMapLayer` originally used code from https://github.com/sanborn/leaflet-ags/blob/master/src/AGS.Layer.Dynamic.js
 
 ### Licensing
-Copyright 2014 Esri
+Copyright 2015 Esri
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

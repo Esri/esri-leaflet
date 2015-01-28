@@ -7,11 +7,11 @@ layout: documentation.hbs
 
 Inherits from [`L.TileLayer`](http://leafletjs.com/reference.html#tilelayer)
 
-Access tiles from ArcGIS Online and ArcGIS Server as well as visualize and identify features on them.
+Access tiles from ArcGIS Online and ArcGIS Server as well as visualize and identify features.
 
-Is you have Feature Services published on ArcGIS online you can create a static set of tiles using your Feature Service. You can find details on that process on the [ArcGIS Online Help](http://doc.arcgis.com/en/arcgis-online/share-maps/publish-tiles.htm#ESRI_SECTION1_F68FCBD33BD54117B23232D41A762E89)
+Is you have Feature Services published in ArcGIS Online you can create a static set of tiles using your Feature Service. You can find details about that process in the [ArcGIS Online Help](http://doc.arcgis.com/en/arcgis-online/share-maps/publish-tiles.htm#ESRI_SECTION1_F68FCBD33BD54117B23232D41A762E89)
 
-**Your map service must be published using the Web Mercator Auxiliary Sphere tiling scheme (WKID 102100/3857) and the default scale option used by Google Maps, Bing Maps and [ArcGIS Online](http://resources.arcgis.com/en/help/arcgisonline-content/index.html#//011q00000002000000). Esri Leaflet will not support any other spatial reference for tile layers.**
+**Your map service must be published using the Web Mercator Auxiliary Sphere tiling scheme (WKID 102100/3857) and the default scale options used by Google Maps, Bing Maps and [ArcGIS Online](http://resources.arcgis.com/en/help/arcgisonline-content/index.html#//011q00000002000000). Esri Leaflet will not support any other spatial reference for tile layers.**
 
 ### Constructor
 
@@ -34,9 +34,9 @@ Is you have Feature Services published on ArcGIS online you can create a static 
 
 | Option | Type | Default | Description |
 | --- | --- | --- | --- |
-| `proxy` | `String` | `false` | URL of an [ArcGIS API for JavaScript proxies](https://developers.arcgis.com/javascript/jshelp/ags_proxy.html) or [ArcGIS Resource Proxies](https://github.com/Esri/resource-proxy) to use for proxying POST requests. |
-| `useCors` | `Boolean` | `true` | If this service should use CORS when making GET requests. |
-| `token` | | `String` | `null` | Will use this tokent to authenticate all calls to the service.
+| `proxy` | `String` | `false` | URL of an [ArcGIS API for JavaScript proxy](https://developers.arcgis.com/javascript/jshelp/ags_proxy.html) or [ArcGIS Resource Proxy](https://github.com/Esri/resource-proxy) to use for proxying POST requests. |
+| `useCors` | `Boolean` | `true` | Dictates if the service should use CORS when making GET requests. |
+| `token` | `String` | `null` | Will use this token to authenticate all calls to the service.
 
 `L.esri.TiledMapLayer` also accepts all [`L.TileLayer`](http://leafletjs.com/reference.html#tilelayer-options) options.
 
@@ -72,10 +72,10 @@ Is you have Feature Services published on ArcGIS online you can create a static 
             <td>
                 Returns a new <a href="/api-reference/tasks/identify-features.html"><code>L.esri.services.IdentifyFeatures</code></a> object that can be used to identify features on this layer. Your callback function will be passed a GeoJSON FeatureCollection with the results or an error.
 <pre class="js"><code>featureLayer.identify()
-            .at(latlng, latlngbounds, 5)
-            .run(function(error, featureCollection){
-              console.log(featureCollection);
-            });</code></pre>
+  .at(latlng, latlngbounds, 5)
+  .run(function(error, featureCollection){
+    console.log(featureCollection);
+  });</code></pre>
             </td>
         </tr>
     </tbody>

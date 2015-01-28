@@ -1,0 +1,18 @@
+---
+title: Inherit service symbology
+description: This sample demonstrates how to recreate the symbology defined for feature services in the client automatically.  The demo relies on the <a href="http://github.com/Esri/esri-leaflet-renderers/">Esri Leaflet Renderers</a> plugin.
+layout: example.hbs
+---
+
+<!-- Load Esri Leaflet Renderers -->
+<script src="https://dl.dropboxusercontent.com/u/59331579/0.7.3/esri-leaflet-renderers-0.0.1-beta.1.min.js"></script>
+
+<div id="map"></div>
+
+<script type='text/javascript'>
+  var map = L.map('map').setView([38, 62], 3);
+  L.esri.basemapLayer('DarkGray').addTo(map);
+
+  //renderer type: unique value
+  L.esri.featureLayer('//services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/World_Regions/FeatureServer/0', {simplifyFactor: .1}).addTo(map);
+</script>
