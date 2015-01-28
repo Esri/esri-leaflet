@@ -29,10 +29,10 @@
   <link rel="stylesheet" href="../../../../esri-leaflet/css/style.css">
 
   <!-- leaflet -->
-  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
-  <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/leaflet/0.7.3/leaflet.css" />
+  <script src="//cdn.jsdelivr.net/leaflet/0.7.3/leaflet.js"></script>
 
-  <!-- esri leaflet -->
+  <!-- Load Esri Leaflet from CDN -->
   <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.5/esri-leaflet.js"></script>
 
   <!-- Google Analytics -->
@@ -69,7 +69,7 @@
   <h5>L.esri</h5>
   <nav>
     <a href="../../../../esri-leaflet/api-reference/request.html">Request</a>
-    <a href="../../../../esri-leaflet/api-reference/utils.html">Utils</a>
+    <a href="../../../../esri-leaflet/api-reference/util.html">Util</a>
   </nav>
 
   <h5>L.esri.Layers</h5>
@@ -98,6 +98,7 @@
     <a href="../../../../esri-leaflet/api-reference/tasks/find.html">Find</a>
     <a href="../../../../esri-leaflet/api-reference/tasks/identify-features.html">Identify Features</a>
     <a href="../../../../esri-leaflet/api-reference/tasks/identify-image.html">Identify Image</a>
+    <a href="../../../../esri-leaflet/api-reference/tasks/task.html">Task</a>
   </nav>
 
   <h5>Misc.</h5>
@@ -109,7 +110,7 @@
 <div class="main-content">
   <h1 id="l-esri-services-mapservice">L.esri.Services.MapService</h1>
 <p>Inherits from <a href="../../../../esri-leaflet/api-reference/services/service.html"><code>L.esri.Service</code></a></p>
-<p><code>L.esri.Services.MapService</code> is an abstraction interacting with Map Services running on ArcGIS Online and ArcGIS server that allows you to make requests to the API, as well as query and identify features on the service.</p>
+<p><code>L.esri.Services.MapService</code> is an abstraction for interacting with Map Services running on ArcGIS Online and ArcGIS Server that allows you to make requests to the API, as well as query and identify published features.</p>
 <h3 id="constructor">Constructor</h3>
 <table>
     <thead>
@@ -121,7 +122,7 @@
     <tbody>
         <tr>
             <td><code class="nobr">new L.esri.Services.MapService(<nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br><code class="nobr">L.esri.Services.mapService(<nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code></td>
-            <td><code>options</code> for confuguring the ArcGIS Server or ArcGIS Online map service you would like to consume. <code>options</code> must include a <code>url</code> option of the MapService you would like to consume.</td>
+            <td><code>options</code> for configuring the ArcGIS Server or ArcGIS Online map service you would like to consume. <code>Options</code> includes a <code>url</code> parameter which refers to the ArcGIS Server or ArcGIS Online service you would like to consume.</td>
         </tr>
     </tbody>
 </table>

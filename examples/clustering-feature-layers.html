@@ -8,11 +8,11 @@
   <meta charset="utf-8">
 
   
-    <title>Simple DynamicMapLayer | Esri Leaflet</title>
+    <title>Clustering points | Esri Leaflet</title>
   
 
   
-    <meta name="description" content="Display a Map Service from ArcGIS Online or ArcGIS Server.  More information about Map Services can be found in the &lt;a href=&quot;/esri-leaflet/api-reference/layers/dynamic-map-layer.html&quot;&gt;L.esri.Layers.DynamicMapLayer&lt;/a&gt; documentation.">
+    <meta name="description" content="Visualize dense services as clusters of points with the &lt;a href=&quot;https://github.com/Leaflet/Leaflet.markercluster&quot;&gt;L.markercluster&lt;/a&gt; plugin. More information about Feature Layers can be found in the &lt;a href=&quot;/esri-leaflet/api-reference/layers/feature-layer.html&quot;&gt;L.esri.Layers.FeatureLayer&lt;/a&gt; documentation.">
   
 
   <meta name="description" content="Esri Leaflet">
@@ -156,28 +156,33 @@
 
 <div class="example-content">
 <div class="wrap">
-  <h1>Simple DynamicMapLayer</h1>
-  <p>Display a Map Service from ArcGIS Online or ArcGIS Server.  More information about Map Services can be found in the <a href="/esri-leaflet/api-reference/layers/dynamic-map-layer.html">L.esri.Layers.DynamicMapLayer</a> documentation.</p>
+  <h1>Clustering points</h1>
+  <p>Visualize dense services as clusters of points with the <a href="https://github.com/Leaflet/Leaflet.markercluster">L.markercluster</a> plugin. More information about Feature Layers can be found in the <a href="/esri-leaflet/api-reference/layers/feature-layer.html">L.esri.Layers.FeatureLayer</a> documentation.</p>
 </div>
 <div id="map-wrapper">
   
 
+<!-- Include Leaflet.markercluster via rawgit.com, do not use in production -->
+<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/Leaflet/Leaflet.markercluster/v0.4.0/dist/MarkerCluster.Default.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/Leaflet/Leaflet.markercluster/v0.4.0/dist/MarkerCluster.css">
+<script src="https://cdn.rawgit.com/Leaflet/Leaflet.markercluster/v0.4.0/dist/leaflet.markercluster.js"></script>
+
+<!-- Load Clustered Feature Layer from CDN -->
+<script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-clustered-feature-layer/1.0.0-rc.1/esri-leaflet-clustered-feature-layer.js"></script>
+
 <div id="map"></div>
 
 <script>
-  var map = L.map('map').setView([34.025, -116.203], 9);
+  var map = L.map('map').setView([45.526, -122.667], 15);
 
-  L.esri.basemapLayer('Gray').addTo(map);
-
-  L.esri.dynamicMapLayer('http://maps1.arcgisonline.com/ArcGIS/rest/services/USA_Federal_Lands/MapServer', {
-    opacity: 0.5
-  }).addTo(map);
+  L.esri.basemapLayer('Streets').addTo(map);
+  L.esri.clusteredFeatureLayer('https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Trimet_Transit_Stops/FeatureServer/0').addTo(map);
 </script>
 </div>
 <pre><code class="language-xml"><span class="tag">&lt;<span class="title">html</span>&gt;</span>
 <span class="tag">&lt;<span class="title">head</span>&gt;</span>
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">utf-8</span> /&gt;</span>
-  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Simple DynamicMapLayer<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Clustering points<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">name</span>=<span class="value">'viewport'</span> <span class="attribute">content</span>=<span class="value">'initial-scale=1,maximum-scale=1,user-scalable=no'</span> /&gt;</span>
 
   <span class="comment">&lt;!-- Load Leaflet from CDN--&gt;</span>
@@ -194,23 +199,28 @@
 <span class="tag">&lt;/<span class="title">head</span>&gt;</span>
 <span class="tag">&lt;<span class="title">body</span>&gt;</span>
 
+<span class="comment">&lt;!-- Include Leaflet.markercluster via rawgit.com, do not use in production --&gt;</span>
+<span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">type</span>=<span class="value">"text/css"</span> <span class="attribute">href</span>=<span class="value">"https://cdn.rawgit.com/Leaflet/Leaflet.markercluster/v0.4.0/dist/MarkerCluster.Default.css"</span>&gt;</span>
+<span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">type</span>=<span class="value">"text/css"</span> <span class="attribute">href</span>=<span class="value">"https://cdn.rawgit.com/Leaflet/Leaflet.markercluster/v0.4.0/dist/MarkerCluster.css"</span>&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://cdn.rawgit.com/Leaflet/Leaflet.markercluster/v0.4.0/dist/leaflet.markercluster.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+
+<span class="comment">&lt;!-- Load Clustered Feature Layer from CDN --&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-clustered-feature-layer/1.0.0-rc.1/esri-leaflet-clustered-feature-layer.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+
 <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
-  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">34.025</span>, -<span class="number">116.203</span>], <span class="number">9</span>);
+  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">45.526</span>, -<span class="number">122.667</span>], <span class="number">15</span>);
 
-  L.esri.basemapLayer(<span class="string">'Gray'</span>).addTo(map);
-
-  L.esri.dynamicMapLayer(<span class="string">'http://maps1.arcgisonline.com/ArcGIS/rest/services/USA_Federal_Lands/MapServer'</span>, {
-    opacity: <span class="number">0.5</span>
-  }).addTo(map);
+  L.esri.basemapLayer(<span class="string">'Streets'</span>).addTo(map);
+  L.esri.clusteredFeatureLayer(<span class="string">'https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Trimet_Transit_Stops/FeatureServer/0'</span>).addTo(map);
 </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 <span class="tag">&lt;/<span class="title">body</span>&gt;</span>
 <span class="tag">&lt;/<span class="title">html</span>&gt;</span></code></pre>
 
 <div class="wrap">
-  <p><a href="http://github.com/esri/esri-leaflet/edit/master/site/source/pages/examples/simple-dynamic-map-layer.hbs">Edit this sample on GitHub</a></p>
+  <p><a href="http://github.com/esri/esri-leaflet/edit/master/site/source/pages/examples/clustering-feature-layers.hbs">Edit this sample on GitHub</a></p>
 </div>
 </div>
   <div style='clear:both;'></div>

@@ -29,10 +29,10 @@
   <link rel="stylesheet" href="../../../../esri-leaflet/css/style.css">
 
   <!-- leaflet -->
-  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
-  <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/leaflet/0.7.3/leaflet.css" />
+  <script src="//cdn.jsdelivr.net/leaflet/0.7.3/leaflet.js"></script>
 
-  <!-- esri leaflet -->
+  <!-- Load Esri Leaflet from CDN -->
   <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.5/esri-leaflet.js"></script>
 
   <!-- Google Analytics -->
@@ -69,7 +69,7 @@
   <h5>L.esri</h5>
   <nav>
     <a href="../../../../esri-leaflet/api-reference/request.html">Request</a>
-    <a href="../../../../esri-leaflet/api-reference/utils.html">Utils</a>
+    <a href="../../../../esri-leaflet/api-reference/util.html">Util</a>
   </nav>
 
   <h5>L.esri.Layers</h5>
@@ -98,6 +98,7 @@
     <a href="../../../../esri-leaflet/api-reference/tasks/find.html">Find</a>
     <a href="../../../../esri-leaflet/api-reference/tasks/identify-features.html">Identify Features</a>
     <a href="../../../../esri-leaflet/api-reference/tasks/identify-image.html">Identify Image</a>
+    <a href="../../../../esri-leaflet/api-reference/tasks/task.html">Task</a>
   </nav>
 
   <h5>Misc.</h5>
@@ -108,11 +109,11 @@
 
 <div class="main-content">
   <h1 id="l-esri-layers-featurelayer">L.esri.Layers.FeatureLayer</h1>
-<p><code>L.esri.Layer.FeatureLayer</code> is used to visualize and query vector geographic data hosted in ArcGIS Feature Layers. These layers are hosted as a part of Feature Services on either ArcGIS Online or ArcGIS Server.</p>
+<p><code>L.esri.Layer.FeatureLayer</code> is used to visualize and query vector geographic data hosted in both ArcGIS Online and published using ArcGIS Server.</p>
 <p>Feature Layers are provided by Feature Services which can contain multiple layers. Feature Layers expose vector geographic information as a web service that can be visualized, styled, queried and edited.</p>
-<p>Here is a sample Feature Service URL </p>
+<p>Here is a sample Feature Service URL</p>
 <pre><code>http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Neighborhoods_pdx/</code></pre>
-<p>This particular service contains only one Feature Layer. Here is the Feature Layer URL </p>
+<p>This particular service contains only one Feature Layer. Here is the Feature Layer URL</p>
 <pre><code>http://services.arcgis.com/rOo16HdIMeOBI4Mb/ArcGIS/rest/services/Neighborhoods_pdx/FeatureServer/0</code></pre>
 <p>Note that the Feature Layer URL ends in <code>/FeatureServer/{LAYER_ID}</code>.</p>
 <p>You can create a new empty feature service with a single layer on the <a href="https://developers.arcgis.com/en/hosted-data/#/new">ArcGIS for Developers website</a> or you can use ArcGIS Online to <a href="https://developers.arcgis.com/tools/csv-to-feature-service/">create a Feature Service from a CSV or Shapefile</a>.</p>
@@ -127,7 +128,7 @@
     <tbody>
         <tr>
             <td><code class="nobr">new L.esri.Layers.FeatureLayer(<nobr class="param"><span>&lt;String&gt;</span> <code>url</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br><code class="nobr">L.esri.Layers.featureLayer(<nobr class="param"><span>&lt;String&gt;</span> <code>url</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br><code class="nobr">new L.esri.FeatureLayer(<nobr class="param"><span>&lt;String&gt;</span> <code>url</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br><code class="nobr">L.esri.featureLayer(<nobr class="param"><span>&lt;String&gt;</span> <code>url</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code></td>
-            <td><code>url</code> should be the URL to the Feature Layer.</td>
+            <td><code>url</code> URL of the Feature Layer.</td>
         </tr>
     </tbody>
 </table>
@@ -363,12 +364,14 @@
             <td><code>this</code></td>
             <td>
                 Returns a new <a href=""><code>L.esri.services.Query</code></a> object that can be used to query this layer. Your callback function will be passed a <a href="http://geojson.org/geojson-spec.html#feature-collection-objects">GeoJSON FeatureCollection</a> with the results or an error.
-<pre class="js"><code>featureLayer.query()
-            .within(latlngbounds)
-            .where(&quot;Direction = &#39;WEST&#39;&quot;)
-            .run(function(error, featureCollection){
-                console.log(featureCollection);
-            });</code></pre>
+<pre class="js"><code>
+featureLayer.query()
+  .within(latlngbounds)
+  .where(&quot;Direction = &#39;WEST&#39;&quot;)
+  .run(function(error, featureCollection){
+    console.log(featureCollection);
+  });
+</code></pre>
             </td>
         </tr>
         <tr>

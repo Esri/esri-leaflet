@@ -29,10 +29,10 @@
   <link rel="stylesheet" href="../../../../esri-leaflet/css/style.css">
 
   <!-- leaflet -->
-  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
-  <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/leaflet/0.7.3/leaflet.css" />
+  <script src="//cdn.jsdelivr.net/leaflet/0.7.3/leaflet.js"></script>
 
-  <!-- esri leaflet -->
+  <!-- Load Esri Leaflet from CDN -->
   <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.5/esri-leaflet.js"></script>
 
   <!-- Google Analytics -->
@@ -69,7 +69,7 @@
   <h5>L.esri</h5>
   <nav>
     <a href="../../../../esri-leaflet/api-reference/request.html">Request</a>
-    <a href="../../../../esri-leaflet/api-reference/utils.html">Utils</a>
+    <a href="../../../../esri-leaflet/api-reference/util.html">Util</a>
   </nav>
 
   <h5>L.esri.Layers</h5>
@@ -98,6 +98,7 @@
     <a href="../../../../esri-leaflet/api-reference/tasks/find.html">Find</a>
     <a href="../../../../esri-leaflet/api-reference/tasks/identify-features.html">Identify Features</a>
     <a href="../../../../esri-leaflet/api-reference/tasks/identify-image.html">Identify Image</a>
+    <a href="../../../../esri-leaflet/api-reference/tasks/task.html">Task</a>
   </nav>
 
   <h5>Misc.</h5>
@@ -108,7 +109,7 @@
 
 <div class="main-content">
   <h1 id="l-esri-layers-basemaplayer">L.esri.Layers.BasemapLayer</h1>
-<p>Quickly access Esri published map tiles from on ArcGIS Online in Leaflet.</p>
+<p>Quickly access Esri published map tiles from ArcGIS Online or ArcGIS Server in Leaflet.</p>
 <p>Inherits from <a href="http://leafletjs.com/reference.html#tilelayer"><code>L.TileLayer</code></a></p>
 <h3 id="constructor">Constructor</h3>
 <table>
@@ -121,7 +122,7 @@
     <tbody>
         <tr>
             <td><code class="nobr">new L.esri.Layers.BasemapLayer(<nobr class="param"><span>&lt;String&gt;</span> <code>key</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br><code class="nobr">L.esri.Layers.basemapLayer(<nobr class="param"><span>&lt;String&gt;</span> <code>key</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br><code class="nobr">new L.esri.BasemapLayer(<nobr class="param"><span>&lt;String&gt;</span> <code>key</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br><code class="nobr">L.esri.basemapLayer(<nobr class="param"><span>&lt;String&gt;</span> <code>key</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code></td>
-            <td><code>key</code> type of base map you want to add. The <code>options</code> parameter can accept the same <a href="http://leafletjs.com/reference.html#tilelayer">options</a> as <code>L.TileLayer</code>.</td>
+            <td><code>key</code> refers to the specific basemap you&#39;d like to add. The <code>options</code> parameter can accept the same <a href="http://leafletjs.com/reference.html#tilelayer">options</a> as <code>L.TileLayer</code>.</td>
         </tr>
     </tbody>
 </table>

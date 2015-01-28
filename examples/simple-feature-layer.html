@@ -31,10 +31,10 @@
   <link rel="stylesheet" href="../../../esri-leaflet/css/style.css">
 
   <!-- leaflet -->
-  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
-  <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/leaflet/0.7.3/leaflet.css" />
+  <script src="//cdn.jsdelivr.net/leaflet/0.7.3/leaflet.js"></script>
 
-  <!-- esri leaflet -->
+  <!-- Load Esri Leaflet from CDN -->
   <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.5/esri-leaflet.js"></script>
 
   <!-- Google Analytics -->
@@ -89,7 +89,7 @@
     <a href="../../../esri-leaflet/examples/simplifying-complex-features.html">Simplifying complex features</a>
     <a href="../../../esri-leaflet/examples/zooming-to-all-features.html">Zoom to all features</a>
     <a href="../../../esri-leaflet/examples/labeling-features.html">Labeling Features</a>
-    <a href="../../../esri-leaflet/examples/custering-feature-layers.html">Clustering points</a>
+    <a href="../../../esri-leaflet/examples/clustering-feature-layers.html">Clustering points</a>
     <a href="../../../esri-leaflet/examples/styling-clusters.html">Styling clusters</a>
     <a href="../../../esri-leaflet/examples/visualize-points-as-a-heatmap.html">Points as a heatmap</a>
     <a href="../../../esri-leaflet/examples/styling-heatmaps.html">Styling heatmaps</a>
@@ -133,10 +133,16 @@
   <h5>Geocoding</h5>
   <nav>
     <a href="../../../esri-leaflet/examples/geocoding-control.html">Geocoding control</a>
-    <a href="../../../esri-leaflet/examples/search-map-service.html">Searching map services</a>
+    <a href="../../../esri-leaflet/examples/search-map-service.html">Searching map service</a>
     <a href="../../../esri-leaflet/examples/search-feature-layer.html">Searching feature layers</a>
     <a href="../../../esri-leaflet/examples/center-map-on-address.html">Center the initial map state</a>
     <a href="../../../esri-leaflet/examples/reverse-geocoding.html">Reverse geocoding</a>
+  </nav>
+
+  <h5>Other Plugins</h5>
+  <nav>
+    <a href="../../../esri-leaflet/examples/gp-plugin.html">Geoprocessing plugin</a>
+    <a href="../../../esri-leaflet/examples/renderers-plugin.html">Renderers plugin</a>
   </nav>
 
   <h5>Misc.</h5>
@@ -162,7 +168,7 @@
   var map = L.map('map').setView([45.526, -122.667], 13);
 
   L.esri.basemapLayer('Streets').addTo(map);
-  L.esri.featureLayer('http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Heritage_Trees_Portland/FeatureServer/0').addTo(map);
+  L.esri.featureLayer('https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Heritage_Trees_Portland/FeatureServer/0').addTo(map);
 </script>
 </div>
 <pre><code class="language-xml"><span class="tag">&lt;<span class="title">html</span>&gt;</span>
@@ -172,8 +178,8 @@
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">name</span>=<span class="value">'viewport'</span> <span class="attribute">content</span>=<span class="value">'initial-scale=1,maximum-scale=1,user-scalable=no'</span> /&gt;</span>
 
   <span class="comment">&lt;!-- Load Leaflet from CDN--&gt;</span>
-  <span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css"</span> /&gt;</span>
-  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"//cdn.jsdelivr.net/leaflet/0.7.3/leaflet.css"</span> /&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"//cdn.jsdelivr.net/leaflet/0.7.3/leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
   <span class="comment">&lt;!-- Load Esri Leaflet from CDN --&gt;</span>
   <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.5/esri-leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
@@ -191,7 +197,7 @@
   <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">45.526</span>, -<span class="number">122.667</span>], <span class="number">13</span>);
 
   L.esri.basemapLayer(<span class="string">'Streets'</span>).addTo(map);
-  L.esri.featureLayer(<span class="string">'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Heritage_Trees_Portland/FeatureServer/0'</span>).addTo(map);
+  L.esri.featureLayer(<span class="string">'https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Heritage_Trees_Portland/FeatureServer/0'</span>).addTo(map);
 </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 <span class="tag">&lt;/<span class="title">body</span>&gt;</span>

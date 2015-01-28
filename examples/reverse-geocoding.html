@@ -31,10 +31,10 @@
   <link rel="stylesheet" href="../../../esri-leaflet/css/style.css">
 
   <!-- leaflet -->
-  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
-  <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/leaflet/0.7.3/leaflet.css" />
+  <script src="//cdn.jsdelivr.net/leaflet/0.7.3/leaflet.js"></script>
 
-  <!-- esri leaflet -->
+  <!-- Load Esri Leaflet from CDN -->
   <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.5/esri-leaflet.js"></script>
 
   <!-- Google Analytics -->
@@ -89,7 +89,7 @@
     <a href="../../../esri-leaflet/examples/simplifying-complex-features.html">Simplifying complex features</a>
     <a href="../../../esri-leaflet/examples/zooming-to-all-features.html">Zoom to all features</a>
     <a href="../../../esri-leaflet/examples/labeling-features.html">Labeling Features</a>
-    <a href="../../../esri-leaflet/examples/custering-feature-layers.html">Clustering points</a>
+    <a href="../../../esri-leaflet/examples/clustering-feature-layers.html">Clustering points</a>
     <a href="../../../esri-leaflet/examples/styling-clusters.html">Styling clusters</a>
     <a href="../../../esri-leaflet/examples/visualize-points-as-a-heatmap.html">Points as a heatmap</a>
     <a href="../../../esri-leaflet/examples/styling-heatmaps.html">Styling heatmaps</a>
@@ -133,10 +133,16 @@
   <h5>Geocoding</h5>
   <nav>
     <a href="../../../esri-leaflet/examples/geocoding-control.html">Geocoding control</a>
-    <a href="../../../esri-leaflet/examples/search-map-service.html">Searching map services</a>
+    <a href="../../../esri-leaflet/examples/search-map-service.html">Searching map service</a>
     <a href="../../../esri-leaflet/examples/search-feature-layer.html">Searching feature layers</a>
     <a href="../../../esri-leaflet/examples/center-map-on-address.html">Center the initial map state</a>
     <a href="../../../esri-leaflet/examples/reverse-geocoding.html">Reverse geocoding</a>
+  </nav>
+
+  <h5>Other Plugins</h5>
+  <nav>
+    <a href="../../../esri-leaflet/examples/gp-plugin.html">Geoprocessing plugin</a>
+    <a href="../../../esri-leaflet/examples/renderers-plugin.html">Renderers plugin</a>
   </nav>
 
   <h5>Misc.</h5>
@@ -156,23 +162,23 @@
 <div id="map-wrapper">
   
 
-<script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.5/esri-leaflet-geocoder.js"></script>
-<link rel="stylesheet" type="text/css" href="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.5/esri-leaflet-geocoder.css">
+<script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/1.0.0-rc.3/esri-leaflet-geocoder.js"></script>
+<link rel="stylesheet" type="text/css" href="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/1.0.0-rc.3/esri-leaflet-geocoder.css">
 
 <div id="map"></div>
 
 <script>
-  var map = L.map('map').setView([ 40.702, -73.979], 13);
+  var map = L.map('map').setView([40.702, -73.979], 13);
 
   L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
   }).addTo(map);
 
-  var geocodeService = new L.esri.Services.Geocoding();
+  var geocodeService = new L.esri.Geocoding.Services.Geocoding();
 
-  map.on('click', function(e){
-    geocodeService.reverse(e.latlng, {}, function(error, result){
-      L.marker(result.latlng).addTo(map).bindPopup(result.address).openPopup();
+  map.on('click', function(e) {
+    geocodeService.reverse().latlng(e.latlng).run(function(error, result) {
+      L.marker(result.latlng).addTo(map).bindPopup(result.address.Match_addr).openPopup();
     });
   });
 </script>
@@ -184,8 +190,8 @@
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">name</span>=<span class="value">'viewport'</span> <span class="attribute">content</span>=<span class="value">'initial-scale=1,maximum-scale=1,user-scalable=no'</span> /&gt;</span>
 
   <span class="comment">&lt;!-- Load Leaflet from CDN--&gt;</span>
-  <span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css"</span> /&gt;</span>
-  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"//cdn.jsdelivr.net/leaflet/0.7.3/leaflet.css"</span> /&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"//cdn.jsdelivr.net/leaflet/0.7.3/leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
   <span class="comment">&lt;!-- Load Esri Leaflet from CDN --&gt;</span>
   <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.5/esri-leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
@@ -197,23 +203,23 @@
 <span class="tag">&lt;/<span class="title">head</span>&gt;</span>
 <span class="tag">&lt;<span class="title">body</span>&gt;</span>
 
-<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.5/esri-leaflet-geocoder.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
-<span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">type</span>=<span class="value">"text/css"</span> <span class="attribute">href</span>=<span class="value">"http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.5/esri-leaflet-geocoder.css"</span>&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/1.0.0-rc.3/esri-leaflet-geocoder.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+<span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">type</span>=<span class="value">"text/css"</span> <span class="attribute">href</span>=<span class="value">"http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/1.0.0-rc.3/esri-leaflet-geocoder.css"</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
-  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([ <span class="number">40.702</span>, -<span class="number">73.979</span>], <span class="number">13</span>);
+  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">40.702</span>, -<span class="number">73.979</span>], <span class="number">13</span>);
 
   L.tileLayer(<span class="string">'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'</span>, {
     attribution: <span class="string">'&amp;copy; &lt;a href="http://osm.org/copyright"&gt;OpenStreetMap&lt;/a&gt; contributors'</span>
   }).addTo(map);
 
-  <span class="keyword">var</span> geocodeService = <span class="keyword">new</span> L.esri.Services.Geocoding();
+  <span class="keyword">var</span> geocodeService = <span class="keyword">new</span> L.esri.Geocoding.Services.Geocoding();
 
-  map.on(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span><span class="params">(e)</span>{</span>
-    geocodeService.reverse(e.latlng, {}, <span class="function"><span class="keyword">function</span><span class="params">(error, result)</span>{</span>
-      L.marker(result.latlng).addTo(map).bindPopup(result.address).openPopup();
+  map.on(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span><span class="params">(e)</span> {</span>
+    geocodeService.reverse().latlng(e.latlng).run(<span class="function"><span class="keyword">function</span><span class="params">(error, result)</span> {</span>
+      L.marker(result.latlng).addTo(map).bindPopup(result.address.Match_addr).openPopup();
     });
   });
 </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>

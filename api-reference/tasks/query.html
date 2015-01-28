@@ -29,10 +29,10 @@
   <link rel="stylesheet" href="../../../../esri-leaflet/css/style.css">
 
   <!-- leaflet -->
-  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
-  <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/leaflet/0.7.3/leaflet.css" />
+  <script src="//cdn.jsdelivr.net/leaflet/0.7.3/leaflet.js"></script>
 
-  <!-- esri leaflet -->
+  <!-- Load Esri Leaflet from CDN -->
   <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.5/esri-leaflet.js"></script>
 
   <!-- Google Analytics -->
@@ -69,7 +69,7 @@
   <h5>L.esri</h5>
   <nav>
     <a href="../../../../esri-leaflet/api-reference/request.html">Request</a>
-    <a href="../../../../esri-leaflet/api-reference/utils.html">Utils</a>
+    <a href="../../../../esri-leaflet/api-reference/util.html">Util</a>
   </nav>
 
   <h5>L.esri.Layers</h5>
@@ -98,6 +98,7 @@
     <a href="../../../../esri-leaflet/api-reference/tasks/find.html">Find</a>
     <a href="../../../../esri-leaflet/api-reference/tasks/identify-features.html">Identify Features</a>
     <a href="../../../../esri-leaflet/api-reference/tasks/identify-image.html">Identify Image</a>
+    <a href="../../../../esri-leaflet/api-reference/tasks/task.html">Task</a>
   </nav>
 
   <h5>Misc.</h5>
@@ -108,8 +109,8 @@
 
 <div class="main-content">
   <h1 id="l-esri-tasks-query">L.esri.Tasks.Query</h1>
-<p><code>L.esri.Tasks.Query</code> is an abstraction for the query API that exists on Feature Layers Map Services and Image Services. It provides a chainable API for building request parameters and executing queries.</p>
-<p><strong>Note</strong> Depending on the type of service you are querying (Feature Layer, Map Service, Image Service) and the version of ArcGIS Server that hosts the service some of these options my not be available.</p>
+<p><code>L.esri.Tasks.Query</code> is an abstraction for the query API included in Feature Layers and Image Services. It provides a chainable API for building request parameters and executing queries.</p>
+<p><strong>Note</strong> Depending on the type of service you are querying (Feature Layer, Map Service, Image Service) and the version of ArcGIS Server that hosts the service some of these options may not be available.</p>
 <h3 id="constructor">Constructor</h3>
 <table>
     <thead>
@@ -146,19 +147,19 @@
 <td><code>url</code></td>
 <td><code>String</code></td>
 <td><code>&#39;&#39;</code></td>
-<td>URL of the ArcGIS service you would like to consume.</td>
+<td>URL of the ArcGIS Server or ArcGIS Online service you would like to consume.</td>
 </tr>
 <tr>
 <td><code>proxy</code></td>
 <td><code>String</code></td>
 <td><code>false</code></td>
-<td>URL of an <a href="https://developers.arcgis.com/javascript/jshelp/ags_proxy.html">ArcGIS API for JavaScript proxies</a> or <a href="https://github.com/Esri/resource-proxy">ArcGIS Resource Proxies</a> to use for proxying POST requests.</td>
+<td>URL of an <a href="https://developers.arcgis.com/javascript/jshelp/ags_proxy.html">ArcGIS API for JavaScript proxy</a> or <a href="https://github.com/Esri/resource-proxy">ArcGIS Resource Proxy</a> to use for proxying POST requests.</td>
 </tr>
 <tr>
 <td><code>useCors</code></td>
 <td><code>Boolean</code></td>
 <td><code>true</code></td>
-<td>If this service should use CORS when making GET requests.</td>
+<td>If this task should use CORS when making GET requests.</td>
 </tr>
 </tbody>
 </table>

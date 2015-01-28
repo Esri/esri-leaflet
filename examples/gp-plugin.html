@@ -8,11 +8,11 @@
   <meta charset="utf-8">
 
   
-    <title>Simple DynamicMapLayer | Esri Leaflet</title>
+    <title>Leverage a Geoprocessing Service | Esri Leaflet</title>
   
 
   
-    <meta name="description" content="Display a Map Service from ArcGIS Online or ArcGIS Server.  More information about Map Services can be found in the &lt;a href=&quot;/esri-leaflet/api-reference/layers/dynamic-map-layer.html&quot;&gt;L.esri.Layers.DynamicMapLayer&lt;/a&gt; documentation.">
+    <meta name="description" content="This demo relies on the &lt;a href=&quot;http://github.com/jgravois/esri-leaflet-gp/&quot;&gt;Esri Leaflet GP&lt;/a&gt; plugin.&lt;br&gt;More information about Geoprocessing Services can be found in the &lt;a href=&quot;http://resources.arcgis.com/en/help/arcgis-rest-api/index.html#/GP_Service/02r3000000rq000000/&quot;&gt;ArcGIS REST&lt;/a&gt; documentation.">
   
 
   <meta name="description" content="Esri Leaflet">
@@ -156,28 +156,69 @@
 
 <div class="example-content">
 <div class="wrap">
-  <h1>Simple DynamicMapLayer</h1>
-  <p>Display a Map Service from ArcGIS Online or ArcGIS Server.  More information about Map Services can be found in the <a href="/esri-leaflet/api-reference/layers/dynamic-map-layer.html">L.esri.Layers.DynamicMapLayer</a> documentation.</p>
+  <h1>Leverage a Geoprocessing Service</h1>
+  <p>This demo relies on the <a href="http://github.com/jgravois/esri-leaflet-gp/">Esri Leaflet GP</a> plugin.<br>More information about Geoprocessing Services can be found in the <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/index.html#/GP_Service/02r3000000rq000000/">ArcGIS REST</a> documentation.</p>
 </div>
 <div id="map-wrapper">
   
 
-<div id="map"></div>
 
-<script>
-  var map = L.map('map').setView([34.025, -116.203], 9);
+<!-- we'll move to CDN soon -->
+<script src="https://dl.dropboxusercontent.com/u/59331579/0.7.3/esri-leaflet-gp-0.0.1-alpha.3.js"></script>
+
+<style>
+  #info-pane {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 10;
+    padding: 1em;
+    background: white;
+  }
+</style>
+
+<div id="map"></div>
+<div id="info-pane" class="leaflet-bar">
+  <label>
+  click on the map to calculate<br>5 and 10 minute drivetimes
+  </label>
+</div>
+
+<script type='text/javascript'>
+  var map = L.map('map').setView([37.78, -122.42], 12);
 
   L.esri.basemapLayer('Gray').addTo(map);
 
-  L.esri.dynamicMapLayer('http://maps1.arcgisonline.com/ArcGIS/rest/services/USA_Federal_Lands/MapServer', {
-    opacity: 0.5
-  }).addTo(map);
+  var gpService = new L.esri.GP.Services.Geoprocessing({
+    url: "http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Network/ESRI_DriveTime_US/GPServer/CreateDriveTimePolygons",
+    useCors:false
+  });
+
+  var gpTask = gpService.createTask();
+
+  gpTask.setParam("Drive_Times", "1 2");
+
+  var driveTimes = new L.FeatureGroup();
+  map.addLayer(driveTimes);
+
+  map.on('click', function(evt){
+    document.getElementById('info-pane').innerHTML = 'working...';
+    driveTimes.clearLayers();
+    gpTask.setParam("Input_Location", evt.latlng)
+    gpTask.run(driveTimeCallback);
+  });
+
+  function driveTimeCallback(error, response, raw){
+    document.getElementById('info-pane').innerHTML = 'click on the map to calculate 1 and 2 minute drivetimes';
+    driveTimes.addLayer(L.geoJson(response));
+  }
 </script>
+
 </div>
 <pre><code class="language-xml"><span class="tag">&lt;<span class="title">html</span>&gt;</span>
 <span class="tag">&lt;<span class="title">head</span>&gt;</span>
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">utf-8</span> /&gt;</span>
-  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Simple DynamicMapLayer<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Leverage a Geoprocessing Service<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">name</span>=<span class="value">'viewport'</span> <span class="attribute">content</span>=<span class="value">'initial-scale=1,maximum-scale=1,user-scalable=no'</span> /&gt;</span>
 
   <span class="comment">&lt;!-- Load Leaflet from CDN--&gt;</span>
@@ -194,23 +235,62 @@
 <span class="tag">&lt;/<span class="title">head</span>&gt;</span>
 <span class="tag">&lt;<span class="title">body</span>&gt;</span>
 
-<span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+<span class="comment">&lt;!-- we'll move to CDN soon --&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://dl.dropboxusercontent.com/u/59331579/0.7.3/esri-leaflet-gp-0.0.1-alpha.3.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
-<span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
-  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">34.025</span>, -<span class="number">116.203</span>], <span class="number">9</span>);
+<span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css">
+  <span class="id">#info-pane</span> <span class="rules">{
+    <span class="rule"><span class="attribute">position</span>:<span class="value"> absolute</span></span>;
+    <span class="rule"><span class="attribute">top</span>:<span class="value"> <span class="number">10</span>px</span></span>;
+    <span class="rule"><span class="attribute">right</span>:<span class="value"> <span class="number">10</span>px</span></span>;
+    <span class="rule"><span class="attribute">z-index</span>:<span class="value"> <span class="number">10</span></span></span>;
+    <span class="rule"><span class="attribute">padding</span>:<span class="value"> <span class="number">1</span>em</span></span>;
+    <span class="rule"><span class="attribute">background</span>:<span class="value"> white</span></span>;
+  <span class="rule">}</span></span>
+</span><span class="tag">&lt;/<span class="title">style</span>&gt;</span>
+
+<span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+<span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"info-pane"</span> <span class="attribute">class</span>=<span class="value">"leaflet-bar"</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">label</span>&gt;</span>
+  click on the map to calculate<span class="tag">&lt;<span class="title">br</span>&gt;</span>5 and 10 minute drivetimes
+  <span class="tag">&lt;/<span class="title">label</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">'text/javascript'</span>&gt;</span><span class="javascript">
+  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">37.78</span>, -<span class="number">122.42</span>], <span class="number">12</span>);
 
   L.esri.basemapLayer(<span class="string">'Gray'</span>).addTo(map);
 
-  L.esri.dynamicMapLayer(<span class="string">'http://maps1.arcgisonline.com/ArcGIS/rest/services/USA_Federal_Lands/MapServer'</span>, {
-    opacity: <span class="number">0.5</span>
-  }).addTo(map);
+  <span class="keyword">var</span> gpService = <span class="keyword">new</span> L.esri.GP.Services.Geoprocessing({
+    url: <span class="string">"http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Network/ESRI_DriveTime_US/GPServer/CreateDriveTimePolygons"</span>,
+    useCors:<span class="literal">false</span>
+  });
+
+  <span class="keyword">var</span> gpTask = gpService.createTask();
+
+  gpTask.setParam(<span class="string">"Drive_Times"</span>, <span class="string">"1 2"</span>);
+
+  <span class="keyword">var</span> driveTimes = <span class="keyword">new</span> L.FeatureGroup();
+  map.addLayer(driveTimes);
+
+  map.on(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span><span class="params">(evt)</span>{</span>
+    document.getElementById(<span class="string">'info-pane'</span>).innerHTML = <span class="string">'working...'</span>;
+    driveTimes.clearLayers();
+    gpTask.setParam(<span class="string">"Input_Location"</span>, evt.latlng)
+    gpTask.run(driveTimeCallback);
+  });
+
+  <span class="function"><span class="keyword">function</span> <span class="title">driveTimeCallback</span><span class="params">(error, response, raw)</span>{</span>
+    document.getElementById(<span class="string">'info-pane'</span>).innerHTML = <span class="string">'click on the map to calculate 1 and 2 minute drivetimes'</span>;
+    driveTimes.addLayer(L.geoJson(response));
+  }
 </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 <span class="tag">&lt;/<span class="title">body</span>&gt;</span>
 <span class="tag">&lt;/<span class="title">html</span>&gt;</span></code></pre>
 
 <div class="wrap">
-  <p><a href="http://github.com/esri/esri-leaflet/edit/master/site/source/pages/examples/simple-dynamic-map-layer.hbs">Edit this sample on GitHub</a></p>
+  <p><a href="http://github.com/esri/esri-leaflet/edit/master/site/source/pages/examples/gp-plugin.hbs">Edit this sample on GitHub</a></p>
 </div>
 </div>
   <div style='clear:both;'></div>
