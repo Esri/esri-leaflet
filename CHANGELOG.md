@@ -8,7 +8,7 @@
 
 #### Changes
 
-* Fixed bug duplicate Esri logo bug [#427](https://github.com/Esri/esri-leaflet/issues/427)
+* Fixed duplicate Esri logo bug [#427](https://github.com/Esri/esri-leaflet/issues/427)
 * GeoJSON is now requested directly from ArcGIS Online Hosted Feature Services [#418](https://github.com/Esri/esri-leaflet/issues/418)
 * other FeatureLayer performance improvements [#416](https://github.com/Esri/esri-leaflet/issues/416)
 * `minZoom`, `maxZoom`, [#413](https://github.com/Esri/esri-leaflet/issues/413) and `cacheLayers` were added as new FeatureLayer constructor options
