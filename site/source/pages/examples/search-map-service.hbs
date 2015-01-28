@@ -1,0 +1,29 @@
+---
+title: Searching map services
+description: Searches map services for matching text in addition to geocoding. This demo relies of the <a href="https://github.com/Esri/esri-leaflet-geocoder">Esri Leaflet Geocoder</a> plugin.
+layout: example.hbs
+---
+
+<script src="//cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/1.0.0-rc.4/esri-leaflet-geocoder.js"></script>
+<link rel="stylesheet" type="text/css" href="//cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/1.0.0-rc.4/esri-leaflet-geocoder.css">
+
+<div id="map"></div>
+
+<script>
+  var map = L.map('map').setView([40.91, -96.63], 4);
+
+  L.tileLayer('//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="//osm.org/copyright">OpenStreetMap</a> contributors'
+  }).addTo(map);
+
+  var searchControl = new L.esri.Geocoding.Controls.Geosearch({
+    providers: [
+      new L.esri.Geocoding.Controls.Geosearch.Providers.MapService({
+        label: 'States and Counties',
+        url: 'http://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer',
+        layers: [2, 3],
+        searchFields: ['NAME', 'STATE_NAME']
+      })
+    ]
+  }).addTo(map);
+</script>

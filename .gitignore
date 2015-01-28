@@ -31,5 +31,7 @@ debug/*.html
 site/build
 
 # Built Files
+dist/*.js
+dist/*.map
 dist/**/*.js
 dist/**/*.map

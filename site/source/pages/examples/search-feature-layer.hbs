@@ -1,0 +1,32 @@
+---
+title: Searching feature layers
+description: Searches features layers for matching text in addition to geocoding. This demo relies of the <a href="https://github.com/Esri/esri-leaflet-geocoder">Esri Leaflet Geocoder</a> plugin.
+layout: example.hbs
+---
+
+<script src="//cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/1.0.0-rc.4/esri-leaflet-geocoder.js"></script>
+<link rel="stylesheet" type="text/css" href="//cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/1.0.0-rc.4/esri-leaflet-geocoder.css">
+
+<div id="map"></div>
+
+<script>
+  var map = L.map('map').setView([40.91, -96.63], 4);
+
+  L.tileLayer('//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+  }).addTo(map);
+
+  var searchControl = new L.esri.Geocoding.Controls.Geosearch({
+    providers: [
+      new L.esri.Geocoding.Controls.Geosearch.Providers.FeatureLayer({
+        url: '//services.arcgis.com/uCXeTVveQzP4IIcx/arcgis/rest/services/gisday/FeatureServer/0/',
+        searchFields: ['Name', 'Organization'],
+        label: 'GIS Day Events',
+        bufferRadius: 5000,
+        formatSuggestion: function(feature){
+          return feature.properties.Name + ' - ' + feature.properties.Organization;
+        }
+      })
+    ]
+  }).addTo(map);
+</script>
