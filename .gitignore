@@ -31,5 +31,5 @@ debug/*.html
 site/build
 
 # Built Files
-dist/
+dist/*
 !dist/README.md
