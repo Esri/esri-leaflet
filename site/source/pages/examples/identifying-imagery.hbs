@@ -45,11 +45,11 @@ layout: example.hbs
 
     map.on('click', function (e) {
         if(identifiedPixel){
-            pane.innerText = 'Loading';
+            pane.innerHTML = 'Loading';
         }
         hillshade.identify().at(e.latlng).run(function(error, results){
             identifiedPixel = results.pixel;
-            pane.innerText = identifiedPixel.properties.value + 'm';
+            pane.innerHTML = identifiedPixel.properties.value + 'm';
         });
     });
 

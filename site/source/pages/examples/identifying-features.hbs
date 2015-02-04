@@ -33,7 +33,7 @@ layout: example.hbs
   map.on('click', function (e) {
     if(identifiedFeature){
       map.removeLayer(identifiedFeature);
-      pane.innerText = 'Loading';
+      pane.innerHTML = 'Loading';
     }
     federalLands.identify().on(map).at(e.latlng).run(function(error, featureCollection){
       identifiedFeature = new L.GeoJSON(featureCollection.features[0], {
@@ -44,7 +44,7 @@ layout: example.hbs
           };
         }
       }).addTo(map);
-      pane.innerText = featureCollection.features[0].properties.NAME1;
+      pane.innerHTML = featureCollection.features[0].properties.NAME1;
     });
   });
 </script>
