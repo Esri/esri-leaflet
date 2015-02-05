@@ -225,11 +225,11 @@
   }).addTo(map);
 
   bikePaths.on('mouseout', function(e){
-    document.getElementById('info-pane').innerText = 'Hover to Inspect';
+    document.getElementById('info-pane').innerHTML = 'Hover to Inspect';
   });
 
   bikePaths.on('mouseover', function(e){
-    document.getElementById('info-pane').innerText = e.layer.feature.properties.BIKEMODE;
+    document.getElementById('info-pane').innerHTML = e.layer.feature.properties.BIKEMODE;
   });
 </script>
 </div>
@@ -316,11 +316,11 @@
   }).addTo(map);
 
   bikePaths.on(<span class="string">'mouseout'</span>, <span class="function"><span class="keyword">function</span><span class="params">(e)</span>{</span>
-    document.getElementById(<span class="string">'info-pane'</span>).innerText = <span class="string">'Hover to Inspect'</span>;
+    document.getElementById(<span class="string">'info-pane'</span>).innerHTML = <span class="string">'Hover to Inspect'</span>;
   });
 
   bikePaths.on(<span class="string">'mouseover'</span>, <span class="function"><span class="keyword">function</span><span class="params">(e)</span>{</span>
-    document.getElementById(<span class="string">'info-pane'</span>).innerText = e.layer.feature.properties.BIKEMODE;
+    document.getElementById(<span class="string">'info-pane'</span>).innerHTML = e.layer.feature.properties.BIKEMODE;
   });
 </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 

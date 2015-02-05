@@ -191,7 +191,7 @@
   map.on('click', function (e) {
     if(identifiedFeature){
       map.removeLayer(identifiedFeature);
-      pane.innerText = 'Loading';
+      pane.innerHTML = 'Loading';
     }
     federalLands.identify().on(map).at(e.latlng).run(function(error, featureCollection){
       identifiedFeature = new L.GeoJSON(featureCollection.features[0], {
@@ -202,7 +202,7 @@
           };
         }
       }).addTo(map);
-      pane.innerText = featureCollection.features[0].properties.NAME1;
+      pane.innerHTML = featureCollection.features[0].properties.NAME1;
     });
   });
 </script>
@@ -256,7 +256,7 @@
   map.on(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(e)</span> {</span>
     <span class="keyword">if</span>(identifiedFeature){
       map.removeLayer(identifiedFeature);
-      pane.innerText = <span class="string">'Loading'</span>;
+      pane.innerHTML = <span class="string">'Loading'</span>;
     }
     federalLands.identify().on(map).at(e.latlng).run(<span class="function"><span class="keyword">function</span><span class="params">(error, featureCollection)</span>{</span>
       identifiedFeature = <span class="keyword">new</span> L.GeoJSON(featureCollection.features[<span class="number">0</span>], {
@@ -267,7 +267,7 @@
           };
         }
       }).addTo(map);
-      pane.innerText = featureCollection.features[<span class="number">0</span>].properties.NAME1;
+      pane.innerHTML = featureCollection.features[<span class="number">0</span>].properties.NAME1;
     });
   });
 </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>

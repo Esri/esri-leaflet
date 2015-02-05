@@ -182,7 +182,7 @@
   var stops = L.esri.featureLayer('https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Heritage_Trees_Portland/FeatureServer/0').addTo(map);
 
   stops.metadata(function (error, metadata) {
-    document.getElementById('info').innerText = metadata.name;
+    document.getElementById('info').innerHTML = metadata.name;
   });
 </script>
 
@@ -227,7 +227,7 @@
   <span class="keyword">var</span> stops = L.esri.featureLayer(<span class="string">'https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Heritage_Trees_Portland/FeatureServer/0'</span>).addTo(map);
 
   stops.metadata(<span class="function"><span class="keyword">function</span> <span class="params">(error, metadata)</span> {</span>
-    document.getElementById(<span class="string">'info'</span>).innerText = metadata.name;
+    document.getElementById(<span class="string">'info'</span>).innerHTML = metadata.name;
   });
 </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 

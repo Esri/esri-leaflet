@@ -203,11 +203,11 @@
 
     map.on('click', function (e) {
         if(identifiedPixel){
-            pane.innerText = 'Loading';
+            pane.innerHTML = 'Loading';
         }
         hillshade.identify().at(e.latlng).run(function(error, results){
             identifiedPixel = results.pixel;
-            pane.innerText = identifiedPixel.properties.value + 'm';
+            pane.innerHTML = identifiedPixel.properties.value + 'm';
         });
     });
 
@@ -274,11 +274,11 @@
 
     map.on(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(e)</span> {</span>
         <span class="keyword">if</span>(identifiedPixel){
-            pane.innerText = <span class="string">'Loading'</span>;
+            pane.innerHTML = <span class="string">'Loading'</span>;
         }
         hillshade.identify().at(e.latlng).run(<span class="function"><span class="keyword">function</span><span class="params">(error, results)</span>{</span>
             identifiedPixel = results.pixel;
-            pane.innerText = identifiedPixel.properties.value + <span class="string">'m'</span>;
+            pane.innerHTML = identifiedPixel.properties.value + <span class="string">'m'</span>;
         });
     });
 

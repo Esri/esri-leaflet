@@ -197,13 +197,13 @@
   var oldId;
 
   zipcodes.on('mouseout', function(e){
-    document.getElementById('info-pane').innerText = 'Hover to Inspect';
+    document.getElementById('info-pane').innerHTML = 'Hover to Inspect';
   });
 
   zipcodes.on('mouseover', function(e){
     zipcodes.resetStyle(oldId);
     oldId = e.layer.feature.id;
-    document.getElementById('info-pane').innerText = e.layer.feature.properties.ZIP + ' ' + e.layer.feature.properties.PO_NAME;
+    document.getElementById('info-pane').innerHTML = e.layer.feature.properties.ZIP + ' ' + e.layer.feature.properties.PO_NAME;
     e.layer.bringToFront();
     zipcodes.setFeatureStyle(e.layer.feature.id, {
       color: '#9D78D2',
@@ -269,13 +269,13 @@
   <span class="keyword">var</span> oldId;
 
   zipcodes.on(<span class="string">'mouseout'</span>, <span class="function"><span class="keyword">function</span><span class="params">(e)</span>{</span>
-    document.getElementById(<span class="string">'info-pane'</span>).innerText = <span class="string">'Hover to Inspect'</span>;
+    document.getElementById(<span class="string">'info-pane'</span>).innerHTML = <span class="string">'Hover to Inspect'</span>;
   });
 
   zipcodes.on(<span class="string">'mouseover'</span>, <span class="function"><span class="keyword">function</span><span class="params">(e)</span>{</span>
     zipcodes.resetStyle(oldId);
     oldId = e.layer.feature.id;
-    document.getElementById(<span class="string">'info-pane'</span>).innerText = e.layer.feature.properties.ZIP + <span class="string">' '</span> + e.layer.feature.properties.PO_NAME;
+    document.getElementById(<span class="string">'info-pane'</span>).innerHTML = e.layer.feature.properties.ZIP + <span class="string">' '</span> + e.layer.feature.properties.PO_NAME;
     e.layer.bringToFront();
     zipcodes.setFeatureStyle(e.layer.feature.id, {
       color: <span class="string">'#9D78D2'</span>,
