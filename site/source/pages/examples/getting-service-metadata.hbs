@@ -24,6 +24,6 @@ layout: example.hbs
   var stops = L.esri.featureLayer('https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Heritage_Trees_Portland/FeatureServer/0').addTo(map);
 
   stops.metadata(function (error, metadata) {
-    document.getElementById('info').innerText = metadata.name;
+    document.getElementById('info').innerHTML = metadata.name;
   });
 </script>
