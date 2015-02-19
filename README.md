@@ -12,7 +12,7 @@ The goal of Esri Leaflet is **not** to replace the [ArcGIS API for JavaScript](h
 There are [loads of demos](http://patrickarlt.github.io/esri-leaflet/examples/) showing many of the features of Esri Leaflet.
 
 ### Example
-Here is a quick example to get you started. Just change the paths to point to the proper libraries and go.
+Here is a quick example to get you started. Just copy/paste into your own .html file and run.
 
 ![App](https://raw.github.com/Esri/esri-leaflet/master/esri-leaflet.png)
 
@@ -25,7 +25,7 @@ Here is a quick example to get you started. Just change the paths to point to th
     <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
 
     <!-- Load Esri Leaflet from CDN -->
-    <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.3/esri-leaflet.js"></script>
+    <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.5/esri-leaflet.js"></script>
 
     <style>
       html, body,  #map {
