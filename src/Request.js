@@ -40,6 +40,8 @@
     var httpRequest = new XMLHttpRequest();
 
     httpRequest.onerror = function(e) {
+      httpRequest.onreadystatechange = L.Util.falseFn;
+
       callback.call(context, {
         error: {
           code: 500,
@@ -59,7 +61,7 @@
           response = null;
           error = {
             code: 500,
-            message: 'Could not parse response as JSON.'
+            message: 'Could not parse response as JSON. This could also be caused by a CORS or XMLHttpRequest error.'
           };
         }
 
@@ -67,6 +69,8 @@
           error = response.error;
           response = null;
         }
+
+        httpRequest.onerror = L.Util.falseFn;
 
         callback.call(context, error, response);
       }
