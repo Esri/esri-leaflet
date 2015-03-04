@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]> <html class="ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html class="ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html class="ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html class="ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="not-ie"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+
+  
+    <title>Editing feature layers | Esri Leaflet</title>
+  
+
+  
+    <meta name="description" content="This sample uses &lt;a href=&quot;https://github.com/Leaflet/Leaflet.draw&quot;&gt;Leaflet Draw&lt;/a&gt; to help edit the geometry of features in a hosted feature service.">
+  
+
+  <meta name="description" content="Esri Leaflet">
+  <meta name="viewport" content="width=device-width">
+
+  <!--[if lt IE 9]>
+    <script src="//cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv-printshiv.js"></script>
+  <![endif]-->
+
+  <!-- google fonts -->
+  <link href='http://fonts.googleapis.com/css?family=Vollkorn:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="//brick.a.ssl.fastly.net/Source+Code+Pro:300">
+  <link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+
+  <!-- stylesheet -->
+  <link rel="stylesheet" href="../../../esri-leaflet/css/style.css">
+
+  <!-- leaflet -->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/leaflet/0.7.3/leaflet.css" />
+  <script src="//cdn.jsdelivr.net/leaflet/0.7.3/leaflet.js"></script>
+
+  <!-- Load Esri Leaflet from CDN -->
+  <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.5/esri-leaflet.js"></script>
+
+  <!-- Google Analytics -->
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-44963317-3', 'auto');
+    ga('send', 'pageview');
+  </script>
+  <!-- End Google Analytics -->
+</head>
+<body>
+  <div class="page-content ">
+    <div class="container">
+      <a class="site-nav" href="../../../esri-leaflet/" class="left logo">Esri Leaflet</a>
+      <nav class="right">
+        <a class="site-nav" href="../../../esri-leaflet/examples/">Examples</a>
+        <a class="site-nav" href="../../../esri-leaflet/api-reference/">API Reference</a>
+        <a class="site-nav" href="../../../esri-leaflet/download/">Download</a>
+        <a class="site-nav" href="https://github.com/Esri/esri-leaflet">View on GitHub</a>
+      </nav>
+    </div>
+    <div id="background-map" class="background-map"></div>
+
+  
+
+<div class="container white">
+  
+
+<aside class="sidebar">
+  <h5>Basemaps</h5>
+  <nav>
+    <a href="../../../esri-leaflet/examples/showing-a-basemap.html">Showing an ArcGIS basemap</a>
+    <a href="../../../esri-leaflet/examples/basemap-with-labels.html">Basemap with labels</a>
+    <a href="../../../esri-leaflet/examples/switching-basemaps.html">Switching basemaps</a>
+    <a href="../../../esri-leaflet/examples/retina-basemap.html">Retina Basemap</a>
+  </nav>
+
+  <h5>Feature Layers</h5>
+  <nav>
+    <a href="../../../esri-leaflet/examples/simple-feature-layer.html">Simple FeatureLayer</a>
+    <a href="../../../esri-leaflet/examples/styling-feature-layer-points.html">Styling points</a>
+    <a href="../../../esri-leaflet/examples/styling-feature-layer-polylines.html">Styling lines</a>
+    <a href="../../../esri-leaflet/examples/styling-feature-layer-polygons.html">Styling polygons</a>
+    <a href="../../../esri-leaflet/examples/feature-layer-popups.html">Custom popups</a>
+    <a href="../../../esri-leaflet/examples/querying-feature-layers-1.html">Querying features #1</a>
+    <a href="../../../esri-leaflet/examples/querying-feature-layers-2.html">Querying features #2</a>
+    <a href="../../../esri-leaflet/examples/spatial-queries.html">Spatial Queries</a>
+    <a href="../../../esri-leaflet/examples/simplifying-complex-features.html">Simplifying complex features</a>
+    <a href="../../../esri-leaflet/examples/zooming-to-all-features.html">Zoom to all features</a>
+    <a href="../../../esri-leaflet/examples/labeling-features.html">Labeling Features</a>
+    <a href="../../../esri-leaflet/examples/clustering-feature-layers.html">Clustering points</a>
+    <a href="../../../esri-leaflet/examples/styling-clusters.html">Styling clusters</a>
+    <a href="../../../esri-leaflet/examples/visualize-points-as-a-heatmap.html">Points as a heatmap</a>
+    <a href="../../../esri-leaflet/examples/styling-heatmaps.html">Styling heatmaps</a>
+    <a href="../../../esri-leaflet/examples/visualizing-time-with-feature-layer.html">Time enabled services</a>
+    <a href="../../../esri-leaflet/examples/feature-layer-snapshot.html">Layer "snapshots"</a>
+    <a href="../../../esri-leaflet/examples/editing.html">Editing</a>
+  </nav>
+
+  <h5>Tile Layers</h5>
+  <nav>
+    <a href="../../../esri-leaflet/examples/tile-layer-1.html">Tiles from a Map Service #1</a>
+    <a href="../../../esri-leaflet/examples/tile-layer-2.html">Tiles from a Map Service #2</a>
+    <a href="../../../esri-leaflet/examples/non-mercator-projection.html">Non-mercator tiles</a>
+  </nav>
+
+  <h5>Dynamic Map Layer</h5>
+  <nav>
+    <a href="../../../esri-leaflet/examples/simple-dynamic-map-layer.html">Simple DynamicMapLayer</a>
+    <a href="../../../esri-leaflet/examples/identifying-features.html">Identifying Features</a>
+    <a href="../../../esri-leaflet/examples/finding-features.html">Finding Features</a>
+    <a href="../../../esri-leaflet/examples/customizing-popups.html">Custom popups</a>
+    <a href="../../../esri-leaflet/examples/visualizing-time-on-dynamic-map-layer.html">Time Ranges</a>
+  </nav>
+
+  <h5>Image Map Layer</h5>
+  <nav>
+    <a href="../../../esri-leaflet/examples/simple-image-map-layer.html">Simple ImageMapLayer</a>
+    <a href="../../../esri-leaflet/examples/infrared-imagery.html">Infrared Imagery using BandIDs</a>
+    <a href="../../../esri-leaflet/examples/image-map-layer-rendering-rule.html">Rendering Rule</a>
+    <a href="../../../esri-leaflet/examples/identifying-imagery.html">Identify Imagery</a>
+    <a href="../../../esri-leaflet/examples/image-map-layer-mosaic-rule.html">Mosaic Rule</a>
+    <a href="../../../esri-leaflet/examples/imagery-popups.html">Custom popups</a>
+  </nav>
+
+  <h5>Authentication</h5>
+  <nav>
+    <a href="../../../esri-leaflet/examples/arcgis-online-auth.html">ArcGIS Online OAuth</a>
+    <a href="../../../esri-leaflet/examples/premium-content.html">Premium ArcGIS Online content</a>
+    <a href="../../../esri-leaflet/examples/arcgis-server-auth.html">ArcGIS Server username/password</a>
+  </nav>
+
+  <h5>Geocoding</h5>
+  <nav>
+    <a href="../../../esri-leaflet/examples/geocoding-control.html">Geocoding control</a>
+    <a href="../../../esri-leaflet/examples/search-map-service.html">Searching map service</a>
+    <a href="../../../esri-leaflet/examples/search-feature-layer.html">Searching feature layers</a>
+    <a href="../../../esri-leaflet/examples/center-map-on-address.html">Center the initial map state</a>
+    <a href="../../../esri-leaflet/examples/reverse-geocoding.html">Reverse geocoding</a>
+  </nav>
+
+  <h5>Other Plugins</h5>
+  <nav>
+    <a href="../../../esri-leaflet/examples/gp-plugin.html">Geoprocessing plugin</a>
+    <a href="../../../esri-leaflet/examples/renderers-plugin.html">Renderers plugin</a>
+  </nav>
+
+  <h5>Misc.</h5>
+  <nav>
+    <a href="../../../esri-leaflet/examples/getting-service-metadata.html">Getting service metadata</a>
+    <a href="../../../esri-leaflet/examples/parse-feature-collection.html">Parsing Feature Collections</a>
+  </nav>
+
+</aside>
+
+
+<div class="example-content">
+<div class="wrap">
+  <h1>Editing feature layers</h1>
+  <p>This sample uses <a href="https://github.com/Leaflet/Leaflet.draw">Leaflet Draw</a> to help edit the geometry of features in a hosted feature service.</p>
+</div>
+<div id="map-wrapper">
+  
+
+<!-- Leaflet Draw -->
+<script src="https://rawgit.com/Leaflet/Leaflet.draw/master/dist/leaflet.draw-src.js"></script>
+<link rel="stylesheet" href="https://rawgit.com/Leaflet/Leaflet.draw/master/dist/leaflet.draw.css">
+
+<style>
+  #info-pane {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 10;
+    padding: 1em;
+    background: white;
+    text-align: right;
+  }
+
+  #form {
+    display: none;
+  }
+</style>
+
+<div id='map'></div>
+<div id='info-pane' class='leaflet-bar'>
+  <label id='greeting'>
+    Let's edit!
+  </label>
+  <form action='#' id='form'>
+    <label for='PEDDISTRIC'>
+      Pedestrian District Name<br>
+      <input id='PEDDISTRIC' type="text" value='' name='PEDDISTRIC'><br>
+    </label>
+    <label for='TRANPLANID'>
+      Transportation Plan Id<br>
+      <input id='TRANPLANID' type='text' value='' name='TRANPLANID' disabled='disabled'>
+    </label>
+  </form>
+</div>
+<script>
+  // create the map
+  var map = L.map('map').setView([45.512, -122.619], 12);
+  L.esri.basemapLayer('Streets').addTo(map);
+
+  // add our feature layer to the map
+  var pedetrianDistricts = new L.esri.FeatureLayer('http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/PDX_Pedestrian_Districts/FeatureServer/0').addTo(map);
+
+  // variable to track the layer being edited
+  var currentlyEditing;
+
+  // create a feature group for Leaflet Draw to hook into for delete functionality
+  var drawnItems = new L.FeatureGroup();
+  map.addLayer(drawnItems);
+
+  // track if we should disable custom editing as a result of other actions (create/delete)
+  var disableEditing = false;
+
+  // start editing a given layer
+  function startEditing(layer) {
+    document.getElementById("form").style.display = 'block';
+    document.getElementById("greeting").innerHTML = null;
+    document.getElementById("PEDDISTRIC").value = layer.feature.properties.PEDDISTRIC;
+    // read only
+    document.getElementById("TRANPLANID").value = layer.feature.properties.TRANPLANID;
+    if (!disableEditing) {
+      layer.editing.enable();
+      currentlyEditing = layer;
+    }
+  }
+
+  // stop editing a given layer
+  function stopEditing() {
+    // is a layer is being editing finish up editing it and disable editing on it.
+    if (currentlyEditing) {
+      handleEdit(currentlyEditing);
+      document.getElementById("form").style.display = 'none';
+      document.getElementById("greeting").innerHTML = "Lets edit!";
+      currentlyEditing.editing.disable();
+    }
+    currentlyEditing = undefined;
+  }
+
+  function handleEdit(layer) {
+    // convert the layer to GeoJSON and build a new updated GeoJSON object for that feature
+    layer.feature.properties.PEDDISTRIC = document.getElementById("PEDDISTRIC").value;
+    pedetrianDistricts.updateFeature({
+      type: 'Feature',
+      id: layer.feature.id,
+      geometry: layer.toGeoJSON().geometry,
+      properties: layer.feature.properties
+    }, function(error, response) {
+      console.log(error, response);
+    });
+  }
+
+  // when the map is clicked, stop editing
+  map.on('click', function(e) {
+    stopEditing();
+  });
+
+  // when a pedestrian district is clicked, stop editing the current layer and edit the clicked layer
+  pedetrianDistricts.on('click', function(e) {
+    stopEditing();
+    startEditing(e.layer);
+  });
+
+  // when pedetrian districts start loading (because of pan/zoom) stop editing
+  pedetrianDistricts.on('loading', function() {
+    stopEditing();
+  });
+
+  // when new features are loaded clear our current guides and feature groups
+  // then load the current features into the guides and feature group
+  pedetrianDistricts.on('load', function() {
+    // wipe the current layers available for deltion and clear the current guide layers.
+    drawnItems.clearLayers();
+
+    // for each feature push the layer representing that feature into the guides and deletion group
+    pedetrianDistricts.eachFeature(function(layer) {
+      drawnItems.addLayer(layer);
+    });
+  });
+
+  // create a new Leaflet Draw control
+  var drawControl = new L.Control.Draw({
+    edit: {
+      featureGroup: drawnItems, // allow editing/deleting of features in this group
+      edit: false // disable the edit tool (since we are doing editing ourselves)
+    },
+    draw: {
+      circle: false, // disable circles
+      marker: false, // disable polylines
+      polyline: false, // disable polylines
+      polygon: {
+        allowIntersection: false, // polygons cannot intersect thenselves
+        drawError: {
+          color: 'red', // color the shape will turn when intersects
+          message: '<strong>Oh snap!<strong> you can\'t draw that!' // message that will show when intersect
+        },
+      }
+    }
+  });
+
+  // add our drawing controls to the map
+  map.addControl(drawControl);
+
+  // when we start using deletion or creation tools disable our custom editing
+  map.on('draw:deletestart draw:createstart', function() {
+    disableEditing = true;
+  });
+
+  // listen to the draw created event
+  map.on('draw:created', function(e) {
+    // add the feature as GeoJSON (feature will be converted to ArcGIS JSON internally)
+    pedetrianDistricts.addFeature(e.layer.toGeoJSON(), function(error, response) {
+      console.log(error, response);
+    });
+  });
+
+  // listen to the draw deleted event
+  map.on('draw:deleted', function(e) {
+    e.layers.eachLayer(function(layer) {
+      var id = layer.feature.id;
+      pedetrianDistricts.deleteFeature(id, function(error, response) {
+        delete pedetrianDistricts._layers[id];
+        console.log(error, response);
+      });
+    });
+  });
+</script>
+</div>
+<pre><code class="language-xml"><span class="tag">&lt;<span class="title">html</span>&gt;</span>
+<span class="tag">&lt;<span class="title">head</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">utf-8</span> /&gt;</span>
+  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Editing feature layers<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">name</span>=<span class="value">'viewport'</span> <span class="attribute">content</span>=<span class="value">'initial-scale=1,maximum-scale=1,user-scalable=no'</span> /&gt;</span>
+
+  <span class="comment">&lt;!-- Load Leaflet from CDN--&gt;</span>
+  <span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"//cdn.jsdelivr.net/leaflet/0.7.3/leaflet.css"</span> /&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"//cdn.jsdelivr.net/leaflet/0.7.3/leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+
+  <span class="comment">&lt;!-- Load Esri Leaflet from CDN --&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.5/esri-leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+
+  <span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css">
+    <span class="tag">body</span> <span class="rules">{<span class="rule"><span class="attribute">margin</span>:<span class="value"><span class="number">0</span></span></span>;<span class="rule"><span class="attribute">padding</span>:<span class="value"><span class="number">0</span></span></span>;<span class="rule">}</span></span>
+    <span class="id">#map</span> <span class="rules">{<span class="rule"><span class="attribute">position</span>:<span class="value"> absolute</span></span>;<span class="rule"><span class="attribute">top</span>:<span class="value"><span class="number">0</span></span></span>;<span class="rule"><span class="attribute">bottom</span>:<span class="value"><span class="number">0</span></span></span>;<span class="rule"><span class="attribute">right</span>:<span class="value"><span class="number">0</span></span></span>;<span class="rule"><span class="attribute">left</span>:<span class="value"><span class="number">0</span></span></span>;<span class="rule">}</span></span>
+  </span><span class="tag">&lt;/<span class="title">style</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">head</span>&gt;</span>
+<span class="tag">&lt;<span class="title">body</span>&gt;</span>
+
+<span class="comment">&lt;!-- Leaflet Draw --&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://rawgit.com/Leaflet/Leaflet.draw/master/dist/leaflet.draw-src.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+<span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"https://rawgit.com/Leaflet/Leaflet.draw/master/dist/leaflet.draw.css"</span>&gt;</span>
+
+<span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css">
+  <span class="id">#info-pane</span> <span class="rules">{
+    <span class="rule"><span class="attribute">position</span>:<span class="value"> absolute</span></span>;
+    <span class="rule"><span class="attribute">top</span>:<span class="value"> <span class="number">10</span>px</span></span>;
+    <span class="rule"><span class="attribute">right</span>:<span class="value"> <span class="number">10</span>px</span></span>;
+    <span class="rule"><span class="attribute">z-index</span>:<span class="value"> <span class="number">10</span></span></span>;
+    <span class="rule"><span class="attribute">padding</span>:<span class="value"> <span class="number">1</span>em</span></span>;
+    <span class="rule"><span class="attribute">background</span>:<span class="value"> white</span></span>;
+    <span class="rule"><span class="attribute">text-align</span>:<span class="value"> right</span></span>;
+  <span class="rule">}</span></span>
+
+  <span class="id">#form</span> <span class="rules">{
+    <span class="rule"><span class="attribute">display</span>:<span class="value"> none</span></span>;
+  <span class="rule">}</span></span>
+</span><span class="tag">&lt;/<span class="title">style</span>&gt;</span>
+
+<span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">'map'</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+<span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">'info-pane'</span> <span class="attribute">class</span>=<span class="value">'leaflet-bar'</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">label</span> <span class="attribute">id</span>=<span class="value">'greeting'</span>&gt;</span>
+    Let's edit!
+  <span class="tag">&lt;/<span class="title">label</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">form</span> <span class="attribute">action</span>=<span class="value">'#'</span> <span class="attribute">id</span>=<span class="value">'form'</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">label</span> <span class="attribute">for</span>=<span class="value">'PEDDISTRIC'</span>&gt;</span>
+      Pedestrian District Name<span class="tag">&lt;<span class="title">br</span>&gt;</span>
+      <span class="tag">&lt;<span class="title">input</span> <span class="attribute">id</span>=<span class="value">'PEDDISTRIC'</span> <span class="attribute">type</span>=<span class="value">"text"</span> <span class="attribute">value</span>=<span class="value">''</span> <span class="attribute">name</span>=<span class="value">'PEDDISTRIC'</span>&gt;</span><span class="tag">&lt;<span class="title">br</span>&gt;</span>
+    <span class="tag">&lt;/<span class="title">label</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">label</span> <span class="attribute">for</span>=<span class="value">'TRANPLANID'</span>&gt;</span>
+      Transportation Plan Id<span class="tag">&lt;<span class="title">br</span>&gt;</span>
+      <span class="tag">&lt;<span class="title">input</span> <span class="attribute">id</span>=<span class="value">'TRANPLANID'</span> <span class="attribute">type</span>=<span class="value">'text'</span> <span class="attribute">value</span>=<span class="value">''</span> <span class="attribute">name</span>=<span class="value">'TRANPLANID'</span> <span class="attribute">disabled</span>=<span class="value">'disabled'</span>&gt;</span>
+    <span class="tag">&lt;/<span class="title">label</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">form</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+<span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
+  <span class="comment">// create the map</span>
+  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">45.512</span>, -<span class="number">122.619</span>], <span class="number">12</span>);
+  L.esri.basemapLayer(<span class="string">'Streets'</span>).addTo(map);
+
+  <span class="comment">// add our feature layer to the map</span>
+  <span class="keyword">var</span> pedetrianDistricts = <span class="keyword">new</span> L.esri.FeatureLayer(<span class="string">'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/PDX_Pedestrian_Districts/FeatureServer/0'</span>).addTo(map);
+
+  <span class="comment">// variable to track the layer being edited</span>
+  <span class="keyword">var</span> currentlyEditing;
+
+  <span class="comment">// create a feature group for Leaflet Draw to hook into for delete functionality</span>
+  <span class="keyword">var</span> drawnItems = <span class="keyword">new</span> L.FeatureGroup();
+  map.addLayer(drawnItems);
+
+  <span class="comment">// track if we should disable custom editing as a result of other actions (create/delete)</span>
+  <span class="keyword">var</span> disableEditing = <span class="literal">false</span>;
+
+  <span class="comment">// start editing a given layer</span>
+  <span class="function"><span class="keyword">function</span> <span class="title">startEditing</span><span class="params">(layer)</span> {</span>
+    document.getElementById(<span class="string">"form"</span>).style.display = <span class="string">'block'</span>;
+    document.getElementById(<span class="string">"greeting"</span>).innerHTML = <span class="literal">null</span>;
+    document.getElementById(<span class="string">"PEDDISTRIC"</span>).value = layer.feature.properties.PEDDISTRIC;
+    <span class="comment">// read only</span>
+    document.getElementById(<span class="string">"TRANPLANID"</span>).value = layer.feature.properties.TRANPLANID;
+    <span class="keyword">if</span> (!disableEditing) {
+      layer.editing.enable();
+      currentlyEditing = layer;
+    }
+  }
+
+  <span class="comment">// stop editing a given layer</span>
+  <span class="function"><span class="keyword">function</span> <span class="title">stopEditing</span><span class="params">()</span> {</span>
+    <span class="comment">// is a layer is being editing finish up editing it and disable editing on it.</span>
+    <span class="keyword">if</span> (currentlyEditing) {
+      handleEdit(currentlyEditing);
+      document.getElementById(<span class="string">"form"</span>).style.display = <span class="string">'none'</span>;
+      document.getElementById(<span class="string">"greeting"</span>).innerHTML = <span class="string">"Lets edit!"</span>;
+      currentlyEditing.editing.disable();
+    }
+    currentlyEditing = <span class="literal">undefined</span>;
+  }
+
+  <span class="function"><span class="keyword">function</span> <span class="title">handleEdit</span><span class="params">(layer)</span> {</span>
+    <span class="comment">// convert the layer to GeoJSON and build a new updated GeoJSON object for that feature</span>
+    layer.feature.properties.PEDDISTRIC = document.getElementById(<span class="string">"PEDDISTRIC"</span>).value;
+    pedetrianDistricts.updateFeature({
+      type: <span class="string">'Feature'</span>,
+      id: layer.feature.id,
+      geometry: layer.toGeoJSON().geometry,
+      properties: layer.feature.properties
+    }, <span class="function"><span class="keyword">function</span><span class="params">(error, response)</span> {</span>
+      console.log(error, response);
+    });
+  }
+
+  <span class="comment">// when the map is clicked, stop editing</span>
+  map.on(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span><span class="params">(e)</span> {</span>
+    stopEditing();
+  });
+
+  <span class="comment">// when a pedestrian district is clicked, stop editing the current layer and edit the clicked layer</span>
+  pedetrianDistricts.on(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span><span class="params">(e)</span> {</span>
+    stopEditing();
+    startEditing(e.layer);
+  });
+
+  <span class="comment">// when pedetrian districts start loading (because of pan/zoom) stop editing</span>
+  pedetrianDistricts.on(<span class="string">'loading'</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+    stopEditing();
+  });
+
+  <span class="comment">// when new features are loaded clear our current guides and feature groups</span>
+  <span class="comment">// then load the current features into the guides and feature group</span>
+  pedetrianDistricts.on(<span class="string">'load'</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+    <span class="comment">// wipe the current layers available for deltion and clear the current guide layers.</span>
+    drawnItems.clearLayers();
+
+    <span class="comment">// for each feature push the layer representing that feature into the guides and deletion group</span>
+    pedetrianDistricts.eachFeature(<span class="function"><span class="keyword">function</span><span class="params">(layer)</span> {</span>
+      drawnItems.addLayer(layer);
+    });
+  });
+
+  <span class="comment">// create a new Leaflet Draw control</span>
+  <span class="keyword">var</span> drawControl = <span class="keyword">new</span> L.Control.Draw({
+    edit: {
+      featureGroup: drawnItems, <span class="comment">// allow editing/deleting of features in this group</span>
+      edit: <span class="literal">false</span> <span class="comment">// disable the edit tool (since we are doing editing ourselves)</span>
+    },
+    draw: {
+      circle: <span class="literal">false</span>, <span class="comment">// disable circles</span>
+      marker: <span class="literal">false</span>, <span class="comment">// disable polylines</span>
+      polyline: <span class="literal">false</span>, <span class="comment">// disable polylines</span>
+      polygon: {
+        allowIntersection: <span class="literal">false</span>, <span class="comment">// polygons cannot intersect thenselves</span>
+        drawError: {
+          color: <span class="string">'red'</span>, <span class="comment">// color the shape will turn when intersects</span>
+          message: <span class="string">'&lt;strong&gt;Oh snap!&lt;strong&gt; you can\'t draw that!'</span> <span class="comment">// message that will show when intersect</span>
+        },
+      }
+    }
+  });
+
+  <span class="comment">// add our drawing controls to the map</span>
+  map.addControl(drawControl);
+
+  <span class="comment">// when we start using deletion or creation tools disable our custom editing</span>
+  map.on(<span class="string">'draw:deletestart draw:createstart'</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+    disableEditing = <span class="literal">true</span>;
+  });
+
+  <span class="comment">// listen to the draw created event</span>
+  map.on(<span class="string">'draw:created'</span>, <span class="function"><span class="keyword">function</span><span class="params">(e)</span> {</span>
+    <span class="comment">// add the feature as GeoJSON (feature will be converted to ArcGIS JSON internally)</span>
+    pedetrianDistricts.addFeature(e.layer.toGeoJSON(), <span class="function"><span class="keyword">function</span><span class="params">(error, response)</span> {</span>
+      console.log(error, response);
+    });
+  });
+
+  <span class="comment">// listen to the draw deleted event</span>
+  map.on(<span class="string">'draw:deleted'</span>, <span class="function"><span class="keyword">function</span><span class="params">(e)</span> {</span>
+    e.layers.eachLayer(<span class="function"><span class="keyword">function</span><span class="params">(layer)</span> {</span>
+      <span class="keyword">var</span> id = layer.feature.id;
+      pedetrianDistricts.deleteFeature(id, <span class="function"><span class="keyword">function</span><span class="params">(error, response)</span> {</span>
+        <span class="keyword">delete</span> pedetrianDistricts._layers[id];
+        console.log(error, response);
+      });
+    });
+  });
+</span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+
+<span class="tag">&lt;/<span class="title">body</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">html</span>&gt;</span></code></pre>
+
+<div class="wrap">
+  <p><a href="http://github.com/esri/esri-leaflet/edit/master/site/source/pages/examples/editing.hbs">Edit this sample on GitHub</a></p>
+</div>
+</div>
+  <div style='clear:both;'></div>
+</div>
+<div class="container centered-text">
+  <p class="copyright">Esri Leaflet is a project from the <a href="http://pdx.esri.com">Esri PDX R&amp;D Center</a> and the <a href="https://github.com/Esri/esri-leaflet/graphs/contributors">Esri Community</a></p>
+</div>
+
+  </div>
+  <script src="../../../esri-leaflet/js/script.js"></script>
+  </body>
+</html>

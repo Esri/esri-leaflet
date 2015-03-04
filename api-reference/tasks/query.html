@@ -196,7 +196,7 @@
         <tr>
             <td><code>nearby(<nobr class="param"><span>&lt;<a href="http://leafletjs.com/reference.html#latlng">LatLng</a>&gt;</span> <code>latlng</code></nobr>, <nobr class="param"><span>&lt;Integer&gt;</span> <code>distance</code></nobr>)</code></td>
             <td><code>this</code></td>
-            <td>Queries features a given distance in meters around a <a href="http://leafletjs.com/reference.html#latlng">LatLng</a>. <small>Only available for Feature Layers hosted on ArcGIS Online.</small></td>
+            <td>Queries features a given distance in meters around a <a href="http://leafletjs.com/reference.html#latlng">LatLng</a>. <small>Only available for Feature Layers hosted on ArcGIS Online or ArcGIS Server 10.3.</small></td>
         </tr>
         <tr>
             <td><code>where(<nobr class="param"><span>&lt;String&gt;</span> <code>where</code></nobr>)</code></td>
@@ -206,12 +206,12 @@
         <tr>
             <td><code>offset(<nobr class="param"><span>&lt;Integer&gt;</span> <code>offset</code></nobr>)</code></td>
             <td><code>this</code></td>
-            <td>Define the offset of the results, when combined with <code>limit</code> can be used for paging. <small>Only available for Feature Layers hosted on ArcGIS Online.</small></td>
+            <td>Define the offset of the results, when combined with <code>limit</code> can be used for paging. <small>Only available for Feature Layers hosted on ArcGIS Online or ArcGIS Server 10.3.</small></td>
         </tr>
         <tr>
             <td><code>limit(<nobr class="param"><span>&lt;Integer&gt;</span> <code>limit</code></nobr>)</code></td>
             <td><code>this</code></td>
-            <td>Limit the number of results returned by this query, when combined with <code>offset</code> can be used for paging. <small>Only available for Feature Layers hosted on ArcGIS Online.</small></td>
+            <td>Limit the number of results returned by this query, when combined with <code>offset</code> can be used for paging. <small>Only available for Feature Layers hosted on ArcGIS Online or ArcGIS Server 10.3.</small></td>
         </tr>
         <tr>
             <td><code>between(<nobr class="param"><span>&lt;Date&gt;</span> <code>from</code></nobr>, <nobr class="param"><span>&lt;Date&gt;</span> <code>to</code></nobr>)</code></td>
@@ -281,7 +281,7 @@
         <tr>
             <td><code>bounds(<nobr class="param"><span>&lt;Function&gt;</span> <code>callback</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>context</code></nobr>)</code></td>
             <td><code>this</code></td>
-            <td>Exectues the query request with the current parameters, passing only the <a href="http://leafletjs.com/reference.html#latlngbounds"><code>LatLngBounds</code></a> of all features the query to callback<code>callback</code>. Accepts an optional function context. <small>Only available for Feature Layers hosted on ArcGIS Online.</small></td>
+            <td>Executes the query request with the current parameters, passing only the <a href="http://leafletjs.com/reference.html#latlngbounds"><code>LatLngBounds</code></a> of all features matching the query in the <code>callback</code>. Accepts an optional function context.  <small>Only available for Feature Layers hosted on ArcGIS Online or ArcGIS Server 10.3.</small></td>
         </tr>
     </tbody>
 </table>
