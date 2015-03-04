@@ -14,6 +14,9 @@ EsriLeaflet.Layers.DynamicMapLayer = EsriLeaflet.Layers.RasterLayer.extend({
     options.url = EsriLeaflet.Util.cleanUrl(url);
     this._service = new EsriLeaflet.Services.MapService(options);
     this._service.on('authenticationrequired requeststart requestend requesterror requestsuccess', this._propagateEvent, this);
+    if (options.proxy){
+      options.f = 'json';
+    }
     L.Util.setOptions(this, options);
   },
 
