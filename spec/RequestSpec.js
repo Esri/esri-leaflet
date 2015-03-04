@@ -151,7 +151,7 @@ describe('L.esri.Request', function () {
   it('should throw errors when response is not a JSON object', function(done){
     L.esri.Request.get.CORS('http://services.arcgisonline.com/ArcGIS/rest/info', {}, function(error){
       expect(error).to.deep.equal({
-        message: 'Could not parse response as JSON.',
+        message: 'Could not parse response as JSON. This could also be caused by a CORS or XMLHttpRequest error.',
         code: 500
       });
       done();
