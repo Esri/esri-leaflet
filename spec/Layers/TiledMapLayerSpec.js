@@ -31,7 +31,6 @@ describe('L.esri.Layers.TiledMapLayer', function () {
   it('should expose the query method on the underlying service', function(){
     var spy = sinon.spy(layer._service, 'identify');
     var identify = layer.identify();
-    expect(spy).to.have.been.calledWith(layer.service);
     expect(identify).to.be.an.instanceof(L.esri.Tasks.IdentifyFeatures);
     expect(identify._service).to.equal(layer._service);
   });

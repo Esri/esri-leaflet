@@ -628,7 +628,6 @@ describe('L.esri.Layers.FeatureManager', function () {
   it('should expose the query method on the underlying service', function(){
     var spy = sinon.spy(layer._service, 'query');
     var query = layer.query();
-    expect(spy).to.have.been.calledWith(layer.service);
     expect(query).to.be.an.instanceof(L.esri.Tasks.Query);
     expect(query._service).to.equal(layer._service);
   });

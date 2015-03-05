@@ -124,7 +124,6 @@ describe('L.esri.Layers.ImageMapLayer', function () {
   it('should expose the identify method on the underlying service', function(){
     var spy = sinon.spy(layer._service, 'identify');
     var identify = layer.identify();
-    expect(spy).to.have.been.calledWith(layer.service);
     expect(identify).to.be.an.instanceof(L.esri.Tasks.IdentifyImage);
     expect(identify._service).to.equal(layer._service);
   });
@@ -326,7 +325,7 @@ describe('L.esri.Layers.ImageMapLayer', function () {
   });
 
   it('should get and set bandIds as an array param', function(done){
-    server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockImageService\/ImageServer\/exportImage\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&format=jpgpng&bboxSR=3857&imageSR=3857&bandIds=3%2C0%2C1&f=json/), JSON.stringify({
+     server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockImageService\/ImageServer\/exportImage\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&format=jpgpng&bboxSR=3857&imageSR=3857&bandIds=3%2C0%2C1&f=json/), JSON.stringify({
       href: 'http://placehold.it/500&text=WithBandIds'
     }));
 

@@ -15,7 +15,6 @@ module.exports = function(config) {
     files: [
       'node_modules/leaflet/dist/leaflet.css',
       'node_modules/leaflet/dist/leaflet.js',
-      'spec/**/*Spec.js',
       'src/EsriLeaflet.js',
       'src/Util.js',
       'src/Layers/BasemapLayer.js',
@@ -37,7 +36,13 @@ module.exports = function(config) {
       'src/Tasks/IdentifyFeatures.js',
       'src/Tasks/IdentifyImage.js',
       'src/Tasks/Find.js',
-      'src/Controls/Logo.js'
+      'src/Controls/Logo.js',
+      // 'spec/UtilSpec.js',
+      // 'spec/RequestSpec.js',
+      // 'spec/Tasks/*Spec.js',
+      // 'spec/Services/*Spec.js',
+      'spec/**/*Spec.js',
+      // 'spec/Layers/DynamicMapLayerSpec.js'
     ],
 
     // list of files to exclude
