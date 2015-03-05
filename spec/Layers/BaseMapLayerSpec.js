@@ -49,7 +49,22 @@ describe('L.esri.Layers.BasemapLayer', function () {
     for (var i = 0, len = testmaps.length; i < len; i++) {
       var name = testmaps[i];
       expect(L.esri.basemapLayer(name)).to.be.instanceof(L.esri.Layers.BasemapLayer);
-      expect(L.esri.basemapLayer(name)._url).to.eql(L.esri.BasemapLayer.TILES[name].urlTemplate);
+      expect(L.esri.basemapLayer(name)._url).to.equal(L.esri.BasemapLayer.TILES[name].urlTemplate);
+    }
+  });
+
+  it('can survive adding/removing basemaps w/ labels', function () {
+    var moremaps = ['Oceans', 'DarkGray', 'Gray', 'Imagery', 'ShadedRelief', 'Terrain'];
+    for (var i = 0, len = moremaps.length; i < len; i++) {
+      var layer = L.esri.basemapLayer(moremaps[i]).addTo(map);
+      var layerWithLabels = L.esri.basemapLayer(moremaps[i] +'Labels').addTo(map);
+      expect(map.hasLayer(layer)).to.equal(true);
+      expect(map.hasLayer(layerWithLabels)).to.equal(true);
+
+      map.removeLayer(layer);
+      map.removeLayer(layerWithLabels);
+      expect(map.hasLayer(layer)).to.equal(false);
+      expect(map.hasLayer(layerWithLabels)).to.equal(false);
     }
   });
 

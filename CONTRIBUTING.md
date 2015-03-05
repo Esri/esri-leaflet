@@ -4,7 +4,9 @@ Esri welcomes contributions from anyone and everyone. Please see our [guidelines
 
 Please take a look at [previous issues](https://github.com/Esri/esri-leaflet/issues?labels=FAQ&milestone=&page=1&state=closed) that resolve common problems.
 
-You can also post issues on the [GIS Stackexchange](http://gis.stackexchange.com/questions/ask?tags=esri-leaflet,leaflet) an/or the [Esri Leaflet place](https://geonet.esri.com/discussion/create.jspa?sr=pmenu&containerID=1841&containerType=700&tags=esri-leaflet,leaflet) on GeoNet.
+If you're just looking for help, you'll probably attract the most eyes if you post in [GIS Stackexchange](http://gis.stackexchange.com/questions/ask?tags=esri-leaflet,leaflet) or the [Esri Leaflet place](https://geonet.esri.com/discussion/create.jspa?sr=pmenu&containerID=1841&containerType=700&tags=esri-leaflet,leaflet) on GeoNet.
+
+If you think you're encountering a new bug, please feel free to log an [issue](https://github.com/Esri/esri-leaflet/issues/new) and include the steps to reproduce the problem (and preferably a running sample).
 
 ### I want to contribute, what should I work on?
 
@@ -22,11 +24,11 @@ You can run the tests with the `grunt karma:watch` to watch files and rerun test
 
 ##### Support for new services and layer types
 
-support for new layer types and services are always needed the [plugin canidates](https://github.com/Esri/esri-leaflet/issues?labels=Plugin+Canidate&page=1&state=open) list is a good place to start.
+support for new layer types and services are always needed.  The [plugin candidates](https://github.com/Esri/esri-leaflet/issues?labels=Plugin+Canidate&page=1&state=open) list is a good place to start.
 
 ### Can I publish my own Esri Leaflet plugins?
 
-Of course! if you develop reusuable components for using or for use with Esri Leaflet that you think would be useful for other developers, please [file an issue](https://github.com/Esri/esri-leaflet/issues?state=open) so we discuss it.
+Of course! if you develop reusuable components for use with Esri Leaflet that you think would be helpful to share with other developers, please [file an issue](https://github.com/Esri/esri-leaflet/issues?state=open) so we discuss it.
 
 ### Setting up a dev environment
 

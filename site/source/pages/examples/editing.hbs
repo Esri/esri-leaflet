@@ -1,0 +1,173 @@
+---
+title: Editing feature layers
+description: This sample uses <a href="https://github.com/Leaflet/Leaflet.draw">Leaflet Draw</a> to help edit the geometry of features in a hosted feature service.
+layout: example.hbs
+---
+
+<!-- Leaflet Draw -->
+<script src="https://rawgit.com/Leaflet/Leaflet.draw/master/dist/leaflet.draw-src.js"></script>
+<link rel="stylesheet" href="https://rawgit.com/Leaflet/Leaflet.draw/master/dist/leaflet.draw.css">
+
+<style>
+  #info-pane {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 10;
+    padding: 1em;
+    background: white;
+    text-align: right;
+  }
+
+  #form {
+    display: none;
+  }
+</style>
+
+<div id='map'></div>
+<div id='info-pane' class='leaflet-bar'>
+  <label id='greeting'>
+    Let's edit!
+  </label>
+  <form action='#' id='form'>
+    <label for='PEDDISTRIC'>
+      Pedestrian District Name<br>
+      <input id='PEDDISTRIC' type="text" value='' name='PEDDISTRIC'><br>
+    </label>
+    <label for='TRANPLANID'>
+      Transportation Plan Id<br>
+      <input id='TRANPLANID' type='text' value='' name='TRANPLANID' disabled='disabled'>
+    </label>
+  </form>
+</div>
+<script>
+  // create the map
+  var map = L.map('map').setView([45.512, -122.619], 12);
+  L.esri.basemapLayer('Streets').addTo(map);
+
+  // add our feature layer to the map
+  var pedetrianDistricts = new L.esri.FeatureLayer('http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/PDX_Pedestrian_Districts/FeatureServer/0').addTo(map);
+
+  // variable to track the layer being edited
+  var currentlyEditing;
+
+  // create a feature group for Leaflet Draw to hook into for delete functionality
+  var drawnItems = new L.FeatureGroup();
+  map.addLayer(drawnItems);
+
+  // track if we should disable custom editing as a result of other actions (create/delete)
+  var disableEditing = false;
+
+  // start editing a given layer
+  function startEditing(layer) {
+    document.getElementById("form").style.display = 'block';
+    document.getElementById("greeting").innerHTML = null;
+    document.getElementById("PEDDISTRIC").value = layer.feature.properties.PEDDISTRIC;
+    // read only
+    document.getElementById("TRANPLANID").value = layer.feature.properties.TRANPLANID;
+    if (!disableEditing) {
+      layer.editing.enable();
+      currentlyEditing = layer;
+    }
+  }
+
+  // stop editing a given layer
+  function stopEditing() {
+    // is a layer is being editing finish up editing it and disable editing on it.
+    if (currentlyEditing) {
+      handleEdit(currentlyEditing);
+      document.getElementById("form").style.display = 'none';
+      document.getElementById("greeting").innerHTML = "Lets edit!";
+      currentlyEditing.editing.disable();
+    }
+    currentlyEditing = undefined;
+  }
+
+  function handleEdit(layer) {
+    // convert the layer to GeoJSON and build a new updated GeoJSON object for that feature
+    layer.feature.properties.PEDDISTRIC = document.getElementById("PEDDISTRIC").value;
+    pedetrianDistricts.updateFeature({
+      type: 'Feature',
+      id: layer.feature.id,
+      geometry: layer.toGeoJSON().geometry,
+      properties: layer.feature.properties
+    }, function(error, response) {
+      console.log(error, response);
+    });
+  }
+
+  // when the map is clicked, stop editing
+  map.on('click', function(e) {
+    stopEditing();
+  });
+
+  // when a pedestrian district is clicked, stop editing the current layer and edit the clicked layer
+  pedetrianDistricts.on('click', function(e) {
+    stopEditing();
+    startEditing(e.layer);
+  });
+
+  // when pedetrian districts start loading (because of pan/zoom) stop editing
+  pedetrianDistricts.on('loading', function() {
+    stopEditing();
+  });
+
+  // when new features are loaded clear our current guides and feature groups
+  // then load the current features into the guides and feature group
+  pedetrianDistricts.on('load', function() {
+    // wipe the current layers available for deltion and clear the current guide layers.
+    drawnItems.clearLayers();
+
+    // for each feature push the layer representing that feature into the guides and deletion group
+    pedetrianDistricts.eachFeature(function(layer) {
+      drawnItems.addLayer(layer);
+    });
+  });
+
+  // create a new Leaflet Draw control
+  var drawControl = new L.Control.Draw({
+    edit: {
+      featureGroup: drawnItems, // allow editing/deleting of features in this group
+      edit: false // disable the edit tool (since we are doing editing ourselves)
+    },
+    draw: {
+      circle: false, // disable circles
+      marker: false, // disable polylines
+      polyline: false, // disable polylines
+      polygon: {
+        allowIntersection: false, // polygons cannot intersect thenselves
+        drawError: {
+          color: 'red', // color the shape will turn when intersects
+          message: '<strong>Oh snap!<strong> you can\'t draw that!' // message that will show when intersect
+        },
+      }
+    }
+  });
+
+  // add our drawing controls to the map
+  map.addControl(drawControl);
+
+  // when we start using deletion or creation tools disable our custom editing
+  map.on('draw:deletestart draw:createstart', function() {
+    disableEditing = true;
+  });
+
+  // listen to the draw created event
+  map.on('draw:created', function(e) {
+    // add the feature as GeoJSON (feature will be converted to ArcGIS JSON internally)
+    pedetrianDistricts.addFeature(e.layer.toGeoJSON(), function(error, response) {
+      console.log(error, response);
+    });
+  });
+
+  // listen to the draw deleted event
+  map.on('draw:deleted', function(e) {
+    e.layers.eachLayer(function(layer) {
+      var id = layer.feature.id;
+      pedetrianDistricts.deleteFeature(id, function(error, response) {
+        delete pedetrianDistricts._layers[id];
+        console.log(error, response);
+      });
+    });
+  });
+</script>

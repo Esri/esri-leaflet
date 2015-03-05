@@ -67,10 +67,10 @@ layout: example.hbs
   }).addTo(map);
 
   bikePaths.on('mouseout', function(e){
-    document.getElementById('info-pane').innerText = 'Hover to Inspect';
+    document.getElementById('info-pane').innerHTML = 'Hover to Inspect';
   });
 
   bikePaths.on('mouseover', function(e){
-    document.getElementById('info-pane').innerText = e.layer.feature.properties.BIKEMODE;
+    document.getElementById('info-pane').innerHTML = e.layer.feature.properties.BIKEMODE;
   });
 </script>

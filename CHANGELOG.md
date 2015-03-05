@@ -18,6 +18,7 @@ None
 #### Breaking Changes
 
 * All `Task` and `Service` constructors now accept `url` as a value within options, rather than as a seperate parameter. [#420](https://github.com/Esri/esri-leaflet/issues/420)
+* 'Layer' objects continue to expect a `url' string to be supplied as the first parameter, but afterwards, the property is now accessible via Layer.options.url instead of Layer.url
 
 #### Changes
 

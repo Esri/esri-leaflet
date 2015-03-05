@@ -73,7 +73,7 @@ layout: documentation.hbs
         <tr>
             <td><code>nearby({{{param 'LatLng' 'latlng' 'http://leafletjs.com/reference.html#latlng'}}}, {{{param 'Integer' 'distance'}}})</code></td>
             <td><code>this</code></td>
-            <td>Queries features a given distance in meters around a <a href="http://leafletjs.com/reference.html#latlng">LatLng</a>. <small>Only available for Feature Layers hosted on ArcGIS Online.</small></td>
+            <td>Queries features a given distance in meters around a <a href="http://leafletjs.com/reference.html#latlng">LatLng</a>. <small>Only available for Feature Layers hosted on ArcGIS Online or ArcGIS Server 10.3.</small></td>
         </tr>
         <tr>
             <td><code>where({{{param 'String' 'where'}}})</code></td>
@@ -83,12 +83,12 @@ layout: documentation.hbs
         <tr>
             <td><code>offset({{{param 'Integer' 'offset'}}})</code></td>
             <td><code>this</code></td>
-            <td>Define the offset of the results, when combined with `limit` can be used for paging. <small>Only available for Feature Layers hosted on ArcGIS Online.</small></td>
+            <td>Define the offset of the results, when combined with `limit` can be used for paging. <small>Only available for Feature Layers hosted on ArcGIS Online or ArcGIS Server 10.3.</small></td>
         </tr>
         <tr>
             <td><code>limit({{{param 'Integer' 'limit'}}})</code></td>
             <td><code>this</code></td>
-            <td>Limit the number of results returned by this query, when combined with `offset` can be used for paging. <small>Only available for Feature Layers hosted on ArcGIS Online.</small></td>
+            <td>Limit the number of results returned by this query, when combined with `offset` can be used for paging. <small>Only available for Feature Layers hosted on ArcGIS Online or ArcGIS Server 10.3.</small></td>
         </tr>
         <tr>
             <td><code>between({{{param 'Date' 'from'}}}, {{{param 'Date' 'to'}}})</code></td>
@@ -158,7 +158,7 @@ layout: documentation.hbs
         <tr>
             <td><code>bounds({{{param 'Function' 'callback'}}}, {{{param 'Object' 'context'}}})</code></td>
             <td><code>this</code></td>
-            <td>Exectues the query request with the current parameters, passing only the <a href="http://leafletjs.com/reference.html#latlngbounds"><code>LatLngBounds</code></a> of all features the query to callback<code>callback</code>. Accepts an optional function context. <small>Only available for Feature Layers hosted on ArcGIS Online.</small></td>
+            <td>Executes the query request with the current parameters, passing only the <a href="http://leafletjs.com/reference.html#latlngbounds"><code>LatLngBounds</code></a> of all features matching the query in the <code>callback</code>. Accepts an optional function context.  <small>Only available for Feature Layers hosted on ArcGIS Online or ArcGIS Server 10.3.</small></td>
         </tr>
     </tbody>
 </table>
