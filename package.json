@@ -18,7 +18,7 @@
     "grunt-gh-pages": "^0.8.1",
     "grunt-karma": "^0.8.3",
     "grunt-newer": "^0.7.0",
-    "grunt-releaseable": "0.0.12",
+    "grunt-releaseable": "0.0.16",
     "grunt-s3": "^0.2.0-alpha.3",
     "highlight.js": "^8.0.0",
     "karma": "^0.12.16",
