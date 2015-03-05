@@ -1,5 +1,18 @@
 # Changelog
 
+## Release Candidate 6
+
+#### Breaking Changes
+
+None
+
+#### Changes
+
+* `f:'json'` will now be used automatically when a proxy is set for `L.esri.DynamicMapLayer`. https://github.com/Esri/esri-leaflet/issues/464
+* Callback functions will now only be run once when there is a CORS error. https://github.com/Esri/esri-leaflet/issues/465
+* Layer ids will now beinlucded with the GeoJSON response from `identify()` and `L.esri.Tasks.Identify`. https://github.com/Esri/esri-leaflet/issues/443
+* Bugfix for adding/removing certain basemap layers. https://github.com/Esri/esri-leaflet/issues/455
+
 ## Release Candidate 5
 
 #### Breaking Changes
