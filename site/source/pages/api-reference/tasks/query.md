@@ -26,7 +26,7 @@ layout: documentation.hbs
             <code>L.esri.Tasks.query({{{param 'MapService' 'endpoint' '../../api-reference/services/map-service.html'}}})</code><br><br>
             <code>new L.esri.Tasks.Query({{{param 'Object' 'options'}}})</code><br><br>
             <code>L.esri.Tasks.query({{{param 'Object' 'options'}}})</code></td>
-            <td>Accepts either an `options` object or an instance of <a href="{{assets}}/api-reference/services/map-service.html">MapService</a> or <a href="{{assets}}/api-reference/services/map-service.html">FeatureLayer</a>.</td>
+            <td>Accepts either an `options` object or an instance of <a href="{{assets}}/api-reference/services/map-service.html">MapService</a> or <a href="{{assets}}/api-reference/layers/feature-layer.html">FeatureLayer</a>.</td>
         </tr>
     </tbody>
 </table>

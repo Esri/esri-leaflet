@@ -202,7 +202,7 @@ imageService.query()
 | `loading` | [<`LoadingEvent`>]({{assets}}api-reference/events.html#loading-event) | Fires when new features start loading. |
 | `load` | [<`LoadEvent`>]({{assets}}api-reference/events.html#load-event) | Fires when all features in the current bounds of the map have loaded. |
 
-`L.esri.Layer.ImageMapLayer` also fires all  [`L.esri.Service.ImageService`]({{assets}}api-reference/services/image-service.html) events.
+`L.esri.Layers.ImageMapLayer` also fires all  [`L.esri.Services.ImageService`]({{assets}}api-reference/services/image-service.html) events.
 
 ### Example
 

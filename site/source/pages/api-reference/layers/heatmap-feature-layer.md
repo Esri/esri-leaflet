@@ -98,7 +98,7 @@ More information about Feature Layers can be found in the [`L.esri.Layers.Featur
 | `loading` | [&lt;LoadingEvent&gt;]() | Fires when new features start loading. |
 | `load` | [&lt;Load&gt;]() | Fires when all features in the current bounds of the map have loaded. |
 
-`L.esri.Layer.FeatureLayer` also fires all  [`L.esri.Service.FeatureLayer`]({{assets}}api-reference/services/feature-layer.html) events.
+`L.esri.Layers.FeatureLayer` also fires all  [`L.esri.Services.FeatureLayer`]({{assets}}api-reference/services/feature-layer.html) events.
 
 ### Methods
 
