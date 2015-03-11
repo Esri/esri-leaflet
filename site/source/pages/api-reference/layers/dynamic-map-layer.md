@@ -23,7 +23,7 @@ Map Services are a way to expose the contents of a map as a web service and expo
     <tbody>
         <tr>
             <td><code class="nobr">new L.esri.Layers.DynamicMapLayer({{{param 'String' 'url'}}}, {{{param 'Object' 'options'}}})</code><br><br><code class="nobr">L.esri.Layers.dynamicMapLayer({{{param 'String' 'url'}}}, {{{param 'Object' 'options'}}})</code><br><br><code class="nobr">new L.esri.DynamicMapLayer({{{param 'String' 'url'}}}, {{{param 'Object' 'options'}}})</code><br><br><code class="nobr">L.esri.dynamicMapLayer({{{param 'String' 'url'}}}, {{{param 'Object' 'options'}}})</code></td>
-            <td><code>url</code> should be the URL to the Map Service hosted the tiles. The <code>options</code> parameter can accept the same options as <a href="http://leafletjs.com/reference.html#tilelayer"><code>L.TileLayer</code></a></td>
+            <td><code>url</code> should be the URL to the Map Service hosting the tiles. The <code>options</code> parameter can accept the same options as <a href="http://leafletjs.com/reference.html#tilelayer"><code>L.TileLayer</code></a></td>
         </tr>
     </tbody>
 </table>
