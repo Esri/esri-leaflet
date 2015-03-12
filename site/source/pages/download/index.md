@@ -8,7 +8,7 @@ class: no-sidebar
 
 All builds of Esri Leaflet are available for download on [GitHub](https://github.com/Esri/esri-leaflet/releases/).
 
-<a href="https://github.com/Esri/esri-leaflet/releases/download/v1.0.0-rc.6/esri-leaflet-v1.0.0-rc.5.zip" class="btn">Current Release</a>
+<a href="https://github.com/Esri/esri-leaflet/releases/download/v1.0.0-rc.6/esri-leaflet-v1.0.0-rc.6.zip" class="btn">Current Release</a>
 <a href="https://github.com/Esri/esri-leaflet/releases/" class="btn">Past Releases</a>
 
 # npm
