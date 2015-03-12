@@ -124,7 +124,7 @@
     <tbody>
         <tr>
             <td><code class="nobr">new L.esri.Layers.DynamicMapLayer(<nobr class="param"><span>&lt;String&gt;</span> <code>url</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br><code class="nobr">L.esri.Layers.dynamicMapLayer(<nobr class="param"><span>&lt;String&gt;</span> <code>url</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br><code class="nobr">new L.esri.DynamicMapLayer(<nobr class="param"><span>&lt;String&gt;</span> <code>url</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br><code class="nobr">L.esri.dynamicMapLayer(<nobr class="param"><span>&lt;String&gt;</span> <code>url</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code></td>
-            <td><code>url</code> should be the URL to the Map Service hosted the tiles. The <code>options</code> parameter can accept the same options as <a href="http://leafletjs.com/reference.html#tilelayer"><code>L.TileLayer</code></a></td>
+            <td><code>url</code> should be the URL to the Map Service hosting the tiles. The <code>options</code> parameter can accept the same options as <a href="http://leafletjs.com/reference.html#tilelayer"><code>L.TileLayer</code></a></td>
         </tr>
     </tbody>
 </table>
@@ -379,7 +379,7 @@
 </tr>
 </tbody>
 </table>
-<p><code>L.esri.Layer.DynamicMapLayer</code> also fires all  <a href="../../../../esri-leaflet/api-reference/services/map-service.html"><code>L.esri.Service.MapService</code></a> events.</p>
+<p><code>L.esri.Layers.DynamicMapLayer</code> also fires all  <a href="../../../../esri-leaflet/api-reference/services/map-service.html"><code>L.esri.Services.MapService</code></a> events.</p>
 <h3 id="example">Example</h3>
 <pre><code class="language-js"><span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([ <span class="number">38.83</span>,-<span class="number">98.5</span>], <span class="number">7</span>);
 
