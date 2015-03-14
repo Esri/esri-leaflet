@@ -25,7 +25,7 @@ Here is a quick example to get you started. Just copy/paste into your own .html 
     <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
 
     <!-- Load Esri Leaflet from CDN -->
-    <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.5/esri-leaflet.js"></script>
+    <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.6/esri-leaflet.js"></script>
 
     <style>
       html, body,  #map {
