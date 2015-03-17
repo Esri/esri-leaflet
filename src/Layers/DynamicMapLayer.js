@@ -90,6 +90,15 @@ EsriLeaflet.Layers.DynamicMapLayer = EsriLeaflet.Layers.RasterLayer.extend({
     var ne = this._map.options.crs.project(bounds._northEast);
     var sw = this._map.options.crs.project(bounds._southWest);
 
+    //ensure that we don't ask ArcGIS Server for a taller image than we have actual map displaying
+    var total = this._map.getSize();
+    var top = this._map.latLngToLayerPoint(bounds._northEast);
+    var bottom = this._map.latLngToLayerPoint(bounds._southWest);
+
+    if (top.y > 0 || bottom.y < total.y){
+      size.y = total.y - top.y - (total.y - bottom.y);
+    }
+
     var params = {
       bbox: [sw.x, sw.y, ne.x, ne.y].join(','),
       size: size.x + ',' + size.y,
