@@ -12,6 +12,10 @@ describe('L.esri.Util', function () {
     [45.52, -122.64] //ne lat lng
   ]);
 
+  var hostedFeatureServiceUrl = 'http://services.arcgis.com/rOo.../arcgis/rest/services/RawsomeServiceName/FeatureServer/0';
+  var otherServiceUrl = 'http://demographics4.arcgis.com/arcgis/rest/services/USA_Demographics_and_Boundaries_2014/MapServer/9';
+  var normalFeatureServiceUrl = 'http://oneofoursampleservers.arcgisonline.com/arcgis/rest/services/WorldTimeZones/MapServer/2';
+
   it('should return a L.LatLngBounds object from extentToBounds', function () {
     var bounds = L.esri.Util.extentToBounds(sampleExtent);
     expect(bounds).to.be.an.instanceof(L.LatLngBounds);
@@ -1066,6 +1070,12 @@ describe('L.esri.Util', function () {
         'id': 1,
       }]
     });
+  });
+
+  it('should know the difference between a hosted feature service and everything else', function () {
+    expect(L.esri.Util.isArcgisOnline(hostedFeatureServiceUrl)).to.be.true;
+    expect(L.esri.Util.isArcgisOnline(otherServiceUrl)).to.be.false;
+    expect(L.esri.Util.isArcgisOnline(normalFeatureServiceUrl)).to.be.false;
   });
 
 });
