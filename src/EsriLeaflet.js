@@ -1,5 +1,5 @@
 var EsriLeaflet = { //jshint ignore:line
-  VERSION: '1.0.0-rc.6',
+  VERSION: '1.0.0-rc.7',
   Layers: {},
   Services: {},
   Controls: {},
