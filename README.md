@@ -9,7 +9,7 @@ The goal of Esri Leaflet is **not** to replace the [ArcGIS API for JavaScript](h
 **Currently Esri Leaflet is in development and should be thought of as a beta or preview.**
 
 ### Demos
-There are [loads of demos](http://patrickarlt.github.io/esri-leaflet/examples/) showing many of the features of Esri Leaflet.
+There are [loads of demos](http://esri.github.io/esri-leaflet/examples/) showing many of the features of Esri Leaflet.
 
 ### Example
 Here is a quick example to get you started. Just copy/paste into your own .html file and run.
@@ -67,7 +67,9 @@ If you are interested in contributing to Esri Leaflet or are interested in seein
 
 ### Frequently Asked Questions
 
+* [What exactly is Esri Leaflet?  Is it a replacement for Leaflet?](https://github.com/Esri/esri-leaflet/wiki/FAQ#what-is-esri-leaflet)
 * [Will Esri Leaflet replace the ArcGIS API for JavaScript?](https://github.com/Esri/esri-leaflet/wiki/FAQ#will-esri-leaflet-replace-the-arcgis-api-for-javascript)
+* [What is the benefit of using Esri Leaflet over using Leaflet all by itself?](https://github.com/Esri/esri-leaflet/wiki/FAQ#why-use-esri-leaflet)
 * [What are the goals of Esri Leaflet?](https://github.com/Esri/esri-leaflet/wiki/FAQ#what-are-the-goals-of-esri-leaflet)
 * [When will Esri Leaflet leave beta?](https://github.com/Esri/esri-leaflet/wiki/FAQ#when-will-esri-leaflet-leave-beta)
 * [How do you decide what features get included in Esri Leaflet?](https://github.com/Esri/esri-leaflet/wiki/FAQ#how-do-you-decide-what-features-get-included-in-esri-leaflet)
