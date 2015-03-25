@@ -44,6 +44,11 @@ describe('L.esri.Util', function () {
     expect(url).to.equal('http://arcgis.com/');
   });
 
+  it('shouldnt trim spaces in the middle', function(){
+    var url = L.esri.Util.cleanUrl('   http://arcgis.com/cool folder/anotherfolder ');
+    expect(url).to.equal('http://arcgis.com/cool folder/anotherfolder/');
+  });
+
   it('should convert a GeoJSON Point to an ArcGIS Point', function() {
     var input = {
       'type': 'Point',
