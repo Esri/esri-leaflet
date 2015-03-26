@@ -5,14 +5,14 @@ layout: example.hbs
 ---
 
 <!-- Load Esri Leaflet Renderers -->
-<script src="//cdn-geoweb.s3.amazonaws.com/esri-leaflet-renderers/v0.0.1-beta.2/esri-leaflet-renderers.js"></script>
+<script src="//cdn-geoweb.s3.amazonaws.com/esri-leaflet-renderers/0.0.1-beta.3/esri-leaflet-renderers.js"></script>
 
 <div id="map"></div>
 
 <script type='text/javascript'>
-  var map = L.map('map').setView([38, 62], 3);
+  var map = L.map('map').setView([45.548, -122.632], 12);
   L.esri.basemapLayer('DarkGray').addTo(map);
 
   //renderer type: unique value
-  L.esri.featureLayer('//services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/World_Regions/FeatureServer/0', {simplifyFactor: .1}).addTo(map);
+  L.esri.featureLayer('//services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Trimet%20Transit%20Stops%20In%20Portland%20Neighborhoods/FeatureServer/0').addTo(map);
 </script>
