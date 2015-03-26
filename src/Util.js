@@ -386,9 +386,10 @@
     return featureCollection;
   };
 
-    // trim whitespace and add a tailing slash is needed to a url
+    // trim url whitespace and add a trailing slash if needed
   EsriLeaflet.Util.cleanUrl = function(url){
-    url = url.replace(/\s\s*/g, '');
+    //trim leading and trailing spaces, but not spaces inside the url
+    url = url.replace(/^\s+|\s+$|\A\s+|\s+\z/g, '');
 
     //add a trailing slash to the url if the user omitted it
     if(url[url.length-1] !== '/'){
