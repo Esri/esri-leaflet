@@ -399,7 +399,10 @@
   };
 
   EsriLeaflet.Util.isArcgisOnline = function(url){
-    return (/\.arcgis\.com/g).test(url);
+    /* hosted feature services can emit geojson natively.
+    our check for 'geojson' support will need to be revisted
+    once the functionality makes its way to ArcGIS Server*/
+    return (/\.arcgis\.com.*?FeatureServer/g).test(url);
   };
 
   EsriLeaflet.Util.geojsonTypeToArcGIS = function (geoJsonType) {
