@@ -164,16 +164,16 @@
   
 
 <!-- Load Esri Leaflet Renderers -->
-<script src="//cdn-geoweb.s3.amazonaws.com/esri-leaflet-renderers/v0.0.1-beta.2/esri-leaflet-renderers.js"></script>
+<script src="//cdn-geoweb.s3.amazonaws.com/esri-leaflet-renderers/0.0.1-beta.3/esri-leaflet-renderers.js"></script>
 
 <div id="map"></div>
 
 <script type='text/javascript'>
-  var map = L.map('map').setView([38, 62], 3);
+  var map = L.map('map').setView([45.548, -122.632], 12);
   L.esri.basemapLayer('DarkGray').addTo(map);
 
   //renderer type: unique value
-  L.esri.featureLayer('//services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/World_Regions/FeatureServer/0', {simplifyFactor: .1}).addTo(map);
+  L.esri.featureLayer('//services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Trimet%20Transit%20Stops%20In%20Portland%20Neighborhoods/FeatureServer/0').addTo(map);
 </script>
 
 </div>
@@ -198,16 +198,16 @@
 <span class="tag">&lt;<span class="title">body</span>&gt;</span>
 
 <span class="comment">&lt;!-- Load Esri Leaflet Renderers --&gt;</span>
-<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"//cdn-geoweb.s3.amazonaws.com/esri-leaflet-renderers/v0.0.1-beta.2/esri-leaflet-renderers.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"//cdn-geoweb.s3.amazonaws.com/esri-leaflet-renderers/0.0.1-beta.3/esri-leaflet-renderers.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">'text/javascript'</span>&gt;</span><span class="javascript">
-  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">38</span>, <span class="number">62</span>], <span class="number">3</span>);
+  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">45.548</span>, -<span class="number">122.632</span>], <span class="number">12</span>);
   L.esri.basemapLayer(<span class="string">'DarkGray'</span>).addTo(map);
 
   <span class="comment">//renderer type: unique value</span>
-  L.esri.featureLayer(<span class="string">'//services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/World_Regions/FeatureServer/0'</span>, {simplifyFactor: <span class="number">.1</span>}).addTo(map);
+  L.esri.featureLayer(<span class="string">'//services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Trimet%20Transit%20Stops%20In%20Portland%20Neighborhoods/FeatureServer/0'</span>).addTo(map);
 </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 <span class="tag">&lt;/<span class="title">body</span>&gt;</span>
