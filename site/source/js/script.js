@@ -15,8 +15,10 @@ L.esri.Layers.basemapLayer('Imagery', {
 
 if (map) {
   map.scrollWheelZoom.disable();
+  map.on("click", accidentalScroll);
+}
 
-  map.on("click", function(){
-    map.scrollWheelZoom.enable();
-  })
+function accidentalScroll() {
+  map.scrollWheelZoom.enable();
+  map.off("click", accidentalScroll);
 }
