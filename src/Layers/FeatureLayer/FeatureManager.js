@@ -415,7 +415,21 @@
           callback.call(context, error, response);
         }
       }, this);
+    },
+
+    deleteFeatures: function(ids, callback, context){
+      return this._service.deleteFeatures(ids, function(error, response){
+        if(!error && response.length > 0){
+          for (var i=0; i<response.length; i++){
+            this.removeLayers([response[i].objectId], true);
+          }
+        }
+        if(callback){
+          callback.call(context, error, response);
+        }
+      }, this);
     }
+
   });
 
   /**
