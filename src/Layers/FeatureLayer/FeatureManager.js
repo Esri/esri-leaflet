@@ -386,7 +386,19 @@
     addFeature: function(feature, callback, context){
       this._service.addFeature(feature, function(error, response){
         if(!error){
-          this.refresh();
+          /*
+          this code requires the developer supply an 'idAttribute' in the constructor options
+          currently, 'this._service.options.idAttribute' is hardcoded to 'OBJECTID'
+          */
+          if (this.options.idAttribute){
+            feature.properties[this.options.idAttribute] = response.objectId;
+          }
+          else {
+            feature.properties.OBJECTID = response.objectId;
+          }
+          // we also need to update the geojson id for createLayers() to function
+          feature.id = response.objectId;
+          this.createLayers([feature]);
         }
         if(callback){
           callback.call(context, error, response);
@@ -398,7 +410,8 @@
     updateFeature: function(feature, callback, context){
       return this._service.updateFeature(feature, function(error, response){
         if(!error){
-          this.refresh();
+          this.removeLayers([feature.id], true);
+          this.createLayers([feature]);
         }
         if(callback){
           callback.call(context, error, response);
@@ -416,6 +429,7 @@
         }
       }, this);
     }
+
   });
 
   /**

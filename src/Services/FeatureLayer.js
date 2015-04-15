@@ -46,7 +46,6 @@ EsriLeaflet.Services.FeatureLayer = EsriLeaflet.Services.Service.extend({
       }
     }, context);
   }
-
 });
 
 EsriLeaflet.Services.featureLayer = function(options) {
