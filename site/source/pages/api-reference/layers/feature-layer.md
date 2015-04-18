@@ -153,7 +153,7 @@ You can create a new empty feature service with a single layer on the [ArcGIS fo
 
 `L.esri.Layers.FeatureLayer` also fires all  [`L.esri.Services.FeatureLayer`]({{assets}}api-reference/services/feature-layer.html) events.
 
-In additon to these events `L.esri.Layers.FeatureLayer` also fires the following [Mouse Events](http://leafletjs.com/reference.html#event-objects) `click`, `dblclick`, `mouseover`, `mouseout`, `mousemove`, and `contextmenu` and the following the [Popup Events](http://leafletjs.com/reference.html#event-objects) `popupopen` and `popupclose`
+In addition to the events above, `L.esri.Layers.FeatureLayer` also fires the following [Mouse Events](http://leafletjs.com/reference.html#event-objects) `click`, `dblclick`, `mouseover`, `mouseout`, `mousemove`, and `contextmenu` and the following the [Popup Events](http://leafletjs.com/reference.html#event-objects) `popupopen` and `popupclose`
 
 ### Methods
 
