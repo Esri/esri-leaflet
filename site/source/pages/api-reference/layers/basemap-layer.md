@@ -38,6 +38,7 @@ These maps have worldwide coverage at a variety of zoom levels.
 * `DarkGray`
 * `Imagery`
 * `ShadedRelief`
+* `Terrain`
 
 ##### Optional Labels
 
@@ -46,9 +47,10 @@ These are optional layers that add extra text labels to the basemaps.
 * `OceansLabels` - Labels to pair with the `Oceans` basemap
 * `GrayLabels` - Labels to pair with the `Gray` basemap
 * `DarkGrayLabels` - Labels to pair with the `DarkGray` basemap
-* `ImageryLabels` - Labels and political boundaries to pair with the `Imagery` basemap
-* `ImageryTransportation` - A street map for pairing with the `Imagery` basemap=
+* `ImageryLabels` - Labels including political boundaries to pair with the `Imagery` basemap
+* `ImageryTransportation` - Street map labels for pairing with the `Imagery` basemap
 * `ShadedReliefLabels` - Labels for pairing with the `ShadedRelief` base map
+* `TerrainLabels` - Labels for pairing with the `Terrain` base map
 
 ### Options
 

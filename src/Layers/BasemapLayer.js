@@ -148,7 +148,7 @@
             minZoom: 1,
             maxZoom: 13,
             subdomains: ['server', 'services'],
-            attribution: 'ESRI, NAVTEQ, DeLorme'
+            attribution: 'Esri, NAVTEQ, DeLorme'
           }
         },
         ShadedReliefLabels: {
