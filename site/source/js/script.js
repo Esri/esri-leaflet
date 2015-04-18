@@ -12,3 +12,13 @@ var bgmap = L.map('background-map', {
 L.esri.Layers.basemapLayer('Imagery', {
   hideLogo: true
 }).addTo(bgmap);
+
+if (map) {
+  map.scrollWheelZoom.disable();
+  map.on("click", accidentalScroll);
+}
+
+function accidentalScroll() {
+  map.scrollWheelZoom.enable();
+  map.off("click", accidentalScroll);
+}
