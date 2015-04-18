@@ -376,6 +376,7 @@ module.exports = function(grunt) {
         secret: '<%= aws.secret %>',
         bucket: '<%= aws.bucket %>',
         access: 'public-read',
+        gzip: true,
         headers: {
           // 1 Year cache policy (1000 * 60 * 60 * 24 * 365)
           'Cache-Control': 'max-age=630720000, public',
