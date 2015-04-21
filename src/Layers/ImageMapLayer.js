@@ -122,6 +122,7 @@ EsriLeaflet.Layers.ImageMapLayer = EsriLeaflet.Layers.RasterLayer.extend({
       bbox: [sw.x, sw.y, ne.x, ne.y].join(','),
       size: size.x + ',' + size.y,
       format: this.options.format,
+      transparent: this.options.transparent,
       bboxSR: this.options.bboxSR,
       imageSR: this.options.imageSR
     };
