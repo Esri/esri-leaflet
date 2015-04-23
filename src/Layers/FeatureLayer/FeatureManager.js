@@ -383,28 +383,34 @@
       return this._service.query();
     },
 
+    _getMetadata: function(callback, context){
+      if(this._metadata){
+        callback(undefined, this._metadata, this);
+      } else {
+        this.metadata(L.Util.bind(function(error, response, context) {
+          this._metadata = response;
+          callback(error, this._metadata, this);
+        }, this));
+      }
+    },
+
     addFeature: function(feature, callback, context){
-      this._service.addFeature(feature, function(error, response){
-        if(!error){
-          /*
-          this code requires the developer supply an 'idAttribute' in the constructor options
-          currently, 'this._service.options.idAttribute' is hardcoded to 'OBJECTID'
-          */
-          if (this.options.idAttribute){
-            feature.properties[this.options.idAttribute] = response.objectId;
+      this._getMetadata(function(error, metadata, context){
+        context._service.addFeature(feature, function(error, response){
+          if(!error){
+            // assign ID from result to appropriate objectid field from service metadata
+            feature.properties[metadata.objectIdField] = response.objectId;
+
+            // we also need to update the geojson id for createLayers() to function
+            feature.id = response.objectId;
+            context.createLayers([feature]);
           }
-          else {
-            feature.properties.OBJECTID = response.objectId;
+          if(callback){
+            callback.call(context, error, response);
           }
-          // we also need to update the geojson id for createLayers() to function
-          feature.id = response.objectId;
-          this.createLayers([feature]);
-        }
-        if(callback){
-          callback.call(context, error, response);
-        }
+        }, context);
+        return this;
       }, this);
-      return this;
     },
 
     updateFeature: function(feature, callback, context){
