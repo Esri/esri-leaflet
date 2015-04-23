@@ -13,6 +13,16 @@ EsriLeaflet.Controls.Logo = L.Control.extend({
     div.style.marginBottom = this.options.marginBottom;
     div.style.marginRight = this.options.marginRight;
     div.innerHTML = '<a href="https://developers.arcgis.com" style="border: none;"><img src="https://js.arcgis.com/3.11/esri/images/map/logo-med.png" alt="Powered by Esri" style="border: none;"></a>';
+
+    this._map.on("resize", function(e){
+      if (e.newSize.x <= 600 || e.newSize.y <= 600){
+        console.log('small!');
+      }
+      else {
+        console.log('big!');
+      }
+    });
+    // second check to set initial size
     return div;
   }
 });
