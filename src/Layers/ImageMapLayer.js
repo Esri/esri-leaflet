@@ -2,7 +2,8 @@ EsriLeaflet.Layers.ImageMapLayer = EsriLeaflet.Layers.RasterLayer.extend({
 
   options: {
     updateInterval: 150,
-    format: 'jpgpng'
+    format: 'jpgpng',
+    transparent: true
   },
 
   query: function(){
