@@ -36,7 +36,7 @@ layout: example.hbs
       pane.innerHTML = 'Loading';
     }
     federalLands.identify().on(map).at(e.latlng).run(function(error, featureCollection){
-      if (featureCollection.features.count > 0){
+      if (featureCollection.features.length > 0){
         identifiedFeature = new L.GeoJSON(featureCollection.features[0], {
           style: function(){
             return {
