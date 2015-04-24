@@ -149,10 +149,10 @@ EsriLeaflet.Layers.RasterLayer =  L.Class.extend({
         var oldImage = this._currentImage;
 
         // if the bounds of this image matches the bounds that
-        // _renderImage was called with and we have a map
+        // _renderImage was called with and we have a map with the same bounds
         // hide the old image if there is one and set the opacity
         // of the new image otherwise remove the new image
-        if(newImage._bounds.equals(bounds)){
+        if(newImage._bounds.equals(bounds) && newImage._bounds.equals(this._map.getBounds())){
           this._currentImage = newImage;
 
           if(this.options.position === 'front'){
