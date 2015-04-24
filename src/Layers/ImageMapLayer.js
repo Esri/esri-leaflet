@@ -2,7 +2,8 @@ EsriLeaflet.Layers.ImageMapLayer = EsriLeaflet.Layers.RasterLayer.extend({
 
   options: {
     updateInterval: 150,
-    format: 'jpgpng'
+    format: 'jpgpng',
+    transparent: true
   },
 
   query: function(){
@@ -122,6 +123,7 @@ EsriLeaflet.Layers.ImageMapLayer = EsriLeaflet.Layers.RasterLayer.extend({
       bbox: [sw.x, sw.y, ne.x, ne.y].join(','),
       size: size.x + ',' + size.y,
       format: this.options.format,
+      transparent: this.options.transparent,
       bboxSR: this.options.bboxSR,
       imageSR: this.options.imageSR
     };
