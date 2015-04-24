@@ -44,12 +44,14 @@ EsriLeaflet.Tasks.IdentifyFeatures = EsriLeaflet.Tasks.Identify.extend({
     return this.request(function(error, response){
       var featureCollection = EsriLeaflet.Util.responseToFeatureCollection(response);
       var count = featureCollection.features.length;
-      // tag each feature with the Id of its parent layer
-      if(!error && count > 0){
-        response.results = response.results.reverse();
-        for (var i = 0; i < count; i++) {
-          var feature = featureCollection.features[i];
-          feature.layerId = response.results[i].layerId;
+      if (!error){
+        // tag each feature with the Id of its parent layer
+        if(count > 0){
+          response.results = response.results.reverse();
+          for (var i = 0; i < count; i++) {
+            var feature = featureCollection.features[i];
+            feature.layerId = response.results[i].layerId;
+          }
         }
       }
       callback.call(context, error, (response && featureCollection), response);
