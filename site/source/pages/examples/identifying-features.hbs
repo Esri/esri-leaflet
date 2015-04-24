@@ -36,15 +36,17 @@ layout: example.hbs
       pane.innerHTML = 'Loading';
     }
     federalLands.identify().on(map).at(e.latlng).run(function(error, featureCollection){
-      identifiedFeature = new L.GeoJSON(featureCollection.features[0], {
-        style: function(){
-          return {
-            color: '#5C7DB8',
-            weight: 2
-          };
-        }
-      }).addTo(map);
-      pane.innerHTML = featureCollection.features[0].properties.NAME1;
+      if (featureCollection.features.length > 0){
+        identifiedFeature = new L.GeoJSON(featureCollection.features[0], {
+          style: function(){
+            return {
+              color: '#5C7DB8',
+              weight: 2
+            };
+          }
+        }).addTo(map);
+        pane.innerHTML = featureCollection.features[0].properties.NAME1;
+      }
     });
   });
 </script>

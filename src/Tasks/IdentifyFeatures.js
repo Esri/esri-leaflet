@@ -42,20 +42,23 @@ EsriLeaflet.Tasks.IdentifyFeatures = EsriLeaflet.Tasks.Identify.extend({
 
   run: function (callback, context){
     return this.request(function(error, response){
-      var featureCollection = EsriLeaflet.Util.responseToFeatureCollection(response);
-      var count = featureCollection.features.length;
-      // tag each feature with the Id of its parent layer
-      if(!error && count > 0){
+      // immediately invoke with an error
+      if(error) {
+        callback.call(context, error, undefined, response);
+        return;
+
+      // ok no error lets just assume we have features...
+      } else {
+        var featureCollection = EsriLeaflet.Util.responseToFeatureCollection(response);
         response.results = response.results.reverse();
-        for (var i = 0; i < count; i++) {
+        for (var i = 0; i < featureCollection.features.length; i++) {
           var feature = featureCollection.features[i];
           feature.layerId = response.results[i].layerId;
         }
+        callback.call(context, undefined, featureCollection, response);
       }
-      callback.call(context, error, (response && featureCollection), response);
-    }, context);
+    });
   }
-
 });
 
 EsriLeaflet.Tasks.identifyFeatures = function(params){
