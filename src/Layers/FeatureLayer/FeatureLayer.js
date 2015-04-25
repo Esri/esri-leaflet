@@ -196,8 +196,7 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
     var layer = this._layers[id];
 
     if(layer){
-      layer.options = layer.defaultOptions;
-      this.setFeatureStyle(layer.feature.id, this.options.style);
+      this.setFeatureStyle(layer.feature.id, layer.defaultOptions.style);
     }
 
     return this;
@@ -218,8 +217,7 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
       style = style(layer.feature);
     }
 
-    /*trap inability to access default style options from MultiLine/MultiPolygon
-    please revisit at Leaflet 1.0*/
+    //trap inability to access default style options from MultiLine/MultiPolygon please revisit at Leaflet 1.0
     else if (!style && !layer.defaultOptions) {
       var dummyPath = new L.Path();
       style = L.Path.prototype.options;
