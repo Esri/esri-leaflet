@@ -396,6 +396,7 @@
     },
 
     addFeature: function(feature, callback, context){
+      //still need to pass 'undefined' as a placeholder, not sure how to fix
       this._getMetadata(L.Util.bind(function(undefined, error, metadata){
         this._service.addFeature(feature, function(error, response){
           if(!error){
