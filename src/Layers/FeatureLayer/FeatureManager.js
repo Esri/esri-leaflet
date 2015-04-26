@@ -385,32 +385,33 @@
 
     _getMetadata: function(callback, context){
       if(this._metadata){
-        callback(undefined, this._metadata, this);
+        var error;
+        callback(context, error, this._metadata);
       } else {
-        this.metadata(L.Util.bind(function(error, response, context) {
+        this.metadata(L.Util.bind(function(error, response) {
           this._metadata = response;
-          callback(error, this._metadata, this);
+          callback(context, error, this._metadata);
         }, this));
       }
     },
 
     addFeature: function(feature, callback, context){
-      this._getMetadata(function(error, metadata, context){
-        context._service.addFeature(feature, function(error, response){
+      this._getMetadata(L.Util.bind(function(undefined, error, metadata){
+        this._service.addFeature(feature, function(error, response){
           if(!error){
             // assign ID from result to appropriate objectid field from service metadata
             feature.properties[metadata.objectIdField] = response.objectId;
 
             // we also need to update the geojson id for createLayers() to function
             feature.id = response.objectId;
-            context.createLayers([feature]);
+            this.createLayers([feature]);
           }
           if(callback){
             callback.call(context, error, response);
           }
-        }, context);
+        }, this);
         return this;
-      }, this);
+      }, this), this);
     },
 
     updateFeature: function(feature, callback, context){
