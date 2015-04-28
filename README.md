@@ -128,14 +128,6 @@ And constructed with the following guidelines:
 
 For more information on SemVer, please visit <http://semver.org/>.
 
-### Resources
-
-* [Importing Data Into Feature Services](https://developers.arcgis.com/tools/csv-to-feature-service/)
-* [ArcGIS for Developers](http://developers.arcgis.com)
-* [ArcGIS REST Services](http://resources.arcgis.com/en/help/arcgis-rest-api/)
-* [@Esri](http://twitter.com/esri)
-* [@EsriPDX](http://twitter.com/esripdx)
-
 ### Issues
 
 Find a bug or want to request a new feature?  Please let us know by submitting an [issue](https://github.com/Esri/esri-leaflet/issues).
