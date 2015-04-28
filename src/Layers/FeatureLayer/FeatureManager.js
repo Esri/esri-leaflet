@@ -398,7 +398,7 @@
     addFeature: function(feature, callback, context){
       //still need to pass 'undefined' as a placeholder, not sure how to fix
       this._getMetadata(L.Util.bind(function(undefined, error, metadata){
-        this._service.addFeature(feature, function(error, response){
+        this._service.addFeature(feature, L.Util.bind(function(error, response){
           if(!error){
             // assign ID from result to appropriate objectid field from service metadata
             feature.properties[metadata.objectIdField] = response.objectId;
@@ -407,16 +407,16 @@
             feature.id = response.objectId;
             this.createLayers([feature]);
           }
+
           if(callback){
             callback.call(context, error, response);
           }
-        }, this);
-        return this;
-      }, this), this);
+        }, this));
+      }, this));
     },
 
     updateFeature: function(feature, callback, context){
-      return this._service.updateFeature(feature, function(error, response){
+      this._service.updateFeature(feature, function(error, response){
         if(!error){
           this.removeLayers([feature.id], true);
           this.createLayers([feature]);
@@ -428,7 +428,7 @@
     },
 
     deleteFeature: function(id, callback, context){
-      return this._service.deleteFeature(id, function(error, response){
+      this._service.deleteFeature(id, function(error, response){
         if(!error && response.objectId){
           this.removeLayers([response.objectId], true);
         }

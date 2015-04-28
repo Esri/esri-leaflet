@@ -54,19 +54,19 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
     var coordsToLatLng = this.options.coordsToLatLng || L.GeoJSON.coordsToLatLng;
 
     switch(geojson.geometry.type){
-      case "LineString":
+      case 'LineString':
         latlngs = L.GeoJSON.coordsToLatLngs(geojson.geometry.coordinates, 0, coordsToLatLng);
         layer.setLatLngs(latlngs);
         break;
-      case "MultiLineString":
+      case 'MultiLineString':
         latlngs = L.GeoJSON.coordsToLatLngs(geojson.geometry.coordinates, 1, coordsToLatLng);
         layer.setLatLngs(latlngs);
         break;
-      case "Polygon":
+      case 'Polygon':
         latlngs = L.GeoJSON.coordsToLatLngs(geojson.geometry.coordinates, 1, coordsToLatLng);
         layer.setLatLngs(latlngs);
         break;
-      case "MultiPolygon":
+      case 'MultiPolygon':
         latlngs = L.GeoJSON.coordsToLatLngs(geojson.geometry.coordinates, 2, coordsToLatLng);
         layer.setLatLngs(latlngs);
         break;
@@ -96,12 +96,9 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
       }
 
       if(!layer){
-        // @TODO Leaflet 0.8
-        //newLayer = L.GeoJSON.geometryToLayer(geojson, this.options);
-
         newLayer =  this.createNewLayer(geojson);
         newLayer.feature = geojson;
-        newLayer.defaultOptions = newLayer.options;
+        newLayer._originalStyle = this.options.style;
         newLayer._leaflet_id = this._key + '_' + geojson.id;
 
         this._leafletIds[newLayer._leaflet_id] = geojson.id;
@@ -220,7 +217,7 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
     var layer = this._layers[id];
 
     if(layer){
-      this.setFeatureStyle(layer.feature.id, layer.defaultOptions.style);
+      this.setFeatureStyle(layer.feature.id, layer._originalStyle);
     }
 
     return this;
@@ -241,16 +238,16 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
       style = style(layer.feature);
     }
 
-    //trap inability to access default style options from MultiLine/MultiPolygon please revisit at Leaflet 1.0
-    else if (!style && !layer.defaultOptions) {
-      var dummyPath = new L.Path();
+    if (!style && !layer.defaultOptions) {
       style = L.Path.prototype.options;
       style.fill = true; //not set by default
     }
 
-    if (layer.setStyle) {
+    if (layer && layer.setStyle) {
       layer.setStyle(style);
     }
+
+    return this;
   },
 
   /**

@@ -116,24 +116,6 @@ describe('L.esri.Layers.FeatureLayer', function () {
     layer.addLayers([1]);
   });
 
-  it('should read features back to a map', function(){
-    map.removeLayer(layer.getFeature(1));
-
-    layer.createLayers([{
-      type: 'Feature',
-      id: 1,
-      geometry: {
-        type: 'LineString',
-        coordinates: [[-122, 45], [-121, 40], [-121.5, 42.5]]
-      },
-      properties: {
-        time: new Date('January 1 2014').valueOf()
-      }
-    }]);
-    expect(map.hasLayer(layer.getFeature(1))).to.equal(true);
-    expect(layer.getFeature(1).getLatLngs().length).to.equal(3);
-  });
-
   it('should not add features outside the time range', function(){
     layer.setTimeRange(new Date('January 1 2014'), new Date('Febuary 1 2014'));
 
@@ -230,6 +212,7 @@ describe('L.esri.Layers.FeatureLayer', function () {
     layer = L.esri.featureLayer('http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0', { timeField: 'time' }).addTo(map);
 
     layer.createLayers(multiPolygon);
+
     layer.bindPopup(function(feature){
       return 'ID: ' + feature.id;
     });
