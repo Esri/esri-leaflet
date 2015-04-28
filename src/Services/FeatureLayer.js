@@ -18,7 +18,7 @@ EsriLeaflet.Services.FeatureLayer = EsriLeaflet.Services.Service.extend({
     }, function(error, response){
       var result = (response && response.addResults) ? response.addResults[0] : undefined;
       if(callback){
-        callback.call(this, error || response.addResults[0].error, result);
+        callback.call(context, error || response.addResults[0].error, result);
       }
     }, context);
   },
@@ -46,7 +46,6 @@ EsriLeaflet.Services.FeatureLayer = EsriLeaflet.Services.Service.extend({
       }
     }, context);
   }
-
 });
 
 EsriLeaflet.Services.featureLayer = function(options) {

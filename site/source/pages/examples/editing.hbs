@@ -46,10 +46,11 @@ layout: example.hbs
   L.esri.basemapLayer('Streets').addTo(map);
 
   // add our feature layer to the map
-  var pedetrianDistricts = new L.esri.FeatureLayer('http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/PDX_Pedestrian_Districts/FeatureServer/0').addTo(map);
+  var pedestrianDistricts = new L.esri.FeatureLayer('http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/PDX_Pedestrian_Districts/FeatureServer/0').addTo(map);
 
   // variable to track the layer being edited
   var currentlyEditing;
+  var currentlyDeleting = false;
 
   // create a feature group for Leaflet Draw to hook into for delete functionality
   var drawnItems = new L.FeatureGroup();
@@ -60,8 +61,6 @@ layout: example.hbs
 
   // start editing a given layer
   function startEditing(layer) {
-    document.getElementById("form").style.display = 'block';
-    document.getElementById("greeting").innerHTML = null;
     document.getElementById("PEDDISTRIC").value = layer.feature.properties.PEDDISTRIC;
     // read only
     document.getElementById("TRANPLANID").value = layer.feature.properties.TRANPLANID;
@@ -73,11 +72,9 @@ layout: example.hbs
 
   // stop editing a given layer
   function stopEditing() {
-    // is a layer is being editing finish up editing it and disable editing on it.
+    // if a layer is being edited, finish up and disable editing on it afterward.
     if (currentlyEditing) {
       handleEdit(currentlyEditing);
-      document.getElementById("form").style.display = 'none';
-      document.getElementById("greeting").innerHTML = "Lets edit!";
       currentlyEditing.editing.disable();
     }
     currentlyEditing = undefined;
@@ -86,14 +83,25 @@ layout: example.hbs
   function handleEdit(layer) {
     // convert the layer to GeoJSON and build a new updated GeoJSON object for that feature
     layer.feature.properties.PEDDISTRIC = document.getElementById("PEDDISTRIC").value;
-    pedetrianDistricts.updateFeature({
+    pedestrianDistricts.updateFeature({
       type: 'Feature',
       id: layer.feature.id,
       geometry: layer.toGeoJSON().geometry,
       properties: layer.feature.properties
     }, function(error, response) {
       console.log(error, response);
+      displayGreeting();
     });
+  }
+
+  function displayAttributes() {
+    document.getElementById("greeting").innerHTML = null;
+    document.getElementById("form").style.display = 'block';
+  }
+
+  function displayGreeting() {
+    document.getElementById("greeting").innerHTML = "Lets edit!";
+    document.getElementById("form").style.display = 'none';
   }
 
   // when the map is clicked, stop editing
@@ -101,25 +109,28 @@ layout: example.hbs
     stopEditing();
   });
 
-  // when a pedestrian district is clicked, stop editing the current layer and edit the clicked layer
-  pedetrianDistricts.on('click', function(e) {
+  // when a pedestrian district is clicked, stop editing the current feature and edit the clicked feature
+  pedestrianDistricts.on('click', function(e) {
     stopEditing();
     startEditing(e.layer);
+    if (!currentlyDeleting) {
+      displayAttributes();
+    }
   });
 
-  // when pedetrian districts start loading (because of pan/zoom) stop editing
-  pedetrianDistricts.on('loading', function() {
+  // when pedestrian districts start loading (because of pan/zoom) stop editing
+  pedestrianDistricts.on('loading', function() {
     stopEditing();
   });
 
   // when new features are loaded clear our current guides and feature groups
   // then load the current features into the guides and feature group
-  pedetrianDistricts.on('load', function() {
+  pedestrianDistricts.on('load', function() {
     // wipe the current layers available for deltion and clear the current guide layers.
     drawnItems.clearLayers();
 
     // for each feature push the layer representing that feature into the guides and deletion group
-    pedetrianDistricts.eachFeature(function(layer) {
+    pedestrianDistricts.eachFeature(function(layer) {
       drawnItems.addLayer(layer);
     });
   });
@@ -147,27 +158,36 @@ layout: example.hbs
   // add our drawing controls to the map
   map.addControl(drawControl);
 
-  // when we start using deletion or creation tools disable our custom editing
-  map.on('draw:deletestart draw:createstart', function() {
+  // when we start using creation tools disable our custom editing
+  map.on('draw:createstart', function() {
     disableEditing = true;
+  });
+
+  // when we start using deletion tools, hide attributes and disable custom editing
+  map.on('draw:deletestart', function() {
+    disableEditing = true;
+    currentlyDeleting = true;
   });
 
   // listen to the draw created event
   map.on('draw:created', function(e) {
     // add the feature as GeoJSON (feature will be converted to ArcGIS JSON internally)
-    pedetrianDistricts.addFeature(e.layer.toGeoJSON(), function(error, response) {
+    pedestrianDistricts.addFeature(e.layer.toGeoJSON(), function(error, response) {
       console.log(error, response);
     });
+    disableEditing = false;
   });
 
   // listen to the draw deleted event
   map.on('draw:deleted', function(e) {
     e.layers.eachLayer(function(layer) {
       var id = layer.feature.id;
-      pedetrianDistricts.deleteFeature(id, function(error, response) {
-        delete pedetrianDistricts._layers[id];
+      pedestrianDistricts.deleteFeature(id, function(error, response) {
+        delete pedestrianDistricts._layers[id];
         console.log(error, response);
       });
     });
+    disableEditing = false;
+    currentlyDeleting = false;
   });
 </script>
