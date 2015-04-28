@@ -47,6 +47,32 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
     return L.GeoJSON.geometryToLayer(geojson, this.options.pointToLayer, L.GeoJSON.coordsToLatLng, this.options);
   },
 
+  _updateLayerGeometry: function(layer, geojson){
+    // convert the geojson coordinates into a Leaflet LatLng array/nested arrays
+    // pass it to setLatLngs to update layer geometries
+    var latlngs = [];
+    var coordsToLatLng = this.options.coordsToLatLng || L.GeoJSON.coordsToLatLng;
+
+    switch(geojson.geometry.type){
+      case "LineString":
+        latlngs = L.GeoJSON.coordsToLatLngs(geojson.geometry.coordinates, 0, coordsToLatLng);
+        layer.setLatLngs(latlngs);
+        break;
+      case "MultiLineString":
+        latlngs = L.GeoJSON.coordsToLatLngs(geojson.geometry.coordinates, 1, coordsToLatLng);
+        layer.setLatLngs(latlngs);
+        break;
+      case "Polygon":
+        latlngs = L.GeoJSON.coordsToLatLngs(geojson.geometry.coordinates, 1, coordsToLatLng);
+        layer.setLatLngs(latlngs);
+        break;
+      case "MultiPolygon":
+        latlngs = L.GeoJSON.coordsToLatLngs(geojson.geometry.coordinates, 2, coordsToLatLng);
+        layer.setLatLngs(latlngs);
+        break;
+    }
+  },
+
   /**
    * Feature Managment Methods
    */
@@ -61,14 +87,12 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
 
       if(layer && !this._map.hasLayer(layer)){
         this._map.addLayer(layer);
+        return;
       }
 
       if (layer && layer.setLatLngs) {
-        // @TODO Leaflet 0.8
-        //newLayer = L.GeoJSON.geometryToLayer(geojson, this.options);
-
-        var updateGeo = this.createNewLayer(geojson);
-        layer.setLatLngs(updateGeo.getLatLngs());
+        this._updateLayerGeometry(layer, geojson);
+        return;
       }
 
       if(!layer){
