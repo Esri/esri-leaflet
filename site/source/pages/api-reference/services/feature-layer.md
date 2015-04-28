@@ -65,7 +65,7 @@ Inherits from [`L.esri.Service`]({{assets}}api-reference/services/service.html)
                 Adds a new feature to the feature layer. this also adds the feature to the map if creation is successful.
                 <ul>
                     <li>Requires authentication as a user who has permission to edit the service in ArcGIS Online or the user who created the service.</li>
-                    <li>Requires the <code>Create</code> capability be enabled on the service. You can check if creation exists by checking the metadata of your service under capabilities in the metadata.</li>
+                    <li>Requires the <code>Create</code> capability be enabled on the service. You can check if creation exists by checking the metadata of your service under capabilities.</li>
                 </ul>
             </td>
         </tr>
@@ -76,7 +76,7 @@ Inherits from [`L.esri.Service`]({{assets}}api-reference/services/service.html)
                 Update the provided feature on the Feature Layer. This also updates the feature on the map.
                 <ul>
                     <li>Requires authentication as a user who has permission to edit the service in ArcGIS Online or the user who created the service.</li>
-                    <li>Requires the <code>Update</code> capability be enabled on the service. You can check if creation exists by checking the metadata of your service under capabilities in the metadata.</li>
+                    <li>Requires the <code>Update</code> capability be enabled on the service. You can check if this operation exists by checking the metadata of your service under capabilities.</li>
                 </ul>
             </td>
         </tr>
@@ -86,8 +86,19 @@ Inherits from [`L.esri.Service`]({{assets}}api-reference/services/service.html)
             <td>
                 Remove the feature with the provided id from the feature layer. This will also remove the feature from the map if it exists.
                 <ul>
-                    <li>Requires authentication as a user who has permission to edit the service in ArcGIS Online or the user who created the srevice.</li>
-                    <li>Requires the <code>Update</code> capability be enabled on the service. You can check if creation exists by checking the metadata of your service under capabilities in the metadata.</li>
+                    <li>Requires authentication as a user who has permission to edit the service in ArcGIS Online or the user who created the service.</li>
+                    <li>Requires the <code>Delete</code> capability be enabled on the service. You can check if this operation exists by checking the metadata of your service under capabilities.</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><code>deleteFeatures({{{param 'Array of String or Integers' 'ids'}}}, {{{param 'Function' 'callback'}}}, {{{param 'Object' 'context'}}})</code></td>
+            <td><code>this</code></td>
+            <td>
+                Removes an array of features with the provided ids from the feature layer. This will also remove the features from the map if they exist.
+                <ul>
+                    <li>Requires authentication as a user who has permission to edit the service in ArcGIS Online or the user who created the service.</li>
+                    <li>Requires the <code>Delete</code> capability be enabled on the service. You can check if this operation exists by checking the metadata of your service under capabilities.</li>
                 </ul>
             </td>
         </tr>
@@ -96,7 +107,7 @@ Inherits from [`L.esri.Service`]({{assets}}api-reference/services/service.html)
 
 ### Examples
 
-**Note**: These examples use a public feature service on ArcGIS Online that required no authentication.
+**Note**: These examples use a public feature service on ArcGIS Online that does not require authentication.
 
 ##### Adding Features
 ```js

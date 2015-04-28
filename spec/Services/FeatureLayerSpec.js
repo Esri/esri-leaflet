@@ -129,7 +129,7 @@ describe('L.esri.Services.FeatureLayer', function () {
     }));
   });
 
-  it('should be able to remove features from the layer', function(){
+  it('should be able to remove a feature from the layer', function(){
     var callback = sinon.spy();
 
     service.deleteFeature(1, callback);
@@ -162,5 +162,33 @@ describe('L.esri.Services.FeatureLayer', function () {
         'success' : true
       }]
     }));
+  });
+
+  it('should be able to remove features from the layer', function(){
+    var callback = sinon.spy();
+
+    service.deleteFeatures([1,2], callback);
+
+    requests[0].respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, JSON.stringify({
+      'deleteResults' : [{
+        'objectId' : 1,
+        'success' : true
+      },{
+        'objectId' : 2,
+        'success' : true
+      }]
+    }));
+
+    var requestBody = window.decodeURIComponent(requests[0].requestBody);
+
+    expect(requestBody).to.equal('objectIds=1,2&f=json');
+
+    callback.should.have.been.calledWith(undefined, [{
+      'objectId' : 1,
+      'success' : true
+    },{
+      'objectId' : 2,
+      'success' : true
+    }]);
   });
 });

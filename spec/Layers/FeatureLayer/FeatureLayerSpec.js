@@ -116,7 +116,7 @@ describe('L.esri.Layers.FeatureLayer', function () {
     layer.addLayers([1]);
   });
 
-  it('should readd features back to a map', function(){
+  it('should read features back to a map', function(){
     map.removeLayer(layer.getFeature(1));
 
     layer.createLayers([{
