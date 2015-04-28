@@ -715,6 +715,30 @@ describe('L.esri.Layers.FeatureManager', function () {
     server.respond();
   });
 
+  it('should wrap the removeFeatures method on the underlying service', function(done){
+    server.respondWith('POST', 'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/deleteFeatures', JSON.stringify({
+      'deleteResults' : [{
+        'objectId' : 1,
+        'success' : true
+      },{
+        'objectId' : 2,
+        'success' : true
+      }]
+    }));
+
+    layer.deleteFeatures([1,2], function(error, response){
+      expect(layer.removeLayers).to.have.been.calledWith([1]);
+      expect(layer.removeLayers).to.have.been.calledWith([2]);
+      expect(response[1]).to.deep.equal({
+        'objectId': 2,
+        'success': true
+      });
+      done();
+    });
+
+    server.respond();
+  });
+
   it('should support generalizing geometries', function(){
     server.respondWith('GET', 'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.6953125%2C%22ymin%22%3A45.521743896993634%2C%22xmax%22%3A-122.6513671875%2C%22ymax%22%3A45.55252525134013%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&maxAllowableOffset=0.00004291534423829546&f=json', JSON.stringify({
       fields: fields,
