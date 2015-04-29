@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/Esri/esri-leaflet.svg)](https://travis-ci.org/Esri/esri-leaflet)
 
-Leaflet plugins for [ArcGIS Services](http://developers.arcgis.com). Currently Esri Leaflet supports loading Esri [basemaps](http://esri.github.io/esri-leaflet/examples/switching-basemaps.html) and [feature services](http://esri.github.io/esri-leaflet/examples/simple-feature-layer.html), as well as [tiled](http://esri.github.io/esri-leaflet/examples/tile-layer-2.html), [dynamic](http://esri.github.io/esri-leaflet/examples/simple-dynamic-map-layer.html) and [image](http://esri.github.io/esri-leaflet/examples/simple-image-map-layer.html)  map services.
+Leaflet plugins for [ArcGIS Services](http://developers.arcgis.com). Currently Esri Leaflet supports loading Esri [basemaps](http://esri.github.io/esri-leaflet/examples/switching-basemaps.html) and [feature services](http://esri.github.io/esri-leaflet/examples/simple-feature-layer.html), as well as [tiled](http://esri.github.io/esri-leaflet/examples/tile-layer-2.html) map, [dynamic](http://esri.github.io/esri-leaflet/examples/simple-dynamic-map-layer.html) map and [image](http://esri.github.io/esri-leaflet/examples/simple-image-map-layer.html)  services.
 
 The goal of Esri Leaflet is **not** to replace the [ArcGIS API for JavaScript](https://developers.arcgis.com/en/javascript/), but rather to provide small components to allow developers to build mapping applications with Leaflet.
 
@@ -63,7 +63,7 @@ A full [API Reference](http://esri.github.io/esri-leaflet/api-reference/) and pl
 
 ### Development Roadmap
 
-If you are interested in contributing to Esri Leaflet or are interested in seeing what is coming up next checkout the [development roadmap](https://github.com/Esri/esri-leaflet/wiki/Roadmap).
+If you are interested in contributing to Esri Leaflet or seeing what is coming up next check out the [development roadmap](https://github.com/Esri/esri-leaflet/wiki/Roadmap).
 
 ### Frequently Asked Questions
 
@@ -100,7 +100,7 @@ Feel free to add your own project to this list!
 
 ### Development Instructions
 
-Make sure you have the [Grunt CLI](http://gruntjs.com/getting-started) installed.
+In order to compile the API yourself and/or run the tests, make sure you have the [Grunt CLI](http://gruntjs.com/getting-started) installed.
 
 1. [Fork and clone Esri Leaflet](https://help.github.com/articles/fork-a-repo)
 2. `cd` into the `esri-leaflet` folder
