@@ -249,30 +249,47 @@
     //   }
     // },
     _getAttributionData: function(url){
-      EsriLeaflet.get(url, {}, function(error, attributions){
-        this._attributions = [];
-        for (var c = 0; c < attributions.contributors.length; c++) {
-          var contributor = attributions.contributors[c];
-          for (var i = 0; i < contributor.coverageAreas.length; i++) {
-            var coverageArea = contributor.coverageAreas[i];
-            var southWest = new L.LatLng(coverageArea.bbox[0], coverageArea.bbox[1]);
-            var northEast = new L.LatLng(coverageArea.bbox[2], coverageArea.bbox[3]);
-            this._attributions.push({
-              attribution: contributor.attribution,
-              score: coverageArea.score,
-              bounds: new L.LatLngBounds(southWest, northEast),
-              minZoom: coverageArea.zoomMin,
-              maxZoom: coverageArea.zoomMax
-            });
+      EsriLeaflet.get(url, {}, L.Util.bind(function(error, attributions){
+        if(error){
+          if(console && console.warn){
+            console.warn('error getting attributions are you sure CORS is allowed in your browser and network? If not add `L.esri.get = L.esri.Request.get.JSONP;` to the top of your application code.');
           }
+          EsriLeaflet.Request.get.JSONP(url, {}, L.Util.bind(function(error, attributions){
+            if(attributions && !error) {
+              this._processAttributions(attributions);
+            }
+          }, this));
+          return;
+        } else {
+          this._processAttributions(attributions);
         }
 
-        this._attributions.sort(function(a, b){
-          return b.score - a.score;
-        });
+      }, this));
+    },
+    _processAttributions: function(attributions){
+      this._attributions = [];
 
-        this._updateMapAttribution();
-      }, this);
+      for (var c = 0; c < attributions.contributors.length; c++) {
+        var contributor = attributions.contributors[c];
+        for (var i = 0; i < contributor.coverageAreas.length; i++) {
+          var coverageArea = contributor.coverageAreas[i];
+          var southWest = new L.LatLng(coverageArea.bbox[0], coverageArea.bbox[1]);
+          var northEast = new L.LatLng(coverageArea.bbox[2], coverageArea.bbox[3]);
+          this._attributions.push({
+            attribution: contributor.attribution,
+            score: coverageArea.score,
+            bounds: new L.LatLngBounds(southWest, northEast),
+            minZoom: coverageArea.zoomMin,
+            maxZoom: coverageArea.zoomMax
+          });
+        }
+      }
+
+      this._attributions.sort(function(a, b){
+        return b.score - a.score;
+      });
+
+      this._updateMapAttribution();
     },
     _updateMapAttribution: function(){
       if(this._map && this._map.attributionControl && this._attributions){
