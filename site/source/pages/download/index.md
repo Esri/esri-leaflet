@@ -8,7 +8,7 @@ class: no-sidebar
 
 All builds of Esri Leaflet are available for download on [GitHub](https://github.com/Esri/esri-leaflet/releases/).
 
-<a href="https://github.com/Esri/esri-leaflet/releases/download/v1.0.0-rc.6/esri-leaflet-v1.0.0-rc.6.zip" class="btn">Current Release</a>
+<a href="https://github.com/Esri/esri-leaflet/releases/download/v1.0.0-rc.7/esri-leaflet-v1.0.0-rc.7.zip" class="btn">Current Release</a>
 <a href="https://github.com/Esri/esri-leaflet/releases/" class="btn">Past Releases</a>
 
 # npm
@@ -29,12 +29,13 @@ bower install esri-leaflet
 
 # CDN
 
-Esri Leaflet is currently hosted on Amazon Cloudfront to make it easily available. After the beta period it will be available on [jsDelivr](http://www.jsdelivr.com/).
+Esri Leaflet is hosted on [jsDelivr](http://www.jsdelivr.com/).
 
 #### Standard Build
 
 ```xml
-<script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.6/esri-leaflet.js"></script>
+<script src="http://cdn.jsdelivr.net/leaflet.esri/1.0.0-rc.7/esri-leaflet.js"></script>
+
 ```
 
 #### Other Builds
@@ -43,22 +44,22 @@ Esri Leaflet is also built into several smaller components and plugins for speci
 
 ```xml
 <!-- Core Build -->
-<script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.6/esri-leaflet-core.js"></script>
+<script src="http://cdn.jsdelivr.net/leaflet.esri/1.0.0-rc.7/esri-leaflet-core.js"></script>
 
 <!-- Basemaps Only Build -->
-<script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.6/esri-leaflet-basemaps.js"></script>
+<script src="http://cdn.jsdelivr.net/leaflet.esri/1.0.0-rc.7/esri-leaflet-basemaps.js"></script>
 
 <!-- Feature Layer Only Build -->
-<script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.6/esri-leaflet-feature-layer.js"></script>
+<script src="http://cdn.jsdelivr.net/leaflet.esri/1.0.0-rc.7/esri-leaflet-feature-layer.js"></script>
 
 <!-- Map Service Only Build -->
-<script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.6/esri-leaflet-map-service.js"></script>
+<script src="http://cdn.jsdelivr.net/leaflet.esri/1.0.0-rc.7/esri-leaflet-map-service.js"></script>
 
 <!-- Heatmap Feature Layer -->
-<script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-heatmap-feature-layer/1.0.0-rc.2/esri-leaflet-heatmap-feature-layer.js"></script>
+<script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-heatmap-feature-layer/1.0.0-rc.3/esri-leaflet-heatmap-feature-layer.js"></script>
 
 <!-- Clustered Feature Layer -->
-<script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-clustered-feature-layer/1.0.0-rc.2/esri-leaflet-clustered-feature-layer.js"></script>
+<script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-clustered-feature-layer/1.0.0-rc.4/esri-leaflet-clustered-feature-layer.js"></script>
 
 <!-- Geocoding Control -->
 <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/1.0.0-rc.4/esri-leaflet-geocoder.js"></script>
