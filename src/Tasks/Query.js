@@ -67,7 +67,8 @@ EsriLeaflet.Tasks.Query = EsriLeaflet.Tasks.Task.extend({
   },
 
   where: function(string){
-    this.params.where = string.replace(/"/g, "\'"); // jshint ignore:line
+    this.params.where = string;
+    // string.replace(/"/g, "\'"); // jshint ignore:line
     return this;
   },
 
@@ -97,14 +98,14 @@ EsriLeaflet.Tasks.Query = EsriLeaflet.Tasks.Task.extend({
       this.params.f = 'geojson';
 
       return this.request(function(error, response){
-        callback.call(context, error, response, response);
-      }, context);
+        callback.call(context, this._parseError(error), response, response);
+      }, this);
 
     // otherwise convert it in the callback then pass it on
     } else {
       return this.request(function(error, response){
-        callback.call(context, error, (response && EsriLeaflet.Util.responseToFeatureCollection(response)), response);
-      }, context);
+        callback.call(context, this._parseError(error), (response && EsriLeaflet.Util.responseToFeatureCollection(response)), response);
+      }, this);
     }
   },
 
@@ -150,6 +151,13 @@ EsriLeaflet.Tasks.Query = EsriLeaflet.Tasks.Task.extend({
     delete this.params.returnIdsOnly;
     delete this.params.returnExtentOnly;
     delete this.params.returnCountOnly;
+  },
+
+  _parseError: function(error){
+    if (error && error.code === 400){
+      error.moreInfo = 'one common cause of syntax errors when executing queries is encasing string values in double quotes instead of single quotes';
+      return error;
+    }
   },
 
   _setGeometry: function(geometry) {
