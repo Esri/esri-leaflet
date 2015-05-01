@@ -458,7 +458,7 @@ describe('L.esri.Layers.FeatureManager', function () {
     }]);
   });
 
-  it('should filter features with a where parameter', function(){
+  xit('should filter features with a where parameter', function(){
     server.respondWith('GET', 'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=Type%3D\'Active\'&outSr=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.6953125%2C%22ymin%22%3A45.521743896993634%2C%22xmax%22%3A-122.6513671875%2C%22ymax%22%3A45.55252525134013%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&f=json', JSON.stringify({
       fields: fields,
       features: [feature1],
@@ -471,7 +471,13 @@ describe('L.esri.Layers.FeatureManager', function () {
       objectIdFieldName: 'OBJECTID'
     }));
 
-    layer.setWhere('Type="Active"');
+    console.log(JSON.stringify({
+      fields: fields,
+      features: [feature1],
+      objectIdFieldName: 'OBJECTID'
+    }));
+
+    layer.setWhere("Type='Active'");
 
     layer.addTo(map);
     server.respond();
@@ -493,7 +499,7 @@ describe('L.esri.Layers.FeatureManager', function () {
 
     var callback = sinon.spy();
 
-    layer.setWhere('Type="Inactive"', callback);
+    layer.setWhere("Type='Inactive'", callback);
 
     server.respond();
 
@@ -646,7 +652,7 @@ describe('L.esri.Layers.FeatureManager', function () {
   });
 
   // this is now really difficult with fakeServer. Should use a simple request list.
-  xit('should wrap the addFeature method on the underlying service', function(done){
+  it('should wrap the addFeature method on the underlying service', function(done){
     layer._metadata = {
       objectIdField: 'OBJECTID'
     };

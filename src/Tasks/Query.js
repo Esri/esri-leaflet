@@ -98,14 +98,25 @@ EsriLeaflet.Tasks.Query = EsriLeaflet.Tasks.Task.extend({
       this.params.f = 'geojson';
 
       return this.request(function(error, response){
-        callback.call(context, this._parseError(error), response, response);
-      }, this);
+        console.log(error);
+        if (error && console && console.warn){
+          console.warn('one common cause of syntax errors when executing queries is encasing string values in double quotes instead of single quotes');
+        }
+        // this._trapSQLerrors(error);
+        callback.call(context, error, response, response);
+      }, context);
 
     // otherwise convert it in the callback then pass it on
     } else {
       return this.request(function(error, response){
-        callback.call(context, this._parseError(error), (response && EsriLeaflet.Util.responseToFeatureCollection(response)), response);
-      }, this);
+        //
+        console.log(error);
+        if (error && console && console.warn){
+          console.warn('one common cause of syntax errors when executing queries is encasing string values in double quotes instead of single quotes');
+        }
+        // this._trapSQLerrors(error);
+        callback.call(context, error, (response && EsriLeaflet.Util.responseToFeatureCollection(response)), response);
+      }, context);
     }
   },
 
@@ -147,17 +158,16 @@ EsriLeaflet.Tasks.Query = EsriLeaflet.Tasks.Task.extend({
     return this;
   },
 
+  _trapSQLerrors: function(error){
+    if (error && console && console.warn){
+      console.warn('one common cause of syntax errors when executing queries is encasing string values in double quotes instead of single quotes');
+    }
+  },
+
   _cleanParams: function(){
     delete this.params.returnIdsOnly;
     delete this.params.returnExtentOnly;
     delete this.params.returnCountOnly;
-  },
-
-  _parseError: function(error){
-    if (error && error.code === 400){
-      error.moreInfo = 'one common cause of syntax errors when executing queries is encasing string values in double quotes instead of single quotes';
-      return error;
-    }
   },
 
   _setGeometry: function(geometry) {

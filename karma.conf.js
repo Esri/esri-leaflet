@@ -42,8 +42,10 @@ module.exports = function(config) {
       // 'spec/Tasks/*Spec.js',
       // 'spec/Services/*Spec.js',
       // 'spec/Layers/**/*Spec.js',
-      'spec/**/*Spec.js'
-      // 'spec/Layers/ImageMapLayerSpec.js'
+      // 'spec/**/*Spec.js'
+      // 'spec/Layers/ImageMapLayerSpec.js',
+      // 'spec/**/QuerySpec.js',
+      'spec/**/FeatureManagerSpec.js'
     ],
 
     // list of files to exclude

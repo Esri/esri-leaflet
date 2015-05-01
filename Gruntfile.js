@@ -262,7 +262,8 @@ module.exports = function(grunt) {
       },
       run: {
         reporters: ['progress'],
-        browsers: browsers
+        browsers: browsers,
+        logLevel: 'VERBOSE'
       },
       coverage: {
         reporters: ['progress', 'coverage'],
