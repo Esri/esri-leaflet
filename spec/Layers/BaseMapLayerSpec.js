@@ -83,27 +83,4 @@ describe('L.esri.Layers.BasemapLayer', function () {
   it('should have a L.esri.Layers.basemapLayer alias', function(){
     expect(L.esri.Layers.basemapLayer('Topographic')).to.be.instanceof(L.esri.Layers.BasemapLayer);
   });
-
-  it('should dynamically update tile attribution', function(){
-    var spy = sinon.spy();
-    var layer = new L.esri.Layers.BasemapLayer('Topographic');
-    layer.on('attributionupdated', spy);
-    layer.addTo(map);
-    server.respond();
-
-    map.setView([37.75, -122.45], 17);
-
-    clock.tick(1000);
-
-    expect(spy).to.have.been.calledWith({
-      type: 'attributionupdated',
-      target: layer,
-      attribution: 'Esri'
-    });
-    expect(spy).to.have.been.calledWith({
-      type: 'attributionupdated',
-      target: layer,
-      attribution: 'City & County of San Francisco, Esri'
-    });
-  });
 });

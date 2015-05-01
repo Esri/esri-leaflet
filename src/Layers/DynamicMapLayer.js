@@ -6,7 +6,8 @@ EsriLeaflet.Layers.DynamicMapLayer = EsriLeaflet.Layers.RasterLayer.extend({
     layerDefs: false,
     timeOptions: false,
     format: 'png24',
-    transparent: true
+    transparent: true,
+    f: 'json'
   },
 
   initialize: function (url, options) {
@@ -14,7 +15,7 @@ EsriLeaflet.Layers.DynamicMapLayer = EsriLeaflet.Layers.RasterLayer.extend({
     options.url = EsriLeaflet.Util.cleanUrl(url);
     this._service = new EsriLeaflet.Services.MapService(options);
     this._service.on('authenticationrequired requeststart requestend requesterror requestsuccess', this._propagateEvent, this);
-    if (options.proxy){
+    if ((options.proxy || options.token) && options.f !== 'json'){
       options.f = 'json';
     }
     L.Util.setOptions(this, options);
