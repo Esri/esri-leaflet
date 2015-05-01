@@ -4,7 +4,7 @@
 
 #### Breaking Changes
 
-None
+* DynamicMapLayer will now request `json` by default to better expose the authentication process. If you are using ArcGIS Server 10.0 or have disabled CORS on your server you will need to add `useCors: false` to your options.
 
 #### Changes
 * refactor of `FeatureLayer.resetStyle()` behavior. https://github.com/Esri/esri-leaflet/issues/488
