@@ -252,7 +252,9 @@
       EsriLeaflet.get(url, {}, L.Util.bind(function(error, attributions){
         if(error){
           if(console && console.warn){
-            console.warn('error getting attributions are you sure CORS is allowed in your browser and network? If not add `L.esri.get = L.esri.Request.get.JSONP;` to the top of your application code.');
+            console.warn('Error getting attributions are you sure CORS is allowed in your browser and network? Falling back to requesting attributions with JSONP. To remove this warning add `L.esri.get = L.esri.Request.get.JSONP;` to the top of your application code.');
+            console.warn('');
+            console.warn('');
           }
           EsriLeaflet.Request.get.JSONP(url, {}, L.Util.bind(function(error, attributions){
             if(attributions && !error) {
