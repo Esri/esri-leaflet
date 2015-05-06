@@ -67,8 +67,8 @@ EsriLeaflet.Tasks.Query = EsriLeaflet.Tasks.Task.extend({
   },
 
   where: function(string){
+    // instead of converting double-quotes to single quotes, pass as is, and provide a more informative message if a 400 is encountered
     this.params.where = string;
-    // string.replace(/"/g, "\'"); // jshint ignore:line
     return this;
   },
 
@@ -98,25 +98,16 @@ EsriLeaflet.Tasks.Query = EsriLeaflet.Tasks.Task.extend({
       this.params.f = 'geojson';
 
       return this.request(function(error, response){
-        console.log(error);
-        if (error && console && console.warn){
-          console.warn('one common cause of syntax errors when executing queries is encasing string values in double quotes instead of single quotes');
-        }
-        // this._trapSQLerrors(error);
+        this._trapSQLerrors(error);
         callback.call(context, error, response, response);
-      }, context);
+      }, this);
 
     // otherwise convert it in the callback then pass it on
     } else {
       return this.request(function(error, response){
-        //
-        console.log(error);
-        if (error && console && console.warn){
-          console.warn('one common cause of syntax errors when executing queries is encasing string values in double quotes instead of single quotes');
-        }
-        // this._trapSQLerrors(error);
+        this._trapSQLerrors(error);
         callback.call(context, error, (response && EsriLeaflet.Util.responseToFeatureCollection(response)), response);
-      }, context);
+      }, this);
     }
   },
 
@@ -159,8 +150,10 @@ EsriLeaflet.Tasks.Query = EsriLeaflet.Tasks.Task.extend({
   },
 
   _trapSQLerrors: function(error){
-    if (error && console && console.warn){
-      console.warn('one common cause of syntax errors when executing queries is encasing string values in double quotes instead of single quotes');
+    if (error){
+      if (error.code === '400' && console && console.warn){
+        console.warn('one common syntax error in query requests is encasing string values in double quotes instead of single quotes');
+      }
     }
   },
 
