@@ -22,6 +22,7 @@ describe('L.esri.Layers.FeatureManager', function () {
   var MockLayer;
   var map = createMap();
   var oldRaf;
+  var requests;
 
   beforeEach(function(){
     xhr = sinon.useFakeXMLHttpRequest();
@@ -471,7 +472,7 @@ describe('L.esri.Layers.FeatureManager', function () {
       objectIdFieldName: 'OBJECTID'
     }));
 
-    layer.setWhere('Type="Active"');
+    layer.setWhere('Type=\'Active\'');
 
     layer.addTo(map);
     server.respond();
@@ -493,7 +494,7 @@ describe('L.esri.Layers.FeatureManager', function () {
 
     var callback = sinon.spy();
 
-    layer.setWhere('Type="Inactive"', callback);
+    layer.setWhere('Type=\'Inactive\'', callback);
 
     server.respond();
 
@@ -646,36 +647,36 @@ describe('L.esri.Layers.FeatureManager', function () {
   });
 
   // this is now really difficult with fakeServer. Should use a simple request list.
-  xit('should wrap the addFeature method on the underlying service', function(done){
-    layer._metadata = {
-      objectIdField: 'OBJECTID'
-    };
+  // xit('should wrap the addFeature method on the underlying service', function(done){
+  //   layer._metadata = {
+  //     objectIdField: 'OBJECTID'
+  //   };
 
-    layer.addFeature({
-      type: 'Feature',
-      geometry: {
-        type: 'Point',
-        coordinates: [45, -121]
-      },
-      properties: {
-        foo: 'bar'
-      }
-    }, function(error, response){
-      expect(response).to.deep.equal({
-        'objectId': 1,
-        'success': true
-      });
+  //   layer.addFeature({
+  //     type: 'Feature',
+  //     geometry: {
+  //       type: 'Point',
+  //       coordinates: [45, -121]
+  //     },
+  //     properties: {
+  //       foo: 'bar'
+  //     }
+  //   }, function(error, response){
+  //     expect(response).to.deep.equal({
+  //       'objectId': 1,
+  //       'success': true
+  //     });
 
-      done();
-    });
+  //     done();
+  //   });
 
-    requests[0].respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, JSON.stringify({
-      'addResults' : [{
-        'objectId' : 1,
-        'success' : true
-      }]
-    }));
-  });
+  //   requests[0].respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, JSON.stringify({
+  //     'addResults' : [{
+  //       'objectId' : 1,
+  //       'success' : true
+  //     }]
+  //   }));
+  // });
 
   it('should wrap the updateFeature method on the underlying service and refresh', function(done){
     server.respondWith('POST', 'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/updateFeatures', JSON.stringify({

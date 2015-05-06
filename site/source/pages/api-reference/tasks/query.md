@@ -78,7 +78,7 @@ layout: documentation.hbs
         <tr>
             <td><code>where({{{param 'String' 'where'}}})</code></td>
             <td><code>this</code></td>
-            <td>Adds a `where` paramter to the query.</td>
+            <td>Adds a `where` clause to the query.  String values should be denoted using single quotes ie: `query.where("FIELDNAME = 'field value'");` More info about valid SQL can be found <a href="http://resources.arcgis.com/en/help/main/10.2/index.html#/SQL_reference_for_query_expressions_used_in_ArcGIS/00s500000033000000/">here</a>.</td>
         </tr>
         <tr>
             <td><code>offset({{{param 'Integer' 'offset'}}})</code></td>
