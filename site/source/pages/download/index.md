@@ -44,16 +44,16 @@ Esri Leaflet is also built into several smaller components and plugins for speci
 
 ```xml
 <!-- Core Build -->
-<script src="http://cdn.jsdelivr.net/leaflet.esri/1.0.0-rc.7/esri-leaflet-core.js"></script>
+<script src="http://cdn.jsdelivr.net/leaflet.esri/1.0.0-rc.7/builds/core/esri-leaflet-core.js"></script>
 
 <!-- Basemaps Only Build -->
-<script src="http://cdn.jsdelivr.net/leaflet.esri/1.0.0-rc.7/esri-leaflet-basemaps.js"></script>
+<script src="http://cdn.jsdelivr.net/leaflet.esri/1.0.0-rc.7/builds/basemaps/esri-leaflet-basemaps.js"></script>
 
 <!-- Feature Layer Only Build -->
-<script src="http://cdn.jsdelivr.net/leaflet.esri/1.0.0-rc.7/esri-leaflet-feature-layer.js"></script>
+<script src="http://cdn.jsdelivr.net/leaflet.esri/1.0.0-rc.7/builds/feature-layer/esri-leaflet-feature-layer.js"></script>
 
 <!-- Map Service Only Build -->
-<script src="http://cdn.jsdelivr.net/leaflet.esri/1.0.0-rc.7/esri-leaflet-map-service.js"></script>
+<script src="http://cdn.jsdelivr.net/leaflet.esri/1.0.0-rc.7/builds/map-service/esri-leaflet-map-service.js"></script>
 
 <!-- Heatmap Feature Layer -->
 <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-heatmap-feature-layer/1.0.0-rc.3/esri-leaflet-heatmap-feature-layer.js"></script>
