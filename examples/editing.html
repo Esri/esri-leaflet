@@ -32,10 +32,9 @@
 
   <!-- leaflet -->
   <link rel="stylesheet" href="//cdn.jsdelivr.net/leaflet/0.7.3/leaflet.css" />
-  <script src="//cdn.jsdelivr.net/leaflet/0.7.3/leaflet.js"></script>
 
-  <!-- Load Esri Leaflet from CDN -->
-  <script src="//cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.6/esri-leaflet.js"></script>
+  <!-- require combined leaflet, esri leaflet and jsdelivr-rum -->
+  <script src="http://cdn.jsdelivr.net/g/leaflet@0.7.3,leaflet.esri,jsdelivr-rum"></script>
 
   <!-- Google Analytics -->
   <script>
@@ -205,10 +204,11 @@
   L.esri.basemapLayer('Streets').addTo(map);
 
   // add our feature layer to the map
-  var pedetrianDistricts = new L.esri.FeatureLayer('http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/PDX_Pedestrian_Districts/FeatureServer/0').addTo(map);
+  var pedestrianDistricts = new L.esri.FeatureLayer('http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/PDX_Pedestrian_Districts/FeatureServer/0').addTo(map);
 
   // variable to track the layer being edited
   var currentlyEditing;
+  var currentlyDeleting = false;
 
   // create a feature group for Leaflet Draw to hook into for delete functionality
   var drawnItems = new L.FeatureGroup();
@@ -219,8 +219,6 @@
 
   // start editing a given layer
   function startEditing(layer) {
-    document.getElementById("form").style.display = 'block';
-    document.getElementById("greeting").innerHTML = null;
     document.getElementById("PEDDISTRIC").value = layer.feature.properties.PEDDISTRIC;
     // read only
     document.getElementById("TRANPLANID").value = layer.feature.properties.TRANPLANID;
@@ -232,11 +230,9 @@
 
   // stop editing a given layer
   function stopEditing() {
-    // is a layer is being editing finish up editing it and disable editing on it.
+    // if a layer is being edited, finish up and disable editing on it afterward.
     if (currentlyEditing) {
       handleEdit(currentlyEditing);
-      document.getElementById("form").style.display = 'none';
-      document.getElementById("greeting").innerHTML = "Lets edit!";
       currentlyEditing.editing.disable();
     }
     currentlyEditing = undefined;
@@ -245,14 +241,25 @@
   function handleEdit(layer) {
     // convert the layer to GeoJSON and build a new updated GeoJSON object for that feature
     layer.feature.properties.PEDDISTRIC = document.getElementById("PEDDISTRIC").value;
-    pedetrianDistricts.updateFeature({
+    pedestrianDistricts.updateFeature({
       type: 'Feature',
       id: layer.feature.id,
       geometry: layer.toGeoJSON().geometry,
       properties: layer.feature.properties
     }, function(error, response) {
       console.log(error, response);
+      displayGreeting();
     });
+  }
+
+  function displayAttributes() {
+    document.getElementById("greeting").innerHTML = null;
+    document.getElementById("form").style.display = 'block';
+  }
+
+  function displayGreeting() {
+    document.getElementById("greeting").innerHTML = "Lets edit!";
+    document.getElementById("form").style.display = 'none';
   }
 
   // when the map is clicked, stop editing
@@ -260,25 +267,28 @@
     stopEditing();
   });
 
-  // when a pedestrian district is clicked, stop editing the current layer and edit the clicked layer
-  pedetrianDistricts.on('click', function(e) {
+  // when a pedestrian district is clicked, stop editing the current feature and edit the clicked feature
+  pedestrianDistricts.on('click', function(e) {
     stopEditing();
     startEditing(e.layer);
+    if (!currentlyDeleting) {
+      displayAttributes();
+    }
   });
 
-  // when pedetrian districts start loading (because of pan/zoom) stop editing
-  pedetrianDistricts.on('loading', function() {
+  // when pedestrian districts start loading (because of pan/zoom) stop editing
+  pedestrianDistricts.on('loading', function() {
     stopEditing();
   });
 
   // when new features are loaded clear our current guides and feature groups
   // then load the current features into the guides and feature group
-  pedetrianDistricts.on('load', function() {
+  pedestrianDistricts.on('load', function() {
     // wipe the current layers available for deltion and clear the current guide layers.
     drawnItems.clearLayers();
 
     // for each feature push the layer representing that feature into the guides and deletion group
-    pedetrianDistricts.eachFeature(function(layer) {
+    pedestrianDistricts.eachFeature(function(layer) {
       drawnItems.addLayer(layer);
     });
   });
@@ -306,28 +316,37 @@
   // add our drawing controls to the map
   map.addControl(drawControl);
 
-  // when we start using deletion or creation tools disable our custom editing
-  map.on('draw:deletestart draw:createstart', function() {
+  // when we start using creation tools disable our custom editing
+  map.on('draw:createstart', function() {
     disableEditing = true;
+  });
+
+  // when we start using deletion tools, hide attributes and disable custom editing
+  map.on('draw:deletestart', function() {
+    disableEditing = true;
+    currentlyDeleting = true;
   });
 
   // listen to the draw created event
   map.on('draw:created', function(e) {
     // add the feature as GeoJSON (feature will be converted to ArcGIS JSON internally)
-    pedetrianDistricts.addFeature(e.layer.toGeoJSON(), function(error, response) {
+    pedestrianDistricts.addFeature(e.layer.toGeoJSON(), function(error, response) {
       console.log(error, response);
     });
+    disableEditing = false;
   });
 
   // listen to the draw deleted event
   map.on('draw:deleted', function(e) {
     e.layers.eachLayer(function(layer) {
       var id = layer.feature.id;
-      pedetrianDistricts.deleteFeature(id, function(error, response) {
-        delete pedetrianDistricts._layers[id];
+      pedestrianDistricts.deleteFeature(id, function(error, response) {
+        delete pedestrianDistricts._layers[id];
         console.log(error, response);
       });
     });
+    disableEditing = false;
+    currentlyDeleting = false;
   });
 </script>
 </div>
@@ -342,7 +361,8 @@
   <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"//cdn.jsdelivr.net/leaflet/0.7.3/leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
   <span class="comment">&lt;!-- Load Esri Leaflet from CDN --&gt;</span>
-  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"//cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.6/esri-leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+  <span class="comment">&lt;!-- we encourage you to replace 'latest' with a hardcode version number (like '1.0.0-rc.7') in production applications --&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"//cdn.jsdelivr.net/leaflet.esri/latest/esri-leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
   <span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css">
     <span class="tag">body</span> <span class="rules">{<span class="rule"><span class="attribute">margin</span>:<span class="value"><span class="number">0</span></span></span>;<span class="rule"><span class="attribute">padding</span>:<span class="value"><span class="number">0</span></span></span>;<span class="rule">}</span></span>
@@ -393,10 +413,11 @@
   L.esri.basemapLayer(<span class="string">'Streets'</span>).addTo(map);
 
   <span class="comment">// add our feature layer to the map</span>
-  <span class="keyword">var</span> pedetrianDistricts = <span class="keyword">new</span> L.esri.FeatureLayer(<span class="string">'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/PDX_Pedestrian_Districts/FeatureServer/0'</span>).addTo(map);
+  <span class="keyword">var</span> pedestrianDistricts = <span class="keyword">new</span> L.esri.FeatureLayer(<span class="string">'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/PDX_Pedestrian_Districts/FeatureServer/0'</span>).addTo(map);
 
   <span class="comment">// variable to track the layer being edited</span>
   <span class="keyword">var</span> currentlyEditing;
+  <span class="keyword">var</span> currentlyDeleting = <span class="literal">false</span>;
 
   <span class="comment">// create a feature group for Leaflet Draw to hook into for delete functionality</span>
   <span class="keyword">var</span> drawnItems = <span class="keyword">new</span> L.FeatureGroup();
@@ -407,8 +428,6 @@
 
   <span class="comment">// start editing a given layer</span>
   <span class="function"><span class="keyword">function</span> <span class="title">startEditing</span><span class="params">(layer)</span> {</span>
-    document.getElementById(<span class="string">"form"</span>).style.display = <span class="string">'block'</span>;
-    document.getElementById(<span class="string">"greeting"</span>).innerHTML = <span class="literal">null</span>;
     document.getElementById(<span class="string">"PEDDISTRIC"</span>).value = layer.feature.properties.PEDDISTRIC;
     <span class="comment">// read only</span>
     document.getElementById(<span class="string">"TRANPLANID"</span>).value = layer.feature.properties.TRANPLANID;
@@ -420,11 +439,9 @@
 
   <span class="comment">// stop editing a given layer</span>
   <span class="function"><span class="keyword">function</span> <span class="title">stopEditing</span><span class="params">()</span> {</span>
-    <span class="comment">// is a layer is being editing finish up editing it and disable editing on it.</span>
+    <span class="comment">// if a layer is being edited, finish up and disable editing on it afterward.</span>
     <span class="keyword">if</span> (currentlyEditing) {
       handleEdit(currentlyEditing);
-      document.getElementById(<span class="string">"form"</span>).style.display = <span class="string">'none'</span>;
-      document.getElementById(<span class="string">"greeting"</span>).innerHTML = <span class="string">"Lets edit!"</span>;
       currentlyEditing.editing.disable();
     }
     currentlyEditing = <span class="literal">undefined</span>;
@@ -433,14 +450,25 @@
   <span class="function"><span class="keyword">function</span> <span class="title">handleEdit</span><span class="params">(layer)</span> {</span>
     <span class="comment">// convert the layer to GeoJSON and build a new updated GeoJSON object for that feature</span>
     layer.feature.properties.PEDDISTRIC = document.getElementById(<span class="string">"PEDDISTRIC"</span>).value;
-    pedetrianDistricts.updateFeature({
+    pedestrianDistricts.updateFeature({
       type: <span class="string">'Feature'</span>,
       id: layer.feature.id,
       geometry: layer.toGeoJSON().geometry,
       properties: layer.feature.properties
     }, <span class="function"><span class="keyword">function</span><span class="params">(error, response)</span> {</span>
       console.log(error, response);
+      displayGreeting();
     });
+  }
+
+  <span class="function"><span class="keyword">function</span> <span class="title">displayAttributes</span><span class="params">()</span> {</span>
+    document.getElementById(<span class="string">"greeting"</span>).innerHTML = <span class="literal">null</span>;
+    document.getElementById(<span class="string">"form"</span>).style.display = <span class="string">'block'</span>;
+  }
+
+  <span class="function"><span class="keyword">function</span> <span class="title">displayGreeting</span><span class="params">()</span> {</span>
+    document.getElementById(<span class="string">"greeting"</span>).innerHTML = <span class="string">"Lets edit!"</span>;
+    document.getElementById(<span class="string">"form"</span>).style.display = <span class="string">'none'</span>;
   }
 
   <span class="comment">// when the map is clicked, stop editing</span>
@@ -448,25 +476,28 @@
     stopEditing();
   });
 
-  <span class="comment">// when a pedestrian district is clicked, stop editing the current layer and edit the clicked layer</span>
-  pedetrianDistricts.on(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span><span class="params">(e)</span> {</span>
+  <span class="comment">// when a pedestrian district is clicked, stop editing the current feature and edit the clicked feature</span>
+  pedestrianDistricts.on(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span><span class="params">(e)</span> {</span>
     stopEditing();
     startEditing(e.layer);
+    <span class="keyword">if</span> (!currentlyDeleting) {
+      displayAttributes();
+    }
   });
 
-  <span class="comment">// when pedetrian districts start loading (because of pan/zoom) stop editing</span>
-  pedetrianDistricts.on(<span class="string">'loading'</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+  <span class="comment">// when pedestrian districts start loading (because of pan/zoom) stop editing</span>
+  pedestrianDistricts.on(<span class="string">'loading'</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
     stopEditing();
   });
 
   <span class="comment">// when new features are loaded clear our current guides and feature groups</span>
   <span class="comment">// then load the current features into the guides and feature group</span>
-  pedetrianDistricts.on(<span class="string">'load'</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+  pedestrianDistricts.on(<span class="string">'load'</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
     <span class="comment">// wipe the current layers available for deltion and clear the current guide layers.</span>
     drawnItems.clearLayers();
 
     <span class="comment">// for each feature push the layer representing that feature into the guides and deletion group</span>
-    pedetrianDistricts.eachFeature(<span class="function"><span class="keyword">function</span><span class="params">(layer)</span> {</span>
+    pedestrianDistricts.eachFeature(<span class="function"><span class="keyword">function</span><span class="params">(layer)</span> {</span>
       drawnItems.addLayer(layer);
     });
   });
@@ -494,28 +525,37 @@
   <span class="comment">// add our drawing controls to the map</span>
   map.addControl(drawControl);
 
-  <span class="comment">// when we start using deletion or creation tools disable our custom editing</span>
-  map.on(<span class="string">'draw:deletestart draw:createstart'</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+  <span class="comment">// when we start using creation tools disable our custom editing</span>
+  map.on(<span class="string">'draw:createstart'</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
     disableEditing = <span class="literal">true</span>;
+  });
+
+  <span class="comment">// when we start using deletion tools, hide attributes and disable custom editing</span>
+  map.on(<span class="string">'draw:deletestart'</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+    disableEditing = <span class="literal">true</span>;
+    currentlyDeleting = <span class="literal">true</span>;
   });
 
   <span class="comment">// listen to the draw created event</span>
   map.on(<span class="string">'draw:created'</span>, <span class="function"><span class="keyword">function</span><span class="params">(e)</span> {</span>
     <span class="comment">// add the feature as GeoJSON (feature will be converted to ArcGIS JSON internally)</span>
-    pedetrianDistricts.addFeature(e.layer.toGeoJSON(), <span class="function"><span class="keyword">function</span><span class="params">(error, response)</span> {</span>
+    pedestrianDistricts.addFeature(e.layer.toGeoJSON(), <span class="function"><span class="keyword">function</span><span class="params">(error, response)</span> {</span>
       console.log(error, response);
     });
+    disableEditing = <span class="literal">false</span>;
   });
 
   <span class="comment">// listen to the draw deleted event</span>
   map.on(<span class="string">'draw:deleted'</span>, <span class="function"><span class="keyword">function</span><span class="params">(e)</span> {</span>
     e.layers.eachLayer(<span class="function"><span class="keyword">function</span><span class="params">(layer)</span> {</span>
       <span class="keyword">var</span> id = layer.feature.id;
-      pedetrianDistricts.deleteFeature(id, <span class="function"><span class="keyword">function</span><span class="params">(error, response)</span> {</span>
-        <span class="keyword">delete</span> pedetrianDistricts._layers[id];
+      pedestrianDistricts.deleteFeature(id, <span class="function"><span class="keyword">function</span><span class="params">(error, response)</span> {</span>
+        <span class="keyword">delete</span> pedestrianDistricts._layers[id];
         console.log(error, response);
       });
     });
+    disableEditing = <span class="literal">false</span>;
+    currentlyDeleting = <span class="literal">false</span>;
   });
 </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
