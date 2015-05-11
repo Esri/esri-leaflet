@@ -65,30 +65,15 @@
   
 
 <aside class="sidebar">
-  <h5>L.esri</h5>
-  <nav>
-    <a href="../../../../esri-leaflet/api-reference/request.html">Request</a>
-    <a href="../../../../esri-leaflet/api-reference/util.html">Util</a>
-  </nav>
-
   <h5>L.esri.Layers</h5>
   <nav>
     <a href="../../../../esri-leaflet/api-reference/layers/basemap-layer.html">BasemapLayer</a>
+    <a href="../../../../esri-leaflet/api-reference/layers/feature-layer.html">FeatureLayer</a>
     <a href="../../../../esri-leaflet/api-reference/layers/tiled-map-layer.html">TiledMapLayer</a>
     <a href="../../../../esri-leaflet/api-reference/layers/dynamic-map-layer.html">DynamicMapLayer</a>
     <a href="../../../../esri-leaflet/api-reference/layers/image-map-layer.html">ImageMapLayer</a>
-    <!-- <a href="../../../../esri-leaflet/api-reference/layers/raster-layer.html">RasterLayer</a> -->
-    <a href="../../../../esri-leaflet/api-reference/layers/feature-layer.html">FeatureLayer</a>
     <a href="../../../../esri-leaflet/api-reference/layers/clustered-feature-layer.html">ClusteredFeatureLayer</a>
     <a href="../../../../esri-leaflet/api-reference/layers/heatmap-feature-layer.html">HeatmapFeatureLayer</a>
-  </nav>
-
-  <h5>L.esri.Services</h5>
-  <nav>
-    <a href="../../../../esri-leaflet/api-reference/services/feature-layer.html">FeatureLayer</a>
-    <a href="../../../../esri-leaflet/api-reference/services/map-service.html">MapService</a>
-    <a href="../../../../esri-leaflet/api-reference/services/image-service.html">ImageService</a>
-    <a href="../../../../esri-leaflet/api-reference/services/service.html">Service</a>
   </nav>
 
   <h5>L.esri.Tasks</h5>
@@ -102,7 +87,17 @@
 
   <h5>Misc.</h5>
   <nav>
+    <a href="../../../../esri-leaflet/api-reference/request.html">Request</a>
+    <a href="../../../../esri-leaflet/api-reference/util.html">Util</a>
     <a href="../../../../esri-leaflet/api-reference/events.html">Events</a>
+  </nav>
+
+  <h5>Base Classes</h5>
+  <nav>
+    <a href="../../../../esri-leaflet/api-reference/services/image-service.html">ImageService</a>
+    <a href="../../../../esri-leaflet/api-reference/services/feature-layer.html">FeatureLayer</a>
+    <a href="../../../../esri-leaflet/api-reference/services/map-service.html">MapService</a>
+    <a href="../../../../esri-leaflet/api-reference/services/service.html">Service</a>
   </nav>
 </aside>
 
@@ -155,12 +150,12 @@
         <tr>
             <td><code>onEachFeature(<nobr class="param"><span>&lt;<a href="http://geojson.org/geojson-spec.html#feature-objects">GeoJSON Feature</a>&gt;</span> <code>feature</code></nobr>, <nobr class="param"><span>&lt;<a href="http://leafletjs.com/reference.html#ilayer">ILayer</a>&gt;</span> <code>layer</code></nobr>)</code></td>
             <td><code>Function</code></td>
-            <td> </td>
+            <td>Provides an opportunity to introspect individual GeoJSON features in the layer.</td>
         </tr>
         <tr>
             <td><code>where</code></td>
             <td><code>String</code></td>
-            <td>A server side expression that will be evaluated to filter features. By default this will include all features in a service.</td>
+            <td>An optional expression to filter features server side. String values should be denoted using single quotes ie: <code>where: &quot;FIELDNAME = &#39;field value&#39;&quot;;</code> More information about valid SQL can be found <a href="http://resources.arcgis.com/en/help/main/10.2/index.html#/SQL_reference_for_query_expressions_used_in_ArcGIS/00s500000033000000/">here</a>.</td>
         </tr>
         <tr>
             <td><code>minZoom</code></td>
@@ -331,7 +326,7 @@
         <tr>
             <td><code>getFeature(<nobr class="param"><span>&lt;String or Integer&gt;</span> <code>undefined</code></nobr> id)</code></td>
             <td><code>Layer</code></td>
-            <td>Given the id of a Feature return the layer on the map that represents it. This will usually be a Leaflet vector layer like <a href="http://leafletjs.com/reference.html#polyline">Polygon</a> or <a href="http://leafletjs.com/reference.html#polyline">Polygon</a>, or a Leaflet <a href="http://leafletjs.com/reference.html#marker">Marker</a>.</td>
+            <td>Given the id of a Feature return the layer on the map that represents it. This will usually be a Leaflet vector layer like <a href="http://leafletjs.com/reference.html#polyline">Polyline</a> or <a href="http://leafletjs.com/reference.html#polygon">Polygon</a>, or a Leaflet <a href="http://leafletjs.com/reference.html#marker">Marker</a>.</td>
         </tr>
         <tr>
             <td><code>getWhere()</code></td>
