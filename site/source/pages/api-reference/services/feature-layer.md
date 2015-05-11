@@ -179,7 +179,7 @@ service.deleteFeature(2, function(error, response){
 });
 ```
 
-##### Querying Feautres
+##### Querying Features
 
 ```js
 var service = L.esri.Services.featureLayer({
