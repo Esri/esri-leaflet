@@ -180,12 +180,13 @@ layout: example.hbs
 
   // listen to the draw deleted event
   map.on('draw:deleted', function(e) {
+    var delArray = [];
     e.layers.eachLayer(function(layer) {
       var id = layer.feature.id;
-      pedestrianDistricts.deleteFeature(id, function(error, response) {
-        delete pedestrianDistricts._layers[id];
-        console.log(error, response);
-      });
+      delArray.push(id);
+    });
+    pedestrianDistricts.deleteFeatures(delArray, function(error, response) {
+      console.log(error, response);
     });
     disableEditing = false;
     currentlyDeleting = false;
