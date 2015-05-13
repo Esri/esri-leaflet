@@ -9,10 +9,10 @@ The goal of Esri Leaflet is **not** to replace the [ArcGIS API for JavaScript](h
 **Currently Esri Leaflet is in development and should be thought of as a beta or preview.**
 
 ### Demos
-There are [loads of demos](http://esri.github.io/esri-leaflet/examples/) showing many of the features of Esri Leaflet.
+We've written [loads of demos](http://esri.github.io/esri-leaflet/examples/) showing many of the features of Esri Leaflet.
 
 ### Example
-Here is a quick example to get you started. Just copy/paste into your own .html file and run.
+Here is a quick example to get you started. Just copy/paste into your own `.html` file and run.
 
 ![App](https://raw.github.com/Esri/esri-leaflet/master/esri-leaflet.png)
 
@@ -24,8 +24,8 @@ Here is a quick example to get you started. Just copy/paste into your own .html 
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
     <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
 
-    <!-- Load Esri Leaflet from CDN -->
-    <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.6/esri-leaflet.js"></script>
+    <!-- we encourage you to replace 'latest' with a hardcode version number (like '1.0.0-rc.7') in production applications -->
+    <script src="//cdn.jsdelivr.net/leaflet.esri/latest/esri-leaflet.js"></script>
 
     <style>
       html, body,  #map {
@@ -65,6 +65,14 @@ A full [API Reference](http://esri.github.io/esri-leaflet/api-reference/) and pl
 
 If you are interested in contributing to Esri Leaflet or seeing what is coming up next check out the [development roadmap](https://github.com/Esri/esri-leaflet/wiki/Roadmap).
 
+### Issues
+
+Find a bug or want to request a new feature?  Please let us know by submitting an [issue](https://github.com/Esri/esri-leaflet/issues).
+
+Please take a look at [previously logged issues](https://github.com/Esri/esri-leaflet/issues?labels=FAQ&milestone=&page=1&state=closed) that resolve common problems.
+
+You can also post issues on [GIS Stackexchange](http://gis.stackexchange.com/questions/ask?tags=esri-leaflet,leaflet) an/or the [Esri Leaflet place](https://geonet.esri.com/discussion/create.jspa?sr=pmenu&containerID=1841&containerType=700&tags=esri-leaflet,leaflet) on GeoNet.
+
 ### Frequently Asked Questions
 
 * [What exactly is Esri Leaflet?  Is it a replacement for Leaflet?](https://github.com/Esri/esri-leaflet/wiki/FAQ#what-is-esri-leaflet)
@@ -86,10 +94,6 @@ If you are interested in contributing to Esri Leaflet or seeing what is coming u
 * [What browsers does Esri Leaflet support?](https://github.com//Esri/esri-leaflet/wiki/FAQ#what-browsers-does-esri-leaflet-support)
 * [What versions of ArcGIS Server does Esri Leaflet support?](https://github.com//Esri/esri-leaflet/wiki/FAQ#what-versions-of-arcgis-server-does-esri-leaflet-support)
 
-Please take a look at [previous issues](https://github.com/Esri/esri-leaflet/issues?labels=FAQ&milestone=&page=1&state=closed) that resolve common problems.
-
-You can also ask questions on [GIS Stackexchange](http://gis.stackexchange.com/questions/ask?tags=esri-leaflet,leaflet) an/or the [Esri Leaflet place](https://geonet.esri.com/discussion/create.jspa?sr=pmenu&containerID=1841&containerType=700&tags=esri-leaflet,leaflet) on GeoNet.
-
 ### Projects Using Esri Leaflet
 
 * [Geotrigger Editor](https://github.com/Esri/geotrigger-editor)
@@ -106,7 +110,7 @@ In order to compile the API yourself and/or run the tests, make sure you have th
 2. `cd` into the `esri-leaflet` folder
 5. Install the dependencies with `npm install`
 5. run `grunt` from the command line. This will start the web server locally at [http://localhost:8001](http://localhost:8001) and start watching the source files and running linting and testing commands.
-6. Make your changes and create a [pull request](https://help.github.com/articles/creating-a-pull-request)
+6. Make your changes and create a [pull request](https://help.github.com/articles/creating-a-pull-request) if you'd like to contribute
 
 ### Dependencies
 
@@ -127,14 +131,6 @@ And constructed with the following guidelines:
 * Bug fixes and misc changes **bumps only the patch**
 
 For more information on SemVer, please visit <http://semver.org/>.
-
-### Issues
-
-Find a bug or want to request a new feature?  Please let us know by submitting an [issue](https://github.com/Esri/esri-leaflet/issues).
-
-Please take a look at [previous issues](https://github.com/Esri/esri-leaflet/issues?labels=FAQ&milestone=&page=1&state=closed) that resolve common problems.
-
-You can also post issues on [GIS Stackexchange](http://gis.stackexchange.com/questions/ask?tags=esri-leaflet,leaflet) an/or the [Esri Leaflet place](https://geonet.esri.com/discussion/create.jspa?sr=pmenu&containerID=1841&containerType=700&tags=esri-leaflet,leaflet) on GeoNet.
 
 ### Contributing
 
