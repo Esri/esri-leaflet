@@ -102,8 +102,8 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
       // polylines and polygons
       if (layer && layer.setLatLngs) {
         this._updateLayer(layer, geojson);
-        // to do: make sure appropriate style is set
-        // this.resetStyle();  ?
+        // update custom symbology for layer if necessary
+        this.resetStyle(geojson.id);
         return;
       }
 
