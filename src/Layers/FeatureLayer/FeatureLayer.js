@@ -17,10 +17,6 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
 
     options = L.setOptions(this, options);
 
-    // if (!options.style){
-    //   options.style =
-    // }
-
     this._layers = {};
     this._leafletIds = {};
     this._key = 'c'+(Math.random() * 1e9).toString(36).replace('.', '_');
