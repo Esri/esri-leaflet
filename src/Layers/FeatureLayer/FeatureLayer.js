@@ -21,6 +21,8 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
     //   options.style =
     // }
 
+    this._originalIcon = this.options.pointToLayer;
+
     this._layers = {};
     this._leafletIds = {};
     this._key = 'c'+(Math.random() * 1e9).toString(36).replace('.', '_');
@@ -106,16 +108,18 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
       // polylines and polygons
       if (layer && layer.setLatLngs) {
         this._updateLayer(layer, geojson);
-        // we need to make sure appropriate style is set
+        // to do: make sure appropriate style is set
+        // this.resetStyle();  ?
         return;
       }
 
-      // if it's a point
+      // points
       if (layer && layer.setLatLng) {
         this._updateLayer(layer, geojson);
-
-        // need a hook to ensure appropriate icon is set here
-        // layer.setIcon(appropriate icon)
+        // to do: identify hook need a hook to ensure appropriate icon is set here
+        var iconTest = this._originalIcon(geojson, L.latLng(geojson.geometry.coordinates[1], geojson.geometry.coordinates[0]));
+        var correctIcon = iconTest.options.icon;
+        layer.setIcon(correctIcon);
         return;
       }
 
