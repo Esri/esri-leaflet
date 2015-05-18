@@ -17,6 +17,10 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
 
     options = L.setOptions(this, options);
 
+    // if (!options.style){
+    //   options.style =
+    // }
+
     this._layers = {};
     this._leafletIds = {};
     this._key = 'c'+(Math.random() * 1e9).toString(36).replace('.', '_');
@@ -47,13 +51,21 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
     return L.GeoJSON.geometryToLayer(geojson, this.options.pointToLayer, L.GeoJSON.coordsToLatLng, this.options);
   },
 
-  _updateLayerGeometry: function(layer, geojson){
+  _updateLayer: function(layer, geojson){
     // convert the geojson coordinates into a Leaflet LatLng array/nested arrays
     // pass it to setLatLngs to update layer geometries
     var latlngs = [];
     var coordsToLatLng = this.options.coordsToLatLng || L.GeoJSON.coordsToLatLng;
 
+    // copy in new attributes, if present
+    if (geojson.properties) {
+      layer.feature.properties = geojson.properties;
+    }
+
     switch(geojson.geometry.type){
+      case 'Point':
+        // still need to figure out how to insert modified geometry appropriately
+        break
       case 'LineString':
         latlngs = L.GeoJSON.coordsToLatLngs(geojson.geometry.coordinates, 0, coordsToLatLng);
         layer.setLatLngs(latlngs);
@@ -74,7 +86,7 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
   },
 
   /**
-   * Feature Managment Methods
+   * Feature Management Methods
    */
 
   createLayers: function(features){
@@ -90,8 +102,19 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
         return;
       }
 
+      // polylines and polygons
       if (layer && layer.setLatLngs) {
-        this._updateLayerGeometry(layer, geojson);
+        this._updateLayer(layer, geojson);
+        // we need to make sure appropriate style is set
+        return;
+      }
+
+      // if it's a point
+      if (layer && layer.setLatLng) {
+        this._updateLayer(layer, geojson);
+
+        // need a hook to ensure appropriate icon is set here
+        // layer.setIcon(appropriate icon)
         return;
       }
 
