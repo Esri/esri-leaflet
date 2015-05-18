@@ -21,7 +21,14 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
     //   options.style =
     // }
 
-    this._originalIcon = this.options.pointToLayer;
+    if (this.options.pointToLayer) {
+      this._originalIcon = this.options.pointToLayer;
+    }
+    else {
+      this._originalIcon = function (geojson, latlng) {
+        return L.marker(latlng);
+      }
+    }
 
     this._layers = {};
     this._leafletIds = {};
