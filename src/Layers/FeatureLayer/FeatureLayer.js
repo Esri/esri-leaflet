@@ -110,9 +110,12 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
       // points
       if (layer && layer.setLatLng) {
         this._updateLayer(layer, geojson);
-        var iconTest = this.options.pointToLayer(geojson, L.latLng(geojson.geometry.coordinates[1], geojson.geometry.coordinates[0]));
-        var updatedIcon = iconTest.options.icon;
-        layer.setIcon(updatedIcon);
+        // update custom symbology for layer if necessary
+        if (this.options.pointToLayer){
+          var getCustomIcon = this.options.pointToLayer(geojson, L.latLng(geojson.geometry.coordinates[1], geojson.geometry.coordinates[0]));
+          var updatedIcon = getCustomIcon.options.icon;
+          layer.setIcon(updatedIcon);
+        }
         return;
       }
 
