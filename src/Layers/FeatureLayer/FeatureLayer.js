@@ -27,7 +27,7 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
     else {
       this._originalIcon = function (geojson, latlng) {
         return L.marker(latlng);
-      }
+      };
     }
 
     this._layers = {};
@@ -75,7 +75,7 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
       case 'Point':
         latlngs = L.GeoJSON.coordsToLatLng(geojson.geometry.coordinates);
         layer.setLatLng(latlngs);
-        break
+        break;
       case 'LineString':
         latlngs = L.GeoJSON.coordsToLatLngs(geojson.geometry.coordinates, 0, coordsToLatLng);
         layer.setLatLngs(latlngs);
