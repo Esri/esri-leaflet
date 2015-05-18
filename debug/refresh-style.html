@@ -73,7 +73,7 @@
   <div id="map"></div>
   <div id="info-pane" class="leaflet-bar">
     <label>
-    <button onclick='postEdits()'>update status attribute of objectid: 149478</button><br>
+    <button onclick='postEdits()'>update 'status' attribute of objectid: 149478</button><br>
     <button onclick='refresh()'>refresh feature layer</button>
     </label>
   </div>
@@ -102,7 +102,17 @@
     }).addTo(map);
 
     function postEdits () {
-      var updated = [{"geometry": { "x": -117.20879371400002, "y": 34.05838465599999 }, "attributes":{"OBJECTID":149478,"status":0 }}];
+      /*
+      original:
+      X: -117.20879371400002
+      Y: 34.05838465599999
+
+      freeway-ish
+      -117.2015
+      34.0635
+      */
+
+      var updated = [{"geometry": { "x": -117.20879371400002, "y": 34.05838465599999 }, "attributes":{"OBJECTID":149478,"status":bool }}];
 
       L.esri.post('http://sampleserver6.arcgisonline.com/arcgis/rest/services/RedlandsEmergencyVehicles/FeatureServer/0/updateFeatures', {
           features: updated,
@@ -112,7 +122,7 @@
           console.log(error);
         } else {
           console.log(response);
-          bool = 1;
+          bool = 1 - bool;
         }
       });
     }
