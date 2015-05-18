@@ -57,14 +57,15 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
     var latlngs = [];
     var coordsToLatLng = this.options.coordsToLatLng || L.GeoJSON.coordsToLatLng;
 
-    // copy in new attributes, if present
+    // copy new attributes, if present
     if (geojson.properties) {
       layer.feature.properties = geojson.properties;
     }
 
     switch(geojson.geometry.type){
       case 'Point':
-        // still need to figure out how to insert modified geometry appropriately
+        latlngs = L.GeoJSON.coordsToLatLng(geojson.geometry.coordinates);
+        layer.setLatLng(latlngs);
         break
       case 'LineString':
         latlngs = L.GeoJSON.coordsToLatLngs(geojson.geometry.coordinates, 0, coordsToLatLng);
