@@ -73,7 +73,11 @@
   <div id="map"></div>
   <div id="info-pane" class="leaflet-bar">
     <label>
-    <button onclick='postEdits()'>update 'status' attribute of objectid: 149478</button><br>
+    status '0' - blue icon<br>
+    status '1' - red icon<br><br>
+
+    <button onclick='postEdits()'>update 'status' attribute of objectid: 149478</button><br><br>
+    <div id='status-status'>current status of objectid: 149478 - ?</div><br>
     <button onclick='refresh()'>refresh feature layer</button>
     </label>
   </div>
@@ -123,6 +127,7 @@
         } else {
           console.log(response);
           bool = 1 - bool;
+          document.getElementById('status-status').innerHTML = 'current status of objectid: 149478 - ' + bool;
         }
       });
     }
