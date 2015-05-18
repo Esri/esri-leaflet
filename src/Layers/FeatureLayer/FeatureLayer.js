@@ -102,7 +102,7 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
       // polylines and polygons
       if (layer && layer.setLatLngs) {
         this._updateLayer(layer, geojson);
-        // update custom symbology for layer if necessary
+        // update custom symbology, if necessary
         this.resetStyle(geojson.id);
         return;
       }
@@ -110,7 +110,7 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
       // points
       if (layer && layer.setLatLng) {
         this._updateLayer(layer, geojson);
-        // update custom symbology for layer if necessary
+        // update custom symbology, if necessary
         if (this.options.pointToLayer){
           var getCustomIcon = this.options.pointToLayer(geojson, L.latLng(geojson.geometry.coordinates[1], geojson.geometry.coordinates[0]));
           var updatedIcon = getCustomIcon.options.icon;

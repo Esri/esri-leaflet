@@ -139,6 +139,12 @@
         var id = features[i].id;
         this._currentSnapshot.push(id);
         this._cache[key].push(id);
+        /*
+        should we refactor the code in FeatureManager.setWhere()
+        so that we can reuse it to make sure that we remove features
+        on the client that are removed from the service?
+        */
+
       }
 
       if(this.options.timeField){
@@ -176,7 +182,7 @@
       this.options.where = (where && where.length) ? where : '1=1';
 
       var oldSnapshot = [];
-      var newShapshot = [];
+      var newSnapshot = [];
       var pendingRequests = 0;
       var requestError = null;
       var requestCallback = L.Util.bind(function(error, featureCollection){
@@ -186,18 +192,18 @@
 
         if(featureCollection){
           for (var i = featureCollection.features.length - 1; i >= 0; i--) {
-            newShapshot.push(featureCollection.features[i].id);
+            newSnapshot.push(featureCollection.features[i].id);
           }
         }
 
         pendingRequests--;
 
         if(pendingRequests <= 0){
-          this._currentSnapshot = newShapshot;
+          this._currentSnapshot = newSnapshot;
           // schedule adding features until the next animation frame
           EsriLeaflet.Util.requestAnimationFrame(L.Util.bind(function(){
             this.removeLayers(oldSnapshot);
-            this.addLayers(newShapshot);
+            this.addLayers(newSnapshot);
             if(callback) {
               callback.call(context, requestError);
             }
