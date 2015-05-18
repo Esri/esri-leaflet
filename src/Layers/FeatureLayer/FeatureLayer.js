@@ -21,15 +21,6 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
     //   options.style =
     // }
 
-    if (this.options.pointToLayer) {
-      this._originalIcon = this.options.pointToLayer;
-    }
-    else {
-      this._originalIcon = function (geojson, latlng) {
-        return L.marker(latlng);
-      };
-    }
-
     this._layers = {};
     this._leafletIds = {};
     this._key = 'c'+(Math.random() * 1e9).toString(36).replace('.', '_');
@@ -123,10 +114,9 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
       // points
       if (layer && layer.setLatLng) {
         this._updateLayer(layer, geojson);
-        // to do: identify hook need a hook to ensure appropriate icon is set here
-        var iconTest = this._originalIcon(geojson, L.latLng(geojson.geometry.coordinates[1], geojson.geometry.coordinates[0]));
-        var correctIcon = iconTest.options.icon;
-        layer.setIcon(correctIcon);
+        var iconTest = this.options.pointToLayer(geojson, L.latLng(geojson.geometry.coordinates[1], geojson.geometry.coordinates[0]));
+        var updatedIcon = iconTest.options.icon;
+        layer.setIcon(updatedIcon);
         return;
       }
 
