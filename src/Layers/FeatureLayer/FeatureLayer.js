@@ -110,11 +110,25 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
       // points
       if (layer && layer.setLatLng) {
         this._updateLayer(layer, geojson);
-        // update custom symbology, if necessary
-        if (this.options.pointToLayer){
-          var getCustomIcon = this.options.pointToLayer(geojson, L.latLng(geojson.geometry.coordinates[1], geojson.geometry.coordinates[0]));
-          var updatedIcon = getCustomIcon.options.icon;
-          layer.setIcon(updatedIcon);
+        // L.marker check
+        if (layer && layer.setIcon) {
+          // update custom symbology, if necessary
+          if (this.options.pointToLayer){
+            var getIcon = this.options.pointToLayer(geojson, L.latLng(geojson.geometry.coordinates[1], geojson.geometry.coordinates[0]));
+            var updatedIcon = getIcon.options.icon;
+            layer.setIcon(updatedIcon);
+          }
+        }
+        // L.circleMarker check
+        if (layer && layer.setStyle) {
+          if (this.options.pointToLayer){
+            var getStyle = this.options.pointToLayer(geojson, L.latLng(geojson.geometry.coordinates[1], geojson.geometry.coordinates[0]));
+            var updatedStyle = getStyle.options;
+            this.setFeatureStyle(geojson.id, updatedStyle);
+          }
+          else {
+            this.resetStyle(geojson.id);
+          }
         }
         return;
       }
@@ -122,7 +136,18 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
       if(!layer){
         newLayer =  this.createNewLayer(geojson);
         newLayer.feature = geojson;
-        newLayer._originalStyle = this.options.style;
+
+        if (this.options.style) {
+          newLayer._originalStyle = this.options.style;
+        }
+
+        // check to see if a custom function determines L.circleMarker feature symbology
+        if (newLayer.setStyle) {
+          if (this.options.pointToLayer) {
+            newLayer._originalStyle = this.options.pointToLayer;
+          }
+        }
+
         newLayer._leaflet_id = this._key + '_' + geojson.id;
 
         this._leafletIds[newLayer._leaflet_id] = geojson.id;
