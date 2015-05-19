@@ -79,6 +79,7 @@ layout: example.hbs
   var direction = document.getElementById('direction');
 
   direction.addEventListener('change', function(){
-    stops.setWhere('direction="'+direction.value+'"');
+    // its only valid sql to encase string values in single quotes
+    stops.setWhere('direction=\'' + direction.value + '\'');
   });
 </script>
