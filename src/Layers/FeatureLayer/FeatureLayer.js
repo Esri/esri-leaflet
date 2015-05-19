@@ -104,7 +104,7 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
         }
 
         // circleMarker check
-        if (newLayer.setStyle) {
+        else if (newLayer.setStyle) {
           newLayer._originalStyle = newLayer.options;
         }
 
