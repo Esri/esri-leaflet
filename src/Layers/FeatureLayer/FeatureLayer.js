@@ -136,18 +136,7 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
       if(!layer){
         newLayer =  this.createNewLayer(geojson);
         newLayer.feature = geojson;
-
-        if (this.options.style) {
-          newLayer._originalStyle = this.options.style;
-        }
-
-        // check to see if a custom function determines L.circleMarker feature symbology
-        if (newLayer.setStyle) {
-          if (this.options.pointToLayer) {
-            newLayer._originalStyle = this.options.pointToLayer;
-          }
-        }
-
+        newLayer._originalStyle = this.options.style;
         newLayer._leaflet_id = this._key + '_' + geojson.id;
 
         this._leafletIds[newLayer._leaflet_id] = geojson.id;
