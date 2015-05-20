@@ -383,21 +383,20 @@
       return this._service.query();
     },
 
-    _getMetadata: function(callback, context){
+    _getMetadata: function(callback){
       if(this._metadata){
         var error;
-        callback(context, error, this._metadata);
+        callback(error, this._metadata);
       } else {
         this.metadata(L.Util.bind(function(error, response) {
           this._metadata = response;
-          callback(context, error, this._metadata);
+          callback(error, this._metadata);
         }, this));
       }
     },
 
     addFeature: function(feature, callback, context){
-      //still need to pass 'undefined' as a placeholder, not sure how to fix
-      this._getMetadata(L.Util.bind(function(undefined, error, metadata){
+      this._getMetadata(L.Util.bind(function(error, metadata){
         this._service.addFeature(feature, L.Util.bind(function(error, response){
           if(!error){
             // assign ID from result to appropriate objectid field from service metadata
