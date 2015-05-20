@@ -39,6 +39,30 @@ describe('L.esri.Layers.FeatureLayer', function () {
     }
   }];
 
+  var pointFeatures = [({
+        type: 'Feature',
+        id: 1,
+        geometry: {
+          type: 'Point',
+          coordinates: [-122, 45]
+        },
+        properties: {
+          time: new Date('January 1 2014').valueOf(),
+          type: 'good'
+        }
+      }),{
+    type: 'Feature',
+    id: 2,
+    geometry: {
+      type: 'Point',
+      coordinates: [-123, 46]
+    },
+    properties: {
+      time: new Date('Febuary 1 2014').valueOf(),
+      type: 'bad'
+    }
+  }];
+
   var multiPolygon = [({
       type : 'Feature',
       id: 1,
@@ -330,6 +354,49 @@ describe('L.esri.Layers.FeatureLayer', function () {
     }]);
 
     expect(layer.getFeature(3).options.color).to.equal('red');
+  });
+
+  it('should update symbology if a relevant attribute is updated', function(){
+    layer = L.esri.featureLayer('http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0', {
+      timeField: 'time',
+      pointToLayer: function(feature, latlng){
+        if (feature.properties.type === 'good') {
+          return L.circleMarker(latlng, {
+            color: 'purple'
+          });
+        }
+        else if (feature.properties.type === 'bad') {
+          return L.circleMarker(latlng, {
+            color: 'yellow'
+          });
+        }
+        else
+          return L.circleMarker(latlng, {
+            color: 'black'
+          });
+      }
+    }).addTo(map);
+
+    layer.createLayers(pointFeatures);
+
+    expect(layer.getFeature(1).options.color).to.equal('purple');
+    expect(layer.getFeature(2).options.color).to.equal('yellow');
+
+    var updatedFeature = {
+        type: 'Feature',
+        id: 1,
+        geometry: {
+          type: 'Point',
+          coordinates: [-122, 45]
+        },
+        properties: {
+          time: new Date('January 1 2014').valueOf(),
+          type: 'bad'
+        }
+      }
+    var bogusCoords = "2:6";
+    layer._addFeatures([updatedFeature], bogusCoords);
+    expect(layer.getFeature(1).options.color).to.equal('yellow');
   });
 
   it('should propagate events from individual features', function(){
