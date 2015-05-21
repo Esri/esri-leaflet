@@ -17,7 +17,7 @@ describe('L.esri.Layers.FeatureLayer', function () {
 
   var layer;
   var map = createMap();
-  var features = [({
+  var features = [{
         type: 'Feature',
         id: 1,
         geometry: {
@@ -25,9 +25,10 @@ describe('L.esri.Layers.FeatureLayer', function () {
           coordinates: [[-122, 45], [-121, 40]]
         },
         properties: {
-          time: new Date('January 1 2014').valueOf()
+          time: new Date('January 1 2014').valueOf(),
+          type: 'good'
         }
-      }),{
+      },{
     type: 'Feature',
     id: 2,
     geometry: {
@@ -35,7 +36,8 @@ describe('L.esri.Layers.FeatureLayer', function () {
       coordinates: [[-123, 46], [-120, 45]]
     },
     properties: {
-      time: new Date('Febuary 1 2014').valueOf()
+      time: new Date('Febuary 1 2014').valueOf(),
+      type: 'bad'
     }
   }];
 
@@ -356,7 +358,7 @@ describe('L.esri.Layers.FeatureLayer', function () {
     expect(layer.getFeature(3).options.color).to.equal('red');
   });
 
-  it('should update symbology if a relevant attribute is updated', function(){
+  it('should update L.CircleMarker symbology if a relevant attribute is updated', function(){
     layer = L.esri.featureLayer('http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0', {
       timeField: 'time',
       pointToLayer: function(feature, latlng){
@@ -397,6 +399,43 @@ describe('L.esri.Layers.FeatureLayer', function () {
     var bogusCoords = "2:6";
     layer._addFeatures([updatedFeature], bogusCoords);
     expect(layer.getFeature(1).options.color).to.equal('yellow');
+  });
+
+  it('should update polyline symbology if a relevant attribute is updated', function(){
+    layer = L.esri.featureLayer('http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0', {
+      timeField: 'time',
+      style: function(feature){
+        if (feature.properties.type === 'good') {
+          return { color: 'purple' };
+        }
+        else if (feature.properties.type === 'bad') {
+          return { color: 'yellow' };
+        }
+        else
+          return { color: 'black' };
+      }
+    }).addTo(map);
+
+    layer.createLayers(features);
+
+    expect(layer.getFeature(1).options.color).to.equal('purple');
+    expect(layer.getFeature(2).options.color).to.equal('yellow');
+
+    var updatedFeature = {
+        type: 'Feature',
+        id: 1,
+        geometry: {
+          type: 'LineString',
+          coordinates: [[-122, 45], [-121, 40]]
+        },
+        properties: {
+          time: new Date('January 1 2014').valueOf(),
+          type: 'the worst'
+        }
+      }
+    var bogusCoords = "2:6";
+    layer._addFeatures([updatedFeature], bogusCoords);
+    expect(layer.getFeature(1).options.color).to.equal('black');
   });
 
   it('should propagate events from individual features', function(){
