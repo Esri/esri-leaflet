@@ -33,19 +33,21 @@ layout: example.hbs
         opacity: 0.9
     }).addTo(map);
 
+    // make sure the dynamicMapLayer never draws on top of the graphics returned by find (otherwise popups won't be triggered)
+    govUnits.bringToBack();
+
     var searchText = document.getElementById('searchText');
 
     function goBtn() {
         govUnits.find().layers('18').text(searchText.value).fields('GNIS_NAME')
                 .run(function(error, featureCollection, response){
                     L.geoJson(featureCollection, {
-                        style: function () {
-                            return {color: 'blue'};
-                        },
+                        style: { color: 'red' },
                         onEachFeature: function (feature, layer) {
                             layer.bindPopup(feature.properties.GNIS_NAME);
                         }
                     }).addTo(map);
+
                 });
     }
 </script>
