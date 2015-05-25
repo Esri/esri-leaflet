@@ -1,3 +1,4 @@
+var map;
 var bgmap = L.map('background-map', {
     center: [68.41, 16.53],
     zoom: 10,

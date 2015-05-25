@@ -73,7 +73,9 @@ Option | Type | Default | Description
             <td><code>this</code></td>
             <td>
                 Uses the provided function to create a popup that will identify features whenever the map is clicked. Your function will be passed a <a href="http://geojson.org/geojson-spec.html#feature-collection-objects">GeoJSON FeatureCollection</a> of the features at the clicked location and should return the appropriate HTML. If you do not want to open the popup when there are no results, return <code>false</code>.
-<pre class="js"><code>dynamicMapLayer.bindPopup(function(err, featureCollection, response){
+<pre class="js"><code>
+dynamicMapLayer.bindPopup(
+  function(err, featureCollection, response){
     var count = featureCollection.features.length;
     return (count) ? count + ' features' : false;
 });</code></pre>
