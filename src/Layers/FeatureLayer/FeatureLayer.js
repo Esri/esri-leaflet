@@ -103,7 +103,6 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
         this._updateLayer(layer, geojson);
         // update custom symbology, if necessary
         this.resetStyle(geojson.id);
-        return;
       }
 
       // points
@@ -129,7 +128,7 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
             this.resetStyle(geojson.id);
           }
         }
-        return;
+        // return;
       }
 
       if(!layer){
