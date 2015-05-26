@@ -66,12 +66,12 @@ You can create a new empty feature service with a single layer on the [ArcGIS fo
         <tr>
             <td><code>onEachFeature({{{param 'GeoJSON Feature' 'feature' 'http://geojson.org/geojson-spec.html#feature-objects'}}}, {{{param 'ILayer' 'layer' 'http://leafletjs.com/reference.html#ilayer'}}})</code></td>
             <td><code>Function</code></td>
-            <td> </td>
+            <td>Provides an opportunity to introspect individual GeoJSON features in the layer.</td>
         </tr>
         <tr>
             <td><code>where</code></td>
             <td><code>String</code></td>
-            <td>A server side expression that will be evaluated to filter features. By default this will include all features in a service.</td>
+            <td>An optional expression to filter features server side. String values should be denoted using single quotes ie: `where: "FIELDNAME = 'field value'";` More information about valid SQL can be found <a href="http://resources.arcgis.com/en/help/main/10.2/index.html#/SQL_reference_for_query_expressions_used_in_ArcGIS/00s500000033000000/">here</a>.</td>
         </tr>
         <tr>
             <td><code>minZoom</code></td>
@@ -170,10 +170,10 @@ In addition to the events above, `L.esri.Layers.FeatureLayer` also fires the fol
             <td><code>setStyle({{{param 'PathOptions' 'style' 'http://leafletjs.com/reference.html#path-options'}}})</code><br><br><code>setStyle({{{param 'Function' 'style'}}})</code></td>
             <td><code>this</code></td>
             <td>Sets the given path options to each layer that has a <code>setStyle</code> method. Can also be a <code>Function</code> that will receive a <code>feature</code> argument and should return <a href="http://leafletjs.com/reference.html#path-options">Path Options</a>
-            <pre><code class="language-javascript">featureLayer.setStyle(1, {
+            <pre><code class="language-javascript">featureLayer.setStyle({
     color: white;
 })</code></pre>
-            <pre><code class="language-javascript">featureLayer.setStyle(1, function(feature){
+            <pre><code class="language-javascript">featureLayer.setStyle(function(feature){
     return {
     weight: feature.properties.pixelWidth
     };
@@ -196,7 +196,8 @@ In addition to the events above, `L.esri.Layers.FeatureLayer` also fires the fol
             <td>
               Defines a function that will return HTML to be bound to a popup on each feature.
 <pre class="js"><code>featureLayer.bindPopup(function(features){
-  return "Name: " + features.properties.NAME;
+  return
+    "Name: " + features.properties.NAME;
 });</code></pre>
             </td>
         </tr>
@@ -211,14 +212,15 @@ In addition to the events above, `L.esri.Layers.FeatureLayer` also fires the fol
             <td>
                 Calls the passed function against every feature. The function will be passed the layer that represents the feature.
 <pre class="js"><code>featureLayer.eachFeature(function(layer){
-  console.log(layer.feature.properties.NAME);
+  console.log(
+    layer.feature.properties.NAME);
 });</code></pre>
             </td>
         </tr>
         <tr>
             <td><code>getFeature({{{param 'String or Integer' id}}} id)</code></td>
             <td><code>Layer</code></td>
-            <td>Given the id of a Feature return the layer on the map that represents it. This will usually be a Leaflet vector layer like <a href="http://leafletjs.com/reference.html#polyline">Polygon</a> or <a href="http://leafletjs.com/reference.html#polyline">Polygon</a>, or a Leaflet <a href="http://leafletjs.com/reference.html#marker">Marker</a>.</td>
+            <td>Given the id of a Feature return the layer on the map that represents it. This will usually be a Leaflet vector layer like <a href="http://leafletjs.com/reference.html#polyline">Polyline</a> or <a href="http://leafletjs.com/reference.html#polygon">Polygon</a>, or a Leaflet <a href="http://leafletjs.com/reference.html#marker">Marker</a>.</td>
         </tr>
         <tr>
             <td><code>getWhere()</code></td>

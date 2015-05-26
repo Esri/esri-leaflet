@@ -37,13 +37,16 @@ module.exports = function(config) {
       'src/Tasks/IdentifyImage.js',
       'src/Tasks/Find.js',
       'src/Controls/Logo.js',
+      'spec/**/*Spec.js'
       // 'spec/UtilSpec.js',
       // 'spec/RequestSpec.js',
       // 'spec/Tasks/*Spec.js',
       // 'spec/Services/*Spec.js',
       // 'spec/Layers/**/*Spec.js',
-      'spec/**/*Spec.js'
-      // 'spec/Layers/ImageMapLayerSpec.js'
+
+      // 'spec/Layers/ImageMapLayerSpec.js',
+      // 'spec/**/QuerySpec.js',
+      // 'spec/**/FeatureManagerSpec.js'
     ],
 
     // list of files to exclude
