@@ -96,7 +96,6 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
 
       if(layer && !this._map.hasLayer(layer)){
         this._map.addLayer(layer);
-        return;
       }
 
       // polylines and polygons
@@ -136,7 +135,24 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
       if(!layer){
         newLayer =  this.createNewLayer(geojson);
         newLayer.feature = geojson;
-        newLayer._originalStyle = this.options.style;
+
+        if (this.options.style) {
+          newLayer._originalStyle = this.options.style;
+        }
+
+        // circleMarker check
+        else if (newLayer.setStyle) {
+          newLayer._originalStyle = newLayer.options;
+        }
+
+        newLayer._leaflet_id = this._key + '_' + geojson.id;
+
+        this._leafletIds[newLayer._leaflet_id] = geojson.id;
+
+        // bubble events from layers to this
+        // @TODO Leaflet 0.8
+        // newLayer.addEventParent(this);
+
         newLayer.on(EsriLeaflet.Layers.FeatureLayer.EVENTS, this._propagateEvent, this);
 
         // bind a popup if we have one

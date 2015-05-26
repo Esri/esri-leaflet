@@ -170,10 +170,10 @@ In addition to the events above, `L.esri.Layers.FeatureLayer` also fires the fol
             <td><code>setStyle({{{param 'PathOptions' 'style' 'http://leafletjs.com/reference.html#path-options'}}})</code><br><br><code>setStyle({{{param 'Function' 'style'}}})</code></td>
             <td><code>this</code></td>
             <td>Sets the given path options to each layer that has a <code>setStyle</code> method. Can also be a <code>Function</code> that will receive a <code>feature</code> argument and should return <a href="http://leafletjs.com/reference.html#path-options">Path Options</a>
-            <pre><code class="language-javascript">featureLayer.setStyle(1, {
+            <pre><code class="language-javascript">featureLayer.setStyle({
     color: white;
 })</code></pre>
-            <pre><code class="language-javascript">featureLayer.setStyle(1, function(feature){
+            <pre><code class="language-javascript">featureLayer.setStyle(function(feature){
     return {
     weight: feature.properties.pixelWidth
     };
@@ -196,7 +196,8 @@ In addition to the events above, `L.esri.Layers.FeatureLayer` also fires the fol
             <td>
               Defines a function that will return HTML to be bound to a popup on each feature.
 <pre class="js"><code>featureLayer.bindPopup(function(features){
-  return "Name: " + features.properties.NAME;
+  return
+    "Name: " + features.properties.NAME;
 });</code></pre>
             </td>
         </tr>
@@ -211,7 +212,8 @@ In addition to the events above, `L.esri.Layers.FeatureLayer` also fires the fol
             <td>
                 Calls the passed function against every feature. The function will be passed the layer that represents the feature.
 <pre class="js"><code>featureLayer.eachFeature(function(layer){
-  console.log(layer.feature.properties.NAME);
+  console.log(
+    layer.feature.properties.NAME);
 });</code></pre>
             </td>
         </tr>

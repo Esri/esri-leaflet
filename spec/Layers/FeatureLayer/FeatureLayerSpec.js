@@ -77,11 +77,25 @@ describe('L.esri.Layers.FeatureLayer', function () {
       }
   })];
 
+  var point = [({
+      type : 'Feature',
+      id: 1,
+      geometry: {
+        type: 'Point',
+        coordinates: [-95, 43]
+      },
+      properties: {
+        time: new Date('Febuary 1 2014').valueOf()
+      }
+  })];
+
   beforeEach(function(){
     layer = L.esri.featureLayer('http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0', {
       timeField: 'time',
       pointToLayer: function(feature, latlng){
-        return L.circleMarker(latlng);
+        return L.circleMarker(latlng, {
+          color: 'green'
+        });
       }
     }).addTo(map);
 
@@ -225,6 +239,20 @@ describe('L.esri.Layers.FeatureLayer', function () {
     expect(layer.getFeature(3)._popup.options.minWidth).to.equal(500);
   });
 
+  it('should style L.circleMarker features appropriately', function(){
+    layer = L.esri.featureLayer('http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0', {
+      timeField: 'time',
+      pointToLayer: function(feature, latlng){
+        return L.circleMarker(latlng, {
+          color: 'green'
+        });
+      }
+    }).addTo(map);
+
+    layer.createLayers(point);
+    expect(layer.getFeature(1).options.color).to.equal('green');
+  });
+
   it('should unbind popups on features', function(){
     layer.bindPopup(function(feature){
       return 'ID: ' + feature.id;
@@ -256,6 +284,8 @@ describe('L.esri.Layers.FeatureLayer', function () {
 
     layer.createLayers(multiPolygon);
 
+    expect(layer.getFeature(1).getLayers()[0].options.color).to.equal('black');
+
     layer.setFeatureStyle(1, {
       color: 'red'
     });
@@ -265,6 +295,27 @@ describe('L.esri.Layers.FeatureLayer', function () {
     layer.resetStyle(1);
 
     expect(layer.getFeature(1).getLayers()[0].options.color).to.equal('black');
+  });
+
+  it('should reset L.circleMarker style', function(){
+    layer = L.esri.featureLayer('http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0', {
+      pointToLayer: function(feature, latlng){
+        return L.circleMarker(latlng, {
+          color: 'green'
+        });
+      }
+    }).addTo(map);
+
+    layer.createLayers(point);
+    expect(layer.getFeature(1).options.color).to.equal('green');
+
+    layer.setStyle({
+      color: 'red'
+    });
+    expect(layer.getFeature(1).options.color).to.equal('red');
+
+    layer.resetStyle(1);
+    expect(layer.getFeature(1).options.color).to.equal('green');
   });
 
   it('should reset to default style on multi polygon features', function(){

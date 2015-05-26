@@ -104,25 +104,25 @@
           this.fire('drawlimitexceeded');
         }
 
-        //deincriment the request counter
-        this._activeRequests--;
-
         if(!error && featureCollection.features.length){
           // schedule adding features until the next animation frame
           EsriLeaflet.Util.requestAnimationFrame(L.Util.bind(function(){
             this._addFeatures(featureCollection.features, coords);
+
+            //deincriment the request counter now that we have created features
+            this._activeRequests--;
+
+            // if there are no more active requests fire a load event for this view
+            if(this._activeRequests <= 0){
+              this.fire('load', {
+                bounds: bounds
+              });
+            }
           }, this));
         }
 
         if(callback){
           callback.call(this, error, featureCollection);
-        }
-
-        // if there are no more active requests fire a load event for this view
-        if(this._activeRequests <= 0){
-          this.fire('load', {
-            bounds: bounds
-          });
         }
       }, this);
     },
@@ -389,21 +389,20 @@
       return this._service.query();
     },
 
-    _getMetadata: function(callback, context){
+    _getMetadata: function(callback){
       if(this._metadata){
         var error;
-        callback(context, error, this._metadata);
+        callback(error, this._metadata);
       } else {
         this.metadata(L.Util.bind(function(error, response) {
           this._metadata = response;
-          callback(context, error, this._metadata);
+          callback(error, this._metadata);
         }, this));
       }
     },
 
     addFeature: function(feature, callback, context){
-      //still need to pass 'undefined' as a placeholder, not sure how to fix
-      this._getMetadata(L.Util.bind(function(undefined, error, metadata){
+      this._getMetadata(L.Util.bind(function(error, metadata){
         this._service.addFeature(feature, L.Util.bind(function(error, response){
           if(!error){
             // assign ID from result to appropriate objectid field from service metadata
