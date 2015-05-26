@@ -87,12 +87,10 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
 
       if(layer && !this._map.hasLayer(layer)){
         this._map.addLayer(layer);
-        return;
       }
 
       if (layer && layer.setLatLngs) {
         this._updateLayerGeometry(layer, geojson);
-        return;
       }
 
       if(!layer){
