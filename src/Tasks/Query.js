@@ -151,8 +151,8 @@ EsriLeaflet.Tasks.Query = EsriLeaflet.Tasks.Task.extend({
 
   _trapSQLerrors: function(error){
     if (error){
-      if (error.code === '400' && console && console.warn){
-        console.warn('one common syntax error in query requests is encasing string values in double quotes instead of single quotes');
+      if (error.code === '400'){
+        EsriLeaflet.Util.warn('one common syntax error in query requests is encasing string values in double quotes instead of single quotes');
       }
     }
   },
@@ -215,9 +215,7 @@ EsriLeaflet.Tasks.Query = EsriLeaflet.Tasks.Task.extend({
 
     // warn the user if we havn't found a
     /* global console */
-    if(console && console.warn) {
-      console.warn('invalid geometry passed to spatial query. Should be an L.LatLng, L.LatLngBounds or L.Marker or a GeoJSON Point Line or Polygon object');
-    }
+    EsriLeaflet.Util.warn('invalid geometry passed to spatial query. Should be an L.LatLng, L.LatLngBounds or L.Marker or a GeoJSON Point Line or Polygon object');
 
     return;
   }

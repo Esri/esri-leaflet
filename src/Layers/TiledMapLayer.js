@@ -1,4 +1,9 @@
 EsriLeaflet.Layers.TiledMapLayer = L.TileLayer.extend({
+  options: {
+    zoomOffsetAllowance: 0.1,
+    correctZoomLevels: true
+  },
+
   statics: {
     MercatorZoomLevels: {
       '0':156543.03392799999,
@@ -27,6 +32,7 @@ EsriLeaflet.Layers.TiledMapLayer = L.TileLayer.extend({
       '23':0.0186613838529763
     }
   },
+
   initialize: function(url, options){
     options = options || {};
     options.url = EsriLeaflet.Util.cleanUrl(url);
@@ -55,30 +61,38 @@ EsriLeaflet.Layers.TiledMapLayer = L.TileLayer.extend({
   getTileUrl: function (tilePoint) {
     return L.Util.template(this.tileUrl, L.extend({
       s: this._getSubdomain(tilePoint),
-      z: this._lodMapper[tilePoint.z],
+      z: this._lodMap[tilePoint.z] || tilePoint.z, // try lod map first, then just defualt to zoom level
       x: tilePoint.x,
       y: tilePoint.y
     }, this.options));
   },
 
   onAdd: function(map){
-    if (!this._lodMapper) {
-      this._lodMapper = {};
-      this.metadata(function(error, metadata){
-        //create the zoom level data
-        var arcgisLODs = metadata.tileInfo.lods;
-        var correctResolutions = EsriLeaflet.Layers.TiledMapLayer.MercatorZoomLevels;
+    if (!this._lodMap) {
+      this._lodMap = {}; // make sure we always have an lod map even if its empty
+      this.metadata(function(error, metadata) {
+        if(!error && this.options.correctZoomLevels) {
+          var sr = metadata.spatialReference.latestWkid || metadata.spatialReference.wkid;
 
-        for(var i = 0; i < arcgisLODs.length; i++) {
-            var arcgisLOD = arcgisLODs[i];
-            for(var ci in correctResolutions) {
+          if (sr === 102100 || sr === 3857) {
+            //create the zoom level data
+            var arcgisLODs = metadata.tileInfo.lods;
+            var correctResolutions = EsriLeaflet.Layers.TiledMapLayer.MercatorZoomLevels;
+
+            for(var i = 0; i < arcgisLODs.length; i++) {
+              var arcgisLOD = arcgisLODs[i];
+              for(var ci in correctResolutions) {
                 var correctRes = correctResolutions[ci];
 
-                if(this._withinPercentage(arcgisLOD.resolution, correctRes, 0.1)) {
-                    this._lodMapper[ci] = arcgisLOD.level;
-                    break;
+                if(this._withinPercentage(arcgisLOD.resolution, correctRes, this.options.zoomOffsetAllowance)) {
+                  this._lodMap[ci] = arcgisLOD.level;
+                  break;
                 }
+              }
             }
+          } else {
+            EsriLeaflet.Util.warn('L.esri.TiledMapLayer is using a non-mercator spatial reference. Support may be available through Proj4Leaflet http://esri.github.io/esri-leaflet/examples/non-mercator-projection.html');
+          }
         }
 
         L.TileLayer.prototype.onAdd.call(this, map);
