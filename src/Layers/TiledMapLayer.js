@@ -68,10 +68,10 @@ EsriLeaflet.Layers.TiledMapLayer = L.TileLayer.extend({
   },
 
   onAdd: function(map){
-    if (!this._lodMap) {
+    if (!this._lodMap && this.options.correctZoomLevels) {
       this._lodMap = {}; // make sure we always have an lod map even if its empty
       this.metadata(function(error, metadata) {
-        if(!error && this.options.correctZoomLevels) {
+        if(!error) {
           var sr = metadata.spatialReference.latestWkid || metadata.spatialReference.wkid;
 
           if (sr === 102100 || sr === 3857) {
