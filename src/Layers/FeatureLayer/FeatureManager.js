@@ -277,6 +277,14 @@
         var bounds = this._cellCoordsToBounds(coords);
         this._requestFeatures(bounds, key);
       }
+
+      if(this.redraw){
+        this.once('load', function(){
+          this.eachFeature(function(layer){
+            this._redraw(layer.feature.id);
+          }, this);
+        }, this);
+      }
     },
 
     _filterExistingFeatures: function (oldFrom, oldTo, newFrom, newTo) {
@@ -426,6 +434,7 @@
           this.removeLayers([feature.id], true);
           this.createLayers([feature]);
         }
+
         if(callback){
           callback.call(context, error, response);
         }

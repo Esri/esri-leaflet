@@ -69,9 +69,11 @@
     status '0' - red circle<br>
     status '1' - green circle<br><br>
 
-    <button onclick='postEdits()'>update 'status' attribute of objectid: 149478</button><br><br>
-    <div id='status-status'>current status of objectid: 150689 - ?</div><br>
-    <button onclick='refresh()'>refresh feature layer</button>
+    <button onclick='postEdits()'>update 'status' attribute of objectid: 151496</button><br><br>
+    <div id='status-status'>current status of objectid: 151496 - ?</div><br>
+    <button onclick='refresh()'>refresh</button>
+    <button onclick='redraw()'>redraw</button>
+
     </label>
   </div>
   <script>
@@ -82,6 +84,7 @@
 
     var fl = L.esri.featureLayer('http://sampleserver6.arcgisonline.com/arcgis/rest/services/RedlandsEmergencyVehicles/FeatureServer/0', {
       pointToLayer: function (geojson, latlng) {
+        console.log(geojson);
         if (geojson.properties.status === 0){
             return L.circleMarker(latlng, {
               color: 'red',
@@ -101,28 +104,15 @@
       }
     }).addTo(map);
 
-    function postEdits () {
-      /*
-      original:
-      X: -117.20879371400002
-      Y: 34.05838465599999
+    function postEdits(){
+      var featureToUpdate = fl.getFeature(151496).feature;
 
-      freeway-ish
-      -117.2015
-      34.0635
-      */
-
-      /*
-      to do:
-      why aren't deleted features removed?
-      */
-
-      var updated = [{"geometry": { "x": -117.2015, "y": 34.0635 }, "attributes":{"OBJECTID":150689,"status":bool }}];
+      featureToUpdate.properties.status = !featureToUpdate.properties.status + 0
 
       L.esri.post('http://sampleserver6.arcgisonline.com/arcgis/rest/services/RedlandsEmergencyVehicles/FeatureServer/0/updateFeatures', {
-          features: updated,
-          f: 'json'
-        }, function(error, response){
+        features: [L.esri.Util.geojsonToArcGIS(featureToUpdate)],
+        f: 'json'
+      }, function(error, response){
         if(error){
           console.log(error);
         } else {
@@ -135,6 +125,12 @@
 
     function refresh () {
       fl.refresh();
+    }
+
+    function redraw () {
+      fl.eachFeature(function(layer){
+        fl.redraw(layer.feature.id);
+      });
     }
   </script>
 

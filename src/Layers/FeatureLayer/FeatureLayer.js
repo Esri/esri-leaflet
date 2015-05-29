@@ -98,38 +98,11 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
         this._map.addLayer(layer);
       }
 
-      // polylines and polygons
-      if (layer && layer.setLatLngs) {
+      // update geomerty if neccessary
+      if (layer && (layer.setLatLngs || layer.setLatLng)) {
         this._updateLayer(layer, geojson);
-        // update custom symbology, if necessary
-        this.resetStyle(geojson.id);
       }
 
-      // points
-      if (layer && layer.setLatLng) {
-        this._updateLayer(layer, geojson);
-        // L.marker check
-        if (layer && layer.setIcon) {
-          // update custom symbology, if necessary
-          if (this.options.pointToLayer){
-            var getIcon = this.options.pointToLayer(geojson, L.latLng(geojson.geometry.coordinates[1], geojson.geometry.coordinates[0]));
-            var updatedIcon = getIcon.options.icon;
-            layer.setIcon(updatedIcon);
-          }
-        }
-        // L.circleMarker check
-        if (layer && layer.setStyle) {
-          if (this.options.pointToLayer){
-            var getStyle = this.options.pointToLayer(geojson, L.latLng(geojson.geometry.coordinates[1], geojson.geometry.coordinates[0]));
-            var updatedStyle = getStyle.options;
-            this.setFeatureStyle(geojson.id, updatedStyle);
-          }
-          else {
-            this.resetStyle(geojson.id);
-          }
-        }
-        // return;
-      }
 
       if(!layer){
         newLayer =  this.createNewLayer(geojson);
@@ -340,6 +313,40 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
 
   getFeature: function (id) {
     return this._layers[id];
+  },
+
+  redraw: function (id) {
+    if (id) {
+      this._redraw(id);
+    }
+    return this;
+  },
+
+  _redraw: function(id) {
+    var layer = this._layers[id];
+    var geojson = layer.feature;
+
+    // if this looks like a marker
+    if (layer && layer.setIcon && this.options.pointToLayer) {
+      // update custom symbology, if necessary
+      if (this.options.pointToLayer){
+        var getIcon = this.options.pointToLayer(geojson, L.latLng(geojson.geometry.coordinates[1], geojson.geometry.coordinates[0]));
+        var updatedIcon = getIcon.options.icon;
+        layer.setIcon(updatedIcon);
+      }
+    }
+
+    // looks like a vector marker (circleMarker)
+    if (layer && layer.setStyle && this.options.pointToLayer) {
+      var getStyle = this.options.pointToLayer(geojson, L.latLng(geojson.geometry.coordinates[1], geojson.geometry.coordinates[0]));
+      var updatedStyle = getStyle.options;
+      this.setFeatureStyle(geojson.id, updatedStyle);
+    }
+
+    // looks like a path (polygon/polyline)
+    if(layer && layer.setStyle && this.options.style) {
+      this.resetStyle(geojson.id);
+    }
   },
 
   // from https://github.com/Leaflet/Leaflet/blob/v0.7.2/src/layer/FeatureGroup.js
