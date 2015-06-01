@@ -371,28 +371,6 @@ module.exports = function(grunt) {
       src: ['**']
     },
 
-    s3: {
-      options: {
-        key: '<%= aws.key %>',
-        secret: '<%= aws.secret %>',
-        bucket: '<%= aws.bucket %>',
-        access: 'public-read',
-        headers: {
-          // 1 Year cache policy (1000 * 60 * 60 * 24 * 365)
-          'Cache-Control': 'max-age=630720000, public',
-          'Expires': new Date(Date.now() + 63072000000).toUTCString()
-        }
-      },
-      upload: {
-        upload: [
-          {
-            src: 'dist/**/*',
-            dest: 'esri-leaflet/<%= pkg.version %>/'
-          }
-        ]
-      }
-    },
-
     releaseable: {
       release: {
         options: {
@@ -416,7 +394,7 @@ module.exports = function(grunt) {
   grunt.registerTask('build', ['jshint', 'karma:coverage', 'concat', 'uglify']);
   grunt.registerTask('test', ['jshint', 'karma:run']);
   grunt.registerTask('prepublish', ['concat', 'uglify']);
-  grunt.registerTask('release', ['releaseable', 's3']);
+  grunt.registerTask('release', ['releaseable']);
   grunt.registerTask('test:sauce', ['karma:sauce']);
 
   // Documentation Site Tasks
