@@ -17,7 +17,7 @@ describe('L.esri.Layers.FeatureLayer', function () {
 
   var layer;
   var map = createMap();
-  var features = [({
+  var features = [{
         type: 'Feature',
         id: 1,
         geometry: {
@@ -25,9 +25,10 @@ describe('L.esri.Layers.FeatureLayer', function () {
           coordinates: [[-122, 45], [-121, 40]]
         },
         properties: {
-          time: new Date('January 1 2014').valueOf()
+          time: new Date('January 1 2014').valueOf(),
+          type: 'good'
         }
-      }),{
+      },{
     type: 'Feature',
     id: 2,
     geometry: {
@@ -35,7 +36,32 @@ describe('L.esri.Layers.FeatureLayer', function () {
       coordinates: [[-123, 46], [-120, 45]]
     },
     properties: {
-      time: new Date('Febuary 1 2014').valueOf()
+      time: new Date('Febuary 1 2014').valueOf(),
+      type: 'bad'
+    }
+  }];
+
+  var pointFeatures = [({
+        type: 'Feature',
+        id: 1,
+        geometry: {
+          type: 'Point',
+          coordinates: [-122, 45]
+        },
+        properties: {
+          time: new Date('January 1 2014').valueOf(),
+          type: 'good'
+        }
+      }),{
+    type: 'Feature',
+    id: 2,
+    geometry: {
+      type: 'Point',
+      coordinates: [-123, 46]
+    },
+    properties: {
+      time: new Date('Febuary 1 2014').valueOf(),
+      type: 'bad'
     }
   }];
 

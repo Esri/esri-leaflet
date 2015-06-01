@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+  <html>
+  <head>
+    <meta charset=utf-8 />
+    <title>refresh point icons</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+
+    <!-- Load Leaflet from CDN-->
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+
+    <!-- Load Esri Leaflet from source-->
+    <script src="../src/EsriLeaflet.js"></script>
+    <script src="../src/Request.js"></script>
+    <script src="../src/Util.js"></script>
+    <script src="../src/Controls/Logo.js"></script>
+
+    <script src="../src/Services/Service.js"></script>
+    <script src="../src/Services/FeatureLayer.js"></script>
+    <script src="../src/Services/ImageService.js"></script>
+    <script src="../src/Services/MapService.js"></script>
+
+    <script src="../src/Layers/FeatureLayer/FeatureGrid.js"></script>
+    <script src="../src/Layers/FeatureLayer/FeatureManager.js"></script>
+    <script src="../src/Layers/FeatureLayer/FeatureLayer.js"></script>
+
+    <script src="../src/Layers/RasterLayer.js"></script>
+    <script src="../src/Layers/ImageMapLayer.js"></script>
+    <script src="../src/Layers/TiledMapLayer.js"></script>
+    <script src="../src/Layers/BasemapLayer.js"></script>
+    <script src="../src/Layers/DynamicMapLayer.js"></script>
+
+    <script src="../src/Tasks/Task.js"></script>
+    <script src="../src/Tasks/Find.js"></script>
+    <script src="../src/Tasks/Identify.js"></script>
+    <script src="../src/Tasks/IdentifyFeatures.js"></script>
+    <script src="../src/Tasks/IdentifyImage.js"></script>
+    <script src="../src/Tasks/Query.js"></script>
+
+    <style>
+      body {
+        margin:0;
+        padding:0;
+      }
+
+      #map {
+        position: absolute;
+        top:0;
+        bottom:0;
+        right:0;left:0;
+      }
+
+      #info-pane {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        z-index: 10;
+        padding: 1em;
+        background: white;
+      }
+      .red-div-icon {
+        background: red;
+        border: 1px solid #666;
+      }
+      .blue-div-icon {
+        background: blue;
+        border: 1px solid #666;
+      }
+    </style>
+  </head>
+  <body>
+
+  <div id="map"></div>
+  <div id="info-pane" class="leaflet-bar">
+    <label>
+    status '0' - blue icon<br>
+    status '1' - red icon<br><br>
+
+    <button onclick='postEdits()'>update 'status' attribute of objectid: 151496</button><br><br>
+    <div id='status-status'>current status of objectid: 151496 - ?</div><br>
+    <button onclick='refresh()'>refresh feature layer</button>
+    </label>
+  </div>
+  <script>
+    var bool = 0;
+
+    var map = L.map('map').setView([34.051, -117.199], 14);
+    L.esri.basemapLayer('Topographic').addTo(map);
+
+    var activeIcon = L.divIcon({className: 'blue-div-icon'});
+    var inactiveIcon = L.divIcon({className: 'red-div-icon'});
+
+    var fl = L.esri.featureLayer('http://sampleserver6.arcgisonline.com/arcgis/rest/services/RedlandsEmergencyVehicles/FeatureServer/0', {
+      pointToLayer: function (geojson, latlng) {
+        if (geojson.properties.status === 0){
+            return L.marker(latlng, {
+            icon: activeIcon
+          });
+        }
+          else {
+            return L.marker(latlng, {
+            icon: inactiveIcon
+          });
+        }
+      }
+    }).addTo(map);
+
+    function postEdits(){
+      var featureToUpdate = fl.getFeature(151496).feature;
+
+      featureToUpdate.properties.status = !featureToUpdate.properties.status + 0
+
+      fl.updateFeature(featureToUpdate, function(){
+        fl.redraw(151496);
+      });
+    }
+
+    function refresh () {
+      fl.refresh();
+    }
+  </script>
+
+  </body>
+  </html>
