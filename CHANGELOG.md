@@ -1,10 +1,10 @@
 # Changelog
 
-## Releace Candidate 8
+## Release Candidate 8
 
 #### Breaking Changes
 
-* 
+* CDN moved to JS Delvr http://www.jsdelivr.com/#!leaflet.esri
 
 #### Changes
 
