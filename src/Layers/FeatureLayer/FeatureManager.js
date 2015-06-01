@@ -104,13 +104,13 @@
           this.fire('drawlimitexceeded');
         }
 
+        //deincriment the request counter now that we have created features
+        this._activeRequests--;
+
         if(!error && featureCollection.features.length){
           // schedule adding features until the next animation frame
           EsriLeaflet.Util.requestAnimationFrame(L.Util.bind(function(){
             this._addFeatures(featureCollection.features, coords);
-
-            //deincriment the request counter now that we have created features
-            this._activeRequests--;
 
             // if there are no more active requests fire a load event for this view
             if(this._activeRequests <= 0){
