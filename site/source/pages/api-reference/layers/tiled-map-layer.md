@@ -34,6 +34,8 @@ Is you have Feature Services published in ArcGIS Online you can create a static 
 
 | Option | Type | Default | Description |
 | --- | --- | --- | --- |
+| `correctZoomLevels` | `Boolean` | `true` | If your tiles were generated in web mercator but at non-standard zoom levels this will remap then to the standard zoom levels. 
+| `zoomOffsetAllowance` | `Number` | `0.1` | If `correctZoomLevels` is enabled this controls the amount of tolerence if the difference at each scale level for remapping tile levels.
 | `proxy` | `String` | `false` | URL of an [ArcGIS API for JavaScript proxy](https://developers.arcgis.com/javascript/jshelp/ags_proxy.html) or [ArcGIS Resource Proxy](https://github.com/Esri/resource-proxy) to use for proxying POST requests. |
 | `useCors` | `Boolean` | `true` | Dictates if the service should use CORS when making GET requests. |
 | `token` | `String` | `null` | Will use this token to authenticate all calls to the service.

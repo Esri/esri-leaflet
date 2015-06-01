@@ -39,8 +39,8 @@
             oidCheck = true;
           }
         }
-        if (oidCheck === false && console && console.warn){
-          console.warn('no known esriFieldTypeOID field detected in fields Array.  Please add an attribute field containing unique IDs to ensure the layer can be drawn correctly.');
+        if (oidCheck === false) {
+          EsriLeaflet.Util.warn('no known esriFieldTypeOID field detected in fields Array.  Please add an attribute field containing unique IDs to ensure the layer can be drawn correctly.');
         }
       }
 

@@ -433,4 +433,10 @@
 
   EsriLeaflet.Util.requestAnimationFrame = L.Util.bind(raf, window);
 
+  EsriLeaflet.Util.warn = function (message) {
+    if(console && console.warn) {
+      console.warn(message);
+    }
+  };
+
 })(EsriLeaflet);
