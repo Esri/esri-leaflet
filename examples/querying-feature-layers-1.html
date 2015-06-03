@@ -34,8 +34,9 @@
   <link rel="stylesheet" href="//cdn.jsdelivr.net/leaflet/0.7.3/leaflet.css" />
 
   <!-- require combined leaflet, esri leaflet and jsdelivr-rum -->
-  <script src="http://cdn.jsdelivr.net/g/leaflet@0.7.3,leaflet.esri,jsdelivr-rum"></script>
-
+  <script src="//cdn.jsdelivr.net/leaflet/latest/leaflet.js"></script>
+  <script src="//cdn.jsdelivr.net/leaflet.esri/latest/esri-leaflet.js"></script>
+  <script src="//cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
   <!-- Google Analytics -->
   <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -237,7 +238,8 @@
   var direction = document.getElementById('direction');
 
   direction.addEventListener('change', function(){
-    stops.setWhere('direction="'+direction.value+'"');
+    // its only valid sql to encase string values in single quotes
+    stops.setWhere('direction=\'' + direction.value + '\'');
   });
 </script>
 
@@ -338,7 +340,8 @@
   <span class="keyword">var</span> direction = document.getElementById(<span class="string">'direction'</span>);
 
   direction.addEventListener(<span class="string">'change'</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span>{</span>
-    stops.setWhere(<span class="string">'direction="'</span>+direction.value+<span class="string">'"'</span>);
+    <span class="comment">// its only valid sql to encase string values in single quotes</span>
+    stops.setWhere(<span class="string">'direction=\''</span> + direction.value + <span class="string">'\''</span>);
   });
 </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
