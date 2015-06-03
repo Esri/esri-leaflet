@@ -4,14 +4,14 @@
 
 #### Breaking Changes
 
-* CDN moved to JS Delvr http://www.jsdelivr.com/#!leaflet.esri
+* CDN moved to JS Delivr http://www.jsdelivr.com/#!leaflet.esri
 
 #### Changes
 
 * Non standard scale levels from tile services published in web mercator are now remapped to the standard scale levels https://github.com/Esri/esri-leaflet/pull/548 https://github.com/Esri/esri-leaflet/issues/530
 * Fixed a bug introduced in RC 7 where features would sometimes not draw https://github.com/Esri/esri-leaflet/issues/546 https://github.com/Esri/esri-leaflet/issues/536
-* `load` event is now fired after all features are created, rather then when they are all recived something from the server https://github.com/Esri/esri-leaflet/issues/545
-* Properly handle using `L.CricleMarker` with `L.esri.Layers.FeatureLayer` https://github.com/Esri/esri-leaflet/issues/534
+* `load` event is now fired after all features are created, rather than when they are all received from the server https://github.com/Esri/esri-leaflet/issues/545
+* Properly handle using `L.CircleMarker` with `L.esri.Layers.FeatureLayer` https://github.com/Esri/esri-leaflet/issues/534
 * New `redraw` method on `L.esri.Layers.FeatureLayer` for programatically redrawing features with their latest symbology. https://github.com/Esri/esri-leaflet/pull/550
 
 ## Release Candidate 7
