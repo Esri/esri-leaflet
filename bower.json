@@ -1,6 +1,6 @@
 {
   "name": "esri-leaflet",
-  "version": "v1.0.0-rc.7",
+  "version": "v1.0.0-rc.8",
   "main": "dist/esri-leaflet.js",
   "ignore": [
     "**/.*",
