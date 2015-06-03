@@ -8,7 +8,7 @@ class: no-sidebar
 
 All builds of Esri Leaflet are available for download on [GitHub](https://github.com/Esri/esri-leaflet/releases/).
 
-<a href="https://github.com/Esri/esri-leaflet/releases/download/v1.0.0-rc.7/esri-leaflet-v1.0.0-rc.7.zip" class="btn">Current Release</a>
+<a href="https://github.com/Esri/esri-leaflet/archive/v1.0.0-rc.8.zip" class="btn">Current Release</a>
 <a href="https://github.com/Esri/esri-leaflet/releases/" class="btn">Past Releases</a>
 
 # npm
@@ -34,7 +34,7 @@ Esri Leaflet is hosted on [jsDelivr](http://www.jsdelivr.com/).
 #### Standard Build
 
 ```xml
-<script src="http://cdn.jsdelivr.net/leaflet.esri/1.0.0-rc.7/esri-leaflet.js"></script>
+<script src="http://cdn.jsdelivr.net/leaflet.esri/1.0.0-rc.8/esri-leaflet.js"></script>
 
 ```
 
@@ -44,16 +44,16 @@ Esri Leaflet is also built into several smaller components and plugins for speci
 
 ```xml
 <!-- Core Build -->
-<script src="http://cdn.jsdelivr.net/leaflet.esri/1.0.0-rc.7/builds/core/esri-leaflet-core.js"></script>
+<script src="http://cdn.jsdelivr.net/leaflet.esri/1.0.0-rc.8/builds/core/esri-leaflet-core.js"></script>
 
 <!-- Basemaps Only Build -->
-<script src="http://cdn.jsdelivr.net/leaflet.esri/1.0.0-rc.7/builds/basemaps/esri-leaflet-basemaps.js"></script>
+<script src="http://cdn.jsdelivr.net/leaflet.esri/1.0.0-rc.8/builds/basemaps/esri-leaflet-basemaps.js"></script>
 
 <!-- Feature Layer Only Build -->
-<script src="http://cdn.jsdelivr.net/leaflet.esri/1.0.0-rc.7/builds/feature-layer/esri-leaflet-feature-layer.js"></script>
+<script src="http://cdn.jsdelivr.net/leaflet.esri/1.0.0-rc.8/builds/feature-layer/esri-leaflet-feature-layer.js"></script>
 
 <!-- Map Service Only Build -->
-<script src="http://cdn.jsdelivr.net/leaflet.esri/1.0.0-rc.7/builds/map-service/esri-leaflet-map-service.js"></script>
+<script src="http://cdn.jsdelivr.net/leaflet.esri/1.0.0-rc.8/builds/map-service/esri-leaflet-map-service.js"></script>
 
 <!-- Heatmap Feature Layer -->
 <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-heatmap-feature-layer/1.0.0-rc.3/esri-leaflet-heatmap-feature-layer.js"></script>
