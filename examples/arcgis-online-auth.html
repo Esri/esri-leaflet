@@ -211,7 +211,7 @@
 
   // this function will be called when the oauth process is complete
   window.oauthCallback = function(token) {
-    L.esri.get('https://arcgis.com/sharing/rest/portals/self', {
+    L.esri.get('https://www.arcgis.com/sharing/rest/portals/self', {
       token: token
     }, function(error, response){
       authPane.innerHTML = '<label>Hi '+response.user.username+' your token is <input value="'+token+'"></label>';
@@ -227,6 +227,7 @@
   var map = new L.Map('map').setView([39.36, -96.19], 4);
   L.esri.basemapLayer('Gray').addTo(map);
 </script>
+
 </div>
 <pre><code class="language-xml"><span class="tag">&lt;<span class="title">html</span>&gt;</span>
 <span class="tag">&lt;<span class="title">head</span>&gt;</span>
@@ -297,7 +298,7 @@
 
   <span class="comment">// this function will be called when the oauth process is complete</span>
   window.oauthCallback = <span class="function"><span class="keyword">function</span><span class="params">(token)</span> {</span>
-    L.esri.get(<span class="string">'https://arcgis.com/sharing/rest/portals/self'</span>, {
+    L.esri.get(<span class="string">'https://www.arcgis.com/sharing/rest/portals/self'</span>, {
       token: token
     }, <span class="function"><span class="keyword">function</span><span class="params">(error, response)</span>{</span>
       authPane.innerHTML = <span class="string">'&lt;label&gt;Hi '</span>+response.user.username+<span class="string">' your token is &lt;input value="'</span>+token+<span class="string">'"&gt;&lt;/label&gt;'</span>;
