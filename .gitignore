@@ -27,7 +27,6 @@ coverage
 working
 debug/*.html
 !debug/sample.html
-!debug/dynamicLayers-sample.html
 
 # Docs Build
 site/build
