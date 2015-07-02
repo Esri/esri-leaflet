@@ -104,27 +104,32 @@
           this.fire('drawlimitexceeded');
         }
 
-        //deincriment the request counter now that we have created features
-        this._activeRequests--;
-
         if(!error && featureCollection.features.length){
           // schedule adding features until the next animation frame
           EsriLeaflet.Util.requestAnimationFrame(L.Util.bind(function(){
             this._addFeatures(featureCollection.features, coords);
-
-            // if there are no more active requests fire a load event for this view
-            if(this._activeRequests <= 0){
-              this.fire('load', {
-                bounds: bounds
-              });
-            }
+            this._postProcessFeatures(bounds);
           }, this));
+        } else {
+          this._postProcessFeatures(bounds);
         }
 
         if(callback){
           callback.call(this, error, featureCollection);
         }
       }, this);
+    },
+
+    _postProcessFeatures: function (bounds) {
+      //deincriment the request counter now that we have processed features
+      this._activeRequests--;
+
+      // if there are no more active requests fire a load event for this view
+      if(this._activeRequests <= 0){
+        this.fire('load', {
+          bounds: bounds
+        });
+      }
     },
 
     _cacheKey: function (coords){
