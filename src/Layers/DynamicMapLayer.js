@@ -21,6 +21,16 @@ EsriLeaflet.Layers.DynamicMapLayer = EsriLeaflet.Layers.RasterLayer.extend({
     L.Util.setOptions(this, options);
   },
 
+  getDynamicLayers: function(){
+    return this.options.dynamicLayers;
+  },
+
+  setDynamicLayers: function(dynamicLayers){
+    this.options.dynamicLayers = dynamicLayers;
+    this._update();
+    return this;
+  },
+
   getLayers: function(){
     return this.options.layers;
   },
@@ -108,6 +118,10 @@ EsriLeaflet.Layers.DynamicMapLayer = EsriLeaflet.Layers.RasterLayer.extend({
       bboxSR: this.options.bboxSR,
       imageSR: this.options.imageSR
     };
+
+    if(this.options.dynamicLayers){
+      params.dynamicLayers = this.options.dynamicLayers;
+    }
 
     if(this.options.layers){
       params.layers = 'show:' + this.options.layers.join(',');
