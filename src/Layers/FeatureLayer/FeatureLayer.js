@@ -315,6 +315,22 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
     return this._layers[id];
   },
 
+  bringToBack: function () {
+    this.eachFeature(function (layer) {
+      if(layer.bringToBack) {
+        layer.bringToBack();
+      }
+    });
+  },
+
+  bringToFront: function () {
+    this.eachFeature(function (layer) {
+      if(layer.bringToFront) {
+        layer.bringToFront();
+      }
+    });
+  },
+
   redraw: function (id) {
     if (id) {
       this._redraw(id);
