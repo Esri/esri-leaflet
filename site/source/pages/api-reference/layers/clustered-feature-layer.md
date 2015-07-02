@@ -151,13 +151,13 @@ In additon to these events `L.esri.FeatureLayer` also fires the following [Mouse
             <td><code>setStyle({{{param 'PathOptions' 'style' 'http://leafletjs.com/reference.html#path-options'}}})</code><br><br><code>setStyle({{{param 'Function' 'style'}}})</code></td>
             <td><code>this</code></td>
             <td>Sets the given path options to each layer that has a <code>setStyle</code> method. Can also be a <code>Function</code> that will receive a <code>feature</code> argument and should return <a href="http://leafletjs.com/reference.html#path-options">Path Options</a>
-            <pre><code class="language-javascript">featureLayer.setStyle(1, {
-    color: white;
+            <pre><code class="language-javascript">featureLayer.setStyle({
+  color: 'white'
 })</code></pre>
             <pre><code class="language-javascript">featureLayer.setStyle(1, function(feature){
-    return {
+  return {
     weight: feature.properties.pixelWidth
-    };
+  };
 })</code></pre>
         <tr>
             <td><code>bindPopup({{{param 'Function' 'fn'}}}, {{{param 'PopupOptions' 'popupOptions' 'http://leafletjs.com/reference.html#popup-options'}}})</code></td>

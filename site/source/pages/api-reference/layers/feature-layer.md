@@ -171,12 +171,12 @@ In addition to the events above, `L.esri.Layers.FeatureLayer` also fires the fol
             <td><code>this</code></td>
             <td>Sets the given path options to each layer that has a <code>setStyle</code> method. Can also be a <code>Function</code> that will receive a <code>feature</code> argument and should return <a href="http://leafletjs.com/reference.html#path-options">Path Options</a>
             <pre><code class="language-javascript">featureLayer.setStyle({
-    color: white;
+  color: 'white'
 })</code></pre>
             <pre><code class="language-javascript">featureLayer.setStyle(function(feature){
-    return {
+  return {
     weight: feature.properties.pixelWidth
-    };
+  };
 })</code></pre>
             </td>
         </tr>
