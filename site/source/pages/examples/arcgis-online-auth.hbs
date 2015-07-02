@@ -52,7 +52,7 @@ layout: example.hbs
 
   // this function will be called when the oauth process is complete
   window.oauthCallback = function(token) {
-    L.esri.get('https://arcgis.com/sharing/rest/portals/self', {
+    L.esri.get('https://www.arcgis.com/sharing/rest/portals/self', {
       token: token
     }, function(error, response){
       authPane.innerHTML = '<label>Hi '+response.user.username+' your token is <input value="'+token+'"></label>';
