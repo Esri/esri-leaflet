@@ -39,6 +39,11 @@
   <script src="//cdn.jsdelivr.net/leaflet/latest/leaflet.js"></script>
   <script src="//cdn.jsdelivr.net/leaflet.esri/latest/esri-leaflet.js"></script>
   <script src="//cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
+{{#if siteData.isDev}}
+  <!-- 'livereload' for development -->
+  <script src="//localhost:35729/livereload.js"></script>
+{{/if}}
+
   <!-- Google Analytics -->
   <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

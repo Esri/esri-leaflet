@@ -186,7 +186,8 @@ module.exports = function(grunt) {
         files: ['site/source/**/*.md', 'site/source/**/*.hbs'],
         tasks: ['assemble:dev'],
         options: {
-          nospawn: true
+          nospawn: true,
+          livereload: true
         }
       }
     },
@@ -314,6 +315,7 @@ module.exports = function(grunt) {
       },
       dev: {
         options: {
+          data: 'site/data/*.json',
           assets: 'site/build/'
         },
         files: [{

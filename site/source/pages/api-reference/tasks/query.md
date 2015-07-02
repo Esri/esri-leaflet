@@ -158,7 +158,7 @@ layout: documentation.hbs
         <tr>
             <td><code>bounds({{{param 'Function' 'callback'}}}, {{{param 'Object' 'context'}}})</code></td>
             <td><code>this</code></td>
-            <td>Executes the query request with the current parameters, passing only the <a href="http://leafletjs.com/reference.html#latlngbounds"><code>LatLngBounds</code></a> of all features matching the query in the <code>callback</code>. Accepts an optional function context.  <small>Only available for Feature Layers hosted on ArcGIS Online or ArcGIS Server 10.3.</small></td>
+            <td>Executes the query request with the current parameters, passing only the <a href="http://leafletjs.com/reference.html#latlngbounds"><code>LatLngBounds</code></a> of all features matching the query in the <code>callback</code>. Accepts an optional function context.  <small>Only available for Feature Layers hosted on ArcGIS Online or ArcGIS Server 10.3.1.</small></td>
         </tr>
     </tbody>
 </table>
