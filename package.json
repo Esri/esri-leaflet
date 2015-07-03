@@ -1,6 +1,6 @@
 {
   "name": "esri-leaflet",
-  "version": "1.0.0-rc.8",
+  "version": "1.0.0",
   "description": "Leaflet plugins for consuming ArcGIS Online and ArcGIS Server services",
   "main": "dist/esri-leaflet.js",
   "devDependencies": {
@@ -36,7 +36,8 @@
   "scripts": {
     "prepublish": "grunt prepublish",
     "start": "grunt dev",
-    "test": "grunt test"
+    "test": "grunt test",
+    "postinstall": "node scripts/install.js"
   },
   "author": "Patrick Arlt <parlt@esri.com> (http://patrickarlt.com)",
   "contributors": [
@@ -45,6 +46,6 @@
   "license": "Apache",
   "readmeFilename": "README.md",
   "dependencies": {
-    "leaflet": "^0.7.0"
+    "leaflet": "git://github.com/Leaflet/Leaflet.git#master"
   }
 }
