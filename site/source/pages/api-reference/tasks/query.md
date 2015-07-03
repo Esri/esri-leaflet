@@ -5,9 +5,9 @@ layout: documentation.hbs
 
 # {{page.data.title}}
 
-`L.esri.Tasks.Query` is an abstraction for the query API that exists on Feature Layers Map Services and Image Services. It provides a chainable API for building request parameters and executing queries.
+`L.esri.Tasks.Query` is an abstraction for the query API included in Feature Layers and Image Services. It provides a chainable API for building request parameters and executing queries.
 
-**Note** Depending on the type of service you are querying (Feature Layer, Map Service, Image Service) and the version of ArcGIS Server that hosts the service some of these options my not be available.
+**Note** Depending on the type of service you are querying (Feature Layer, Map Service, Image Service) and the version of ArcGIS Server that hosts the service some of these options may not be available.
 
 ### Constructor
 
@@ -20,11 +20,13 @@ layout: documentation.hbs
     </thead>
     <tbody>
         <tr>
-            <td><code class='nobr'>new L.esri.Tasks.Query({{{param 'FeatureLayer' 'endpoint' '../../api-reference/services/feature-layer.html'}}}, {{{param 'Object' 'options'}}})</code><br><br>
-            <code>L.esri.Tasks.query({{{param 'FeatureLayer' 'endpoint' '../../api-reference/services/feature-layer.html'}}}, {{{param 'Object' 'options'}}})</code><br><br>
-            <code>new L.esri.Tasks.Query({{{param 'String' 'endpoint'}}}, {{{param 'Object' 'options'}}})</code><br><br>
-            <code>L.esri.Tasks.query({{{param 'String' 'endpoint'}}}, {{{param 'Object' 'options'}}})</code></td>
-            <td>The `endpoint` parameter is the service that you want to query either an  ArcGIS Server or ArcGIS Online service. You can also pass the URL to a service directly as a string. See [service URLs](#service-urls) for more information on how to find these URLs.</td>
+            <td><code class='nobr'>new L.esri.Tasks.Query({{{param 'FeatureLayer' 'endpoint' '../../api-reference/services/feature-layer.html'}}})</code><br><br>
+            <code>L.esri.Tasks.query({{{param 'FeatureLayer' 'endpoint' '../../api-reference/services/feature-layer.html'}}})</code><br><br>
+            <code class='nobr'>new L.esri.Tasks.Query({{{param 'MapService' 'endpoint' '../../api-reference/services/map-service.html'}}})</code><br><br>
+            <code>L.esri.Tasks.query({{{param 'MapService' 'endpoint' '../../api-reference/services/map-service.html'}}})</code><br><br>
+            <code>new L.esri.Tasks.Query({{{param 'Object' 'options'}}})</code><br><br>
+            <code>L.esri.Tasks.query({{{param 'Object' 'options'}}})</code></td>
+            <td>Accepts either an `options` object or an instance of <a href="{{assets}}/api-reference/services/map-service.html">MapService</a> or <a href="{{assets}}/api-reference/layers/feature-layer.html">FeatureLayer</a>.</td>
         </tr>
     </tbody>
 </table>
@@ -33,8 +35,9 @@ layout: documentation.hbs
 
 | Option | Type | Default | Description |
 | --- | --- | --- | --- |
-| `proxy` | `String` | `false` | URL of an [ArcGIS API for JavaScript proxies](https://developers.arcgis.com/javascript/jshelp/ags_proxy.html) or [ArcGIS Resource Proxies](https://github.com/Esri/resource-proxy) to use for proxying POST requests. |
-| `useCors` | `Boolean` | `true` | If this service should use CORS when making GET requests. |
+| `url` | `String` | `''` | URL of the ArcGIS Server or ArcGIS Online service you would like to consume. |
+| `proxy` | `String` | `false` | URL of an [ArcGIS API for JavaScript proxy](https://developers.arcgis.com/javascript/jshelp/ags_proxy.html) or [ArcGIS Resource Proxy](https://github.com/Esri/resource-proxy) to use for proxying POST requests. |
+| `useCors` | `Boolean` | `true` | If this task should use CORS when making GET requests. |
 
 ### Methods
 
@@ -70,22 +73,22 @@ layout: documentation.hbs
         <tr>
             <td><code>nearby({{{param 'LatLng' 'latlng' 'http://leafletjs.com/reference.html#latlng'}}}, {{{param 'Integer' 'distance'}}})</code></td>
             <td><code>this</code></td>
-            <td>Queries features a given distance in meters around a <a href="http://leafletjs.com/reference.html#latlng">LatLng</a>. <small>Only available for Feature Layers hosted on ArcGIS Online.</small></td>
+            <td>Queries features a given distance in meters around a <a href="http://leafletjs.com/reference.html#latlng">LatLng</a>. <small>Only available for Feature Layers hosted on ArcGIS Online or ArcGIS Server 10.3.</small></td>
         </tr>
         <tr>
             <td><code>where({{{param 'String' 'where'}}})</code></td>
             <td><code>this</code></td>
-            <td>Adds a `where` paramter to the query.</td>
+            <td>Adds a `where` clause to the query.  String values should be denoted using single quotes ie: `query.where("FIELDNAME = 'field value'");` More info about valid SQL can be found <a href="http://resources.arcgis.com/en/help/main/10.2/index.html#/SQL_reference_for_query_expressions_used_in_ArcGIS/00s500000033000000/">here</a>.</td>
         </tr>
         <tr>
             <td><code>offset({{{param 'Integer' 'offset'}}})</code></td>
             <td><code>this</code></td>
-            <td>Define the offset of the results, when combined with `limit` can be used for paging. <small>Only available for Feature Layers hosted on ArcGIS Online.</small></td>
+            <td>Define the offset of the results, when combined with `limit` can be used for paging. <small>Only available for Feature Layers hosted on ArcGIS Online or ArcGIS Server 10.3.</small></td>
         </tr>
         <tr>
             <td><code>limit({{{param 'Integer' 'limit'}}})</code></td>
             <td><code>this</code></td>
-            <td>Limit the number of results returned by this query, when combined with `offset` can be used for paging. <small>Only available for Feature Layers hosted on ArcGIS Online.</small></td>
+            <td>Limit the number of results returned by this query, when combined with `offset` can be used for paging. <small>Only available for Feature Layers hosted on ArcGIS Online or ArcGIS Server 10.3.</small></td>
         </tr>
         <tr>
             <td><code>between({{{param 'Date' 'from'}}}, {{{param 'Date' 'to'}}})</code></td>
@@ -155,7 +158,7 @@ layout: documentation.hbs
         <tr>
             <td><code>bounds({{{param 'Function' 'callback'}}}, {{{param 'Object' 'context'}}})</code></td>
             <td><code>this</code></td>
-            <td>Exectues the query request with the current parameters, passing only the <a href="http://leafletjs.com/reference.html#latlngbounds"><code>LatLngBounds</code></a> of all features the query to callback<code>callback</code>. Accepts an optional function context. <small>Only available for Feature Layers hosted on ArcGIS Online.</small></td>
+            <td>Executes the query request with the current parameters, passing only the <a href="http://leafletjs.com/reference.html#latlngbounds"><code>LatLngBounds</code></a> of all features matching the query in the <code>callback</code>. Accepts an optional function context.  <small>Only available for Feature Layers hosted on ArcGIS Online or ArcGIS Server 10.3.1.</small></td>
         </tr>
     </tbody>
 </table>
@@ -169,7 +172,9 @@ var southWest = L.latLng(45.51, -122.70);
 var northEast = L.latLng(45.52, -122.64);
 var bounds = L.latLngBounds(southWest, northEast);
 
-var query = L.esri.Tasks.query('http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0');
+var query = L.esri.Tasks.query({
+    url:'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0'
+});
 
 query.within(bounds);
 
@@ -184,7 +189,9 @@ query.run(function(error, featureCollection, response){
 var map = L.map('map').setView([41.64, -53.70], 3);
 L.esri.basemapLayer('Gray').addTo(map);
 
-var query = L.esri.Tasks.query('http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0');
+var query = L.esri.Tasks.query({
+    url: 'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0'
+});
 
 query.bounds(function(error, latLngBounds, response){
     map.fitBounds(latLngBounds);
@@ -196,7 +203,9 @@ query.bounds(function(error, latLngBounds, response){
 ```js
 var latlng = L.latLng(45.51, -122.70);
 
-var query = L.esri.Tasks.query('http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0');
+var query = L.esri.Tasks.query({
+    url:'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0'
+});
 
 query.nearby(latlng, 500);
 
@@ -210,7 +219,9 @@ query.run(function(error, featureCollection, response){
 ```js
 var latlng = L.latLng(45.51, -122.70);
 
-var query = L.esri.Tasks.query('http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0');
+var query = L.esri.Tasks.query({
+    url: 'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0'
+});
 
 query.nearby(latlng, 2000).where("direction='East'").orderBy('stop_id', 'ASC');
 
@@ -219,7 +230,6 @@ query.count(function(error, count, response){
 });
 
 query.ids(function(error, ids, response){
-  console.log(arguments);
     console.log(ids.join(', ') + 'match the provided parameters');
 });
 ```
@@ -231,7 +241,9 @@ var map = L.map('map').setView([41.64, -53.70], 3);
 L.esri.basemapLayer('Gray').addTo(map);
 
 
-var query = L.esri.Tasks.query('http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0');
+var query = L.esri.Tasks.query({
+    url:'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0'
+});
 
 query.where("zone_id='B'").bounds(function(error, latLngBounds, response){
     map.fitBounds(latLngBounds);

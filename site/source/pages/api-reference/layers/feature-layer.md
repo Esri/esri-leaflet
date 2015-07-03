@@ -5,17 +5,17 @@ layout: documentation.hbs
 
 # {{page.data.title}}
 
-`L.esri.Layer.FeatureLayer` is used to visualize and query vector geographic data hosted in ArcGIS Feature Layers. These layers are hosted as a part of Feature Services on either ArcGIS Online or ArcGIS Server.
+`L.esri.Layers.FeatureLayer` is used to visualize and query vector geographic data hosted in both ArcGIS Online and published using ArcGIS Server.
 
-Feature Layers are provided by Feature Services which can contain multupile layers. Feature Layers expose vector geographic information as a web service that can be visualized, styled, queried and edited.
+Feature Layers are provided by Feature Services which can contain multiple layers. Feature Layers expose vector geographic information as a web service that can be visualized, styled, queried and edited.
 
-Here is a sample Feature Service URL 
+Here is a sample Feature Service URL
 
 ```
 http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Neighborhoods_pdx/
 ```
 
-This particular service contains only one Feature Layer. Here is the Feature Layer URL 
+This particular service contains only one Feature Layer. Here is the Feature Layer URL
 
 ```
 http://services.arcgis.com/rOo16HdIMeOBI4Mb/ArcGIS/rest/services/Neighborhoods_pdx/FeatureServer/0
@@ -23,7 +23,7 @@ http://services.arcgis.com/rOo16HdIMeOBI4Mb/ArcGIS/rest/services/Neighborhoods_p
 
 Note that the Feature Layer URL ends in `/FeatureServer/{LAYER_ID}`.
 
-You can create a new empty feature service witha  single layer on the [ArcGIS for Devleopers website](https://developers.arcgis.com/en/hosted-data/#/new) or you can use ArcGIS Online to [create a Feature Service from a CSV or Shapefile](https://developers.arcgis.com/tools/csv-to-feature-service/).
+You can create a new empty feature service with a single layer on the [ArcGIS for Developers website](https://developers.arcgis.com/en/hosted-data/#/new) or you can use ArcGIS Online to [create a Feature Service from a CSV or Shapefile](https://developers.arcgis.com/tools/csv-to-feature-service/).
 
 ### Constructor
 
@@ -37,7 +37,7 @@ You can create a new empty feature service witha  single layer on the [ArcGIS fo
     <tbody>
         <tr>
             <td><code class="nobr">new L.esri.Layers.FeatureLayer({{{param 'String' 'url'}}}, {{{param 'Object' 'options'}}})</code><br><br><code class="nobr">L.esri.Layers.featureLayer({{{param 'String' 'url'}}}, {{{param 'Object' 'options'}}})</code><br><br><code class="nobr">new L.esri.FeatureLayer({{{param 'String' 'url'}}}, {{{param 'Object' 'options'}}})</code><br><br><code class="nobr">L.esri.featureLayer({{{param 'String' 'url'}}}, {{{param 'Object' 'options'}}})</code></td>
-            <td><code>url</code> should be the URL to the Feature Layer.</td>
+            <td><code>url</code> URL of the Feature Layer.</td>
         </tr>
     </tbody>
 </table>
@@ -66,12 +66,27 @@ You can create a new empty feature service witha  single layer on the [ArcGIS fo
         <tr>
             <td><code>onEachFeature({{{param 'GeoJSON Feature' 'feature' 'http://geojson.org/geojson-spec.html#feature-objects'}}}, {{{param 'ILayer' 'layer' 'http://leafletjs.com/reference.html#ilayer'}}})</code></td>
             <td><code>Function</code></td>
-            <td> </td>
+            <td>Provides an opportunity to introspect individual GeoJSON features in the layer.</td>
         </tr>
         <tr>
             <td><code>where</code></td>
             <td><code>String</code></td>
-            <td>A server side expression that will be evaluated to filter features. By default this will include all features in a service.</td>
+            <td>An optional expression to filter features server side. String values should be denoted using single quotes ie: `where: "FIELDNAME = 'field value'";` More information about valid SQL can be found <a href="http://resources.arcgis.com/en/help/main/10.2/index.html#/SQL_reference_for_query_expressions_used_in_ArcGIS/00s500000033000000/">here</a>.</td>
+        </tr>
+        <tr>
+            <td><code>minZoom</code></td>
+            <td><code>Integer</code></td>
+            <td>Minimum zoom level of the map that features will display. example:  <code>minZoom:0</code></td>
+        </tr>
+        <tr>
+            <td><code>maxZoom</code></td>
+            <td><code>Integer</code></td>
+            <td>Maximum zoom level of the map that features will display. example:  <code>maxZoom:19</code></td>
+        </tr>
+        <tr>
+            <td><code>cacheLayers</code></td>
+            <td><code>Boolean</code></td>
+            <td>Will remove layers from the internal cache when they are removed from the map.</td>
         </tr>
         <tr>
             <td><code>fields</code></td>
@@ -136,9 +151,9 @@ You can create a new empty feature service witha  single layer on the [ArcGIS fo
 | `removefeature` | [<`RemoveFeatureEvent`>]({{assets}}api-reference/events.html#feature-remove) | Fired when a feature on the layer is removed from the map. |
 | `addfeature` | [<`AddFeatureEvent`>]({{assets}}api-reference/events.html#feature-add) | Fired when a previously removed feature is added back to the map. |
 
-`L.esri.Layer.FeatureLayer` also fires all  [`L.esri.Service.FeatureLayer`]({{assets}}api-reference/services/feature-layer.html) events.
+`L.esri.Layers.FeatureLayer` also fires all  [`L.esri.Services.FeatureLayer`]({{assets}}api-reference/services/feature-layer.html) events.
 
-In additon to these events `L.esri.Layer.FeatureLayer` also fires the following [Mouse Events](http://leafletjs.com/reference.html#event-objects) `click`, `dblclick`, `mouseover`, `mouseout`, `mousemove`, and `contextmenu` and the following the [Popup Events](http://leafletjs.com/reference.html#event-objects) `popupopen` and `popupclose`
+In addition to the events above, `L.esri.Layers.FeatureLayer` also fires the following [Mouse Events](http://leafletjs.com/reference.html#event-objects) `click`, `dblclick`, `mouseover`, `mouseout`, `mousemove`, and `contextmenu` and the following the [Popup Events](http://leafletjs.com/reference.html#event-objects) `popupopen` and `popupclose`
 
 ### Methods
 
@@ -155,13 +170,13 @@ In additon to these events `L.esri.Layer.FeatureLayer` also fires the following 
             <td><code>setStyle({{{param 'PathOptions' 'style' 'http://leafletjs.com/reference.html#path-options'}}})</code><br><br><code>setStyle({{{param 'Function' 'style'}}})</code></td>
             <td><code>this</code></td>
             <td>Sets the given path options to each layer that has a <code>setStyle</code> method. Can also be a <code>Function</code> that will receive a <code>feature</code> argument and should return <a href="http://leafletjs.com/reference.html#path-options">Path Options</a>
-            <pre><code class="language-javascript">featureLayer.setStyle(1, {
-    color: white;
+            <pre><code class="language-javascript">featureLayer.setStyle({
+  color: 'white'
 })</code></pre>
-            <pre><code class="language-javascript">featureLayer.setStyle(1, function(feature){
-    return {
+            <pre><code class="language-javascript">featureLayer.setStyle(function(feature){
+  return {
     weight: feature.properties.pixelWidth
-    };
+  };
 })</code></pre>
             </td>
         </tr>
@@ -181,7 +196,8 @@ In additon to these events `L.esri.Layer.FeatureLayer` also fires the following 
             <td>
               Defines a function that will return HTML to be bound to a popup on each feature.
 <pre class="js"><code>featureLayer.bindPopup(function(features){
-  return "Name: " + features.properties.NAME;
+  return
+    "Name: " + features.properties.NAME;
 });</code></pre>
             </td>
         </tr>
@@ -196,14 +212,15 @@ In additon to these events `L.esri.Layer.FeatureLayer` also fires the following 
             <td>
                 Calls the passed function against every feature. The function will be passed the layer that represents the feature.
 <pre class="js"><code>featureLayer.eachFeature(function(layer){
-  console.log(layer.feature.properties.NAME);
+  console.log(
+    layer.feature.properties.NAME);
 });</code></pre>
             </td>
         </tr>
         <tr>
             <td><code>getFeature({{{param 'String or Integer' id}}} id)</code></td>
             <td><code>Layer</code></td>
-            <td>Given the id of a Feature return the layer on the map that represents it. This will usually be a Leaflet vector layer like <a href="http://leafletjs.com/reference.html#polyline">Polygon</a> or <a href="http://leafletjs.com/reference.html#polyline">Polygon</a>, or a Leaflet <a href="http://leafletjs.com/reference.html#marker">Marker</a>.</td>
+            <td>Given the id of a Feature return the layer on the map that represents it. This will usually be a Leaflet vector layer like <a href="http://leafletjs.com/reference.html#polyline">Polyline</a> or <a href="http://leafletjs.com/reference.html#polygon">Polygon</a>, or a Leaflet <a href="http://leafletjs.com/reference.html#marker">Marker</a>.</td>
         </tr>
         <tr>
             <td><code>getWhere()</code></td>
@@ -235,12 +252,14 @@ In additon to these events `L.esri.Layer.FeatureLayer` also fires the following 
             <td><code>this</code></td>
             <td>
                 Returns a new <a href=""><code>L.esri.services.Query</code></a> object that can be used to query this layer. Your callback function will be passed a <a href="http://geojson.org/geojson-spec.html#feature-collection-objects">GeoJSON FeatureCollection</a> with the results or an error.
-<pre class="js"><code>featureLayer.query()
-            .within(latlngbounds)
-            .where("Direction = 'WEST'")
-            .run(function(error, featureCollection){
-                console.log(featureCollection);
-            });</code></pre>
+<pre class="js"><code>
+featureLayer.query()
+  .within(latlngbounds)
+  .where("Direction = 'WEST'")
+  .run(function(error, featureCollection){
+    console.log(featureCollection);
+  });
+</code></pre>
             </td>
         </tr>
         <tr>
@@ -254,13 +273,13 @@ In additon to these events `L.esri.Layer.FeatureLayer` also fires the following 
             </td>
         </tr>
  <tr>
-            <td><code>createFeature({{{param 'GeoJSON Feature' 'feature' 'http://geojson.org/geojson-spec.html#feature-objects'}}}, {{{param 'Function' 'callback'}}}, {{{param 'Object' 'context'}}})</code></td>
+            <td><code>addFeature({{{param 'GeoJSON Feature' 'feature' 'http://geojson.org/geojson-spec.html#feature-objects'}}}, {{{param 'Function' 'callback'}}}, {{{param 'Object' 'context'}}})</code></td>
             <td><code>this</code></td>
             <td>
                 Adds a new feature to the feature layer. this also adds the feature to the map if creation is successful.
                 <ul>
                     <li>Requires authentication as a user who has permission to edit the service in ArcGIS Online or the user who created the service.</li>
-                    <li>Requires the <code>Create</code> capability be enabled on the service. You can check if creation exists by checking the metadata of your service under capabilities in the metadata.</li>
+                    <li>Requires the <code>Create</code> capability be enabled on the service. You can check if creation exists by checking the metadata of your service under capabilities.</li>
                 </ul>
             </td>
         </tr>
@@ -271,7 +290,7 @@ In additon to these events `L.esri.Layer.FeatureLayer` also fires the following 
                 Update the provided feature on the Feature Layer. This also updates the feature on the map.
                 <ul>
                     <li>Requires authentication as a user who has permission to edit the service in ArcGIS Online or the user who created the service.</li>
-                    <li>Requires the <code>Update</code> capability be enabled on the service. You can check if creation exists by checking the metadata of your service under capabilities in the metadata.</li>
+                    <li>Requires the <code>Update</code> capability be enabled on the service. You can check if this operation exists by checking the metadata of your service under capabilities.</li>
                 </ul>
             </td>
         </tr>
@@ -282,7 +301,18 @@ In additon to these events `L.esri.Layer.FeatureLayer` also fires the following 
                 Remove the feature with the provided id from the feature layer. This will also remove the feature from the map if it exists.
                 <ul>
                     <li>Requires authentication as a user who has permission to edit the service in ArcGIS Online or the user who created the service.</li>
-                    <li>Requires the <code>Update</code> capability be enabled on the service. You can check if creation exists by checking the metadata of your service under capabilities in the metadata.</li>
+                    <li>Requires the <code>Delete</code> capability be enabled on the service. You can check if this operation exists by checking the metadata of your service under capabilities.</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><code>deleteFeatures({{{param 'Array of String or Integers' 'ids'}}}, {{{param 'Function' 'callback'}}}, {{{param 'Object' 'context'}}})</code></td>
+            <td><code>this</code></td>
+            <td>
+                Removes an array of features with the provided ids from the feature layer. This will also remove the features from the map if they exist.
+                <ul>
+                    <li>Requires authentication as a user who has permission to edit the service in ArcGIS Online or the user who created the service.</li>
+                    <li>Requires the <code>Delete</code> capability be enabled on the service. You can check if this operation exists by checking the metadata of your service under capabilities.</li>
                 </ul>
             </td>
         </tr>

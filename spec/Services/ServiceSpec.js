@@ -1,11 +1,11 @@
 describe('L.esri.Service', function () {
-  var url = 'http://services.arcgis.com/mock/arcgis/rest/services/MockService';
+  var serviceUrl = 'http://services.arcgis.com/mock/arcgis/rest/services/MockService';
   var service;
   var server;
 
   beforeEach(function(){
     server = sinon.fakeServer.create();
-    service = L.esri.Services.service(url);
+    service = L.esri.Services.service({url: serviceUrl});
   });
 
   afterEach(function(){

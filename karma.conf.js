@@ -15,7 +15,6 @@ module.exports = function(config) {
     files: [
       'node_modules/leaflet/dist/leaflet.css',
       'node_modules/leaflet/dist/leaflet.js',
-      'spec/**/*Spec.js',
       'src/EsriLeaflet.js',
       'src/Util.js',
       'src/Layers/BasemapLayer.js',
@@ -37,7 +36,17 @@ module.exports = function(config) {
       'src/Tasks/IdentifyFeatures.js',
       'src/Tasks/IdentifyImage.js',
       'src/Tasks/Find.js',
-      'src/Controls/Logo.js'
+      'src/Controls/Logo.js',
+      'spec/**/*Spec.js'
+      // 'spec/UtilSpec.js',
+      // 'spec/RequestSpec.js',
+      // 'spec/Tasks/*Spec.js',
+      // 'spec/Services/*Spec.js',
+      // 'spec/Layers/**/*Spec.js',
+
+      // 'spec/Layers/ImageMapLayerSpec.js',
+      // 'spec/**/QuerySpec.js',
+      // 'spec/**/FeatureManagerSpec.js'
     ],
 
     // list of files to exclude
@@ -68,11 +77,11 @@ module.exports = function(config) {
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
     browsers: [
-      // 'Chrome',
+      'Chrome',
       // 'ChromeCanary',
       // 'Firefox',
       // 'Safari',
-      'PhantomJS'
+      // 'PhantomJS'
     ],
 
     // Continuous Integration mode

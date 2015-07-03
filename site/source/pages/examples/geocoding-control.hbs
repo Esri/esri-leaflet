@@ -4,8 +4,8 @@ description: Using the geocoding control to search for addresses and center the 
 layout: example.hbs
 ---
 
-<script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.5/esri-leaflet-geocoder.js"></script>
-<link rel="stylesheet" type="text/css" href="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.5/esri-leaflet-geocoder.css">
+<script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/1.0.0-rc.4/esri-leaflet-geocoder.js"></script>
+<link rel="stylesheet" type="text/css" href="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/1.0.0-rc.4/esri-leaflet-geocoder.css">
 
 <div id="map"></div>
 
@@ -16,7 +16,7 @@ layout: example.hbs
     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
   }).addTo(map);
 
-  var searchControl = new L.esri.Controls.Geosearch().addTo(map);
+  var searchControl = new L.esri.Geocoding.Controls.Geosearch().addTo(map);
 
   var results = new L.LayerGroup().addTo(map);
 

@@ -1,5 +1,12 @@
 (function(EsriLeaflet){
 
+  // normalize request animation frame
+  var raf = window.requestAnimationFrame ||
+     window.webkitRequestAnimationFrame ||
+     window.mozRequestAnimationFrame ||
+     window.msRequestAnimationFrame ||
+     function(cb) { return window.setTimeout(cb, 1000 / 60); };
+
   // shallow object clone for feature properties and attributes
   // from http://jsperf.com/cloning-an-object/2
   function clone(obj) {
@@ -379,9 +386,10 @@
     return featureCollection;
   };
 
-    // trim whitespace and add a tailing slash is needed to a url
+    // trim url whitespace and add a trailing slash if needed
   EsriLeaflet.Util.cleanUrl = function(url){
-    url = url.replace(/\s\s*/g, '');
+    //trim leading and trailing spaces, but not spaces inside the url
+    url = url.replace(/^\s+|\s+$|\A\s+|\s+\z/g, '');
 
     //add a trailing slash to the url if the user omitted it
     if(url[url.length-1] !== '/'){
@@ -389,6 +397,13 @@
     }
 
     return url;
+  };
+
+  EsriLeaflet.Util.isArcgisOnline = function(url){
+    /* hosted feature services can emit geojson natively.
+    our check for 'geojson' support will need to be revisted
+    once the functionality makes its way to ArcGIS Server*/
+    return (/\.arcgis\.com.*?FeatureServer/g).test(url);
   };
 
   EsriLeaflet.Util.geojsonTypeToArcGIS = function (geoJsonType) {
@@ -414,6 +429,14 @@
       break;
     }
     return arcgisGeometryType;
+  };
+
+  EsriLeaflet.Util.requestAnimationFrame = L.Util.bind(raf, window);
+
+  EsriLeaflet.Util.warn = function (message) {
+    if(console && console.warn) {
+      console.warn(message);
+    }
   };
 
 })(EsriLeaflet);

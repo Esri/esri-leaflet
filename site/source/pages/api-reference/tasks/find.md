@@ -5,7 +5,7 @@ layout: documentation.hbs
 
 # {{page.data.title}}
 
-`L.esri.Tasks.Find` is an abstraction for the find API that exists on Map Services. It provides a chainable API for building request parameters and executing find tasks.
+`L.esri.Tasks.Find` is an abstraction for the find API included in Map Services. It provides a chainable API for building request parameters and executing find tasks.
 
 ### Constructor
 
@@ -19,12 +19,12 @@ layout: documentation.hbs
     <tbody>
         <tr>
             <td>
-                <code class='nobr'>new L.esri.Tasks.Find({{{param 'MapService' 'endpoint' '../../api-reference/services/service.html'}}}, {{{param 'Object' 'options'}}})</code><br><br>
-                <code>L.esri.Tasks.find({{{param 'MapService' 'endpoint' '../../api-reference/services/service.html'}}}, {{{param 'Object' 'options'}}})</code><br><br>
-                <code>new L.esri.Tasks.Find({{{param 'String' 'endpoint'}}}, {{{param 'Object' 'options'}}})</code><br><br>
-                <code>L.esri.Tasks.find({{{param 'String' 'endpoint'}}}, {{{param 'Object' 'options'}}})</code>
+                <code class='nobr'>new L.esri.Tasks.Find({{{param 'MapService' 'endpoint' '../../api-reference/services/service.html'}}})</code><br><br>
+                <code>L.esri.Tasks.find({{{param 'MapService' 'endpoint' '../../api-reference/services/service.html'}}})</code><br><br>
+                <code>new L.esri.Tasks.Find({{{param 'Object' 'options'}}})</code><br><br>
+                <code>L.esri.Tasks.find({{{param 'Object' 'options'}}})</code>
             </td>
-            <td>The `endpoint` parameter is the service that you want to find either an  ArcGIS Server or ArcGIS Online service. You can also pass the URL to a service directly as a string. See [service URLs](#service-urls) for more information on how to find these URLs.</td>
+            <td>Accepts either an `options` object or an instance of <a href="{{assets}}/api-reference/services/map-service.html">MapService</a>.</td>
         </tr>
     </tbody>
 </table>
@@ -33,7 +33,8 @@ layout: documentation.hbs
 
 | Option | Type | Default | Description |
 | --- | --- | --- | --- |
-| `proxy` | `String` | `false` | URL of an [ArcGIS API for JavaScript proxies](https://developers.arcgis.com/javascript/jshelp/ags_proxy.html) or [ArcGIS Resource Proxies](https://github.com/Esri/resource-proxy) to use for proxying POST requests. |
+| `url` | `String` | `''` | URL of the ArcGIS service you would like to consume. |
+| `proxy` | `String` | `false` | URL of an [ArcGIS API for JavaScript proxy](https://developers.arcgis.com/javascript/jshelp/ags_proxy.html) or [ArcGIS Resource Proxy](https://github.com/Esri/resource-proxy) to use for proxying POST requests. |
 | `useCors` | `Boolean` | `true` | If this service should use CORS when making GET requests. |
 
 ### Methods
@@ -134,7 +135,7 @@ var find = L.esri.Tasks.find('http://services.nationalmap.gov/arcgis/rest/servic
 
 find.layers('18')
     .text('Colorado');
-           
+
 find.run(function(error, featureCollection, response){
     console.log('GNIS Name: ' + featureCollection.features[0].properties.GNIS_NAME);
 });
@@ -143,7 +144,9 @@ find.run(function(error, featureCollection, response){
 ##### Finding features by specified search field name
 
 ```js
-var find = L.esri.Tasks.find('http://services.nationalmap.gov/arcgis/rest/services/govunits/MapServer');
+var find = L.esri.Tasks.find({
+    url: 'http://services.nationalmap.gov/arcgis/rest/services/govunits/MapServer'
+});
 
 find.layers('13')
     .text('198133')

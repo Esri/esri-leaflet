@@ -5,7 +5,7 @@ layout: documentation.hbs
 
 # {{page.data.title}}
 
-`L.esri.Tasks.IdentifyFeatures` is an abstraction for the Identify API that exists on Map Services. It provides a chainable API for building request parameters and executing the request.
+`L.esri.Tasks.IdentifyFeatures` is an abstraction for the Identify API found in Map Services. It provides a chainable API for building request parameters and executing the request.
 
 ### Constructor
 
@@ -18,11 +18,11 @@ layout: documentation.hbs
     </thead>
     <tbody>
         <tr>
-            <td><code class='nobr'>new L.esri.Tasks.IdentifyFeatures({{{param 'MapService' 'endpoint' '../../api-reference/services/map-service.html'}}}, {{{param 'Object' 'options'}}})</code><br><br>
-            <code>L.esri.Tasks.identifyFeatures({{{param 'MapService' 'endpoint' '../../api-reference/services/map-service.html'}}}, {{{param 'Object' 'options'}}})</code><br><br>
-            <code>new L.esri.Tasks.IdentifyFeatures({{{param 'String' 'endpoint'}}}, {{{param 'Object' 'options'}}})</code><br><br>
-            <code>L.esri.Tasks.identifyFeatures({{{param 'String' 'endpoint'}}}, {{{param 'Object' 'options'}}})</code><br></td>
-            <td>The `endpoint` parameter is the service that you want to identify either an  ArcGIS Server or ArcGIS Online service. You can also pass the URL to a service directly as a string. See [service URLs](#service-urls) for more information on how to find these URLs.</td>
+            <td><code class='nobr'>new L.esri.Tasks.IdentifyFeatures({{{param 'ImageService' 'endpoint' '../../api-reference/services/map-service.html'}}})</code><br><br>
+            <code>L.esri.Tasks.identifyFeatures({{{param 'ImageService' 'endpoint' '../../api-reference/services/map-service.html'}}})</code><br><br>
+            <code>new L.esri.Tasks.IdentifyFeatures({{{param 'Object' 'options'}}})</code><br><br>
+            <code>L.esri.Tasks.identifyFeatures({{{param 'Object' 'options'}}})</code><br></td>
+            <td>Accepts either an `options` object or an instance of <a href="{{assets}}/api-reference/services/image-service.html"></a>.</td>
         </tr>
     </tbody>
 </table>
@@ -31,8 +31,9 @@ layout: documentation.hbs
 
 | Option | Type | Default | Description |
 | --- | --- | --- | --- |
-| `proxy` | `String` | `false` | URL of an [ArcGIS API for JavaScript proxies](https://developers.arcgis.com/javascript/jshelp/ags_proxy.html) or [ArcGIS Resource Proxies](https://github.com/Esri/resource-proxy) to use for proxying POST requests. |
-| `useCors` | `Boolean` | `true` | If this service should use CORS when making GET requests. |
+| `url` | `String` | `''` | URL of the ArcGIS service you would like to consume. |
+| `proxy` | `String` | `false` | URL of an [ArcGIS API for JavaScript proxy](https://developers.arcgis.com/javascript/jshelp/ags_proxy.html) or [ArcGIS Resource Proxy](https://github.com/Esri/resource-proxy) to use for proxying POST requests. |
+| `useCors` | `Boolean` | `true` | If this task should use CORS when making GET requests. |
 
 ### Methods
 
@@ -108,11 +109,13 @@ layout: documentation.hbs
 ```js
 var map = new L.Map('map').setView([ 45.543, -122.621 ], 5);
 
-L.esri.Tasks.identifyFeatures('http://sampleserver6.arcgisonline.com/arcgis/rest/services/WorldTimeZones/MapServer')
-            .on(map)
-            .at([45.543, -122.621])
-            .layers('visible:1')
-            .run(function(error, featureCollection, response){
-                console.log("UTC Offset: " + featureCollection.features[0].properties.ZONE);
-            });
+L.esri.Tasks.identifyFeatures({
+    url: 'http://sampleserver6.arcgisonline.com/arcgis/rest/services/WorldTimeZones/MapServer'
+})
+.on(map)
+.at([45.543, -122.621])
+.layers('visible:1')
+.run(function(error, featureCollection, response){
+    console.log("UTC Offset: " + featureCollection.features[0].properties.ZONE);
+});
 ```

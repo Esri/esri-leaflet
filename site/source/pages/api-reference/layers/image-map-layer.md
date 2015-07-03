@@ -74,10 +74,12 @@ Option | Type | Default | Description
             <td>
                 Uses the provided function to create a popup that will identify pixel value(s) whenever the map is clicked. Your function will be passed an object with a `pixel` property that is a <a href="http://geojson.org/geojson-spec.html#point">GeoJSON Point</a> with the pixel value(s) at the clicked location and should return the appropriate HTML. If you do not want to open the popup when there are no results, return <code>false</code>.
 
-<pre class="js"><code>imageMapLayer.bindPopup(function(err, identifyResults, response){
-    var value = results.pixel.properties.value;;
+<pre class="js"><code>
+imageMapLayer.bindPopup(
+  function(err, identifyResults, response){
+    var value = results.pixel.properties.value;
     return (value) ? 'Pixel value: ' + value : false;
-});</code></pre>
+  });</code></pre>
 
                 NOTE: by default, if the layer has a mosaic rule applied, then the same rule will be applied to the identify request. Conversely, if the layer has a rendering rule applied, that rule is **NOT** applied to the layer so that that the raw pixel value can be returned. If you need specific control over how these rules (and/or other identify parameters) are passed to the identify service, use <a href="{{assets}}api-reference/tasks/identify-image.html"><code>L.esri.Tasks.IdentifyImage</code></a>.
             </td>
@@ -162,11 +164,12 @@ Option | Type | Default | Description
             <td><code>this</code></td>
             <td>
                 Returns a new <a href="{{assets}}api-reference/tasks/query.html"><code>L.esri.Tasks.Query</code></a> object that can be used to query this service.
-<pre class="js"><code>imageService.query()
-            .within(latlngbounds)
-            .run(function(error, featureCollection, response){
-              console.log(featureCollection);
-            });</code></pre>
+<pre class="js"><code>
+imageService.query()
+  .within(latlngbounds)
+  .run(function(error, featureCollection, response){
+    console.log(featureCollection);
+});</code></pre>
             </td>
         </tr>
         <tr>
@@ -199,7 +202,7 @@ Option | Type | Default | Description
 | `loading` | [<`LoadingEvent`>]({{assets}}api-reference/events.html#loading-event) | Fires when new features start loading. |
 | `load` | [<`LoadEvent`>]({{assets}}api-reference/events.html#load-event) | Fires when all features in the current bounds of the map have loaded. |
 
-`L.esri.Layer.ImageMapLayer` also fires all  [`L.esri.Service.ImageService`]({{assets}}api-reference/services/image-service.html) events.
+`L.esri.Layers.ImageMapLayer` also fires all  [`L.esri.Services.ImageService`]({{assets}}api-reference/services/image-service.html) events.
 
 ### Example
 

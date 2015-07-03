@@ -5,11 +5,12 @@ EsriLeaflet.Services.Service = L.Evented.extend({
     useCors: EsriLeaflet.Support.CORS
   },
 
-  initialize: function (url, options) {
-    this.url = EsriLeaflet.Util.cleanUrl(url);
+  initialize: function (options) {
+    options = options || {};
     this._requestQueue = [];
     this._authenticating = false;
     L.Util.setOptions(this, options);
+    this.options.url = EsriLeaflet.Util.cleanUrl(this.options.url);
   },
 
   get: function (path, params, callback, context) {
@@ -37,7 +38,7 @@ EsriLeaflet.Services.Service = L.Evented.extend({
 
   _request: function(method, path, params, callback, context){
     this.fire('requeststart', {
-      url: this.url + path,
+      url: this.options.url + path,
       params: params,
       method: method
     }, true);
@@ -52,7 +53,7 @@ EsriLeaflet.Services.Service = L.Evented.extend({
       this._requestQueue.push([method, path, params, callback, context]);
       return;
     } else {
-      var url = (this.options.proxy) ? this.options.proxy + '?' + this.url + path : this.url + path;
+      var url = (this.options.proxy) ? this.options.proxy + '?' + this.options.url + path : this.options.url + path;
 
       if((method === 'get' || method === 'request') && !this.options.useCors){
         return EsriLeaflet.Request.get.JSONP(url, params, wrappedCallback);
@@ -80,7 +81,7 @@ EsriLeaflet.Services.Service = L.Evented.extend({
 
         if(error) {
           this.fire('requesterror', {
-            url: this.url + path,
+            url: this.options.url + path,
             params: params,
             message: error.message,
             code: error.code,
@@ -88,7 +89,7 @@ EsriLeaflet.Services.Service = L.Evented.extend({
           }, true);
         } else {
           this.fire('requestsuccess', {
-            url: this.url + path,
+            url: this.options.url + path,
             params: params,
             response: response,
             method: method
@@ -96,7 +97,7 @@ EsriLeaflet.Services.Service = L.Evented.extend({
         }
 
         this.fire('requestend', {
-          url: this.url + path,
+          url: this.options.url + path,
           params: params,
           method: method
         }, true);
@@ -115,6 +116,6 @@ EsriLeaflet.Services.Service = L.Evented.extend({
 
 });
 
-EsriLeaflet.Services.service = function(url, params){
-  return new EsriLeaflet.Services.Service(url, params);
+EsriLeaflet.Services.service = function(params){
+  return new EsriLeaflet.Services.Service(params);
 };

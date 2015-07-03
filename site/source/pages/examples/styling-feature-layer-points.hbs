@@ -41,7 +41,7 @@ layout: example.hbs
   };
 
   L.esri.basemapLayer('Streets').addTo(map);
-  L.esri.featureLayer('http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Trimet_Transit_Stops/FeatureServer/0', {
+  L.esri.featureLayer('https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Trimet_Transit_Stops/FeatureServer/0', {
    pointToLayer: function (geojson, latlng) {
       return L.marker(latlng, {
         icon: icons[geojson.properties.direction.toLowerCase()]

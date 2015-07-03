@@ -25,7 +25,8 @@ EsriLeaflet.Layers.FeatureGrid = L.Layer.extend({
   getEvents: function () {
     var events = {
       viewreset: this._reset,
-      moveend: this._update
+      moveend: this._update,
+      zoomend : this._onZoom
     };
 
     return events;
@@ -39,6 +40,20 @@ EsriLeaflet.Layers.FeatureGrid = L.Layer.extend({
   removeFrom: function(map){
     map.removeLayer(this);
     return this;
+  },
+
+  _onZoom : function () {
+    var zoom = this._map.getZoom();
+
+    if (zoom > this.options.maxZoom ||
+        zoom < this.options.minZoom) {
+      this.removeFrom(this._map);
+      this._map.addEventListener('zoomend', this.getEvents().zoomend, this);
+    } else if (!this._map.hasLayer(this)) {
+      this._map.removeEventListener('zoomend', this.getEvents().zoomend, this);
+      this.addTo(this._map);
+    }
+
   },
 
   _reset: function () {
@@ -86,18 +101,23 @@ EsriLeaflet.Layers.FeatureGrid = L.Layer.extend({
 
     var bounds = this._map.getPixelBounds(),
         zoom = this._map.getZoom(),
-        cellSize = this._getCellSize();
+        cellSize = this._getCellSize(),
+        cellPadding = [cellSize/2,cellSize/2];
+        // cellPadding = [0,0]
 
     if (zoom > this.options.maxZoom ||
         zoom < this.options.minZoom) { return; }
 
     // cell coordinates range for the current view
-    var cellBounds = L.bounds(
-      bounds.min.divideBy(cellSize).floor(),
-      bounds.max.divideBy(cellSize).floor());
+    var topLeft = bounds.min.subtract(cellPadding).divideBy(cellSize).floor();
+    topLeft.x = Math.max(topLeft.x, 0);
+    topLeft.y = Math.max(topLeft.y, 0);
 
-    this._addCells(cellBounds);
+    var cellBounds = L.bounds(topLeft, bounds.max.add(cellPadding).divideBy(cellSize).floor());
+
+    // remove any present cells that are off the specified bounds
     this._removeOtherCells(cellBounds);
+    this._addCells(cellBounds);
   },
 
   _addCells: function (bounds) {

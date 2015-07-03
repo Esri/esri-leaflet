@@ -1,5 +1,9 @@
 EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
 
+  options: {
+    cacheLayers: true
+  },
+
   /**
    * Constructor
    */
@@ -17,11 +21,13 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
    */
 
   onAdd: function(map){
+    map.on('zoomstart zoomend', function(e){
+      this._zooming = (e.type === 'zoomstart');
+    }, this);
     return EsriLeaflet.Layers.FeatureManager.prototype.onAdd.call(this, map);
   },
 
   onRemove: function(map){
-
     for (var i in this._layers) {
       map.removeLayer(this._layers[i]);
     }
@@ -33,8 +39,43 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
     return L.GeoJSON.geometryToLayer(geojson, this.options);
   },
 
+  _updateLayer: function(layer, geojson){
+    // convert the geojson coordinates into a Leaflet LatLng array/nested arrays
+    // pass it to setLatLngs to update layer geometries
+    var latlngs = [];
+    var coordsToLatLng = this.options.coordsToLatLng || L.GeoJSON.coordsToLatLng;
+
+    // copy new attributes, if present
+    if (geojson.properties) {
+      layer.feature.properties = geojson.properties;
+    }
+
+    switch(geojson.geometry.type){
+      case 'Point':
+        latlngs = L.GeoJSON.coordsToLatLng(geojson.geometry.coordinates);
+        layer.setLatLng(latlngs);
+        break;
+      case 'LineString':
+        latlngs = L.GeoJSON.coordsToLatLngs(geojson.geometry.coordinates, 0, coordsToLatLng);
+        layer.setLatLngs(latlngs);
+        break;
+      case 'MultiLineString':
+        latlngs = L.GeoJSON.coordsToLatLngs(geojson.geometry.coordinates, 1, coordsToLatLng);
+        layer.setLatLngs(latlngs);
+        break;
+      case 'Polygon':
+        latlngs = L.GeoJSON.coordsToLatLngs(geojson.geometry.coordinates, 1, coordsToLatLng);
+        layer.setLatLngs(latlngs);
+        break;
+      case 'MultiPolygon':
+        latlngs = L.GeoJSON.coordsToLatLngs(geojson.geometry.coordinates, 2, coordsToLatLng);
+        layer.setLatLngs(latlngs);
+        break;
+    }
+  },
+
   /**
-   * Feature Managment Methods
+   * Feature Management Methods
    */
 
   createLayers: function(features){
@@ -49,18 +90,24 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
         this._map.addLayer(layer);
       }
 
-      if (layer && layer.setLatLngs) {
-        var updateGeo = this.createNewLayer(geojson);
-        layer.setLatLngs(updateGeo.getLatLngs());
+      // update geomerty if neccessary
+      if (layer && (layer.setLatLngs || layer.setLatLng)) {
+        this._updateLayer(layer, geojson);
       }
 
       if(!layer){
-
         newLayer =  this.createNewLayer(geojson);
         newLayer.feature = geojson;
-        newLayer.defaultOptions = newLayer.options;
+        if (this.options.style) {
+          newLayer._originalStyle = this.options.style;
+        }
 
-        // bubble events from layers to this
+        // circleMarker check
+        else if (newLayer.setStyle) {
+          newLayer._originalStyle = newLayer.options;
+        }
+
+        // bubble events from individual layers to the feature layer
         newLayer.addEventParent(this);
 
         // bind a popup if we have one
@@ -119,6 +166,50 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
     }
   },
 
+  cellEnter: function(bounds, coords){
+    if(!this._zooming){
+      EsriLeaflet.Util.requestAnimationFrame(L.Util.bind(function(){
+        var cacheKey = this._cacheKey(coords);
+        var cellKey = this._cellCoordsToKey(coords);
+        var layers = this._cache[cacheKey];
+        if(this._activeCells[cellKey] && layers){
+          this.addLayers(layers);
+        }
+      }, this));
+    }
+  },
+
+  cellLeave: function(bounds, coords){
+    if(!this._zooming){
+      EsriLeaflet.Util.requestAnimationFrame(L.Util.bind(function(){
+        var cacheKey = this._cacheKey(coords);
+        var cellKey = this._cellCoordsToKey(coords);
+        var layers = this._cache[cacheKey];
+        var mapBounds = this._map.getBounds();
+        if(!this._activeCells[cellKey] && layers){
+          var removable = true;
+
+          for (var i = 0; i < layers.length; i++) {
+            var layer = this._layers[layers[i]];
+            if(layer && layer.getBounds && mapBounds.intersects(layer.getBounds())){
+              removable = false;
+            }
+          }
+
+          if(removable){
+            this.removeLayers(layers, !this.options.cacheLayers);
+          }
+
+          if(!this.options.cacheLayers && removable){
+            delete this._cache[cacheKey];
+            delete this._cells[cellKey];
+            delete this._activeCells[cellKey];
+          }
+        }
+      }, this));
+    }
+  },
+
   /**
    * Styling Methods
    */
@@ -127,8 +218,7 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
     var layer = this._layers[id];
 
     if(layer){
-      layer.options = layer.defaultOptions;
-      this.setFeatureStyle(layer.feature.id, this.options.style);
+      this.setFeatureStyle(layer.feature.id, layer._originalStyle);
     }
 
     return this;
@@ -148,9 +238,17 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
     if (typeof style === 'function') {
       style = style(layer.feature);
     }
-    if (layer.setStyle) {
+
+    if (!style && !layer.defaultOptions) {
+      style = L.Path.prototype.options;
+      style.fill = true; //not set by default
+    }
+
+    if (layer && layer.setStyle) {
       layer.setStyle(style);
     }
+
+    return this;
   },
 
   /**
@@ -198,6 +296,56 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
 
   getFeature: function (id) {
     return this._layers[id];
+  },
+
+  bringToBack: function () {
+    this.eachFeature(function (layer) {
+      if(layer.bringToBack) {
+        layer.bringToBack();
+      }
+    });
+  },
+
+  bringToFront: function () {
+    this.eachFeature(function (layer) {
+      if(layer.bringToFront) {
+        layer.bringToFront();
+      }
+    });
+  },
+
+  redraw: function (id) {
+    if (id) {
+      this._redraw(id);
+    }
+    return this;
+  },
+
+  _redraw: function(id) {
+    var layer = this._layers[id];
+    var geojson = layer.feature;
+
+    // if this looks like a marker
+    if (layer && layer.setIcon && this.options.pointToLayer) {
+      // update custom symbology, if necessary
+      if (this.options.pointToLayer){
+        var getIcon = this.options.pointToLayer(geojson, L.latLng(geojson.geometry.coordinates[1], geojson.geometry.coordinates[0]));
+        var updatedIcon = getIcon.options.icon;
+        layer.setIcon(updatedIcon);
+      }
+    }
+
+    // looks like a vector marker (circleMarker)
+    if (layer && layer.setStyle && this.options.pointToLayer) {
+      var getStyle = this.options.pointToLayer(geojson, L.latLng(geojson.geometry.coordinates[1], geojson.geometry.coordinates[0]));
+      var updatedStyle = getStyle.options;
+      this.setFeatureStyle(geojson.id, updatedStyle);
+    }
+
+    // looks like a path (polygon/polyline)
+    if(layer && layer.setStyle && this.options.style) {
+      this.resetStyle(geojson.id);
+    }
   }
 });
 

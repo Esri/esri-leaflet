@@ -24,7 +24,8 @@ layout: example.hbs
   L.esri.basemapLayer('Gray').addTo(map);
 
   var zipcodes = L.esri.featureLayer('http://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_ZIP_Codes/FeatureServer/0', {
-    simplifyFactor: 0.25,
+    simplifyFactor: 0.35,
+    precision: 5,
     fields: ['FID', 'ZIP', 'PO_NAME'],
     style: function(feature) {
       return {
@@ -38,13 +39,13 @@ layout: example.hbs
   var oldId;
 
   zipcodes.on('mouseout', function(e){
-    document.getElementById('info-pane').innerText = 'Hover to Inspect';
+    document.getElementById('info-pane').innerHTML = 'Hover to Inspect';
   });
 
   zipcodes.on('mouseover', function(e){
     zipcodes.resetStyle(oldId);
     oldId = e.layer.feature.id;
-    document.getElementById('info-pane').innerText = e.layer.feature.properties.ZIP + ' ' + e.layer.feature.properties.PO_NAME;
+    document.getElementById('info-pane').innerHTML = e.layer.feature.properties.ZIP + ' ' + e.layer.feature.properties.PO_NAME;
     e.layer.bringToFront();
     zipcodes.setFeatureStyle(e.layer.feature.id, {
       color: '#9D78D2',

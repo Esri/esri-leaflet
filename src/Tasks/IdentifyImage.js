@@ -2,7 +2,9 @@ EsriLeaflet.Tasks.IdentifyImage = EsriLeaflet.Tasks.Identify.extend({
   setters: {
     'setMosaicRule': 'mosaicRule',
     'setRenderingRule': 'renderingRule',
-    'returnCatalogItems': 'returnCatalogItems'
+    'setPixelSize': 'pixelSize',
+    'returnCatalogItems': 'returnCatalogItems',
+    'returnGeometry': 'returnGeometry'
   },
 
   params: {
@@ -28,11 +30,6 @@ EsriLeaflet.Tasks.IdentifyImage = EsriLeaflet.Tasks.Identify.extend({
 
   getRenderingRule: function() {
     return this.params.renderingRule;
-  },
-
-  setPixelSize: function(pixelSize) {
-    this.params.pixelSize = pixelSize.join ? pixelSize.join(',') : pixelSize;
-    return this;
   },
 
   getPixelSize: function() {
@@ -91,6 +88,6 @@ EsriLeaflet.Tasks.IdentifyImage = EsriLeaflet.Tasks.Identify.extend({
 
 });
 
-EsriLeaflet.Tasks.identifyImage = function(url, params){
-  return new EsriLeaflet.Tasks.IdentifyImage(url, params);
+EsriLeaflet.Tasks.identifyImage = function(params){
+  return new EsriLeaflet.Tasks.IdentifyImage(params);
 };

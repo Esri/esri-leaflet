@@ -5,7 +5,7 @@ layout: documentation.hbs
 
 # {{page.data.title}}
 
-Quickly access Esri published map tiles from on ArcGIS Online in Leaflet.
+Quickly access Esri published map tiles from ArcGIS Online or ArcGIS Server in Leaflet.
 
 Inherits from [`L.TileLayer`](http://leafletjs.com/reference.html#tilelayer)
 
@@ -21,7 +21,7 @@ Inherits from [`L.TileLayer`](http://leafletjs.com/reference.html#tilelayer)
     <tbody>
         <tr>
             <td><code class="nobr">new L.esri.Layers.BasemapLayer({{{param 'String' 'key'}}}, {{{param 'Object' 'options'}}})</code><br><br><code class="nobr">L.esri.Layers.basemapLayer({{{param 'String' 'key'}}}, {{{param 'Object' 'options'}}})</code><br><br><code class="nobr">new L.esri.BasemapLayer({{{param 'String' 'key'}}}, {{{param 'Object' 'options'}}})</code><br><br><code class="nobr">L.esri.basemapLayer({{{param 'String' 'key'}}}, {{{param 'Object' 'options'}}})</code></td>
-            <td><code>key</code> type of base map you want to add. The <code>options</code> parameter can accept the same [options](http://leafletjs.com/reference.html#tilelayer) as `L.TileLayer`.</td>
+            <td><code>key</code> refers to the specific basemap you'd like to add. The <code>options</code> parameter can accept the same [options](http://leafletjs.com/reference.html#tilelayer) as `L.TileLayer`.</td>
         </tr>
     </tbody>
 </table>
@@ -38,6 +38,7 @@ These maps have worldwide coverage at a variety of zoom levels.
 * `DarkGray`
 * `Imagery`
 * `ShadedRelief`
+* `Terrain`
 
 ##### Optional Labels
 
@@ -46,9 +47,10 @@ These are optional layers that add extra text labels to the basemaps.
 * `OceansLabels` - Labels to pair with the `Oceans` basemap
 * `GrayLabels` - Labels to pair with the `Gray` basemap
 * `DarkGrayLabels` - Labels to pair with the `DarkGray` basemap
-* `ImageryLabels` - Labels and political boundaries to pair with the `Imagery` basemap
-* `ImageryTransportation` - A street map for pairing with the `Imagery` basemap=
+* `ImageryLabels` - Labels including political boundaries to pair with the `Imagery` basemap
+* `ImageryTransportation` - Street map labels for pairing with the `Imagery` basemap
 * `ShadedReliefLabels` - Labels for pairing with the `ShadedRelief` base map
+* `TerrainLabels` - Labels for pairing with the `Terrain` base map
 
 ### Options
 

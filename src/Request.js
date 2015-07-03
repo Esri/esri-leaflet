@@ -7,7 +7,7 @@
   function serialize(params){
     var data = '';
 
-    params.f = 'json';
+    params.f = params.f || 'json';
 
     for (var key in params){
       if(params.hasOwnProperty(key)){
@@ -19,7 +19,9 @@
           data += '&';
         }
 
-        if(type === '[object Array]' || type === '[object Object]'){
+        if (type === '[object Array]'){
+          value = (Object.prototype.toString.call(param[0]) === '[object Object]') ? JSON.stringify(param) : param.join(',');
+        } else if (type === '[object Object]') {
           value = JSON.stringify(param);
         } else if (type === '[object Date]'){
           value = param.valueOf();
@@ -38,6 +40,8 @@
     var httpRequest = new XMLHttpRequest();
 
     httpRequest.onerror = function(e) {
+      httpRequest.onreadystatechange = L.Util.falseFn;
+
       callback.call(context, {
         error: {
           code: 500,
@@ -57,7 +61,7 @@
           response = null;
           error = {
             code: 500,
-            message: 'Could not parse response as JSON.'
+            message: 'Could not parse response as JSON. This could also be caused by a CORS or XMLHttpRequest error.'
           };
         }
 
@@ -65,6 +69,8 @@
           error = response.error;
           response = null;
         }
+
+        httpRequest.onerror = L.Util.falseFn;
 
         callback.call(context, error, response);
       }
@@ -97,14 +103,13 @@
 
       // request is longer then 2000 characters and the browser does not support CORS, log a warning
       } else {
-        if(console && console.warn){
-          console.warn('a request to ' + url + ' was longer then 2000 characters and this browser cannot make a cross-domain post request. Please use a proxy http://esri.github.io/esri-leaflet/api-reference/request.html');
-          return;
-        }
+        EsriLeaflet.Util.warn('a request to ' + url + ' was longer then 2000 characters and this browser cannot make a cross-domain post request. Please use a proxy http://esri.github.io/esri-leaflet/api-reference/request.html');
+        return;
       }
 
       return httpRequest;
     },
+
     post: {
       XMLHTTP: function (url, params, callback, context) {
         var httpRequest = createRequest(callback, context);
@@ -176,10 +181,10 @@
     }
   };
 
-  // Choose the correct AJAX handler depending on CORS support
+  // choose the correct AJAX handler depending on CORS support
   EsriLeaflet.get = (EsriLeaflet.Support.CORS) ? EsriLeaflet.Request.get.CORS : EsriLeaflet.Request.get.JSONP;
 
-  // Always use XMLHttpRequest for posts
+  // always use XMLHttpRequest for posts
   EsriLeaflet.post = EsriLeaflet.Request.post.XMLHTTP;
 
   // expose a common request method the uses GET\POST based on request length

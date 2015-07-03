@@ -1,6 +1,6 @@
 ---
 title: Non-mercator projection
-description: Using non mercator tiles with <code>L.esri.Layers.TiledMapLayer</code> with the <a href="https://github.com/kartena/Proj4Leaflet">Proj4Leaflet</a> plugin. <br><br> <strong>This demo should be implimented at your own risk. Esri Leaflet only supports tiles that have been published in Web Mercator Auxiliary Sphere tiling scheme (WKID 102100/3857) at the default scales and resolutions. Strong knowlage of projections, spatial references and tiling schemes is required for this.</strong>
+description: Using non mercator tiles with <code>L.esri.Layers.TiledMapLayer</code> with the <a href="https://github.com/kartena/Proj4Leaflet">Proj4Leaflet</a> plugin. <br><br> <strong>This demo should be implemented at your own risk. Esri Leaflet only supports tiles that have been published in Web Mercator Auxiliary Sphere tiling scheme (WKID 102100/3857) at the default scales and resolutions. Strong knowledge of projections, spatial references and tiling schemes is required for this.</strong>
 layout: example.hbs
 ---
 
@@ -10,9 +10,13 @@ layout: example.hbs
 <div id="map"></div>
 
 <script>
-  // create new Proj4Leaflet CRS
+  /*
+    create new Proj4Leaflet CRS:
+    1. Proj4 and WKT definitions can be found at sites like http://epsg.io
+    2. appropriate values to supply to the resolution and origin constructor options can be found in the ArcGIS Server RESTful tile server endpoint (ex: http://mapserv.utah.gov/arcgis/rest/services/BaseMaps/Terrain/MapServer)
+  */
   var crs = new L.Proj.CRS('EPSG:26912', '+proj=utm +zone=12 +ellps=GRS80 +datum=NAD83 +units=m +no_defs', {
-    transformation: new L.Transformation(1, 5120900, -1, 9998100),
+    origin: [-5120900, 9998100],
     resolutions: [
       4891.96999883583,
       2445.98499994708,
@@ -32,11 +36,13 @@ layout: example.hbs
     ]
   });
 
-  // pass crs into map constructor
   var map = new L.Map('map', {
     crs: crs
   }).setView([40.381, -111.859], 5);
 
+  /*
+    The min/maxZoom values provided should match the actual cache thats been published. This information can be retrieved from the service endpoint directly.
+  */
   L.esri.tiledMapLayer('http://mapserv.utah.gov/arcgis/rest/services/BaseMaps/Terrain/MapServer', {
     maxZoom: 14,
     minZoom: 0,

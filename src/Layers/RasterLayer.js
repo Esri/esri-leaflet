@@ -3,7 +3,8 @@ EsriLeaflet.Layers.RasterLayer =  L.Layer.extend({
   options: {
     opacity: 1,
     position: 'front',
-    f: 'image'
+    f: 'image',
+    useCors: EsriLeaflet.Support.CORS
   },
 
   onAdd: function (map) {
@@ -15,6 +16,17 @@ EsriLeaflet.Layers.RasterLayer =  L.Layer.extend({
       var sr = map.options.crs.code.split(':')[1];
       this.options.bboxSR = sr;
       this.options.imageSR = sr;
+    }
+
+    map.on('moveend', this._update, this);
+
+    // if we had an image loaded and it matches the
+    // current bounds show the image otherwise remove it
+    if(this._currentImage && this._currentImage._bounds.equals(this._map.getBounds())){
+      map.addLayer(this._currentImage);
+    } else if(this._currentImage) {
+      this._map.removeLayer(this._currentImage);
+      this._currentImage = null;
     }
 
     this._update();
@@ -47,7 +59,7 @@ EsriLeaflet.Layers.RasterLayer =  L.Layer.extend({
     return this;
   },
 
-  onRemove: function () {
+  onRemove: function (map) {
     if (this._currentImage) {
       this._map.removeLayer(this._currentImage);
     }
@@ -57,8 +69,8 @@ EsriLeaflet.Layers.RasterLayer =  L.Layer.extend({
       this._map.off('dblclick', this._resetPopupState, this);
     }
 
-    // @TODO remove at Leaflet 0.8
-    this._map.removeEventListener(this.getEvents(), this);
+    this._map.off('moveend', this._update, this);
+    this._map = null;
   },
 
   getEvents: function(){
@@ -119,41 +131,60 @@ EsriLeaflet.Layers.RasterLayer =  L.Layer.extend({
   },
 
   _renderImage: function(url, bounds){
-    var image = new L.ImageOverlay(url, bounds, {
-      opacity: 0
-    }).addTo(this._map);
+    if(this._map){
+      // create a new image overlay and add it to the map
+      // to start loading the image
+      // opacity is 0 while the image is loading
+      var image = new L.ImageOverlay(url, bounds, {
+        opacity: 0,
+        crossOrigin: this.options.useCors
+      }).addTo(this._map);
 
-    image.once('load', function(e){
-      var newImage = e.target;
-      var oldImage = this._currentImage;
+      // once the image loads
+      image.once('load', function(e){
+        var newImage = e.target;
+        var oldImage = this._currentImage;
 
-      if(newImage._bounds.equals(bounds)){
-        this._currentImage = newImage;
+        // if the bounds of this image matches the bounds that
+        // _renderImage was called with and we have a map with the same bounds
+        // hide the old image if there is one and set the opacity
+        // of the new image otherwise remove the new image
+        if(newImage._bounds.equals(bounds) && newImage._bounds.equals(this._map.getBounds())){
+          this._currentImage = newImage;
 
-        if(this.options.position === 'front'){
-          this.bringToFront();
+          if(this.options.position === 'front'){
+            this.bringToFront();
+          } else {
+            this.bringToBack();
+          }
+
+          if(this._map && this._currentImage._map){
+            this._currentImage.setOpacity(this.options.opacity);
+          } else {
+            this._currentImage._map.removeLayer(this._currentImage);
+          }
+
+          if(oldImage && this._map) {
+            this._map.removeLayer(oldImage);
+          }
+
+          if(oldImage && oldImage._map){
+            oldImage._map.removeLayer(oldImage);
+          }
         } else {
-          this.bringToBack();
+          this._map.removeLayer(newImage);
         }
 
-        this._currentImage.setOpacity(this.options.opacity);
+        this.fire('load', {
+          bounds: bounds
+        });
 
-        if(oldImage){
-          this._map.removeLayer(oldImage);
-        }
-      } else {
-        this._map.removeLayer(newImage);
-      }
+      }, this);
 
-      this.fire('load', {
+      this.fire('loading', {
         bounds: bounds
       });
-
-    }, this);
-
-    this.fire('loading', {
-      bounds: bounds
-    });
+    }
   },
 
   _update: function () {
@@ -176,6 +207,7 @@ EsriLeaflet.Layers.RasterLayer =  L.Layer.extend({
       return;
     }
     var params = this._buildExportParams();
+
     this._requestExport(params, bounds);
   },
 

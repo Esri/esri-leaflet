@@ -186,7 +186,8 @@ module.exports = function(grunt) {
         files: ['site/source/**/*.md', 'site/source/**/*.hbs'],
         tasks: ['assemble:dev'],
         options: {
-          nospawn: true
+          nospawn: true,
+          livereload: true
         }
       }
     },
@@ -262,7 +263,8 @@ module.exports = function(grunt) {
       },
       run: {
         reporters: ['progress'],
-        browsers: browsers
+        browsers: browsers,
+        logLevel: 'ERROR'
       },
       coverage: {
         reporters: ['progress', 'coverage'],
@@ -313,6 +315,7 @@ module.exports = function(grunt) {
       },
       dev: {
         options: {
+          data: 'site/data/*.json',
           assets: 'site/build/'
         },
         files: [{
@@ -370,28 +373,6 @@ module.exports = function(grunt) {
       src: ['**']
     },
 
-    s3: {
-      options: {
-        key: '<%= aws.key %>',
-        secret: '<%= aws.secret %>',
-        bucket: '<%= aws.bucket %>',
-        access: 'public-read',
-        headers: {
-          // 1 Year cache policy (1000 * 60 * 60 * 24 * 365)
-          'Cache-Control': 'max-age=630720000, public',
-          'Expires': new Date(Date.now() + 63072000000).toUTCString()
-        }
-      },
-      upload: {
-        upload: [
-          {
-            src: 'dist/**/*',
-            dest: 'esri-leaflet/<%= pkg.version %>/'
-          }
-        ]
-      }
-    },
-
     releaseable: {
       release: {
         options: {
@@ -399,23 +380,17 @@ module.exports = function(grunt) {
           dryRun: grunt.option('dryRun') ? grunt.option('dryRun') : false,
           silent: false
         },
-        src: [ 'dist/**/*' ]
+        src: [ 'dist/**/*.js','dist/**/*.map' ]
       }
     }
   });
-
-  var awsExists = fs.existsSync(process.env.HOME + '/esri-leaflet-s3.json');
-
-  if (awsExists) {
-    grunt.config.set('aws', grunt.file.readJSON(process.env.HOME + '/esri-leaflet-s3.json'));
-  }
 
   // Development Tasks
   grunt.registerTask('default', ['concurrent:dev']);
   grunt.registerTask('build', ['jshint', 'karma:coverage', 'concat', 'uglify']);
   grunt.registerTask('test', ['jshint', 'karma:run']);
   grunt.registerTask('prepublish', ['concat', 'uglify']);
-  grunt.registerTask('release', ['releaseable', 's3']);
+  grunt.registerTask('release', ['releaseable']);
   grunt.registerTask('test:sauce', ['karma:sauce']);
 
   // Documentation Site Tasks

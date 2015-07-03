@@ -49,7 +49,22 @@ describe('L.esri.Layers.BasemapLayer', function () {
     for (var i = 0, len = testmaps.length; i < len; i++) {
       var name = testmaps[i];
       expect(L.esri.basemapLayer(name)).to.be.instanceof(L.esri.Layers.BasemapLayer);
-      expect(L.esri.basemapLayer(name)._url).to.eql(L.esri.BasemapLayer.TILES[name].urlTemplate);
+      expect(L.esri.basemapLayer(name)._url).to.equal(L.esri.BasemapLayer.TILES[name].urlTemplate);
+    }
+  });
+
+  it('can survive adding/removing basemaps w/ labels', function () {
+    var moremaps = ['Oceans', 'DarkGray', 'Gray', 'Imagery', 'ShadedRelief', 'Terrain'];
+    for (var i = 0, len = moremaps.length; i < len; i++) {
+      var layer = L.esri.basemapLayer(moremaps[i]).addTo(map);
+      var layerWithLabels = L.esri.basemapLayer(moremaps[i] +'Labels').addTo(map);
+      expect(map.hasLayer(layer)).to.equal(true);
+      expect(map.hasLayer(layerWithLabels)).to.equal(true);
+
+      map.removeLayer(layer);
+      map.removeLayer(layerWithLabels);
+      expect(map.hasLayer(layer)).to.equal(false);
+      expect(map.hasLayer(layerWithLabels)).to.equal(false);
     }
   });
 
@@ -67,28 +82,5 @@ describe('L.esri.Layers.BasemapLayer', function () {
 
   it('should have a L.esri.Layers.basemapLayer alias', function(){
     expect(L.esri.Layers.basemapLayer('Topographic')).to.be.instanceof(L.esri.Layers.BasemapLayer);
-  });
-
-  it('should dynamically update tile attribution', function(){
-    var spy = sinon.spy();
-    var layer = new L.esri.Layers.BasemapLayer('Topographic');
-    layer.on('attributionupdated', spy);
-    layer.addTo(map);
-    server.respond();
-
-    map.setView([37.75, -122.45], 17);
-
-    clock.tick(1000);
-
-    expect(spy).to.have.been.calledWith({
-      type: 'attributionupdated',
-      target: layer,
-      attribution: 'Esri'
-    });
-    expect(spy).to.have.been.calledWith({
-      type: 'attributionupdated',
-      target: layer,
-      attribution: 'City & County of San Francisco, Esri'
-    });
   });
 });

@@ -18,7 +18,7 @@ EsriLeaflet.Services.FeatureLayer = EsriLeaflet.Services.Service.extend({
     }, function(error, response){
       var result = (response && response.addResults) ? response.addResults[0] : undefined;
       if(callback){
-        callback.call(this, error || response.addResults[0].error, result);
+        callback.call(context, error || response.addResults[0].error, result);
       }
     }, context);
   },
@@ -45,10 +45,21 @@ EsriLeaflet.Services.FeatureLayer = EsriLeaflet.Services.Service.extend({
         callback.call(context, error || response.deleteResults[0].error, result);
       }
     }, context);
-  }
+  },
 
+  deleteFeatures: function(ids, callback, context) {
+    return this.post('deleteFeatures', {
+      objectIds: ids
+    }, function(error, response){
+      // pass back the entire array
+      var result = (response && response.deleteResults) ? response.deleteResults : undefined;
+      if(callback){
+        callback.call(context, error || response.deleteResults[0].error, result);
+      }
+    }, context);
+  }
 });
 
-EsriLeaflet.Services.featureLayer = function(url, options) {
-  return new EsriLeaflet.Services.FeatureLayer(url, options);
+EsriLeaflet.Services.featureLayer = function(options) {
+  return new EsriLeaflet.Services.FeatureLayer(options);
 };

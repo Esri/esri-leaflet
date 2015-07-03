@@ -15,6 +15,7 @@ Icon
 
 # Node
 node_modules
+npm-debug.log
 
 # Coverage
 coverage
@@ -31,5 +32,8 @@ debug/*.html
 site/build
 
 # Built Files
-dist/**/*.js
-dist/**/*.map
+dist/*
+!dist/README.md
+
+# Custom Gruntfile (for custom builds)
+Gruntfile.custom.js

@@ -21,7 +21,7 @@ describe('L.esri.Tasks.IdentifyFeatures', function () {
   var latlng = map.getCenter();
   var rawLatlng = [45.51, -122.66];
 
-  var url = 'http://services.arcgis.com/mock/arcgis/rest/services/MockMapService/MapServer/';
+  var mapServiceUrl = 'http://services.arcgis.com/mock/arcgis/rest/services/MockMapService/MapServer/';
 
   var sampleResponse = {
     'results': [
@@ -58,13 +58,14 @@ describe('L.esri.Tasks.IdentifyFeatures', function () {
         'OBJECTID': 1,
         'Name': 'Site'
       },
-      'id': 1
+      'id': 1,
+      'layerId': 0
     }]
   };
 
   beforeEach(function(){
     server = sinon.fakeServer.create();
-    task = L.esri.Tasks.identifyFeatures(url).on(map).at(latlng);
+    task = L.esri.Tasks.identifyFeatures({url: mapServiceUrl}).on(map).at(latlng);
   });
 
   afterEach(function(){
@@ -78,7 +79,7 @@ describe('L.esri.Tasks.IdentifyFeatures', function () {
       done();
     });
 
-    expect(request.url).to.contain(url + 'identify');
+    expect(request.url).to.contain(mapServiceUrl + 'identify');
     expect(request.url).to.contain('sr=4326');
     expect(request.url).to.contain('layers=all');
     expect(request.url).to.contain('tolerance=3');
@@ -197,7 +198,7 @@ describe('L.esri.Tasks.IdentifyFeatures', function () {
   });
 
   it('should use a service to execute the request', function(done){
-    var service = L.esri.Services.mapService(url);
+    var service = L.esri.Services.mapService({url: mapServiceUrl});
 
 
     var request = service.identify().on(map).at(latlng).run(function(error, featureCollection, raw){
@@ -206,7 +207,7 @@ describe('L.esri.Tasks.IdentifyFeatures', function () {
       done();
     });
 
-    expect(request.url).to.contain(url + 'identify');
+    expect(request.url).to.contain(mapServiceUrl + 'identify');
     expect(request.url).to.contain('sr=4326');
     expect(request.url).to.contain('layers=all');
     expect(request.url).to.contain('tolerance=3');
@@ -220,7 +221,7 @@ describe('L.esri.Tasks.IdentifyFeatures', function () {
   });
 
   it('should use a service to execute the request with simple LatLng', function(done){
-    var service = L.esri.Services.mapService(url);
+    var service = L.esri.Services.mapService({url: mapServiceUrl});
 
 
     var request = service.identify().on(map).at(rawLatlng).run(function(error, featureCollection, raw){
@@ -229,7 +230,7 @@ describe('L.esri.Tasks.IdentifyFeatures', function () {
       done();
     });
 
-    expect(request.url).to.contain(url + 'identify');
+    expect(request.url).to.contain(mapServiceUrl + 'identify');
     expect(request.url).to.contain('sr=4326');
     expect(request.url).to.contain('layers=all');
     expect(request.url).to.contain('tolerance=3');
@@ -238,6 +239,18 @@ describe('L.esri.Tasks.IdentifyFeatures', function () {
     expect(request.url).to.match(/mapExtent=\-122\.\d+%2C45\.\d+%2C\-122\.\d+%2C45\.\d+/g);
     expect(request.url).to.contain('geometryType=esriGeometryPoint');
     expect(request.url).to.contain('geometry=-122.66%2C45.51');
+
+    request.respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, JSON.stringify(sampleResponse));
+  });
+
+  it('should return layerId of features in response', function(done){
+    var service = L.esri.Services.mapService({url: mapServiceUrl});
+
+    var request = service.identify().on(map).at(rawLatlng).run(function(error, featureCollection, raw){
+      expect(featureCollection.features[0].layerId).to.deep.equal(0);
+      expect(raw).to.deep.equal(sampleResponse);
+      done();
+    });
 
     request.respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, JSON.stringify(sampleResponse));
   });

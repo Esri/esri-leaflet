@@ -36,7 +36,8 @@ layout: example.hbs
     L.esri.basemapLayer('Gray').addTo(map);
 
     var hillshade = L.esri.imageMapLayer('http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Earthquakes/CaliforniaDEM/ImageServer', {
-      renderingRule: renderingRule
+      renderingRule: renderingRule,
+      useCors: false
     }).addTo(map);
 
     var identifiedPixel;
@@ -44,11 +45,11 @@ layout: example.hbs
 
     map.on('click', function (e) {
         if(identifiedPixel){
-            pane.innerText = 'Loading';
+            pane.innerHTML = 'Loading';
         }
         hillshade.identify().at(e.latlng).run(function(error, results){
             identifiedPixel = results.pixel;
-            pane.innerText = identifiedPixel.properties.value + 'm';
+            pane.innerHTML = identifiedPixel.properties.value + 'm';
         });
     });
 

@@ -91,7 +91,20 @@ describe('L.esri.Request', function () {
     requests[0].respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, JSON.stringify(sampleResponse));
   });
 
-  it('should serialize Arrays as JSON', function(done){
+  it('should serialize arrays of objects as JSON', function(done){
+    L.esri.Request.get.CORS('http://services.arcgisonline.com/ArcGIS/rest/info', {
+      object: [{foo:'bar'}]
+    }, function(error, response){
+      expect(response).to.deep.equal(sampleResponse);
+      done();
+    });
+
+    expect(requests[0].url).to.equal('http://services.arcgisonline.com/ArcGIS/rest/info?object=%5B%7B%22foo%22%3A%22bar%22%7D%5D&f=json');
+    expect(requests[0].method).to.equal('GET');
+    requests[0].respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, JSON.stringify(sampleResponse));
+  });
+
+  it('should serialize arrays of non objects as comma seperated strings', function(done){
     L.esri.Request.get.CORS('http://services.arcgisonline.com/ArcGIS/rest/info', {
       array: ['foo', 'bar']
     }, function(error, response){
@@ -99,7 +112,7 @@ describe('L.esri.Request', function () {
       done();
     });
 
-    expect(requests[0].url).to.equal('http://services.arcgisonline.com/ArcGIS/rest/info?array=%5B%22foo%22%2C%22bar%22%5D&f=json');
+    expect(requests[0].url).to.equal('http://services.arcgisonline.com/ArcGIS/rest/info?array=foo%2Cbar&f=json');
     expect(requests[0].method).to.equal('GET');
     requests[0].respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, JSON.stringify(sampleResponse));
   });
@@ -138,7 +151,7 @@ describe('L.esri.Request', function () {
   it('should throw errors when response is not a JSON object', function(done){
     L.esri.Request.get.CORS('http://services.arcgisonline.com/ArcGIS/rest/info', {}, function(error){
       expect(error).to.deep.equal({
-        message: 'Could not parse response as JSON.',
+        message: 'Could not parse response as JSON. This could also be caused by a CORS or XMLHttpRequest error.',
         code: 500
       });
       done();

@@ -1,6 +1,6 @@
 ---
 title: Labeling Features
-description: This demo shows how to add text labels to features. <strong>This does not performat automatic label placement!</strong> This demo only shows static text labeling and labels will collide at different zoom levels.
+description: This demo shows how to add static text labels to the center of features. <strong>This is not the same as fitting labels dynamically.</strong> Because of this, the labels will start to collide as you zoom out.
 layout: example.hbs
 ---
 
@@ -26,7 +26,7 @@ layout: example.hbs
 
   L.esri.basemapLayer('Gray').addTo(map);
 
-  var neighborhoods = new L.esri.FeatureLayer('http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Neighborhoods_pdx/FeatureServer/0', {
+  var neighborhoods = new L.esri.FeatureLayer('https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Neighborhoods_pdx/FeatureServer/0', {
     style: function() {
       return {
         color: '#5B7CBA',

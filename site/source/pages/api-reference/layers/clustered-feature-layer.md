@@ -5,7 +5,7 @@ layout: documentation.hbs
 
 # {{page.data.title}}
 
-`L.esri.Layers.ClusteredFeatureLayer` provides integration for Feature Layers with the [Leaflet.markercluster plugin](https://github.com/Leaflet/Leaflet.markercluster). Because of the extra Dependency on Leaflet.markercluster we do not include `L.esri.Layers.ClusteredFeatureLayer` in the default build of Esri Leaflet. It lives in /dist/extras/clustered-feature-layer.js. You will also need to include your own copy of the [Leaflet.markercluster plugin](https://github.com/Leaflet/Leaflet.markercluster).
+`L.esri.Layers.ClusteredFeatureLayer` provides integration for Feature Layers with the [Leaflet.markercluster plugin](https://github.com/Leaflet/Leaflet.markercluster). Because of the extra dependency on Leaflet.markercluster we do not include `L.esri.Layers.ClusteredFeatureLayer` in the default build of Esri Leaflet. It lives in /dist/extras/clustered-feature-layer.js. You will also need to include your own copy of the [Leaflet.markercluster plugin](https://github.com/Leaflet/Leaflet.markercluster).
 
 More information about Feature Layers can be found in the [`L.esri.Layers.FeatureLayer` documentation]({{assets}}api-reference/layers/feature-layer.html).
 
@@ -122,7 +122,7 @@ More information about Feature Layers can be found in the [`L.esri.Layers.Featur
 | `removefeature` | [<`RemoveFeatureEvent`>]({{assets}}api-reference/events.html#feature-remove) | Fired when a feature on the layer is removed from the map. |
 | `addfeature` | [<`AddFeatureEvent`>]({{assets}}api-reference/events.html#feature-add) | Fired when a previously removed feature is added back to the map. |
 
-`L.esri.Layer.FeatureLayer` also fires all  [`L.esri.Service.FeatureLayer`]({{assets}}api-reference/services/feature-layer.html) events.
+`L.esri.Layers.FeatureLayer` also fires all  [`L.esri.Services.FeatureLayer`]({{assets}}api-reference/services/feature-layer.html) events.
 
 In additon to these events `L.esri.FeatureLayer` also fires the following [Mouse Events](http://leafletjs.com/reference.html#event-objects) `click`, `dblclick`, `mouseover`, `mouseout`, `mousemove`, and `contextmenu`, `clusterclick`, `clusterdblclick`, `clustermouseover`, `vmouseout`, `clustermousemove`, and `clustercontextmenu` as well as the following the [Popup Events](http://leafletjs.com/reference.html#event-objects) `popupopen` and `popupclose`.
 
@@ -151,13 +151,13 @@ In additon to these events `L.esri.FeatureLayer` also fires the following [Mouse
             <td><code>setStyle({{{param 'PathOptions' 'style' 'http://leafletjs.com/reference.html#path-options'}}})</code><br><br><code>setStyle({{{param 'Function' 'style'}}})</code></td>
             <td><code>this</code></td>
             <td>Sets the given path options to each layer that has a <code>setStyle</code> method. Can also be a <code>Function</code> that will receive a <code>feature</code> argument and should return <a href="http://leafletjs.com/reference.html#path-options">Path Options</a>
-            <pre><code class="language-javascript">featureLayer.setStyle(1, {
-    color: white;
+            <pre><code class="language-javascript">featureLayer.setStyle({
+  color: 'white'
 })</code></pre>
             <pre><code class="language-javascript">featureLayer.setStyle(1, function(feature){
-    return {
+  return {
     weight: feature.properties.pixelWidth
-    };
+  };
 })</code></pre>
         <tr>
             <td><code>bindPopup({{{param 'Function' 'fn'}}}, {{{param 'PopupOptions' 'popupOptions' 'http://leafletjs.com/reference.html#popup-options'}}})</code></td>
@@ -238,7 +238,7 @@ In additon to these events `L.esri.FeatureLayer` also fires the following [Mouse
             </td>
         </tr>
  <tr>
-            <td><code>createFeature({{{param 'GeoJSON Feature' 'feature' 'http://geojson.org/geojson-spec.html#feature-objects'}}}, {{{param 'Function' 'callback'}}}, {{{param 'Object' 'context'}}})</code></td>
+            <td><code>addFeature({{{param 'GeoJSON Feature' 'feature' 'http://geojson.org/geojson-spec.html#feature-objects'}}}, {{{param 'Function' 'callback'}}}, {{{param 'Object' 'context'}}})</code></td>
             <td><code>this</code></td>
             <td>
                 Adds a new feature to the feature layer. this also adds the feature to the map if creation is successful.

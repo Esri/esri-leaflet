@@ -37,7 +37,7 @@ describe('L.esri.Layers.ImageMapLayer', function () {
   beforeEach(function(){
     clock = sinon.useFakeTimers();
     server = sinon.fakeServer.create();
-    server.respondWith('GET',new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockImageService\/ImageServer\/exportImage\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&format=jpgpng&bboxSR=3857&imageSR=3857&f=json/), JSON.stringify({
+    server.respondWith('GET',new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockImageService\/ImageServer\/exportImage\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&format=jpgpng&transparent=true&bboxSR=3857&imageSR=3857&f=json/), JSON.stringify({
       href: 'http://placehold.it/500&text=Image1'
     }));
     layer = L.esri.imageMapLayer(url, {
@@ -92,7 +92,7 @@ describe('L.esri.Layers.ImageMapLayer', function () {
       });
       clock.tick(151);
       map.setView([ 37.30, -121.96], 10);
-      server.respondWith('GET',new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockImageService\/ImageServer\/exportImage\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&format=jpgpng&bboxSR=3857&imageSR=3857&f=json/), JSON.stringify({
+      server.respondWith('GET',new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockImageService\/ImageServer\/exportImage\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&format=jpgpng&transparent=true&bboxSR=3857&imageSR=3857&f=json/), JSON.stringify({
         href: 'http://placehold.it/500&text=Image2'
       }));
       server.respond();
@@ -124,7 +124,6 @@ describe('L.esri.Layers.ImageMapLayer', function () {
   it('should expose the identify method on the underlying service', function(){
     var spy = sinon.spy(layer._service, 'identify');
     var identify = layer.identify();
-    expect(spy).to.have.been.calledWith(layer.service);
     expect(identify).to.be.an.instanceof(L.esri.Tasks.IdentifyImage);
     expect(identify._service).to.equal(layer._service);
   });
@@ -278,7 +277,7 @@ describe('L.esri.Layers.ImageMapLayer', function () {
   });
 
   it('should get and set rendering rule', function(done){
-    server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockImageService\/ImageServer\/exportImage\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&format=jpgpng&bboxSR=3857&imageSR=3857&renderingRule=%7B%22rasterFunction%22%3A%22RFTAspectColor%22%7D&f=json/), JSON.stringify({
+    server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockImageService\/ImageServer\/exportImage\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&format=jpgpng&transparent=true&bboxSR=3857&imageSR=3857&renderingRule=%7B%22rasterFunction%22%3A%22RFTAspectColor%22%7D&f=json/), JSON.stringify({
       href: 'http://placehold.it/500&text=WithRenderingRule'
     }));
 
@@ -294,7 +293,7 @@ describe('L.esri.Layers.ImageMapLayer', function () {
   });
 
   it('should get and set mosaic rule', function(done){
-    server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockImageService\/ImageServer\/exportImage\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&format=jpgpng&bboxSR=3857&imageSR=3857&mosaicRule=%7B%22mosaicMethod%22%3A%22esriMosaicLockRaster%22%2C%22lockRasterIds%22%3A%5B8%5D%7D&f=json/), JSON.stringify({
+    server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockImageService\/ImageServer\/exportImage\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&format=jpgpng&transparent=true&bboxSR=3857&imageSR=3857&mosaicRule=%7B%22mosaicMethod%22%3A%22esriMosaicLockRaster%22%2C%22lockRasterIds%22%3A%5B8%5D%7D&f=json/), JSON.stringify({
       href: 'http://placehold.it/500&text=WithMosaicRule'
     }));
 
@@ -310,7 +309,7 @@ describe('L.esri.Layers.ImageMapLayer', function () {
   });
 
   it('should get and set time ranges', function(done){
-    server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockImageService\/ImageServer\/exportImage\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&format=jpgpng&bboxSR=3857&imageSR=3857&time=1389254400000%2C1389513600000&f=json/), JSON.stringify({
+    server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockImageService\/ImageServer\/exportImage\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&format=jpgpng&transparent=true&bboxSR=3857&imageSR=3857&time=1389254400000%2C1389513600000&f=json/), JSON.stringify({
       href: 'http://placehold.it/500&text=WithTime'
     }));
 
@@ -326,7 +325,7 @@ describe('L.esri.Layers.ImageMapLayer', function () {
   });
 
   it('should get and set bandIds as an array param', function(done){
-    server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockImageService\/ImageServer\/exportImage\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&format=jpgpng&bboxSR=3857&imageSR=3857&bandIds=3%2C0%2C1&f=json/), JSON.stringify({
+     server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockImageService\/ImageServer\/exportImage\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&format=jpgpng&transparent=true&bboxSR=3857&imageSR=3857&bandIds=3%2C0%2C1&f=json/), JSON.stringify({
       href: 'http://placehold.it/500&text=WithBandIds'
     }));
 
@@ -342,7 +341,7 @@ describe('L.esri.Layers.ImageMapLayer', function () {
   });
 
   it('should get and set bandIds as a string param', function(done){
-    server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockImageService\/ImageServer\/exportImage\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&format=jpgpng&bboxSR=3857&imageSR=3857&bandIds=3%2C0%2C1&f=json/), JSON.stringify({
+    server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockImageService\/ImageServer\/exportImage\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&format=jpgpng&transparent=true&bboxSR=3857&imageSR=3857&bandIds=3%2C0%2C1&f=json/), JSON.stringify({
       href: 'http://placehold.it/500&text=WithBandIds'
     }));
 
@@ -358,7 +357,7 @@ describe('L.esri.Layers.ImageMapLayer', function () {
   });
 
   it('should get and set noData as a numeric param', function(done){
-    server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockImageService\/ImageServer\/exportImage\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&format=jpgpng&bboxSR=3857&imageSR=3857&noData=0&f=json/), JSON.stringify({
+    server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockImageService\/ImageServer\/exportImage\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&format=jpgpng&transparent=true&bboxSR=3857&imageSR=3857&noData=0&f=json/), JSON.stringify({
       href: 'http://placehold.it/500&text=WithNoData'
     }));
 
@@ -374,7 +373,7 @@ describe('L.esri.Layers.ImageMapLayer', function () {
   });
 
   it('should get and set noData as an array', function(done){
-    server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockImageService\/ImageServer\/exportImage\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&format=jpgpng&bboxSR=3857&imageSR=3857&noData=58%2C128%2C187&f=json/), JSON.stringify({
+    server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockImageService\/ImageServer\/exportImage\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&format=jpgpng&transparent=true&bboxSR=3857&imageSR=3857&noData=58%2C128%2C187&f=json/), JSON.stringify({
       href: 'http://placehold.it/500&text=WithNoDataArray'
     }));
 
@@ -390,7 +389,7 @@ describe('L.esri.Layers.ImageMapLayer', function () {
   });
 
   it('should get and set noDataInterpretation', function(done){
-    server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockImageService\/ImageServer\/exportImage\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&format=jpgpng&bboxSR=3857&imageSR=3857&noData=0&noDataInterpretation=esriNoDataMatchAll&f=json/), JSON.stringify({
+    server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockImageService\/ImageServer\/exportImage\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&format=jpgpng&transparent=true&bboxSR=3857&imageSR=3857&noData=0&noDataInterpretation=esriNoDataMatchAll&f=json/), JSON.stringify({
       href: 'http://placehold.it/500&text=WithNoDataInterpretation'
     }));
 
@@ -406,7 +405,7 @@ describe('L.esri.Layers.ImageMapLayer', function () {
   });
 
   it('should get and set pixelType', function(done){
-    server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockImageService\/ImageServer\/exportImage\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&format=jpgpng&bboxSR=3857&imageSR=3857&pixelType=U8&f=json/), JSON.stringify({
+    server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockImageService\/ImageServer\/exportImage\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&format=jpgpng&transparent=true&bboxSR=3857&imageSR=3857&pixelType=U8&f=json/), JSON.stringify({
       href: 'http://placehold.it/500&text=WithPixelType'
     }));
 
@@ -425,7 +424,7 @@ describe('L.esri.Layers.ImageMapLayer', function () {
     layer = L.esri.imageMapLayer(url);
     var spy = sinon.spy(layer, '_renderImage');
     layer.addTo(map);
-    expect(spy.getCall(0).args[0]).to.match(new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockImageService\/ImageServer\/exportImage\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&format=jpgpng&bboxSR=3857&imageSR=3857&f=image/));
+    expect(spy.getCall(0).args[0]).to.match(new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockImageService\/ImageServer\/exportImage\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&format=jpgpng&transparent=true&bboxSR=3857&imageSR=3857&f=image/));
   });
 
   it('should render an images at the back if specified', function(done){

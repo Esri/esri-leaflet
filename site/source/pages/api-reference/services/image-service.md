@@ -7,7 +7,7 @@ layout: documentation.hbs
 
 Inherits from [`L.esri.Service`]({{assets}}api-reference/services/service.html)
 
-`L.esri.Services.ImageService` is an abstraction interacting with Image Services running on ArcGIS Online and ArcGIS server that allows you to make requests to the API, as well as query and identify features on the service.
+`L.esri.Services.ImageService` is an abstraction for interacting with Image Services running on ArcGIS Online and ArcGIS Server that allows you to make requests to the API, as well as query and identify features on the service.
 
 ### Constructor
 
@@ -20,8 +20,8 @@ Inherits from [`L.esri.Service`]({{assets}}api-reference/services/service.html)
     </thead>
     <tbody>
         <tr>
-            <td><code class="nobr">new L.esri.Services.ImageService({{{param 'String' 'url'}}}, {{{param 'Object' 'options'}}})</code><br><br><code class="nobr">L.esri.Services.imageService({{{param 'String' 'url'}}}, {{{param 'Object' 'options'}}})</code></td>
-            <td>The `url` parameter is the URL to the ArcGIS Server or ArcGIS Online map service you would like to consume.</td>
+            <td><code class="nobr">new L.esri.Services.ImageService({{{param 'Object' 'options'}}})</code><br><br><code class="nobr">L.esri.Services.imageService({{{param 'Object' 'options'}}})</code></td>
+            <td><code>Options</code> for configuring the ArcGIS Server or ArcGIS Online image service you would like to consume. <code>Options</code>includes a <code>url</code> parameter which refers to the ArcGIS Server or ArcGIS Online service you would like to consume.</td>
         </tr>
     </tbody>
 </table>

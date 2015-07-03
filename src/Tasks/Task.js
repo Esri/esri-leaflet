@@ -7,35 +7,20 @@ EsriLeaflet.Tasks.Task = L.Class.extend({
 
   //Generate a method for each methodName:paramName in the setters for this task.
   generateSetter: function(param, context){
-    var isArray = param.match(/([a-zA-Z]+)\[\]/);
-
-    param = (isArray) ? isArray[1] : param;
-
-    if(isArray){
-      return L.Util.bind(function(value){
-        // this.params[param] = (this.params[param]) ? this.params[param] + ',' : '';
-        if (L.Util.isArray(value)) {
-          this.params[param] = value.join(',');
-        } else {
-          this.params[param] = value;
-        }
-        return this;
-      }, context);
-    } else {
-      return L.Util.bind(function(value){
-        this.params[param] = value;
-        return this;
-      }, context);
-    }
+    return L.Util.bind(function(value){
+      this.params[param] = value;
+      return this;
+    }, context);
   },
 
-  initialize: function(endpoint, options){
-    // endpoint can be either a url to an ArcGIS Rest Service or an instance of EsriLeaflet.Service
-    if(endpoint.url && endpoint.request){
+  initialize: function(endpoint){
+    // endpoint can be either a url (and options) for an ArcGIS Rest Service or an instance of EsriLeaflet.Service
+    if(endpoint.request && endpoint.options){
       this._service = endpoint;
-      this.url = endpoint.url;
+      L.Util.setOptions(this, endpoint.options);
     } else {
-      this.url = EsriLeaflet.Util.cleanUrl(endpoint);
+      L.Util.setOptions(this, endpoint);
+      this.options.url = L.esri.Util.cleanUrl(endpoint.url);
     }
 
     // clone default params into this object
@@ -48,8 +33,6 @@ EsriLeaflet.Tasks.Task = L.Class.extend({
         this[setter] = this.generateSetter(param, this);
       }
     }
-
-    L.Util.setOptions(this, options);
   },
 
   token: function(token){
@@ -70,7 +53,7 @@ EsriLeaflet.Tasks.Task = L.Class.extend({
   },
 
   _request: function(method, path, params, callback, context){
-    var url = (this.options.proxy) ? this.options.proxy + '?' + this.url + path : this.url + path;
+    var url = (this.options.proxy) ? this.options.proxy + '?' + this.options.url + path : this.options.url + path;
     if((method === 'get' || method === 'request') && !this.options.useCors){
       return EsriLeaflet.Request.get.JSONP(url, params, callback, context);
     } else{

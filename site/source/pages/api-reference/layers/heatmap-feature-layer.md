@@ -5,7 +5,7 @@ layout: documentation.hbs
 
 # {{page.data.title}}
 
-`L.esri.Layers.HeatMapFeatureLayer` provides integration for Feature Layers with the [Leaflet.heat plugin](https://github.com/Leaflet/Leaflet.heat). Because of the extra Dependency on Leaflet.heat we do not include `L.esri.Layers.HeatMapFeatureLayer` in the default build of Esri Leaflet. It lives in /dist/extras/heatmap-feature-layer.js. You will also need to include your own copy of the [Leaflet.heat plugin](https://github.com/Leaflet/Leaflet.heat).
+`L.esri.Layers.HeatMapFeatureLayer` provides integration for Feature Layers with the [Leaflet.heat plugin](https://github.com/Leaflet/Leaflet.heat). Because of the extra dependency on Leaflet.heat we do not include `L.esri.Layers.HeatMapFeatureLayer` in the default build of Esri Leaflet. It lives in /dist/extras/heatmap-feature-layer.js. You will also need to include your own copy of the [Leaflet.heat plugin](https://github.com/Leaflet/Leaflet.heat).
 
 More information about Feature Layers can be found in the [`L.esri.Layers.FeatureLayer` documentation]({{assets}}api-reference/layers/feature-layer.html).
 
@@ -38,7 +38,7 @@ More information about Feature Layers can be found in the [`L.esri.Layers.Featur
     <tbody>
         <tr>
             <td><code>where</code></td>
-            <td><code>String</code></td
+            <td><code>String</code></td>
             <td>A server side expression that will be evaluated to filter features. By default this will include all features in a service.</td>
         </tr>
         <tr>
@@ -98,7 +98,7 @@ More information about Feature Layers can be found in the [`L.esri.Layers.Featur
 | `loading` | [&lt;LoadingEvent&gt;]() | Fires when new features start loading. |
 | `load` | [&lt;Load&gt;]() | Fires when all features in the current bounds of the map have loaded. |
 
-`L.esri.Layer.FeatureLayer` also fires all  [`L.esri.Service.FeatureLayer`]({{assets}}api-reference/services/feature-layer.html) events.
+`L.esri.Layers.FeatureLayer` also fires all  [`L.esri.Services.FeatureLayer`]({{assets}}api-reference/services/feature-layer.html) events.
 
 ### Methods
 
@@ -160,7 +160,7 @@ More information about Feature Layers can be found in the [`L.esri.Layers.Featur
             </td>
         </tr>
  <tr>
-            <td><code>createFeature({{{param 'GeoJSON Feature' 'feature' 'http://geojson.org/geojson-spec.html#feature-objects'}}}, {{{param 'Function' 'callback'}}}, {{{param 'Object' 'context'}}})</code></td>
+            <td><code>addFeature({{{param 'GeoJSON Feature' 'feature' 'http://geojson.org/geojson-spec.html#feature-objects'}}}, {{{param 'Function' 'callback'}}}, {{{param 'Object' 'context'}}})</code></td>
             <td><code>this</code></td>
             <td>
                 Adds a new feature to the feature layer. this also adds the feature to the map if creation is successful.

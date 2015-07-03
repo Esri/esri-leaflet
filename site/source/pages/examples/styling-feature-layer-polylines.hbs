@@ -23,7 +23,7 @@ layout: example.hbs
 
   L.esri.basemapLayer('Streets').addTo(map);
 
-  var bikePaths = L.esri.featureLayer('http://services.arcgis.com/uCXeTVveQzP4IIcx/arcgis/rest/services/bike_rte/FeatureServer/0', {
+  var bikePaths = L.esri.featureLayer('http://services.arcgis.com/uCXeTVveQzP4IIcx/ArcGIS/rest/services/Bike_Routes/FeatureServer/0', {
     style: function (feature) {
       var c,o = 0.75;
       switch (feature.properties.BIKEMODE) {
@@ -67,10 +67,10 @@ layout: example.hbs
   }).addTo(map);
 
   bikePaths.on('mouseout', function(e){
-    document.getElementById('info-pane').innerText = 'Hover to Inspect';
+    document.getElementById('info-pane').innerHTML = 'Hover to Inspect';
   });
 
   bikePaths.on('mouseover', function(e){
-    document.getElementById('info-pane').innerText = e.layer.feature.properties.BIKEMODE;
+    document.getElementById('info-pane').innerHTML = e.layer.feature.properties.BIKEMODE;
   });
 </script>

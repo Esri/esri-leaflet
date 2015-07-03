@@ -2,9 +2,9 @@ EsriLeaflet.Tasks.Query = EsriLeaflet.Tasks.Task.extend({
   setters: {
     'offset': 'offset',
     'limit': 'limit',
-    'outFields': 'fields[]',
+    'fields': 'outFields',
     'precision': 'geometryPrecision',
-    'featureIds': 'objectIds[]',
+    'featureIds': 'objectIds',
     'returnGeometry': 'returnGeometry',
     'token': 'token'
   },
@@ -57,7 +57,7 @@ EsriLeaflet.Tasks.Query = EsriLeaflet.Tasks.Task.extend({
   // only valid for Feature Services running on ArcGIS Server 10.3 or ArcGIS Online
   nearby: function(latlng, radius){
     latlng = L.latLng(latlng);
-    this.params.geometry = ([latlng.lng,latlng.lat]).join(',');
+    this.params.geometry = [latlng.lng, latlng.lat];
     this.params.geometryType = 'esriGeometryPoint';
     this.params.spatialRel = 'esriSpatialRelIntersects';
     this.params.units = 'esriSRUnit_Meter';
@@ -67,21 +67,13 @@ EsriLeaflet.Tasks.Query = EsriLeaflet.Tasks.Task.extend({
   },
 
   where: function(string){
-    this.params.where = string.replace(/"/g, "\'"); // jshint ignore:line
+    // instead of converting double-quotes to single quotes, pass as is, and provide a more informative message if a 400 is encountered
+    this.params.where = string;
     return this;
   },
 
   between: function(start, end){
-    this.params.time = ([start.valueOf(), end.valueOf()]).join();
-    return this;
-  },
-
-  fields: function (fields) {
-    if (L.Util.isArray(fields)) {
-      this.params.outFields = fields.join(',');
-    } else {
-      this.params.outFields = fields;
-    }
+    this.params.time = [start.valueOf(), end.valueOf()];
     return this;
   },
 
@@ -98,16 +90,25 @@ EsriLeaflet.Tasks.Query = EsriLeaflet.Tasks.Task.extend({
     return this;
   },
 
-  returnGeometry: function(bool){
-    this.params.returnGeometry = bool;
-    return this;
-  },
-
   run: function(callback, context){
     this._cleanParams();
-    return this.request(function(error, response){
-      callback.call(context, error, (response && EsriLeaflet.Util.responseToFeatureCollection(response)), response);
-    }, context);
+
+    // if the service is hosted on arcgis online request geojson directly
+    if(EsriLeaflet.Util.isArcgisOnline(this.options.url)){
+      this.params.f = 'geojson';
+
+      return this.request(function(error, response){
+        this._trapSQLerrors(error);
+        callback.call(context, error, response, response);
+      }, this);
+
+    // otherwise convert it in the callback then pass it on
+    } else {
+      return this.request(function(error, response){
+        this._trapSQLerrors(error);
+        callback.call(context, error, (response && EsriLeaflet.Util.responseToFeatureCollection(response)), response);
+      }, this);
+    }
   },
 
   count: function(callback, context){
@@ -138,7 +139,7 @@ EsriLeaflet.Tasks.Query = EsriLeaflet.Tasks.Task.extend({
   // only valid for image services
   pixelSize: function(point){
     point = L.point(point);
-    this.params.pixelSize = ([point.x,point.y]).join(',');
+    this.params.pixelSize = [point.x,point.y];
     return this;
   },
 
@@ -146,6 +147,14 @@ EsriLeaflet.Tasks.Query = EsriLeaflet.Tasks.Task.extend({
   layer: function(layer){
     this.path = layer + '/query';
     return this;
+  },
+
+  _trapSQLerrors: function(error){
+    if (error){
+      if (error.code === '400'){
+        EsriLeaflet.Util.warn('one common syntax error in query requests is encasing string values in double quotes instead of single quotes');
+      }
+    }
   },
 
   _cleanParams: function(){
@@ -206,14 +215,12 @@ EsriLeaflet.Tasks.Query = EsriLeaflet.Tasks.Task.extend({
 
     // warn the user if we havn't found a
     /* global console */
-    if(console && console.warn) {
-      console.warn('invalid geometry passed to spatial query. Should be an L.LatLng, L.LatLngBounds or L.Marker or a GeoJSON Point Line or Polygon object');
-    }
+    EsriLeaflet.Util.warn('invalid geometry passed to spatial query. Should be an L.LatLng, L.LatLngBounds or L.Marker or a GeoJSON Point Line or Polygon object');
 
     return;
   }
 });
 
-EsriLeaflet.Tasks.query = function(url, params){
-  return new EsriLeaflet.Tasks.Query(url, params);
+EsriLeaflet.Tasks.query = function(params){
+  return new EsriLeaflet.Tasks.Query(params);
 };

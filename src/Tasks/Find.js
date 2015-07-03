@@ -3,10 +3,10 @@ EsriLeaflet.Tasks.Find = EsriLeaflet.Tasks.Task.extend({
     // method name > param name
     'contains': 'contains',
     'text': 'searchText',
-    'fields': 'searchFields[]', // denote an array or single string
+    'fields': 'searchFields', // denote an array or single string
     'spatialReference': 'sr',
     'sr': 'sr',
-    'layers': 'layers[]',
+    'layers': 'layers',
     'returnGeometry': 'returnGeometry',
     'maxAllowableOffset': 'maxAllowableOffset',
     'precision': 'geometryPrecision',
@@ -46,6 +46,6 @@ EsriLeaflet.Tasks.Find = EsriLeaflet.Tasks.Task.extend({
   }
 });
 
-EsriLeaflet.Tasks.find = function (url, params) {
-  return new EsriLeaflet.Tasks.Find(url, params);
+EsriLeaflet.Tasks.find = function (params) {
+  return new EsriLeaflet.Tasks.Find(params);
 };

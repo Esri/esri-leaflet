@@ -21,15 +21,16 @@ layout: page.hbs
   <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 
   <!-- Load Leaflet from CDN-->
-  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
-  <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/leaflet/0.7.3/leaflet.css" />
+  <script src="//cdn.jsdelivr.net/leaflet/0.7.3/leaflet.js"></script>
 
   <!-- Load Esri Leaflet from CDN -->
-  <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.2/esri-leaflet.js"></script>
+  <!-- we encourage you to replace 'latest' with a hardcode version number (like '1.0.0-rc.7') in production applications -->
+  <script src="//cdn.jsdelivr.net/leaflet.esri/latest/esri-leaflet.js"></script>
 
   <style>
-    body {margin:0;padding:0;}
-    #map {position: absolute;top:0;bottom:0;right:0;left:0;}
+    body { margin:0; padding:0; }
+    #map { position: absolute; top:0; bottom:0; right:0; left:0; }
   </style>
 </head>
 <body>

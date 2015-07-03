@@ -17,7 +17,7 @@ describe('L.esri.Layers.FeatureLayer', function () {
 
   var layer;
   var map = createMap();
-  var features = [({
+  var features = [{
         type: 'Feature',
         id: 1,
         geometry: {
@@ -25,9 +25,10 @@ describe('L.esri.Layers.FeatureLayer', function () {
           coordinates: [[-122, 45], [-121, 40]]
         },
         properties: {
-          time: new Date('January 1 2014').valueOf()
+          time: new Date('January 1 2014').valueOf(),
+          type: 'good'
         }
-      }),{
+      },{
     type: 'Feature',
     id: 2,
     geometry: {
@@ -35,7 +36,32 @@ describe('L.esri.Layers.FeatureLayer', function () {
       coordinates: [[-123, 46], [-120, 45]]
     },
     properties: {
-      time: new Date('Febuary 1 2014').valueOf()
+      time: new Date('Febuary 1 2014').valueOf(),
+      type: 'bad'
+    }
+  }];
+
+  var pointFeatures = [({
+        type: 'Feature',
+        id: 1,
+        geometry: {
+          type: 'Point',
+          coordinates: [-122, 45]
+        },
+        properties: {
+          time: new Date('January 1 2014').valueOf(),
+          type: 'good'
+        }
+      }),{
+    type: 'Feature',
+    id: 2,
+    geometry: {
+      type: 'Point',
+      coordinates: [-123, 46]
+    },
+    properties: {
+      time: new Date('Febuary 1 2014').valueOf(),
+      type: 'bad'
     }
   }];
 
@@ -51,11 +77,25 @@ describe('L.esri.Layers.FeatureLayer', function () {
       }
   })];
 
+  var point = [({
+      type : 'Feature',
+      id: 1,
+      geometry: {
+        type: 'Point',
+        coordinates: [-95, 43]
+      },
+      properties: {
+        time: new Date('Febuary 1 2014').valueOf()
+      }
+  })];
+
   beforeEach(function(){
-    layer = L.esri.featureLayer('http://services.arcgis.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0', {
+    layer = L.esri.featureLayer('http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0', {
       timeField: 'time',
       pointToLayer: function(feature, latlng){
-        return L.circleMarker(latlng);
+        return L.circleMarker(latlng, {
+          color: 'green'
+        });
       }
     }).addTo(map);
 
@@ -63,7 +103,7 @@ describe('L.esri.Layers.FeatureLayer', function () {
   });
 
   it('should fire a createfeature event', function(done){
-    layer = L.esri.featureLayer('http://services.arcgis.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0', {
+    layer = L.esri.featureLayer('http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0', {
       timeField: 'time',
       pointToLayer: function(feature, latlng){
         return L.circleMarker(latlng);
@@ -79,7 +119,7 @@ describe('L.esri.Layers.FeatureLayer', function () {
   });
 
   it('should have an alias at L.esri.Layers.featureLayer', function(){
-    var layer = L.esri.Layers.featureLayer('http://services.arcgis.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0');
+    var layer = L.esri.Layers.featureLayer('http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0');
     expect(layer).to.be.an.instanceof(L.esri.Layers.FeatureLayer);
   });
 
@@ -114,24 +154,6 @@ describe('L.esri.Layers.FeatureLayer', function () {
     });
     layer.removeLayers([1]);
     layer.addLayers([1]);
-  });
-
-  it('should readd features back to a map', function(){
-    map.removeLayer(layer.getFeature(1));
-
-    layer.createLayers([{
-      type: 'Feature',
-      id: 1,
-      geometry: {
-        type: 'LineString',
-        coordinates: [[-122, 45], [-121, 40], [-121.5, 42.5]]
-      },
-      properties: {
-        time: new Date('January 1 2014').valueOf()
-      }
-    }]);
-    expect(map.hasLayer(layer.getFeature(1))).to.equal(true);
-    expect(layer.getFeature(1).getLatLngs().length).to.equal(3);
   });
 
   it('should not add features outside the time range', function(){
@@ -217,6 +239,20 @@ describe('L.esri.Layers.FeatureLayer', function () {
     expect(layer.getFeature(3)._popup.options.minWidth).to.equal(500);
   });
 
+  it('should style L.circleMarker features appropriately', function(){
+    layer = L.esri.featureLayer('http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0', {
+      timeField: 'time',
+      pointToLayer: function(feature, latlng){
+        return L.circleMarker(latlng, {
+          color: 'green'
+        });
+      }
+    }).addTo(map);
+
+    layer.createLayers(point);
+    expect(layer.getFeature(1).options.color).to.equal('green');
+  });
+
   it('should unbind popups on features', function(){
     layer.bindPopup(function(feature){
       return 'ID: ' + feature.id;
@@ -227,7 +263,7 @@ describe('L.esri.Layers.FeatureLayer', function () {
   });
 
   it('should unbind popups on multi polygon features', function(){
-    layer = L.esri.featureLayer('http://services.arcgis.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0', { timeField: 'time' }).addTo(map);
+    layer = L.esri.featureLayer('http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0', { timeField: 'time' }).addTo(map);
 
     layer.createLayers(multiPolygon);
 
@@ -240,6 +276,77 @@ describe('L.esri.Layers.FeatureLayer', function () {
     expect(layer.getFeature(1)._popup).to.equal(null);
   });
 
+  it('should reset style on multi polygon features', function(){
+    layer = L.esri.featureLayer('http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0', {
+      style: {
+        color: 'black'
+      }
+    }).addTo(map);
+
+    layer.createLayers(multiPolygon);
+
+    expect(layer.getFeature(1).getLayers()[0].options.color).to.equal('black');
+
+    layer.setFeatureStyle(1, {
+      color: 'red'
+    });
+
+    expect(layer.getFeature(1).getLayers()[0].options.color).to.equal('red');
+
+    layer.resetStyle(1);
+
+    expect(layer.getFeature(1).getLayers()[0].options.color).to.equal('black');
+  });
+
+  it('should reset L.circleMarker style', function(){
+    layer = L.esri.featureLayer('http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0', {
+      pointToLayer: function(feature, latlng){
+        return L.circleMarker(latlng, {
+          color: 'green'
+        });
+      }
+    }).addTo(map);
+
+    layer.createLayers(point);
+    expect(layer.getFeature(1).options.color).to.equal('green');
+
+    layer.setStyle({
+      color: 'red'
+    });
+    expect(layer.getFeature(1).options.color).to.equal('red');
+
+    layer.resetStyle(1);
+    expect(layer.getFeature(1).options.color).to.equal('green');
+  });
+
+  it('should reset to default style on multi polygon features', function(){
+    layer = L.esri.featureLayer('http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0').addTo(map);
+
+    layer.createLayers(multiPolygon);
+
+    layer.setFeatureStyle(1, {
+      color: 'red'
+    });
+
+    expect(layer.getFeature(1).getLayers()[0].options.color).to.equal('red');
+
+    layer.resetStyle(1);
+
+    expect(layer.getFeature(1).getLayers()[0].options.color).to.equal('#0033ff');
+  });
+
+  it('should draw multi polygon features with a fill', function(){
+    layer = L.esri.featureLayer('http://services.arcgis.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0').addTo(map);
+
+    layer.createLayers(multiPolygon);
+
+    expect(layer.getFeature(1).getLayers()[0].options.fill).to.equal(true);
+
+    layer.resetStyle(1);
+
+    expect(layer.getFeature(1).getLayers()[0].options.color).to.equal('#0033ff');
+  });
+
   it('should iterate over each feature', function(){
     var spy = sinon.spy();
     layer.eachFeature(spy);
@@ -248,7 +355,7 @@ describe('L.esri.Layers.FeatureLayer', function () {
 
   it('should run a function against every feature', function(){
     var spy = sinon.spy();
-    layer = L.esri.featureLayer('http://services.arcgis.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0', {
+    layer = L.esri.featureLayer('http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0', {
       onEachFeature: spy
     }).addTo(map);
     layer.createLayers(features);
