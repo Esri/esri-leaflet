@@ -28,8 +28,8 @@
       options.url = EsriLeaflet.Util.cleanUrl(url);
       options = L.setOptions(this, options);
 
-      this._service.addEventParent(this);
       this._service = new EsriLeaflet.Services.FeatureLayer(options);
+      this._service.addEventParent(this);
 
       //use case insensitive regex to look for common fieldnames used for indexing
       /*global console */

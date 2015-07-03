@@ -110,11 +110,6 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
         // bubble events from individual layers to the feature layer
         newLayer.addEventParent(this);
 
-        // bind a popup if we have one
-        if(this._popup && newLayer.bindPopup){
-          newLayer.bindPopup(this._popup(newLayer.feature, newLayer), this._popupOptions);
-        }
-
         if(this.options.onEachFeature){
           this.options.onEachFeature(newLayer.feature, newLayer);
         }
@@ -248,38 +243,6 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
       layer.setStyle(style);
     }
 
-    return this;
-  },
-
-  /**
-   * Popup Methods
-   */
-
-  bindPopup: function (fn, options) {
-    this._popup = fn;
-    this._popupOptions = options;
-    for (var i in this._layers) {
-      var layer = this._layers[i];
-      var popupContent = this._popup(layer.feature, layer);
-      layer.bindPopup(popupContent, options);
-    }
-    return this;
-  },
-
-  unbindPopup: function () {
-    this._popup =  false;
-    for (var i in this._layers) {
-      var layer = this._layers[i];
-      if (layer.unbindPopup) {
-        layer.unbindPopup();
-      } else if (layer.getLayers) {
-        var groupLayers = layer.getLayers();
-        for (var j in groupLayers) {
-          var gLayer = groupLayers[j];
-          gLayer.unbindPopup();
-        }
-      }
-    }
     return this;
   },
 

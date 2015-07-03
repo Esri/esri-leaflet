@@ -21,7 +21,8 @@ layout: example.hbs
     L.esri.basemapLayer('Imagery').addTo(map);
 
     L.esri.imageMapLayer('http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Earthquakes/SanAndreasLidar/ImageServer', {
-      renderingRule: renderingRule
+      renderingRule: renderingRule,
+      useCors: false
     }).addTo(map);
 
 </script>
