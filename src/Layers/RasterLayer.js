@@ -5,7 +5,9 @@ EsriLeaflet.Layers.RasterLayer =  L.Layer.extend({
     position: 'front',
     f: 'image',
     useCors: EsriLeaflet.Support.CORS,
-    attribution: null
+    attribution: null,
+    interactive: false,
+    alt: ''
   },
 
   onAdd: function (map) {
@@ -135,7 +137,10 @@ EsriLeaflet.Layers.RasterLayer =  L.Layer.extend({
       // opacity is 0 while the image is loading
       var image = new L.ImageOverlay(url, bounds, {
         opacity: 0,
-        crossOrigin: this.options.useCors
+        crossOrigin: this.options.useCors,
+        alt: this.options.alt,
+        pane: this.options.pane || this.getPane(),
+        interactive: this.options.interactive
       }).addTo(this._map);
 
       // once the image loads
