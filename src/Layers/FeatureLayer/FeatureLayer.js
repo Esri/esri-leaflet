@@ -1,6 +1,7 @@
 EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
 
   options: {
+		attribution: null,
     cacheLayers: true
   },
 
@@ -36,7 +37,14 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
   },
 
   createNewLayer: function(geojson){
-    return L.GeoJSON.geometryToLayer(geojson, this.options);
+    var options = {};
+    if (this.options.style) {
+      options = (typeof this.options.style === 'function') ? this.options.style(geojson) : this.options.style;
+    }
+    if (this.options.pointToLayer) {
+      options.pointToLayer = this.options.pointToLayer;
+    }
+    return L.GeoJSON.geometryToLayer(geojson, options);
   },
 
   _updateLayer: function(layer, geojson){
@@ -98,13 +106,9 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
       if(!layer){
         newLayer =  this.createNewLayer(geojson);
         newLayer.feature = geojson;
-        if (this.options.style) {
-          newLayer._originalStyle = this.options.style;
-        }
 
-        // circleMarker check
-        else if (newLayer.setStyle) {
-          newLayer._originalStyle = newLayer.options;
+        if (newLayer instanceof L.Path) {
+          newLayer._originalStyle = L.esri.Util.shallowClone(newLayer.options);
         }
 
         // bubble events from individual layers to the feature layer
@@ -230,13 +234,12 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
   setFeatureStyle: function (id, style) {
     var layer = this._layers[id];
 
-    if (typeof style === 'function') {
-      style = style(layer.feature);
+    if (!style) {
+      return;
     }
 
-    if (!style && !layer.defaultOptions) {
-      style = L.Path.prototype.options;
-      style.fill = true; //not set by default
+    if (typeof style === 'function') {
+      style = style(layer.feature);
     }
 
     if (layer && layer.setStyle) {

@@ -234,12 +234,12 @@ describe('L.esri.Layers.DynamicMapLayer', function () {
   });
 
   it('should get and set extra time options', function(done){
-    server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png24&transparent=true&bboxSR=3857&imageSR=3857&timeOptions=%7B%22foo%22%3A%22bar%22%7D&time=1389254400000%2C1389513600000&f=json/), JSON.stringify({
-      href: 'http://placehold.it/500&text=WithTime&TimeOptions'
+    server.respondWith('GET', new RegExp(/http:\/\/services\.arcgis\.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png24&transparent=true&bboxSR=3857&imageSR=3857&timeOptions=%7B%22foo%22%3A%22bar%22%7D&time=1389254400000%2C1389513600000&f=json/), JSON.stringify({
+      href: 'http://placehold.it/500&text=WithTime+TimeOptions'
     }));
 
     layer.once('load', function(){
-      expect(layer._currentImage._url).to.equal('http://placehold.it/500&text=WithTime&TimeOptions');
+      expect(layer._currentImage._url).to.equal('http://placehold.it/500&text=WithTime+TimeOptions');
       done();
     });
 

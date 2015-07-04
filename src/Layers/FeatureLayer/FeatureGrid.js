@@ -12,7 +12,6 @@ EsriLeaflet.Layers.FeatureGrid = L.Layer.extend({
   onAdd: function (map) {
     this._map = map;
     this._update = L.Util.throttle(this._update, this.options.updateInterval, this);
-
     this._reset();
     this._update();
   },
@@ -24,9 +23,8 @@ EsriLeaflet.Layers.FeatureGrid = L.Layer.extend({
 
   getEvents: function () {
     var events = {
-      viewreset: this._reset,
       moveend: this._update,
-      zoomend : this._onZoom
+      zoomend: this._reset
     };
 
     return events;
@@ -42,20 +40,6 @@ EsriLeaflet.Layers.FeatureGrid = L.Layer.extend({
     return this;
   },
 
-  _onZoom : function () {
-    var zoom = this._map.getZoom();
-
-    if (zoom > this.options.maxZoom ||
-        zoom < this.options.minZoom) {
-      this.removeFrom(this._map);
-      this._map.addEventListener('zoomend', this.getEvents().zoomend, this);
-    } else if (!this._map.hasLayer(this)) {
-      this._map.removeEventListener('zoomend', this.getEvents().zoomend, this);
-      this.addTo(this._map);
-    }
-
-  },
-
   _reset: function () {
     this._removeCells();
 
@@ -63,7 +47,6 @@ EsriLeaflet.Layers.FeatureGrid = L.Layer.extend({
     this._activeCells = {};
     this._cellsToLoad = 0;
     this._cellsTotal = 0;
-
     this._cellNumBounds = this._getCellNumBounds();
 
     this._resetWrap();
@@ -101,26 +84,22 @@ EsriLeaflet.Layers.FeatureGrid = L.Layer.extend({
 
     var bounds = this._map.getPixelBounds(),
         zoom = this._map.getZoom(),
-        cellSize = this._getCellSize(),
-        cellPadding = [cellSize/2,cellSize/2];
-        // cellPadding = [0,0]
+        cellSize = this._getCellSize();
 
     if (zoom > this.options.maxZoom ||
         zoom < this.options.minZoom) { return; }
 
     // cell coordinates range for the current view
-    var topLeft = bounds.min.subtract(cellPadding).divideBy(cellSize).floor();
-    topLeft.x = Math.max(topLeft.x, 0);
-    topLeft.y = Math.max(topLeft.y, 0);
+    var cellBounds = L.bounds(
+      bounds.min.divideBy(cellSize).floor(),
+      bounds.max.divideBy(cellSize).floor());
 
-    var cellBounds = L.bounds(topLeft, bounds.max.add(cellPadding).divideBy(cellSize).floor());
-
-    // remove any present cells that are off the specified bounds
     this._removeOtherCells(cellBounds);
     this._addCells(cellBounds);
   },
 
   _addCells: function (bounds) {
+
     var queue = [],
         center = bounds.getCenter(),
         zoom = this._map.getZoom();
@@ -132,14 +111,12 @@ EsriLeaflet.Layers.FeatureGrid = L.Layer.extend({
         coords = new L.Point(i, j);
         coords.z = zoom;
 
-        // @TODO enable at Leaflet 0.8
-        // if (this._isValidCell(coords)) {
-        //   queue.push(coords);
-        // }
-
-        queue.push(coords);
+        if (this._isValidCell(coords)) {
+          queue.push(coords);
+        }
       }
     }
+
     var cellsToLoad = queue.length;
 
     if (cellsToLoad === 0) { return; }
@@ -157,29 +134,28 @@ EsriLeaflet.Layers.FeatureGrid = L.Layer.extend({
     }
   },
 
-  // @TODO enable at Leaflet 0.8
-  // _isValidCell: function (coords) {
-  //   var crs = this._map.options.crs;
+  _isValidCell: function (coords) {
+    var crs = this._map.options.crs;
 
-  //   if (!crs.infinite) {
-  //     // don't load cell if it's out of bounds and not wrapped
-  //     var bounds = this._cellNumBounds;
-  //     if (
-  //       (!crs.wrapLng && (coords.x < bounds.min.x || coords.x > bounds.max.x)) ||
-  //       (!crs.wrapLat && (coords.y < bounds.min.y || coords.y > bounds.max.y))
-  //     ) {
-  //       return false;
-  //     }
-  //   }
+    if (!crs.infinite) {
+      // don't load cell if it's out of bounds and not wrapped
+      var bounds = this._cellNumBounds;
+      if (
+        (!crs.wrapLng && (coords.x < bounds.min.x || coords.x > bounds.max.x)) ||
+        (!crs.wrapLat && (coords.y < bounds.min.y || coords.y > bounds.max.y))
+      ) {
+        return false;
+      }
+    }
 
-  //   if (!this.options.bounds) {
-  //     return true;
-  //   }
+    if (!this.options.bounds) {
+      return true;
+    }
 
-  //   // don't load cell if it doesn't intersect the bounds in options
-  //   var cellBounds = this._cellCoordsToBounds(coords);
-  //   return L.latLngBounds(this.options.bounds).intersects(cellBounds);
-  // },
+    // don't load cell if it doesn't intersect the bounds in options
+    var cellBounds = this._cellCoordsToBounds(coords);
+    return L.latLngBounds(this.options.bounds).intersects(cellBounds);
+  },
 
   // converts cell coordinates to its geographical bounds
   _cellCoordsToBounds: function (coords) {
@@ -189,13 +165,8 @@ EsriLeaflet.Layers.FeatureGrid = L.Layer.extend({
         nwPoint = coords.multiplyBy(cellSize),
         sePoint = nwPoint.add([cellSize, cellSize]),
 
-        // @TODO for Leaflet 0.8
-        // nw = map.wrapLatLng(map.unproject(nwPoint, coords.z)),
-        // se = map.wrapLatLng(map.unproject(sePoint, coords.z));
-
-        nw = map.unproject(nwPoint, coords.z).wrap(),
-        se = map.unproject(sePoint, coords.z).wrap();
-
+        nw = map.wrapLatLng(map.unproject(nwPoint, coords.z)),
+        se = map.wrapLatLng(map.unproject(sePoint, coords.z));
     return new L.LatLngBounds(nw, se);
   },
 
@@ -224,6 +195,7 @@ EsriLeaflet.Layers.FeatureGrid = L.Layer.extend({
 
   _removeCell: function (key) {
     var cell = this._activeCells[key];
+
     if(cell){
       delete this._activeCells[key];
 
@@ -234,7 +206,7 @@ EsriLeaflet.Layers.FeatureGrid = L.Layer.extend({
       this.fire('cellleave', {
         bounds: cell.bounds,
         coords: cell.coords
-      }, true);
+      });
     }
   },
 
@@ -250,12 +222,11 @@ EsriLeaflet.Layers.FeatureGrid = L.Layer.extend({
       this.fire('cellleave', {
         bounds: bounds,
         coords: coords
-      }, true);
+      });
     }
   },
 
   _addCell: function (coords) {
-
     // wrap cell coords if necessary (depending on CRS)
     this._wrapCoords(coords);
 
@@ -274,7 +245,7 @@ EsriLeaflet.Layers.FeatureGrid = L.Layer.extend({
       this.fire('cellenter', {
         bounds: cell.bounds,
         coords: coords
-      }, true);
+      });
 
       this._activeCells[key] = cell;
     }
@@ -296,7 +267,7 @@ EsriLeaflet.Layers.FeatureGrid = L.Layer.extend({
       this.fire('cellcreate', {
         bounds: cell.bounds,
         coords: coords
-      }, true);
+      });
     }
   },
 
@@ -307,8 +278,8 @@ EsriLeaflet.Layers.FeatureGrid = L.Layer.extend({
 
   // get the global cell coordinates range for the current zoom
   _getCellNumBounds: function () {
-    var bounds = this._map.getPixelWorldBounds();
-    var size = this._getCellSize();
+    var bounds = this._map.getPixelWorldBounds(),
+        size = this._getCellSize();
 
     return bounds ? L.bounds(
         bounds.min.divideBy(size).floor(),

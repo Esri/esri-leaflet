@@ -44,7 +44,7 @@ module.exports = function(config) {
       // 'spec/Services/*Spec.js',
       // 'spec/Layers/**/*Spec.js',
 
-      // 'spec/Layers/ImageMapLayerSpec.js',
+      // 'spec/Layers/DynamicMapLayerSpec.js'
       // 'spec/**/QuerySpec.js',
       // 'spec/**/FeatureManagerSpec.js'
     ],

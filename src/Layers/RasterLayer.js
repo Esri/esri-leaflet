@@ -8,8 +8,6 @@ EsriLeaflet.Layers.RasterLayer =  L.Layer.extend({
   },
 
   onAdd: function (map) {
-    this._map = map;
-
     this._update = L.Util.throttle(this._update, this.options.updateInterval, this);
 
     if (map.options.crs && map.options.crs.code) {
@@ -37,6 +35,25 @@ EsriLeaflet.Layers.RasterLayer =  L.Layer.extend({
     }
   },
 
+  onRemove: function (map) {
+    if (this._currentImage) {
+      this._map.removeLayer(this._currentImage);
+    }
+
+    if(this._popup){
+      this._map.off('click', this._getPopupData, this);
+      this._map.off('dblclick', this._resetPopupState, this);
+    }
+
+    this._map.off('moveend', this._update, this);
+  },
+
+  getEvents: function(){
+    return {
+      moveend: this._update
+    };
+  },
+
   bindPopup: function(fn, popupOptions){
     this._shouldRenderPopup = false;
     this._lastClick = false;
@@ -57,26 +74,6 @@ EsriLeaflet.Layers.RasterLayer =  L.Layer.extend({
     }
     this._popup = false;
     return this;
-  },
-
-  onRemove: function (map) {
-    if (this._currentImage) {
-      this._map.removeLayer(this._currentImage);
-    }
-
-    if(this._popup){
-      this._map.off('click', this._getPopupData, this);
-      this._map.off('dblclick', this._resetPopupState, this);
-    }
-
-    this._map.off('moveend', this._update, this);
-    this._map = null;
-  },
-
-  getEvents: function(){
-    return {
-      moveend: this._update
-    };
   },
 
   bringToFront: function(){
@@ -142,43 +139,44 @@ EsriLeaflet.Layers.RasterLayer =  L.Layer.extend({
 
       // once the image loads
       image.once('load', function(e){
-        var newImage = e.target;
-        var oldImage = this._currentImage;
+        if(this._map) {
+          var newImage = e.target;
+          var oldImage = this._currentImage;
 
-        // if the bounds of this image matches the bounds that
-        // _renderImage was called with and we have a map with the same bounds
-        // hide the old image if there is one and set the opacity
-        // of the new image otherwise remove the new image
-        if(newImage._bounds.equals(bounds) && newImage._bounds.equals(this._map.getBounds())){
-          this._currentImage = newImage;
+          // if the bounds of this image matches the bounds that
+          // _renderImage was called with and we have a map with the same bounds
+          // hide the old image if there is one and set the opacity
+          // of the new image otherwise remove the new image
+          if(newImage._bounds.equals(bounds) && newImage._bounds.equals(this._map.getBounds())){
+            this._currentImage = newImage;
 
-          if(this.options.position === 'front'){
-            this.bringToFront();
+            if(this.options.position === 'front'){
+              this.bringToFront();
+            } else {
+              this.bringToBack();
+            }
+
+            if(this._map && this._currentImage._map){
+              this._currentImage.setOpacity(this.options.opacity);
+            } else {
+              this._currentImage._map.removeLayer(this._currentImage);
+            }
+
+            if(oldImage && this._map) {
+              this._map.removeLayer(oldImage);
+            }
+
+            if(oldImage && oldImage._map){
+              oldImage._map.removeLayer(oldImage);
+            }
           } else {
-            this.bringToBack();
+            this._map.removeLayer(newImage);
           }
-
-          if(this._map && this._currentImage._map){
-            this._currentImage.setOpacity(this.options.opacity);
-          } else {
-            this._currentImage._map.removeLayer(this._currentImage);
-          }
-
-          if(oldImage && this._map) {
-            this._map.removeLayer(oldImage);
-          }
-
-          if(oldImage && oldImage._map){
-            oldImage._map.removeLayer(oldImage);
-          }
-        } else {
-          this._map.removeLayer(newImage);
         }
 
         this.fire('load', {
           bounds: bounds
         });
-
       }, this);
 
       this.fire('loading', {

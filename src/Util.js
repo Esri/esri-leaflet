@@ -439,4 +439,6 @@
     }
   };
 
+  EsriLeaflet.Util.shallowClone = clone;
+
 })(EsriLeaflet);
