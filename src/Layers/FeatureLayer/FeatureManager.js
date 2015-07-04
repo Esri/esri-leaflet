@@ -7,6 +7,7 @@
      */
 
     options: {
+      attribution: null,
       where: '1=1',
       fields: ['*'],
       from: false,
@@ -28,8 +29,8 @@
       options.url = EsriLeaflet.Util.cleanUrl(url);
       options = L.setOptions(this, options);
 
-      this._service = new EsriLeaflet.Services.FeatureLayer(options);
-      this._service.addEventParent(this);
+      this.service = new EsriLeaflet.Services.FeatureLayer(options);
+      this.service.addEventParent(this);
 
       //use case insensitive regex to look for common fieldnames used for indexing
       /*global console */
@@ -55,7 +56,6 @@
       this._cache = {};
       this._currentSnapshot = []; // cache of what layers should be active
       this._activeRequests = 0;
-      this._pendingRequests = [];
     },
 
     /**

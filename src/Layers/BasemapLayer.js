@@ -201,6 +201,7 @@
       if(config.attributionUrl){
         this._getAttributionData(config.attributionUrl);
       }
+
       this._logo = new EsriLeaflet.Controls.Logo({
         position: this.options.logoPosition
       });

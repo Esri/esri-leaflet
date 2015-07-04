@@ -13,8 +13,8 @@ EsriLeaflet.Layers.DynamicMapLayer = EsriLeaflet.Layers.RasterLayer.extend({
   initialize: function (url, options) {
     options = options || {};
     options.url = EsriLeaflet.Util.cleanUrl(url);
-    this._service = new EsriLeaflet.Services.MapService(options);
-    this._service.addEventParent(this);
+    this.service = new EsriLeaflet.Services.MapService(options);
+    this.service.addEventParent(this);
     if ((options.proxy || options.token) && options.f !== 'json'){
       options.f = 'json';
     }

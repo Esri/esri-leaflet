@@ -40,8 +40,8 @@ EsriLeaflet.Layers.TiledMapLayer = L.TileLayer.extend({
 
     // set the urls
     this.tileUrl = options.url + 'tile/{z}/{y}/{x}';
-    this._service = new L.esri.Services.MapService(options);
-    this._service.addEventParent(this);
+    this.service = new L.esri.Services.MapService(options);
+    this.service.addEventParent(this);
 
     //if this is looking at the AGO tiles subdomain insert the subdomain placeholder
     if(this.tileUrl.match('://tiles.arcgisonline.com')){

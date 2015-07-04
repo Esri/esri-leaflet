@@ -1,7 +1,6 @@
 EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
 
   options: {
-		attribution: null,
     cacheLayers: true
   },
 

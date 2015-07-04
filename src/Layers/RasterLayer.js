@@ -4,7 +4,8 @@ EsriLeaflet.Layers.RasterLayer =  L.Layer.extend({
     opacity: 1,
     position: 'front',
     f: 'image',
-    useCors: EsriLeaflet.Support.CORS
+    useCors: EsriLeaflet.Support.CORS,
+    attribution: null
   },
 
   onAdd: function (map) {

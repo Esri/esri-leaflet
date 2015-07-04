@@ -17,8 +17,8 @@ EsriLeaflet.Layers.ImageMapLayer = EsriLeaflet.Layers.RasterLayer.extend({
   initialize: function (url, options) {
     options = options || {};
     options.url = EsriLeaflet.Util.cleanUrl(url);
-    this._service = new EsriLeaflet.Services.ImageService(options);
-    this._service.addEventParent(this);
+    this.service = new EsriLeaflet.Services.ImageService(options);
+    this.service.addEventParent(this);
     L.Util.setOptions(this, options);
   },
 
