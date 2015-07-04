@@ -48,7 +48,8 @@
             logoPosition: 'bottomright',
             minZoom: 1,
             maxZoom: 16,
-            subdomains: ['server', 'services']
+            subdomains: ['server', 'services'],
+            pane: (EsriLeaflet.Support.pointerEvents) ? 'esri-labels' : 'tilePane'
           }
         },
         NationalGeographic: {
@@ -80,7 +81,8 @@
             logoPosition: 'bottomright',
             minZoom: 1,
             maxZoom: 16,
-            subdomains: ['server', 'services']
+            subdomains: ['server', 'services'],
+            pane: (EsriLeaflet.Support.pointerEvents) ? 'esri-labels' : 'tilePane'
           }
         },
         Gray: {
@@ -101,7 +103,8 @@
             logoPosition: 'bottomright',
             minZoom: 1,
             maxZoom: 16,
-            subdomains: ['server', 'services']
+            subdomains: ['server', 'services'],
+            pane: (EsriLeaflet.Support.pointerEvents) ? 'esri-labels' : 'tilePane'
           }
         },
         Imagery: {
@@ -153,7 +156,8 @@
             logoPosition: 'bottomright',
             minZoom: 1,
             maxZoom: 12,
-            subdomains: ['server', 'services']
+            subdomains: ['server', 'services'],
+            pane: (EsriLeaflet.Support.pointerEvents) ? 'esri-labels' : 'tilePane'
           }
         },
         Terrain: {
@@ -174,7 +178,8 @@
             logoPosition: 'bottomright',
             minZoom: 1,
             maxZoom: 13,
-            subdomains: ['server', 'services']
+            subdomains: ['server', 'services'],
+            pane: (EsriLeaflet.Support.pointerEvents) ? 'esri-labels' : 'tilePane'
           }
         }
       }
@@ -212,6 +217,10 @@
         map._hasEsriLogo = true;
       }
 
+      if(this.options.pane === 'esri-labels'){
+        this._initPane();
+      }
+
       L.TileLayer.prototype.onAdd.call(this, map);
 
       map.on('moveend', this._updateMapAttribution, this);
@@ -230,6 +239,13 @@
     getAttribution:function(){
       var attribution = '<span class="esri-attributions" style="line-height:14px; vertical-align: -3px; text-overflow:ellipsis; white-space:nowrap; overflow:hidden; display:inline-block;">' + this.options.attribution + '</span>'/* + logo*/;
       return attribution;
+    },
+    _initPane: function(){
+      if(!this._map.getPane(this.options.pane)){
+        var pane = this._map.createPane(this.options.pane);
+        pane.style.pointerEvents = 'none';
+        pane.style.zIndex = 500;
+      }
     },
     _getAttributionData: function(url){
       L.esri.Request.get.JSONP(url, {}, L.Util.bind(function(error, attributions){
