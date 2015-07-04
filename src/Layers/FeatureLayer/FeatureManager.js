@@ -158,7 +158,7 @@
     },
 
     _buildQuery: function(bounds){
-      var query = this._service.query().intersects(bounds).where(this.options.where).fields(this.options.fields).precision(this.options.precision);
+      var query = this.service.query().intersects(bounds).where(this.options.where).fields(this.options.fields).precision(this.options.precision);
 
       if(this.options.simplifyFactor){
         query.simplify(this._map, this.options.simplifyFactor);
@@ -382,17 +382,17 @@
      */
 
     authenticate: function(token){
-      this._service.authenticate(token);
+      this.service.authenticate(token);
       return this;
     },
 
     metadata: function(callback, context){
-      this._service.metadata(callback, context);
+      this.service.metadata(callback, context);
       return this;
     },
 
     query: function(){
-      return this._service.query();
+      return this.service.query();
     },
 
     _getMetadata: function(callback){
@@ -409,7 +409,7 @@
 
     addFeature: function(feature, callback, context){
       this._getMetadata(L.Util.bind(function(error, metadata){
-        this._service.addFeature(feature, L.Util.bind(function(error, response){
+        this.service.addFeature(feature, L.Util.bind(function(error, response){
           if(!error){
             // assign ID from result to appropriate objectid field from service metadata
             feature.properties[metadata.objectIdField] = response.objectId;
@@ -427,7 +427,7 @@
     },
 
     updateFeature: function(feature, callback, context){
-      this._service.updateFeature(feature, function(error, response){
+      this.service.updateFeature(feature, function(error, response){
         if(!error){
           this.removeLayers([feature.id], true);
           this.createLayers([feature]);
@@ -440,7 +440,7 @@
     },
 
     deleteFeature: function(id, callback, context){
-      this._service.deleteFeature(id, function(error, response){
+      this.service.deleteFeature(id, function(error, response){
         if(!error && response.objectId){
           this.removeLayers([response.objectId], true);
         }
@@ -451,7 +451,7 @@
     },
 
     deleteFeatures: function(ids, callback, context){
-      return this._service.deleteFeatures(ids, function(error, response){
+      return this.service.deleteFeatures(ids, function(error, response){
         if(!error && response.length > 0){
           for (var i=0; i<response.length; i++){
             this.removeLayers([response[i].objectId], true);

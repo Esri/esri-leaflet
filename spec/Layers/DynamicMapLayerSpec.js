@@ -129,16 +129,16 @@ describe('L.esri.Layers.DynamicMapLayer', function () {
   });
 
   it('should expose the authenticate method on the underlying service', function(){
-    var spy = sinon.spy(layer._service, 'authenticate');
+    var spy = sinon.spy(layer.service, 'authenticate');
     layer.authenticate('foo');
     expect(spy).to.have.been.calledWith('foo');
   });
 
   it('should expose the identify method on the underlying service', function(){
-    var spy = sinon.spy(layer._service, 'identify');
+    var spy = sinon.spy(layer.service, 'identify');
     var identify = layer.identify();
     expect(identify).to.be.an.instanceof(L.esri.Tasks.IdentifyFeatures);
-    expect(identify._service).to.equal(layer._service);
+    expect(identify._service).to.equal(layer.service);
   });
 
   it('should propagate events from the service', function(){

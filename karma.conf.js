@@ -38,15 +38,6 @@ module.exports = function(config) {
       'src/Tasks/Find.js',
       'src/Controls/Logo.js',
       'spec/**/*Spec.js'
-      // 'spec/UtilSpec.js',
-      // 'spec/RequestSpec.js',
-      // 'spec/Tasks/*Spec.js',
-      // 'spec/Services/*Spec.js',
-      // 'spec/Layers/**/*Spec.js',
-
-      // 'spec/Layers/DynamicMapLayerSpec.js'
-      // 'spec/**/QuerySpec.js',
-      // 'spec/**/FeatureManagerSpec.js'
     ],
 
     // list of files to exclude

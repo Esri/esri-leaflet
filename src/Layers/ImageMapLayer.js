@@ -7,11 +7,11 @@ EsriLeaflet.Layers.ImageMapLayer = EsriLeaflet.Layers.RasterLayer.extend({
   },
 
   query: function(){
-    return this._service.query();
+    return this.service.query();
   },
 
   identify: function(){
-    return this._service.identify();
+    return this.service.identify();
   },
 
   initialize: function (url, options) {
@@ -156,8 +156,8 @@ EsriLeaflet.Layers.ImageMapLayer = EsriLeaflet.Layers.RasterLayer.extend({
       params.noDataInterpretation = this.options.noDataInterpretation;
     }
 
-    if (this._service.options.token) {
-      params.token = this._service.options.token;
+    if (this.service.options.token) {
+      params.token = this.service.options.token;
     }
 
     if(this.options.renderingRule) {
@@ -173,7 +173,7 @@ EsriLeaflet.Layers.ImageMapLayer = EsriLeaflet.Layers.RasterLayer.extend({
 
   _requestExport: function (params, bounds) {
     if (this.options.f === 'json') {
-      this._service.get('exportImage', params, function(error, response){
+      this.service.get('exportImage', params, function(error, response){
         this._renderImage(response.href, bounds);
       }, this);
     } else {

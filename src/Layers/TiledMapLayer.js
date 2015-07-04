@@ -102,19 +102,19 @@ EsriLeaflet.Layers.TiledMapLayer = L.TileLayer.extend({
   },
 
   metadata: function(callback, context){
-    this._service.metadata(callback, context);
+    this.service.metadata(callback, context);
     return this;
   },
 
   identify: function(){
-    return this._service.identify();
+    return this.service.identify();
   },
 
   authenticate: function(token){
     var tokenQs = '?token=' + token;
     this.tileUrl = (this.options.token) ? this.tileUrl.replace(/\?token=(.+)/g, tokenQs) : this.tileUrl + tokenQs;
     this.options.token = token;
-    this._service.authenticate(token);
+    this.service.authenticate(token);
     return this;
   },
 

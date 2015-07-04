@@ -12,7 +12,7 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
     EsriLeaflet.Layers.FeatureManager.prototype.initialize.call(this, url, options);
 
     options = L.setOptions(this, options);
-
+    this._originalStyle = options.style;
     this._layers = {};
   },
 
@@ -36,14 +36,9 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
   },
 
   createNewLayer: function(geojson){
-    var options = {};
-    if (this.options.style) {
-      options = (typeof this.options.style === 'function') ? this.options.style(geojson) : this.options.style;
-    }
-    if (this.options.pointToLayer) {
-      options.pointToLayer = this.options.pointToLayer;
-    }
-    return L.GeoJSON.geometryToLayer(geojson, options);
+    var layer = L.GeoJSON.geometryToLayer(geojson, this.options);
+    layer.defaultOptions = layer.options;
+    return layer;
   },
 
   _updateLayer: function(layer, geojson){
@@ -106,10 +101,6 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
         newLayer =  this.createNewLayer(geojson);
         newLayer.feature = geojson;
 
-        if (newLayer instanceof L.Path) {
-          newLayer._originalStyle = L.esri.Util.shallowClone(newLayer.options);
-        }
-
         // bubble events from individual layers to the feature layer
         newLayer.addEventParent(this);
 
@@ -121,7 +112,7 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
         this._layers[newLayer.feature.id] = newLayer;
 
         // style the layer
-        this.resetStyle(newLayer.feature.id);
+        this.setFeatureStyle(newLayer.feature.id, this.options.style);
 
         this.fire('createfeature', {
           feature: newLayer.feature
@@ -213,12 +204,10 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
    */
 
   resetStyle: function (id) {
-    var layer = this._layers[id];
-
-    if(layer){
-      this.setFeatureStyle(layer.feature.id, layer._originalStyle);
-    }
-
+    this.options.style = this._originalStyle;
+    this.eachFeature(function (layer) {
+      this.resetFeatureStyle(layer.feature.id);
+    }, this);
     return this;
   },
 
@@ -230,21 +219,26 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
     return this;
   },
 
+  resetFeatureStyle: function (id) {
+    var layer = this._layers[id];
+    var style = this._originalStyle;
+    if (style) {
+      // reset any custom styles
+      L.Util.extend(layer.options, layer.defaultOptions);
+
+      this.setFeatureStyle(id, style);
+    }
+    return this;
+  },
+
   setFeatureStyle: function (id, style) {
     var layer = this._layers[id];
-
-    if (!style) {
-      return;
-    }
-
     if (typeof style === 'function') {
       style = style(layer.feature);
     }
-
-    if (layer && layer.setStyle) {
+    if (layer.setStyle) {
       layer.setStyle(style);
     }
-
     return this;
   },
 

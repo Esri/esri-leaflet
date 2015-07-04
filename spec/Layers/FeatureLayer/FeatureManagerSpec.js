@@ -627,23 +627,23 @@ describe('L.esri.Layers.FeatureManager', function () {
   });
 
   it('should expose the authenticate method on the underlying service', function(){
-    var spy = sinon.spy(layer._service, 'authenticate');
+    var spy = sinon.spy(layer.service, 'authenticate');
     layer.authenticate('foo');
     expect(spy).to.have.been.calledWith('foo');
   });
 
   it('should expose the metadata method on the underlying service', function(){
-    var spy = sinon.spy(layer._service, 'metadata');
+    var spy = sinon.spy(layer.service, 'metadata');
     var callback = sinon.spy();
     layer.metadata(callback);
     expect(spy).to.have.been.calledWith(callback);
   });
 
   it('should expose the query method on the underlying service', function(){
-    var spy = sinon.spy(layer._service, 'query');
+    var spy = sinon.spy(layer.service, 'query');
     var query = layer.query();
     expect(query).to.be.an.instanceof(L.esri.Tasks.Query);
-    expect(query._service).to.equal(layer._service);
+    expect(query._service).to.equal(layer.service);
   });
 
   // this is now really difficult with fakeServer. Should use a simple request list.

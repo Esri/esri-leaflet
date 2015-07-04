@@ -62,15 +62,15 @@ EsriLeaflet.Layers.DynamicMapLayer = EsriLeaflet.Layers.RasterLayer.extend({
   },
 
   query: function(){
-    return this._service.query();
+    return this.service.query();
   },
 
   identify: function(){
-    return this._service.identify();
+    return this.service.identify();
   },
 
   find: function(){
-    return this._service.find();
+    return this.service.find();
   },
 
   _getPopupData: function(e){
@@ -139,8 +139,8 @@ EsriLeaflet.Layers.DynamicMapLayer = EsriLeaflet.Layers.RasterLayer.extend({
       params.time = this.options.from.valueOf() + ',' + this.options.to.valueOf();
     }
 
-    if(this._service.options.token) {
-      params.token = this._service.options.token;
+    if(this.service.options.token) {
+      params.token = this.service.options.token;
     }
 
     return params;
@@ -148,7 +148,7 @@ EsriLeaflet.Layers.DynamicMapLayer = EsriLeaflet.Layers.RasterLayer.extend({
 
   _requestExport: function (params, bounds) {
     if(this.options.f === 'json'){
-      this._service.get('export', params, function(error, response){
+      this.service.get('export', params, function(error, response){
         this._renderImage(response.href, bounds);
       }, this);
     } else {

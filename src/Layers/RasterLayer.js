@@ -121,12 +121,12 @@ EsriLeaflet.Layers.RasterLayer =  L.Layer.extend({
   },
 
   metadata: function(callback, context){
-    this._service.metadata(callback, context);
+    this.service.metadata(callback, context);
     return this;
   },
 
   authenticate: function(token){
-    this._service.authenticate(token);
+    this.service.authenticate(token);
     return this;
   },
 

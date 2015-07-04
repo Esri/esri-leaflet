@@ -204,7 +204,7 @@ describe('L.esri.Layers.FeatureLayer', function () {
     expect(spy.callCount).to.equal(2);
   });
 
-xit('should style L.circleMarker features appropriately', function(){
+  it('should style L.circleMarker features appropriately', function(){
     layer = L.esri.featureLayer('http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0', {
       timeField: 'time',
       pointToLayer: function(feature, latlng){
@@ -218,13 +218,15 @@ xit('should style L.circleMarker features appropriately', function(){
     expect(layer.getFeature(1).options.color).to.equal('green');
   });
 
-
   it('should reset L.circleMarker style', function(){
     layer = L.esri.featureLayer('http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0', {
       pointToLayer: function(feature, latlng){
-        return L.circleMarker(latlng, {
+        return L.circleMarker(latlng);
+      },
+      style: function () {
+        return {
           color: 'green'
-        });
+        };
       }
     }).addTo(map);
 
@@ -236,7 +238,7 @@ xit('should style L.circleMarker features appropriately', function(){
     });
     expect(layer.getFeature(1).options.color).to.equal('red');
 
-    layer.resetStyle(1);
+    layer.resetFeatureStyle(1);
     expect(layer.getFeature(1).options.color).to.equal('green');
 
   });

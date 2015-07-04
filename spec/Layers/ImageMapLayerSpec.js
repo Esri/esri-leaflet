@@ -122,10 +122,10 @@ describe('L.esri.Layers.ImageMapLayer', function () {
   });
 
   it('should expose the identify method on the underlying service', function(){
-    var spy = sinon.spy(layer._service, 'identify');
+    var spy = sinon.spy(layer.service, 'identify');
     var identify = layer.identify();
     expect(identify).to.be.an.instanceof(L.esri.Tasks.IdentifyImage);
-    expect(identify._service).to.equal(layer._service);
+    expect(identify._service).to.equal(layer.service);
   });
 
   it('should bind a popup to the layer', function(){
