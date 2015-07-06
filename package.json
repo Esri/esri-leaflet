@@ -3,6 +3,10 @@
   "version": "1.0.0-rc.8",
   "description": "Leaflet plugins for consuming ArcGIS Online and ArcGIS Server services",
   "main": "dist/esri-leaflet.js",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Esri/esri-leaflet.git"
+  },
   "devDependencies": {
     "assemble": "^0.4.37",
     "grunt": "^0.4.2",
@@ -40,9 +44,10 @@
   },
   "author": "Patrick Arlt <parlt@esri.com> (http://patrickarlt.com)",
   "contributors": [
-    "Patrick Arlt <parlt@esri.com> (http://patrickarlt.com)"
+    "Patrick Arlt <parlt@esri.com> (http://patrickarlt.com)",
+    "John Gravois <jgravois@esri.com> (http://johngravois.com)"
   ],
-  "license": "Apache",
+  "license": "Apache-2.0",
   "readmeFilename": "README.md",
   "dependencies": {
     "leaflet": "^0.7.0"
