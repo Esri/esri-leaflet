@@ -126,7 +126,7 @@ You can create a new empty feature service with a single layer on the [ArcGIS fo
         <tr>
             <td><code>token</code></td>
             <td><code>String</code></td>
-            <td>If you pass a token in your options it will included in all requests to the service. See [working with authenticated services](#working-with-authenticated-services) for more information.</td>
+            <td>If you pass a token in your options it will be included in all requests to the service.</td>
         </tr>
         <tr>
             <td><code>proxy</code></td>
