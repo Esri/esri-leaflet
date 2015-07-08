@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.9.0
+
+This represents the stable release of Esri Leaflet that will be compatible with Leaflet 0.7.3. All future 0.9.X releases will be compatible with Leaflet 0.7.3 and contain only bug fixes.
+
+#### Changes
+
+* Added support for the `dymanicLayers` option to `L.esri.DymanicMapLayer` https://github.com/Esri/esri-leaflet/issues/566
+* Restored `bringToBack` and `bringToFront` to `L.esri.FeatureLayer` https://github.com/Esri/esri-leaflet/issues/479
+* `load` event on `L.esri.FeatureLayer` now fires at the proper time https://github.com/Esri/esri-leaflet/issues/545
+* `L.esri.DynamicMapLayer` and `L.esri.ImageMapLayer` will now automatically use POST for large requests. https://github.com/Esri/esri-leaflet/issues/574
+* `L.esri.ImageMapLayer` now defaults to requesting `json` as opposed to an image to better handle authentication and large requests https://github.com/Esri/esri-leaflet/issues/574
+
 ## Release Candidate 8
 
 #### Breaking Changes
@@ -12,7 +24,7 @@
 * Fixed a bug introduced in RC 7 where features would sometimes not draw https://github.com/Esri/esri-leaflet/issues/546 https://github.com/Esri/esri-leaflet/issues/536
 * `load` event is now fired after all features are created, rather than when they are all received from the server https://github.com/Esri/esri-leaflet/issues/545
 * Properly handle using `L.CircleMarker` with `L.esri.Layers.FeatureLayer` https://github.com/Esri/esri-leaflet/issues/534
-* New `redraw` method on `L.esri.Layers.FeatureLayer` for programatically redrawing features with their latest symbology. https://github.com/Esri/esri-leaflet/pull/550
+* New `redraw` method on `L.esri.Layers.FeatureLayer` for programmatically redrawing features with their latest symbology. https://github.com/Esri/esri-leaflet/pull/550
 
 ## Release Candidate 7
 
