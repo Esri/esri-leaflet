@@ -39,56 +39,47 @@ svg:not(:root) {
 @media screen and (min-width: 960px) {
   .phone-hide {
     visibility: visible; }
-
   .tablet-hide {
     visibility: visible; }
-
   .phone-show {
     display: none !important;
     visibility: hidden; }
-
   .tablet-show {
     display: none !important;
     visibility: hidden; }
-
   .tablet-only {
     display: none !important;
     visibility: hidden; } }
+
 @media screen and (max-width: 959px) and (min-width: 480px) {
   .phone-hide {
     visibility: visible; }
-
   .tablet-hide {
     display: none !important;
     visibility: hidden; }
-
   .phone-show {
     display: none !important;
     visibility: hidden; }
-
   .tablet-show {
     visibility: visible; }
-
   .tablet-only {
     visibility: visible; } }
+
 @media screen and (max-width: 479px) {
   .phone-hide {
     display: none !important;
     visibility: hidden; }
-
   .tablet-hide {
     display: none !important;
     visibility: hidden; }
-
   .phone-show {
     visibility: visible; }
-
   .tablet-show {
     visibility: visible; }
-
   .tablet-only {
     display: none !important;
     visibility: hidden; } }
+
 html {
   font-family: "Lato", sans-serif;
   font-weight: 400;
@@ -101,7 +92,7 @@ html em {
   font-style: italic;
   text-rendering: optimizeLegibility; }
 
-html strong, html em strong em, html em strong strong {
+html strong, html em strong em {
   font-family: "Lato", sans-serif;
   font-weight: 700;
   font-style: normal;
@@ -125,7 +116,7 @@ h1 em, h2 em, h3 em, h4 em, h5 em {
   font-style: italic;
   text-rendering: optimizeLegibility; }
 
-h1 strong, h2 strong, h3 strong, h4 strong, h5 strong, h1 em strong em, h2 em strong em, h3 em strong em, h4 em strong em, h5 em strong em, h1 em strong strong, h2 em strong strong, h3 em strong strong, h4 em strong strong, h5 em strong strong {
+h1 strong, h2 strong, h3 strong, h4 strong, h5 strong, h1 em strong em, h2 em strong em, h3 em strong em, h4 em strong em, h5 em strong em {
   font-family: "Vollkorn", serif;
   font-weight: 700;
   font-style: normal;
@@ -220,21 +211,21 @@ table {
   background-color: #FFFFFF;
   border-collapse: collapse;
   border-spacing: 0;
-  border: 1px solid #e4e9ed;
+  border: 1px solid #e5eaee;
   text-align: left;
   margin: 1.5rem 0;
   font-size: .875rem; }
   table > thead {
-    background-color: #f3f5f8;
-    border-bottom: 1px solid #e4e9ed; }
+    background-color: #f3f6f9;
+    border-bottom: 1px solid #e5eaee; }
   table thead th, table thead td {
     font-weight: 700; }
   table th, table td {
-    border-left: 1px solid #e4e9ed;
-    border-right: 1px solid #e4e9ed;
+    border-left: 1px solid #e5eaee;
+    border-right: 1px solid #e5eaee;
     padding: 12px; }
   table tr {
-    border-bottom: 1px solid #e4e9ed;
+    border-bottom: 1px solid #e5eaee;
     text-align: left; }
     table tr:last-child {
       border-bottom: none; }
@@ -247,7 +238,7 @@ body {
   min-width: 768px; }
 
 .page-content {
-  margin: 0 .75em; }
+  margin: 0 0.75em; }
 
 .container {
   -webkit-box-sizing: border-box;
@@ -259,7 +250,8 @@ body {
   position: relative;
   z-index: 3;
   padding: 2em 0; }
-  .container:before, .container:after {
+  .container:before,
+  .container:after {
     content: " ";
     display: table; }
   .container:after {
@@ -333,6 +325,7 @@ body {
     background-color: rgba(36, 132, 210, 0.85); }
   66% {
     background-color: rgba(121, 189, 143, 0.85); } }
+
 @-webkit-keyframes colorshift {
   0% {
     background-color: rgba(157, 120, 210, 0.85); }
@@ -340,6 +333,7 @@ body {
     background-color: rgba(36, 132, 210, 0.85); }
   66% {
     background-color: rgba(121, 189, 143, 0.85); } }
+
 @-moz-keyframes colorshift {
   0% {
     background-color: rgba(157, 120, 210, 0.85); }
@@ -347,6 +341,7 @@ body {
     background-color: rgba(36, 132, 210, 0.85); }
   66% {
     background-color: rgba(121, 189, 143, 0.85); } }
+
 .btn {
   display: inline-block;
   padding: 1em;
@@ -393,9 +388,11 @@ body {
   display: none !important;
   visibility: hidden; }
 
-.clearfix:before, .clearfix:after {
+.clearfix:before,
+.clearfix:after {
   content: " ";
   display: table; }
+
 .clearfix:after {
   clear: both; }
 
@@ -485,7 +482,8 @@ body {
     clear: both;
     padding: .15em 0;
     margin-bottom: .25em; }
-    .sidebar nav a:before, .sidebar nav a:after {
+    .sidebar nav a:before,
+    .sidebar nav a:after {
       content: " ";
       display: table; }
     .sidebar nav a:after {
@@ -538,8 +536,10 @@ pre .xml .cdata {
 .homepage .modal {
   margin-top: 6rem;
   text-align: center; }
+
 .homepage #homepage-map {
   min-height: 100vh; }
+
 .homepage .page-title {
   font-size: 3.998rem;
   margin-top: 1.5rem;
@@ -547,8 +547,10 @@ pre .xml .cdata {
   padding-bottom: 2.25rem;
   line-height: 3rem;
   border-bottom: 4px solid #4C5156; }
+
 .homepage .page-description {
   margin-bottom: 2.25rem; }
+
 .homepage .btn {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -587,6 +589,7 @@ pre .xml .cdata {
   height: 100%;
   width: 24.75%;
   z-index: 2; }
+
 .container.white:after {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -610,8 +613,8 @@ pre .xml .cdata {
   box-sizing: border-box; }
   .example-content pre {
     border: none;
-    border-top: 1px solid #e4e9ed;
-    border-bottom: 1px solid #e4e9ed;
+    border-top: 1px solid #e5eaee;
+    border-bottom: 1px solid #e5eaee;
     margin: 0; }
     .example-content pre code {
       padding: 0; }
@@ -627,7 +630,7 @@ pre .xml .cdata {
 pre {
   display: block;
   overflow: auto;
-  border: 1px solid #e4e9ed;
+  border: 1px solid #e5eaee;
   margin: 1rem 0;
   -moz-tab-size: 2;
   tab-size: 2; }
@@ -651,7 +654,7 @@ td pre {
   position: relative; }
 
 #map {
-  border-top: 1px solid #e4e9ed;
+  border-top: 1px solid #e5eaee;
   height: 500px;
   width: 100%;
   position: relative;
@@ -692,6 +695,7 @@ td pre {
   height: 100%;
   width: 24.75%;
   z-index: 2; }
+
 .container.white:after {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -715,8 +719,8 @@ td pre {
   box-sizing: border-box; }
   .example-content pre {
     border: none;
-    border-top: 1px solid #e4e9ed;
-    border-bottom: 1px solid #e4e9ed;
+    border-top: 1px solid #e5eaee;
+    border-bottom: 1px solid #e5eaee;
     margin: 0; }
     .example-content pre code {
       padding: 0; }
@@ -732,7 +736,7 @@ td pre {
 pre {
   display: block;
   overflow: auto;
-  border: 1px solid #e4e9ed;
+  border: 1px solid #e5eaee;
   margin: 1rem 0;
   -moz-tab-size: 2;
   tab-size: 2; }
@@ -756,7 +760,7 @@ td pre {
   position: relative; }
 
 #map {
-  border-top: 1px solid #e4e9ed;
+  border-top: 1px solid #e5eaee;
   height: 500px;
   width: 100%;
   position: relative;
@@ -764,5 +768,3 @@ td pre {
   right: 0; }
   #map a {
     padding-bottom: 0; }
-
-/*# sourceMappingURL=style.css.map */

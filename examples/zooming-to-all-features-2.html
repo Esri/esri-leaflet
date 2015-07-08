@@ -8,11 +8,11 @@
   <meta charset="utf-8">
 
   
-    <title>Geocoding control | Esri Leaflet</title>
+    <title>Zoom to all features | Esri Leaflet</title>
   
 
   
-    <meta name="description" content="Using the geocoding control to search for addresses and center the map. This demo relies of the &lt;a href=&quot;https://github.com/Esri/esri-leaflet-geocoder&quot;&gt;Esri Leaflet Geocoder&lt;/a&gt; plugin.">
+    <meta name="description" content="This sample creates a latLngBounds object clientside which contains the geometries fetched from the server.  An approach like this is necessary when working with older Feature Services (prior to ArcGIS Server 10.3.1) that don&#x27;t support making direct requests to the server for the &#x27;bounds&#x27; of features matching a query.">
   
 
   <meta name="description" content="Esri Leaflet">
@@ -161,40 +161,51 @@
 
 <div class="example-content">
 <div class="wrap">
-  <h1>Geocoding control</h1>
-  <p>Using the geocoding control to search for addresses and center the map. This demo relies of the <a href="https://github.com/Esri/esri-leaflet-geocoder">Esri Leaflet Geocoder</a> plugin.</p>
+  <h1>Zoom to all features</h1>
+  <p>This sample creates a latLngBounds object clientside which contains the geometries fetched from the server.  An approach like this is necessary when working with older Feature Services (prior to ArcGIS Server 10.3.1) that don't support making direct requests to the server for the 'bounds' of features matching a query.</p>
 </div>
 <div id="map-wrapper">
   
 
-<script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/1.0.0-rc.4/esri-leaflet-geocoder.js"></script>
-<link rel="stylesheet" type="text/css" href="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/1.0.0-rc.4/esri-leaflet-geocoder.css">
-
 <div id="map"></div>
 
 <script>
-  var map = L.map('map').setView([40.91, -96.63], 4);
 
-  L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+  // create a map and add Esri's Dark Gray basemap
+  var map = L.map('map').setView([40, -100], 5);
+  L.esri.basemapLayer('DarkGray').addTo(map);
+
+  // add a graphic layer composed of selected US Counties
+  var fl = L.esri.featureLayer('http://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer/2', {
+    where: "NAME='Los Angeles' OR NAME='San Bernardino'"
   }).addTo(map);
 
-  var searchControl = new L.esri.Geocoding.Controls.Geosearch().addTo(map);
+  // listen for when all features have been retrieved from the server
+  fl.on("load", function(evt) {
+    // create a new empty Leaflet bounds object
+    var bounds = L.latLngBounds([]);
+    // loop through the features returned by the server
+    fl.eachFeature(function(layer) {
+      // get the bounds of an individual feature
+      var layerBounds = layer.getBounds();
+      // extend the bounds of the collection to fit the bounds of the new feature
+      bounds.extend(layerBounds);
+    });
 
-  var results = new L.LayerGroup().addTo(map);
+    // once we've looped through all the features, zoom the map to the extent of the collection
+    map.fitBounds(bounds);
 
-  searchControl.on('results', function(data){
-    results.clearLayers();
-    for (var i = data.results.length - 1; i >= 0; i--) {
-      results.addLayer(L.marker(data.results[i].latlng));
-    }
+    // unwire the event listener so that it only fires once when the page is loaded
+    fl.off('load');
   });
+
 </script>
+
 </div>
 <pre><code class="language-xml"><span class="tag">&lt;<span class="title">html</span>&gt;</span>
 <span class="tag">&lt;<span class="title">head</span>&gt;</span>
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">utf-8</span> /&gt;</span>
-  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Geocoding control<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Zoom to all features<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">name</span>=<span class="value">'viewport'</span> <span class="attribute">content</span>=<span class="value">'initial-scale=1,maximum-scale=1,user-scalable=no'</span> /&gt;</span>
 
   <span class="comment">&lt;!-- Load Leaflet from CDN--&gt;</span>
@@ -212,35 +223,45 @@
 <span class="tag">&lt;/<span class="title">head</span>&gt;</span>
 <span class="tag">&lt;<span class="title">body</span>&gt;</span>
 
-<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/1.0.0-rc.4/esri-leaflet-geocoder.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
-<span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">type</span>=<span class="value">"text/css"</span> <span class="attribute">href</span>=<span class="value">"http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/1.0.0-rc.4/esri-leaflet-geocoder.css"</span>&gt;</span>
-
 <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
-  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">40.91</span>, -<span class="number">96.63</span>], <span class="number">4</span>);
 
-  L.tileLayer(<span class="string">'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'</span>, {
-    attribution: <span class="string">'&amp;copy; &lt;a href="http://osm.org/copyright"&gt;OpenStreetMap&lt;/a&gt; contributors'</span>
+  <span class="comment">// create a map and add Esri's Dark Gray basemap</span>
+  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">40</span>, -<span class="number">100</span>], <span class="number">5</span>);
+  L.esri.basemapLayer(<span class="string">'DarkGray'</span>).addTo(map);
+
+  <span class="comment">// add a graphic layer composed of selected US Counties</span>
+  <span class="keyword">var</span> fl = L.esri.featureLayer(<span class="string">'http://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer/2'</span>, {
+    where: <span class="string">"NAME='Los Angeles' OR NAME='San Bernardino'"</span>
   }).addTo(map);
 
-  <span class="keyword">var</span> searchControl = <span class="keyword">new</span> L.esri.Geocoding.Controls.Geosearch().addTo(map);
+  <span class="comment">// listen for when all features have been retrieved from the server</span>
+  fl.on(<span class="string">"load"</span>, <span class="function"><span class="keyword">function</span><span class="params">(evt)</span> {</span>
+    <span class="comment">// create a new empty Leaflet bounds object</span>
+    <span class="keyword">var</span> bounds = L.latLngBounds([]);
+    <span class="comment">// loop through the features returned by the server</span>
+    fl.eachFeature(<span class="function"><span class="keyword">function</span><span class="params">(layer)</span> {</span>
+      <span class="comment">// get the bounds of an individual feature</span>
+      <span class="keyword">var</span> layerBounds = layer.getBounds();
+      <span class="comment">// extend the bounds of the collection to fit the bounds of the new feature</span>
+      bounds.extend(layerBounds);
+    });
 
-  <span class="keyword">var</span> results = <span class="keyword">new</span> L.LayerGroup().addTo(map);
+    <span class="comment">// once we've looped through all the features, zoom the map to the extent of the collection</span>
+    map.fitBounds(bounds);
 
-  searchControl.on(<span class="string">'results'</span>, <span class="function"><span class="keyword">function</span><span class="params">(data)</span>{</span>
-    results.clearLayers();
-    <span class="keyword">for</span> (<span class="keyword">var</span> i = data.results.length - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) {
-      results.addLayer(L.marker(data.results[i].latlng));
-    }
+    <span class="comment">// unwire the event listener so that it only fires once when the page is loaded</span>
+    fl.off(<span class="string">'load'</span>);
   });
+
 </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 <span class="tag">&lt;/<span class="title">body</span>&gt;</span>
 <span class="tag">&lt;/<span class="title">html</span>&gt;</span></code></pre>
 
 <div class="wrap">
-  <p><a href="http://github.com/esri/esri-leaflet/edit/master/site/source/pages/examples/geocoding-control.hbs">Edit this sample on GitHub</a></p>
+  <p><a href="http://github.com/esri/esri-leaflet/edit/master/site/source/pages/examples/zooming-to-all-features-2.hbs">Edit this sample on GitHub</a></p>
 </div>
 </div>
   <div style='clear:both;'></div>

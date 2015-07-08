@@ -35,6 +35,8 @@
   <script src="//cdn.jsdelivr.net/leaflet/latest/leaflet.js"></script>
   <script src="//cdn.jsdelivr.net/leaflet.esri/latest/esri-leaflet.js"></script>
   <script src="//cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
+
+
   <!-- Google Analytics -->
   <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -191,10 +193,16 @@
 <td>Position of the layer relative to other overlays.</td>
 </tr>
 <tr>
+<td><code>dynamicLayers</code></td>
+<td><code>Object</code></td>
+<td><code>null</code></td>
+<td>JSON object literal used to manipulate the layer symbology defined in the service itself.  Requires a 10.1 (or above) map service which supports <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/index.html#/Export_Map/02r3000000v7000000/">dynamicLayers</a> requests.</td>
+</tr>
+<tr>
 <td><code>token</code></td>
 <td><code>String</code></td>
 <td><code>null</code></td>
-<td>If you pass a token in your options it will included in all requests to the service. See <a href="#working-with-authenticated-services">working with authenticated services</a> for more information.</td>
+<td>If you pass a token in your options it will be included in all requests to the service.</td>
 </tr>
 <tr>
 <td><code>proxy</code></td>
@@ -297,6 +305,22 @@ dynamicMapLayer.bindPopup(
             <td><code>setTimeOptions(<nobr class="param"><span>&lt;<a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Export_Map/02r3000000v7000000/">Object</a>&gt;</span> <code>timeOptions</code></nobr>)</code></td>
             <td><code>this</code></td>
             <td>Sets the current time options being used to render the layer. Corresponds to the <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Export_Map/02r3000000v7000000/">layerTimeOptions</a> option on the export API.</td>
+        </tr>
+        <tr>
+            <td><code>getDynamicLayers()</code></td>
+            <td><code>Object</code></td>
+            <td>Returns a JSON object representing the modified layer symbology being requested from the map service.</td>
+        </tr>
+        <tr>
+            <td><code>setDynamicLayers(<nobr class="param"><span>&lt;Object&gt;</span> <code>layers</code></nobr>)</code></td>
+            <td><code>Object</code></td>
+            <td>Used to insert raw dynamicLayers JSON in situations where you&#39;d like to modify layer symbology defined in the service itself.
+<pre class="js"><code>dynamicMapLayer.setDynamicLayers([{
+  ...
+  &quot;drawingInfo&quot;: { ... }
+}]);
+</code></pre>
+            </td>
         </tr>
         <tr>
             <td><code>metadata(<nobr class="param"><span>&lt;Function&gt;</span> <code>callback</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>context</code></nobr>)</code></td>
