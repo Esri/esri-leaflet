@@ -3,7 +3,8 @@ EsriLeaflet.Layers.ImageMapLayer = EsriLeaflet.Layers.RasterLayer.extend({
   options: {
     updateInterval: 150,
     format: 'jpgpng',
-    transparent: true
+    transparent: true,
+    f: 'json'
   },
 
   query: function(){
@@ -173,7 +174,7 @@ EsriLeaflet.Layers.ImageMapLayer = EsriLeaflet.Layers.RasterLayer.extend({
 
   _requestExport: function (params, bounds) {
     if (this.options.f === 'json') {
-      this._service.get('exportImage', params, function(error, response){
+      this._service.request('exportImage', params, function(error, response){
         this._renderImage(response.href, bounds);
       }, this);
     } else {

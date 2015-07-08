@@ -148,7 +148,7 @@ EsriLeaflet.Layers.DynamicMapLayer = EsriLeaflet.Layers.RasterLayer.extend({
 
   _requestExport: function (params, bounds) {
     if(this.options.f === 'json'){
-      this._service.get('export', params, function(error, response){
+      this._service.request('export', params, function(error, response){
         this._renderImage(response.href, bounds);
       }, this);
     } else {
