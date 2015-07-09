@@ -1,4 +1,6 @@
-EsriLeaflet.Layers.FeatureGrid = L.Layer.extend({
+import L from "leaflet";
+
+export var FeatureGrid = L.Layer.extend({
 
   options: {
     cellSize: 512,
@@ -287,3 +289,7 @@ EsriLeaflet.Layers.FeatureGrid = L.Layer.extend({
   }
 
 });
+
+export default function (options) {
+  return new FeatureGrid(options);
+};

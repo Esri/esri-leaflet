@@ -1,4 +1,9 @@
-EsriLeaflet.Layers.DynamicMapLayer = EsriLeaflet.Layers.RasterLayer.extend({
+import L from "leaflet";
+import { RasterLayer } from "./RasterLayer";
+import { cleanUrl } from "../Util";
+import mapService from "../Services/MapService";
+
+export var DynamicMapLayer = RasterLayer.extend({
 
   options: {
     updateInterval: 150,
@@ -12,8 +17,8 @@ EsriLeaflet.Layers.DynamicMapLayer = EsriLeaflet.Layers.RasterLayer.extend({
 
   initialize: function (url, options) {
     options = options || {};
-    options.url = EsriLeaflet.Util.cleanUrl(url);
-    this.service = new EsriLeaflet.Services.MapService(options);
+    options.url = cleanUrl(url);
+    this.service = mapService(options);
     this.service.addEventParent(this);
     if ((options.proxy || options.token) && options.f !== 'json'){
       options.f = 'json';
@@ -158,12 +163,6 @@ EsriLeaflet.Layers.DynamicMapLayer = EsriLeaflet.Layers.RasterLayer.extend({
   }
 });
 
-EsriLeaflet.DynamicMapLayer = EsriLeaflet.Layers.DynamicMapLayer;
-
-EsriLeaflet.Layers.dynamicMapLayer = function(url, options){
-  return new EsriLeaflet.Layers.DynamicMapLayer(url, options);
-};
-
-EsriLeaflet.dynamicMapLayer = function(url, options){
-  return new EsriLeaflet.Layers.DynamicMapLayer(url, options);
+export default function dynamicMapLayer(url, options){
+  return new DynamicMapLayer(url, options);
 };

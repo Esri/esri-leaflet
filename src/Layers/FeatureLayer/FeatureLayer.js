@@ -1,4 +1,8 @@
-EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
+import L from 'leaflet';
+import { FeatureManager } from './FeatureManager';
+import { requestAnimationFrame } from '../../Util';
+
+export var FeatureLayer = FeatureManager.extend({
 
   options: {
     cacheLayers: true
@@ -9,7 +13,7 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
    */
 
   initialize: function (url, options) {
-    EsriLeaflet.Layers.FeatureManager.prototype.initialize.call(this, url, options);
+    FeatureManager.prototype.initialize.call(this, url, options);
 
     options = L.setOptions(this, options);
     this._originalStyle = options.style;
@@ -24,7 +28,7 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
     map.on('zoomstart zoomend', function(e){
       this._zooming = (e.type === 'zoomstart');
     }, this);
-    return EsriLeaflet.Layers.FeatureManager.prototype.onAdd.call(this, map);
+    return FeatureManager.prototype.onAdd.call(this, map);
   },
 
   onRemove: function(map){
@@ -32,7 +36,7 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
       map.removeLayer(this._layers[i]);
     }
 
-    return EsriLeaflet.Layers.FeatureManager.prototype.onRemove.call(this, map);
+    return FeatureManager.prototype.onRemove.call(this, map);
   },
 
   createNewLayer: function(geojson){
@@ -157,7 +161,7 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
 
   cellEnter: function(bounds, coords){
     if(!this._zooming){
-      EsriLeaflet.Util.requestAnimationFrame(L.Util.bind(function(){
+      requestAnimationFrame(L.Util.bind(function(){
         var cacheKey = this._cacheKey(coords);
         var cellKey = this._cellCoordsToKey(coords);
         var layers = this._cache[cacheKey];
@@ -170,7 +174,7 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
 
   cellLeave: function(bounds, coords){
     if(!this._zooming){
-      EsriLeaflet.Util.requestAnimationFrame(L.Util.bind(function(){
+      requestAnimationFrame(L.Util.bind(function(){
         var cacheKey = this._cacheKey(coords);
         var cellKey = this._cellCoordsToKey(coords);
         var layers = this._cache[cacheKey];
@@ -223,9 +227,7 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
     var layer = this._layers[id];
     var style = this._originalStyle;
     if (style) {
-      // reset any custom styles
       L.Util.extend(layer.options, layer.defaultOptions);
-
       this.setFeatureStyle(id, style);
     }
     return this;
@@ -308,12 +310,6 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
   }
 });
 
-EsriLeaflet.FeatureLayer = EsriLeaflet.Layers.FeatureLayer;
-
-EsriLeaflet.Layers.featureLayer = function(url, options){
-  return new EsriLeaflet.Layers.FeatureLayer(url, options);
-};
-
-EsriLeaflet.featureLayer = function(url, options){
+export default function featureLayer (url, options){
   return new EsriLeaflet.Layers.FeatureLayer(url, options);
 };

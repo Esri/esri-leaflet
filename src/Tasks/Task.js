@@ -1,8 +1,13 @@
-EsriLeaflet.Tasks.Task = L.Class.extend({
+import L from "leaflet";
+import {cors} from "../Support";
+import {cleanUrl} from "../Util";
+import {Request, jsonp} from "../Request";
+
+export var Task = L.Class.extend({
 
   options: {
     proxy: false,
-    useCors: EsriLeaflet.Support.CORS
+    useCors: cors
   },
 
   //Generate a method for each methodName:paramName in the setters for this task.
@@ -20,7 +25,7 @@ EsriLeaflet.Tasks.Task = L.Class.extend({
       L.Util.setOptions(this, endpoint.options);
     } else {
       L.Util.setOptions(this, endpoint);
-      this.options.url = L.esri.Util.cleanUrl(endpoint.url);
+      this.options.url = cleanUrl(endpoint.url);
     }
 
     // clone default params into this object
@@ -47,17 +52,22 @@ EsriLeaflet.Tasks.Task = L.Class.extend({
   request: function(callback, context){
     if(this._service){
       return this._service.request(this.path, this.params, callback, context);
-    } else {
-      return this._request('request', this.path, this.params, callback, context);
     }
+
+    return this._request('request', this.path, this.params, callback, context);
   },
 
   _request: function(method, path, params, callback, context){
     var url = (this.options.proxy) ? this.options.proxy + '?' + this.options.url + path : this.options.url + path;
+
     if((method === 'get' || method === 'request') && !this.options.useCors){
-      return EsriLeaflet.Request.get.JSONP(url, params, callback, context);
-    } else{
-      return EsriLeaflet[method](url, params, callback, context);
+      return jsonp(url, params, callback, context);
     }
+
+    return Request[method](url, params, callback, context);
   }
 });
+
+export default function task (options) {
+  return new Task(options);
+};

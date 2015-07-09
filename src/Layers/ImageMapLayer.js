@@ -1,4 +1,9 @@
-EsriLeaflet.Layers.ImageMapLayer = EsriLeaflet.Layers.RasterLayer.extend({
+import L from "leaflet";
+import { RasterLayer } from "./RasterLayer";
+import { cleanUrl} from "../Util";
+import imageService from "../Services/ImageService";
+
+export var ImageMapLayer = RasterLayer.extend({
 
   options: {
     updateInterval: 150,
@@ -16,8 +21,8 @@ EsriLeaflet.Layers.ImageMapLayer = EsriLeaflet.Layers.RasterLayer.extend({
 
   initialize: function (url, options) {
     options = options || {};
-    options.url = EsriLeaflet.Util.cleanUrl(url);
-    this.service = new EsriLeaflet.Services.ImageService(options);
+    options.url = cleanUrl(url);
+    this.service = imageService(options);
     this.service.addEventParent(this);
     L.Util.setOptions(this, options);
   },
@@ -183,12 +188,6 @@ EsriLeaflet.Layers.ImageMapLayer = EsriLeaflet.Layers.RasterLayer.extend({
   }
 });
 
-EsriLeaflet.ImageMapLayer = EsriLeaflet.Layers.ImageMapLayer;
-
-EsriLeaflet.Layers.imageMapLayer = function (url, options) {
-  return new EsriLeaflet.Layers.ImageMapLayer(url, options);
-};
-
-EsriLeaflet.imageMapLayer = function (url, options) {
+export default function imageMapLayer(url, options) {
   return new EsriLeaflet.Layers.ImageMapLayer(url, options);
 };

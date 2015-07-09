@@ -1,4 +1,8 @@
-EsriLeaflet.Tasks.IdentifyImage = EsriLeaflet.Tasks.Identify.extend({
+import L from "leaflet";
+import { Identify } from "./Identify";
+import Util from "../Util";
+
+export var IdentifyImage = Identify.extend({
   setters: {
     'setMosaicRule': 'mosaicRule',
     'setRenderingRule': 'renderingRule',
@@ -76,7 +80,7 @@ EsriLeaflet.Tasks.IdentifyImage = EsriLeaflet.Tasks.Identify.extend({
     }
 
     if (catalogItems && catalogItems.features) {
-      geoJSON.catalogItems = EsriLeaflet.Util.responseToFeatureCollection(catalogItems);
+      geoJSON.catalogItems = Util.responseToFeatureCollection(catalogItems);
       if (catalogItemVisibilities && catalogItemVisibilities.length === geoJSON.catalogItems.features.length) {
         for (var i = catalogItemVisibilities.length - 1; i >= 0; i--) {
           geoJSON.catalogItems.features[i].properties.catalogItemVisibility = catalogItemVisibilities[i];
@@ -88,6 +92,6 @@ EsriLeaflet.Tasks.IdentifyImage = EsriLeaflet.Tasks.Identify.extend({
 
 });
 
-EsriLeaflet.Tasks.identifyImage = function(params){
-  return new EsriLeaflet.Tasks.IdentifyImage(params);
+export default function identifyImage(params){
+  return new IdentifyImage(params);
 };

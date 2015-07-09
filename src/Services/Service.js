@@ -1,8 +1,13 @@
-EsriLeaflet.Services.Service = L.Evented.extend({
+import L from "leaflet";
+import {cors} from "../Support";
+import {cleanUrl} from "../Util";
+import {Request, jsonp} from "../Request";
+
+export var Service = L.Evented.extend({
 
   options: {
     proxy: false,
-    useCors: EsriLeaflet.Support.CORS
+    useCors: cors
   },
 
   initialize: function (options) {
@@ -10,7 +15,7 @@ EsriLeaflet.Services.Service = L.Evented.extend({
     this._requestQueue = [];
     this._authenticating = false;
     L.Util.setOptions(this, options);
-    this.options.url = EsriLeaflet.Util.cleanUrl(this.options.url);
+    this.options.url = cleanUrl(this.options.url);
   },
 
   get: function (path, params, callback, context) {
@@ -56,9 +61,9 @@ EsriLeaflet.Services.Service = L.Evented.extend({
       var url = (this.options.proxy) ? this.options.proxy + '?' + this.options.url + path : this.options.url + path;
 
       if((method === 'get' || method === 'request') && !this.options.useCors){
-        return EsriLeaflet.Request.get.JSONP(url, params, wrappedCallback);
+        return jsonp(url, params, wrappedCallback);
       } else {
-        return EsriLeaflet[method](url, params, wrappedCallback);
+        return Request[method](url, params, wrappedCallback);
       }
     }
   },
@@ -113,9 +118,8 @@ EsriLeaflet.Services.Service = L.Evented.extend({
     }
     this._requestQueue = [];
   }
-
 });
 
-EsriLeaflet.Services.service = function(params){
-  return new EsriLeaflet.Services.Service(params);
+export default function service (options) {
+  return new EsriLeaflet.Services.Service(options);
 };

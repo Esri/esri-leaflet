@@ -1,4 +1,6 @@
-EsriLeaflet.Controls.Logo = L.Control.extend({
+import L from "leaflet";
+
+export var Logo = L.Control.extend({
   options: {
     position: 'bottomright',
     marginTop: 0,
@@ -33,6 +35,6 @@ EsriLeaflet.Controls.Logo = L.Control.extend({
 
 });
 
-EsriLeaflet.Controls.logo = function(options){
-  return new L.esri.Controls.Logo(options);
+export default function logo (options){
+  return new Logo(options);
 };

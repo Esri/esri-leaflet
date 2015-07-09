@@ -1,4 +1,8 @@
-EsriLeaflet.Tasks.IdentifyFeatures = EsriLeaflet.Tasks.Identify.extend({
+import L from "leaflet";
+import { Identify } from "./Identify";
+import Util from "../Util";
+
+export var IdentifyFeatures = Identify.extend({
   setters: {
     'layers': 'layers',
     'precision': 'geometryPrecision',
@@ -14,7 +18,7 @@ EsriLeaflet.Tasks.IdentifyFeatures = EsriLeaflet.Tasks.Identify.extend({
   },
 
   on: function(map){
-    var extent = EsriLeaflet.Util.boundsToExtent(map.getBounds());
+    var extent = Util.boundsToExtent(map.getBounds());
     var size = map.getSize();
     this.params.imageDisplay = [size.x, size.y, 96];
     this.params.mapExtent = [extent.xmin, extent.ymin, extent.xmax, extent.ymax];
@@ -49,7 +53,7 @@ EsriLeaflet.Tasks.IdentifyFeatures = EsriLeaflet.Tasks.Identify.extend({
 
       // ok no error lets just assume we have features...
       } else {
-        var featureCollection = EsriLeaflet.Util.responseToFeatureCollection(response);
+        var featureCollection = Util.responseToFeatureCollection(response);
         response.results = response.results.reverse();
         for (var i = 0; i < featureCollection.features.length; i++) {
           var feature = featureCollection.features[i];
@@ -61,6 +65,6 @@ EsriLeaflet.Tasks.IdentifyFeatures = EsriLeaflet.Tasks.Identify.extend({
   }
 });
 
-EsriLeaflet.Tasks.identifyFeatures = function(params){
-  return new EsriLeaflet.Tasks.IdentifyFeatures(params);
+export default function identifyFeatures (options){
+  return new IdentifyFeatures(options);
 };

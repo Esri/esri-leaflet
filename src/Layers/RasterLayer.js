@@ -1,10 +1,13 @@
-EsriLeaflet.Layers.RasterLayer =  L.Layer.extend({
+import L from "leaflet";
+import {cors} from "../Support";
+
+export var RasterLayer =  L.Layer.extend({
 
   options: {
     opacity: 1,
     position: 'front',
     f: 'image',
-    useCors: EsriLeaflet.Support.CORS,
+    useCors: cors,
     attribution: null,
     interactive: false,
     alt: ''
@@ -215,7 +218,6 @@ EsriLeaflet.Layers.RasterLayer =  L.Layer.extend({
     this._requestExport(params, bounds);
   },
 
-  // TODO: refactor these into raster layer
   _renderPopup: function(latlng, error, results, response){
     latlng = L.latLng(latlng);
     if(this._shouldRenderPopup && this._lastClick.equals(latlng)){
@@ -232,3 +234,7 @@ EsriLeaflet.Layers.RasterLayer =  L.Layer.extend({
     this._lastClick = e.latlng;
   }
 });
+
+export default function rasterLayer (url, options){
+  return new RasterLayer(url, options);
+};

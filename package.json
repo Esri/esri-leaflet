@@ -5,6 +5,10 @@
   "main": "dist/esri-leaflet.js",
   "devDependencies": {
     "assemble": "^0.4.37",
+    "babelify": "^6.1.2",
+    "browserify": "^10.2.4",
+    "exorcist": "^0.4.0",
+    "exposify": "^0.4.3",
     "grunt": "^0.4.2",
     "grunt-concurrent": "^0.5.0",
     "grunt-contrib-concat": "^0.5.0",
@@ -43,6 +47,11 @@
   "contributors": [
     "Patrick Arlt <parlt@esri.com> (http://patrickarlt.com)"
   ],
+  "browserify": {
+    "transform": [
+      "babelify"
+    ]
+  },
   "license": "Apache",
   "readmeFilename": "README.md",
   "dependencies": {

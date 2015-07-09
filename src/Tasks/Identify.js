@@ -1,4 +1,6 @@
-EsriLeaflet.Tasks.Identify = EsriLeaflet.Tasks.Task.extend({
+import { Task } from "./Task";
+
+export var Identify = Task.extend({
   path: 'identify',
 
   between: function(start, end){
@@ -6,3 +8,7 @@ EsriLeaflet.Tasks.Identify = EsriLeaflet.Tasks.Task.extend({
     return this;
   }
 });
+
+export default function identify(options){
+  return new Identify(options);
+};

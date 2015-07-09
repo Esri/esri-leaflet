@@ -1,4 +1,8 @@
-EsriLeaflet.Layers.TiledMapLayer = L.TileLayer.extend({
+import L from "leaflet";
+import {warn, cleanUrl} from "../Util";
+import mapService from "../Services/MapService";
+
+export var TiledMapLayer = L.TileLayer.extend({
   options: {
     zoomOffsetAllowance: 0.1,
     correctZoomLevels: true
@@ -35,12 +39,12 @@ EsriLeaflet.Layers.TiledMapLayer = L.TileLayer.extend({
 
   initialize: function(url, options){
     options = options || {};
-    options.url = EsriLeaflet.Util.cleanUrl(url);
+    options.url = cleanUrl(url);
     options = L.Util.setOptions(this, options);
 
     // set the urls
     this.tileUrl = options.url + 'tile/{z}/{y}/{x}';
-    this.service = new L.esri.Services.MapService(options);
+    this.service = mapService(options);
     this.service.addEventParent(this);
 
     //if this is looking at the AGO tiles subdomain insert the subdomain placeholder
@@ -90,7 +94,7 @@ EsriLeaflet.Layers.TiledMapLayer = L.TileLayer.extend({
               }
             }
           } else {
-            EsriLeaflet.Util.warn('L.esri.TiledMapLayer is using a non-mercator spatial reference. Support may be available through Proj4Leaflet http://esri.github.io/esri-leaflet/examples/non-mercator-projection.html');
+            warn('L.esri.TiledMapLayer is using a non-mercator spatial reference. Support may be available through Proj4Leaflet http://esri.github.io/esri-leaflet/examples/non-mercator-projection.html');
           }
         }
 
@@ -110,6 +114,14 @@ EsriLeaflet.Layers.TiledMapLayer = L.TileLayer.extend({
     return this.service.identify();
   },
 
+  find: function(){
+    return this.service.find();
+  },
+
+  query: function(){
+    return this.service.query();
+  },
+
   authenticate: function(token){
     var tokenQs = '?token=' + token;
     this.tileUrl = (this.options.token) ? this.tileUrl.replace(/\?token=(.+)/g, tokenQs) : this.tileUrl + tokenQs;
@@ -124,12 +136,6 @@ EsriLeaflet.Layers.TiledMapLayer = L.TileLayer.extend({
   }
 });
 
-L.esri.TiledMapLayer = L.esri.Layers.tiledMapLayer;
-
-L.esri.Layers.tiledMapLayer = function(url, options){
-  return new L.esri.Layers.TiledMapLayer(url, options);
-};
-
-L.esri.tiledMapLayer = function(url, options){
-  return new L.esri.Layers.TiledMapLayer(url, options);
+export default function tiledMapLayer (url, options){
+  return new TiledMapLayer(url, options);
 };

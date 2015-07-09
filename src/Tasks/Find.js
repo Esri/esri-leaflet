@@ -1,4 +1,8 @@
-EsriLeaflet.Tasks.Find = EsriLeaflet.Tasks.Task.extend({
+import L from "leaflet";
+import { Task } from "./Task";
+import Util from "../Util";
+
+export var Find = Task.extend({
   setters: {
     // method name > param name
     'contains': 'contains',
@@ -41,11 +45,11 @@ EsriLeaflet.Tasks.Find = EsriLeaflet.Tasks.Task.extend({
 
   run: function (callback, context) {
     return this.request(function(error, response){
-      callback.call(context, error, (response && EsriLeaflet.Util.responseToFeatureCollection(response)), response);
+      callback.call(context, error, (response && Util.responseToFeatureCollection(response)), response);
     }, context);
   }
 });
 
-EsriLeaflet.Tasks.find = function (params) {
-  return new EsriLeaflet.Tasks.Find(params);
+export default function find (options) {
+  return new Find(options);
 };
