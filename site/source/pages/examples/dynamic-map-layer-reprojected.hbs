@@ -12,7 +12,8 @@ layout: example.hbs
 
   //Add Gray Basemap
   L.esri.basemapLayer("Gray").addTo(map);
-  dynLayer = L.esri.dynamicMapLayer("http://sampleserver6.arcgisonline.com/arcgis/rest/services/SampleWorldCities/MapServer");
+  dynLayer = L.esri.dynamicMapLayer({
+    url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/SampleWorldCities/MapServer"});
 
   map.addLayer(dynLayer);
 </script>

@@ -31,7 +31,7 @@ module.exports = function(grunt) {
     'src/Util.js',
     'src/Request.js',
     'src/Services/Service.js',
-    'src/Services/FeatureLayer.js',
+    'src/Services/FeatureLayerService.js',
     'src/Services/MapService.js',
     'src/Services/ImageService.js',
     'src/Tasks/Task.js',
