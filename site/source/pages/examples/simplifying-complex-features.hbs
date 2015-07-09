@@ -23,7 +23,8 @@ layout: example.hbs
 
   L.esri.basemapLayer('Gray').addTo(map);
 
-  var zipcodes = L.esri.featureLayer('http://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_ZIP_Codes/FeatureServer/0', {
+  var zipcodes = L.esri.featureLayer({
+    url: 'http://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_ZIP_Codes/FeatureServer/0',
     simplifyFactor: 0.35,
     precision: 5,
     fields: ['FID', 'ZIP', 'PO_NAME'],

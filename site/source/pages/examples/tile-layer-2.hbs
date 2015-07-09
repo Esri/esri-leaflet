@@ -9,7 +9,8 @@ layout: example.hbs
 <script>
   var map = L.map('map').setView([19.31, -155.04], 9);
 
-  L.esri.tiledMapLayer("http://services.arcgisonline.com/ArcGIS/rest/services/Specialty/World_Navigation_Charts/MapServer", {
+  L.esri.tiledMapLayer({
+    url: "http://services.arcgisonline.com/ArcGIS/rest/services/Specialty/World_Navigation_Charts/MapServer",
     detectRetina: true
   }).addTo(map);
 </script>

@@ -65,7 +65,8 @@ layout: example.hbs
 
   signInButton.addEventListener('click', function(e){
     oauth(function(token){
-      trafficLayer = L.esri.dynamicMapLayer('http://traffic.arcgis.com/arcgis/rest/services/World/Traffic/MapServer', {
+      trafficLayer = L.esri.dynamicMapLayer({
+        url: 'http://traffic.arcgis.com/arcgis/rest/services/World/Traffic/MapServer',
         token: token
       }).addTo(map);
       trafficLayer.on('authenticationrequired', function(e){

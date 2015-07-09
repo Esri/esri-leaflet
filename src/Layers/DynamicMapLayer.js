@@ -10,9 +10,8 @@ EsriLeaflet.Layers.DynamicMapLayer = EsriLeaflet.Layers.RasterLayer.extend({
     f: 'json'
   },
 
-  initialize: function (url, options) {
-    options = options || {};
-    options.url = EsriLeaflet.Util.cleanUrl(url);
+  initialize: function (options) {
+    options.url = EsriLeaflet.Util.cleanUrl(options.url);
     this._service = new EsriLeaflet.Services.MapService(options);
     this._service.on('authenticationrequired requeststart requestend requesterror requestsuccess', this._propagateEvent, this);
     if ((options.proxy || options.token) && options.f !== 'json'){
@@ -160,10 +159,10 @@ EsriLeaflet.Layers.DynamicMapLayer = EsriLeaflet.Layers.RasterLayer.extend({
 
 EsriLeaflet.DynamicMapLayer = EsriLeaflet.Layers.DynamicMapLayer;
 
-EsriLeaflet.Layers.dynamicMapLayer = function(url, options){
-  return new EsriLeaflet.Layers.DynamicMapLayer(url, options);
+EsriLeaflet.Layers.dynamicMapLayer = function(options){
+  return new EsriLeaflet.Layers.DynamicMapLayer(options);
 };
 
-EsriLeaflet.dynamicMapLayer = function(url, options){
-  return new EsriLeaflet.Layers.DynamicMapLayer(url, options);
+EsriLeaflet.dynamicMapLayer = function(options){
+  return new EsriLeaflet.Layers.DynamicMapLayer(options);
 };

@@ -60,7 +60,8 @@ layout: example.hbs
   L.esri.basemapLayer('Gray').addTo(map);
   L.esri.basemapLayer('GrayLabels').addTo(map);
 
-  var oilWells = L.esri.dynamicMapLayer('http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Petroleum/KSWells/MapServer', {
+  var oilWells = L.esri.dynamicMapLayer({
+    url: 'http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Petroleum/KSWells/MapServer',
     useCors: false,
     layers: [0],
     from: new Date(startTimeInput.value),

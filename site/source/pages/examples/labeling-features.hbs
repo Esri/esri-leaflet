@@ -26,7 +26,8 @@ layout: example.hbs
 
   L.esri.basemapLayer('Gray').addTo(map);
 
-  var neighborhoods = new L.esri.FeatureLayer('https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Neighborhoods_pdx/FeatureServer/0', {
+  var neighborhoods = new L.esri.FeatureLayer({
+    url: 'https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Neighborhoods_pdx/FeatureServer/0',
     style: function() {
       return {
         color: '#5B7CBA',

@@ -1,4 +1,4 @@
-EsriLeaflet.Services.FeatureLayer = EsriLeaflet.Services.Service.extend({
+EsriLeaflet.Services.FeatureLayerService = EsriLeaflet.Services.Service.extend({
 
   options: {
     idAttribute: 'OBJECTID'
@@ -60,6 +60,6 @@ EsriLeaflet.Services.FeatureLayer = EsriLeaflet.Services.Service.extend({
   }
 });
 
-EsriLeaflet.Services.featureLayer = function(options) {
-  return new EsriLeaflet.Services.FeatureLayer(options);
+EsriLeaflet.Services.featureLayerService = function(options) {
+  return new EsriLeaflet.Services.FeatureLayerService(options);
 };

@@ -633,7 +633,7 @@ describe('L.esri.Tasks.Query', function () {
   it('should use a feature layer service to query features', function(done){
     server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&f=json', JSON.stringify(sampleQueryResponse));
 
-    var service = new L.esri.Services.FeatureLayer({url: featureLayerUrl});
+    var service = new L.esri.Services.FeatureLayerService({url: featureLayerUrl});
 
     var request = service.query().run(function(error, featureCollection, raw){
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);

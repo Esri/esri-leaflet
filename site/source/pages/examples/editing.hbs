@@ -46,7 +46,9 @@ layout: example.hbs
   L.esri.basemapLayer('Streets').addTo(map);
 
   // add our feature layer to the map
-  var pedestrianDistricts = new L.esri.FeatureLayer('http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/PDX_Pedestrian_Districts/FeatureServer/0').addTo(map);
+  var pedestrianDistricts = new L.esri.FeatureLayer({
+    'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/PDX_Pedestrian_Districts/FeatureServer/0'
+  }).addTo(map);
 
   // variable to track the layer being edited
   var currentlyEditing;

@@ -11,7 +11,8 @@ layout: example.hbs
 
   L.esri.basemapLayer('Gray').addTo(map);
 
-  var federalLands = L.esri.dynamicMapLayer('http://maps1.arcgisonline.com/ArcGIS/rest/services/USA_Federal_Lands/MapServer', {
+  var federalLands = L.esri.dynamicMapLayer({
+    url: 'http://maps1.arcgisonline.com/ArcGIS/rest/services/USA_Federal_Lands/MapServer',
     opacity: 0.5,
     useCors: false
   }).addTo(map);
