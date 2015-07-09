@@ -98,18 +98,22 @@
         });
       }
 
-      return this._buildQuery(bounds).run(function(error, featureCollection, response){
+      this._buildQuery(bounds).run(function(error, featureCollection, response){
         if(response && response.exceededTransferLimit){
           this.fire('drawlimitexceeded');
         }
 
-        if(!error && featureCollection.features.length){
+        // no error, features
+        if(!error && featureCollection && featureCollection.features.length){
           // schedule adding features until the next animation frame
           EsriLeaflet.Util.requestAnimationFrame(L.Util.bind(function(){
             this._addFeatures(featureCollection.features, coords);
             this._postProcessFeatures(bounds);
           }, this));
-        } else {
+        }
+
+        // no error, no features
+        if (!error && featureCollection && !featureCollection.features.length) {
           this._postProcessFeatures(bounds);
         }
 
@@ -164,7 +168,11 @@
     },
 
     _buildQuery: function(bounds){
-      var query = this._service.query().intersects(bounds).where(this.options.where).fields(this.options.fields).precision(this.options.precision);
+      var query = this._service.query()
+                      .intersects(bounds)
+                      .where(this.options.where)
+                      .fields(this.options.fields)
+                      .precision(this.options.precision);
 
       if(this.options.simplifyFactor){
         query.simplify(this._map, this.options.simplifyFactor);
@@ -188,31 +196,30 @@
       var oldSnapshot = [];
       var newSnapshot = [];
       var pendingRequests = 0;
-      var requestError = null;
+      var mostRecentError = null;
       var requestCallback = L.Util.bind(function(error, featureCollection){
-        if(error){
-          requestError = error;
+        pendingRequests--;
+
+        if(error) {
+          mostRecentError = error;
         }
 
-        if(featureCollection){
+        if(!featureCollection && featureCollection.features.length){
           for (var i = featureCollection.features.length - 1; i >= 0; i--) {
             newSnapshot.push(featureCollection.features[i].id);
           }
         }
 
-        pendingRequests--;
-
-        if(pendingRequests <= 0){
+        if(pendingRequests <= 0) {
           this._currentSnapshot = newSnapshot;
-          // schedule adding features until the next animation frame
-          EsriLeaflet.Util.requestAnimationFrame(L.Util.bind(function(){
+          // delay adding features until the next animation frame
+          EsriLeaflet.Util.requestAnimationFrame(L.Util.bind(function() {
             this.removeLayers(oldSnapshot);
             this.addLayers(newSnapshot);
             if(callback) {
-              callback.call(context, requestError);
+              callback.call(context, mostRecentError);
             }
           }, this));
-
         }
       }, this);
 
@@ -246,17 +253,18 @@
       var oldFrom = this.options.from;
       var oldTo = this.options.to;
       var pendingRequests = 0;
-      var requestError = null;
+      var mostRecentError = null;
       var requestCallback = L.Util.bind(function(error){
         if(error){
-          requestError = error;
+          mostRecentError = error;
         }
+
         this._filterExistingFeatures(oldFrom, oldTo, from, to);
 
         pendingRequests--;
 
         if(callback && pendingRequests <= 0){
-          callback.call(context, requestError);
+          callback.call(context, mostRecentError);
         }
       }, this);
 
@@ -450,6 +458,7 @@
         if(!error && response.objectId){
           this.removeLayers([response.objectId], true);
         }
+
         if(callback){
           callback.call(context, error, response);
         }
@@ -463,12 +472,12 @@
             this.removeLayers([response[i].objectId], true);
           }
         }
+
         if(callback){
           callback.call(context, error, response);
         }
       }, this);
     }
-
   });
 
   /**

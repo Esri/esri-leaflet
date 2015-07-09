@@ -74,6 +74,7 @@ EsriLeaflet.Layers.DynamicMapLayer = EsriLeaflet.Layers.RasterLayer.extend({
 
   _getPopupData: function(e){
     var callback = L.Util.bind(function(error, featureCollection, response) {
+      if(error) { return; } // we really can't do anything here but authenticate or requesterror will fire
       setTimeout(L.Util.bind(function(){
         this._renderPopup(e.latlng, error, featureCollection, response);
       }, this), 300);
@@ -148,6 +149,7 @@ EsriLeaflet.Layers.DynamicMapLayer = EsriLeaflet.Layers.RasterLayer.extend({
   _requestExport: function (params, bounds) {
     if(this.options.f === 'json'){
       this._service.request('export', params, function(error, response){
+        if(error) { return; } // we really can't do anything here but authenticate or requesterror will fire
         this._renderImage(response.href, bounds);
       }, this);
     } else {
