@@ -2,7 +2,9 @@
 
 ## 1.0.0
 
-This represents the stable release of Esri Leaflet that will be compatible with Leaflet 0.7.3. All future 1.0.X releases will be compatible with Leaflet 0.7.3 and contain only bug fixes. New features will now only be added in Esri Leaflet 2.0.0 which will require Leaflet 1.0.0. As this is a major release there are a number of breaking changes.
+This represents the stable release of Esri Leaflet compatible with Leaflet 0.7.3. All future 1.0.X releases will be compatible with Leaflet 0.7.3 and contain only bug fixes. New features will only be added in Esri Leaflet 2.0.0 which will require Leaflet 1.0.0.
+
+As this is a major release there are a number of breaking changes.
 
 #### Breaking Changes
 
@@ -11,7 +13,7 @@ This represents the stable release of Esri Leaflet that will be compatible with 
 
 #### Changes
 
-* Added support for the `dymanicLayers` option to `L.esri.DymanicMapLayer` https://github.com/Esri/esri-leaflet/issues/566
+* Added support for the `dynamicLayers` option to `L.esri.DynamicMapLayer` https://github.com/Esri/esri-leaflet/issues/566
 * Restored `bringToBack` and `bringToFront` to `L.esri.FeatureLayer` https://github.com/Esri/esri-leaflet/issues/479
 * `load` event on `L.esri.FeatureLayer` now fires at the proper time https://github.com/Esri/esri-leaflet/issues/545
 * `L.esri.DynamicMapLayer` and `L.esri.ImageMapLayer` will now automatically use POST for large requests. https://github.com/Esri/esri-leaflet/issues/574
