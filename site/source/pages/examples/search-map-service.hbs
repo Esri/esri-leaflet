@@ -16,9 +16,9 @@ layout: example.hbs
     attribution: '&copy; <a href="//osm.org/copyright">OpenStreetMap</a> contributors'
   }).addTo(map);
 
-  var searchControl = new L.esri.Geocoding.Controls.Geosearch({
+  var searchControl = L.esri.Geocoding.Controls.geosearch({
     providers: [
-      new L.esri.Geocoding.Controls.Geosearch.Providers.MapService({
+      L.esri.Geocoding.Controls.Geosearch.Providers.mapService({
         label: 'States and Counties',
         url: 'http://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer',
         layers: [2, 3],

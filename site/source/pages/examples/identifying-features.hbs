@@ -38,7 +38,7 @@ layout: example.hbs
     }
     federalLands.identify().on(map).at(e.latlng).run(function(error, featureCollection){
       if (featureCollection.features.length > 0){
-        identifiedFeature = new L.GeoJSON(featureCollection.features[0], {
+        identifiedFeature = L.geoJson(featureCollection.features[0], {
           style: function(){
             return {
               color: '#5C7DB8',
