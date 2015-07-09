@@ -45,7 +45,7 @@ Option | Type | Default | Description
 `opacity` | `Number` | `1` | Opacity of the layer. Should be a value between 0 (completely transparent) and 1 (completely opaque).
 `position` | `String` | `'front'` | Position of the layer relative to other overlays.
 `dynamicLayers` | `Object` | `null` | JSON object literal used to manipulate the layer symbology defined in the service itself.  Requires a 10.1 (or above) map service which supports [dynamicLayers](http://resources.arcgis.com/en/help/arcgis-rest-api/index.html#/Export_Map/02r3000000v7000000/) requests.
-`token` | `String` | `null` | If you pass a token in your options it will included in all requests to the service. See [working with authenticated services](#working-with-authenticated-services) for more information.
+`token` | `String` | `null` | If you pass a token in your options it will be included in all requests to the service.
 `proxy` | `String` | `false` | URL of an [ArcGIS API for JavaScript proxy](https://developers.arcgis.com/javascript/jshelp/ags_proxy.html) or [ArcGIS Resource Proxy](https://github.com/Esri/resource-proxy) to use for proxying POST requests.
 `useCors` | `Boolean` | `true` | If this service should use CORS when making GET requests.
 

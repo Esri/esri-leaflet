@@ -74,7 +74,7 @@ More information about Feature Layers can be found in the [`L.esri.Layers.Featur
         <tr>
             <td><code>token</code></td>
             <td><code>String</code></td>
-            <td>If you pass a token in your options it will included in all requests to the service. See [working with authenticated services](#working-with-authenticated-services) for more information.</td>
+            <td>If you pass a token in your options it will be included in all requests to the service.</td>
         </tr>
         <tr>
             <td><code>proxy</code></td>
