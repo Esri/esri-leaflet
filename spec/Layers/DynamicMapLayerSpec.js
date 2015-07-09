@@ -1,4 +1,6 @@
 describe('L.esri.Layers.DynamicMapLayer', function () {
+  this.timeout(12000);
+
   function createMap(){
     // create container
     var container = document.createElement('div');
