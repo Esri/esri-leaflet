@@ -16,9 +16,9 @@ layout: example.hbs
     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
   }).addTo(map);
 
-  var searchControl = new L.esri.Geocoding.Controls.Geosearch().addTo(map);
+  var searchControl = L.esri.Geocoding.Controls.geosearch().addTo(map);
 
-  var results = new L.LayerGroup().addTo(map);
+  var results = L.layerGroup().addTo(map);
 
   searchControl.on('results', function(data){
     results.clearLayers();

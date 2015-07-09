@@ -11,7 +11,8 @@ layout: example.hbs
 
   L.esri.basemapLayer('Gray').addTo(map);
 
-  var landsatImagery = L.esri.imageMapLayer('http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Portland/CascadeLandsat/ImageServer', {
+  var landsatImagery = L.esri.imageMapLayer({
+    url: 'http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Portland/CascadeLandsat/ImageServer',
     useCors: false
   }).addTo(map);
 

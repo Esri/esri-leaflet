@@ -11,7 +11,7 @@ layout: example.hbs
 
   L.esri.basemapLayer('Gray').addTo(map);
 
-  L.esri.imageMapLayer('http://imagery.oregonexplorer.info/arcgis/rest/services/NAIP_2011/NAIP_2011_Dynamic/ImageServer')
-        .setBandIds('3,0,1')
-        .addTo(map);
+  L.esri.imageMapLayer({
+    url: 'http://imagery.oregonexplorer.info/arcgis/rest/services/NAIP_2011/NAIP_2011_Dynamic/ImageServer'
+  }).setBandIds('3,0,1').addTo(map);
 </script>

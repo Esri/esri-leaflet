@@ -22,7 +22,8 @@ layout: example.hbs
 
   L.esri.basemapLayer('Gray').addTo(map);
 
-  var federalLands = L.esri.dynamicMapLayer('http://maps1.arcgisonline.com/ArcGIS/rest/services/USA_Federal_Lands/MapServer', {
+  var federalLands = L.esri.dynamicMapLayer({
+    url: 'http://maps1.arcgisonline.com/ArcGIS/rest/services/USA_Federal_Lands/MapServer',
     opacity: 0.5,
     useCors: false
   }).addTo(map);
@@ -37,7 +38,7 @@ layout: example.hbs
     }
     federalLands.identify().on(map).at(e.latlng).run(function(error, featureCollection){
       if (featureCollection.features.length > 0){
-        identifiedFeature = new L.GeoJSON(featureCollection.features[0], {
+        identifiedFeature = L.geoJson(featureCollection.features[0], {
           style: function(){
             return {
               color: '#5C7DB8',

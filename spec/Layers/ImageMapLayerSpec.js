@@ -1,4 +1,6 @@
 describe('L.esri.Layers.ImageMapLayer', function () {
+  this.timeout(12000);
+
   function createMap(){
     // create container
     var container = document.createElement('div');
@@ -40,7 +42,8 @@ describe('L.esri.Layers.ImageMapLayer', function () {
     server.respondWith('GET',new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockImageService\/ImageServer\/exportImage\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&format=jpgpng&transparent=true&bboxSR=3857&imageSR=3857&f=json/), JSON.stringify({
       href: 'http://placehold.it/500&text=Image1'
     }));
-    layer = L.esri.imageMapLayer(url, {
+    layer = L.esri.imageMapLayer({
+      url: url,
       f: 'json'
     });
     map = createMap();
@@ -53,11 +56,14 @@ describe('L.esri.Layers.ImageMapLayer', function () {
   });
 
   it('should have a L.esri.Layers.imageMapLayer alias', function(){
-    expect(L.esri.Layers.imageMapLayer(url)).to.be.instanceof(L.esri.Layers.ImageMapLayer);
+    expect(L.esri.Layers.imageMapLayer({
+      url: url
+    })).to.be.instanceof(L.esri.Layers.ImageMapLayer);
   });
 
   it('should display an attribution if one was passed', function(){
-    L.esri.Layers.imageMapLayer(url, {
+    L.esri.Layers.imageMapLayer({
+      url: url,
       attribution: 'Esri'
     }).addTo(map);
 
@@ -421,7 +427,8 @@ describe('L.esri.Layers.ImageMapLayer', function () {
   });
 
   it('should be able to request an image directly from the export service', function(){
-    layer = L.esri.imageMapLayer(url, {
+    layer = L.esri.imageMapLayer({
+      url: url,
       f: 'image'
     });
     var spy = sinon.spy(layer, '_renderImage');

@@ -19,12 +19,10 @@ layout: documentation.hbs
     <tbody>
         <tr>
             <td>
-                <code class='nobr'>new L.esri.Tasks.Find({{{param 'MapService' 'endpoint' '../../api-reference/services/service.html'}}})</code><br><br>
                 <code>L.esri.Tasks.find({{{param 'MapService' 'endpoint' '../../api-reference/services/service.html'}}})</code><br><br>
-                <code>new L.esri.Tasks.Find({{{param 'Object' 'options'}}})</code><br><br>
                 <code>L.esri.Tasks.find({{{param 'Object' 'options'}}})</code>
             </td>
-            <td>Accepts either an `options` object or an instance of <a href="{{assets}}/api-reference/services/map-service.html">MapService</a>.</td>
+            <td>Accepts either an <code>options</code> object or an instance of <a href="{{assets}}/api-reference/services/map-service.html">MapService</a>.</td>
         </tr>
     </tbody>
 </table>

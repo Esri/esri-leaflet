@@ -26,7 +26,8 @@ layout: example.hbs
 
   L.esri.basemapLayer('Gray').addTo(map);
 
-  var neighborhoods = new L.esri.FeatureLayer('https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Neighborhoods_pdx/FeatureServer/0', {
+  var neighborhoods = L.esri.featureLayer({
+    url: 'https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Neighborhoods_pdx/FeatureServer/0',
     style: function() {
       return {
         color: '#5B7CBA',
@@ -42,7 +43,7 @@ layout: example.hbs
     var feature = neighborhoods.getFeature(id);
     var center = feature.getBounds().getCenter();
     var label = L.marker(center, {
-      icon: new L.DivIcon({
+      icon: L.divIcon({
         iconSize: null,
         className: 'label',
         html: '<div>' + e.feature.properties.NAME + '</div>'

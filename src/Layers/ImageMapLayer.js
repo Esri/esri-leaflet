@@ -15,9 +15,8 @@ EsriLeaflet.Layers.ImageMapLayer = EsriLeaflet.Layers.RasterLayer.extend({
     return this._service.identify();
   },
 
-  initialize: function (url, options) {
-    options = options || {};
-    options.url = EsriLeaflet.Util.cleanUrl(url);
+  initialize: function (options) {
+    options.url = EsriLeaflet.Util.cleanUrl(options.url);
     this._service = new EsriLeaflet.Services.ImageService(options);
     this._service.on('authenticationrequired requeststart requestend requesterror requestsuccess', this._propagateEvent, this);
     L.Util.setOptions(this, options);
@@ -186,10 +185,10 @@ EsriLeaflet.Layers.ImageMapLayer = EsriLeaflet.Layers.RasterLayer.extend({
 
 EsriLeaflet.ImageMapLayer = EsriLeaflet.Layers.ImageMapLayer;
 
-EsriLeaflet.Layers.imageMapLayer = function (url, options) {
-  return new EsriLeaflet.Layers.ImageMapLayer(url, options);
+EsriLeaflet.Layers.imageMapLayer = function (options) {
+  return new EsriLeaflet.Layers.ImageMapLayer(options);
 };
 
-EsriLeaflet.imageMapLayer = function (url, options) {
-  return new EsriLeaflet.Layers.ImageMapLayer(url, options);
+EsriLeaflet.imageMapLayer = function (options) {
+  return new EsriLeaflet.Layers.ImageMapLayer(options);
 };

@@ -33,14 +33,13 @@ EsriLeaflet.Layers.TiledMapLayer = L.TileLayer.extend({
     }
   },
 
-  initialize: function(url, options){
-    options = options || {};
-    options.url = EsriLeaflet.Util.cleanUrl(url);
+  initialize: function(options){
+    options.url = EsriLeaflet.Util.cleanUrl(options.url);
     options = L.Util.setOptions(this, options);
 
     // set the urls
     //this.url = L.esri.Util.cleanUrl(url);
-    this.tileUrl = L.esri.Util.cleanUrl(url) + 'tile/{z}/{y}/{x}';
+    this.tileUrl = L.esri.Util.cleanUrl(options.url) + 'tile/{z}/{y}/{x}';
     this._service = new L.esri.Services.MapService(options);
     this._service.on('authenticationrequired requeststart requestend requesterror requestsuccess', this._propagateEvent, this);
 
@@ -137,10 +136,10 @@ EsriLeaflet.Layers.TiledMapLayer = L.TileLayer.extend({
 
 L.esri.TiledMapLayer = L.esri.Layers.tiledMapLayer;
 
-L.esri.Layers.tiledMapLayer = function(url, options){
-  return new L.esri.Layers.TiledMapLayer(url, options);
+L.esri.Layers.tiledMapLayer = function(options){
+  return new L.esri.Layers.TiledMapLayer(options);
 };
 
-L.esri.tiledMapLayer = function(url, options){
-  return new L.esri.Layers.TiledMapLayer(url, options);
+L.esri.tiledMapLayer = function(options){
+  return new L.esri.Layers.TiledMapLayer(options);
 };

@@ -35,7 +35,8 @@ layout: example.hbs
 
     L.esri.basemapLayer('Gray').addTo(map);
 
-    var hillshade = L.esri.imageMapLayer('http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Earthquakes/CaliforniaDEM/ImageServer', {
+    var hillshade = L.esri.imageMapLayer({
+      url: 'http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Earthquakes/CaliforniaDEM/ImageServer',
       renderingRule: renderingRule,
       useCors: false
     }).addTo(map);

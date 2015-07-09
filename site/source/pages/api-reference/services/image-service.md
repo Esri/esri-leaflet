@@ -20,7 +20,7 @@ Inherits from [`L.esri.Service`]({{assets}}api-reference/services/service.html)
     </thead>
     <tbody>
         <tr>
-            <td><code class="nobr">new L.esri.Services.ImageService({{{param 'Object' 'options'}}})</code><br><br><code class="nobr">L.esri.Services.imageService({{{param 'Object' 'options'}}})</code></td>
+            <td><code class="nobr">L.esri.Services.imageService({{{param 'Object' 'options'}}})</code></td>
             <td><code>Options</code> for configuring the ArcGIS Server or ArcGIS Online image service you would like to consume. <code>Options</code>includes a <code>url</code> parameter which refers to the ArcGIS Server or ArcGIS Online service you would like to consume.</td>
         </tr>
     </tbody>

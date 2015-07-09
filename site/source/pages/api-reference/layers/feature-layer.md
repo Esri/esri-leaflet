@@ -36,8 +36,8 @@ You can create a new empty feature service with a single layer on the [ArcGIS fo
     </thead>
     <tbody>
         <tr>
-            <td><code class="nobr">new L.esri.Layers.FeatureLayer({{{param 'String' 'url'}}}, {{{param 'Object' 'options'}}})</code><br><br><code class="nobr">L.esri.Layers.featureLayer({{{param 'String' 'url'}}}, {{{param 'Object' 'options'}}})</code><br><br><code class="nobr">new L.esri.FeatureLayer({{{param 'String' 'url'}}}, {{{param 'Object' 'options'}}})</code><br><br><code class="nobr">L.esri.featureLayer({{{param 'String' 'url'}}}, {{{param 'Object' 'options'}}})</code></td>
-            <td><code>url</code> URL of the Feature Layer.</td>
+            <td><code class="nobr">L.esri.featureLayer({{{param 'Object' 'options'}}})</code></td>
+            <td>You must pass a <code>url</code> to a [Feature Layer](http://resources.arcgis.com/en/help/arcgis-rest-api/#/Layer/02r3000000w6000000/) in your <code>options</code></td>
         </tr>
     </tbody>
 </table>
@@ -53,6 +53,11 @@ You can create a new empty feature service with a single layer on the [ArcGIS fo
         </tr>
     </thead>
     <tbody>
+        <tr>
+          <td><code>url</code></td>
+          <td><code>String</code></td>
+          <td><strong>Required</strong> The URL to the [Feature Layer](http://resources.arcgis.com/en/help/arcgis-rest-api/#/Layer/02r3000000w6000000/).</td>
+        </tr>
         <tr>
             <td><code>pointToLayer({{{param 'GeoJSON Feature' 'feature' 'http://geojson.org/geojson-spec.html#feature-objects'}}}, {{{param 'LatLng' 'latlng' 'http://leafletjs.com/reference.html#latlng'}}})</code></td>
             <td><code>Function</code></td>

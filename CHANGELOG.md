@@ -1,8 +1,13 @@
 # Changelog
 
-## 0.9.0
+## 1.0.0
 
-This represents the stable release of Esri Leaflet that will be compatible with Leaflet 0.7.3. All future 0.9.X releases will be compatible with Leaflet 0.7.3 and contain only bug fixes.
+This represents the stable release of Esri Leaflet that will be compatible with Leaflet 0.7.3. All future 1.0.X releases will be compatible with Leaflet 0.7.3 and contain only bug fixes. New features will now only be added in Esri Leaflet 2.0.0 which will require Leaflet 1.0.0. As this is a major release there are a number of breaking changes.
+
+#### Breaking Changes
+
+* `L.esri.Services.FeatureLayer` has been renamed to `L.esri.Services.FeatureLayerService`. It should be initialized with `L.esri.Services.featureLayerService(options)`.
+* All layers now match services and tasks and now only accept `url` in their options. E.x. `L.esri.featureLayer(url)` should now `L.esri.featureLayer({url: url}})`. This *does not* affect `L.esri.baseMapLayer` which still accepts the `key` as it's first parameter.
 
 #### Changes
 
@@ -10,7 +15,7 @@ This represents the stable release of Esri Leaflet that will be compatible with 
 * Restored `bringToBack` and `bringToFront` to `L.esri.FeatureLayer` https://github.com/Esri/esri-leaflet/issues/479
 * `load` event on `L.esri.FeatureLayer` now fires at the proper time https://github.com/Esri/esri-leaflet/issues/545
 * `L.esri.DynamicMapLayer` and `L.esri.ImageMapLayer` will now automatically use POST for large requests. https://github.com/Esri/esri-leaflet/issues/574
-* `L.esri.ImageMapLayer` now defaults to requesting `json` as opposed to an image to better handle authentication and large requests https://github.com/Esri/esri-leaflet/issues/574
+* `L.esri.ImageMapLayer` now defaults to requesting `json` as opposed to an image to better handle authentication and large requests https://github.com/Esri/esri-leaflet/issues/574. If your Image Service does not support CORS you should set ``{f:'image'}`` in your options.
 
 ## Release Candidate 8
 

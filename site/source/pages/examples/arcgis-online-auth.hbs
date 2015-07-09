@@ -65,6 +65,7 @@ layout: example.hbs
   });
 
   // make a new map and basemap
-  var map = new L.Map('map').setView([39.36, -96.19], 4);
+  var map = L.map('map').setView([39.36, -96.19], 4);
+  
   L.esri.basemapLayer('Gray').addTo(map);
 </script>

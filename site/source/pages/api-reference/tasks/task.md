@@ -18,7 +18,8 @@ layout: documentation.hbs
     </thead>
     <tbody>
         <tr>
-            <td><code class="nobr">new L.esri.Tasks.Task(<nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br><code class="nobr">L.esri.Tasks.task(<nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code></td>
+            <td><code>L.esri.Tasks.task({{{param 'Object' 'options'}}})</code><br><br>
+            <code>L.esri.Tasks.task({{{param 'Service' 'endpoint' '../../api-reference/services/service.html'}}})</code></td>
             <td>Options includes a <code>url</code> parameter which refers to the ArcGIS Server or ArcGIS Online service you would like to consume.</td>
         </tr>
    </tbody>
