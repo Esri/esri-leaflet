@@ -85,7 +85,7 @@ A summary of what features exist in which builds.
 | `L.esri.Util`                          | &#10003; | &#10003; | &#10003;   | &#10003;     | &#10003;     |          |
 | `L.esri.Services.Service`              | &#10003; | &#10003; | &#10003;   | &#10003;     | &#10003;     |          |
 | `L.esri.Services.MapService`           | &#10003; |          | &#10003;   |              |              |          |
-| `L.esri.Services.FeatureLayer`         | &#10003; |          |            |              | &#10003;     |          |
+| `L.esri.Services.FeatureLayerService`         | &#10003; |          |            |              | &#10003;     |          |
 | `L.esri.Tasks.Task `                   | &#10003; | &#10003; | &#10003;   | &#10003;     | &#10003;     |          |
 | `L.esri.Tasks.Query`                   | &#10003; |          | &#10003;   | &#10003;     | &#10003;     |          |
 | `L.esri.Tasks.Find`                    | &#10003; |          | &#10003;   |              |              |          |
