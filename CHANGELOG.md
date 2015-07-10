@@ -6,6 +6,8 @@ This represents the stable release of Esri Leaflet compatible with Leaflet 0.7.3
 
 As this is a major release there are a number of breaking changes.
 
+Also see the [Esri Leaflet 1.0 announcement](https://github.com/Esri/esri-leaflet/wiki/Esri-Leaflet-1.0.0-Announcement).
+
 #### Breaking Changes
 
 * `L.esri.Services.FeatureLayer` has been renamed to `L.esri.Services.FeatureLayerService`. It should be initialized with `L.esri.Services.featureLayerService(options)`.
@@ -27,7 +29,7 @@ L.esri.Services.service({
     // handle any other errors, returning to stop execution of the rest of the function
     return;
   }
-  
+
   // if you get here you are successful!
   console.log(metadata);
 });
