@@ -16,7 +16,8 @@ layout: example.hbs
 
     L.esri.imageMapLayer({
       url: 'http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/World/Temperature/ImageServer',
-      mosaicRule: mosaicRule
+      mosaicRule: mosaicRule,
+      useCors: false
     }).addTo(map);
 
     L.esri.basemapLayer('Gray').addTo(map);
