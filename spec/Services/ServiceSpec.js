@@ -207,7 +207,6 @@ describe('L.esri.Service', function () {
 
 
     service.get('route', {}, function(error, response){
-      console.log(error);
       if(error && error.authenticate) {
         error.authenticate('foo');
         server.respond(); // authenticate will trigger another request we should respond to
