@@ -8,7 +8,7 @@ This represents the stable release of Esri Leaflet that will be compatible with 
 
 * `L.esri.Services.FeatureLayer` has been renamed to `L.esri.Services.FeatureLayerService`. It should be initialized with `L.esri.Services.featureLayerService(options)`.
 * All layers now match services and tasks and now only accept `url` in their options. E.x. `L.esri.featureLayer(url)` should now `L.esri.featureLayer({url: url}})`. This *does not* affect `L.esri.baseMapLayer` which still accepts the `key` as it's first parameter.
-* Request callbacks across Esri Leaflet now can handle authentication errors by calling `error.authenticate(newToken)` as opposed to listening to `authenticationrequired` event and calling `e.target.authenticate(newToken)`. This means that your callbacks may be called multiple times, once with an authentication failure and once with an authentication success. To avoid any side affects of this you should `return` as early as possible after handling errors. It is recommended you adapt techniques from http://blog.timoxley.com/post/47041269194/avoid-else-return-early to handle these cases.
+* Request callbacks across Esri Leaflet now can handle authentication errors by calling `error.authenticate(newToken)` as opposed to listening to `authenticationrequired` event and calling `e.target.authenticate(newToken)`. **This means that your callbacks may be called multiple times**, once with an authentication failure and once with an authentication success. To avoid any side affects of this you should `return` as early as possible after handling errors. It is recommended you adapt techniques from http://blog.timoxley.com/post/47041269194/avoid-else-return-early to handle these cases.
 
 ```js
 L.esri.Services.service({
@@ -25,7 +25,8 @@ L.esri.Services.service({
     // handle any other errors, returning to stop execution of the rest of the function
     return;
   }
-
+  
+  // if you get here you are successful!
   console.log(metadata);
 });
 ```
