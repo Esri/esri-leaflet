@@ -315,7 +315,7 @@ module.exports = function(grunt) {
       },
       dev: {
         options: {
-          data: 'site/data/*.json',
+          data: ['site/data/*.json', 'package.json'],
           assets: 'site/build/'
         },
         files: [{

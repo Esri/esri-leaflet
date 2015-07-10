@@ -204,7 +204,7 @@
           mostRecentError = error;
         }
 
-        if(!featureCollection && featureCollection.features.length){
+        if(featureCollection){
           for (var i = featureCollection.features.length - 1; i >= 0; i--) {
             newSnapshot.push(featureCollection.features[i].id);
           }

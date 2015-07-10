@@ -37,12 +37,13 @@
 
   <!-- require combined leaflet, esri leaflet and jsdelivr-rum -->
   <script src="//cdn.jsdelivr.net/leaflet/latest/leaflet.js"></script>
-  <script src="//cdn.jsdelivr.net/leaflet.esri/latest/esri-leaflet.js"></script>
+  <script src="//cdn.jsdelivr.net/leaflet.esri/{{package.version}}/esri-leaflet.js"></script>
   <script src="//cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
-{{#if siteData.isDev}}
-  <!-- 'livereload' for development -->
-  <script src="//localhost:35729/livereload.js"></script>
-{{/if}}
+
+  {{#if siteData.isDev}}
+    <!-- 'livereload' for development -->
+    <script src="//localhost:35729/livereload.js"></script>
+  {{/if}}
 
   <!-- Google Analytics -->
   <script>
