@@ -16,7 +16,7 @@ layout: example.hbs
     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
   }).addTo(map);
 
-  var geocodeService = new L.esri.Geocoding.Services.Geocoding();
+  var geocodeService = L.esri.Geocoding.Services.geocoding();
 
   map.on('click', function(e) {
     geocodeService.reverse().latlng(e.latlng).run(function(error, result) {

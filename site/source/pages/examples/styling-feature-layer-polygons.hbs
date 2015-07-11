@@ -1,6 +1,6 @@
 ---
 title: Styling polygons
-description: Custom styling of polygons with the <code>style</code> option. More information about Feature Layers can be found in the <a href="/esri-leaflet/api-reference/layers/feature-layer.html">L.esri.Layers.FeatureLayer</a> documentation.
+description: Custom styling of polygons with the <code>style</code> option. More information about Feature Layers can be found in the <a href="../api-reference/layers/feature-layer.html">L.esri.Layers.FeatureLayer</a> documentation.
 layout: example.hbs
 ---
 
@@ -13,7 +13,8 @@ layout: example.hbs
   L.esri.basemapLayer('Gray').addTo(map);
   L.esri.basemapLayer('GrayLabels').addTo(map);
 
-  L.esri.featureLayer('http://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_Congressional_Districts/FeatureServer/0', {
+  L.esri.featureLayer({
+    url: 'http://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_Congressional_Districts/FeatureServer/0',
     simplifyFactor: 0.5,
     precision: 5,
     style: function (feature) {

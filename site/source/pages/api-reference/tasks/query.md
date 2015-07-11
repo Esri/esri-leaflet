@@ -20,13 +20,13 @@ layout: documentation.hbs
     </thead>
     <tbody>
         <tr>
-            <td><code class='nobr'>new L.esri.Tasks.Query({{{param 'FeatureLayer' 'endpoint' '../../api-reference/services/feature-layer.html'}}})</code><br><br>
+            <td>
+            <code>L.esri.Tasks.query({{{param 'Object' 'options'}}})</code><br><br>
             <code>L.esri.Tasks.query({{{param 'FeatureLayer' 'endpoint' '../../api-reference/services/feature-layer.html'}}})</code><br><br>
-            <code class='nobr'>new L.esri.Tasks.Query({{{param 'MapService' 'endpoint' '../../api-reference/services/map-service.html'}}})</code><br><br>
             <code>L.esri.Tasks.query({{{param 'MapService' 'endpoint' '../../api-reference/services/map-service.html'}}})</code><br><br>
-            <code>new L.esri.Tasks.Query({{{param 'Object' 'options'}}})</code><br><br>
-            <code>L.esri.Tasks.query({{{param 'Object' 'options'}}})</code></td>
-            <td>Accepts either an `options` object or an instance of <a href="{{assets}}/api-reference/services/map-service.html">MapService</a> or <a href="{{assets}}/api-reference/layers/feature-layer.html">FeatureLayer</a>.</td>
+            <code>L.esri.Tasks.query({{{param 'ImageService' 'endpoint' '../../api-reference/services/image-service.html'}}})</code>
+            </td>
+            <td>Accepts either an `options` object or an instance of <a href="{{assets}}/api-reference/services/map-service.html">MapService</a>, <a href="{{assets}}/api-reference/services/feature-layer-service.html">FeatureLayer</a> or <a href="{{assets}}/api-reference/service/image-service.html">ImageService</a>.</td>
         </tr>
     </tbody>
 </table>

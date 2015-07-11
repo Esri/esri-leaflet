@@ -24,11 +24,10 @@ export var FeatureManager = FeatureGrid.extend({
    * Constructor
    */
 
-  initialize: function (url, options) {
+  initialize: function (options) {
     FeatureGrid.prototype.initialize.call(this, options);
 
-    options = options || {};
-    options.url = cleanUrl(url);
+    options.url = cleanUrl(options.url);
     options = L.setOptions(this, options);
 
     this.service = featureLayerService(options);
@@ -96,16 +95,20 @@ export var FeatureManager = FeatureGrid.extend({
 
     return this._buildQuery(bounds).run(function(error, featureCollection, response){
       if(response && response.exceededTransferLimit){
-        this.fire('drawlimitexceeded', {}, true);
+        this.fire('drawlimitexceeded');
       }
 
-      if(!error && featureCollection.features.length){
+      // no error, features
+      if(!error && featureCollection && featureCollection.features.length){
         // schedule adding features until the next animation frame
-        requestAnimationFrame(L.Util.bind(function(){
+        EsriLeaflet.Util.requestAnimationFrame(L.Util.bind(function(){
           this._addFeatures(featureCollection.features, coords);
           this._postProcessFeatures(bounds);
         }, this));
-      } else {
+      }
+
+      // no error, no features
+      if (!error && featureCollection && !featureCollection.features.length) {
         this._postProcessFeatures(bounds);
       }
 
@@ -182,7 +185,6 @@ export var FeatureManager = FeatureGrid.extend({
    */
 
   setWhere: function(where, callback, context){
-
     this.options.where = (where && where.length) ? where : '1=1';
 
     var oldSnapshot = [];
@@ -212,7 +214,6 @@ export var FeatureManager = FeatureGrid.extend({
             callback.call(context, requestError);
           }
         }, this));
-
       }
     }, this);
 
@@ -273,6 +274,8 @@ export var FeatureManager = FeatureGrid.extend({
         this._requestFeatures(bounds, key, requestCallback);
       }
     }
+
+    return this;
   },
 
   refresh: function(){
@@ -468,7 +471,6 @@ export var FeatureManager = FeatureGrid.extend({
       }
     }, this);
   }
-
 });
 
 /**

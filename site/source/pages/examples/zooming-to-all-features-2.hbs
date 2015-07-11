@@ -1,0 +1,40 @@
+---
+title: Zoom to all features #2
+description: This sample creates a latLngBounds object clientside which contains the geometries fetched from the server.  An approach like this is necessary when working with older Feature Services (prior to ArcGIS Server 10.3.1) that don't support making direct requests to the server for the 'bounds' of features matching a query.
+layout: example.hbs
+---
+
+<div id="map"></div>
+
+<script>
+
+  // create a map and add Esri's Dark Gray basemap
+  var map = L.map('map').setView([40, -100], 5);
+  L.esri.basemapLayer('DarkGray').addTo(map);
+
+  // add a graphic layer composed of selected US Counties
+  var fl = L.esri.featureLayer({
+    url: 'http://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer/2',
+    where: "NAME='Los Angeles' OR NAME='San Bernardino'"
+  }).addTo(map);
+
+  // listen for when all features have been retrieved from the server
+  fl.on("load", function(evt) {
+    // create a new empty Leaflet bounds object
+    var bounds = L.latLngBounds([]);
+    // loop through the features returned by the server
+    fl.eachFeature(function(layer) {
+      // get the bounds of an individual feature
+      var layerBounds = layer.getBounds();
+      // extend the bounds of the collection to fit the bounds of the new feature
+      bounds.extend(layerBounds);
+    });
+
+    // once we've looped through all the features, zoom the map to the extent of the collection
+    map.fitBounds(bounds);
+
+    // unwire the event listener so that it only fires once when the page is loaded
+    fl.off('load');
+  });
+
+</script>

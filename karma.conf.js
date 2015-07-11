@@ -14,7 +14,7 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       'node_modules/leaflet/dist/leaflet.css',
-      'node_modules/leaflet/dist/leaflet.js',
+      'node_modules/leaflet/dist/leaflet-src.js',
       'src/EsriLeaflet.js',
       'src/Util.js',
       'src/Layers/BasemapLayer.js',
@@ -27,7 +27,7 @@ module.exports = function(config) {
       'src/Layers/FeatureLayer/FeatureLayer.js',
       'src/Request.js',
       'src/Services/Service.js',
-      'src/Services/FeatureLayer.js',
+      'src/Services/FeatureLayerService.js',
       'src/Services/MapService.js',
       'src/Services/ImageService.js',
       'src/Tasks/Task.js',
@@ -60,7 +60,7 @@ module.exports = function(config) {
 
     // level of logging
     // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-    logLevel: config.LOG_INFO,
+    logLevel: config.LOG_DEBUG,
 
     // enable / disable watching file and executing tests whenever any file changes
     autoWatch: true,

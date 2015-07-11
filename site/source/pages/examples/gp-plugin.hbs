@@ -29,7 +29,7 @@ layout: example.hbs
 
   L.esri.basemapLayer('Gray').addTo(map);
 
-  var gpService = new L.esri.GP.Services.Geoprocessing({
+  var gpService = L.esri.GP.Services.geoprocessing({
     url: "http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Network/ESRI_DriveTime_US/GPServer/CreateDriveTimePolygons",
     useCors:false
   });
@@ -38,7 +38,7 @@ layout: example.hbs
 
   gpTask.setParam("Drive_Times", "1 2");
 
-  var driveTimes = new L.FeatureGroup();
+  var driveTimes = L.featureGroup();
   map.addLayer(driveTimes);
 
   map.on('click', function(evt){

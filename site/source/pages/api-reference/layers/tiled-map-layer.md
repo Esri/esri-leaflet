@@ -24,25 +24,28 @@ Is you have Feature Services published in ArcGIS Online you can create a static 
     </thead>
     <tbody>
         <tr>
-            <td><code class="nobr">new L.esri.Layers.TiledMapLayer({{{param 'String' 'url'}}}, {{{param 'Object' 'options'}}})</code><br><br><code class="nobr">L.esri.Layers.tiledMapLayer({{{param 'String' 'url'}}}, {{{param 'Object' 'options'}}})</code><br><br><code class="nobr">new L.esri.TiledMapLayer({{{param 'String' 'url'}}}, {{{param 'Object' 'options'}}})</code><br><br><code class="nobr">L.esri.tiledMapLayer({{{param 'String' 'url'}}}, {{{param 'Object' 'options'}}})</code></td>
-            <td><code>url</code> should be the URL to the Map Service hosted the tiles. The <code>options</code> parameter can accept the same options as <a href="http://leafletjs.com/reference.html#tilelayer"><code>L.TileLayer</code></a></td>
+            <td><code class="nobr">L.esri.tiledMapLayer({{{param 'Object' 'options'}}})</code></td>
+            <td>The <code>options</code> parameter can accept the same options as <a href="http://leafletjs.com/reference.html#tilelayer"><code>L.ImageOverlay</code></a>. You also must pass a <code>url</code> key in your <code>options</code>.</td>
         </tr>
     </tbody>
 </table>
 
 ### Options
 
+`L.esri.TiledMapLayer` also accepts all [`L.TileLayer`](http://leafletjs.com/reference.html#tilelayer-options) options.
+
 | Option | Type | Default | Description |
 | --- | --- | --- | --- |
-| `correctZoomLevels` | `Boolean` | `true` | If your tiles were generated in web mercator but at non-standard zoom levels this will remap then to the standard zoom levels. 
-| `zoomOffsetAllowance` | `Number` | `0.1` | If `correctZoomLevels` is enabled this controls the amount of tolerence if the difference at each scale level for remapping tile levels.
+`url` | `String` | | *Required* URL of the [Map Service](http://resources.arcgis.com/en/help/arcgis-rest-api/#/Map_Service/02r3000000w2000000) with a tile cache.
+| `correctZoomLevels` | `Boolean` | `true` | If your tiles were generated in web mercator but at non-standard zoom levels this will remap then to the standard zoom levels.
+| `zoomOffsetAllowance` | `Number` | `0.1` | If `correctZoomLevels` is enabled this controls the amount of tolerance if the difference at each scale level for remapping tile levels.
 | `proxy` | `String` | `false` | URL of an [ArcGIS API for JavaScript proxy](https://developers.arcgis.com/javascript/jshelp/ags_proxy.html) or [ArcGIS Resource Proxy](https://github.com/Esri/resource-proxy) to use for proxying POST requests. |
 | `useCors` | `Boolean` | `true` | Dictates if the service should use CORS when making GET requests. |
 | `token` | `String` | `null` | Will use this token to authenticate all calls to the service.
 
-`L.esri.TiledMapLayer` also accepts all [`L.TileLayer`](http://leafletjs.com/reference.html#tilelayer-options) options.
-
 ### Methods
+
+`L.esri.BasemapLayer` inherits all methods from [`L.TileLayer`](http://leafletjs.com/reference.html#tilelayer).
 
 <table>
     <thead>
@@ -82,8 +85,6 @@ Is you have Feature Services published in ArcGIS Online you can create a static 
         </tr>
     </tbody>
 </table>
-
-`L.esri.BasemapLayer` inherits all methods from [`L.TileLayer`](http://leafletjs.com/reference.html#tilelayer).
 
 ### Events
 

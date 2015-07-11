@@ -1,0 +1,19 @@
+---
+title: Reprojected DynamicMapLayer
+description: Map services published in projections other than Web Mercator (like <a href="http://sampleserver6.arcgisonline.com/arcgis/rest/services/SampleWorldCities/MapServer">this one</a>) will be reprojected on the fly automatically.  More information about Map Services can be found in the <a href="../api-reference/layers/dynamic-map-layer.html">L.esri.Layers.DynamicMapLayer</a> documentation.
+layout: example.hbs
+---
+
+<div id="map"></div>
+
+<script>
+  //Initialize the map to center on Western Europe
+  var map = L.map('map').setView([49.39609, 5.76991], 4);
+
+  //Add Gray Basemap
+  L.esri.basemapLayer("Gray").addTo(map);
+  dynLayer = L.esri.dynamicMapLayer({
+    url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/SampleWorldCities/MapServer"});
+
+  map.addLayer(dynLayer);
+</script>

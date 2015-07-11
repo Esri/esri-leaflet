@@ -69,44 +69,46 @@ export var Service = L.Evented.extend({
   },
 
   _createServiceCallback: function(method, path, params, callback, context){
-    var request = [method, path, params, callback, context];
-
     return L.Util.bind(function(error, response){
 
       if (error && (error.code === 499 || error.code === 498)) {
         this._authenticating = true;
 
-        this._requestQueue.push(request);
+        this._requestQueue.push([method, path, params, callback, context]);
 
+        // fire an event for users to handle and re-authenticate
         this.fire('authenticationrequired', {
           authenticate: L.Util.bind(this.authenticate, this)
-        }, true);
-      } else {
-        callback.call(context, error, response);
+        });
 
-        if(error) {
-          this.fire('requesterror', {
-            url: this.options.url + path,
-            params: params,
-            message: error.message,
-            code: error.code,
-            method: method
-          }, true);
-        } else {
-          this.fire('requestsuccess', {
-            url: this.options.url + path,
-            params: params,
-            response: response,
-            method: method
-          }, true);
-        }
+        // if the user has access to a callback they can handle the auth error
+        error.authenticate = L.Util.bind(this.authenticate, this);
+      }
 
-        this.fire('requestend', {
+      callback.call(context, error, response);
+
+      if(error) {
+        this.fire('requesterror', {
           url: this.options.url + path,
           params: params,
+          message: error.message,
+          code: error.code,
+          method: method
+        });
+      } else {
+        this.fire('requestsuccess', {
+          url: this.options.url + path,
+          params: params,
+          response: response,
           method: method
         }, true);
       }
+
+      this.fire('requestend', {
+        url: this.options.url + path,
+        params: params,
+        method: method
+      });
     }, this);
   },
 

@@ -11,11 +11,8 @@ export var FeatureLayer = FeatureManager.extend({
   /**
    * Constructor
    */
-
-  initialize: function (url, options) {
-    FeatureManager.prototype.initialize.call(this, url, options);
-
-    options = L.setOptions(this, options);
+  initialize: function (options) {
+    FeatureManager.prototype.initialize.call(this, options);
     this._originalStyle = options.style;
     this._layers = {};
   },

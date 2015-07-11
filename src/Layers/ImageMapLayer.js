@@ -8,7 +8,8 @@ export var ImageMapLayer = RasterLayer.extend({
   options: {
     updateInterval: 150,
     format: 'jpgpng',
-    transparent: true
+    transparent: true,
+    f: 'json'
   },
 
   query: function(){
@@ -19,11 +20,11 @@ export var ImageMapLayer = RasterLayer.extend({
     return this.service.identify();
   },
 
-  initialize: function (url, options) {
-    options = options || {};
-    options.url = cleanUrl(url);
+  initialize: function (options) {
+    options.url = EsriLeaflet.Util.cleanUrl(options.url);
     this.service = imageService(options);
     this.service.addEventParent(this);
+
     L.Util.setOptions(this, options);
   },
 
@@ -92,6 +93,7 @@ export var ImageMapLayer = RasterLayer.extend({
 
   _getPopupData: function(e){
     var callback = L.Util.bind(function(error, results, response) {
+      if(error) { return; } // we really can't do anything here but authenticate or requesterror will fire
       setTimeout(L.Util.bind(function(){
         this._renderPopup(e.latlng, error, results, response);
       }, this), 300);
@@ -178,7 +180,9 @@ export var ImageMapLayer = RasterLayer.extend({
 
   _requestExport: function (params, bounds) {
     if (this.options.f === 'json') {
+
       this.service.get('exportImage', params, function(error, response){
+        if(error) { return; } // we really can't do anything here but authenticate or requesterror will fire
         this._renderImage(response.href, bounds);
       }, this);
     } else {

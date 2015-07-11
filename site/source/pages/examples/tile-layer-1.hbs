@@ -8,5 +8,8 @@ layout: example.hbs
 
 <script>
   var map = L.map('map').setView([ 30.70, -81.47], 12);
-  L.esri.tiledMapLayer("http://services.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer", {}).addTo(map);
+
+  L.esri.tiledMapLayer({
+    url: "http://services.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer"
+  }).addTo(map);
 </script>

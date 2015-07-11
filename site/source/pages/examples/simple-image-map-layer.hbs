@@ -11,5 +11,7 @@ layout: example.hbs
 
     L.esri.basemapLayer('Gray').addTo(map);
 
-    L.esri.imageMapLayer('http://raster.nationalmap.gov/arcgis/rest/services/Scanned_Maps/USGS_EROS_DRG_SCALE/ImageServer').addTo(map);
+    L.esri.imageMapLayer({
+      url: 'http://raster.nationalmap.gov/arcgis/rest/services/Scanned_Maps/USGS_EROS_DRG_SCALE/ImageServer'
+    }).addTo(map);
 </script>

@@ -1,6 +1,6 @@
 ---
 title: Simple DynamicMapLayer
-description: Display a Map Service from ArcGIS Online or ArcGIS Server.  More information about Map Services can be found in the <a href="/esri-leaflet/api-reference/layers/dynamic-map-layer.html">L.esri.Layers.DynamicMapLayer</a> documentation.
+description: Display a Map Service from ArcGIS Online or ArcGIS Server.  More information about Map Services can be found in the <a href="../api-reference/layers/dynamic-map-layer.html">L.esri.Layers.DynamicMapLayer</a> documentation.
 layout: example.hbs
 ---
 
@@ -11,7 +11,8 @@ layout: example.hbs
 
   L.esri.basemapLayer('Gray').addTo(map);
 
-  L.esri.dynamicMapLayer('http://maps1.arcgisonline.com/ArcGIS/rest/services/USA_Federal_Lands/MapServer', {
+  L.esri.dynamicMapLayer({
+    url: 'http://maps1.arcgisonline.com/ArcGIS/rest/services/USA_Federal_Lands/MapServer',
     opacity: 0.5,
     useCors: false
   }).addTo(map);

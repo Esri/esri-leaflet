@@ -5,7 +5,9 @@ describe('L.esri.Layers.TiledMapLayer', function () {
 
   beforeEach(function(){
     server = sinon.fakeServer.create();
-    layer = L.esri.tiledMapLayer(url);
+    layer = L.esri.tiledMapLayer({
+      url: url
+    });
   });
 
   afterEach(function(){
@@ -17,7 +19,9 @@ describe('L.esri.Layers.TiledMapLayer', function () {
   });
 
   it('will modify url for tiles.arcgis.com services', function () {
-    var layer = L.esri.tiledMapLayer('http://tiles.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer');
+    var layer = L.esri.tiledMapLayer({
+      url: 'http://tiles.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer'
+    });
     expect(layer.tileUrl).to.equal('http://tiles{s}.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer/tile/{z}/{y}/{x}');
     expect(layer.options.subdomains).to.deep.equal(['1','2','3','4']);
   });
@@ -55,12 +59,15 @@ describe('L.esri.Layers.TiledMapLayer', function () {
   });
 
   it('should have a L.esri.Layers.tiledMapLayer alias', function(){
-    layer = L.esri.Layers.tiledMapLayer(url);
+    layer = L.esri.Layers.tiledMapLayer({
+      url: url
+    });
     expect(layer).to.be.instanceof(L.esri.Layers.TiledMapLayer);
   });
 
   it('should use a token passed in options', function(){
-    layer = L.esri.tiledMapLayer(url, {
+    layer = L.esri.tiledMapLayer({
+      url: url,
       token: 'foo'
     });
 
@@ -68,7 +75,9 @@ describe('L.esri.Layers.TiledMapLayer', function () {
   });
 
   it('should use a token passed with authenticate()', function(){
-    layer = L.esri.tiledMapLayer(url);
+    layer = L.esri.tiledMapLayer({
+      url: url
+    });
 
     layer.authenticate('foo');
 
@@ -76,7 +85,8 @@ describe('L.esri.Layers.TiledMapLayer', function () {
   });
 
   it('should reauthenticate with a token authenticate()', function(){
-    layer = L.esri.tiledMapLayer(url, {
+    layer = L.esri.tiledMapLayer({
+      url: url,
       token: 'foo'
     });
 

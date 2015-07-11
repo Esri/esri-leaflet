@@ -1,6 +1,6 @@
 ---
 title: Getting service metadata
-description: Retrieving service metadata such as name, bounding box and capabilities. More information about Feature Layers can be found in the <a href="/esri-leaflet/api-reference/layers/feature-layer.html">L.esri.Layers.FeatureLayer</a> documentation.
+description: Retrieving service metadata such as name, bounding box and capabilities. More information about Feature Layers can be found in the <a href="../api-reference/layers/feature-layer.html">L.esri.Layers.FeatureLayer</a> documentation.
 layout: example.hbs
 ---
 
@@ -21,7 +21,9 @@ layout: example.hbs
   var map = L.map('map').setView([45.526, -122.667], 13);
 
   L.esri.basemapLayer('Streets').addTo(map);
-  var stops = L.esri.featureLayer('https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Heritage_Trees_Portland/FeatureServer/0').addTo(map);
+  var stops = L.esri.featureLayer({
+    url: 'https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Heritage_Trees_Portland/FeatureServer/0'
+  }).addTo(map);
 
   stops.metadata(function (error, metadata) {
     document.getElementById('info').innerHTML = metadata.name;

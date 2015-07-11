@@ -9,7 +9,7 @@ layout: documentation.hbs
 
 Render and visualize Map Services from ArcGIS Online and ArcGIS Server. L.esri.Layers.DynamicMapLayer also supports custom popups and identification of features.
 
-Map Services are a way to expose the contents of a map as a web service and expose capabilites for exporting tile images, querying and identifying features and more.
+Map Services are a way to expose the contents of a map as a web service and expose capabilities for exporting tile images, querying and identifying features and more.
 
 ### Constructor
 
@@ -22,8 +22,8 @@ Map Services are a way to expose the contents of a map as a web service and expo
     </thead>
     <tbody>
         <tr>
-            <td><code class="nobr">new L.esri.Layers.DynamicMapLayer({{{param 'String' 'url'}}}, {{{param 'Object' 'options'}}})</code><br><br><code class="nobr">L.esri.Layers.dynamicMapLayer({{{param 'String' 'url'}}}, {{{param 'Object' 'options'}}})</code><br><br><code class="nobr">new L.esri.DynamicMapLayer({{{param 'String' 'url'}}}, {{{param 'Object' 'options'}}})</code><br><br><code class="nobr">L.esri.dynamicMapLayer({{{param 'String' 'url'}}}, {{{param 'Object' 'options'}}})</code></td>
-            <td><code>url</code> should be the URL to the Map Service hosting the tiles. The <code>options</code> parameter can accept the same options as <a href="http://leafletjs.com/reference.html#tilelayer"><code>L.TileLayer</code></a></td>
+            <td>L.esri.dynamicMapLayer({{{param 'Object' 'options'}}})</code></td>
+            <td>The <code>options</code> parameter can accept the same options as <a href="http://leafletjs.com/reference.html#imageoverlay"><code>L.ImageOverlay</code></a>. You also must pass a <code>url</code> key in your <code>options</code>.</td>
         </tr>
     </tbody>
 </table>
@@ -34,9 +34,10 @@ Map Services are a way to expose the contents of a map as a web service and expo
 
 Option | Type | Default | Description
 --- | --- | --- | ---
+`url` | `String` | | *Required* URL of the [Map Service](http://resources.arcgis.com/en/help/arcgis-rest-api/#/Map_Service/02r3000000w2000000/).
 `format` | `String` | `'png24'` | Output format of the image.
 `transparent` | `Boolean` | `true` | Allow the server to produce transparent images.
-`f` | `String` | `'image'` |  Server response content type.
+`f` | `String` | `'json'` |  Server response content type.
 `bboxSR` | `Integer` | `4326` | Spatial reference of the bounding box to generate the image with. If you don't know what this is don't change it.
 `imageSR` | `Integer` | `3857` | Spatial reference of the output image. If you don't know what this is don't change it.
 `layers` | `Array` | `''` | An array of Layer IDs like `[3,4,5]` to show from the service.
@@ -44,7 +45,7 @@ Option | Type | Default | Description
 `opacity` | `Number` | `1` | Opacity of the layer. Should be a value between 0 (completely transparent) and 1 (completely opaque).
 `position` | `String` | `'front'` | Position of the layer relative to other overlays.
 `dynamicLayers` | `Object` | `null` | JSON object literal used to manipulate the layer symbology defined in the service itself.  Requires a 10.1 (or above) map service which supports [dynamicLayers](http://resources.arcgis.com/en/help/arcgis-rest-api/index.html#/Export_Map/02r3000000v7000000/) requests.
-`token` | `String` | `null` | If you pass a token in your options it will included in all requests to the service. See [working with authenticated services](#working-with-authenticated-services) for more information.
+`token` | `String` | `null` | If you pass a token in your options it will be included in all requests to the service.
 `proxy` | `String` | `false` | URL of an [ArcGIS API for JavaScript proxy](https://developers.arcgis.com/javascript/jshelp/ags_proxy.html) or [ArcGIS Resource Proxy](https://github.com/Esri/resource-proxy) to use for proxying POST requests.
 `useCors` | `Boolean` | `true` | If this service should use CORS when making GET requests.
 

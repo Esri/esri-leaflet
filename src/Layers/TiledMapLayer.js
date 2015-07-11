@@ -37,12 +37,12 @@ export var TiledMapLayer = L.TileLayer.extend({
     }
   },
 
-  initialize: function(url, options){
-    options = options || {};
-    options.url = cleanUrl(url);
+  initialize: function(options){
+    options.url = EsriLeaflet.Util.cleanUrl(options.url);
     options = L.Util.setOptions(this, options);
 
     // set the urls
+    //this.url = L.esri.Util.cleanUrl(url);
     this.tileUrl = options.url + 'tile/{z}/{y}/{x}';
     this.service = mapService(options);
     this.service.addEventParent(this);

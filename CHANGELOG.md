@@ -1,5 +1,48 @@
 # Changelog
 
+## 1.0.0
+
+This represents the stable release of Esri Leaflet compatible with Leaflet 0.7.3. All future 1.0.X releases will be compatible with Leaflet 0.7.3 and contain only bug fixes. New features will only be added in Esri Leaflet 2.0.0 which will require Leaflet 1.0.0.
+
+As this is a major release there are a number of breaking changes.
+
+Also see the [Esri Leaflet 1.0 announcement](https://github.com/Esri/esri-leaflet/wiki/Esri-Leaflet-1.0.0-Announcement).
+
+#### Breaking Changes
+
+* `L.esri.Services.FeatureLayer` has been renamed to `L.esri.Services.FeatureLayerService`. It should be initialized with `L.esri.Services.featureLayerService(options)`.
+* All layers now match services and tasks and now only accept `url` in their options. E.x. `L.esri.featureLayer(url)` should now `L.esri.featureLayer({url: url}})`. This *does not* affect `L.esri.baseMapLayer` which still accepts the `key` as it's first parameter.
+* Request callbacks across Esri Leaflet now can handle authentication errors by calling `error.authenticate(newToken)` as opposed to listening to `authenticationrequired` event and calling `e.target.authenticate(newToken)`. **This means that your callbacks may be called multiple times**, once with an authentication failure and once with an authentication success. To avoid any side affects of this you should `return` as early as possible after handling errors. It is recommended you adapt techniques from http://blog.timoxley.com/post/47041269194/avoid-else-return-early to handle these cases.
+
+```js
+L.esri.Services.service({
+  url: 'http://logistics.arcgis.com/arcgis/rest/services/World/ServiceAreas/GPServer/GenerateServiceAreas',
+  token: 'badtoken'
+}).metadata(function(error, response){
+  if(error && error.authenticate) {
+    // handle an authentication error, returning to stop execution of the rest of the function
+    error.authenticate('good token');
+    return;
+  }
+
+  if(error) {
+    // handle any other errors, returning to stop execution of the rest of the function
+    return;
+  }
+
+  // if you get here you are successful!
+  console.log(metadata);
+});
+```
+
+#### Changes
+
+* Added support for the `dynamicLayers` option to `L.esri.DynamicMapLayer` https://github.com/Esri/esri-leaflet/issues/566
+* Restored `bringToBack` and `bringToFront` to `L.esri.FeatureLayer` https://github.com/Esri/esri-leaflet/issues/479
+* `load` event on `L.esri.FeatureLayer` now fires at the proper time https://github.com/Esri/esri-leaflet/issues/545
+* `L.esri.DynamicMapLayer` and `L.esri.ImageMapLayer` will now automatically use POST for large requests. https://github.com/Esri/esri-leaflet/issues/574
+* `L.esri.ImageMapLayer` now defaults to requesting `json` as opposed to an image to better handle authentication and large requests https://github.com/Esri/esri-leaflet/issues/574. If your Image Service does not support CORS you should set ``{f:'image'}`` in your options.
+
 ## Release Candidate 8
 
 #### Breaking Changes
@@ -12,7 +55,7 @@
 * Fixed a bug introduced in RC 7 where features would sometimes not draw https://github.com/Esri/esri-leaflet/issues/546 https://github.com/Esri/esri-leaflet/issues/536
 * `load` event is now fired after all features are created, rather than when they are all received from the server https://github.com/Esri/esri-leaflet/issues/545
 * Properly handle using `L.CircleMarker` with `L.esri.Layers.FeatureLayer` https://github.com/Esri/esri-leaflet/issues/534
-* New `redraw` method on `L.esri.Layers.FeatureLayer` for programatically redrawing features with their latest symbology. https://github.com/Esri/esri-leaflet/pull/550
+* New `redraw` method on `L.esri.Layers.FeatureLayer` for programmatically redrawing features with their latest symbology. https://github.com/Esri/esri-leaflet/pull/550
 
 ## Release Candidate 7
 

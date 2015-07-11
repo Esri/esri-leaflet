@@ -7,7 +7,7 @@ layout: example.hbs
 <div id="map"></div>
 
 <script>
-  var map = new L.Map('map').setView([34.326, -117.697], 12);
+  var map = L.map('map').setView([34.326, -117.697], 12);
 
   L.esri.basemapLayer('Topographic').addTo(map);
 
@@ -23,7 +23,8 @@ layout: example.hbs
   }
 
   serverAuth(function(error, response){
-    var dl = L.esri.dynamicMapLayer('http://sampleserver6.arcgisonline.com/arcgis/rest/services/Wildfire_secure_ac/MapServer', {
+    var dl = L.esri.dynamicMapLayer({
+      url: 'http://sampleserver6.arcgisonline.com/arcgis/rest/services/Wildfire_secure_ac/MapServer',
       opacity: 1,
       token:  response.token
     }).addTo(map);

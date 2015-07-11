@@ -18,9 +18,8 @@ layout: documentation.hbs
     </thead>
     <tbody>
         <tr>
-            <td><code class='nobr'>new L.esri.Tasks.IdentifyImage({{{param 'ImageService' 'endpoint' '../../api-reference/services/map-service.html'}}})</code><br><br>
+            <td>
             <code>L.esri.Tasks.identifyImage({{{param 'ImageService' 'endpoint' '../../api-reference/services/map-service.html'}}})</code><br><br>
-            <code>new L.esri.Tasks.IdentifyImage({{{param 'Object' 'options'}}})</code><br><br>
             <code>L.esri.Tasks.identifyImage({{{param 'Object' 'options'}}})</code><br></td>
             <td>Accepts either an `options` object or an instance of <a href="{{assets}}/api-reference/services/image-service.html"></a>.</td>
         </tr>

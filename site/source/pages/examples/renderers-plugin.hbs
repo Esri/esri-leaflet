@@ -14,5 +14,7 @@ layout: example.hbs
   L.esri.basemapLayer('DarkGray').addTo(map);
 
   //renderer type: unique value
-  L.esri.featureLayer('//services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Trimet%20Transit%20Stops%20In%20Portland%20Neighborhoods/FeatureServer/0').addTo(map);
+  L.esri.featureLayer({
+    url: '//services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Trimet%20Transit%20Stops%20In%20Portland%20Neighborhoods/FeatureServer/0'
+  }).addTo(map);
 </script>
