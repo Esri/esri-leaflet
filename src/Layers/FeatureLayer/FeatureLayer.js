@@ -310,6 +310,8 @@ export var FeatureLayer = FeatureManager.extend({
   }
 });
 
-export default function featureLayer (url, options){
+export function featureLayer (url, options){
   return new EsriLeaflet.Layers.FeatureLayer(url, options);
 };
+
+export default featureLayer;

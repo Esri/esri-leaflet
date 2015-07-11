@@ -223,6 +223,8 @@ export var raf = L.Util.bind(window.requestAnimationFrame ||
           window.msRequestAnimationFrame ||
           function(cb) { return window.setTimeout(cb, 1000 / 60); }, window);
 
+export { raf as requestAnimationFrame }
+
 // shallow object clone for feature properties and attributes
 // from http://jsperf.com/cloning-an-object/2
 function shallowClone(obj) {
@@ -437,16 +439,18 @@ export function warn () {
   }
 };
 
-export default {
+export var Util = {
   requestAnimationFrame: raf,
   shallowClone: shallowClone,
-  warn,
-  cleanUrl,
-  isArcgisOnline,
-  geojsonTypeToArcGIS,
-  responseToFeatureCollection,
-  geojsonToArcGIS,
-  arcgisToGeojson,
-  boundsToExtent,
-  extentToBounds
+  warn: warn,
+  cleanUrl: cleanUrl,
+  isArcgisOnline: isArcgisOnline,
+  geojsonTypeToArcGIS: geojsonTypeToArcGIS,
+  responseToFeatureCollection: responseToFeatureCollection,
+  geojsonToArcGIS: geojsonToArcGIS,
+  arcgisToGeojson: arcgisToGeojson,
+  boundsToExtent: boundsToExtent,
+  extentToBounds: extentToBounds
 };
+
+export default Util;

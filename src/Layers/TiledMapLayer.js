@@ -136,6 +136,8 @@ export var TiledMapLayer = L.TileLayer.extend({
   }
 });
 
-export default function tiledMapLayer (url, options){
+export function tiledMapLayer (url, options){
   return new TiledMapLayer(url, options);
 };
+
+export default tiledMapLayer;

@@ -1,7 +1,7 @@
 import L from "leaflet";
 import {cors} from "../Support";
 import {cleanUrl} from "../Util";
-import {Request, jsonp} from "../Request";
+import Request from "../Request";
 
 export var Service = L.Evented.extend({
 
@@ -61,7 +61,7 @@ export var Service = L.Evented.extend({
       var url = (this.options.proxy) ? this.options.proxy + '?' + this.options.url + path : this.options.url + path;
 
       if((method === 'get' || method === 'request') && !this.options.useCors){
-        return jsonp(url, params, wrappedCallback);
+        return Request.get.JSONP(url, params, wrappedCallback);
       } else {
         return Request[method](url, params, wrappedCallback);
       }
@@ -120,6 +120,8 @@ export var Service = L.Evented.extend({
   }
 });
 
-export default function service (options) {
+export function service (options) {
   return new EsriLeaflet.Services.Service(options);
 };
+
+export default service;

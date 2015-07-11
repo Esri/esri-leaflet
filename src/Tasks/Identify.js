@@ -9,6 +9,8 @@ export var Identify = Task.extend({
   }
 });
 
-export default function identify(options){
+export function identify(options){
   return new Identify(options);
 };
+
+export default identify;

@@ -189,8 +189,10 @@ export { get };
 export { xmlHttpPost as post };
 
 // export the Request object to call the different handlers for debugging
-export default Request = {
+export var Request = {
   request: request,
   get: get,
   post: xmlHttpPost
 };
+
+export default Request;

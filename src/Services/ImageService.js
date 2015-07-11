@@ -16,3 +16,5 @@ export var ImageService = Service.extend({
 export function imageService(options){
   return new ImageService(options);
 };
+
+export default imageService;

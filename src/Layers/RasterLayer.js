@@ -234,7 +234,3 @@ export var RasterLayer =  L.Layer.extend({
     this._lastClick = e.latlng;
   }
 });
-
-export default function rasterLayer (url, options){
-  return new RasterLayer(url, options);
-};

@@ -289,7 +289,3 @@ export var FeatureGrid = L.Layer.extend({
   }
 
 });
-
-export default function (options) {
-  return new FeatureGrid(options);
-};

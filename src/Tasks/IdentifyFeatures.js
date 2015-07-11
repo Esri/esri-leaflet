@@ -65,6 +65,8 @@ export var IdentifyFeatures = Identify.extend({
   }
 });
 
-export default function identifyFeatures (options){
+export function identifyFeatures (options){
   return new IdentifyFeatures(options);
-};
+}
+
+export default identifyFeatures;

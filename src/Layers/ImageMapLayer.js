@@ -188,6 +188,8 @@ export var ImageMapLayer = RasterLayer.extend({
   }
 });
 
-export default function imageMapLayer(url, options) {
+export function imageMapLayer(url, options) {
   return new EsriLeaflet.Layers.ImageMapLayer(url, options);
 };
+
+export default imageMapLayer;

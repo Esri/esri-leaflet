@@ -1,6 +1,6 @@
 import L from "leaflet";
-import { FeatureGrid } from "./FeatureManager";
-import { featureLayer as featureLayerService } from "../../Services/FeatureLayerService"
+import { FeatureGrid } from "./FeatureGrid";
+import featureLayerService from "../../Services/FeatureLayerService"
 import { cleanUrl, warn, requestAnimationFrame } from "../../Util";
 
 export var FeatureManager = FeatureGrid.extend({
@@ -530,7 +530,3 @@ BinarySearchIndex.prototype.bulkAdd = function(items){
   this.dirty = true;
   this.values = this.values.concat(items);
 };
-
-export default function featureManager (url, options) {
-  return new FeatureManager(url, options);
-}

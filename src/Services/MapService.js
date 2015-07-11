@@ -19,6 +19,8 @@ export var MapService = Service.extend({
 
 });
 
-export default function mapService (options){
+export function mapService (options){
   return new MapService(options);
 };
+
+export default mapService;

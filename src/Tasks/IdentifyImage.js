@@ -92,6 +92,8 @@ export var IdentifyImage = Identify.extend({
 
 });
 
-export default function identifyImage(params){
+export function identifyImage(params){
   return new IdentifyImage(params);
 };
+
+export default identifyImage;

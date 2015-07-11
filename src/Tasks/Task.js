@@ -1,7 +1,7 @@
 import L from "leaflet";
 import {cors} from "../Support";
 import {cleanUrl} from "../Util";
-import {Request, jsonp} from "../Request";
+import Request from "../Request";
 
 export var Task = L.Class.extend({
 
@@ -61,13 +61,15 @@ export var Task = L.Class.extend({
     var url = (this.options.proxy) ? this.options.proxy + '?' + this.options.url + path : this.options.url + path;
 
     if((method === 'get' || method === 'request') && !this.options.useCors){
-      return jsonp(url, params, callback, context);
+      return Request.get.JSONP(url, params, callback, context);
     }
 
     return Request[method](url, params, callback, context);
   }
 });
 
-export default function task (options) {
+export function task (options) {
   return new Task(options);
-};
+}
+
+export default task;

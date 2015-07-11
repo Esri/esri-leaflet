@@ -163,6 +163,8 @@ export var DynamicMapLayer = RasterLayer.extend({
   }
 });
 
-export default function dynamicMapLayer(url, options){
+export function dynamicMapLayer(url, options){
   return new DynamicMapLayer(url, options);
 };
+
+export default dynamicMapLayer;

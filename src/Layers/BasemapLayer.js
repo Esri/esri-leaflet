@@ -301,6 +301,8 @@ export var BasemapLayer = L.TileLayer.extend({
   }
 });
 
-function basemapLayer (key, options){
+export function basemapLayer (key, options){
   return new BasemapLayer(key, options);
 };
+
+export default basemapLayer;

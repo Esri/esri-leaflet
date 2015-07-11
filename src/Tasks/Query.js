@@ -225,6 +225,8 @@ export var Query = Task.extend({
   }
 });
 
-export default function query(options){
+export function query(options){
   return new Query(options);
 };
+
+export default query;

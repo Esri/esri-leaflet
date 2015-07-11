@@ -67,3 +67,5 @@ export var FeatureLayerService = Service.extend({
 export function featureLayerService(options) {
   return FeatureLayer(options);
 };
+
+export default featureLayerService;

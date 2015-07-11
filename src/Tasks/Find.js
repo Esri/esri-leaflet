@@ -50,6 +50,8 @@ export var Find = Task.extend({
   }
 });
 
-export default function find (options) {
+export function find (options) {
   return new Find(options);
 };
+
+export default find;

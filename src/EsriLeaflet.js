@@ -1,3 +1,8 @@
+// import base
+import { Support } from './Support';
+import {Util } from './Util';
+import {Request, get, post, request} from './Request';
+
 // import tasks
 import { Task, task } from './Tasks/Task';
 import { Query, query } from './Tasks/Query';
@@ -15,53 +20,106 @@ import { FeatureLayerService, featureLayerService } from './Services/FeatureLaye
 // export layers
 import { BasemapLayer, basemapLayer } from './Layers/BasemapLayer';
 import { TiledMapLayer, tiledMapLayer } from './Layers/TiledMapLayer';
-import { RasterLayer, rasterLayer } from './Layers/RasterLayer';
+import { RasterLayer } from './Layers/RasterLayer';
 import { ImageMapLayer, imageMapLayer } from './Layers/ImageMapLayer';
 import { DynamicMapLayer, dynamicMapLayer } from './Layers/DynamicMapLayer';
-import { FeatureGrid, featureGrid } from './Layers/FeatureLayer/FeatureGrid';
-import { FeatureManager, featureManager } from './Layers/FeatureLayer/FeatureManager';
+import { FeatureGrid } from './Layers/FeatureLayer/FeatureGrid';
+import { FeatureManager } from './Layers/FeatureLayer/FeatureManager';
 import { FeatureLayer, featureLayer } from './Layers/FeatureLayer/FeatureLayer';
 
 export var VERSION = '1.0.0';
-export { Support } from './Support';
-export { Util } from './Util';
-export * from './Request';
 
-export var Tasks = {
-  Task, task,
-  Query, query,
-  Find, find,
-  Identify, identify,
-  IdentifyFeatures, identifyFeatures,
-  IdentifyImage, identifyImage
+export { get }
+export { post }
+export { request }
+export { Request }
+
+export { Support }
+export { Util }
+
+export { Task }
+export { task }
+export { Query }
+export { query }
+export { Find }
+export { find }
+export { Identify }
+export { identify }
+export { IdentifyFeatures }
+export { identifyFeatures }
+export { IdentifyImage }
+export { identifyImage }
+
+export { Service }
+export { service }
+export { MapService }
+export { mapService }
+export { ImageService }
+export { imageService }
+export { FeatureLayerService }
+export { featureLayerService }
+
+export { BasemapLayer }
+export { basemapLayer }
+export { TiledMapLayer }
+export { tiledMapLayer }
+export { RasterLayer }
+
+export { ImageMapLayer }
+export { imageMapLayer }
+export { DynamicMapLayer }
+export { dynamicMapLayer }
+export { FeatureGrid }
+
+export { FeatureManager }
+
+export { FeatureLayer }
+export { featureLayer }
+
+var EsriLeaflet = {
+  VERSION: '1.0.0',
+  Support: Support,
+  Util: Util,
+  get: get,
+  post: post,
+  request: request,
+  Task: Task,
+  task: task,
+  Query: Query,
+  query: query,
+  Find: Find,
+  find: find,
+  Identify: Identify,
+  identify: identify,
+  IdentifyFeatures: IdentifyFeatures,
+  identifyFeatures: identifyFeatures,
+  IdentifyImage: IdentifyImage,
+  identifyImage: identifyImage,
+  Service: Service,
+  service: service,
+  MapService: MapService,
+  mapService: mapService,
+  ImageService: ImageService,
+  imageService: imageService,
+  FeatureLayerService: FeatureLayerService,
+  featureLayerService: featureLayerService,
+  BasemapLayer: BasemapLayer,
+  basemapLayer: basemapLayer,
+  TiledMapLayer: TiledMapLayer,
+  tiledMapLayer: tiledMapLayer,
+  RasterLayer: RasterLayer,
+  ImageMapLayer: ImageMapLayer,
+  imageMapLayer: imageMapLayer,
+  DynamicMapLayer: DynamicMapLayer,
+  dynamicMapLayer: dynamicMapLayer,
+  FeatureGrid: FeatureGrid,
+  FeatureManager: FeatureManager,
+  FeatureLayer: FeatureLayer,
+  featureLayer: featureLayer
 };
 
-export var Services = {
-  Service, service,
-  MapService, mapService,
-  ImageService, imageService,
-  FeatureLayer: FeatureLayerService, featureLayer: featureLayerService
-};
+if(window && window.L) {
+  window.L.esri = EsriLeaflet;
+}
 
-export var Layers = {
-  BasemapLayer, basemapLayer,
-  TiledMapLayer, tiledMapLayer,
-  RasterLayer, rasterLayer,
-  ImageMapLayer, imageMapLayer,
-  DynamicMapLayer, dynamicMapLayer
-};
-
-export { BasemapLayer };
-export { basemapLayer };
-export { TiledMapLayer };
-export { tiledMapLayer };
-export { ImageMapLayer };
-export { imageMapLayer };
-export { DynamicMapLayer };
-export { dynamicMapLayer };
-export { FeatureGrid };
-export { featureGrid };
-export { FeatureManager };
-export { featureManager };
-export { FeatureLayer };
-export { featureLayer };
+export default EsriLeaflet;
