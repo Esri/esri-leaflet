@@ -35,9 +35,10 @@
 
   <!-- require combined leaflet, esri leaflet and jsdelivr-rum -->
   <script src="//cdn.jsdelivr.net/leaflet/latest/leaflet.js"></script>
-  <script src="//cdn.jsdelivr.net/leaflet.esri/latest/esri-leaflet.js"></script>
+  <script src="//cdn.jsdelivr.net/leaflet.esri//esri-leaflet.js"></script>
   <script src="//cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
 
+  
 
   <!-- Google Analytics -->
   <script>
@@ -189,7 +190,8 @@
 
   L.esri.basemapLayer('Gray').addTo(map);
 
-  var neighborhoods = new L.esri.FeatureLayer('https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Neighborhoods_pdx/FeatureServer/0', {
+  var neighborhoods = L.esri.featureLayer({
+    url: 'https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Neighborhoods_pdx/FeatureServer/0',
     style: function() {
       return {
         color: '#5B7CBA',
@@ -205,7 +207,7 @@
     var feature = neighborhoods.getFeature(id);
     var center = feature.getBounds().getCenter();
     var label = L.marker(center, {
-      icon: new L.DivIcon({
+      icon: L.divIcon({
         iconSize: null,
         className: 'label',
         html: '<div>' + e.feature.properties.NAME + '</div>'
@@ -228,6 +230,7 @@
     }
   });
 </script>
+
 </div>
 <pre><code class="language-xml"><span class="tag">&lt;<span class="title">html</span>&gt;</span>
 <span class="tag">&lt;<span class="title">head</span>&gt;</span>
@@ -240,8 +243,7 @@
   <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"//cdn.jsdelivr.net/leaflet/0.7.3/leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
   <span class="comment">&lt;!-- Load Esri Leaflet from CDN --&gt;</span>
-  <span class="comment">&lt;!-- we encourage you to replace 'latest' with a hardcoded version number (like '1.0.0-rc.8') in production applications --&gt;</span>
-  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"//cdn.jsdelivr.net/leaflet.esri/latest/esri-leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"//cdn.jsdelivr.net/leaflet.esri//esri-leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
   <span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css">
     <span class="tag">body</span> <span class="rules">{ <span class="rule"><span class="attribute">margin</span>:<span class="value"><span class="number">0</span></span></span>; <span class="rule"><span class="attribute">padding</span>:<span class="value"><span class="number">0</span></span></span>; <span class="rule">}</span></span>
@@ -272,7 +274,8 @@
 
   L.esri.basemapLayer(<span class="string">'Gray'</span>).addTo(map);
 
-  <span class="keyword">var</span> neighborhoods = <span class="keyword">new</span> L.esri.FeatureLayer(<span class="string">'https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Neighborhoods_pdx/FeatureServer/0'</span>, {
+  <span class="keyword">var</span> neighborhoods = L.esri.featureLayer({
+    url: <span class="string">'https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Neighborhoods_pdx/FeatureServer/0'</span>,
     style: <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
       <span class="keyword">return</span> {
         color: <span class="string">'#5B7CBA'</span>,
@@ -288,7 +291,7 @@
     <span class="keyword">var</span> feature = neighborhoods.getFeature(id);
     <span class="keyword">var</span> center = feature.getBounds().getCenter();
     <span class="keyword">var</span> label = L.marker(center, {
-      icon: <span class="keyword">new</span> L.DivIcon({
+      icon: L.divIcon({
         iconSize: <span class="literal">null</span>,
         className: <span class="string">'label'</span>,
         html: <span class="string">'&lt;div&gt;'</span> + e.feature.properties.NAME + <span class="string">'&lt;/div&gt;'</span>
@@ -319,6 +322,7 @@
   <p><a href="http://github.com/esri/esri-leaflet/edit/master/site/source/pages/examples/labeling-features.hbs">Edit this sample on GitHub</a></p>
 </div>
 </div>
+
   <div style='clear:both;'></div>
 </div>
 <div class="container centered-text">

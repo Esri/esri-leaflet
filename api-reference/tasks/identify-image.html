@@ -33,9 +33,10 @@
 
   <!-- require combined leaflet, esri leaflet and jsdelivr-rum -->
   <script src="//cdn.jsdelivr.net/leaflet/latest/leaflet.js"></script>
-  <script src="//cdn.jsdelivr.net/leaflet.esri/latest/esri-leaflet.js"></script>
+  <script src="//cdn.jsdelivr.net/leaflet.esri//esri-leaflet.js"></script>
   <script src="//cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
 
+  
 
   <!-- Google Analytics -->
   <script>
@@ -98,11 +99,12 @@
   <h5>Base Classes</h5>
   <nav>
     <a href="../../../../esri-leaflet/api-reference/services/image-service.html">ImageService</a>
-    <a href="../../../../esri-leaflet/api-reference/services/feature-layer.html">FeatureLayer</a>
+    <a href="../../../../esri-leaflet/api-reference/services/feature-layer.html">FeatureLayerService</a>
     <a href="../../../../esri-leaflet/api-reference/services/map-service.html">MapService</a>
     <a href="../../../../esri-leaflet/api-reference/services/service.html">Service</a>
   </nav>
 </aside>
+
 
 <div class="main-content">
   <h1 id="l-esri-tasks-identifyimage">L.esri.Tasks.IdentifyImage</h1>
@@ -117,9 +119,8 @@
     </thead>
     <tbody>
         <tr>
-            <td><code class='nobr'>new L.esri.Tasks.IdentifyImage(<nobr class="param"><span>&lt;<a href="../../api-reference/services/map-service.html">ImageService</a>&gt;</span> <code>endpoint</code></nobr>)</code><br><br>
+            <td>
             <code>L.esri.Tasks.identifyImage(<nobr class="param"><span>&lt;<a href="../../api-reference/services/map-service.html">ImageService</a>&gt;</span> <code>endpoint</code></nobr>)</code><br><br>
-            <code>new L.esri.Tasks.IdentifyImage(<nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br>
             <code>L.esri.Tasks.identifyImage(<nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br></td>
             <td>Accepts either an <code>options</code> object or an instance of <a href="../../../../esri-leaflet//api-reference/services/image-service.html"></a>.</td>
         </tr>

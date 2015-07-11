@@ -35,9 +35,10 @@
 
   <!-- require combined leaflet, esri leaflet and jsdelivr-rum -->
   <script src="//cdn.jsdelivr.net/leaflet/latest/leaflet.js"></script>
-  <script src="//cdn.jsdelivr.net/leaflet.esri/latest/esri-leaflet.js"></script>
+  <script src="//cdn.jsdelivr.net/leaflet.esri//esri-leaflet.js"></script>
   <script src="//cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
 
+  
 
   <!-- Google Analytics -->
   <script>
@@ -209,14 +210,16 @@
   L.esri.basemapLayer('Streets').addTo(map);
 
   // add our feature layer to the map
-  var pedestrianDistricts = new L.esri.FeatureLayer('http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/PDX_Pedestrian_Districts/FeatureServer/0').addTo(map);
+  var pedestrianDistricts = L.esri.featureLayer({
+    url: 'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/PDX_Pedestrian_Districts/FeatureServer/0'
+  }).addTo(map);
 
   // variable to track the layer being edited
   var currentlyEditing;
   var currentlyDeleting = false;
 
   // create a feature group for Leaflet Draw to hook into for delete functionality
-  var drawnItems = new L.FeatureGroup();
+  var drawnItems = L.featureGroup();
   map.addLayer(drawnItems);
 
   // track if we should disable custom editing as a result of other actions (create/delete)
@@ -355,6 +358,7 @@
     currentlyDeleting = false;
   });
 </script>
+
 </div>
 <pre><code class="language-xml"><span class="tag">&lt;<span class="title">html</span>&gt;</span>
 <span class="tag">&lt;<span class="title">head</span>&gt;</span>
@@ -367,8 +371,7 @@
   <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"//cdn.jsdelivr.net/leaflet/0.7.3/leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
   <span class="comment">&lt;!-- Load Esri Leaflet from CDN --&gt;</span>
-  <span class="comment">&lt;!-- we encourage you to replace 'latest' with a hardcoded version number (like '1.0.0-rc.8') in production applications --&gt;</span>
-  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"//cdn.jsdelivr.net/leaflet.esri/latest/esri-leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"//cdn.jsdelivr.net/leaflet.esri//esri-leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
   <span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css">
     <span class="tag">body</span> <span class="rules">{ <span class="rule"><span class="attribute">margin</span>:<span class="value"><span class="number">0</span></span></span>; <span class="rule"><span class="attribute">padding</span>:<span class="value"><span class="number">0</span></span></span>; <span class="rule">}</span></span>
@@ -419,14 +422,16 @@
   L.esri.basemapLayer(<span class="string">'Streets'</span>).addTo(map);
 
   <span class="comment">// add our feature layer to the map</span>
-  <span class="keyword">var</span> pedestrianDistricts = <span class="keyword">new</span> L.esri.FeatureLayer(<span class="string">'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/PDX_Pedestrian_Districts/FeatureServer/0'</span>).addTo(map);
+  <span class="keyword">var</span> pedestrianDistricts = L.esri.featureLayer({
+    url: <span class="string">'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/PDX_Pedestrian_Districts/FeatureServer/0'</span>
+  }).addTo(map);
 
   <span class="comment">// variable to track the layer being edited</span>
   <span class="keyword">var</span> currentlyEditing;
   <span class="keyword">var</span> currentlyDeleting = <span class="literal">false</span>;
 
   <span class="comment">// create a feature group for Leaflet Draw to hook into for delete functionality</span>
-  <span class="keyword">var</span> drawnItems = <span class="keyword">new</span> L.FeatureGroup();
+  <span class="keyword">var</span> drawnItems = L.featureGroup();
   map.addLayer(drawnItems);
 
   <span class="comment">// track if we should disable custom editing as a result of other actions (create/delete)</span>
@@ -573,6 +578,7 @@
   <p><a href="http://github.com/esri/esri-leaflet/edit/master/site/source/pages/examples/editing.hbs">Edit this sample on GitHub</a></p>
 </div>
 </div>
+
   <div style='clear:both;'></div>
 </div>
 <div class="container centered-text">

@@ -33,9 +33,10 @@
 
   <!-- require combined leaflet, esri leaflet and jsdelivr-rum -->
   <script src="//cdn.jsdelivr.net/leaflet/latest/leaflet.js"></script>
-  <script src="//cdn.jsdelivr.net/leaflet.esri/latest/esri-leaflet.js"></script>
+  <script src="//cdn.jsdelivr.net/leaflet.esri//esri-leaflet.js"></script>
   <script src="//cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
 
+  
 
   <!-- Google Analytics -->
   <script>
@@ -98,18 +99,19 @@
   <h5>Base Classes</h5>
   <nav>
     <a href="../../../../esri-leaflet/api-reference/services/image-service.html">ImageService</a>
-    <a href="../../../../esri-leaflet/api-reference/services/feature-layer.html">FeatureLayer</a>
+    <a href="../../../../esri-leaflet/api-reference/services/feature-layer.html">FeatureLayerService</a>
     <a href="../../../../esri-leaflet/api-reference/services/map-service.html">MapService</a>
     <a href="../../../../esri-leaflet/api-reference/services/service.html">Service</a>
   </nav>
 </aside>
+
 
 <div class="main-content">
   <h1 id="l-esri-layers-dynamicmaplayer">L.esri.Layers.DynamicMapLayer</h1>
 <!-- Inherits from [`L.esri.Layers.RasterLayer`](../../../../esri-leaflet/api-reference/layers/raster-layer.html) -->
 
 <p>Render and visualize Map Services from ArcGIS Online and ArcGIS Server. L.esri.Layers.DynamicMapLayer also supports custom popups and identification of features.</p>
-<p>Map Services are a way to expose the contents of a map as a web service and expose capabilites for exporting tile images, querying and identifying features and more.</p>
+<p>Map Services are a way to expose the contents of a map as a web service and expose capabilities for exporting tile images, querying and identifying features and more.</p>
 <h3 id="constructor">Constructor</h3>
 <table>
     <thead>
@@ -120,8 +122,8 @@
     </thead>
     <tbody>
         <tr>
-            <td><code class="nobr">new L.esri.Layers.DynamicMapLayer(<nobr class="param"><span>&lt;String&gt;</span> <code>url</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br><code class="nobr">L.esri.Layers.dynamicMapLayer(<nobr class="param"><span>&lt;String&gt;</span> <code>url</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br><code class="nobr">new L.esri.DynamicMapLayer(<nobr class="param"><span>&lt;String&gt;</span> <code>url</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br><code class="nobr">L.esri.dynamicMapLayer(<nobr class="param"><span>&lt;String&gt;</span> <code>url</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code></td>
-            <td><code>url</code> should be the URL to the Map Service hosting the tiles. The <code>options</code> parameter can accept the same options as <a href="http://leafletjs.com/reference.html#tilelayer"><code>L.TileLayer</code></a></td>
+            <td>L.esri.dynamicMapLayer(<nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code></td>
+            <td>The <code>options</code> parameter can accept the same options as <a href="http://leafletjs.com/reference.html#imageoverlay"><code>L.ImageOverlay</code></a>. You also must pass a <code>url</code> key in your <code>options</code>.</td>
         </tr>
     </tbody>
 </table>
@@ -139,6 +141,12 @@
 </thead>
 <tbody>
 <tr>
+<td><code>url</code></td>
+<td><code>String</code></td>
+<td></td>
+<td><em>Required</em> URL of the <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Map_Service/02r3000000w2000000/">Map Service</a>.</td>
+</tr>
+<tr>
 <td><code>format</code></td>
 <td><code>String</code></td>
 <td><code>&#39;png24&#39;</code></td>
@@ -153,7 +161,7 @@
 <tr>
 <td><code>f</code></td>
 <td><code>String</code></td>
-<td><code>&#39;image&#39;</code></td>
+<td><code>&#39;json&#39;</code></td>
 <td>Server response content type.</td>
 </tr>
 <tr>

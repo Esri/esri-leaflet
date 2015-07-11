@@ -33,9 +33,10 @@
 
   <!-- require combined leaflet, esri leaflet and jsdelivr-rum -->
   <script src="//cdn.jsdelivr.net/leaflet/latest/leaflet.js"></script>
-  <script src="//cdn.jsdelivr.net/leaflet.esri/latest/esri-leaflet.js"></script>
+  <script src="//cdn.jsdelivr.net/leaflet.esri//esri-leaflet.js"></script>
   <script src="//cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
 
+  
 
   <!-- Google Analytics -->
   <script>
@@ -98,11 +99,12 @@
   <h5>Base Classes</h5>
   <nav>
     <a href="../../../../esri-leaflet/api-reference/services/image-service.html">ImageService</a>
-    <a href="../../../../esri-leaflet/api-reference/services/feature-layer.html">FeatureLayer</a>
+    <a href="../../../../esri-leaflet/api-reference/services/feature-layer.html">FeatureLayerService</a>
     <a href="../../../../esri-leaflet/api-reference/services/map-service.html">MapService</a>
     <a href="../../../../esri-leaflet/api-reference/services/service.html">Service</a>
   </nav>
 </aside>
+
 
 <div class="main-content">
   <h1 id="l-esri-services-service">L.esri.Services.Service</h1>
@@ -117,7 +119,7 @@
     </thead>
     <tbody>
         <tr>
-            <td><code class="nobr">new L.esri.Services.Service(<nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br><code class="nobr">L.esri.Services.service(<nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code></td>
+            <td><code class="nobr">L.esri.Services.service(<nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code></td>
             <td>Options includes a <code>url</code> parameter which refers to the ArcGIS Server or ArcGIS Online service you would like to consume.</td>
         </tr>
     </tbody>

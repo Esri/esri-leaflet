@@ -35,9 +35,10 @@
 
   <!-- require combined leaflet, esri leaflet and jsdelivr-rum -->
   <script src="//cdn.jsdelivr.net/leaflet/latest/leaflet.js"></script>
-  <script src="//cdn.jsdelivr.net/leaflet.esri/latest/esri-leaflet.js"></script>
+  <script src="//cdn.jsdelivr.net/leaflet.esri//esri-leaflet.js"></script>
   <script src="//cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
 
+  
 
   <!-- Google Analytics -->
   <script>
@@ -183,11 +184,14 @@
 
     L.esri.basemapLayer('Imagery').addTo(map);
 
-    L.esri.imageMapLayer('http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Earthquakes/SanAndreasLidar/ImageServer', {
-      renderingRule: renderingRule
+    L.esri.imageMapLayer({
+      url: 'http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Earthquakes/SanAndreasLidar/ImageServer',
+      renderingRule: renderingRule,
+      useCors: false
     }).addTo(map);
 
 </script>
+
 </div>
 <pre><code class="language-xml"><span class="tag">&lt;<span class="title">html</span>&gt;</span>
 <span class="tag">&lt;<span class="title">head</span>&gt;</span>
@@ -200,8 +204,7 @@
   <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"//cdn.jsdelivr.net/leaflet/0.7.3/leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
   <span class="comment">&lt;!-- Load Esri Leaflet from CDN --&gt;</span>
-  <span class="comment">&lt;!-- we encourage you to replace 'latest' with a hardcoded version number (like '1.0.0-rc.8') in production applications --&gt;</span>
-  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"//cdn.jsdelivr.net/leaflet.esri/latest/esri-leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"//cdn.jsdelivr.net/leaflet.esri//esri-leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
   <span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css">
     <span class="tag">body</span> <span class="rules">{ <span class="rule"><span class="attribute">margin</span>:<span class="value"><span class="number">0</span></span></span>; <span class="rule"><span class="attribute">padding</span>:<span class="value"><span class="number">0</span></span></span>; <span class="rule">}</span></span>
@@ -226,8 +229,10 @@
 
     L.esri.basemapLayer(<span class="string">'Imagery'</span>).addTo(map);
 
-    L.esri.imageMapLayer(<span class="string">'http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Earthquakes/SanAndreasLidar/ImageServer'</span>, {
-      renderingRule: renderingRule
+    L.esri.imageMapLayer({
+      url: <span class="string">'http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Earthquakes/SanAndreasLidar/ImageServer'</span>,
+      renderingRule: renderingRule,
+      useCors: <span class="literal">false</span>
     }).addTo(map);
 
 </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
@@ -239,6 +244,7 @@
   <p><a href="http://github.com/esri/esri-leaflet/edit/master/site/source/pages/examples/image-map-layer-rendering-rule.hbs">Edit this sample on GitHub</a></p>
 </div>
 </div>
+
   <div style='clear:both;'></div>
 </div>
 <div class="container centered-text">

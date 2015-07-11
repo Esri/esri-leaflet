@@ -35,9 +35,10 @@
 
   <!-- require combined leaflet, esri leaflet and jsdelivr-rum -->
   <script src="//cdn.jsdelivr.net/leaflet/latest/leaflet.js"></script>
-  <script src="//cdn.jsdelivr.net/leaflet.esri/latest/esri-leaflet.js"></script>
+  <script src="//cdn.jsdelivr.net/leaflet.esri//esri-leaflet.js"></script>
   <script src="//cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
 
+  
 
   <!-- Google Analytics -->
   <script>
@@ -176,7 +177,8 @@
   L.esri.basemapLayer('DarkGray').addTo(map);
 
   // add a graphic layer composed of selected US Counties
-  var fl = L.esri.featureLayer('http://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer/2', {
+  var fl = L.esri.featureLayer({
+    url: 'http://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer/2',
     where: "NAME='Los Angeles' OR NAME='San Bernardino'"
   }).addTo(map);
 
@@ -213,8 +215,7 @@
   <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"//cdn.jsdelivr.net/leaflet/0.7.3/leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
   <span class="comment">&lt;!-- Load Esri Leaflet from CDN --&gt;</span>
-  <span class="comment">&lt;!-- we encourage you to replace 'latest' with a hardcoded version number (like '1.0.0-rc.8') in production applications --&gt;</span>
-  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"//cdn.jsdelivr.net/leaflet.esri/latest/esri-leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"//cdn.jsdelivr.net/leaflet.esri//esri-leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
   <span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css">
     <span class="tag">body</span> <span class="rules">{ <span class="rule"><span class="attribute">margin</span>:<span class="value"><span class="number">0</span></span></span>; <span class="rule"><span class="attribute">padding</span>:<span class="value"><span class="number">0</span></span></span>; <span class="rule">}</span></span>
@@ -232,7 +233,8 @@
   L.esri.basemapLayer(<span class="string">'DarkGray'</span>).addTo(map);
 
   <span class="comment">// add a graphic layer composed of selected US Counties</span>
-  <span class="keyword">var</span> fl = L.esri.featureLayer(<span class="string">'http://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer/2'</span>, {
+  <span class="keyword">var</span> fl = L.esri.featureLayer({
+    url: <span class="string">'http://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer/2'</span>,
     where: <span class="string">"NAME='Los Angeles' OR NAME='San Bernardino'"</span>
   }).addTo(map);
 
@@ -264,6 +266,7 @@
   <p><a href="http://github.com/esri/esri-leaflet/edit/master/site/source/pages/examples/zooming-to-all-features-2.hbs">Edit this sample on GitHub</a></p>
 </div>
 </div>
+
   <div style='clear:both;'></div>
 </div>
 <div class="container centered-text">

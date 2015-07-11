@@ -35,9 +35,10 @@
 
   <!-- require combined leaflet, esri leaflet and jsdelivr-rum -->
   <script src="//cdn.jsdelivr.net/leaflet/latest/leaflet.js"></script>
-  <script src="//cdn.jsdelivr.net/leaflet.esri/latest/esri-leaflet.js"></script>
+  <script src="//cdn.jsdelivr.net/leaflet.esri//esri-leaflet.js"></script>
   <script src="//cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
 
+  
 
   <!-- Google Analytics -->
   <script>
@@ -199,20 +200,22 @@
     ]
   });
 
-  var map = new L.Map('map', {
+  var map = L.map('map', {
     crs: crs
   }).setView([40.381, -111.859], 5);
 
   /*
     The min/maxZoom values provided should match the actual cache thats been published. This information can be retrieved from the service endpoint directly.
   */
-  L.esri.tiledMapLayer('http://mapserv.utah.gov/arcgis/rest/services/BaseMaps/Terrain/MapServer', {
+  L.esri.tiledMapLayer({
+    url: 'http://mapserv.utah.gov/arcgis/rest/services/BaseMaps/Terrain/MapServer',
     maxZoom: 14,
     minZoom: 0,
     continuousWorld: true,
     attribution: 'State of Utah'
   }).addTo(map);
 </script>
+
 </div>
 <pre><code class="language-xml"><span class="tag">&lt;<span class="title">html</span>&gt;</span>
 <span class="tag">&lt;<span class="title">head</span>&gt;</span>
@@ -225,8 +228,7 @@
   <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"//cdn.jsdelivr.net/leaflet/0.7.3/leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
   <span class="comment">&lt;!-- Load Esri Leaflet from CDN --&gt;</span>
-  <span class="comment">&lt;!-- we encourage you to replace 'latest' with a hardcoded version number (like '1.0.0-rc.8') in production applications --&gt;</span>
-  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"//cdn.jsdelivr.net/leaflet.esri/latest/esri-leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"//cdn.jsdelivr.net/leaflet.esri//esri-leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
   <span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css">
     <span class="tag">body</span> <span class="rules">{ <span class="rule"><span class="attribute">margin</span>:<span class="value"><span class="number">0</span></span></span>; <span class="rule"><span class="attribute">padding</span>:<span class="value"><span class="number">0</span></span></span>; <span class="rule">}</span></span>
@@ -267,14 +269,15 @@
     ]
   });
 
-  <span class="keyword">var</span> map = <span class="keyword">new</span> L.Map(<span class="string">'map'</span>, {
+  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>, {
     crs: crs
   }).setView([<span class="number">40.381</span>, -<span class="number">111.859</span>], <span class="number">5</span>);
 
   <span class="comment">/*
     The min/maxZoom values provided should match the actual cache thats been published. This information can be retrieved from the service endpoint directly.
   */</span>
-  L.esri.tiledMapLayer(<span class="string">'http://mapserv.utah.gov/arcgis/rest/services/BaseMaps/Terrain/MapServer'</span>, {
+  L.esri.tiledMapLayer({
+    url: <span class="string">'http://mapserv.utah.gov/arcgis/rest/services/BaseMaps/Terrain/MapServer'</span>,
     maxZoom: <span class="number">14</span>,
     minZoom: <span class="number">0</span>,
     continuousWorld: <span class="literal">true</span>,
@@ -289,6 +292,7 @@
   <p><a href="http://github.com/esri/esri-leaflet/edit/master/site/source/pages/examples/non-mercator-projection.hbs">Edit this sample on GitHub</a></p>
 </div>
 </div>
+
   <div style='clear:both;'></div>
 </div>
 <div class="container centered-text">

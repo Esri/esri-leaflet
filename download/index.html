@@ -33,9 +33,10 @@
 
   <!-- require combined leaflet, esri leaflet and jsdelivr-rum -->
   <script src="//cdn.jsdelivr.net/leaflet/latest/leaflet.js"></script>
-  <script src="//cdn.jsdelivr.net/leaflet.esri/latest/esri-leaflet.js"></script>
+  <script src="//cdn.jsdelivr.net/leaflet.esri//esri-leaflet.js"></script>
   <script src="//cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
 
+  
 
   <!-- Google Analytics -->
   <script>
@@ -67,7 +68,7 @@
 <div class="container white single">
   <h1 id="download">Download</h1>
 <p>All builds of Esri Leaflet are available for download on <a href="https://github.com/Esri/esri-leaflet/releases/">GitHub</a>.</p>
-<p><a href="https://github.com/Esri/esri-leaflet/archive/v1.0.0-rc.8.zip" class="btn">Current Release</a>
+<p><a href="https://github.com/Esri/esri-leaflet/releases/tag/v" class="btn">Current Release</a>
 <a href="https://github.com/Esri/esri-leaflet/releases/" class="btn">Past Releases</a></p>
 <h1 id="npm">npm</h1>
 <p>Esri Leaflet is also <a href="https://www.npmjs.org/package/esri-leaflet">available on npm</a> and can be installed with the following command.</p>
@@ -76,32 +77,31 @@
 <p>Esri Leaflet is also <a href="http://bower.io/search/?q=esri-leaflet">available on Bower</a> and can be installed with the following command.</p>
 <pre><code class="language-bash">bower install esri-leaflet</code></pre>
 <h1 id="cdn">CDN</h1>
-<p>Esri Leaflet is hosted on <a href="http://www.jsdelivr.com/">jsDelivr</a>.</p>
 <h4 id="standard-build">Standard Build</h4>
-<pre><code class="language-xml"><span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"http://cdn.jsdelivr.net/leaflet.esri/1.0.0-rc.8/esri-leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></code></pre>
+<pre><code class="language-xml"><span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"http://cdn.jsdelivr.net/leaflet.esri//esri-leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></code></pre>
 <h4 id="other-builds">Other Builds</h4>
 <p>Esri Leaflet is also built into several smaller components and plugins for specific use cases.  These more specialized builds are available on the CDN as well.</p>
 <pre><code class="language-xml"><span class="comment">&lt;!-- Core Build --&gt;</span>
-<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"http://cdn.jsdelivr.net/leaflet.esri/1.0.0-rc.8/builds/core/esri-leaflet-core.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"//cdn.jsdelivr.net/leaflet.esri//builds/core/esri-leaflet-core.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 <span class="comment">&lt;!-- Basemaps Only Build --&gt;</span>
-<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"http://cdn.jsdelivr.net/leaflet.esri/1.0.0-rc.8/builds/basemaps/esri-leaflet-basemaps.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"//cdn.jsdelivr.net/leaflet.esri//builds/basemaps/esri-leaflet-basemaps.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 <span class="comment">&lt;!-- Feature Layer Only Build --&gt;</span>
-<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"http://cdn.jsdelivr.net/leaflet.esri/1.0.0-rc.8/builds/feature-layer/esri-leaflet-feature-layer.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"//cdn.jsdelivr.net/leaflet.esri//builds/feature-layer/esri-leaflet-feature-layer.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 <span class="comment">&lt;!-- Map Service Only Build --&gt;</span>
-<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"http://cdn.jsdelivr.net/leaflet.esri/1.0.0-rc.8/builds/map-service/esri-leaflet-map-service.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"//cdn.jsdelivr.net/leaflet.esri//builds/map-service/esri-leaflet-map-service.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 <span class="comment">&lt;!-- Heatmap Feature Layer --&gt;</span>
-<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-heatmap-feature-layer/1.0.0-rc.3/esri-leaflet-heatmap-feature-layer.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"//cdn.jsdelivr.net/leaflet.esri.heatmap-feature-layer/1.0.2/esri-leaflet-heatmap-feature-layer.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 <span class="comment">&lt;!-- Clustered Feature Layer --&gt;</span>
-<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-clustered-feature-layer/1.0.0-rc.4/esri-leaflet-clustered-feature-layer.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"//cdn.jsdelivr.net/leaflet.esri.clustered-feature-layer/1.0.2/esri-leaflet-clustered-feature-layer.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 <span class="comment">&lt;!-- Geocoding Control --&gt;</span>
-<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/1.0.0-rc.4/esri-leaflet-geocoder.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
-<span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">type</span>=<span class="value">"text/css"</span> <span class="attribute">href</span>=<span class="value">"http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/1.0.0-rc.4/esri-leaflet-geocoder.css"</span>&gt;</span>
+<span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"//cdn.jsdelivr.net/leaflet.esri.geocoder/1.0.1/esri-leaflet-geocoder.css"</span>&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"//cdn.jsdelivr.net/leaflet.esri.geocoder/1.0.1/esri-leaflet-geocoder.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 <span class="comment">&lt;!-- Renderers Plugin --&gt;</span>
 <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-renderers/v0.0.1-beta.2/esri-leaflet-renderers.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
@@ -125,21 +125,21 @@
 <tbody>
 <tr>
 <td>Size</td>
-<td>52kb</td>
-<td>11.6kb</td>
-<td>24.3kb</td>
-<td>21.6kb</td>
-<td>29.6kb</td>
-<td>11kb</td>
+<td>57.3kb</td>
+<td>11.3kb</td>
+<td>26.9kb</td>
+<td>22.2kb</td>
+<td>32.4kb</td>
+<td>11.5kb</td>
 </tr>
 <tr>
 <td>Gzipped</td>
-<td>12.9kb</td>
-<td>3.8kb</td>
-<td>6.8kb</td>
-<td>6.3kb</td>
-<td>8.7kb</td>
-<td>3.3kb</td>
+<td>14.6kb</td>
+<td>4kb</td>
+<td>8kb</td>
+<td>6.6kb</td>
+<td>9.4kb</td>
+<td>3.5kb</td>
 </tr>
 <tr>
 <td><code>L.esri.Request</code></td>
@@ -178,7 +178,7 @@
 <td></td>
 </tr>
 <tr>
-<td><code>L.esri.Services.FeatureLayer</code></td>
+<td><code>L.esri.Services.FeatureLayerService</code></td>
 <td>&#10003;</td>
 <td></td>
 <td></td>

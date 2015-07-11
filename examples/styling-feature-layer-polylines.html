@@ -35,9 +35,10 @@
 
   <!-- require combined leaflet, esri leaflet and jsdelivr-rum -->
   <script src="//cdn.jsdelivr.net/leaflet/latest/leaflet.js"></script>
-  <script src="//cdn.jsdelivr.net/leaflet.esri/latest/esri-leaflet.js"></script>
+  <script src="//cdn.jsdelivr.net/leaflet.esri//esri-leaflet.js"></script>
   <script src="//cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
 
+  
 
   <!-- Google Analytics -->
   <script>
@@ -179,14 +180,15 @@
 </style>
 
 <div id="map"></div>
-<div id="info-pane" class="leaflet-bar"></div>
+<div id="info-pane" class="leaflet-bar">Hover to inspect</div>
 
 <script type='text/javascript'>
   var map = L.map('map').setView([45.5275, -122.6717], 14);
 
   L.esri.basemapLayer('Streets').addTo(map);
 
-  var bikePaths = L.esri.featureLayer('http://services.arcgis.com/uCXeTVveQzP4IIcx/ArcGIS/rest/services/Bike_Routes/FeatureServer/0', {
+  var bikePaths = L.esri.featureLayer({
+    url: 'http://services.arcgis.com/uCXeTVveQzP4IIcx/ArcGIS/rest/services/Bike_Routes/FeatureServer/0',
     style: function (feature) {
       var c,o = 0.75;
       switch (feature.properties.BIKEMODE) {
@@ -237,6 +239,7 @@
     document.getElementById('info-pane').innerHTML = e.layer.feature.properties.BIKEMODE;
   });
 </script>
+
 </div>
 <pre><code class="language-xml"><span class="tag">&lt;<span class="title">html</span>&gt;</span>
 <span class="tag">&lt;<span class="title">head</span>&gt;</span>
@@ -249,8 +252,7 @@
   <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"//cdn.jsdelivr.net/leaflet/0.7.3/leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
   <span class="comment">&lt;!-- Load Esri Leaflet from CDN --&gt;</span>
-  <span class="comment">&lt;!-- we encourage you to replace 'latest' with a hardcoded version number (like '1.0.0-rc.8') in production applications --&gt;</span>
-  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"//cdn.jsdelivr.net/leaflet.esri/latest/esri-leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"//cdn.jsdelivr.net/leaflet.esri//esri-leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
   <span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css">
     <span class="tag">body</span> <span class="rules">{ <span class="rule"><span class="attribute">margin</span>:<span class="value"><span class="number">0</span></span></span>; <span class="rule"><span class="attribute">padding</span>:<span class="value"><span class="number">0</span></span></span>; <span class="rule">}</span></span>
@@ -271,14 +273,15 @@
 </span><span class="tag">&lt;/<span class="title">style</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
-<span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"info-pane"</span> <span class="attribute">class</span>=<span class="value">"leaflet-bar"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+<span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"info-pane"</span> <span class="attribute">class</span>=<span class="value">"leaflet-bar"</span>&gt;</span>Hover to inspect<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">'text/javascript'</span>&gt;</span><span class="javascript">
   <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">45.5275</span>, -<span class="number">122.6717</span>], <span class="number">14</span>);
 
   L.esri.basemapLayer(<span class="string">'Streets'</span>).addTo(map);
 
-  <span class="keyword">var</span> bikePaths = L.esri.featureLayer(<span class="string">'http://services.arcgis.com/uCXeTVveQzP4IIcx/ArcGIS/rest/services/Bike_Routes/FeatureServer/0'</span>, {
+  <span class="keyword">var</span> bikePaths = L.esri.featureLayer({
+    url: <span class="string">'http://services.arcgis.com/uCXeTVveQzP4IIcx/ArcGIS/rest/services/Bike_Routes/FeatureServer/0'</span>,
     style: <span class="function"><span class="keyword">function</span> <span class="params">(feature)</span> {</span>
       <span class="keyword">var</span> c,o = <span class="number">0.75</span>;
       <span class="keyword">switch</span> (feature.properties.BIKEMODE) {
@@ -337,6 +340,7 @@
   <p><a href="http://github.com/esri/esri-leaflet/edit/master/site/source/pages/examples/styling-feature-layer-polylines.hbs">Edit this sample on GitHub</a></p>
 </div>
 </div>
+
   <div style='clear:both;'></div>
 </div>
 <div class="container centered-text">

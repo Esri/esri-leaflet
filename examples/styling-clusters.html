@@ -35,9 +35,10 @@
 
   <!-- require combined leaflet, esri leaflet and jsdelivr-rum -->
   <script src="//cdn.jsdelivr.net/leaflet/latest/leaflet.js"></script>
-  <script src="//cdn.jsdelivr.net/leaflet.esri/latest/esri-leaflet.js"></script>
+  <script src="//cdn.jsdelivr.net/leaflet.esri//esri-leaflet.js"></script>
   <script src="//cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
 
+  
 
   <!-- Google Analytics -->
   <script>
@@ -173,7 +174,7 @@
 <script src="https://cdn.rawgit.com/Leaflet/Leaflet.markercluster/v0.4.0/dist/leaflet.markercluster.js"></script>
 
 <!-- Load Clustered Feature Layer from CDN -->
-<script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-clustered-feature-layer/1.0.0-rc.1/esri-leaflet-clustered-feature-layer.js"></script>
+<script src="http://cdn.jsdelivr.net/leaflet.esri.clustered-feature-layer/1.0.2/esri-leaflet-clustered-feature-layer.js"></script>
 
 <style>
   .cluster {
@@ -290,7 +291,8 @@
   };
 
   // create a new cluster layer
-  var stops = L.esri.clusteredFeatureLayer('https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0', {
+  var stops = L.esri.clusteredFeatureLayer({
+    url: 'https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0',
     spiderfyOnMaxZoom:false,
     disableClusteringAtZoom: 16,
     polygonOptions: {
@@ -313,7 +315,7 @@
       // the <head> to see these styles. You have to set
       // iconSize to null if you want to use CSS to set the
       // width and height.
-      return new L.DivIcon({
+      return new L.divIcon({
         html: count,
         className:'cluster digits-'+digits,
         iconSize: null
@@ -348,8 +350,7 @@
   <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"//cdn.jsdelivr.net/leaflet/0.7.3/leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
   <span class="comment">&lt;!-- Load Esri Leaflet from CDN --&gt;</span>
-  <span class="comment">&lt;!-- we encourage you to replace 'latest' with a hardcoded version number (like '1.0.0-rc.8') in production applications --&gt;</span>
-  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"//cdn.jsdelivr.net/leaflet.esri/latest/esri-leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"//cdn.jsdelivr.net/leaflet.esri//esri-leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
   <span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css">
     <span class="tag">body</span> <span class="rules">{ <span class="rule"><span class="attribute">margin</span>:<span class="value"><span class="number">0</span></span></span>; <span class="rule"><span class="attribute">padding</span>:<span class="value"><span class="number">0</span></span></span>; <span class="rule">}</span></span>
@@ -364,7 +365,7 @@
 <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://cdn.rawgit.com/Leaflet/Leaflet.markercluster/v0.4.0/dist/leaflet.markercluster.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 <span class="comment">&lt;!-- Load Clustered Feature Layer from CDN --&gt;</span>
-<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-clustered-feature-layer/1.0.0-rc.1/esri-leaflet-clustered-feature-layer.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"http://cdn.jsdelivr.net/leaflet.esri.clustered-feature-layer/1.0.2/esri-leaflet-clustered-feature-layer.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css">
   <span class="class">.cluster</span> <span class="rules">{
@@ -481,7 +482,8 @@
   };
 
   <span class="comment">// create a new cluster layer</span>
-  <span class="keyword">var</span> stops = L.esri.clusteredFeatureLayer(<span class="string">'https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0'</span>, {
+  <span class="keyword">var</span> stops = L.esri.clusteredFeatureLayer({
+    url: <span class="string">'https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0'</span>,
     spiderfyOnMaxZoom:<span class="literal">false</span>,
     disableClusteringAtZoom: <span class="number">16</span>,
     polygonOptions: {
@@ -504,7 +506,7 @@
       <span class="comment">// the &lt;head&gt; to see these styles. You have to set</span>
       <span class="comment">// iconSize to null if you want to use CSS to set the</span>
       <span class="comment">// width and height.</span>
-      <span class="keyword">return</span> <span class="keyword">new</span> L.DivIcon({
+      <span class="keyword">return</span> <span class="keyword">new</span> L.divIcon({
         html: count,
         className:<span class="string">'cluster digits-'</span>+digits,
         iconSize: <span class="literal">null</span>
@@ -534,6 +536,7 @@
   <p><a href="http://github.com/esri/esri-leaflet/edit/master/site/source/pages/examples/styling-clusters.hbs">Edit this sample on GitHub</a></p>
 </div>
 </div>
+
   <div style='clear:both;'></div>
 </div>
 <div class="container centered-text">

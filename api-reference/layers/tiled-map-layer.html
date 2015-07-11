@@ -33,9 +33,10 @@
 
   <!-- require combined leaflet, esri leaflet and jsdelivr-rum -->
   <script src="//cdn.jsdelivr.net/leaflet/latest/leaflet.js"></script>
-  <script src="//cdn.jsdelivr.net/leaflet.esri/latest/esri-leaflet.js"></script>
+  <script src="//cdn.jsdelivr.net/leaflet.esri//esri-leaflet.js"></script>
   <script src="//cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
 
+  
 
   <!-- Google Analytics -->
   <script>
@@ -98,11 +99,12 @@
   <h5>Base Classes</h5>
   <nav>
     <a href="../../../../esri-leaflet/api-reference/services/image-service.html">ImageService</a>
-    <a href="../../../../esri-leaflet/api-reference/services/feature-layer.html">FeatureLayer</a>
+    <a href="../../../../esri-leaflet/api-reference/services/feature-layer.html">FeatureLayerService</a>
     <a href="../../../../esri-leaflet/api-reference/services/map-service.html">MapService</a>
     <a href="../../../../esri-leaflet/api-reference/services/service.html">Service</a>
   </nav>
 </aside>
+
 
 <div class="main-content">
   <h1 id="l-esri-layers-tiledmaplayer">L.esri.Layers.TiledMapLayer</h1>
@@ -120,13 +122,14 @@
     </thead>
     <tbody>
         <tr>
-            <td><code class="nobr">new L.esri.Layers.TiledMapLayer(<nobr class="param"><span>&lt;String&gt;</span> <code>url</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br><code class="nobr">L.esri.Layers.tiledMapLayer(<nobr class="param"><span>&lt;String&gt;</span> <code>url</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br><code class="nobr">new L.esri.TiledMapLayer(<nobr class="param"><span>&lt;String&gt;</span> <code>url</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br><code class="nobr">L.esri.tiledMapLayer(<nobr class="param"><span>&lt;String&gt;</span> <code>url</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code></td>
-            <td><code>url</code> should be the URL to the Map Service hosted the tiles. The <code>options</code> parameter can accept the same options as <a href="http://leafletjs.com/reference.html#tilelayer"><code>L.TileLayer</code></a></td>
+            <td><code class="nobr">L.esri.tiledMapLayer(<nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code></td>
+            <td>The <code>options</code> parameter can accept the same options as <a href="http://leafletjs.com/reference.html#tilelayer"><code>L.ImageOverlay</code></a>. You also must pass a <code>url</code> key in your <code>options</code>.</td>
         </tr>
     </tbody>
 </table>
 
 <h3 id="options">Options</h3>
+<p><code>L.esri.TiledMapLayer</code> also accepts all <a href="http://leafletjs.com/reference.html#tilelayer-options"><code>L.TileLayer</code></a> options.</p>
 <table>
 <thead>
 <tr>
@@ -138,39 +141,18 @@
 </thead>
 <tbody>
 <tr>
-<td><code>correctZoomLevels</code></td>
-<td><code>Boolean</code></td>
-<td><code>true</code></td>
-<td>If your tiles were generated in web mercator but at non-standard zoom levels this will remap then to the standard zoom levels. </td>
-</tr>
-<tr>
-<td><code>zoomOffsetAllowance</code></td>
-<td><code>Number</code></td>
-<td><code>0.1</code></td>
-<td>If <code>correctZoomLevels</code> is enabled this controls the amount of tolerence if the difference at each scale level for remapping tile levels.</td>
-</tr>
-<tr>
-<td><code>proxy</code></td>
-<td><code>String</code></td>
-<td><code>false</code></td>
-<td>URL of an <a href="https://developers.arcgis.com/javascript/jshelp/ags_proxy.html">ArcGIS API for JavaScript proxy</a> or <a href="https://github.com/Esri/resource-proxy">ArcGIS Resource Proxy</a> to use for proxying POST requests.</td>
-</tr>
-<tr>
-<td><code>useCors</code></td>
-<td><code>Boolean</code></td>
-<td><code>true</code></td>
-<td>Dictates if the service should use CORS when making GET requests.</td>
-</tr>
-<tr>
-<td><code>token</code></td>
-<td><code>String</code></td>
-<td><code>null</code></td>
-<td>Will use this token to authenticate all calls to the service.</td>
+<td></td>
 </tr>
 </tbody>
 </table>
-<p><code>L.esri.TiledMapLayer</code> also accepts all <a href="http://leafletjs.com/reference.html#tilelayer-options"><code>L.TileLayer</code></a> options.</p>
+<p><code>url</code> | <code>String</code> | | <em>Required</em> URL of the <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Map_Service/02r3000000w2000000">Map Service</a> with a tile cache.
+| <code>correctZoomLevels</code> | <code>Boolean</code> | <code>true</code> | If your tiles were generated in web mercator but at non-standard zoom levels this will remap then to the standard zoom levels.
+| <code>zoomOffsetAllowance</code> | <code>Number</code> | <code>0.1</code> | If <code>correctZoomLevels</code> is enabled this controls the amount of tolerance if the difference at each scale level for remapping tile levels.
+| <code>proxy</code> | <code>String</code> | <code>false</code> | URL of an <a href="https://developers.arcgis.com/javascript/jshelp/ags_proxy.html">ArcGIS API for JavaScript proxy</a> or <a href="https://github.com/Esri/resource-proxy">ArcGIS Resource Proxy</a> to use for proxying POST requests. |
+| <code>useCors</code> | <code>Boolean</code> | <code>true</code> | Dictates if the service should use CORS when making GET requests. |
+| <code>token</code> | <code>String</code> | <code>null</code> | Will use this token to authenticate all calls to the service.</p>
 <h3 id="methods">Methods</h3>
+<p><code>L.esri.BasemapLayer</code> inherits all methods from <a href="http://leafletjs.com/reference.html#tilelayer"><code>L.TileLayer</code></a>.</p>
 <table>
     <thead>
         <tr>
@@ -210,7 +192,6 @@
     </tbody>
 </table>
 
-<p><code>L.esri.BasemapLayer</code> inherits all methods from <a href="http://leafletjs.com/reference.html#tilelayer"><code>L.TileLayer</code></a>.</p>
 <h3 id="events">Events</h3>
 <p><code>L.esri.TiledMapLayer</code> fires all  <a href="http://leafletjs.com/reference.html#tilelayer"><code>L.TileLayer</code></a> events.</p>
 <h3 id="example">Example</h3>
