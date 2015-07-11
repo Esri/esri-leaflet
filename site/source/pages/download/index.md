@@ -33,7 +33,6 @@ bower install esri-leaflet
 
 ```xml
 <script src="http://cdn.jsdelivr.net/leaflet.esri/{{package.version}}/esri-leaflet.js"></script>
-
 ```
 
 #### Other Builds
@@ -77,13 +76,13 @@ A summary of what features exist in which builds.
 
 | Feature                                | Standard | Core     | MapService | ImageService | FeatureLayer | Basemaps |
 | -------------------------------------- | -------- | -------- | ---------- | ------------ | ------------ | -------- |
-| Size                                   | 52kb     | 11.6kb   | 24.3kb     | 21.6kb       | 29.6kb       | 11kb   |
-| Gzipped                                | 12.9kb   | 3.8kb    | 6.8kb      | 6.3kb        | 8.7kb        | 3.3kb    |
+| Size                                   | 57.3kb     | 11.3kb   | 26.9kb     | 22.2kb       | 32.4kb       | 11.5kb   |
+| Gzipped                                | 14.6kb   | 4kb    | 8kb      | 6.6kb        | 9.4kb        | 3.5kb    |
 | `L.esri.Request`                       | &#10003; | &#10003; | &#10003;   | &#10003;     | &#10003;     | &#10003; |
 | `L.esri.Util`                          | &#10003; | &#10003; | &#10003;   | &#10003;     | &#10003;     |          |
 | `L.esri.Services.Service`              | &#10003; | &#10003; | &#10003;   | &#10003;     | &#10003;     |          |
 | `L.esri.Services.MapService`           | &#10003; |          | &#10003;   |              |              |          |
-| `L.esri.Services.FeatureLayer`         | &#10003; |          |            |              | &#10003;     |          |
+| `L.esri.Services.FeatureLayerService`         | &#10003; |          |            |              | &#10003;     |          |
 | `L.esri.Tasks.Task `                   | &#10003; | &#10003; | &#10003;   | &#10003;     | &#10003;     |          |
 | `L.esri.Tasks.Query`                   | &#10003; |          | &#10003;   | &#10003;     | &#10003;     |          |
 | `L.esri.Tasks.Find`                    | &#10003; |          | &#10003;   |              |              |          |
