@@ -327,6 +327,7 @@ module.exports = function(grunt) {
       },
       build: {
         options: {
+          data: ['package.json'],
           assets: 'esri-leaflet/'
         },
         files: [{
