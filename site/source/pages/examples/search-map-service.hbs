@@ -4,8 +4,8 @@ description: Searches map services for matching text in addition to geocoding. T
 layout: example.hbs
 ---
 
-<script src="//cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/1.0.0-rc.4/esri-leaflet-geocoder.js"></script>
-<link rel="stylesheet" type="text/css" href="//cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/1.0.0-rc.4/esri-leaflet-geocoder.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/leaflet.esri.geocoder/1.0.1/esri-leaflet-geocoder.css">
+<script src="//cdn.jsdelivr.net/leaflet.esri.geocoder/1.0.1/esri-leaflet-geocoder.js"></script>
 
 <div id="map"></div>
 
@@ -18,7 +18,7 @@ layout: example.hbs
 
   var searchControl = L.esri.Geocoding.Controls.geosearch({
     providers: [
-      L.esri.Geocoding.Controls.Geosearch.Providers.mapService({
+      new L.esri.Geocoding.Controls.Geosearch.Providers.MapService({
         label: 'States and Counties',
         url: 'http://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer',
         layers: [2, 3],
