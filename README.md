@@ -6,8 +6,6 @@ Leaflet plugins for [ArcGIS Services](http://developers.arcgis.com). Currently E
 
 The goal of Esri Leaflet is **not** to replace the [ArcGIS API for JavaScript](https://developers.arcgis.com/en/javascript/), but rather to provide small components to allow developers to build mapping applications with Leaflet.
 
-**Currently Esri Leaflet is in development and should be thought of as a beta or preview.**
-
 ### Demos
 We've written [loads of demos](http://esri.github.io/esri-leaflet/examples/) showing many of the features of Esri Leaflet.
 
@@ -41,7 +39,7 @@ Here is a quick example to get you started. Just copy/paste into your own `.html
 
       L.esri.basemapLayer("Gray").addTo(map);
 
-      var parks = new L.esri.FeatureLayer("http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Portland_Parks/FeatureServer/0", {
+      var parks = L.esri.featureLayer("http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Portland_Parks/FeatureServer/0", {
        style: function () {
           return { color: "#70ca49", weight: 2 };
         }
@@ -79,7 +77,6 @@ You can also post issues on [GIS Stackexchange](http://gis.stackexchange.com/que
 * [Will Esri Leaflet replace the ArcGIS API for JavaScript?](https://github.com//Esri/esri-leaflet/wiki/FAQ#will-esri-leaflet-replace-the-arcgis-api-for-javascript)
 * [What is the benefit of using Esri Leaflet over using Leaflet all by itself?](https://github.com//Esri/esri-leaflet/wiki/FAQ#why-use-esri-leaflet)
 * [What are the goals of Esri Leaflet?](https://github.com//Esri/esri-leaflet/wiki/FAQ#what-are-the-goals-of-esri-leaflet)
-* [When will Esri Leaflet leave beta?](https://github.com//Esri/esri-leaflet/wiki/FAQ#when-will-esri-leaflet-leave-beta)
 * [How do you decide what features get included in Esri Leaflet?](https://github.com//Esri/esri-leaflet/wiki/FAQ#how-do-you-decide-what-features-get-included-in-esri-leaflet)
 * [I have an idea! What should I do?](https://github.com//Esri/esri-leaflet/wiki/FAQ#i-have-an-idea-what-should-i-do)
 * [When will you support "x"?](https://github.com//Esri/esri-leaflet/wiki/FAQ#when-will-you-support-x)
@@ -114,7 +111,7 @@ In order to compile the API yourself and/or run the tests, make sure you have th
 
 ### Dependencies
 
-* [Leaflet](http://leafletjs.com) version 0.7 or higher is required but the latest version is recommended.
+* [Leaflet](http://leafletjs.com) version 0.7.3 is required.
 
 ### Versioning
 
