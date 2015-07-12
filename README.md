@@ -22,7 +22,7 @@ Here is a quick example to get you started. Just copy/paste into your own `.html
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
     <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
 
-    <!-- we encourage you to replace 'latest' with a hardcode version number (like '1.0.0-rc.7') in production applications -->
+    <!-- we encourage you to replace 'latest' with a hardcode version number (like '1.0.0') in production applications -->
     <script src="//cdn.jsdelivr.net/leaflet.esri/latest/esri-leaflet.js"></script>
 
     <style>
@@ -39,7 +39,8 @@ Here is a quick example to get you started. Just copy/paste into your own `.html
 
       L.esri.basemapLayer("Gray").addTo(map);
 
-      var parks = L.esri.featureLayer("http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Portland_Parks/FeatureServer/0", {
+      var parks = L.esri.featureLayer({
+      url: "http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Portland_Parks/FeatureServer/0",
        style: function () {
           return { color: "#70ca49", weight: 2 };
         }
