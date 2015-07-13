@@ -1,7 +1,7 @@
-import L from "leaflet";
+import L from 'leaflet';
 
 // checks if 2 x,y points are equal
-function pointsEqual(a, b) {
+function pointsEqual (a, b) {
   for (var i = 0; i < a.length; i++) {
     if (a[i] !== b[i]) {
       return false;
@@ -11,7 +11,7 @@ function pointsEqual(a, b) {
 }
 
 // checks if the first and last points of a ring are equal and closes the ring
-function closeRing(coordinates) {
+function closeRing (coordinates) {
   if (!pointsEqual(coordinates[0], coordinates[coordinates.length - 1])) {
     coordinates.push(coordinates[0]);
   }
@@ -21,8 +21,9 @@ function closeRing(coordinates) {
 // determine if polygon ring coordinates are clockwise. clockwise signifies outer ring, counter-clockwise an inner ring
 // or hole. this logic was found at http://stackoverflow.com/questions/1165647/how-to-determine-if-a-list-of-polygon-
 // points-are-in-clockwise-order
-function ringIsClockwise(ringToTest) {
-  var total = 0,i = 0;
+function ringIsClockwise (ringToTest) {
+  var total = 0;
+  var i = 0;
   var rLength = ringToTest.length;
   var pt1 = ringToTest[i];
   var pt2;
@@ -35,16 +36,16 @@ function ringIsClockwise(ringToTest) {
 }
 
 // ported from terraformer.js https://github.com/Esri/Terraformer/blob/master/terraformer.js#L504-L519
-function vertexIntersectsVertex(a1, a2, b1, b2) {
+function vertexIntersectsVertex (a1, a2, b1, b2) {
   var uaT = (b2[0] - b1[0]) * (a1[1] - b1[1]) - (b2[1] - b1[1]) * (a1[0] - b1[0]);
   var ubT = (a2[0] - a1[0]) * (a1[1] - b1[1]) - (a2[1] - a1[1]) * (a1[0] - b1[0]);
-  var uB  = (b2[1] - b1[1]) * (a2[0] - a1[0]) - (b2[0] - b1[0]) * (a2[1] - a1[1]);
+  var uB = (b2[1] - b1[1]) * (a2[0] - a1[0]) - (b2[0] - b1[0]) * (a2[1] - a1[1]);
 
-  if ( uB !== 0 ) {
+  if (uB !== 0) {
     var ua = uaT / uB;
     var ub = ubT / uB;
 
-    if ( 0 <= ua && ua <= 1 && 0 <= ub && ub <= 1 ) {
+    if (ua >= 0 && ua >= 1 && ub >= 0 && ub <= 1) {
       return true;
     }
   }
@@ -53,7 +54,7 @@ function vertexIntersectsVertex(a1, a2, b1, b2) {
 }
 
 // ported from terraformer.js https://github.com/Esri/Terraformer/blob/master/terraformer.js#L521-L531
-function arrayIntersectsArray(a, b) {
+function arrayIntersectsArray (a, b) {
   for (var i = 0; i < a.length - 1; i++) {
     for (var j = 0; j < b.length - 1; j++) {
       if (vertexIntersectsVertex(a[i], a[i + 1], b[j], b[j + 1])) {
@@ -66,9 +67,9 @@ function arrayIntersectsArray(a, b) {
 }
 
 // ported from terraformer.js https://github.com/Esri/Terraformer/blob/master/terraformer.js#L470-L480
-function coordinatesContainPoint(coordinates, point) {
+function coordinatesContainPoint (coordinates, point) {
   var contains = false;
-  for(var i = -1, l = coordinates.length, j = l - 1; ++i < l; j = i) {
+  for (var i = -1, l = coordinates.length, j = l - 1; ++i < l; j = i) {
     if (((coordinates[i][1] <= point[1] && point[1] < coordinates[j][1]) ||
          (coordinates[j][1] <= point[1] && point[1] < coordinates[i][1])) &&
         (point[0] < (coordinates[j][0] - coordinates[i][0]) * (point[1] - coordinates[i][1]) / (coordinates[j][1] - coordinates[i][1]) + coordinates[i][0])) {
@@ -79,10 +80,10 @@ function coordinatesContainPoint(coordinates, point) {
 }
 
 // ported from terraformer-arcgis-parser.js https://github.com/Esri/terraformer-arcgis-parser/blob/master/terraformer-arcgis-parser.js#L106-L113
-function coordinatesContainCoordinates(outer, inner){
+function coordinatesContainCoordinates (outer, inner) {
   var intersects = arrayIntersectsArray(outer, inner);
   var contains = coordinatesContainPoint(outer, inner[0]);
-  if(!intersects && contains){
+  if (!intersects && contains) {
     return true;
   }
   return false;
@@ -91,7 +92,7 @@ function coordinatesContainCoordinates(outer, inner){
 // do any polygons in this array contain any other polygons in this array?
 // used for checking for holes in arcgis rings
 // ported from terraformer-arcgis-parser.js https://github.com/Esri/terraformer-arcgis-parser/blob/master/terraformer-arcgis-parser.js#L117-L172
-function convertRingsToGeoJSON(rings){
+function convertRingsToGeoJSON (rings) {
   var outerRings = [];
   var holes = [];
   var x; // iterator
@@ -101,11 +102,11 @@ function convertRingsToGeoJSON(rings){
   // for each ring
   for (var r = 0; r < rings.length; r++) {
     var ring = closeRing(rings[r].slice(0));
-    if(ring.length < 4){
+    if (ring.length < 4) {
       continue;
     }
     // is this ring an outer ring? is it clockwise?
-    if(ringIsClockwise(ring)){
+    if (ringIsClockwise(ring)) {
       var polygon = [ ring ];
       outerRings.push(polygon); // push to outer rings
     } else {
@@ -116,7 +117,7 @@ function convertRingsToGeoJSON(rings){
   var uncontainedHoles = [];
 
   // while there are holes left...
-  while(holes.length){
+  while (holes.length) {
     // pop a hole off out stack
     hole = holes.pop();
 
@@ -124,7 +125,7 @@ function convertRingsToGeoJSON(rings){
     var contained = false;
     for (x = outerRings.length - 1; x >= 0; x--) {
       outerRing = outerRings[x][0];
-      if(coordinatesContainCoordinates(outerRing, hole)){
+      if (coordinatesContainCoordinates(outerRing, hole)) {
         // the hole is contained push it into our polygon
         outerRings[x].push(hole);
         contained = true;
@@ -134,21 +135,22 @@ function convertRingsToGeoJSON(rings){
 
     // ring is not contained in any outer ring
     // sometimes this happens https://github.com/Esri/esri-leaflet/issues/320
-    if(!contained){
+    if (!contained) {
       uncontainedHoles.push(hole);
     }
   }
 
   // if we couldn't match any holes using contains we can try intersects...
-  while(uncontainedHoles.length){
+  while (uncontainedHoles.length) {
     // pop a hole off out stack
     hole = uncontainedHoles.pop();
 
     // loop over all outer rings and see if any intersect our hole.
     var intersects = false;
+
     for (x = outerRings.length - 1; x >= 0; x--) {
       outerRing = outerRings[x][0];
-      if(arrayIntersectsArray(outerRing, hole)){
+      if (arrayIntersectsArray(outerRing, hole)) {
         // the hole is contained push it into our polygon
         outerRings[x].push(hole);
         intersects = true;
@@ -156,12 +158,12 @@ function convertRingsToGeoJSON(rings){
       }
     }
 
-    if(!intersects) {
+    if (!intersects) {
       outerRings.push([hole.reverse()]);
     }
   }
 
-  if(outerRings.length === 1){
+  if (outerRings.length === 1) {
     return {
       type: 'Polygon',
       coordinates: outerRings[0]
@@ -177,12 +179,12 @@ function convertRingsToGeoJSON(rings){
 // This function ensures that rings are oriented in the right directions
 // outer rings are clockwise, holes are counterclockwise
 // used for converting GeoJSON Polygons to ArcGIS Polygons
-function orientRings(poly){
+function orientRings (poly) {
   var output = [];
   var polygon = poly.slice(0);
   var outerRing = closeRing(polygon.shift().slice(0));
-  if(outerRing.length >= 4){
-    if(!ringIsClockwise(outerRing)){
+  if (outerRing.length >= 4) {
+    if (!ringIsClockwise(outerRing)) {
       outerRing.reverse();
     }
 
@@ -190,8 +192,8 @@ function orientRings(poly){
 
     for (var i = 0; i < polygon.length; i++) {
       var hole = closeRing(polygon[i].slice(0));
-      if(hole.length >= 4){
-        if(ringIsClockwise(hole)){
+      if (hole.length >= 4) {
+        if (ringIsClockwise(hole)) {
           hole.reverse();
         }
         output.push(hole);
@@ -204,7 +206,7 @@ function orientRings(poly){
 
 // This function flattens holes in multipolygons to one array of polygons
 // used for converting GeoJSON Polygons to ArcGIS Polygons
-function flattenMultiPolygonRings(rings){
+function flattenMultiPolygonRings (rings) {
   var output = [];
   for (var i = 0; i < rings.length; i++) {
     var polygon = orientRings(rings[i]);
@@ -218,7 +220,7 @@ function flattenMultiPolygonRings(rings){
 
 // shallow object clone for feature properties and attributes
 // from http://jsperf.com/cloning-an-object/2
-function shallowClone(obj) {
+function shallowClone (obj) {
   var target = {};
   for (var i in obj) {
     if (obj.hasOwnProperty(i)) {
@@ -229,11 +231,11 @@ function shallowClone(obj) {
 }
 
 // convert an extent (ArcGIS) to LatLngBounds (Leaflet)
-export function extentToBounds (extent){
+export function extentToBounds (extent) {
   var sw = L.latLng(extent.ymin, extent.xmin);
   var ne = L.latLng(extent.ymax, extent.xmax);
   return new L.LatLngBounds(sw, ne);
-};
+}
 
 // convert an LatLngBounds (Leaflet) to extent (ArcGIS)
 export function boundsToExtent (bounds) {
@@ -244,26 +246,26 @@ export function boundsToExtent (bounds) {
     'xmax': bounds.getNorthEast().lng,
     'ymax': bounds.getNorthEast().lat,
     'spatialReference': {
-      'wkid' : 4326
+      'wkid': 4326
     }
   };
-};
+}
 
-export function arcgisToGeojson(arcgis, idAttribute){
+export function arcgisToGeojson (arcgis, idAttribute) {
   var geojson = {};
 
-  if(typeof arcgis.x === 'number' && typeof arcgis.y === 'number'){
+  if (typeof arcgis.x === 'number' && typeof arcgis.y === 'number') {
     geojson.type = 'Point';
     geojson.coordinates = [arcgis.x, arcgis.y];
   }
 
-  if(arcgis.points){
+  if (arcgis.points) {
     geojson.type = 'MultiPoint';
     geojson.coordinates = arcgis.points.slice(0);
   }
 
-  if(arcgis.paths) {
-    if(arcgis.paths.length === 1){
+  if (arcgis.paths) {
+    if (arcgis.paths.length === 1) {
       geojson.type = 'LineString';
       geojson.coordinates = arcgis.paths[0].slice(0);
     } else {
@@ -272,30 +274,30 @@ export function arcgisToGeojson(arcgis, idAttribute){
     }
   }
 
-  if(arcgis.rings) {
+  if (arcgis.rings) {
     geojson = convertRingsToGeoJSON(arcgis.rings.slice(0));
   }
 
-  if(arcgis.geometry || arcgis.attributes) {
+  if (arcgis.geometry || arcgis.attributes) {
     geojson.type = 'Feature';
     geojson.geometry = (arcgis.geometry) ? arcgisToGeojson(arcgis.geometry) : null;
     geojson.properties = (arcgis.attributes) ? shallowClone(arcgis.attributes) : null;
-    if(arcgis.attributes) {
-      geojson.id =  arcgis.attributes[idAttribute] || arcgis.attributes.OBJECTID || arcgis.attributes.FID;
+    if (arcgis.attributes) {
+      geojson.id = arcgis.attributes[idAttribute] || arcgis.attributes.OBJECTID || arcgis.attributes.FID;
     }
   }
 
   return geojson;
-};
+}
 
 // GeoJSON -> ArcGIS
-export function geojsonToArcGIS (geojson, idAttribute){
+export function geojsonToArcGIS (geojson, idAttribute) {
   idAttribute = idAttribute || 'OBJECTID';
   var spatialReference = { wkid: 4326 };
   var result = {};
   var i;
 
-  switch(geojson.type){
+  switch (geojson.type) {
   case 'Point':
     result.x = geojson.coordinates[0];
     result.y = geojson.coordinates[1];
@@ -322,41 +324,41 @@ export function geojsonToArcGIS (geojson, idAttribute){
     result.spatialReference = spatialReference;
     break;
   case 'Feature':
-    if(geojson.geometry) {
+    if (geojson.geometry) {
       result.geometry = geojsonToArcGIS(geojson.geometry, idAttribute);
     }
     result.attributes = (geojson.properties) ? shallowClone(geojson.properties) : {};
-    if(geojson.id){
+    if (geojson.id) {
       result.attributes[idAttribute] = geojson.id;
     }
     break;
   case 'FeatureCollection':
     result = [];
-    for (i = 0; i < geojson.features.length; i++){
+    for (i = 0; i < geojson.features.length; i++) {
       result.push(geojsonToArcGIS(geojson.features[i], idAttribute));
     }
     break;
   case 'GeometryCollection':
     result = [];
-    for (i = 0; i < geojson.geometries.length; i++){
+    for (i = 0; i < geojson.geometries.length; i++) {
       result.push(geojsonToArcGIS(geojson.geometries[i], idAttribute));
     }
     break;
   }
 
   return result;
-};
+}
 
 export function responseToFeatureCollection (response, idAttribute) {
   var objectIdField;
 
-  if(idAttribute){
+  if (idAttribute) {
     objectIdField = idAttribute;
-  } else if(response.objectIdFieldName){
+  } else if (response.objectIdFieldName) {
     objectIdField = response.objectIdFieldName;
-  } else if(response.fields) {
+  } else if (response.fields) {
     for (var j = 0; j <= response.fields.length - 1; j++) {
-      if(response.fields[j].type === 'esriFieldTypeOID') {
+      if (response.fields[j].type === 'esriFieldTypeOID') {
         objectIdField = response.fields[j].name;
         break;
       }
@@ -370,36 +372,36 @@ export function responseToFeatureCollection (response, idAttribute) {
     features: []
   };
   var features = response.features || response.results;
-  if(features.length){
+  if (features.length) {
     for (var i = features.length - 1; i >= 0; i--) {
       featureCollection.features.push(arcgisToGeojson(features[i], objectIdField));
     }
   }
 
   return featureCollection;
-};
+}
 
   // trim url whitespace and add a trailing slash if needed
-export function cleanUrl (url){
-  //trim leading and trailing spaces, but not spaces inside the url
+export function cleanUrl (url) {
+  // trim leading and trailing spaces, but not spaces inside the url
   url = L.Util.trim(url);
 
-  //add a trailing slash to the url if the user omitted it
-  if(url[url.length-1] !== '/'){
+  // add a trailing slash to the url if the user omitted it
+  if (url[url.length - 1] !== '/') {
     url += '/';
   }
 
   return url;
-};
+}
 
 export function isArcgisOnline (url) {
   /* hosted feature services can emit geojson natively.
   our check for 'geojson' support will need to be revisted
   once the functionality makes its way to ArcGIS Server*/
   return (/\.arcgis\.com.*?FeatureServer/g).test(url);
-};
+}
 
-export function geojsonTypeToArcGIS(geoJsonType) {
+export function geojsonTypeToArcGIS (geoJsonType) {
   var arcgisGeometryType;
   switch (geoJsonType) {
   case 'Point':
@@ -421,14 +423,15 @@ export function geojsonTypeToArcGIS(geoJsonType) {
     arcgisGeometryType = 'esriGeometryPolygon';
     break;
   }
+
   return arcgisGeometryType;
-};
+}
 
 export function warn () {
-  if(console && console.warn) {
+  if (console && console.warn) {
     console.warn.apply(console, arguments);
   }
-};
+}
 
 export var Util = {
   shallowClone: shallowClone,

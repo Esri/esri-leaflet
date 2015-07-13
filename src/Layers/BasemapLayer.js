@@ -1,6 +1,7 @@
-import logo from "../Controls/Logo";
-import { jsonp } from "../Request";
-import { pointerEvents } from "../Support";
+import L from 'leaflet';
+import logo from '../Controls/Logo';
+import { jsonp } from '../Request';
+import { pointerEvents } from '../Support';
 
 var tileProtocol = (window.location.protocol !== 'https:') ? 'http:' : 'https:';
 
@@ -186,13 +187,13 @@ export var BasemapLayer = L.TileLayer.extend({
       }
     }
   },
-  initialize: function(key, options){
+  initialize: function (key, options) {
     var config;
 
     // set the config variable with the appropriate config object
-    if (typeof key === 'object' && key.urlTemplate && key.options){
+    if (typeof key === 'object' && key.urlTemplate && key.options) {
       config = key;
-    } else if(typeof key === 'string' && BasemapLayer.TILES[key]){
+    } else if (typeof key === 'string' && BasemapLayer.TILES[key]) {
       config = BasemapLayer.TILES[key];
     } else {
       throw new Error('L.esri.BasemapLayer: Invalid parameter. Use one of "Streets", "Topographic", "Oceans", "OceansLabels", "NationalGeographic", "Gray", "GrayLabels", "DarkGray", "DarkGrayLabels", "Imagery", "ImageryLabels", "ImageryTransportation", "ShadedRelief", "ShadedReliefLabels", "Terrain" or "TerrainLabels"');
@@ -205,21 +206,21 @@ export var BasemapLayer = L.TileLayer.extend({
     L.TileLayer.prototype.initialize.call(this, config.urlTemplate, L.Util.setOptions(this, tileOptions));
 
     // if this basemap requires dynamic attribution set it up
-    if(config.attributionUrl){
+    if (config.attributionUrl) {
       this._getAttributionData(config.attributionUrl);
     }
 
-    this._logo = new logo({
+    this._logo = logo({
       position: this.options.logoPosition
     });
   },
-  onAdd: function(map){
-    if(!this.options.hideLogo && !map._hasEsriLogo){
+  onAdd: function (map) {
+    if (!this.options.hideLogo && !map._hasEsriLogo) {
       this._logo.addTo(map);
       map._hasEsriLogo = true;
     }
 
-    if(this.options.pane === 'esri-labels'){
+    if (this.options.pane === 'esri-labels') {
       this._initPane();
     }
 
@@ -227,9 +228,9 @@ export var BasemapLayer = L.TileLayer.extend({
 
     map.on('moveend', this._updateMapAttribution, this);
   },
-  onRemove: function(map){
+  onRemove: function (map) {
     // check to make sure the logo hasn't already been removed
-    if(this._logo && this._logo._container){
+    if (this._logo && this._logo._container) {
       map.removeControl(this._logo);
       map._hasEsriLogo = false;
     }
@@ -238,19 +239,20 @@ export var BasemapLayer = L.TileLayer.extend({
 
     map.off('moveend', this._updateMapAttribution, this);
   },
-  getAttribution:function(){
-    var attribution = '<span class="esri-attributions" style="line-height:14px; vertical-align: -3px; text-overflow:ellipsis; white-space:nowrap; overflow:hidden; display:inline-block;">' + this.options.attribution + '</span>'/* + logo*/;
+  getAttribution: function () {
+    var attribution = '<span class="esri-attributions" style="line-height:14px; vertical-align: -3px; text-overflow:ellipsis; white-space:nowrap; overflow:hidden; display:inline-block;">' + this.options.attribution + '</span>';
     return attribution;
   },
-  _initPane: function(){
-    if(!this._map.getPane(this.options.pane)){
+  _initPane: function () {
+    if (!this._map.getPane(this.options.pane)) {
       var pane = this._map.createPane(this.options.pane);
       pane.style.pointerEvents = 'none';
       pane.style.zIndex = 500;
     }
   },
-  _getAttributionData: function(url){
-    jsonp(url, {}, L.Util.bind(function(error, attributions){
+  _getAttributionData: function (url) {
+    jsonp(url, {}, L.Util.bind(function (error, attributions) {
+      if (error) { return; }
       this._attributions = [];
 
       for (var c = 0; c < attributions.contributors.length; c++) {
@@ -269,15 +271,15 @@ export var BasemapLayer = L.TileLayer.extend({
         }
       }
 
-      this._attributions.sort(function(a, b){
+      this._attributions.sort(function (a, b) {
         return b.score - a.score;
       });
 
       this._updateMapAttribution();
     }, this));
   },
-  _updateMapAttribution: function(){
-    if(this._map && this._map.attributionControl && this._attributions){
+  _updateMapAttribution: function () {
+    if (this._map && this._map.attributionControl && this._attributions) {
       var newAttributions = '';
       var bounds = this._map.getBounds();
       var zoom = this._map.getZoom();
@@ -285,7 +287,7 @@ export var BasemapLayer = L.TileLayer.extend({
       for (var i = 0; i < this._attributions.length; i++) {
         var attribution = this._attributions[i];
         var text = attribution.attribution;
-        if(!newAttributions.match(text) && bounds.intersects(attribution.bounds) && zoom >= attribution.minZoom && zoom <= attribution.maxZoom) {
+        if (!newAttributions.match(text) && bounds.intersects(attribution.bounds) && zoom >= attribution.minZoom && zoom <= attribution.maxZoom) {
           newAttributions += (', ' + text);
         }
       }
@@ -293,7 +295,7 @@ export var BasemapLayer = L.TileLayer.extend({
       var attributionElement = this._map.attributionControl._container.querySelector('.esri-attributions');
 
       attributionElement.innerHTML = newAttributions;
-      attributionElement.style.maxWidth =  (this._map.getSize().x * 0.65) + 'px';
+      attributionElement.style.maxWidth = (this._map.getSize().x * 0.65) + 'px';
 
       this.fire('attributionupdated', {
         attribution: newAttributions
@@ -302,8 +304,8 @@ export var BasemapLayer = L.TileLayer.extend({
   }
 });
 
-export function basemapLayer (key, options){
+export function basemapLayer (key, options) {
   return new BasemapLayer(key, options);
-};
+}
 
 export default basemapLayer;

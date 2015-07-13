@@ -1,7 +1,7 @@
 // import base
 import { Support } from './Support';
 import { Util } from './Util';
-import { Request, get, post, request } from './Request';
+import { get, post, request } from './Request';
 
 // import tasks
 import { Task, task } from './Tasks/Task';
@@ -28,7 +28,6 @@ import { FeatureManager } from './Layers/FeatureLayer/FeatureManager';
 import { FeatureLayer, featureLayer } from './Layers/FeatureLayer/FeatureLayer';
 
 var EsriLeaflet = {
-  VERSION: '1.0.0',
   Support: Support,
   Util: Util,
   get: get,
@@ -88,7 +87,7 @@ var EsriLeaflet = {
   featureLayer: featureLayer
 };
 
-if(window && window.L) {
+if (window && window.L) {
   window.L.esri = EsriLeaflet;
 }
 

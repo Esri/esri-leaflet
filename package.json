@@ -20,6 +20,9 @@
   },
   "devDependencies": {
     "assemble": "^0.4.37",
+    "esperanto": "^0.7.3",
+    "exorcist": "^0.4.0",
+    "gh-release": "^2.0.0",
     "grunt": "^0.4.2",
     "grunt-concurrent": "^0.5.0",
     "grunt-contrib-concat": "^0.5.0",
@@ -49,7 +52,9 @@
     "karma-sauce-launcher": "^0.2.10",
     "karma-sourcemap-loader": "^0.3.5",
     "load-grunt-tasks": "^0.4.0",
-    "sinon": "^1.11.1"
+    "semistandard": "^6.1.2",
+    "sinon": "^1.11.1",
+    "uglify-js": "^2.4.23"
   },
   "homepage": "http://esri.github.io/esri-leaflet",
   "jsnext:main": "./index.js",
@@ -78,9 +83,15 @@
     "url": "git@github.com:Esri/esri-leaflet.git"
   },
   "scripts": {
-    "postinstall": "node scripts/install.js",
-    "prepublish": "grunt prepublish",
+    "archive": "zip -r ./dist/esri-leaflet-v$(node --eval \"console.log(require('./package.json').version);\") ./dist/esri-leaflet.js ./dist/esri-leaflet.js.map",
+    "prerelease": "npm run build",
+    "release": "gh-release --dry-run --assets ./dist/esri-leaflet-v$(node --eval \"console.log(require('./package.json').version);\")",
+    "build": "./scripts/build.js",
+    "postbuild": "npm run archive",
+    "prepublish": "npm run build",
     "start": "grunt dev",
-    "test": "grunt test"
+    "lint": "semistandard src/**/*.js", 
+    "pretest": "npm run lint && esperanto -i src/EsriLeaflet.js -o ./dist/esri-leaflet-src.js --skip=leaflet --t umd --strict --name L.esri --bundle -m inline",
+    "test": "karma start"
   }
 }

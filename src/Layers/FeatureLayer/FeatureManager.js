@@ -1,7 +1,7 @@
-import L from "leaflet";
-import { FeatureGrid } from "./FeatureGrid";
-import featureLayerService from "../../Services/FeatureLayerService"
-import { cleanUrl, warn } from "../../Util";
+import L from 'leaflet';
+import { FeatureGrid } from './FeatureGrid';
+import featureLayerService from '../../Services/FeatureLayerService';
+import { cleanUrl, warn } from '../../Util';
 
 export var FeatureManager = FeatureGrid.extend({
   /**
@@ -33,12 +33,11 @@ export var FeatureManager = FeatureGrid.extend({
     this.service = featureLayerService(options);
     this.service.addEventParent(this);
 
-    //use case insensitive regex to look for common fieldnames used for indexing
-    /*global console */
-    if (this.options.fields[0] !== '*'){
+    // use case insensitive regex to look for common fieldnames used for indexing
+    if (this.options.fields[0] !== '*') {
       var oidCheck = false;
-      for (var i = 0; i < this.options.fields.length; i++){
-        if (this.options.fields[i].match(/^(OBJECTID|FID|OID|ID)$/i)){
+      for (var i = 0; i < this.options.fields.length; i++) {
+        if (this.options.fields[i].match(/^(OBJECTID|FID|OID|ID)$/i)) {
           oidCheck = true;
         }
       }
@@ -47,10 +46,10 @@ export var FeatureManager = FeatureGrid.extend({
       }
     }
 
-    if(this.options.timeField.start && this.options.timeField.end){
+    if (this.options.timeField.start && this.options.timeField.end) {
       this._startTimeIndex = new BinarySearchIndex();
       this._endTimeIndex = new BinarySearchIndex();
-    } else if(this.options.timeField){
+    } else if (this.options.timeField) {
       this._timeIndex = new BinarySearchIndex();
     }
 
@@ -63,11 +62,11 @@ export var FeatureManager = FeatureGrid.extend({
    * Layer Interface
    */
 
-  onAdd: function(map){
+  onAdd: function (map) {
     return FeatureGrid.prototype.onAdd.call(this, map);
   },
 
-  onRemove: function(map){
+  onRemove: function (map) {
     return FeatureGrid.prototype.onRemove.call(this, map);
   },
 
@@ -79,29 +78,29 @@ export var FeatureManager = FeatureGrid.extend({
    * Feature Managment
    */
 
-  createCell: function(bounds, coords){
+  createCell: function (bounds, coords) {
     this._requestFeatures(bounds, coords);
   },
 
-  _requestFeatures: function(bounds, coords, callback){
+  _requestFeatures: function (bounds, coords, callback) {
     this._activeRequests++;
 
     // our first active request fires loading
-    if(this._activeRequests === 1){
+    if (this._activeRequests === 1) {
       this.fire('loading', {
         bounds: bounds
       }, true);
     }
 
-    return this._buildQuery(bounds).run(function(error, featureCollection, response){
-      if(response && response.exceededTransferLimit){
+    return this._buildQuery(bounds).run(function (error, featureCollection, response) {
+      if (response && response.exceededTransferLimit) {
         this.fire('drawlimitexceeded');
       }
 
       // no error, features
-      if(!error && featureCollection && featureCollection.features.length){
+      if (!error && featureCollection && featureCollection.features.length) {
         // schedule adding features until the next animation frame
-        L.Util.requestAnimFrame(L.Util.bind(function(){
+        L.Util.requestAnimFrame(L.Util.bind(function () {
           this._addFeatures(featureCollection.features, coords);
           this._postProcessFeatures(bounds);
         }, this));
@@ -112,29 +111,29 @@ export var FeatureManager = FeatureGrid.extend({
         this._postProcessFeatures(bounds);
       }
 
-      if(callback){
+      if (callback) {
         callback.call(this, error, featureCollection);
       }
     }, this);
   },
 
   _postProcessFeatures: function (bounds) {
-    //deincriment the request counter now that we have processed features
+    // deincriment the request counter now that we have processed features
     this._activeRequests--;
 
     // if there are no more active requests fire a load event for this view
-    if(this._activeRequests <= 0){
+    if (this._activeRequests <= 0) {
       this.fire('load', {
         bounds: bounds
       });
     }
   },
 
-  _cacheKey: function (coords){
-    return coords.z + ':' + coords.x + ':' +coords.y;
+  _cacheKey: function (coords) {
+    return coords.z + ':' + coords.x + ':' + coords.y;
   },
 
-  _addFeatures: function(features, coords){
+  _addFeatures: function (features, coords) {
     var key = this._cacheKey(coords);
     this._cache[key] = this._cache[key] || [];
 
@@ -142,15 +141,9 @@ export var FeatureManager = FeatureGrid.extend({
       var id = features[i].id;
       this._currentSnapshot.push(id);
       this._cache[key].push(id);
-      /*
-      should we refactor the code in FeatureManager.setWhere()
-      so that we can reuse it to make sure that we remove features
-      on the client that are removed from the service?
-      */
-
     }
 
-    if(this.options.timeField){
+    if (this.options.timeField) {
       this._buildTimeIndexes(features);
     }
 
@@ -162,18 +155,18 @@ export var FeatureManager = FeatureGrid.extend({
     this.createLayers(features);
   },
 
-  _buildQuery: function(bounds){
+  _buildQuery: function (bounds) {
     var query = this.service.query()
       .intersects(bounds)
       .where(this.options.where)
       .fields(this.options.fields)
       .precision(this.options.precision);
 
-    if(this.options.simplifyFactor){
+    if (this.options.simplifyFactor) {
       query.simplify(this._map, this.options.simplifyFactor);
     }
 
-    if(this.options.timeFilterMode === 'server' && this.options.from && this.options.to){
+    if (this.options.timeFilterMode === 'server' && this.options.from && this.options.to) {
       query.between(this.options.from, this.options.to);
     }
 
@@ -184,19 +177,19 @@ export var FeatureManager = FeatureGrid.extend({
    * Where Methods
    */
 
-  setWhere: function(where, callback, context){
+  setWhere: function (where, callback, context) {
     this.options.where = (where && where.length) ? where : '1=1';
 
     var oldSnapshot = [];
     var newSnapshot = [];
     var pendingRequests = 0;
     var requestError = null;
-    var requestCallback = L.Util.bind(function(error, featureCollection){
-      if(error){
+    var requestCallback = L.Util.bind(function (error, featureCollection) {
+      if (error) {
         requestError = error;
       }
 
-      if(featureCollection){
+      if (featureCollection) {
         for (var i = featureCollection.features.length - 1; i >= 0; i--) {
           newSnapshot.push(featureCollection.features[i].id);
         }
@@ -204,13 +197,13 @@ export var FeatureManager = FeatureGrid.extend({
 
       pendingRequests--;
 
-      if(pendingRequests <= 0){
+      if (pendingRequests <= 0) {
         this._currentSnapshot = newSnapshot;
         // schedule adding features until the next animation frame
-        L.Util.requestAnimFrame(L.Util.bind(function(){
+        L.Util.requestAnimFrame(L.Util.bind(function () {
           this.removeLayers(oldSnapshot);
           this.addLayers(newSnapshot);
-          if(callback) {
+          if (callback) {
             callback.call(context, requestError);
           }
         }, this));
@@ -221,7 +214,7 @@ export var FeatureManager = FeatureGrid.extend({
       oldSnapshot.push(this._currentSnapshot[i]);
     }
 
-    for(var key in this._activeCells){
+    for (var key in this._activeCells) {
       pendingRequests++;
       var coords = this._keyToCellCoords(key);
       var bounds = this._cellCoordsToBounds(coords);
@@ -231,7 +224,7 @@ export var FeatureManager = FeatureGrid.extend({
     return this;
   },
 
-  getWhere: function(){
+  getWhere: function () {
     return this.options.where;
   },
 
@@ -239,24 +232,24 @@ export var FeatureManager = FeatureGrid.extend({
    * Time Range Methods
    */
 
-  getTimeRange: function(){
+  getTimeRange: function () {
     return [this.options.from, this.options.to];
   },
 
-  setTimeRange: function(from, to, callback, context){
+  setTimeRange: function (from, to, callback, context) {
     var oldFrom = this.options.from;
     var oldTo = this.options.to;
     var pendingRequests = 0;
     var requestError = null;
-    var requestCallback = L.Util.bind(function(error){
-      if(error){
+    var requestCallback = L.Util.bind(function (error) {
+      if (error) {
         requestError = error;
       }
       this._filterExistingFeatures(oldFrom, oldTo, from, to);
 
       pendingRequests--;
 
-      if(callback && pendingRequests <= 0){
+      if (callback && pendingRequests <= 0) {
         callback.call(context, requestError);
       }
     }, this);
@@ -266,8 +259,8 @@ export var FeatureManager = FeatureGrid.extend({
 
     this._filterExistingFeatures(oldFrom, oldTo, from, to);
 
-    if(this.options.timeFilterMode === 'server') {
-      for(var key in this._activeCells){
+    if (this.options.timeFilterMode === 'server') {
+      for (var key in this._activeCells) {
         pendingRequests++;
         var coords = this._keyToCellCoords(key);
         var bounds = this._cellCoordsToBounds(coords);
@@ -278,16 +271,16 @@ export var FeatureManager = FeatureGrid.extend({
     return this;
   },
 
-  refresh: function(){
-    for(var key in this._activeCells){
+  refresh: function () {
+    for (var key in this._activeCells) {
       var coords = this._keyToCellCoords(key);
       var bounds = this._cellCoordsToBounds(coords);
       this._requestFeatures(bounds, key);
     }
 
-    if(this.redraw){
-      this.once('load', function(){
-        this.eachFeature(function(layer){
+    if (this.redraw) {
+      this.once('load', function () {
+        this.eachFeature(function (layer) {
           this._redraw(layer.feature.id);
         }, this);
       }, this);
@@ -298,27 +291,27 @@ export var FeatureManager = FeatureGrid.extend({
     var layersToRemove = (oldFrom && oldTo) ? this._getFeaturesInTimeRange(oldFrom, oldTo) : this._currentSnapshot;
     var layersToAdd = this._getFeaturesInTimeRange(newFrom, newTo);
 
-    if(layersToAdd.indexOf){
+    if (layersToAdd.indexOf) {
       for (var i = 0; i < layersToAdd.length; i++) {
         var shouldRemoveLayer = layersToRemove.indexOf(layersToAdd[i]);
-        if(shouldRemoveLayer >= 0){
+        if (shouldRemoveLayer >= 0) {
           layersToRemove.splice(shouldRemoveLayer, 1);
         }
       }
     }
 
     // schedule adding features until the next animation frame
-    L.Util.requestAnimFrame(L.Util.bind(function(){
+    L.Util.requestAnimFrame(L.Util.bind(function () {
       this.removeLayers(layersToRemove);
       this.addLayers(layersToAdd);
     }, this));
   },
 
-  _getFeaturesInTimeRange: function(start, end){
+  _getFeaturesInTimeRange: function (start, end) {
     var ids = [];
     var search;
 
-    if(this.options.timeField.start && this.options.timeField.end){
+    if (this.options.timeField.start && this.options.timeField.end) {
       var startTimes = this._startTimeIndex.between(start, end);
       var endTimes = this._endTimeIndex.between(start, end);
       search = startTimes.concat(endTimes);
@@ -333,19 +326,19 @@ export var FeatureManager = FeatureGrid.extend({
     return ids;
   },
 
-  _buildTimeIndexes: function(geojson){
+  _buildTimeIndexes: function (geojson) {
     var i;
     var feature;
-    if(this.options.timeField.start && this.options.timeField.end){
+    if (this.options.timeField.start && this.options.timeField.end) {
       var startTimeEntries = [];
       var endTimeEntries = [];
       for (i = geojson.length - 1; i >= 0; i--) {
         feature = geojson[i];
-        startTimeEntries.push( {
+        startTimeEntries.push({
           id: feature.id,
           value: new Date(feature.properties[this.options.timeField.start])
         });
-        endTimeEntries.push( {
+        endTimeEntries.push({
           id: feature.id,
           value: new Date(feature.properties[this.options.timeField.end])
         });
@@ -356,7 +349,7 @@ export var FeatureManager = FeatureGrid.extend({
       var timeEntries = [];
       for (i = geojson.length - 1; i >= 0; i--) {
         feature = geojson[i];
-        timeEntries.push( {
+        timeEntries.push({
           id: feature.id,
           value: new Date(feature.properties[this.options.timeField])
         });
@@ -366,20 +359,20 @@ export var FeatureManager = FeatureGrid.extend({
     }
   },
 
-  _featureWithinTimeRange: function(feature){
-    if(!this.options.from || !this.options.to){
+  _featureWithinTimeRange: function (feature) {
+    if (!this.options.from || !this.options.to) {
       return true;
     }
 
     var from = +this.options.from.valueOf();
     var to = +this.options.to.valueOf();
 
-    if(typeof this.options.timeField === 'string'){
+    if (typeof this.options.timeField === 'string') {
       var date = +feature.properties[this.options.timeField];
       return (date >= from) && (date <= to);
     }
 
-    if(this.options.timeField.start &&  this.options.timeField.end){
+    if (this.options.timeField.start && this.options.timeField.end) {
       var startDate = +feature.properties[this.options.timeField.start];
       var endDate = +feature.properties[this.options.timeField.end];
       return ((startDate >= from) && (startDate <= to)) || ((endDate >= from) && (endDate <= to));
@@ -390,36 +383,41 @@ export var FeatureManager = FeatureGrid.extend({
    * Service Methods
    */
 
-  authenticate: function(token){
+  authenticate: function (token) {
     this.service.authenticate(token);
     return this;
   },
 
-  metadata: function(callback, context){
+  metadata: function (callback, context) {
     this.service.metadata(callback, context);
     return this;
   },
 
-  query: function(){
+  query: function () {
     return this.service.query();
   },
 
-  _getMetadata: function(callback){
-    if(this._metadata){
+  _getMetadata: function (callback) {
+    if (this._metadata) {
       var error;
       callback(error, this._metadata);
     } else {
-      this.metadata(L.Util.bind(function(error, response) {
+      this.metadata(L.Util.bind(function (error, response) {
         this._metadata = response;
         callback(error, this._metadata);
       }, this));
     }
   },
 
-  addFeature: function(feature, callback, context){
-    this._getMetadata(L.Util.bind(function(error, metadata){
-      this.service.addFeature(feature, L.Util.bind(function(error, response){
-        if(!error){
+  addFeature: function (feature, callback, context) {
+    this._getMetadata(L.Util.bind(function (error, metadata) {
+      if (error) {
+        if (callback) { callback.call(this, error, null); }
+        return;
+      }
+
+      this.service.addFeature(feature, L.Util.bind(function (error, response) {
+        if (!error) {
           // assign ID from result to appropriate objectid field from service metadata
           feature.properties[metadata.objectIdField] = response.objectId;
 
@@ -428,45 +426,45 @@ export var FeatureManager = FeatureGrid.extend({
           this.createLayers([feature]);
         }
 
-        if(callback){
+        if (callback) {
           callback.call(context, error, response);
         }
       }, this));
     }, this));
   },
 
-  updateFeature: function(feature, callback, context){
-    this.service.updateFeature(feature, function(error, response){
-      if(!error){
+  updateFeature: function (feature, callback, context) {
+    this.service.updateFeature(feature, function (error, response) {
+      if (!error) {
         this.removeLayers([feature.id], true);
         this.createLayers([feature]);
       }
 
-      if(callback){
+      if (callback) {
         callback.call(context, error, response);
       }
     }, this);
   },
 
-  deleteFeature: function(id, callback, context){
-    this.service.deleteFeature(id, function(error, response){
-      if(!error && response.objectId){
+  deleteFeature: function (id, callback, context) {
+    this.service.deleteFeature(id, function (error, response) {
+      if (!error && response.objectId) {
         this.removeLayers([response.objectId], true);
       }
-      if(callback){
+      if (callback) {
         callback.call(context, error, response);
       }
     }, this);
   },
 
-  deleteFeatures: function(ids, callback, context){
-    return this.service.deleteFeatures(ids, function(error, response){
-      if(!error && response.length > 0){
-        for (var i=0; i<response.length; i++){
+  deleteFeatures: function (ids, callback, context) {
+    return this.service.deleteFeatures(ids, function (error, response) {
+      if (!error && response.length > 0) {
+        for (var i = 0; i < response.length; i++) {
           this.removeLayers([response[i].objectId], true);
         }
       }
-      if(callback){
+      if (callback) {
         callback.call(context, error, response);
       }
     }, this);
@@ -477,19 +475,18 @@ export var FeatureManager = FeatureGrid.extend({
  * Temporal Binary Search Index
  */
 
-function BinarySearchIndex(values) {
+function BinarySearchIndex (values) {
   this.values = values || [];
 }
 
-BinarySearchIndex.prototype._query = function(query){
+BinarySearchIndex.prototype._query = function (query) {
   var minIndex = 0;
   var maxIndex = this.values.length - 1;
   var currentIndex;
   var currentElement;
-  var resultIndex;
 
   while (minIndex <= maxIndex) {
-    resultIndex = currentIndex = (minIndex + maxIndex) / 2 | 0;
+    currentIndex = (minIndex + maxIndex) / 2 | 0;
     currentElement = this.values[Math.round(currentIndex)];
     if (+currentElement.value < +query) {
       minIndex = currentIndex + 1;
@@ -503,32 +500,32 @@ BinarySearchIndex.prototype._query = function(query){
   return ~maxIndex;
 };
 
-BinarySearchIndex.prototype.sort = function(){
-  this.values.sort(function(a, b) {
+BinarySearchIndex.prototype.sort = function () {
+  this.values.sort(function (a, b) {
     return +b.value - +a.value;
   }).reverse();
   this.dirty = false;
 };
 
-BinarySearchIndex.prototype.between = function(start, end){
-  if(this.dirty){
+BinarySearchIndex.prototype.between = function (start, end) {
+  if (this.dirty) {
     this.sort();
   }
 
   var startIndex = this._query(start);
   var endIndex = this._query(end);
 
-  if(startIndex === 0 && endIndex === 0){
+  if (startIndex === 0 && endIndex === 0) {
     return [];
   }
 
   startIndex = Math.abs(startIndex);
-  endIndex = (endIndex < 0) ? Math.abs(endIndex): endIndex + 1;
+  endIndex = (endIndex < 0) ? Math.abs(endIndex) : endIndex + 1;
 
   return this.values.slice(startIndex, endIndex);
 };
 
-BinarySearchIndex.prototype.bulkAdd = function(items){
+BinarySearchIndex.prototype.bulkAdd = function (items) {
   this.dirty = true;
   this.values = this.values.concat(items);
 };

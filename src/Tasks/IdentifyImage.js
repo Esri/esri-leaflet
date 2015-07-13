@@ -1,6 +1,6 @@
-import L from "leaflet";
-import { Identify } from "./Identify";
-import Util from "../Util";
+import L from 'leaflet';
+import { Identify } from './Identify';
+import Util from '../Util';
 
 export var IdentifyImage = Identify.extend({
   setters: {
@@ -15,12 +15,12 @@ export var IdentifyImage = Identify.extend({
     returnGeometry: false
   },
 
-  at: function(latlng){
+  at: function (latlng) {
     latlng = L.latLng(latlng);
     this.params.geometry = JSON.stringify({
       x: latlng.lng,
       y: latlng.lat,
-      spatialReference:{
+      spatialReference: {
         wkid: 4326
       }
     });
@@ -28,20 +28,20 @@ export var IdentifyImage = Identify.extend({
     return this;
   },
 
-  getMosaicRule: function() {
+  getMosaicRule: function () {
     return this.params.mosaicRule;
   },
 
-  getRenderingRule: function() {
+  getRenderingRule: function () {
     return this.params.renderingRule;
   },
 
-  getPixelSize: function() {
+  getPixelSize: function () {
     return this.params.pixelSize;
   },
 
-  run: function (callback, context){
-    return this.request(function(error, response){
+  run: function (callback, context) {
+    return this.request(function (error, response) {
       callback.call(context, error, (response && this._responseToGeoJSON(response)), response);
     }, this);
   },
@@ -49,11 +49,11 @@ export var IdentifyImage = Identify.extend({
   // get pixel data and return as geoJSON point
   // populate catalog items (if any)
   // merging in any catalogItemVisibilities as a propery of each feature
-  _responseToGeoJSON: function(response) {
+  _responseToGeoJSON: function (response) {
     var location = response.location;
     var catalogItems = response.catalogItems;
     var catalogItemVisibilities = response.catalogItemVisibilities;
-    var geoJSON =  {
+    var geoJSON = {
       'pixel': {
         'type': 'Feature',
         'geometry': {
@@ -92,8 +92,8 @@ export var IdentifyImage = Identify.extend({
 
 });
 
-export function identifyImage(params){
+export function identifyImage (params) {
   return new IdentifyImage(params);
-};
+}
 
 export default identifyImage;

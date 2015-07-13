@@ -1,31 +1,31 @@
-import L from "leaflet";
-import Support from "./Support";
-import {warn} from "./Util";
+import L from 'leaflet';
+import Support from './Support';
+import {warn} from './Util';
 
 var callbacks = 0;
 
 window._EsriLeafletCallbacks = {};
 
-function serialize(params){
+function serialize (params) {
   var data = '';
 
   params.f = params.f || 'json';
 
-  for (var key in params){
-    if(params.hasOwnProperty(key)){
+  for (var key in params) {
+    if (params.hasOwnProperty(key)) {
       var param = params[key];
       var type = Object.prototype.toString.call(param);
       var value;
 
-      if(data.length){
+      if (data.length) {
         data += '&';
       }
 
-      if (type === '[object Array]'){
+      if (type === '[object Array]') {
         value = (Object.prototype.toString.call(param[0]) === '[object Object]') ? JSON.stringify(param) : param.join(',');
       } else if (type === '[object Object]') {
         value = JSON.stringify(param);
-      } else if (type === '[object Date]'){
+      } else if (type === '[object Date]') {
         value = param.valueOf();
       } else {
         value = param;
@@ -38,10 +38,10 @@ function serialize(params){
   return data;
 }
 
-function createRequest(callback, context){
-  var httpRequest = new XMLHttpRequest();
+function createRequest (callback, context) {
+  var httpRequest = new window.XMLHttpRequest();
 
-  httpRequest.onerror = function(e) {
+  httpRequest.onerror = function (e) {
     httpRequest.onreadystatechange = L.Util.falseFn;
 
     callback.call(context, {
@@ -52,7 +52,7 @@ function createRequest(callback, context){
     }, null);
   };
 
-  httpRequest.onreadystatechange = function(){
+  httpRequest.onreadystatechange = function () {
     var response;
     var error;
 
@@ -100,24 +100,24 @@ function xmlHttpGet (url, params, callback, context) {
 }
 
 // AJAX handlers for CORS (modern browsers) or JSONP (older browsers)
-export function request(url, params, callback, context){
+export function request (url, params, callback, context) {
   var paramString = serialize(params);
   var httpRequest = createRequest(callback, context);
   var requestLength = (url + '?' + paramString).length;
 
   // request is less then 2000 characters and the browser supports CORS, make GET request with XMLHttpRequest
-  if(requestLength <= 2000 && Support.cors){
+  if (requestLength <= 2000 && Support.cors) {
     httpRequest.open('GET', url + '?' + paramString);
     httpRequest.send(null);
 
   // request is less more then 2000 characters and the browser supports CORS, make POST request with XMLHttpRequest
-  } else if (requestLength > 2000 && Support.cors){
+  } else if (requestLength > 2000 && Support.cors) {
     httpRequest.open('POST', url);
     httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     httpRequest.send(paramString);
 
   // request is less more then 2000 characters and the browser does not support CORS, make a JSONP request
-  } else if(requestLength <= 2000 && !Support.cors){
+  } else if (requestLength <= 2000 && !Support.cors) {
     return jsonp(url, params, callback, context);
 
   // request is longer then 2000 characters and the browser does not support CORS, log a warning
@@ -129,22 +129,22 @@ export function request(url, params, callback, context){
   return httpRequest;
 }
 
-export function jsonp (url, params, callback, context){
+export function jsonp (url, params, callback, context) {
   var callbackId = 'c' + callbacks;
 
   params.callback = 'window._EsriLeafletCallbacks.' + callbackId;
 
   var script = L.DomUtil.create('script', null, document.body);
   script.type = 'text/javascript';
-  script.src = url + '?' +  serialize(params);
+  script.src = url + '?' + serialize(params);
   script.id = callbackId;
 
-  window._EsriLeafletCallbacks[callbackId] = function(response){
-    if(window._EsriLeafletCallbacks[callbackId] !== true){
+  window._EsriLeafletCallbacks[callbackId] = function (response) {
+    if (window._EsriLeafletCallbacks[callbackId] !== true) {
       var error;
       var responseType = Object.prototype.toString.call(response);
 
-      if(!(responseType === '[object Object]' || responseType === '[object Array]')){
+      if (!(responseType === '[object Object]' || responseType === '[object Array]')) {
         error = {
           error: {
             code: 500,
@@ -169,7 +169,7 @@ export function jsonp (url, params, callback, context){
   return {
     id: callbackId,
     url: script.src,
-    abort: function(){
+    abort: function () {
       window._EsriLeafletCallbacks._callback[callbackId]({
         code: 0,
         message: 'Request aborted.'
@@ -178,7 +178,7 @@ export function jsonp (url, params, callback, context){
   };
 }
 
-var get = ((Support.cors) ? xmlHttpGet : jsonp)
+var get = ((Support.cors) ? xmlHttpGet : jsonp);
 get.CORS = xmlHttpGet;
 get.JSONP = jsonp;
 

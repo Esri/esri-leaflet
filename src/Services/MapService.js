@@ -1,7 +1,7 @@
-import { Service } from "./Service";
-import identifyFeatures from "../Tasks/IdentifyFeatures";
-import query from "../Tasks/Query";
-import find from "../Tasks/Find";
+import { Service } from './Service';
+import identifyFeatures from '../Tasks/IdentifyFeatures';
+import query from '../Tasks/Query';
+import find from '../Tasks/Find';
 
 export var MapService = Service.extend({
 
@@ -19,8 +19,8 @@ export var MapService = Service.extend({
 
 });
 
-export function mapService (options){
+export function mapService (options) {
   return new MapService(options);
-};
+}
 
 export default mapService;

@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.0
+
+#### Changes
+
+* Everything!
+
 ## 1.0.0
 
 This represents the stable release of Esri Leaflet compatible with Leaflet 0.7.3. All future 1.0.X releases will be compatible with Leaflet 0.7.3 and contain only bug fixes. New features will only be added in Esri Leaflet 2.0.0 which will require Leaflet 1.0.0.

@@ -1,4 +1,4 @@
-import L from "leaflet";
+import L from 'leaflet';
 
 export var FeatureGrid = L.Layer.extend({
 
@@ -18,7 +18,7 @@ export var FeatureGrid = L.Layer.extend({
     this._update();
   },
 
-  onRemove: function(){
+  onRemove: function () {
     this._map.removeEventListener(this.getEvents(), this);
     this._removeCells();
   },
@@ -32,12 +32,12 @@ export var FeatureGrid = L.Layer.extend({
     return events;
   },
 
-  addTo: function(map){
+  addTo: function (map) {
     map.addLayer(this);
     return this;
   },
 
-  removeFrom: function(map){
+  removeFrom: function (map) {
     map.removeLayer(this);
     return this;
   },
@@ -55,8 +55,8 @@ export var FeatureGrid = L.Layer.extend({
   },
 
   _resetWrap: function () {
-    var map = this._map,
-        crs = map.options.crs;
+    var map = this._map;
+    var crs = map.options.crs;
 
     if (crs.infinite) { return; }
 
@@ -84,9 +84,9 @@ export var FeatureGrid = L.Layer.extend({
   _update: function () {
     if (!this._map) { return; }
 
-    var bounds = this._map.getPixelBounds(),
-        zoom = this._map.getZoom(),
-        cellSize = this._getCellSize();
+    var bounds = this._map.getPixelBounds();
+    var zoom = this._map.getZoom();
+    var cellSize = this._getCellSize();
 
     if (zoom > this.options.maxZoom ||
         zoom < this.options.minZoom) { return; }
@@ -101,10 +101,9 @@ export var FeatureGrid = L.Layer.extend({
   },
 
   _addCells: function (bounds) {
-
-    var queue = [],
-        center = bounds.getCenter(),
-        zoom = this._map.getZoom();
+    var queue = [];
+    var center = bounds.getCenter();
+    var zoom = this._map.getZoom();
 
     var j, i, coords;
     // create a queue of coordinates to load cells from
@@ -161,14 +160,13 @@ export var FeatureGrid = L.Layer.extend({
 
   // converts cell coordinates to its geographical bounds
   _cellCoordsToBounds: function (coords) {
-    var map = this._map,
-        cellSize = this.options.cellSize,
+    var map = this._map;
+    var cellSize = this.options.cellSize;
+    var nwPoint = coords.multiplyBy(cellSize);
+    var sePoint = nwPoint.add([cellSize, cellSize]);
+    var nw = map.wrapLatLng(map.unproject(nwPoint, coords.z));
+    var se = map.wrapLatLng(map.unproject(sePoint, coords.z));
 
-        nwPoint = coords.multiplyBy(cellSize),
-        sePoint = nwPoint.add([cellSize, cellSize]),
-
-        nw = map.wrapLatLng(map.unproject(nwPoint, coords.z)),
-        se = map.wrapLatLng(map.unproject(sePoint, coords.z));
     return new L.LatLngBounds(nw, se);
   },
 
@@ -179,9 +177,9 @@ export var FeatureGrid = L.Layer.extend({
 
   // converts cell cache key to coordiantes
   _keyToCellCoords: function (key) {
-    var kArr = key.split(':'),
-        x = parseInt(kArr[0], 10),
-        y = parseInt(kArr[1], 10);
+    var kArr = key.split(':');
+    var x = parseInt(kArr[0], 10);
+    var y = parseInt(kArr[1], 10);
 
     return new L.Point(x, y);
   },
@@ -198,7 +196,7 @@ export var FeatureGrid = L.Layer.extend({
   _removeCell: function (key) {
     var cell = this._activeCells[key];
 
-    if(cell){
+    if (cell) {
       delete this._activeCells[key];
 
       if (this.cellLeave) {
@@ -212,7 +210,7 @@ export var FeatureGrid = L.Layer.extend({
     }
   },
 
-  _removeCells: function(){
+  _removeCells: function () {
     for (var key in this._cells) {
       var bounds = this._cells[key].bounds;
       var coords = this._cells[key].coords;
@@ -262,7 +260,7 @@ export var FeatureGrid = L.Layer.extend({
       this._cells[key] = cell;
       this._activeCells[key] = cell;
 
-      if(this.createCell){
+      if (this.createCell) {
         this.createCell(cell.bounds, coords);
       }
 
@@ -280,12 +278,11 @@ export var FeatureGrid = L.Layer.extend({
 
   // get the global cell coordinates range for the current zoom
   _getCellNumBounds: function () {
-    var bounds = this._map.getPixelWorldBounds(),
-        size = this._getCellSize();
+    var bounds = this._map.getPixelWorldBounds();
+    var size = this._getCellSize();
 
     return bounds ? L.bounds(
         bounds.min.divideBy(size).floor(),
         bounds.max.divideBy(size).ceil().subtract([1, 1])) : null;
   }
-
 });

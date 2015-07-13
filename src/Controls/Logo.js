@@ -1,4 +1,4 @@
-import L from "leaflet";
+import L from 'leaflet';
 
 export var Logo = L.Control.extend({
   options: {
@@ -17,7 +17,7 @@ export var Logo = L.Control.extend({
     div.style.marginRight = this.options.marginRight;
     div.innerHTML = this._adjustLogo(this._map._size);
 
-    this._map.on('resize', function(e){
+    this._map.on('resize', function (e) {
       div.innerHTML = this._adjustLogo(e.newSize);
     }, this);
 
@@ -25,16 +25,14 @@ export var Logo = L.Control.extend({
   },
 
   _adjustLogo: function (mapSize) {
-    if (mapSize.x <= 600 || mapSize.y <= 600){
+    if (mapSize.x <= 600 || mapSize.y <= 600) {
       return '<a href="https://developers.arcgis.com" style="border: none;"><img src="https://js.arcgis.com/3.13/esri/images/map/logo-sm.png" alt="Powered by Esri" style="border: none;"></a>';
-    }
-    else {
+    } else {
       return '<a href="https://developers.arcgis.com" style="border: none;"><img src="https://js.arcgis.com/3.13/esri/images/map/logo-med.png" alt="Powered by Esri" style="border: none;"></a>';
     }
   }
-
 });
 
-export default function logo (options){
+export default function logo (options) {
   return new Logo(options);
-};
+}

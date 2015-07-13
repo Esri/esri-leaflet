@@ -1,6 +1,5 @@
-import L from "leaflet";
-import { Task } from "./Task";
-import Util from "../Util";
+import { Task } from './Task';
+import Util from '../Util';
 
 export var Find = Task.extend({
   setters: {
@@ -15,10 +14,10 @@ export var Find = Task.extend({
     'maxAllowableOffset': 'maxAllowableOffset',
     'precision': 'geometryPrecision',
     'dynamicLayers': 'dynamicLayers',
-    'returnZ' : 'returnZ',
-    'returnM' : 'returnM',
-    'gdbVersion' : 'gdbVersion',
-    'token' : 'token'
+    'returnZ': 'returnZ',
+    'returnM': 'returnM',
+    'gdbVersion': 'gdbVersion',
+    'token': 'token'
   },
 
   path: 'find',
@@ -37,14 +36,14 @@ export var Find = Task.extend({
     return this;
   },
 
-  simplify: function(map, factor){
+  simplify: function (map, factor) {
     var mapWidth = Math.abs(map.getBounds().getWest() - map.getBounds().getEast());
     this.params.maxAllowableOffset = (mapWidth / map.getSize().y) * factor;
     return this;
   },
 
   run: function (callback, context) {
-    return this.request(function(error, response){
+    return this.request(function (error, response) {
       callback.call(context, error, (response && Util.responseToFeatureCollection(response)), response);
     }, context);
   }
@@ -52,6 +51,6 @@ export var Find = Task.extend({
 
 export function find (options) {
   return new Find(options);
-};
+}
 
 export default find;

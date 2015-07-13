@@ -1,6 +1,6 @@
-import L from "leaflet";
-import { Identify } from "./Identify";
-import Util from "../Util";
+import L from 'leaflet';
+import { Identify } from './Identify';
+import Util from '../Util';
 
 export var IdentifyFeatures = Identify.extend({
   setters: {
@@ -17,7 +17,7 @@ export var IdentifyFeatures = Identify.extend({
     returnGeometry: true
   },
 
-  on: function(map){
+  on: function (map) {
     var extent = Util.boundsToExtent(map.getBounds());
     var size = map.getSize();
     this.params.imageDisplay = [size.x, size.y, 96];
@@ -25,29 +25,29 @@ export var IdentifyFeatures = Identify.extend({
     return this;
   },
 
-  at: function(latlng){
+  at: function (latlng) {
     latlng = L.latLng(latlng);
     this.params.geometry = [latlng.lng, latlng.lat];
     this.params.geometryType = 'esriGeometryPoint';
     return this;
   },
 
-  layerDef: function (id, where){
+  layerDef: function (id, where) {
     this.params.layerDefs = (this.params.layerDefs) ? this.params.layerDefs + ';' : '';
     this.params.layerDefs += ([id, where]).join(':');
     return this;
   },
 
-  simplify: function(map, factor){
+  simplify: function (map, factor) {
     var mapWidth = Math.abs(map.getBounds().getWest() - map.getBounds().getEast());
     this.params.maxAllowableOffset = (mapWidth / map.getSize().y) * (1 - factor);
     return this;
   },
 
-  run: function (callback, context){
-    return this.request(function(error, response){
+  run: function (callback, context) {
+    return this.request(function (error, response) {
       // immediately invoke with an error
-      if(error) {
+      if (error) {
         callback.call(context, error, undefined, response);
         return;
 
@@ -65,7 +65,7 @@ export var IdentifyFeatures = Identify.extend({
   }
 });
 
-export function identifyFeatures (options){
+export function identifyFeatures (options) {
   return new IdentifyFeatures(options);
 }
 
