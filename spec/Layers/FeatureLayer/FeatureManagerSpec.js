@@ -40,7 +40,7 @@ describe('L.esri.Layers.FeatureManager', function () {
   beforeEach(function(){
     server = sinon.fakeServer.create();
     sandbox = sinon.sandbox.create();
-    oldRaf = L.esri.Util.requestAnimationFrame;
+    oldRaf = L.Util.requestAnimFrame;
 
     MockLayer = L.esri.Layers.FeatureManager.extend({
       createLayers: sandbox.spy(),
@@ -56,7 +56,7 @@ describe('L.esri.Layers.FeatureManager', function () {
       maxZoom : 15
     });
 
-    L.esri.Util.requestAnimationFrame = function(cd){
+    L.Util.requestAnimFrame = function(cd){
       cd();
     };
   });
@@ -64,7 +64,7 @@ describe('L.esri.Layers.FeatureManager', function () {
   afterEach(function(){
     server.restore();
     sandbox.restore();
-    L.esri.Util.requestAnimationFrame = oldRaf;
+    L.Util.requestAnimFrame = oldRaf;
   });
 
   var fields = [

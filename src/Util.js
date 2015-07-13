@@ -216,15 +216,6 @@ function flattenMultiPolygonRings(rings){
   return output;
 }
 
-// normalize request animation frame
-export var raf = L.Util.bind(window.requestAnimationFrame ||
-          window.webkitRequestAnimationFrame ||
-          window.mozRequestAnimationFrame ||
-          window.msRequestAnimationFrame ||
-          function(cb) { return window.setTimeout(cb, 1000 / 60); }, window);
-
-export { raf as requestAnimationFrame }
-
 // shallow object clone for feature properties and attributes
 // from http://jsperf.com/cloning-an-object/2
 function shallowClone(obj) {
@@ -391,7 +382,7 @@ export function responseToFeatureCollection (response, idAttribute) {
   // trim url whitespace and add a trailing slash if needed
 export function cleanUrl (url){
   //trim leading and trailing spaces, but not spaces inside the url
-  url = url.replace(/^\s+|\s+$|\A\s+|\s+\z/g, '');
+  url = L.Util.trim(url);
 
   //add a trailing slash to the url if the user omitted it
   if(url[url.length-1] !== '/'){
@@ -440,7 +431,6 @@ export function warn () {
 };
 
 export var Util = {
-  requestAnimationFrame: raf,
   shallowClone: shallowClone,
   warn: warn,
   cleanUrl: cleanUrl,

@@ -231,8 +231,8 @@ describe('L.esri.Layers.FeatureLayer', function () {
 
     layer.unbindPopup();
 
-    expect(layer.getFeature(1)._popup).to.equal(null);
-    expect(layer.getFeature(2)._popup).to.equal(null);
+    expect(layer._popup).to.equal(null);
+    expect(layer._popup).to.equal(null);
   });
 
   it('should unbind popups on multi polygon features', function(){
@@ -246,9 +246,10 @@ describe('L.esri.Layers.FeatureLayer', function () {
     layer.bindPopup(function(feature){
       return 'ID: ' + feature.id;
     });
+
     layer.unbindPopup();
-    expect(layer.getFeature(1).getLayers()[0]._popup).to.equal(null);
-    expect(layer.getFeature(1).getLayers()[1]._popup).to.equal(null);
+
+    expect(layer._popup).to.equal(null);
   });
 
   it('should reset style on multi polygon features', function(){
@@ -261,17 +262,17 @@ describe('L.esri.Layers.FeatureLayer', function () {
 
     layer.createLayers(multiPolygon);
 
-    expect(layer.getFeature(1).getLayers()[0].options.color).to.equal('black');
+    expect(layer.getFeature(1).options.color).to.equal('black');
 
     layer.setFeatureStyle(1, {
       color: 'red'
     });
 
-    expect(layer.getFeature(1).getLayers()[0].options.color).to.equal('red');
+    expect(layer.getFeature(1).options.color).to.equal('red');
 
     layer.resetStyle(1);
 
-    expect(layer.getFeature(1).getLayers()[0].options.color).to.equal('black');
+    expect(layer.getFeature(1).options.color).to.equal('black');
   });
 
   it('should reset L.circleMarker style', function(){
@@ -310,11 +311,11 @@ describe('L.esri.Layers.FeatureLayer', function () {
       color: 'red'
     });
 
-    expect(layer.getFeature(1).getLayers()[0].options.color).to.equal('red');
+    expect(layer.getFeature(1).options.color).to.equal('red');
 
     layer.resetStyle(1);
 
-    expect(layer.getFeature(1).getLayers()[0].options.color).to.equal('#0033ff');
+    expect(layer.getFeature(1).options.color).to.equal('#3388ff');
   });
 
   it('should draw multi polygon features with a fill', function(){
@@ -324,11 +325,11 @@ describe('L.esri.Layers.FeatureLayer', function () {
 
     layer.createLayers(multiPolygon);
 
-    expect(layer.getFeature(1).getLayers()[0].options.fill).to.equal(true);
+    expect(layer.getFeature(1).options.fill).to.equal(true);
 
     layer.resetStyle(1);
 
-    expect(layer.getFeature(1).getLayers()[0].options.color).to.equal('#0033ff');
+    expect(layer.getFeature(1).options.color).to.equal('#3388ff');
   });
 
   it('should iterate over each feature', function(){

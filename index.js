@@ -1,55 +1,28 @@
 // import base
-import { Support } from './Support';
-import { Util } from './Util';
-import { Request, get, post, request } from './Request';
+export { Support, cors, pointerEvents } from './src/Support';
+export { Util, shallowClone, warn, cleanUrl, isArcgisOnline, geojsonTypeToArcGIS, responseToFeatureCollection, geojsonToArcGIS, arcgisToGeojson, boundsToExtent, extentToBounds } from './src/Util';
+export { Request, get, post, request } from './src/Request';
 
-// import tasks
-import { Task, task } from './Tasks/Task';
-import { Query, query } from './Tasks/Query';
-import { Find, find } from './Tasks/Find';
-import { Identify, identify } from './Tasks/Identify';
-import { IdentifyFeatures, identifyFeatures } from './Tasks/IdentifyFeatures';
-import { IdentifyImage, identifyImage } from './Tasks/IdentifyImage';
+// export tasks
+export { Task, task } from './src/Tasks/Task';
+export { Query, query } from './src/Tasks/Query';
+export { Find, find } from './src/Tasks/Find';
+export { Identify, identify } from './src/Tasks/Identify';
+export { IdentifyFeatures, identifyFeatures } from './src/Tasks/IdentifyFeatures';
+export { IdentifyImage, identifyImage } from './src/Tasks/IdentifyImage';
 
 // export services
-import { Service, service } from './Services/Service';
-import { MapService, mapService } from './Services/MapService';
-import { ImageService, imageService } from './Services/ImageService';
-import { FeatureLayerService, featureLayerService } from './Services/FeatureLayerService';
+export { Service, service } from './src/Services/Service';
+export { MapService, mapService } from './src/Services/MapService';
+export { ImageService, imageService } from './src/Services/ImageService';
+export { FeatureLayerService, featureLayerService } from './src/Services/FeatureLayerService';
 
 // export layers
-import { BasemapLayer, basemapLayer } from './Layers/BasemapLayer';
-import { TiledMapLayer, tiledMapLayer } from './Layers/TiledMapLayer';
-import { RasterLayer } from './Layers/RasterLayer';
-import { ImageMapLayer, imageMapLayer } from './Layers/ImageMapLayer';
-import { DynamicMapLayer, dynamicMapLayer } from './Layers/DynamicMapLayer';
-import { FeatureGrid } from './Layers/FeatureLayer/FeatureGrid';
-import { FeatureManager } from './Layers/FeatureLayer/FeatureManager';
-import { FeatureLayer, featureLayer } from './Layers/FeatureLayer/FeatureLayer';
-
-export default {
-  Support,
-  Util,
-  Request,
-  get,
-  post,
-  request,
-  Task, task,
-  Query, query,
-  Find, find,
-  Identify, identify,
-  IdentifyFeatures, identifyFeatures,
-  IdentifyImage, identifyImage,
-  Service, service,
-  MapService, mapService,
-  ImageService, imageService,
-  FeatureLayerService, featureLayerService,
-  BasemapLayer, basemapLayer,
-  TiledMapLayer, tiledMapLayer,
-  RasterLayer,
-  ImageMapLayer, imageMapLayer,
-  DynamicMapLayer, dynamicMapLayer,
-  FeatureGrid,
-  FeatureManager,
-  FeatureLayer, featureLayer
-}
+export { BasemapLayer, basemapLayer } from './src/Layers/BasemapLayer';
+export { TiledMapLayer, tiledMapLayer } from './src/Layers/TiledMapLayer';
+export { RasterLayer } from './src/Layers/RasterLayer';
+export { ImageMapLayer, imageMapLayer } from './src/Layers/ImageMapLayer';
+export { DynamicMapLayer, dynamicMapLayer } from './src/Layers/DynamicMapLayer';
+export { FeatureGrid } from './src/Layers/FeatureLayer/FeatureGrid';
+export { FeatureManager } from './src/Layers/FeatureLayer/FeatureManager';
+export { FeatureLayer, featureLayer } from './src/Layers/FeatureLayer/FeatureLayer';

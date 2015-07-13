@@ -1,6 +1,5 @@
 import L from 'leaflet';
 import { FeatureManager } from './FeatureManager';
-import { requestAnimationFrame } from '../../Util';
 
 export var FeatureLayer = FeatureManager.extend({
 
@@ -13,7 +12,7 @@ export var FeatureLayer = FeatureManager.extend({
    */
   initialize: function (options) {
     FeatureManager.prototype.initialize.call(this, options);
-    this._originalStyle = options.style;
+    this._originalStyle = this.options.style;
     this._layers = {};
   },
 
@@ -158,7 +157,7 @@ export var FeatureLayer = FeatureManager.extend({
 
   cellEnter: function(bounds, coords){
     if(!this._zooming){
-      requestAnimationFrame(L.Util.bind(function(){
+      L.Util.requestAnimFrame(L.Util.bind(function(){
         var cacheKey = this._cacheKey(coords);
         var cellKey = this._cellCoordsToKey(coords);
         var layers = this._cache[cacheKey];
@@ -171,7 +170,7 @@ export var FeatureLayer = FeatureManager.extend({
 
   cellLeave: function(bounds, coords){
     if(!this._zooming){
-      requestAnimationFrame(L.Util.bind(function(){
+      L.Util.requestAnimFrame(L.Util.bind(function(){
         var cacheKey = this._cacheKey(coords);
         var cellKey = this._cellCoordsToKey(coords);
         var layers = this._cache[cacheKey];
@@ -222,7 +221,7 @@ export var FeatureLayer = FeatureManager.extend({
 
   resetFeatureStyle: function (id) {
     var layer = this._layers[id];
-    var style = this._originalStyle;
+    var style = this._originalStyle || L.Path.prototype.options;
     if (style) {
       L.Util.extend(layer.options, layer.defaultOptions);
       this.setFeatureStyle(id, style);

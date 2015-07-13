@@ -1,19 +1,25 @@
 {
   "name": "esri-leaflet",
-  "version": "1.0.0",
   "description": "Leaflet plugins for consuming ArcGIS Online and ArcGIS Server services",
-  "main": "dist/esri-leaflet.js",
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:Esri/esri-leaflet.git"
+  "version": "2.0.0",
+  "author": "Patrick Arlt <parlt@esri.com> (http://patrickarlt.com)",
+  "browserify": {
+    "transform": [
+      "babelify"
+    ]
   },
-  "jsnext:main": "index",
+  "bugs": {
+    "url": "https://github.com/esri/esri-leaflet/issues"
+  },
+  "contributors": [
+    "Patrick Arlt <parlt@esri.com> (http://patrickarlt.com)",
+    "John Gravois <jgravois@esri.com> (http://johngravois.com)"
+  ],
+  "dependencies": {
+    "leaflet": "git://github.com/Leaflet/Leaflet.git#master"
+  },
   "devDependencies": {
     "assemble": "^0.4.37",
-    "babelify": "^6.1.2",
-    "browserify": "^10.2.4",
-    "exorcist": "^0.4.0",
-    "exposify": "^0.4.3",
     "grunt": "^0.4.2",
     "grunt-concurrent": "^0.5.0",
     "grunt-contrib-concat": "^0.5.0",
@@ -45,25 +51,36 @@
     "load-grunt-tasks": "^0.4.0",
     "sinon": "^1.11.1"
   },
+  "homepage": "http://esri.github.io/esri-leaflet",
+  "jsnext:main": "./index.js",
+  "jspm": {
+    "main": "./index.js",
+    "directories": {
+      "lib": "./lib"
+    },
+    "registry": "npm",
+    "format": "es6"
+  },
+  "keywords": [
+    "arcgis",
+    "esri",
+    "esri leaflet",
+    "gis",
+    "leaflet",
+    "leaflet plugin",
+    "mapping"
+  ],
+  "license": "Apache-2.0",
+  "main": "dist/esri-leaflet.js",
+  "readmeFilename": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Esri/esri-leaflet.git"
+  },
   "scripts": {
+    "postinstall": "node scripts/install.js",
     "prepublish": "grunt prepublish",
     "start": "grunt dev",
-    "test": "grunt test",
-    "postinstall": "node scripts/install.js"
-  },
-  "author": "Patrick Arlt <parlt@esri.com> (http://patrickarlt.com)",
-  "contributors": [
-    "Patrick Arlt <parlt@esri.com> (http://patrickarlt.com)",
-    "John Gravois <jgravois@esri.com> (http://johngravois.com)"
-  ],
-  "browserify": {
-    "transform": [
-      "babelify"
-    ]
-  },
-  "license": "Apache",
-  "readmeFilename": "README.md",
-  "dependencies": {
-    "leaflet": "git://github.com/Leaflet/Leaflet.git#master"
+    "test": "grunt test"
   }
 }

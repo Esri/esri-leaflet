@@ -1,7 +1,7 @@
 // import base
 import { Support } from './Support';
-import {Util } from './Util';
-import {Request, get, post, request} from './Request';
+import { Util } from './Util';
+import { Request, get, post, request } from './Request';
 
 // import tasks
 import { Task, task } from './Tasks/Task';
@@ -26,55 +26,6 @@ import { DynamicMapLayer, dynamicMapLayer } from './Layers/DynamicMapLayer';
 import { FeatureGrid } from './Layers/FeatureLayer/FeatureGrid';
 import { FeatureManager } from './Layers/FeatureLayer/FeatureManager';
 import { FeatureLayer, featureLayer } from './Layers/FeatureLayer/FeatureLayer';
-
-export var VERSION = '1.0.0';
-
-export { get }
-export { post }
-export { request }
-export { Request }
-
-export { Support }
-export { Util }
-
-export { Task }
-export { task }
-export { Query }
-export { query }
-export { Find }
-export { find }
-export { Identify }
-export { identify }
-export { IdentifyFeatures }
-export { identifyFeatures }
-export { IdentifyImage }
-export { identifyImage }
-
-export { Service }
-export { service }
-export { MapService }
-export { mapService }
-export { ImageService }
-export { imageService }
-export { FeatureLayerService }
-export { featureLayerService }
-
-export { BasemapLayer }
-export { basemapLayer }
-export { TiledMapLayer }
-export { tiledMapLayer }
-export { RasterLayer }
-
-export { ImageMapLayer }
-export { imageMapLayer }
-export { DynamicMapLayer }
-export { dynamicMapLayer }
-export { FeatureGrid }
-
-export { FeatureManager }
-
-export { FeatureLayer }
-export { featureLayer }
 
 var EsriLeaflet = {
   VERSION: '1.0.0',

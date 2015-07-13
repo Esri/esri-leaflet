@@ -1,7 +1,7 @@
 import L from "leaflet";
 import { FeatureGrid } from "./FeatureGrid";
 import featureLayerService from "../../Services/FeatureLayerService"
-import { cleanUrl, warn, requestAnimationFrame } from "../../Util";
+import { cleanUrl, warn } from "../../Util";
 
 export var FeatureManager = FeatureGrid.extend({
   /**
@@ -101,7 +101,7 @@ export var FeatureManager = FeatureGrid.extend({
       // no error, features
       if(!error && featureCollection && featureCollection.features.length){
         // schedule adding features until the next animation frame
-        requestAnimationFrame(L.Util.bind(function(){
+        L.Util.requestAnimFrame(L.Util.bind(function(){
           this._addFeatures(featureCollection.features, coords);
           this._postProcessFeatures(bounds);
         }, this));
@@ -207,7 +207,7 @@ export var FeatureManager = FeatureGrid.extend({
       if(pendingRequests <= 0){
         this._currentSnapshot = newSnapshot;
         // schedule adding features until the next animation frame
-        requestAnimationFrame(L.Util.bind(function(){
+        L.Util.requestAnimFrame(L.Util.bind(function(){
           this.removeLayers(oldSnapshot);
           this.addLayers(newSnapshot);
           if(callback) {
@@ -308,7 +308,7 @@ export var FeatureManager = FeatureGrid.extend({
     }
 
     // schedule adding features until the next animation frame
-    requestAnimationFrame(L.Util.bind(function(){
+    L.Util.requestAnimFrame(L.Util.bind(function(){
       this.removeLayers(layersToRemove);
       this.addLayers(layersToAdd);
     }, this));
