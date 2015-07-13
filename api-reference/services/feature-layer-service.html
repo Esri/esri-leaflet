@@ -8,7 +8,7 @@
   <meta charset="utf-8">
 
   
-    <title>L.esri.Services.FeatureLayer | Esri Leaflet</title>
+    <title>L.esri.Services.FeatureLayerService | Esri Leaflet</title>
   
 
   
@@ -107,9 +107,9 @@
 
 
 <div class="main-content">
-  <h1 id="l-esri-services-featurelayer">L.esri.Services.FeatureLayer</h1>
+  <h1 id="l-esri-services-featurelayerservice">L.esri.Services.FeatureLayerService</h1>
 <p>Inherits from <a href="../../../../esri-leaflet/api-reference/services/service.html"><code>L.esri.Service</code></a></p>
-<p><code>L.esri.Services.FeatureLayer</code> is an abstraction for interacting with Feature Layers running on ArcGIS Online and ArcGIS Server that allows you to make requests to the API, as well as query, add, update and remove features from the service.</p>
+<p><code>L.esri.Services.FeatureLayerService</code> is an abstraction for interacting with Feature Layers running on ArcGIS Online and ArcGIS Server that allows you to make requests to the API, as well as query, add, update and remove features from the service.</p>
 <h3 id="constructor">Constructor</h3>
 <table>
     <thead>
@@ -120,16 +120,16 @@
     </thead>
     <tbody>
         <tr>
-            <td><code class="nobr">L.esri.Services.featureLayer(<nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code></td>
+            <td><code class="nobr">L.esri.Services.featureLayerService(<nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code></td>
             <td><code>options</code> for configuring the ArcGIS Server or ArcGIS Online feature layer you would like to consume. <code>Options</code> include a <code>url</code> parameter which refers to the ArcGIS Server or ArcGIS Online service you would like to consume.</td>
         </tr>
     </tbody>
 </table>
 
 <h3 id="options">Options</h3>
-<p><code>L.esri.Services.FeatureLayer</code> accepts all <a href="../../../../esri-leaflet/api-reference/services/service.html"><code>L.esri.Services.Service</code></a> options.</p>
+<p><code>L.esri.Services.FeatureLayerService</code> accepts all <a href="../../../../esri-leaflet/api-reference/services/service.html"><code>L.esri.Services.Service</code></a> options.</p>
 <h3 id="events">Events</h3>
-<p><code>L.esri.Services.FeatureLayer</code> fires all  <a href="../../../../esri-leaflet/api-reference/services/service.html"><code>L.esri.Services.service</code></a> events.</p>
+<p><code>L.esri.Services.FeatureLayerService</code> fires all  <a href="../../../../esri-leaflet/api-reference/services/service.html"><code>L.esri.Services.service</code></a> events.</p>
 <h3 id="methods">Methods</h3>
 <table>
     <thead>
@@ -203,7 +203,7 @@
 <h3 id="examples">Examples</h3>
 <p><strong>Note</strong>: These examples use a public feature service on ArcGIS Online that does not require authentication.</p>
 <h5 id="adding-features">Adding Features</h5>
-<pre><code class="language-js"><span class="keyword">var</span> service = L.esri.Services.featureLayer({
+<pre><code class="language-js"><span class="keyword">var</span> service = L.esri.Services.featureLayerService({
     url: <span class="string">'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Pubic_Feature_Service/FeatureServer/0'</span>
 });
 
@@ -226,7 +226,7 @@ service.addFeature(feature, <span class="function"><span class="keyword">functio
     }
 });</code></pre>
 <h5 id="updating-features">Updating Features</h5>
-<pre><code class="language-js"><span class="keyword">var</span> service = L.esri.Services.featureLayer({
+<pre><code class="language-js"><span class="keyword">var</span> service = L.esri.Services.featureLayerService({
     url:<span class="string">'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Pubic_Feature_Service/FeatureServer/0'</span>
 });
 
@@ -250,7 +250,7 @@ service.updateFeature(feature, <span class="function"><span class="keyword">func
     }
 });</code></pre>
 <h5 id="deleting-features">Deleting Features</h5>
-<pre><code class="language-js"><span class="keyword">var</span> service = L.esri.Services.featureLayer({
+<pre><code class="language-js"><span class="keyword">var</span> service = L.esri.Services.featureLayerService({
     url: <span class="string">'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Pubic_Feature_Service/FeatureServer/0'</span>
 });
 
@@ -262,7 +262,7 @@ service.deleteFeature(<span class="number">2</span>, <span class="function"><spa
     }
 });</code></pre>
 <h5 id="querying-features">Querying Features</h5>
-<pre><code class="language-js"><span class="keyword">var</span> service = L.esri.Services.featureLayer({
+<pre><code class="language-js"><span class="keyword">var</span> service = L.esri.Services.featureLayerService({
     url: <span class="string">'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Pubic_Feature_Service/FeatureServer/0'</span>
 });
 
