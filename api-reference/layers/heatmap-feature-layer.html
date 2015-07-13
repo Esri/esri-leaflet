@@ -120,8 +120,8 @@
     </thead>
     <tbody>
         <tr>
-            <td><code class="nobr">new L.esri.Layers.HeatmapFeatureLayer(<nobr class="param"><span>&lt;String&gt;</span> <code>url</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br><code class="nobr">L.esri.Layers.heatmapFeatureLayer(<nobr class="param"><span>&lt;String&gt;</span> <code>url</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br><code class="nobr">new L.esri.HeatmapFeatureLayer(<nobr class="param"><span>&lt;String&gt;</span> <code>url</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br><code class="nobr">L.esri.heatmapFeatureLayer(<nobr class="param"><span>&lt;String&gt;</span> <code>url</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code></td>
-            <td><code>url</code> should be the URL to the Feature Layer.</td>
+            <td><code class="nobr">L.esri.heatmapFeatureLayer(<nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code></td>
+            <td>You must pass a <code>url</code> to a <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Layer/02r3000000w6000000/">Feature Layer</a> in your <code>options</code></td>
         </tr>
     </tbody>
 </table>
@@ -136,6 +136,11 @@
         </tr>
     </thead>
     <tbody>
+        <tr>
+          <td><code>url</code></td>
+          <td><code>String</code></td>
+          <td><strong>Required</strong> The URL to the <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Layer/02r3000000w6000000/">Feature Layer</a>.</td>
+        </tr>
         <tr>
             <td><code>where</code></td>
             <td><code>String</code></td>

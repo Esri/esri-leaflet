@@ -120,8 +120,8 @@
     </thead>
     <tbody>
         <tr>
-            <td><code class="nobr">new L.esri.Layers.ClusteredFeatureLayer(<nobr class="param"><span>&lt;String&gt;</span> <code>url</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br><code class="nobr">L.esri.Layers.clusteredFeatureLayer(<nobr class="param"><span>&lt;String&gt;</span> <code>url</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br><code class="nobr">new L.esri.ClusteredFeatureLayer(<nobr class="param"><span>&lt;String&gt;</span> <code>url</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br><code class="nobr">L.esri.clusteredFeatureLayer(<nobr class="param"><span>&lt;String&gt;</span> <code>url</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code></td>
-            <td><code>url</code> should be the URL to the Feature Layer.</td>
+            <td><code class="nobr">L.esri.clusteredFeatureLayer(<nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code></td>
+            <td>You must pass a <code>url</code> to a <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Layer/02r3000000w6000000/">Feature Layer</a> in your <code>options</code></td>
         </tr>
     </tbody>
 </table>
@@ -136,6 +136,11 @@
         </tr>
     </thead>
     <tbody>
+        <tr>
+          <td><code>url</code></td>
+          <td><code>String</code></td>
+          <td><strong>Required</strong> The URL to the <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Layer/02r3000000w6000000/">Feature Layer</a>.</td>
+        </tr>
         <tr>
             <td><code>pointToLayer(<nobr class="param"><span>&lt;<a href="http://geojson.org/geojson-spec.html#feature-objects">GeoJSON Feature</a>&gt;</span> <code>feature</code></nobr>, <nobr class="param"><span>&lt;<a href="http://leafletjs.com/reference.html#latlng">LatLng</a>&gt;</span> <code>latlng</code></nobr>)</code></td>
             <td><code>Function</code></td>
