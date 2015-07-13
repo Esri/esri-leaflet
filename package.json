@@ -7,6 +7,7 @@
     "type": "git",
     "url": "git@github.com:Esri/esri-leaflet.git"
   },
+  "jsnext:main": "index",
   "devDependencies": {
     "assemble": "^0.4.37",
     "babelify": "^6.1.2",
