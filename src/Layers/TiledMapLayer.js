@@ -38,11 +38,10 @@ export var TiledMapLayer = L.TileLayer.extend({
   },
 
   initialize: function(options){
-    options.url = EsriLeaflet.Util.cleanUrl(options.url);
+    options.url = cleanUrl(options.url);
     options = L.Util.setOptions(this, options);
 
     // set the urls
-    //this.url = L.esri.Util.cleanUrl(url);
     this.tileUrl = options.url + 'tile/{z}/{y}/{x}';
     this.service = mapService(options);
     this.service.addEventParent(this);
@@ -80,7 +79,7 @@ export var TiledMapLayer = L.TileLayer.extend({
           if (sr === 102100 || sr === 3857) {
             //create the zoom level data
             var arcgisLODs = metadata.tileInfo.lods;
-            var correctResolutions = EsriLeaflet.Layers.TiledMapLayer.MercatorZoomLevels;
+            var correctResolutions = TiledMapLayer.MercatorZoomLevels;
 
             for(var i = 0; i < arcgisLODs.length; i++) {
               var arcgisLOD = arcgisLODs[i];

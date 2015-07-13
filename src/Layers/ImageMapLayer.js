@@ -1,6 +1,6 @@
 import L from "leaflet";
 import { RasterLayer } from "./RasterLayer";
-import { cleanUrl} from "../Util";
+import { cleanUrl } from "../Util";
 import imageService from "../Services/ImageService";
 
 export var ImageMapLayer = RasterLayer.extend({
@@ -21,7 +21,7 @@ export var ImageMapLayer = RasterLayer.extend({
   },
 
   initialize: function (options) {
-    options.url = EsriLeaflet.Util.cleanUrl(options.url);
+    options.url = cleanUrl(options.url);
     this.service = imageService(options);
     this.service.addEventParent(this);
 
@@ -193,7 +193,7 @@ export var ImageMapLayer = RasterLayer.extend({
 });
 
 export function imageMapLayer(url, options) {
-  return new EsriLeaflet.Layers.ImageMapLayer(url, options);
+  return new ImageMapLayer(url, options);
 };
 
 export default imageMapLayer;

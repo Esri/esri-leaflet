@@ -144,7 +144,7 @@ describe('L.esri.Layers.DynamicMapLayer', function () {
     expect(identify._service).to.equal(layer.service);
   });
 
-  it('should propagate events from the service', function(){
+  it('should propagate events from the service', function(done){
     server.respondWith('GET', 'http://services.arcgis.com/mock/arcgis/rest/services/MockMapService/MapServer&f=json', JSON.stringify({
       currentVersion: 10.2
     }));
@@ -155,10 +155,9 @@ describe('L.esri.Layers.DynamicMapLayer', function () {
     layer.on('requeststart', requeststartSpy);
     layer.on('requestend', requestendSpy);
 
-    layer.on('requeststart', requeststartSpy);
-    layer.on('requestend', requestendSpy);
-
-    layer.metadata(function(){});
+    layer.metadata(function(){
+      done();
+    });
 
     server.respond();
 

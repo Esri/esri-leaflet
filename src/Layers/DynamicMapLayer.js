@@ -16,7 +16,7 @@ export var DynamicMapLayer = RasterLayer.extend({
   },
 
   initialize: function (options) {
-    options.url = EsriLeaflet.Util.cleanUrl(options.url);
+    options.url = cleanUrl(options.url);
     this.service = mapService(options);
     this.service.addEventParent(this);
 

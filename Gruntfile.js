@@ -270,7 +270,7 @@ module.exports = function(grunt) {
         reporters: ['progress', 'coverage'],
         browsers: browsers,
         preprocessors: {
-          'src/**/*.js': 'coverage'
+          'src/**/*.js': ['sourcemap', 'coverage']
         }
       },
       watch: {

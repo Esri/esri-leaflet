@@ -1,5 +1,6 @@
 import logo from "../Controls/Logo";
 import { jsonp } from "../Request";
+import { pointerEvents } from "../Support";
 
 var tileProtocol = (window.location.protocol !== 'https:') ? 'http:' : 'https:';
 
@@ -50,7 +51,7 @@ export var BasemapLayer = L.TileLayer.extend({
           minZoom: 1,
           maxZoom: 16,
           subdomains: ['server', 'services'],
-          pane: (EsriLeaflet.Support.pointerEvents) ? 'esri-labels' : 'tilePane'
+          pane: (pointerEvents) ? 'esri-labels' : 'tilePane'
         }
       },
       NationalGeographic: {
@@ -83,7 +84,7 @@ export var BasemapLayer = L.TileLayer.extend({
           minZoom: 1,
           maxZoom: 16,
           subdomains: ['server', 'services'],
-          pane: (EsriLeaflet.Support.pointerEvents) ? 'esri-labels' : 'tilePane'
+          pane: (pointerEvents) ? 'esri-labels' : 'tilePane'
         }
       },
       Gray: {
@@ -105,7 +106,7 @@ export var BasemapLayer = L.TileLayer.extend({
           minZoom: 1,
           maxZoom: 16,
           subdomains: ['server', 'services'],
-          pane: (EsriLeaflet.Support.pointerEvents) ? 'esri-labels' : 'tilePane'
+          pane: (pointerEvents) ? 'esri-labels' : 'tilePane'
         }
       },
       Imagery: {
@@ -158,7 +159,7 @@ export var BasemapLayer = L.TileLayer.extend({
           minZoom: 1,
           maxZoom: 12,
           subdomains: ['server', 'services'],
-          pane: (EsriLeaflet.Support.pointerEvents) ? 'esri-labels' : 'tilePane'
+          pane: (pointerEvents) ? 'esri-labels' : 'tilePane'
         }
       },
       Terrain: {
@@ -180,7 +181,7 @@ export var BasemapLayer = L.TileLayer.extend({
           minZoom: 1,
           maxZoom: 13,
           subdomains: ['server', 'services'],
-          pane: (EsriLeaflet.Support.pointerEvents) ? 'esri-labels' : 'tilePane'
+          pane: (pointerEvents) ? 'esri-labels' : 'tilePane'
         }
       }
     }

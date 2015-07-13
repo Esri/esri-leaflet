@@ -201,7 +201,8 @@ describe('L.esri.Layers.FeatureLayer', function () {
 
   it('should run a function against every feature', function(){
     var spy = sinon.spy();
-    layer = L.esri.featureLayer('http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0', {
+    layer = L.esri.featureLayer({
+      url: 'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0',
       onEachFeature: spy
     }).addTo(map);
     layer.createLayers(features);
@@ -227,7 +228,9 @@ describe('L.esri.Layers.FeatureLayer', function () {
     layer.bindPopup(function(feature){
       return 'ID: ' + feature.id;
     });
+
     layer.unbindPopup();
+
     expect(layer.getFeature(1)._popup).to.equal(null);
     expect(layer.getFeature(2)._popup).to.equal(null);
   });

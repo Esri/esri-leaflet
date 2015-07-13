@@ -79,7 +79,7 @@ export var Service = L.Evented.extend({
         // fire an event for users to handle and re-authenticate
         this.fire('authenticationrequired', {
           authenticate: L.Util.bind(this.authenticate, this)
-        });
+        }, true);
 
         // if the user has access to a callback they can handle the auth error
         error.authenticate = L.Util.bind(this.authenticate, this);
@@ -94,7 +94,7 @@ export var Service = L.Evented.extend({
           message: error.message,
           code: error.code,
           method: method
-        });
+        }, true);
       } else {
         this.fire('requestsuccess', {
           url: this.options.url + path,
@@ -108,7 +108,7 @@ export var Service = L.Evented.extend({
         url: this.options.url + path,
         params: params,
         method: method
-      });
+      }, true);
     }, this);
   },
 
@@ -123,7 +123,7 @@ export var Service = L.Evented.extend({
 });
 
 export function service (options) {
-  return new EsriLeaflet.Services.Service(options);
+  return new Service(options);
 };
 
 export default service;

@@ -224,7 +224,7 @@ describe('L.esri.Layers.ImageMapLayer', function () {
     expect(layer._popup.getLatLng()).to.equal(map.getCenter());
   });
 
-  it('should propagate events from the service', function(){
+  it('should propagate events from the service', function(done){
     server.respondWith('GET', 'http://services.arcgis.com/mock/arcgis/rest/services/MockImageService/ImageServer&f=json', JSON.stringify({
       currentVersion: 10.2
     }));
@@ -235,7 +235,9 @@ describe('L.esri.Layers.ImageMapLayer', function () {
     layer.on('requeststart', requeststartSpy);
     layer.on('requestend', requestendSpy);
 
-    layer.metadata(function(){});
+    layer.metadata(function(){
+      done();
+    });
 
     server.respond();
 

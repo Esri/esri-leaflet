@@ -101,7 +101,7 @@ export var FeatureManager = FeatureGrid.extend({
       // no error, features
       if(!error && featureCollection && featureCollection.features.length){
         // schedule adding features until the next animation frame
-        EsriLeaflet.Util.requestAnimationFrame(L.Util.bind(function(){
+        requestAnimationFrame(L.Util.bind(function(){
           this._addFeatures(featureCollection.features, coords);
           this._postProcessFeatures(bounds);
         }, this));
