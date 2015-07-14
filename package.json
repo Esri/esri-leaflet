@@ -52,9 +52,12 @@
     "karma-sauce-launcher": "^0.2.10",
     "karma-sourcemap-loader": "^0.3.5",
     "load-grunt-tasks": "^0.4.0",
+    "minimist": "^1.1.1",
+    "rollup": "^0.10.0",
     "semistandard": "^6.1.2",
     "sinon": "^1.11.1",
-    "uglify-js": "^2.4.23"
+    "uglify-js": "^2.4.23",
+    "yargs": "^3.15.0"
   },
   "homepage": "http://esri.github.io/esri-leaflet",
   "jsnext:main": "./index.js",
@@ -90,7 +93,7 @@
     "postbuild": "npm run archive",
     "prepublish": "npm run build",
     "start": "grunt dev",
-    "lint": "semistandard src/**/*.js", 
+    "lint": "semistandard src/**/*.js",
     "pretest": "npm run lint && esperanto -i src/EsriLeaflet.js -o ./dist/esri-leaflet-src.js --skip=leaflet --t umd --strict --name L.esri --bundle -m inline",
     "test": "karma start"
   }
