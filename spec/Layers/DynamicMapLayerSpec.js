@@ -12,6 +12,14 @@ describe('L.esri.Layers.DynamicMapLayer', function () {
     return L.map(container).setView([37.75, -122.45], 12);
   }
 
+  var Image1 = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAH0AAAB9CAMAAAC4XpwXAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyhpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMDY3IDc5LjE1Nzc0NywgMjAxNS8wMy8zMC0yMzo0MDo0MiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6RjNGODI5NzkyMjYwMTFFNUJEOEJCNkRDM0Q3NUQxQ0UiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6RjNGODI5N0EyMjYwMTFFNUJEOEJCNkRDM0Q3NUQxQ0UiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpGM0Y4Mjk3NzIyNjAxMUU1QkQ4QkI2REMzRDc1RDFDRSIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpGM0Y4Mjk3ODIyNjAxMUU1QkQ4QkI2REMzRDc1RDFDRSIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PrtQ3ewAAAAwUExURbS0tN3d3dLS0qurq4yMjNbW1pOTk76+vqKios7OzpqamsbGxuXl5YSEhM/Pz8zMzOLy6/8AAAGBSURBVHja7Nu7cgMhDAVQIfESCuL//zYidpLOSUNIcXEBw6znrHgImiX2e4Vp3SzkF3GHDh06dOjQoUOHDh06dOjQoUOHDh06dOjQoUOH/u90LfzTI1zKId2N2uuHVUma6hGdbcrryNT7HMf0LD+Nq/d6Uuf981J0zzGX+HOJSld08V4Zvfo5PTVqvVknVY4GNeaYajJ26cZL+WjsbzJ7rr1OSlbziKrNWnNLkmtV3/rJ2Ckvm1R2a1q0gmXJpvECmcrh2EOPqpW6W6qZUq8fb5SpxY44H7uGzqFLXiv0MVLLZnWMTnw+dn/qn7E/9Bh5M/272L/nnfa8U8pydt5njzWve9XNntbXmh/VUuyEbDHyIx/S3aSVJmpiLM1jv1Mk/uiR2oo+9zvRIX2fccYlKl87sT3SHsmbTfNHrtudf3m+F5kyIs/cuV2oSx2N1x09jhcvvG7p+06BWyV06NChQ4cOHTp06NChQ4cOHTp06NChQ4cO/df6ulno6nfQ7wIMAAxMgKYG08xRAAAAAElFTkSuQmCC';
+  var Image2 = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAH0AAAB9CAMAAAC4XpwXAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyhpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMDY3IDc5LjE1Nzc0NywgMjAxNS8wMy8zMC0yMzo0MDo0MiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MDI5MjEwNkEyMjYxMTFFNUJEOEJCNkRDM0Q3NUQxQ0UiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6MDI5MjEwNkIyMjYxMTFFNUJEOEJCNkRDM0Q3NUQxQ0UiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDowMjkyMTA2ODIyNjExMUU1QkQ4QkI2REMzRDc1RDFDRSIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDowMjkyMTA2OTIyNjExMUU1QkQ4QkI2REMzRDc1RDFDRSIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PpxjvssAAAAwUExURd3d3bOzs9LS0qurq4uLi9bW1ry8vMnJyZubm5KSkoODg6SkpOPj48TExM/Pz8zMzIOgIpEAAAGeSURBVHja7NvLbsQgDAVQbGPzGuz//9tCuumqUdXSVOplpEEaoTkYjMkmif25ximebMkfxB06dOjQoUOHDh06dOjQoUOHDh06dOjQoUOHDh3639OVy80IVuUzuheym8FcRCYf0Xl20c9HRMu5fYH/kp5vdKU+Iw89pvP+uKrvPWb1Enp1vjdcpYe2cS72STZmGeTBNowmM4lRYZexvky83C3QN/QX9draaJ1SabmuznJreaaxuvCV8tTtmJ4oR+mkeax5lNltsSy5eLaUSZdfm/s5va21NW17Hh6ZUq0r/DIb2U43tTW1OBi7z2x86RFt63rptVZbeVdz8O/oH2NfK1/mFXqK39Dtfd8lM+USe99FdTTmU3ofL+k+r6z7kPO1vef8XDPK9dCJ8yKmJlFkuhhf5918/UJtqkud+7yTDDtSba47jldgq7Tt2+4qe0z0mn3yVet2xdP7i/Dn7vdVXKWuOvPM04W7tGocz+jh6srxlB7xjT/AUyV06NChQ4cOHTp06NChQ4cOHTp06NChQ4f+//R4sqVH34N+E2AAO/CAbzhay1gAAAAASUVORK5CYII=';
+  var WithLayers = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAH0AAAB9CAMAAAC4XpwXAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyhpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMDY3IDc5LjE1Nzc0NywgMjAxNS8wMy8zMC0yMzo0MDo0MiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MkU1NjVEN0MyMjZBMTFFNUI1NTc5NjAwMkVENUQwM0IiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6MkU1NjVEN0QyMjZBMTFFNUI1NTc5NjAwMkVENUQwM0IiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDoyRTU2NUQ3QTIyNkExMUU1QjU1Nzk2MDAyRUQ1RDAzQiIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDoyRTU2NUQ3QjIyNkExMUU1QjU1Nzk2MDAyRUQ1RDAzQiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Plrqc7EAAABgUExURaioqL29vba2tsbGxrm5uaGhobi4uLOzs5ycnMTExKampr+/v7KysrCwsMDAwMLCwq2traSkpMvLy5+fn6+vr8PDw6KiosjIyKOjo6Wlpa6urqurq8rKyp6enpmZmczMzKKB4ZgAAAEfSURBVHja7NXZboMwEIVhLzhQCMRAWEOY93/L2k26qb1Erir9vkAGIX0+gz0o+cuh0NHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0T/HJUuqF91sVSWVEekmEe3jw/aSSG/trt0kdgi5VXLdn/q8D+pVpN6t6Nk1Tz0vZ5FVm1CVdbEi51HLNt4O1Y3yanlkfst+O5un7oawqqxWL7KVJmyHax5eWY7NXhXZff2ie/OuF13QbdmKDEV5CroOW0Plh+p2H3rzq+5s0GUOpbZLo+NHCLebO/bEFZ1qfuixHLWLuo9HcByHR3Z796m6TRcv4/Qx/TZJ0usmlbLX8ZdBR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR/8H+qsAAwABe1cCMD1LDwAAAABJRU5ErkJggg==';
+  var WithTime = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAH0AAAB9CAMAAAC4XpwXAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyhpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMDY3IDc5LjE1Nzc0NywgMjAxNS8wMy8zMC0yMzo0MDo0MiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6RjNGODI5N0QyMjYwMTFFNUJEOEJCNkRDM0Q3NUQxQ0UiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6RjNGODI5N0UyMjYwMTFFNUJEOEJCNkRDM0Q3NUQxQ0UiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpGM0Y4Mjk3QjIyNjAxMUU1QkQ4QkI2REMzRDc1RDFDRSIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpGM0Y4Mjk3QzIyNjAxMUU1QkQ4QkI2REMzRDc1RDFDRSIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pk/Tz9QAAAAwUExURbS0tMrKypKSkqOjo6urq87OztnZ2dTU1JmZmb29vZ2dncLCwtHR0bi4uM/Pz8zMzLWz9KMAAAGMSURBVHja7NtB0pggDAVgQgiEEML9b9to2wt0ht8uHjKoq4+HElcWj++al/NlK/EhHtChQ4cOHTp06NChQ4cOHTp06NChQ4cOHTp06ND/d11+WBdJUv6qLnQk8vgZnRKORx+R7uE53hlRjJzHbV2Il7BMprJ8+KlljKlWCxWS+7onVFfRqNMbhe7utCv7rGtEhDyPwuPWyg9uCTXu5KvOodvDh85OJHmQUxx/Tpf01nYtXAavXdswy/RHS18sZGattr6qkV/SNzdr+bLVeXKxdbOlvvuskmuhXLTbzqW5o/syLpzhdLqmTsXe7FNl6eC9zI2NXa7oIqqk5qJTdOUEyp/sjy5cZuptTrmkD9WuKdYpdXl99ZrZa6waVqYO25PHpVo38qFy68dmZHZbJaXMnsGXvdnHqjpv6c9+zop3iE5uqxzea3lun57DuLfjDkU8PSv87y7vNYlnJTohknBcqzb4vkOHDh06dOjQoUOHDh06dOjQoUOHDh06dOjQoUP/N/182cqn/0H/EmAAhleDsZtu/OkAAAAASUVORK5CYII=';
+  var WithTimeTimeOptions = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAH0AAAB9CAMAAAC4XpwXAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyhpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMDY3IDc5LjE1Nzc0NywgMjAxNS8wMy8zMC0yMzo0MDo0MiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MkU1NjVENzgyMjZBMTFFNUI1NTc5NjAwMkVENUQwM0IiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6MkU1NjVENzkyMjZBMTFFNUI1NTc5NjAwMkVENUQwM0IiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDoyOUVEREI3NTIyNkExMUU1QjU1Nzk2MDAyRUQ1RDAzQiIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDoyOUVEREI3NjIyNkExMUU1QjU1Nzk2MDAyRUQ1RDAzQiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pno8yQ0AAABgUExURb29va6urqysrKioqLKyssvLy7Gxsbm5ucjIyLe3t7W1tcLCwr6+vsbGxrOzs8XFxbS0tMHBwaqqqsDAwLu7u7i4uLq6usfHx8nJyaurq8PDw8rKyqenp6Ojo7CwsMzMzDDnGUgAAAEDSURBVHja7NTbUoMwFIXhBhJCoJwLbT2t939L02A7elEdO2ov/JkMJGTtfMAAG91z26Cjo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6PfTS//Xp/DnOYbyUou231I74+DpndXtTfT2mm+8UA/CbbPrbSVcicT5apMozDH3RKJQqpL1SEc5MKjdpOR+kGHY4r5hxiNx8rdqBd5n+761Oyqn7qFlRt90n0n39pB9VhrqV/iube4nF2rnLlV7324omvcXvS+HdTknbosLvVUnSvMslZl5c+/8+7K2H6Z/M0vzvG3QUdHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dH//f6qwADAEAoWKnzLlffAAAAAElFTkSuQmCC';
+  var WithDefs = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAH0AAAB9CAMAAAC4XpwXAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyhpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMDY3IDc5LjE1Nzc0NywgMjAxNS8wMy8zMC0yMzo0MDo0MiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MjlFRERCNkYyMjZBMTFFNUI1NTc5NjAwMkVENUQwM0IiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6MjlFRERCNzAyMjZBMTFFNUI1NTc5NjAwMkVENUQwM0IiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDoyOUVEREI2RDIyNkExMUU1QjU1Nzk2MDAyRUQ1RDAzQiIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDoyOUVEREI2RTIyNkExMUU1QjU1Nzk2MDAyRUQ1RDAzQiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pg3iWmcAAABgUExURa6urr+/v8HBwcfHx7u7u56enrW1taWlpby8vLe3t7i4uMPDw8LCwqioqKamppmZmcjIyKurq7Kysq2trZaWlsrKypqampycnKOjo5eXl8vLy52dnZubm6KiorCwsMzMzADumocAAAFCSURBVHja7NXLbsMgEEBRMAH8KHEc41cch///yxLXSVrJm0p2uuhlhzTSYWYYEOEvl0BHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR//FurxHb1q1Yk/jHvo1vXhV+CYk+UP3s37wpT09w4pB7qFbo3ya6hCMjbsse+ltoW/PMHndpe9CpIMxbtnV4psezKvasttFz47nqarPUTvG+pZlEXWh5aynQwxIJhdPY30sTTJ2G+uJrkRv0xDy/pl7crzNuvSx8TZzZsm9EmpjvRl62Wn1Q1d1/aUPccy6qq8W/VAmW0/c2F7G+5Va0fM7eTXy49H3vD1trDsd7LSqH3RMOkzmLBZdqbbYWL+5IKo13bfuNJdbF4tuBvf2l7Z5vbENfxw6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6+r/XPwUYAAXsVASA6AUmAAAAAElFTkSuQmCC';
+  var WithToken = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAH0AAAB9CAMAAAC4XpwXAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyhpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMDY3IDc5LjE1Nzc0NywgMjAxNS8wMy8zMC0yMzo0MDo0MiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MjlFRERCNzMyMjZBMTFFNUI1NTc5NjAwMkVENUQwM0IiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6MjlFRERCNzQyMjZBMTFFNUI1NTc5NjAwMkVENUQwM0IiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDoyOUVEREI3MTIyNkExMUU1QjU1Nzk2MDAyRUQ1RDAzQiIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDoyOUVEREI3MjIyNkExMUU1QjU1Nzk2MDAyRUQ1RDAzQiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PhEp84oAAABgUExURcjIyJycnLa2tsTExL+/v7i4uJ+fn5mZmbS0tK6urqmpqbGxsaamppqamsDAwLKysrOzs6WlpcrKyqurq6Kioq2trby8vMvLy8PDw6SkpKqqqqysrKOjo8HBwbq6uszMzKcQTFcAAAEoSURBVHja7NTbboMwDIDhhHOABginAm39/m/ZsFGpmqpdQVdpfy4Qsi2+WDhR8pdLoaOjo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojf5iu7I9AGB6oF2MUqcpXb+W2WZ+BMcNWUNUH6km4GDuJ9IXIOXrow2W279DzoSljI+JGkbh/6NIG8g69zrqu8FSWiUxaiU2aetNdrqNVN/596Hxe9FLuqw/z1OXX7xa/er/Yy6Zfm1vuE23i/MZU4qOpS8dd9VD3uXZPenPuNj2eIz8QlV7WrvPSfy+Vk9v3xKVBnchL3ZY3H6iKk1qH04xH6J0dyte6axK7JqrWj4Vu5Qj9t/X0k90/uGnR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dE/X78LMAB6zVaMpfGcowAAAABJRU5ErkJggg==';
+
   var url = 'http://services.arcgis.com/mock/arcgis/rest/services/MockMapService/MapServer';
   var layer;
   var server;
@@ -45,7 +53,7 @@ describe('L.esri.Layers.DynamicMapLayer', function () {
     clock = sinon.useFakeTimers();
     server = sinon.fakeServer.create();
     server.respondWith('GET',new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png24&transparent=true&bboxSR=3857&imageSR=3857&f=json/), JSON.stringify({
-      href: 'http://placehold.it/500&text=Image1'
+      href: Image1
     }));
     layer = L.esri.dynamicMapLayer({
       url: url
@@ -97,13 +105,13 @@ describe('L.esri.Layers.DynamicMapLayer', function () {
 
     layer.once('load', function(){
       layer.once('load', function(){
-        expect(layer._currentImage._url).to.equal('http://placehold.it/500&text=Image2');
+        expect(layer._currentImage._url).to.equal(Image2);
         done();
       });
       clock.tick(151);
       map.setView([ 37.30, -121.96], 10);
       server.respondWith('GET',new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png24&transparent=true&bboxSR=3857&imageSR=3857&f=json/), JSON.stringify({
-        href: 'http://placehold.it/500&text=Image2'
+        href: Image2
       }));
       server.respond();
     });
@@ -113,7 +121,7 @@ describe('L.esri.Layers.DynamicMapLayer', function () {
   it('can be added to a map', function(done){
     layer.on('load', function(){
       expect(layer._currentImage).to.be.an.instanceof(L.ImageOverlay);
-      expect(layer._currentImage._url).to.equal('http://placehold.it/500&text=Image1');
+      expect(layer._currentImage._url).to.equal(Image1);
       expect(layer._currentImage._bounds).to.deep.equal(map.getBounds());
       done();
     });
@@ -205,11 +213,11 @@ describe('L.esri.Layers.DynamicMapLayer', function () {
   it('should get and set visible layers', function(done){
 
     server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png24&transparent=true&bboxSR=3857&imageSR=3857&layers=show%3A0%2C1%2C2&f=json/), JSON.stringify({
-      href: 'http://placehold.it/500&text=WithLayers'
+      href: WithLayers
     }));
 
     layer.once('load', function(){
-      expect(layer._currentImage._url).to.equal('http://placehold.it/500&text=WithLayers');
+      expect(layer._currentImage._url).to.equal(WithLayers);
       done();
     });
 
@@ -221,11 +229,11 @@ describe('L.esri.Layers.DynamicMapLayer', function () {
 
   it('should get and set time ranges', function(done){
     server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png24&transparent=true&bboxSR=3857&imageSR=3857&time=1389254400000%2C1389513600000&f=json/), JSON.stringify({
-      href: 'http://placehold.it/500&text=WithTime'
+      href: WithTime
     }));
 
     layer.once('load', function(){
-      expect(layer._currentImage._url).to.equal('http://placehold.it/500&text=WithTime');
+      expect(layer._currentImage._url).to.equal(WithTime);
       done();
     });
 
@@ -237,11 +245,11 @@ describe('L.esri.Layers.DynamicMapLayer', function () {
 
   it('should get and set extra time options', function(done){
     server.respondWith('GET', new RegExp(/http:\/\/services\.arcgis\.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png24&transparent=true&bboxSR=3857&imageSR=3857&timeOptions=%7B%22foo%22%3A%22bar%22%7D&time=1389254400000%2C1389513600000&f=json/), JSON.stringify({
-      href: 'http://placehold.it/500&text=WithTime+TimeOptions'
+      href: WithTimeTimeOptions
     }));
 
     layer.once('load', function(){
-      expect(layer._currentImage._url).to.equal('http://placehold.it/500&text=WithTime+TimeOptions');
+      expect(layer._currentImage._url).to.equal(WithTimeTimeOptions);
       done();
     });
 
@@ -255,11 +263,11 @@ describe('L.esri.Layers.DynamicMapLayer', function () {
 
   it('should get and set layer definitions', function(done){
     server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png24&transparent=true&bboxSR=3857&imageSR=3857&layerDefs=%7B%221%22%3A%22Foo%3DBar%22%7D&f=json/), JSON.stringify({
-      href: 'http://placehold.it/500&text=WithDefs'
+      href: WithDefs
     }));
 
     layer.once('load', function(){
-      expect(layer._currentImage._url).to.equal('http://placehold.it/500&text=WithDefs');
+      expect(layer._currentImage._url).to.equal(WithDefs);
       done();
     });
 
@@ -272,11 +280,11 @@ describe('L.esri.Layers.DynamicMapLayer', function () {
 
   it('should pass a token if one is set', function(done){
     server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png24&transparent=true&bboxSR=3857&imageSR=3857&token=foo&f=json/), JSON.stringify({
-      href: 'http://placehold.it/500&text=WithToken'
+      href: WithToken
     }));
 
     layer.once('load', function(){
-      expect(layer._currentImage._url).to.equal('http://placehold.it/500&text=WithToken');
+      expect(layer._currentImage._url).to.equal(WithToken);
       done();
     });
 
