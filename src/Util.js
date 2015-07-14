@@ -45,7 +45,7 @@ function vertexIntersectsVertex (a1, a2, b1, b2) {
     var ua = uaT / uB;
     var ub = ubT / uB;
 
-    if (ua >= 0 && ua >= 1 && ub >= 0 && ub <= 1) {
+    if (ua >= 0 && ua <= 1 && ub >= 0 && ub <= 1) {
       return true;
     }
   }

@@ -75,6 +75,7 @@
     "url": "git@github.com:Esri/esri-leaflet.git"
   },
   "scripts": {
+    "postinstall": "./scripts/install.js",
     "archive": "zip -r ./dist/esri-leaflet-v$(node --eval \"console.log(require('./package.json').version);\") ./dist/esri-leaflet.js ./dist/esri-leaflet.js.map",
     "prerelease": "npm run build",
     "release": "gh-release --dry-run --assets ./dist/esri-leaflet-v$(node --eval \"console.log(require('./package.json').version);\")",
