@@ -197,7 +197,8 @@
 <h3 id="example">Example</h3>
 <pre><code class="language-js"><span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">37.7614</span>, -<span class="number">122.3911</span>], <span class="number">12</span>);
 
-L.esri.tiledMapLayer(<span class="string">"http://services.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer"</span>, {
+L.esri.tiledMapLayer({
+  url: <span class="string">'http://services.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer'</span>,
   maxZoom: <span class="number">15</span>
 }).addTo(map);</code></pre>
 
