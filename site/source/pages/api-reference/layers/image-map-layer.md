@@ -229,7 +229,7 @@ var map = L.map('map').setView([43.50, -120.23], 7);
 
 L.esri.basemapLayer('Imagery').addTo(map);
 
-L.esri.imageMapLayer('http://imagery.oregonexplorer.info/arcgis/rest/services/NAIP_2011/NAIP_2011_Dynamic/ImageServer')
+L.esri.imageMapLayer({url: 'http://imagery.oregonexplorer.info/arcgis/rest/services/NAIP_2011/NAIP_2011_Dynamic/ImageServer'})
       .setBandIds('3,0,1')
       .addTo(map);
 ```
