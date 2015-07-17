@@ -1,6 +1,6 @@
 # Esri Leaflet
 
-[![Build Status](https://travis-ci.org/Esri/esri-leaflet.svg?branch=master)](https://travis-ci.org/Esri/esri-leaflet.svg?branch=master)
+[![Build Status](https://travis-ci.org/Esri/esri-leaflet.svg?branch=master)](https://travis-ci.org/Esri/esri-leaflet)
 
 Leaflet plugins for [ArcGIS Services](http://developers.arcgis.com). Currently Esri Leaflet supports loading Esri [basemaps](http://esri.github.io/esri-leaflet/examples/switching-basemaps.html) and [feature services](http://esri.github.io/esri-leaflet/examples/simple-feature-layer.html), as well as [tiled](http://esri.github.io/esri-leaflet/examples/tile-layer-2.html) map, [dynamic](http://esri.github.io/esri-leaflet/examples/simple-dynamic-map-layer.html) map and [image](http://esri.github.io/esri-leaflet/examples/simple-image-map-layer.html)  services.
 
