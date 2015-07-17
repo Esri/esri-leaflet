@@ -141,16 +141,43 @@
 </thead>
 <tbody>
 <tr>
+<td><code>url</code></td>
+<td><code>String</code></td>
 <td></td>
+<td><em>Required</em> URL of the <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Map_Service/02r3000000w2000000">Map Service</a> with a tile cache.</td>
+</tr>
+<tr>
+<td><code>correctZoomLevels</code></td>
+<td><code>Boolean</code></td>
+<td><code>true</code></td>
+<td>If your tiles were generated in web mercator but at non-standard zoom levels this will remap then to the standard zoom levels.</td>
+</tr>
+<tr>
+<td><code>zoomOffsetAllowance</code></td>
+<td><code>Number</code></td>
+<td><code>0.1</code></td>
+<td>If <code>correctZoomLevels</code> is enabled this controls the amount of tolerance if the difference at each scale level for remapping tile levels.</td>
+</tr>
+<tr>
+<td><code>proxy</code></td>
+<td><code>String</code></td>
+<td><code>false</code></td>
+<td>URL of an <a href="https://developers.arcgis.com/javascript/jshelp/ags_proxy.html">ArcGIS API for JavaScript proxy</a> or <a href="https://github.com/Esri/resource-proxy">ArcGIS Resource Proxy</a> to use for proxying POST requests.</td>
+</tr>
+<tr>
+<td><code>useCors</code></td>
+<td><code>Boolean</code></td>
+<td><code>true</code></td>
+<td>Dictates if the service should use CORS when making GET requests.</td>
+</tr>
+<tr>
+<td><code>token</code></td>
+<td><code>String</code></td>
+<td><code>null</code></td>
+<td>Will use this token to authenticate all calls to the service.</td>
 </tr>
 </tbody>
 </table>
-<p><code>url</code> | <code>String</code> | | <em>Required</em> URL of the <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Map_Service/02r3000000w2000000">Map Service</a> with a tile cache.
-| <code>correctZoomLevels</code> | <code>Boolean</code> | <code>true</code> | If your tiles were generated in web mercator but at non-standard zoom levels this will remap then to the standard zoom levels.
-| <code>zoomOffsetAllowance</code> | <code>Number</code> | <code>0.1</code> | If <code>correctZoomLevels</code> is enabled this controls the amount of tolerance if the difference at each scale level for remapping tile levels.
-| <code>proxy</code> | <code>String</code> | <code>false</code> | URL of an <a href="https://developers.arcgis.com/javascript/jshelp/ags_proxy.html">ArcGIS API for JavaScript proxy</a> or <a href="https://github.com/Esri/resource-proxy">ArcGIS Resource Proxy</a> to use for proxying POST requests. |
-| <code>useCors</code> | <code>Boolean</code> | <code>true</code> | Dictates if the service should use CORS when making GET requests. |
-| <code>token</code> | <code>String</code> | <code>null</code> | Will use this token to authenticate all calls to the service.</p>
 <h3 id="methods">Methods</h3>
 <p><code>L.esri.BasemapLayer</code> inherits all methods from <a href="http://leafletjs.com/reference.html#tilelayer"><code>L.TileLayer</code></a>.</p>
 <table>

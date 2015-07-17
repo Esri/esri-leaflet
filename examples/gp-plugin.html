@@ -168,7 +168,7 @@
 <div id="map-wrapper">
   
 
-<script src="//cdn-geoweb.s3.amazonaws.com/esri-leaflet-gp/0.0.1-alpha.3/esri-leaflet-gp.js"></script>
+<script src="//cdn.jsdelivr.net/leaflet.esri.gp/1.0.2/esri-leaflet-gp.js"></script>
 
 <style>
   #info-pane {
@@ -214,7 +214,7 @@
 
   function driveTimeCallback(error, response, raw){
     document.getElementById('info-pane').innerHTML = 'click on the map to calculate 1 and 2 minute drivetimes';
-    driveTimes.addLayer(L.geoJson(response));
+    driveTimes.addLayer(L.geoJson(response.Output_Drive_Time_Polygons));
   }
 </script>
 
@@ -239,7 +239,7 @@
 <span class="tag">&lt;/<span class="title">head</span>&gt;</span>
 <span class="tag">&lt;<span class="title">body</span>&gt;</span>
 
-<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"//cdn-geoweb.s3.amazonaws.com/esri-leaflet-gp/0.0.1-alpha.3/esri-leaflet-gp.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"//cdn.jsdelivr.net/leaflet.esri.gp/1.0.2/esri-leaflet-gp.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css">
   <span class="id">#info-pane</span> <span class="rules">{
@@ -285,7 +285,7 @@
 
   <span class="function"><span class="keyword">function</span> <span class="title">driveTimeCallback</span><span class="params">(error, response, raw)</span>{</span>
     document.getElementById(<span class="string">'info-pane'</span>).innerHTML = <span class="string">'click on the map to calculate 1 and 2 minute drivetimes'</span>;
-    driveTimes.addLayer(L.geoJson(response));
+    driveTimes.addLayer(L.geoJson(response.Output_Drive_Time_Polygons));
   }
 </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 

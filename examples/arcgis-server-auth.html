@@ -176,7 +176,7 @@
   L.esri.basemapLayer('Topographic').addTo(map);
 
   function serverAuth(callback){
-    L.esri.post('http://sampleserver6.arcgisonline.com/arcgis/tokens/generateToken', {
+    L.esri.post('https://sampleserver6.arcgisonline.com/arcgis/tokens/generateToken', {
       username: 'user1',
       password: 'user1',
       f: 'json',
@@ -188,7 +188,7 @@
 
   serverAuth(function(error, response){
     var dl = L.esri.dynamicMapLayer({
-      url: 'http://sampleserver6.arcgisonline.com/arcgis/rest/services/Wildfire_secure_ac/MapServer',
+      url: 'https://sampleserver6.arcgisonline.com/arcgis/rest/services/Wildfire_secure_ac/MapServer',
       opacity: 1,
       token:  response.token
     }).addTo(map);
@@ -230,7 +230,7 @@
   L.esri.basemapLayer(<span class="string">'Topographic'</span>).addTo(map);
 
   <span class="function"><span class="keyword">function</span> <span class="title">serverAuth</span><span class="params">(callback)</span>{</span>
-    L.esri.post(<span class="string">'http://sampleserver6.arcgisonline.com/arcgis/tokens/generateToken'</span>, {
+    L.esri.post(<span class="string">'https://sampleserver6.arcgisonline.com/arcgis/tokens/generateToken'</span>, {
       username: <span class="string">'user1'</span>,
       password: <span class="string">'user1'</span>,
       f: <span class="string">'json'</span>,
@@ -242,7 +242,7 @@
 
   serverAuth(<span class="function"><span class="keyword">function</span><span class="params">(error, response)</span>{</span>
     <span class="keyword">var</span> dl = L.esri.dynamicMapLayer({
-      url: <span class="string">'http://sampleserver6.arcgisonline.com/arcgis/rest/services/Wildfire_secure_ac/MapServer'</span>,
+      url: <span class="string">'https://sampleserver6.arcgisonline.com/arcgis/rest/services/Wildfire_secure_ac/MapServer'</span>,
       opacity: <span class="number">1</span>,
       token:  response.token
     }).addTo(map);
