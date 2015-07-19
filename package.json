@@ -78,7 +78,7 @@
   "scripts": {
     "archive": "zip -r ./dist/esri-leaflet-v$(node --eval \"console.log(require('./package.json').version);\") ./dist/esri-leaflet.js ./dist/esri-leaflet.js.map",
     "prerelease": "npm run build",
-    "release": "gh-release --dry-run --assets ./dist/esri-leaflet-v$(node --eval \"console.log(require('./package.json').version);\")",
+    "release": "gh-release --assets ./dist/esri-leaflet-v$(node --eval \"console.log(require('./package.json').version);\") && npm publish",
     "build": "./scripts/build.js",
     "postbuild": "npm run archive",
     "prepublish": "npm run build",
