@@ -221,7 +221,7 @@ export var FeatureLayer = FeatureManager.extend({
   resetFeatureStyle: function (id) {
     var layer = this._layers[id];
     var style = this._originalStyle || L.Path.prototype.options;
-    if (style) {
+    if (layer) {
       L.Util.extend(layer.options, layer.defaultOptions);
       this.setFeatureStyle(id, style);
     }

@@ -30,6 +30,7 @@
     "grunt-contrib-watch": "^0.6.1",
     "grunt-gh-pages": "^0.8.1",
     "grunt-newer": "^0.7.0",
+    "grunt-sass": "^1.0.0",
     "highlight.js": "^8.0.0",
     "isparta": "^3.0.3",
     "istanbul": "gotwarlost/istanbul.git#source-map",
@@ -62,7 +63,6 @@
     "esri",
     "esri leaflet",
     "gis",
-    "leaflet",
     "leaflet plugin",
     "mapping"
   ],

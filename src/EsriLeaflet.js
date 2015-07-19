@@ -27,52 +27,40 @@ import { FeatureGrid } from './Layers/FeatureLayer/FeatureGrid';
 import { FeatureManager } from './Layers/FeatureLayer/FeatureManager';
 import { FeatureLayer, featureLayer } from './Layers/FeatureLayer/FeatureLayer';
 
-var EsriLeaflet = {
-  VERSION: '2.0.0-beta.1',
-  Support: Support,
-  Util: Util,
-  get: get,
-  post: post,
-  request: request,
-  Tasks: {
-    Task: Task,
-    task: task,
-    Query: Query,
-    query: query,
-    Find: Find,
-    find: find,
-    Identify: Identify,
-    identify: identify,
-    IdentifyFeatures: IdentifyFeatures,
-    identifyFeatures: identifyFeatures,
-    IdentifyImage: IdentifyImage,
-    identifyImage: identifyImage
-  },
-  Services: {
-    Service: Service,
-    service: service,
-    MapService: MapService,
-    mapService: mapService,
-    ImageService: ImageService,
-    imageService: imageService,
-    FeatureLayerService: FeatureLayerService,
-    featureLayerService: featureLayerService
-  },
-  Layers: {
-    BasemapLayer: BasemapLayer,
-    basemapLayer: basemapLayer,
-    TiledMapLayer: TiledMapLayer,
-    tiledMapLayer: tiledMapLayer,
-    RasterLayer: RasterLayer,
-    ImageMapLayer: ImageMapLayer,
-    imageMapLayer: imageMapLayer,
-    DynamicMapLayer: DynamicMapLayer,
-    dynamicMapLayer: dynamicMapLayer,
-    FeatureGrid: FeatureGrid,
-    FeatureManager: FeatureManager,
-    FeatureLayer: FeatureLayer,
-    featureLayer: featureLayer
-  },
+export var VERSION = '2.0.0-beta.1';
+export { Support };
+export { Util };
+export { get };
+export { post };
+export { request };
+
+export var Tasks = {
+  Task: Task,
+  task: task,
+  Query: Query,
+  query: query,
+  Find: Find,
+  find: find,
+  Identify: Identify,
+  identify: identify,
+  IdentifyFeatures: IdentifyFeatures,
+  identifyFeatures: identifyFeatures,
+  IdentifyImage: IdentifyImage,
+  identifyImage: identifyImage
+};
+
+export var Services = {
+  Service: Service,
+  service: service,
+  MapService: MapService,
+  mapService: mapService,
+  ImageService: ImageService,
+  imageService: imageService,
+  FeatureLayerService: FeatureLayerService,
+  featureLayerService: featureLayerService
+};
+
+export var Layers = {
   BasemapLayer: BasemapLayer,
   basemapLayer: basemapLayer,
   TiledMapLayer: TiledMapLayer,
@@ -88,8 +76,46 @@ var EsriLeaflet = {
   featureLayer: featureLayer
 };
 
-if (window && window.L) {
-  window.L.esri = EsriLeaflet;
-}
+export { BasemapLayer };
+export { basemapLayer };
+export { TiledMapLayer };
+export { tiledMapLayer };
+export { RasterLayer };
+export { ImageMapLayer };
+export { imageMapLayer };
+export { DynamicMapLayer };
+export { dynamicMapLayer };
+export { FeatureGrid };
+export { FeatureManager };
+export { FeatureLayer };
+export { featureLayer };
 
-export default EsriLeaflet;
+var amd = (typeof define === 'undefined') ? false : define.amd && typeof define === 'function';
+var cjs = (typeof exports === 'object') && (typeof module !== 'undefined');
+
+if ((amd || cjs) && window && window.L) {
+  window.L.esri = {
+    VERSION: VERSION,
+    Support: Support,
+    Util: Util,
+    get: get,
+    post: post,
+    request: request,
+    Tasks: Tasks,
+    Services: Services,
+    Layers: Layers,
+    BasemapLayer: BasemapLayer,
+    basemapLayer: basemapLayer,
+    TiledMapLayer: TiledMapLayer,
+    tiledMapLayer: tiledMapLayer,
+    RasterLayer: RasterLayer,
+    ImageMapLayer: ImageMapLayer,
+    imageMapLayer: imageMapLayer,
+    DynamicMapLayer: DynamicMapLayer,
+    dynamicMapLayer: dynamicMapLayer,
+    FeatureGrid: FeatureGrid,
+    FeatureManager: FeatureManager,
+    FeatureLayer: FeatureLayer,
+    featureLayer: featureLayer
+  };
+}

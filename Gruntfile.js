@@ -36,13 +36,6 @@ module.exports = function (grunt) {
       }
     },
 
-    concurrent: {
-      options: {
-        logConcurrentOutput: true
-      },
-      dev: ['karma:watch', 'docs']
-    },
-
     connect: {
       server: {
         options: {
@@ -136,7 +129,7 @@ module.exports = function (grunt) {
   grunt.registerTask('docs', ['assemble:dev', 'sass', 'copy', 'connect:docs', 'watch']);
 
   // Documentation Site Tasks
-  grunt.registerTask('docs:build', ['assemble:build', 'copy', 'imagemin','sass', 'gh-pages']);
+  grunt.registerTask('docs:build', ['assemble:build', 'copy', 'imagemin', 'sass', 'gh-pages']);
 
   // Require all grunt modules
   require('load-grunt-tasks')(grunt, {pattern: ['grunt-*', 'assemble']});

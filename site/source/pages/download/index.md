@@ -29,32 +29,15 @@ bower install esri-leaflet
 
 # CDN
 
-#### Standard Build
+#### Esri Leaflet
 
 ```xml
 <script src="http://cdn.jsdelivr.net/leaflet.esri/{{package.version}}/esri-leaflet.js"></script>
 ```
 
-#### Other Builds
-
-Esri Leaflet is also built into several smaller components and plugins for specific use cases.  These more specialized builds are available on the CDN as well.
+#### Other Plugins
 
 ```xml
-<!-- Core Build -->
-<script src="//cdn.jsdelivr.net/leaflet.esri/{{package.version}}/builds/core/esri-leaflet-core.js"></script>
-
-<!-- Basemaps Only Build -->
-<script src="//cdn.jsdelivr.net/leaflet.esri/{{package.version}}/builds/basemaps/esri-leaflet-basemaps.js"></script>
-
-<!-- Feature Layer Only Build -->
-<script src="//cdn.jsdelivr.net/leaflet.esri/{{package.version}}/builds/feature-layer/esri-leaflet-feature-layer.js"></script>
-
-<!-- Map Service Only Build -->
-<script src="//cdn.jsdelivr.net/leaflet.esri/{{package.version}}/builds/map-service/esri-leaflet-map-service.js"></script>
-
-<!-- Heatmap Feature Layer -->
-<script src="//cdn.jsdelivr.net/leaflet.esri.heatmap-feature-layer/1.0.2/esri-leaflet-heatmap-feature-layer.js"></script>
-
 <!-- Clustered Feature Layer -->
 <script src="//cdn.jsdelivr.net/leaflet.esri.clustered-feature-layer/1.0.2/esri-leaflet-clustered-feature-layer.js"></script>
 
@@ -67,29 +50,4 @@ Esri Leaflet is also built into several smaller components and plugins for speci
 
 <!-- Geoprocessing Plugin -->
 <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-gp/0.0.1-alpha.3/esri-leaflet-gp.js"></script>
-
 ```
-
-# Builds
-
-A summary of what features exist in which builds.
-
-| Feature                                | Standard | Core     | MapService | ImageService | FeatureLayer | Basemaps |
-| -------------------------------------- | -------- | -------- | ---------- | ------------ | ------------ | -------- |
-| Size                                   | 57.3kb     | 11.3kb   | 26.9kb     | 22.2kb       | 32.4kb       | 11.5kb   |
-| Gzipped                                | 14.6kb   | 4kb    | 8kb      | 6.6kb        | 9.4kb        | 3.5kb    |
-| `L.esri.Request`                       | &#10003; | &#10003; | &#10003;   | &#10003;     | &#10003;     | &#10003; |
-| `L.esri.Util`                          | &#10003; | &#10003; | &#10003;   | &#10003;     | &#10003;     |          |
-| `L.esri.Services.Service`              | &#10003; | &#10003; | &#10003;   | &#10003;     | &#10003;     |          |
-| `L.esri.Services.MapService`           | &#10003; |          | &#10003;   |              |              |          |
-| `L.esri.Services.FeatureLayerService`         | &#10003; |          |            |              | &#10003;     |          |
-| `L.esri.Tasks.Task `                   | &#10003; | &#10003; | &#10003;   | &#10003;     | &#10003;     |          |
-| `L.esri.Tasks.Query`                   | &#10003; |          | &#10003;   | &#10003;     | &#10003;     |          |
-| `L.esri.Tasks.Find`                    | &#10003; |          | &#10003;   |              |              |          |
-| `L.esri.Tasks.IdentifyFeatures`        | &#10003; |          | &#10003;   |              |              |          |
-| `L.esri.Tasks.IdentifyImage`           | &#10003; |          |            | &#10003;     |              |          |
-| `L.esri.Layers.FeatureLayer`           | &#10003; |          |            |              | &#10003;     |          |
-| `L.esri.Layers.ImageMapLayer`          | &#10003; |          |            | &#10003;     |              |          |
-| `L.esri.Layers.DynamicMapLayer`        | &#10003; |          | &#10003;   |              |              |          |
-| `L.esri.Layers.TiledMapLayer`          | &#10003; |          | &#10003;   |              |              |          |
-| `L.esri.Layers.BasemapLayer`           | &#10003; |          |            |              |              | &#10003; |
