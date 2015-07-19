@@ -1,31 +1,34 @@
+// import leaflet to ensure a gloabl
+import L from 'leaflet';
+
 // import base
-import { Support } from './Support';
-import { Util } from './Util';
-import { get, post, request } from './Request';
+import { Support } from './Support.js';
+import { Util } from './Util.js';
+import { get, post, request } from './Request.js';
 
 // import tasks
-import { Task, task } from './Tasks/Task';
-import { Query, query } from './Tasks/Query';
-import { Find, find } from './Tasks/Find';
-import { Identify, identify } from './Tasks/Identify';
-import { IdentifyFeatures, identifyFeatures } from './Tasks/IdentifyFeatures';
-import { IdentifyImage, identifyImage } from './Tasks/IdentifyImage';
+import { Task, task } from './Tasks/Task.js';
+import { Query, query } from './Tasks/Query.js';
+import { Find, find } from './Tasks/Find.js';
+import { Identify, identify } from './Tasks/Identify.js';
+import { IdentifyFeatures, identifyFeatures } from './Tasks/IdentifyFeatures.js';
+import { IdentifyImage, identifyImage } from './Tasks/IdentifyImage.js';
 
 // export services
-import { Service, service } from './Services/Service';
-import { MapService, mapService } from './Services/MapService';
-import { ImageService, imageService } from './Services/ImageService';
-import { FeatureLayerService, featureLayerService } from './Services/FeatureLayerService';
+import { Service, service } from './Services/Service.js';
+import { MapService, mapService } from './Services/MapService.js';
+import { ImageService, imageService } from './Services/ImageService.js';
+import { FeatureLayerService, featureLayerService } from './Services/FeatureLayerService.js';
 
 // export layers
-import { BasemapLayer, basemapLayer } from './Layers/BasemapLayer';
-import { TiledMapLayer, tiledMapLayer } from './Layers/TiledMapLayer';
-import { RasterLayer } from './Layers/RasterLayer';
-import { ImageMapLayer, imageMapLayer } from './Layers/ImageMapLayer';
-import { DynamicMapLayer, dynamicMapLayer } from './Layers/DynamicMapLayer';
-import { FeatureGrid } from './Layers/FeatureLayer/FeatureGrid';
-import { FeatureManager } from './Layers/FeatureLayer/FeatureManager';
-import { FeatureLayer, featureLayer } from './Layers/FeatureLayer/FeatureLayer';
+import { BasemapLayer, basemapLayer } from './Layers/BasemapLayer.js';
+import { TiledMapLayer, tiledMapLayer } from './Layers/TiledMapLayer.js';
+import { RasterLayer } from './Layers/RasterLayer.js';
+import { ImageMapLayer, imageMapLayer } from './Layers/ImageMapLayer.js';
+import { DynamicMapLayer, dynamicMapLayer } from './Layers/DynamicMapLayer.js';
+import { FeatureGrid } from './Layers/FeatureLayer/FeatureGrid.js';
+import { FeatureManager } from './Layers/FeatureLayer/FeatureManager.js';
+import { FeatureLayer, featureLayer } from './Layers/FeatureLayer/FeatureLayer.js';
 
 export var VERSION = '2.0.0-beta.1';
 export { Support };
@@ -90,10 +93,11 @@ export { FeatureManager };
 export { FeatureLayer };
 export { featureLayer };
 
-var amd = (typeof define === 'undefined') ? false : define.amd && typeof define === 'function';
-var cjs = (typeof exports === 'object') && (typeof module !== 'undefined');
+var _isAmd = (typeof define === 'undefined') ? false : define.amd && typeof define === 'function';
+var _isCjs = (typeof exports === 'object') && (typeof module !== 'undefined');
+var _isSystem = window && window.System;
 
-if ((amd || cjs) && window && window.L) {
+if ((_isAmd || _isCjs || _isSystem) && window && window.L) {
   window.L.esri = {
     VERSION: VERSION,
     Support: Support,

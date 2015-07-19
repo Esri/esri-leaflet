@@ -1,7 +1,7 @@
 import L from 'leaflet';
-import { RasterLayer } from './RasterLayer';
-import { cleanUrl } from '../Util';
-import mapService from '../Services/MapService';
+import { RasterLayer } from './RasterLayer.js';
+import { cleanUrl } from '../Util.js';
+import mapService from '../Services/MapService.js';
 
 export var DynamicMapLayer = RasterLayer.extend({
 

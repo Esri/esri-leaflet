@@ -1,7 +1,7 @@
 import L from 'leaflet';
-import logo from '../Controls/Logo';
-import { jsonp } from '../Request';
-import { pointerEvents } from '../Support';
+import logo from '../Controls/Logo.js';
+import { jsonp } from '../Request.js';
+import { pointerEvents } from '../Support.js';
 
 var tileProtocol = (window.location.protocol !== 'https:') ? 'http:' : 'https:';
 

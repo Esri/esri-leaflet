@@ -1,6 +1,6 @@
 import L from 'leaflet';
-import {warn, cleanUrl} from '../Util';
-import mapService from '../Services/MapService';
+import {warn, cleanUrl} from '../Util.js';
+import mapService from '../Services/MapService.js';
 
 export var TiledMapLayer = L.TileLayer.extend({
   options: {

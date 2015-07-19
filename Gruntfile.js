@@ -14,7 +14,7 @@ module.exports = function (grunt) {
       },
       'docs-js': {
         files: ['site/source/**/*.js'],
-        tasks: ['concat', 'uglify', 'copy:assemble'],
+        tasks: ['copy:assemble'],
         options: {
           nospawn: true
         }

@@ -1,7 +1,7 @@
 import L from 'leaflet';
-import {cors} from '../Support';
-import {cleanUrl} from '../Util';
-import Request from '../Request';
+import {cors} from '../Support.js';
+import {cleanUrl} from '../Util.js';
+import Request from '../Request.js';
 
 export var Service = L.Evented.extend({
 

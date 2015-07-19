@@ -1,6 +1,6 @@
-import { Service } from './Service';
-import query from '../Tasks/Query';
-import { geojsonToArcGIS } from '../Util';
+import { Service } from './Service.js';
+import query from '../Tasks/Query.js';
+import { geojsonToArcGIS } from '../Util.js';
 
 export var FeatureLayerService = Service.extend({
 

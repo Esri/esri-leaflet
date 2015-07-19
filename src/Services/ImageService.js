@@ -1,6 +1,6 @@
-import { Service } from './Service';
-import identifyImage from '../Tasks/IdentifyImage';
-import query from '../Tasks/Query';
+import { Service } from './Service.js';
+import identifyImage from '../Tasks/IdentifyImage.js';
+import query from '../Tasks/Query.js';
 
 export var ImageService = Service.extend({
 
