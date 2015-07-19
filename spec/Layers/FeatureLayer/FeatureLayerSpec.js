@@ -407,4 +407,28 @@ describe('L.esri.Layers.FeatureLayer', function () {
     expect(spy.getCall(0).args[0].foo).to.equal('bar');
     expect(spy.getCall(0).args[0].type).to.equal('click');
   });
+
+  it('should pass renderer through to individual features', function(){
+    var renderer = L.canvas();
+    layer = L.esri.featureLayer({
+      url: 'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0',
+      renderer: renderer
+    }).addTo(map);
+
+    layer.createLayers(features);
+
+    expect(layer.getFeature(1).options.renderer).to.equal(renderer);
+  });
+
+  it('should pass pane through to individual features', function(){
+    map.createPane('custom');
+    layer = L.esri.featureLayer({
+      url: 'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0',
+      pane: 'custom'
+    }).addTo(map);
+
+    layer.createLayers(features);
+
+    expect(layer.getFeature(1).options.pane).to.equal('custom');
+  });
 });

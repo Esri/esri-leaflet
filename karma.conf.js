@@ -1,7 +1,7 @@
 // Karma configuration
 // Generated on Fri May 30 2014 15:44:45 GMT-0400 (EDT)
 
-module.exports = function(config) {
+module.exports = function (config) {
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
@@ -63,13 +63,19 @@ module.exports = function(config) {
 
     // Configure the coverage reporters
     coverageReporter: {
-      instrumenters: {isparta: require('isparta')},
-      instrumenter: {
-          'src/**/*.js': 'isparta'
+      instrumenters: {
+        isparta: require('isparta')
       },
-      reporters:[
-        {type: 'html', dir:'coverage/'},
-        {type: 'text'}
+      instrumenter: {
+        'src/**/*.js': 'isparta'
+      },
+      reporters: [
+        {
+          type: 'html',
+          dir: 'coverage/'
+        }, {
+          type: 'text'
+        }
       ]
     }
   });

@@ -51,7 +51,9 @@ describe('L.esri.Layers.ImageMapLayer', function () {
     server.respondWith('GET',new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockImageService\/ImageServer\/exportImage\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&format=jpgpng&transparent=true&bboxSR=3857&imageSR=3857&f=json/), JSON.stringify({
       href: Image1
     }));
+    map.createPane('custom');
     layer = L.esri.imageMapLayer({
+      pane: 'custom',
       url: url,
       f: 'json'
     });
@@ -134,6 +136,10 @@ describe('L.esri.Layers.ImageMapLayer', function () {
     });
     layer.addTo(map);
     server.respond();
+  });
+
+  it('should pass the pane option through to the image', function(){
+    expect(layer._currentImage.options.pane).to.equal('custom');
   });
 
   it('should expose the identify method on the underlying service', function(){

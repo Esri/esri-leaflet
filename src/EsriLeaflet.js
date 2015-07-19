@@ -28,6 +28,7 @@ import { FeatureManager } from './Layers/FeatureLayer/FeatureManager';
 import { FeatureLayer, featureLayer } from './Layers/FeatureLayer/FeatureLayer';
 
 var EsriLeaflet = {
+  VERSION: '2.0.0-beta.1',
   Support: Support,
   Util: Util,
   get: get,

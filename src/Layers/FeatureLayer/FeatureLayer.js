@@ -202,7 +202,7 @@ export var FeatureLayer = FeatureManager.extend({
    * Styling Methods
    */
 
-  resetStyle: function (id) {
+  resetStyle: function () {
     this.options.style = this._originalStyle;
     this.eachFeature(function (layer) {
       this.resetFeatureStyle(layer.feature.id);

@@ -2,7 +2,7 @@
 
 var esperanto = require('esperanto');
 var path = require('path');
-var UglifyJS = require('uglify-js');
+var minify = require('uglify-js').minify;
 var fs = require('fs');
 var pkg = require('../package.json');
 
@@ -14,16 +14,15 @@ var copyright = '/*! ' + pkg.name + ' - v' + pkg.version + ' - ' + new Date().to
 esperanto.bundle({
   entry: path.resolve('src/EsriLeaflet.js'),
   skip: ['leaflet']
-}).then(function (bundle){
+}).then(function (bundle) {
   var transpiled = bundle.toUmd({
     strict: true,
     sourceMap: true,
     sourceMapFile: './esri-leaflet-src.js',
-    name: 'L.esri',
-    amdName: 'EsriLeaflet'
+    name: 'L.esri'
   });
 
-  var compressed = UglifyJS.minify(transpiled.code, {
+  var compressed = minify(transpiled.code, {
     fromString: true,
     inSourceMap: JSON.parse(transpiled.map),
     outSourceMap: './esri-leaflet.js.map'
@@ -31,7 +30,9 @@ esperanto.bundle({
 
   fs.writeFileSync(path.join('dist', 'esri-leaflet.js'), copyright + compressed.code);
   fs.writeFileSync(path.join('dist', 'esri-leaflet.js.map'), compressed.map);
+  process.exit(0);
 
-}).catch(function (error){
+}).catch(function (error) {
   console.log(error);
+  process.exit(1);
 });

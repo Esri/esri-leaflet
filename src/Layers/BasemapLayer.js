@@ -128,7 +128,8 @@ export var BasemapLayer = L.TileLayer.extend({
           logoPosition: 'bottomright',
           minZoom: 1,
           maxZoom: 19,
-          subdomains: ['server', 'services']
+          subdomains: ['server', 'services'],
+          pane: (pointerEvents) ? 'esri-labels' : 'tilePane'
         }
       },
       ImageryTransportation: {
@@ -138,7 +139,8 @@ export var BasemapLayer = L.TileLayer.extend({
           logoPosition: 'bottomright',
           minZoom: 1,
           maxZoom: 19,
-          subdomains: ['server', 'services']
+          subdomains: ['server', 'services'],
+          pane: (pointerEvents) ? 'esri-labels' : 'tilePane'
         }
       },
       ShadedRelief: {
