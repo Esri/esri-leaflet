@@ -47,6 +47,7 @@ Option | Type | Default | Description
 `useCors` | `Boolean` | `true` | If this service should use CORS when making GET requests.
 `renderingRule` | `Object` | `undefined` | A JSON representation of a [raster function](http://resources.arcgis.com/en/help/arcgis-rest-api/#/Raster_function_objects/02r3000000rv000000/)
 `mosaicRule` | `Object` | `undefined` | A JSON representation of a [mosaic rule](http://resources.arcgis.com/en/help/arcgis-rest-api/#/Mosaic_rule_objects/02r3000000s4000000/)
+`pane` | `String` | `overlayPane` | The map pane to render on.
 
 ### Methods
 
