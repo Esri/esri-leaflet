@@ -49,5 +49,5 @@ bower install esri-leaflet
 <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-renderers/v0.0.1-beta.2/esri-leaflet-renderers.js"></script>
 
 <!-- Geoprocessing Plugin -->
-<script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-gp/0.0.1-alpha.3/esri-leaflet-gp.js"></script>
+<script src="//cdn.jsdelivr.net/leaflet.esri.gp/1.0.2/esri-leaflet-gp.js"></script>
 ```
