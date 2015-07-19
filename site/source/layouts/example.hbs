@@ -7,7 +7,7 @@ layout: page.hbs
 <div class="example-content">
 <div class="wrap">
   <h1>{{ title }}</h1>
-  <p>{{{description}}}</p>
+  <p>{{{ description }}}</p>
 </div>
 <div id="map-wrapper">
   {{> body }}
@@ -21,12 +21,11 @@ layout: page.hbs
   <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 
   <!-- Load Leaflet from CDN-->
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/leaflet/0.7.3/leaflet.css" />
-  <script src="//cdn.jsdelivr.net/leaflet/0.7.3/leaflet.js"></script>
+  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-1.0.0-b1/leaflet.css" />
+  <script src="http://cdn.leafletjs.com/leaflet-1.0.0-b1/leaflet.js"></script>
 
   <!-- Load Esri Leaflet from CDN -->
-  <!-- we encourage you to replace 'latest' with a hardcode version number (like '1.0.0-rc.7') in production applications -->
-  <script src="//cdn.jsdelivr.net/leaflet.esri/latest/esri-leaflet.js"></script>
+  <!-- <script src="//cdn.jsdelivr.net/leaflet.esri/{{package.version}}/esri-leaflet.js"></script> -->
 
   <style>
     body { margin:0; padding:0; }

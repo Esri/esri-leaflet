@@ -90,7 +90,8 @@ describe('L.esri.Layers.FeatureLayer', function () {
   })];
 
   beforeEach(function(){
-    layer = L.esri.featureLayer('http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0', {
+    layer = L.esri.featureLayer({
+      url: 'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0',
       timeField: 'time',
       pointToLayer: function(feature, latlng){
         return L.circleMarker(latlng, {
@@ -103,7 +104,8 @@ describe('L.esri.Layers.FeatureLayer', function () {
   });
 
   it('should fire a createfeature event', function(done){
-    layer = L.esri.featureLayer('http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0', {
+    layer = L.esri.featureLayer({
+      url: 'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0',
       timeField: 'time',
       pointToLayer: function(feature, latlng){
         return L.circleMarker(latlng);
@@ -119,7 +121,9 @@ describe('L.esri.Layers.FeatureLayer', function () {
   });
 
   it('should have an alias at L.esri.Layers.featureLayer', function(){
-    var layer = L.esri.Layers.featureLayer('http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0');
+    var layer = L.esri.Layers.featureLayer({
+      url: 'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0'
+    });
     expect(layer).to.be.an.instanceof(L.esri.Layers.FeatureLayer);
   });
 
@@ -197,7 +201,8 @@ describe('L.esri.Layers.FeatureLayer', function () {
 
   it('should run a function against every feature', function(){
     var spy = sinon.spy();
-    layer = L.esri.featureLayer('http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0', {
+    layer = L.esri.featureLayer({
+      url: 'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0',
       onEachFeature: spy
     }).addTo(map);
     layer.createLayers(features);
@@ -205,7 +210,8 @@ describe('L.esri.Layers.FeatureLayer', function () {
   });
 
   it('should style L.circleMarker features appropriately', function(){
-    layer = L.esri.featureLayer('http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0', {
+    layer = L.esri.featureLayer({
+      url: 'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0',
       timeField: 'time',
       pointToLayer: function(feature, latlng){
         return L.circleMarker(latlng, {
@@ -218,8 +224,60 @@ describe('L.esri.Layers.FeatureLayer', function () {
     expect(layer.getFeature(1).options.color).to.equal('green');
   });
 
+  it('should unbind popups on features', function(){
+    layer.bindPopup(function(feature){
+      return 'ID: ' + feature.id;
+    });
+
+    layer.unbindPopup();
+
+    expect(layer._popup).to.equal(null);
+    expect(layer._popup).to.equal(null);
+  });
+
+  it('should unbind popups on multi polygon features', function(){
+    layer = L.esri.featureLayer({
+      url: 'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0',
+      timeField: 'time'
+    }).addTo(map);
+
+    layer.createLayers(multiPolygon);
+
+    layer.bindPopup(function(feature){
+      return 'ID: ' + feature.id;
+    });
+
+    layer.unbindPopup();
+
+    expect(layer._popup).to.equal(null);
+  });
+
+  it('should reset style on multi polygon features', function(){
+    layer = L.esri.featureLayer({
+      url: 'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0',
+      style: {
+        color: 'black'
+      }
+    }).addTo(map);
+
+    layer.createLayers(multiPolygon);
+
+    expect(layer.getFeature(1).options.color).to.equal('black');
+
+    layer.setFeatureStyle(1, {
+      color: 'red'
+    });
+
+    expect(layer.getFeature(1).options.color).to.equal('red');
+
+    layer.resetStyle(1);
+
+    expect(layer.getFeature(1).options.color).to.equal('black');
+  });
+
   it('should reset L.circleMarker style', function(){
-    layer = L.esri.featureLayer('http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0', {
+    layer = L.esri.featureLayer({
+      url: 'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0',
       pointToLayer: function(feature, latlng){
         return L.circleMarker(latlng);
       },
@@ -240,7 +298,54 @@ describe('L.esri.Layers.FeatureLayer', function () {
 
     layer.resetFeatureStyle(1);
     expect(layer.getFeature(1).options.color).to.equal('green');
+  });
 
+  it('should reset to default style on multi polygon features', function(){
+    layer = L.esri.featureLayer({
+      url: 'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0'
+    }).addTo(map);
+
+    layer.createLayers(multiPolygon);
+
+    layer.setFeatureStyle(1, {
+      color: 'red'
+    });
+
+    expect(layer.getFeature(1).options.color).to.equal('red');
+
+    layer.resetStyle(1);
+
+    expect(layer.getFeature(1).options.color).to.equal('#3388ff');
+  });
+
+  it('should draw multi polygon features with a fill', function(){
+    layer = L.esri.featureLayer({
+      url: 'http://services.arcgis.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0'
+    }).addTo(map);
+
+    layer.createLayers(multiPolygon);
+
+    expect(layer.getFeature(1).options.fill).to.equal(true);
+
+    layer.resetStyle(1);
+
+    expect(layer.getFeature(1).options.color).to.equal('#3388ff');
+  });
+
+  it('should iterate over each feature', function(){
+    var spy = sinon.spy();
+    layer.eachFeature(spy);
+    expect(spy.callCount).to.equal(2);
+  });
+
+  it('should run a function against every feature', function(){
+    var spy = sinon.spy();
+    layer = L.esri.featureLayer({
+      url: 'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0',
+      onEachFeature: spy
+    }).addTo(map);
+    layer.createLayers(features);
+    expect(spy.callCount).to.equal(2);
   });
 
   it('should change styles on features with an object', function(){
@@ -301,5 +406,29 @@ describe('L.esri.Layers.FeatureLayer', function () {
 
     expect(spy.getCall(0).args[0].foo).to.equal('bar');
     expect(spy.getCall(0).args[0].type).to.equal('click');
+  });
+
+  it('should pass renderer through to individual features', function(){
+    var renderer = L.canvas();
+    layer = L.esri.featureLayer({
+      url: 'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0',
+      renderer: renderer
+    }).addTo(map);
+
+    layer.createLayers(features);
+
+    expect(layer.getFeature(1).options.renderer).to.equal(renderer);
+  });
+
+  it('should pass pane through to individual features', function(){
+    map.createPane('custom');
+    layer = L.esri.featureLayer({
+      url: 'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0',
+      pane: 'custom'
+    }).addTo(map);
+
+    layer.createLayers(features);
+
+    expect(layer.getFeature(1).options.pane).to.equal('custom');
   });
 });

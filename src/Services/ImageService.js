@@ -1,14 +1,20 @@
-EsriLeaflet.Services.ImageService = EsriLeaflet.Services.Service.extend({
+import { Service } from './Service';
+import identifyImage from '../Tasks/IdentifyImage';
+import query from '../Tasks/Query';
+
+export var ImageService = Service.extend({
 
   query: function () {
-    return new EsriLeaflet.Tasks.Query(this);
+    return query(this);
   },
 
-  identify: function() {
-    return new EsriLeaflet.Tasks.IdentifyImage(this);
+  identify: function () {
+    return identifyImage(this);
   }
 });
 
-EsriLeaflet.Services.imageService = function(params){
-  return new EsriLeaflet.Services.ImageService(params);
-};
+export function imageService (options) {
+  return new ImageService(options);
+}
+
+export default imageService;

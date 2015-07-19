@@ -1,6 +1,6 @@
 ---
 title: Identifying Features
-description: Identifying features on a Dynamic Map Layer on click by querying the service. Click a feature to identify it. More information about Map Services can be found in the <a href="/esri-leaflet/api-reference/layers/dynamic-map-layer.html">L.esri.Layers.DynamicMapLayer</a> documentation.
+description: Identifying features on a Dynamic Map Layer on click by querying the service. Click a feature to identify it. More information about Map Services can be found in the <a href="../api-reference/layers/dynamic-map-layer.html">L.esri.Layers.DynamicMapLayer</a> documentation.
 layout: example.hbs
 ---
 
@@ -9,7 +9,7 @@ layout: example.hbs
     position: absolute;
     top: 10px;
     right: 10px;
-    z-index: 10;
+    z-index: 1000;
     background: white;
     padding: 1em;
   }
@@ -22,7 +22,8 @@ layout: example.hbs
 
   L.esri.basemapLayer('Gray').addTo(map);
 
-  var federalLands = L.esri.dynamicMapLayer('http://maps1.arcgisonline.com/ArcGIS/rest/services/USA_Federal_Lands/MapServer', {
+  var federalLands = L.esri.dynamicMapLayer({
+    url: 'http://maps1.arcgisonline.com/ArcGIS/rest/services/USA_Federal_Lands/MapServer',
     opacity: 0.5,
     useCors: false
   }).addTo(map);
@@ -37,7 +38,7 @@ layout: example.hbs
     }
     federalLands.identify().on(map).at(e.latlng).run(function(error, featureCollection){
       if (featureCollection.features.length > 0){
-        identifiedFeature = new L.GeoJSON(featureCollection.features[0], {
+        identifiedFeature = L.geoJson(featureCollection.features[0], {
           style: function(){
             return {
               color: '#5C7DB8',

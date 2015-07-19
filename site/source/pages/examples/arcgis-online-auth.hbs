@@ -9,7 +9,7 @@ layout: example.hbs
     position: absolute;
     top: 10px;
     right: 10px;
-    z-index: 10;
+    z-index: 1000;
     background: white;
     padding: 1em;
     box-shadow: 0 1px 5px rgba(0,0,0,0.65);
@@ -65,6 +65,7 @@ layout: example.hbs
   });
 
   // make a new map and basemap
-  var map = new L.Map('map').setView([39.36, -96.19], 4);
+  var map = L.map('map').setView([39.36, -96.19], 4);
+
   L.esri.basemapLayer('Gray').addTo(map);
 </script>

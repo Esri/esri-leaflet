@@ -9,7 +9,7 @@ layout: example.hbs
     position: absolute;
     top: 10px;
     right: 10px;
-    z-index: 10;
+    z-index: 1000;
     background: white;
     padding: 10px;
   }
@@ -33,12 +33,13 @@ layout: example.hbs
   </select>
 </div>
 <script>
-  var map = new L.Map("map").setView([45.525231693565054, -122.62836456298828], 11);
+  var map = L.map("map").setView([45.525231693565054, -122.62836456298828], 11);
 
   L.esri.basemapLayer("Topographic").addTo(map);
 
   // create our layer
-  neighborhoods = L.esri.featureLayer("https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Neighborhoods_pdx/FeatureServer/0", {
+  neighborhoods = L.esri.featureLayer({
+    url: "https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Neighborhoods_pdx/FeatureServer/0",
     style: {
       color: 'gray',
       weight: 1

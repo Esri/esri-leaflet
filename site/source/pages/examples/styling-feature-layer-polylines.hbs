@@ -1,6 +1,6 @@
 ---
 title: Styling lines
-description: Custom styles for line features with the <code>style</code> option. More information about Feature Layers can be found in the <a href="/esri-leaflet/api-reference/layers/feature-layer.html">L.esri.Layers.FeatureLayer</a> documentation.
+description: Custom styles for line features with the <code>style</code> option. More information about Feature Layers can be found in the <a href="../api-reference/layers/feature-layer.html">L.esri.Layers.FeatureLayer</a> documentation.
 layout: example.hbs
 ---
 
@@ -16,14 +16,15 @@ layout: example.hbs
 </style>
 
 <div id="map"></div>
-<div id="info-pane" class="leaflet-bar"></div>
+<div id="info-pane" class="leaflet-bar">Hover to inspect</div>
 
 <script type='text/javascript'>
   var map = L.map('map').setView([45.5275, -122.6717], 14);
 
   L.esri.basemapLayer('Streets').addTo(map);
 
-  var bikePaths = L.esri.featureLayer('http://services.arcgis.com/uCXeTVveQzP4IIcx/ArcGIS/rest/services/Bike_Routes/FeatureServer/0', {
+  var bikePaths = L.esri.featureLayer({
+    url: 'http://services.arcgis.com/uCXeTVveQzP4IIcx/ArcGIS/rest/services/Bike_Routes/FeatureServer/0',
     style: function (feature) {
       var c,o = 0.75;
       switch (feature.properties.BIKEMODE) {

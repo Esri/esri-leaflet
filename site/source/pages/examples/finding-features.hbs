@@ -1,6 +1,6 @@
 ---
 title: Find Features
-description: Find features on a Dynamic Map Layer. More information about Map Services can be found in the <a href="/esri-leaflet/api-reference/layers/dynamic-map-layer.html">L.esri.Layers.DynamicMapLayer</a> documentation.
+description: Find features on a Dynamic Map Layer. More information about Map Services can be found in the <a href="../api-reference/layers/dynamic-map-layer.html">L.esri.Layers.DynamicMapLayer</a> documentation.
 layout: example.hbs
 ---
 
@@ -29,7 +29,8 @@ layout: example.hbs
 
     L.esri.basemapLayer('Gray').addTo(map);
 
-    var govUnits = L.esri.dynamicMapLayer('http://services.nationalmap.gov/arcgis/rest/services/govunits/MapServer', {
+    var govUnits = L.esri.dynamicMapLayer({
+        url: 'http://services.nationalmap.gov/arcgis/rest/services/govunits/MapServer',
         opacity: 0.9
     }).addTo(map);
 

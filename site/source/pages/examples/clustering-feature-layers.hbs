@@ -1,6 +1,6 @@
 ---
 title: Clustering points
-description: Visualize dense services as clusters of points with the <a href="https://github.com/Leaflet/Leaflet.markercluster">L.markercluster</a> plugin. More information about Feature Layers can be found in the <a href="/esri-leaflet/api-reference/layers/feature-layer.html">L.esri.Layers.FeatureLayer</a> documentation.
+description: Visualize dense services as clusters of points with the <a href="https://github.com/Leaflet/Leaflet.markercluster">L.markercluster</a> plugin. More information about Feature Layers can be found in the <a href="../api-reference/layers/feature-layer.html">L.esri.Layers.FeatureLayer</a> documentation.
 layout: example.hbs
 ---
 
@@ -10,7 +10,7 @@ layout: example.hbs
 <script src="https://cdn.rawgit.com/Leaflet/Leaflet.markercluster/v0.4.0/dist/leaflet.markercluster.js"></script>
 
 <!-- Load Clustered Feature Layer from CDN -->
-<script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-clustered-feature-layer/1.0.0-rc.1/esri-leaflet-clustered-feature-layer.js"></script>
+<script src="https://cdn.jsdelivr.net/leaflet.esri.clustered-feature-layer/1.0.2/esri-leaflet-clustered-feature-layer.js"></script>
 
 <div id="map"></div>
 
@@ -18,5 +18,7 @@ layout: example.hbs
   var map = L.map('map').setView([45.526, -122.667], 15);
 
   L.esri.basemapLayer('Streets').addTo(map);
-  L.esri.clusteredFeatureLayer('https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Trimet_Transit_Stops/FeatureServer/0').addTo(map);
+  L.esri.clusteredFeatureLayer({
+    url: 'https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Trimet_Transit_Stops/FeatureServer/0'
+  }).addTo(map);
 </script>

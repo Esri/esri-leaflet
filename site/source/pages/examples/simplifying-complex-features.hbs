@@ -1,6 +1,6 @@
 ---
 title: Simplifying complex features
-description: Complex features can be simplified on the server for faster response times. Zoom in and watch as higher resolution vectors are loaded from the service. Hover over features for effects. More information about Feature Layers can be found in the <a href="/esri-leaflet/api-reference/layers/feature-layer.html">L.esri.Layers.FeatureLayer</a> documentation.
+description: Complex features can be simplified on the server for faster response times. Zoom in and watch as higher resolution vectors are loaded from the service. Hover over features for effects. More information about Feature Layers can be found in the <a href="../api-reference/layers/feature-layer.html">L.esri.Layers.FeatureLayer</a> documentation.
 layout: example.hbs
 ---
 
@@ -23,16 +23,15 @@ layout: example.hbs
 
   L.esri.basemapLayer('Gray').addTo(map);
 
-  var zipcodes = L.esri.featureLayer('http://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_ZIP_Codes/FeatureServer/0', {
+  var zipcodes = L.esri.featureLayer({
+    url: 'http://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_ZIP_Codes/FeatureServer/0',
     simplifyFactor: 0.35,
     precision: 5,
     fields: ['FID', 'ZIP', 'PO_NAME'],
-    style: function(feature) {
-      return {
-        color: '#000',
-        weight: 1,
-        opacity: 1
-      }
+    style: {
+      color: '#000',
+      weight: 1,
+      opacity: 1
     }
   }).addTo(map);
 
@@ -40,10 +39,10 @@ layout: example.hbs
 
   zipcodes.on('mouseout', function(e){
     document.getElementById('info-pane').innerHTML = 'Hover to Inspect';
+    zipcodes.resetFeatureStyle(oldId);
   });
 
   zipcodes.on('mouseover', function(e){
-    zipcodes.resetStyle(oldId);
     oldId = e.layer.feature.id;
     document.getElementById('info-pane').innerHTML = e.layer.feature.properties.ZIP + ' ' + e.layer.feature.properties.PO_NAME;
     e.layer.bringToFront();

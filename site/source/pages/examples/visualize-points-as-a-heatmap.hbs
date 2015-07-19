@@ -1,6 +1,6 @@
 ---
 title: Points as a heatmap
-description: Displaying point data as a heatmap using the <code>L.heat</code> plugin. More information about Feature Layers can be found in the <a href="/esri-leaflet/api-reference/layers/feature-layer.html">L.esri.Layers.FeatureLayer</a> documentation.
+description: Displaying point data as a heatmap using the <code>L.heat</code> plugin. More information about Feature Layers can be found in the <a href="../api-reference/layers/feature-layer.html">L.esri.Layers.FeatureLayer</a> documentation.
 layout: example.hbs
 ---
 
@@ -8,7 +8,7 @@ layout: example.hbs
 <script src="https://rawgit.com/Leaflet/Leaflet.heat/gh-pages/dist/leaflet-heat.js"></script>
 
 <!-- Load Heatmap Feature Layer from CDN -->
-<script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-heatmap-feature-layer/1.0.0-rc.1/esri-leaflet-heatmap-feature-layer.js"></script>
+<script src="https://cdn.jsdelivr.net/leaflet.esri.heatmap-feature-layer/1.0.2/esri-leaflet-heatmap-feature-layer-src.js"></script>
 
 <div id="map"></div>
 
@@ -16,7 +16,9 @@ layout: example.hbs
   var map = L.map('map').setView([ 40.706, -73.926], 14);
 
   L.esri.basemapLayer('Gray').addTo(map);
-  L.esri.heatmapFeatureLayer('https://services.arcgis.com/rOo16HdIMeOBI4Mb/ArcGIS/rest/services/Graffiti_Reports/FeatureServer/0', {
+
+  L.esri.heatmapFeatureLayer({
+    url: 'https://services.arcgis.com/rOo16HdIMeOBI4Mb/ArcGIS/rest/services/Graffiti_Reports/FeatureServer/0',
     radius: 12
   }).addTo(map);
 </script>

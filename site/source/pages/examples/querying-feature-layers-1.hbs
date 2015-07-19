@@ -1,6 +1,6 @@
 ---
 title: Querying features
-description: Configuring a query to filter features on a <code>L.esri.Layers.FeatureLayer</code>. More information about Feature Layers can be found in the <a href="/esri-leaflet/api-reference/layers/feature-layer.html">L.esri.Layers.FeatureLayer</a> documentation.
+description: Configuring a query to filter features on a <code>L.esri.Layers.FeatureLayer</code>. More information about Feature Layers can be found in the <a href="../api-reference/layers/feature-layer.html">L.esri.Layers.FeatureLayer</a> documentation.
 layout: example.hbs
 ---
 
@@ -9,7 +9,7 @@ layout: example.hbs
     position: absolute;
     top: 10px;
     right: 10px;
-    z-index: 10;
+    z-index: 1000;
     background: white;
     padding: 1em;
   }
@@ -68,8 +68,9 @@ layout: example.hbs
   };
 
   L.esri.basemapLayer('Streets').addTo(map);
-  var stops = L.esri.featureLayer('https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Trimet_Transit_Stops/FeatureServer/0', {
-   pointToLayer: function (geojson, latlng) {
+  var stops = L.esri.featureLayer({
+    url: 'https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Trimet_Transit_Stops/FeatureServer/0',
+    pointToLayer: function (geojson, latlng) {
       return L.marker(latlng, {
         icon: icons[geojson.properties.direction.toLowerCase()]
       });

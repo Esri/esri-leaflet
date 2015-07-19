@@ -41,7 +41,7 @@ layout: example.hbs
 
   var trafficLayer;
 
-  var map = new L.Map('map').setView([34.045, -118.195], 12);
+  var map = L.map('map').setView([34.045, -118.195], 12);
 
   L.esri.basemapLayer('Streets').addTo(map);
 
@@ -65,7 +65,8 @@ layout: example.hbs
 
   signInButton.addEventListener('click', function(e){
     oauth(function(token){
-      trafficLayer = L.esri.dynamicMapLayer('http://traffic.arcgis.com/arcgis/rest/services/World/Traffic/MapServer', {
+      trafficLayer = L.esri.dynamicMapLayer({
+        url: 'http://traffic.arcgis.com/arcgis/rest/services/World/Traffic/MapServer',
         token: token
       }).addTo(map);
       trafficLayer.on('authenticationrequired', function(e){

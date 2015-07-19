@@ -12,7 +12,7 @@ describe('L.esri.Services.FeatureLayer', function () {
       requests.push(xhr);
     };
 
-    service = L.esri.Services.featureLayer({url: featureServiceUrl});
+    service = L.esri.Services.featureLayerService({url: featureServiceUrl});
   });
 
   afterEach(function(){

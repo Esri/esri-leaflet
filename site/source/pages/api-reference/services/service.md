@@ -18,7 +18,7 @@ A generic class representing a hosted resource on ArcGIS Online or ArcGIS Server
     </thead>
     <tbody>
         <tr>
-            <td><code class="nobr">new L.esri.Services.Service({{{param 'Object' 'options'}}})</code><br><br><code class="nobr">L.esri.Services.service({{{param 'Object' 'options'}}})</code></td>
+            <td><code class="nobr">L.esri.Services.service({{{param 'Object' 'options'}}})</code></td>
             <td>Options includes a <code>url</code> parameter which refers to the ArcGIS Server or ArcGIS Online service you would like to consume.</td>
         </tr>
     </tbody>
@@ -40,7 +40,7 @@ A generic class representing a hosted resource on ArcGIS Online or ArcGIS Server
 | `requestend` | [<`RequestEvent`>]({{assets}}api-reference/events.html#request-event) | Fired when a request to the service ends. |
 | `requestsuccess` | [<`RequestSuccessEvent`>]({{assets}}api-reference/events.html#request-success-event) | Fired when a request to the service was successful. |
 | `requesterror` | [<`RequestErrorEvent`>]({{assets}}api-reference/events.html#request-error-event) | Fired when a request to the service responsed with an error. |
-| `authenticationrequired` | [<`AuthenticationEvent`>]({{assets}}api-reference/events.html#authentication-event) | This will be fired when a request to the service fails and requires authentication. See [working with authenticated services](#working-with-authenticated-services) for more information. |
+| `authenticationrequired` | [<`AuthenticationEvent`>]({{assets}}api-reference/events.html#authentication-event) | This will be fired when a request to the service fails and requires authentication. |
 
 ### Methods
 

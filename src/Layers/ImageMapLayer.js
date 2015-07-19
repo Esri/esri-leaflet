@@ -1,24 +1,30 @@
-EsriLeaflet.Layers.ImageMapLayer = EsriLeaflet.Layers.RasterLayer.extend({
+import L from 'leaflet';
+import { RasterLayer } from './RasterLayer';
+import { cleanUrl } from '../Util';
+import imageService from '../Services/ImageService';
+
+export var ImageMapLayer = RasterLayer.extend({
 
   options: {
     updateInterval: 150,
     format: 'jpgpng',
-    transparent: true
+    transparent: true,
+    f: 'json'
   },
 
-  query: function(){
+  query: function () {
     return this.service.query();
   },
 
-  identify: function(){
+  identify: function () {
     return this.service.identify();
   },
 
-  initialize: function (url, options) {
-    options = options || {};
-    options.url = EsriLeaflet.Util.cleanUrl(url);
-    this.service = new EsriLeaflet.Services.ImageService(options);
+  initialize: function (options) {
+    options.url = cleanUrl(options.url);
+    this.service = imageService(options);
     this.service.addEventParent(this);
+
     L.Util.setOptions(this, options);
   },
 
@@ -67,27 +73,28 @@ EsriLeaflet.Layers.ImageMapLayer = EsriLeaflet.Layers.RasterLayer.extend({
     return this.options.noDataInterpretation;
   },
 
-  setRenderingRule: function(renderingRule) {
+  setRenderingRule: function (renderingRule) {
     this.options.renderingRule = renderingRule;
     this._update();
   },
 
-  getRenderingRule: function() {
+  getRenderingRule: function () {
     return this.options.renderingRule;
   },
 
-  setMosaicRule: function(mosaicRule) {
+  setMosaicRule: function (mosaicRule) {
     this.options.mosaicRule = mosaicRule;
     this._update();
   },
 
-  getMosaicRule: function() {
+  getMosaicRule: function () {
     return this.options.mosaicRule;
   },
 
-  _getPopupData: function(e){
-    var callback = L.Util.bind(function(error, results, response) {
-      setTimeout(L.Util.bind(function(){
+  _getPopupData: function (e) {
+    var callback = L.Util.bind(function (error, results, response) {
+      if (error) { return; } // we really can't do anything here but authenticate or requesterror will fire
+      setTimeout(L.Util.bind(function () {
         this._renderPopup(e.latlng, error, results, response);
       }, this), 300);
     }, this);
@@ -160,11 +167,11 @@ EsriLeaflet.Layers.ImageMapLayer = EsriLeaflet.Layers.RasterLayer.extend({
       params.token = this.service.options.token;
     }
 
-    if(this.options.renderingRule) {
+    if (this.options.renderingRule) {
       params.renderingRule = JSON.stringify(this.options.renderingRule);
     }
 
-    if(this.options.mosaicRule) {
+    if (this.options.mosaicRule) {
       params.mosaicRule = JSON.stringify(this.options.mosaicRule);
     }
 
@@ -173,7 +180,8 @@ EsriLeaflet.Layers.ImageMapLayer = EsriLeaflet.Layers.RasterLayer.extend({
 
   _requestExport: function (params, bounds) {
     if (this.options.f === 'json') {
-      this.service.get('exportImage', params, function(error, response){
+      this.service.get('exportImage', params, function (error, response) {
+        if (error) { return; } // we really can't do anything here but authenticate or requesterror will fire
         this._renderImage(response.href, bounds);
       }, this);
     } else {
@@ -183,12 +191,8 @@ EsriLeaflet.Layers.ImageMapLayer = EsriLeaflet.Layers.RasterLayer.extend({
   }
 });
 
-EsriLeaflet.ImageMapLayer = EsriLeaflet.Layers.ImageMapLayer;
+export function imageMapLayer (url, options) {
+  return new ImageMapLayer(url, options);
+}
 
-EsriLeaflet.Layers.imageMapLayer = function (url, options) {
-  return new EsriLeaflet.Layers.ImageMapLayer(url, options);
-};
-
-EsriLeaflet.imageMapLayer = function (url, options) {
-  return new EsriLeaflet.Layers.ImageMapLayer(url, options);
-};
+export default imageMapLayer;

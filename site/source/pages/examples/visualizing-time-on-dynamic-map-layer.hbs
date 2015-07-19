@@ -1,6 +1,6 @@
 ---
 title: Time Ranges
-description: Using time to filter visualized information from a Map Service. Enter dates between 1930 and 1980. More information about Map Services can be found in the <a href="/esri-leaflet/api-reference/layers/dynamic-map-layer.html">L.esri.Layers.DynamicMapLayer</a> documentation.
+description: Using time to filter visualized information from a Map Service. Enter dates between 1930 and 1980. More information about Map Services can be found in the <a href="../api-reference/layers/dynamic-map-layer.html">L.esri.Layers.DynamicMapLayer</a> documentation.
 layout: example.hbs
 ---
 
@@ -12,7 +12,7 @@ layout: example.hbs
     position: absolute;
     top: 10px;
     right: 10px;
-    z-index: 10;
+    z-index: 1000;
     padding: 1em;
     background: white;
   }
@@ -60,7 +60,8 @@ layout: example.hbs
   L.esri.basemapLayer('Gray').addTo(map);
   L.esri.basemapLayer('GrayLabels').addTo(map);
 
-  var oilWells = L.esri.dynamicMapLayer('http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Petroleum/KSWells/MapServer', {
+  var oilWells = L.esri.dynamicMapLayer({
+    url: 'http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Petroleum/KSWells/MapServer',
     useCors: false,
     layers: [0],
     from: new Date(startTimeInput.value),

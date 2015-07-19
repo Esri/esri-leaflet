@@ -1,6 +1,6 @@
 ---
 title: Visualizing time on a feature layer
-description: Filtering a feature layer within a certain time range. Try dates between October 2010 and August 2011. More information about Feature Layers can be found in the <a href="/esri-leaflet/api-reference/layers/feature-layer.html">L.esri.Layers.FeatureLayer</a> documentation.
+description: Filtering a feature layer within a certain time range. Try dates between October 2010 and August 2011. More information about Feature Layers can be found in the <a href="../api-reference/layers/feature-layer.html">L.esri.Layers.FeatureLayer</a> documentation.
 layout: example.hbs
 ---
 
@@ -8,14 +8,14 @@ layout: example.hbs
 <script src="https://rawgit.com/Leaflet/Leaflet.heat/gh-pages/dist/leaflet-heat.js"></script>
 
 <!-- Load Heatmap Feature Layer from CDN -->
-<script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-heatmap-feature-layer/1.0.0-rc.1/esri-leaflet-heatmap-feature-layer.js"></script>
+<script src="https://cdn.jsdelivr.net/leaflet.esri.heatmap-feature-layer/1.0.2/esri-leaflet-heatmap-feature-layer-src.js"></script>
 
 <style>
   #time-ranges {
     position: absolute;
     top: 10px;
     right: 10px;
-    z-index: 10;
+    z-index: 1000;
     padding: 1em;
     background: white;
   }
@@ -63,7 +63,8 @@ layout: example.hbs
   L.esri.basemapLayer('Gray').addTo(map);
   L.esri.basemapLayer('GrayLabels').addTo(map);
 
-  var reports = L.esri.heatmapFeatureLayer('https://services.arcgis.com/rOo16HdIMeOBI4Mb/ArcGIS/rest/services/Graffiti_Reports/FeatureServer/0', {
+  var reports = L.esri.heatmapFeatureLayer({
+    url: 'https://services.arcgis.com/rOo16HdIMeOBI4Mb/ArcGIS/rest/services/Graffiti_Reports/FeatureServer/0',
     timeField: 'CreatedDate',
     from: new Date(startTimeInput.value),
     to: new Date(endTimeInput.value),

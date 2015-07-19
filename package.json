@@ -1,51 +1,88 @@
 {
   "name": "esri-leaflet",
-  "version": "1.0.0",
-  "description": "Leaflet plugins for consuming ArcGIS Online and ArcGIS Server services",
-  "main": "dist/esri-leaflet.js",
+  "description": "Leaflet plugins for consuming ArcGIS Online and ArcGIS Server services.",
+  "version": "2.0.0-beta.1",
+  "author": "Patrick Arlt <parlt@esri.com> (http://patrickarlt.com)",
+  "browserify": {
+    "transform": [
+      "babelify"
+    ]
+  },
+  "bugs": {
+    "url": "https://github.com/esri/esri-leaflet/issues"
+  },
+  "contributors": [
+    "Patrick Arlt <parlt@esri.com> (http://patrickarlt.com)",
+    "John Gravois <jgravois@esri.com> (http://johngravois.com)"
+  ],
+  "dependencies": {
+    "leaflet": "1.0.0-beta.1"
+  },
   "devDependencies": {
     "assemble": "^0.4.37",
+    "babelify": "^6.1.3",
+    "esperanto": "^0.7.3",
+    "gh-release": "^2.0.0",
     "grunt": "^0.4.2",
     "grunt-concurrent": "^0.5.0",
-    "grunt-contrib-concat": "^0.5.0",
     "grunt-contrib-connect": "^0.4.1",
     "grunt-contrib-copy": "^0.5.0",
-    "grunt-contrib-imagemin": "^0.7.1",
-    "grunt-contrib-jshint": "^0.10.0",
-    "grunt-contrib-uglify": "^0.6.0",
     "grunt-contrib-watch": "^0.6.1",
     "grunt-gh-pages": "^0.8.1",
-    "grunt-karma": "^0.8.3",
     "grunt-newer": "^0.7.0",
-    "grunt-releaseable": "0.0.16",
     "grunt-sass": "^1.0.0",
     "highlight.js": "^8.0.0",
+    "isparta": "^3.0.3",
+    "istanbul": "gotwarlost/istanbul.git#source-map",
     "karma": "^0.12.16",
     "karma-chai-sinon": "^0.1.3",
-    "karma-chrome-launcher": "^0.1.3",
-    "karma-coverage": "^0.1",
-    "karma-firefox-launcher": "^0.1.3",
+    "karma-coverage": "douglasduteil/karma-coverage#next",
     "karma-mocha": "^0.1.0",
     "karma-mocha-reporter": "^0.2.5",
-    "karma-phantomjs-launcher": "^0.1.4",
-    "karma-safari-launcher": "^0.1.1",
-    "karma-sauce-launcher": "^0.2.10",
+    "karma-phantomjs-launcher": "^0.2.0",
+    "karma-sourcemap-loader": "^0.3.5",
     "load-grunt-tasks": "^0.4.0",
-    "sinon": "^1.11.1"
+    "phantomjs": "^1.9.17",
+    "rollup": "^0.10.0",
+    "semistandard": "^6.1.2",
+    "sinon": "^1.11.1",
+    "uglify-js": "^2.4.23"
+  },
+  "homepage": "http://esri.github.io/esri-leaflet",
+  "jsnext:main": "./index.js",
+  "jspm": {
+    "main": "./index.js",
+    "directories": {
+      "lib": "./lib"
+    },
+    "registry": "npm",
+    "format": "es6"
+  },
+  "keywords": [
+    "arcgis",
+    "esri",
+    "esri leaflet",
+    "gis",
+    "leaflet plugin",
+    "mapping"
+  ],
+  "license": "Apache-2.0",
+  "main": "dist/esri-leaflet.js",
+  "readmeFilename": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Esri/esri-leaflet.git"
   },
   "scripts": {
-    "prepublish": "grunt prepublish",
-    "start": "grunt dev",
-    "test": "grunt test",
-    "postinstall": "node scripts/install.js"
-  },
-  "author": "Patrick Arlt <parlt@esri.com> (http://patrickarlt.com)",
-  "contributors": [
-    "Patrick Arlt <parlt@esri.com> (http://patrickarlt.com)"
-  ],
-  "license": "Apache",
-  "readmeFilename": "README.md",
-  "dependencies": {
-    "leaflet": "git://github.com/Leaflet/Leaflet.git#master"
+    "archive": "zip -r ./dist/esri-leaflet-v$(node --eval \"console.log(require('./package.json').version);\") ./dist/esri-leaflet.js ./dist/esri-leaflet.js.map",
+    "prerelease": "npm run build",
+    "release": "gh-release --dry-run --assets ./dist/esri-leaflet-v$(node --eval \"console.log(require('./package.json').version);\")",
+    "build": "./scripts/build.js",
+    "postbuild": "npm run archive",
+    "prepublish": "npm run build",
+    "start": "grunt",
+    "lint": "semistandard src/**/*.js",
+    "pretest": "npm run lint && esperanto -i src/EsriLeaflet.js -o ./dist/esri-leaflet-src.js --skip=leaflet --t umd --strict --name L.esri --bundle -m inline",
+    "test": "karma start"
   }
 }

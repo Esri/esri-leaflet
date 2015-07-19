@@ -14,8 +14,10 @@ layout: example.hbs
 
     var map = L.map('map').setView([30,0], 2);
 
-    L.esri.imageMapLayer('http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/World/Temperature/ImageServer', {
-      mosaicRule: mosaicRule
+    L.esri.imageMapLayer({
+      url: 'http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/World/Temperature/ImageServer',
+      mosaicRule: mosaicRule,
+      useCors: false
     }).addTo(map);
 
     L.esri.basemapLayer('Gray').addTo(map);

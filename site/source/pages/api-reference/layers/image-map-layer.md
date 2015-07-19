@@ -22,8 +22,8 @@ Image Services provide access to raster data through a web service.
     </thead>
     <tbody>
         <tr>
-            <td><code class="nobr">new L.esri.Layers.ImageMapLayer({{{param 'String' 'url'}}}, {{{param 'Object' 'options'}}})</code><br><br><code class="nobr">L.esri.Layers.imageMapLayer({{{param 'String' 'url'}}}, {{{param 'Object' 'options'}}})</code><br><br><code class="nobr">new L.esri.ImageMapLayer({{{param 'String' 'url'}}}, {{{param 'Object' 'options'}}})</code><br><br><code class="nobr">L.esri.dimageMapLayer({{{param 'String' 'url'}}}, {{{param 'Object' 'options'}}})</code></td>
-            <td><code>url</code> should be the URL to the Image Service hosted the tiles. The <code>options</code> parameter can accept the same options as <a href="http://leafletjs.com/reference.html#tilelayer"><code>L.TileLayer</code></a></td>
+            <td><code class="nobr">L.esri.imageMapLayer({{{param 'Object' 'options'}}})</code></td>
+            <td>The <code>options</code> parameter can accept the same options as <a href="http://leafletjs.com/reference.html#imageoverlay"><code>L.ImageOverlay</code></a>. You also must pass a <code>url</code> key in your <code>options</code>.</td>
         </tr>
     </tbody>
 </table>
@@ -34,6 +34,7 @@ Image Services provide access to raster data through a web service.
 
 Option | Type | Default | Description
 --- | --- | --- | ---
+`url` | `String` | | *Required* URL of the [Image Service](http://resources.arcgis.com/en/help/arcgis-rest-api/#/Image_Service/02r3000000q8000000/).
 `format` | `String` | `'jpegpng'` | Output format of the image.
 `f` | `String` | `'image'` | Server response content type.
 `opacity` | `Number` | `1` | Opacity of the layer. Should be a value between 0 and 1.
