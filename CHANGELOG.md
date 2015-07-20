@@ -5,6 +5,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 [Upcoming changes][unreleased]
 
+## [2.0.0-beta.2](v2.0.0-beta.2)
+
+### Fixed
+
+* Files not included in git tag.
+
 ## [2.0.0-beta.1](v2.0.0-beta.1)
 
 This release is the first release that supports [Leaflet 1.0.0-beta.1](http://leafletjs.com/2015/07/15/leaflet-1.0-beta1-released.html).
@@ -299,7 +305,8 @@ None
 * Add DarkGray and DarkGrayLabels to BasemapLayer. #190
 * An attributionControl on maps is now required when using BasemapLayer. #159
 
-[unreleased]: https://github.com/esri/esri-leaflet/compare/v2.0.0-beta.1...HEAD
+[unreleased]: https://github.com/esri/esri-leaflet/compare/v2.0.0-beta.2...HEAD
+[v2.0.0-beta.2]: https://github.com/esri/esri-leaflet/compare/v2.0.0-beta.1...v2.0.0-beta.2
 [v2.0.0-beta.1]: https://github.com/esri/esri-leaflet/compare/v1.0.0...v2.0.0-beta.1
 [v1.0.0]: https://github.com/esri/esri-leaflet/compare/v1.0.0-rc.8...v1.0.0
 [v1.0.0-rc.8]: https://github.com/esri/esri-leaflet/compare/v1.0.0-rc.7...v1.0.0-rc.8
