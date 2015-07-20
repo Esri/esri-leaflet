@@ -83,7 +83,7 @@
     "lint": "semistandard src/**/*.js",
     "posttest": "rm ./dist/esri-leaflet-src.js",
     "prepublish": "./scripts/build.js",
-    "pretest": "npm run lint && esperanto -i src/EsriLeaflet.js -o ./dist/esri-leaflet-src.js --skip=leaflet --t umd --strict --name L.esri --bundle",
+    "pretest": "npm run lint && esperanto -i src/EsriLeaflet.js -o ./dist/esri-leaflet-src.js --skip=leaflet --t umd --strict --name L.esri --bundle -m inline",
     "release": "./scripts/release.sh",
     "start": "grunt",
     "test": "karma start"
