@@ -21,7 +21,7 @@ git add $FILES -f
 git commit -m "build $VERSION"
 
 # Create a ZIP archive of the dist files
-zip -r dist/esri-leaflet-v$VERSION.zip $FILES
+zip -r ./dist/esri-leaflet-v$VERSION.zip $FILES
 
 # Run gh-release to create the tag and push release to github
 gh-release --assets ./dist/esri-leaflet-v$VERSION.zip

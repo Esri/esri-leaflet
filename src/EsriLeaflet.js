@@ -30,7 +30,7 @@ import { FeatureGrid } from './Layers/FeatureLayer/FeatureGrid.js';
 import { FeatureManager } from './Layers/FeatureLayer/FeatureManager.js';
 import { FeatureLayer, featureLayer } from './Layers/FeatureLayer/FeatureLayer.js';
 
-export var VERSION = '2.0.0-beta.2';
+export var VERSION = '2.0.0-beta.3';
 export { Support };
 export { Util };
 export { get };
