@@ -81,11 +81,11 @@
   },
   "scripts": {
     "lint": "semistandard src/**/*.js",
-    "posttest": "rm ./dist/esri-leaflet-src.js",
     "prepublish": "./scripts/build.js",
-    "pretest": "npm run lint && esperanto -i src/EsriLeaflet.js -o ./dist/esri-leaflet-src.js --skip=leaflet --t umd --strict --name L.esri --bundle -m inline",
+    "pretest": "esperanto -i src/EsriLeaflet.js -o ./dist/esri-leaflet-src.js --skip=leaflet --t umd --strict --name L.esri --bundle -m inline",
+    "test": "npm run lint && karma start",
+    "posttest": "rm ./dist/esri-leaflet-src.js",
     "release": "./scripts/release.sh",
-    "start": "grunt",
-    "test": "karma start"
+    "start": "grunt"
   }
 }

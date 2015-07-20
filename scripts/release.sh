@@ -2,12 +2,11 @@
 
 # Get current version from package.json
 VERSION=$(node --eval "console.log(require('./package.json').version);")
+
+# Get a list of files to add form package.json
 FILES=$(node --eval "console.log(require('./package.json').files.join(' '));")
 
-echo "$VERSION"
-echo "$FILES"
-
-# Checkout templ branch for release
+# Checkout temp branch for release
 git checkout -b gh-release
 
 # Build and test
