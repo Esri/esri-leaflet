@@ -2,7 +2,7 @@
 
 # Get current version from package.json
 VERSION=$(node --eval "console.log(require('./package.json').version);")
-FILES = $(node --eval "console.log(require('./package.json').files.join(' '));")
+FILES=$(node --eval "console.log(require('./package.json').files.join(' '));")
 
 # Checkout templ branch for release
 git checkout -b gh-release
