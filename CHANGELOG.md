@@ -5,11 +5,17 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 [Upcoming changes][unreleased]
 
-## [2.0.0-beta.2](v2.0.0-beta.2)
+## [2.0.0-beta.3](v2.0.0-beta.3)
 
 ### Fixed
 
 * Files not included in git tag.
+
+## [2.0.0-beta.2](v2.0.0-beta.2)
+
+### Fixed
+
+* Release process bugs.
 
 ## [2.0.0-beta.1](v2.0.0-beta.1)
 
