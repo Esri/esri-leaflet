@@ -4,11 +4,14 @@
 VERSION=$(node --eval "console.log(require('./package.json').version);")
 FILES=$(node --eval "console.log(require('./package.json').files.join(' '));")
 
+echo "$VERSION"
+echo "$FILES"
+
 # Checkout templ branch for release
 git checkout -b gh-release
 
 # Build and test
-npm test
+npm test || exit 1
 npm run prepublish
 
 # Force add files
@@ -18,7 +21,7 @@ git add $FILES -f
 git commit -m "build $VERSION"
 
 # Create a ZIP archive of the dist files
-zip -r dist/esri-leaflet-v$VERSION.zip -i $FILES
+zip -r dist/esri-leaflet-v$VERSION.zip $FILES
 
 # Run gh-release to create the tag and push release to github
 gh-release --assets ./dist/esri-leaflet-v$VERSION.zip
