@@ -7,13 +7,13 @@
 <head>
   <meta charset="utf-8">
 
-  
-    <title>Esri Leaflet Quickstart | Esri Leaflet</title>
-  
 
-  
+    <title>Esri Leaflet Quickstart | Esri Leaflet</title>
+
+
+
     <meta name="description" content="A quick template to get started with Esri Leaflet.">
-  
+
 
   <meta name="description" content="Esri Leaflet">
   <meta name="viewport" content="width=device-width">
@@ -36,9 +36,11 @@
   <!-- require combined leaflet, esri leaflet and jsdelivr-rum -->
   <script src="//cdn.jsdelivr.net/leaflet/latest/leaflet.js"></script>
   <script src="//cdn.jsdelivr.net/leaflet.esri/1.0.0/esri-leaflet.js"></script>
+  <script src="//cdn.maptiks.com/maptiks-leaflet.min.js"></script>
+  <script>maptiks.trackcode='25e137e2-9ffa-49c2-a698-2a02171c4175';</script>
   <script src="//cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
 
-  
+
 
   <!-- Google Analytics -->
   <script>
@@ -46,7 +48,6 @@
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
     })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
     ga('create', 'UA-44963317-3', 'auto');
     ga('send', 'pageview');
   </script>
@@ -65,10 +66,10 @@
     </div>
     <div id="background-map" class="background-map"></div>
 
-  
+
 
 <div class="container white">
-  
+
 
 <aside class="sidebar">
   <h5>Basemaps</h5>
@@ -166,13 +167,12 @@
   <p>A quick template to get started with Esri Leaflet.</p>
 </div>
 <div id="map-wrapper">
-  
+
 
 <div id="map"></div>
 
 <script>
   var map = L.map('map').setView([37.75, -122.23], 10);
-
   L.esri.basemapLayer('Topographic').addTo(map);
 </script>
 </div>
