@@ -1,4 +1,4 @@
-describe('L.esri.Request', function () {
+describe('L.esri request helpers', function () {
   var xhr;
   var requests = [];
 
@@ -33,7 +33,7 @@ describe('L.esri.Request', function () {
   };
 
   it('should be able to make a GET request with CORS', function(done){
-    L.esri.Request.get.CORS('http://services.arcgisonline.com/ArcGIS/rest/info', {}, function(error, response){
+    L.esri.get.CORS('http://services.arcgisonline.com/ArcGIS/rest/info', {}, function(error, response){
       expect(this.foo).to.equal('bar');
       expect(response).to.deep.equal(sampleResponse);
       done();
@@ -47,7 +47,7 @@ describe('L.esri.Request', function () {
   });
 
   it('should be able to make a GET request with JSONP', function(done){
-    var request = L.esri.Request.get.JSONP('http://example.com/foo', {}, function(error, response){
+    var request = L.esri.get.JSONP('http://example.com/foo', {}, function(error, response){
       expect(this.foo).to.equal('bar');
       expect(response).to.deep.equal(sampleResponse);
       done();
@@ -59,7 +59,7 @@ describe('L.esri.Request', function () {
   });
 
   it('should callback with an error on non-JSON reponses', function(done){
-    var request = L.esri.Request.get.JSONP('http://example.com/foo', {}, function(error){
+    var request = L.esri.get.JSONP('http://example.com/foo', {}, function(error){
       expect(error).to.deep.equal({
         error: {
           code: 500,
@@ -73,7 +73,7 @@ describe('L.esri.Request', function () {
   });
 
   it('should callback with an error when an error is recived from the server', function(done){
-    var request = L.esri.Request.get.JSONP('http://example.com/foo', {}, function(error){
+    var request = L.esri.get.JSONP('http://example.com/foo', {}, function(error){
       expect(error).to.deep.equal(sampleError);
       done();
     });
@@ -82,7 +82,7 @@ describe('L.esri.Request', function () {
   });
 
   it('should be able to make a POST request with CORS', function(done){
-    L.esri.Request.post.XMLHTTP('http://services.arcgisonline.com/ArcGIS/rest/info', {}, function(error, response){
+    L.esri.post('http://services.arcgisonline.com/ArcGIS/rest/info', {}, function(error, response){
       expect(response).to.deep.equal(sampleResponse);
       done();
     });
@@ -92,7 +92,7 @@ describe('L.esri.Request', function () {
   });
 
   it('should serialize arrays of objects as JSON', function(done){
-    L.esri.Request.get.CORS('http://services.arcgisonline.com/ArcGIS/rest/info', {
+    L.esri.get.CORS('http://services.arcgisonline.com/ArcGIS/rest/info', {
       object: [{foo:'bar'}]
     }, function(error, response){
       expect(response).to.deep.equal(sampleResponse);
@@ -105,7 +105,7 @@ describe('L.esri.Request', function () {
   });
 
   it('should serialize arrays of non objects as comma seperated strings', function(done){
-    L.esri.Request.get.CORS('http://services.arcgisonline.com/ArcGIS/rest/info', {
+    L.esri.get.CORS('http://services.arcgisonline.com/ArcGIS/rest/info', {
       array: ['foo', 'bar']
     }, function(error, response){
       expect(response).to.deep.equal(sampleResponse);
@@ -118,7 +118,7 @@ describe('L.esri.Request', function () {
   });
 
   it('should serialize Objects as JSON', function(done){
-    L.esri.Request.get.CORS('http://services.arcgisonline.com/ArcGIS/rest/info', {
+    L.esri.get.CORS('http://services.arcgisonline.com/ArcGIS/rest/info', {
       object: {
         foo:'bar'
       }
@@ -136,7 +136,7 @@ describe('L.esri.Request', function () {
     var now = new Date();
     var stamp = now.valueOf();
 
-    L.esri.Request.get.CORS('http://services.arcgisonline.com/ArcGIS/rest/info', {
+    L.esri.get.CORS('http://services.arcgisonline.com/ArcGIS/rest/info', {
       time: now
     }, function(error, response){
       expect(response).to.deep.equal(sampleResponse);
@@ -149,7 +149,7 @@ describe('L.esri.Request', function () {
   });
 
   it('should throw errors when response is not a JSON object', function(done){
-    L.esri.Request.get.CORS('http://services.arcgisonline.com/ArcGIS/rest/info', {}, function(error){
+    L.esri.get.CORS('http://services.arcgisonline.com/ArcGIS/rest/info', {}, function(error){
       expect(error).to.deep.equal({
         message: 'Could not parse response as JSON. This could also be caused by a CORS or XMLHttpRequest error.',
         code: 500
@@ -163,7 +163,7 @@ describe('L.esri.Request', function () {
   });
 
   it('should callback with an error when an XMLHttpRequest error is encountered', function(done){
-    var request = L.esri.Request.post.XMLHTTP('http://services.arcgisonline.com/ArcGIS/rest/info', {}, function(error, response){
+    var request = L.esri.post('http://services.arcgisonline.com/ArcGIS/rest/info', {}, function(error, response){
       expect(error).to.deep.equal({
         error: {
           message: 'XMLHttpRequest error',

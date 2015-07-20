@@ -40,7 +40,7 @@ describe('L.esri.Layers.FeatureManager', function () {
   beforeEach(function(){
     server = sinon.fakeServer.create();
     sandbox = sinon.sandbox.create();
-    oldRaf = L.esri.Util.requestAnimationFrame;
+    oldRaf = L.Util.requestAnimFrame;
 
     MockLayer = L.esri.Layers.FeatureManager.extend({
       createLayers: sandbox.spy(),
@@ -56,7 +56,7 @@ describe('L.esri.Layers.FeatureManager', function () {
       maxZoom : 15
     });
 
-    L.esri.Util.requestAnimationFrame = function(cd){
+    L.Util.requestAnimFrame = function(cd){
       cd();
     };
   });
@@ -64,7 +64,7 @@ describe('L.esri.Layers.FeatureManager', function () {
   afterEach(function(){
     server.restore();
     sandbox.restore();
-    L.esri.Util.requestAnimationFrame = oldRaf;
+    L.Util.requestAnimFrame = oldRaf;
   });
 
   var fields = [
@@ -630,23 +630,23 @@ describe('L.esri.Layers.FeatureManager', function () {
   });
 
   it('should expose the authenticate method on the underlying service', function(){
-    var spy = sinon.spy(layer._service, 'authenticate');
+    var spy = sinon.spy(layer.service, 'authenticate');
     layer.authenticate('foo');
     expect(spy).to.have.been.calledWith('foo');
   });
 
   it('should expose the metadata method on the underlying service', function(){
-    var spy = sinon.spy(layer._service, 'metadata');
+    var spy = sinon.spy(layer.service, 'metadata');
     var callback = sinon.spy();
     layer.metadata(callback);
     expect(spy).to.have.been.calledWith(callback);
   });
 
   it('should expose the query method on the underlying service', function(){
-    var spy = sinon.spy(layer._service, 'query');
+    var spy = sinon.spy(layer.service, 'query');
     var query = layer.query();
     expect(query).to.be.an.instanceof(L.esri.Tasks.Query);
-    expect(query._service).to.equal(layer._service);
+    expect(query._service).to.equal(layer.service);
   });
 
   // this is now really difficult with fakeServer. Should use a simple request list.
@@ -755,7 +755,7 @@ describe('L.esri.Layers.FeatureManager', function () {
   });
 
   it('should support generalizing geometries', function(){
-    server.respondWith('GET', 'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.6953125%2C%22ymin%22%3A45.521743896993634%2C%22xmax%22%3A-122.6513671875%2C%22ymax%22%3A45.55252525134013%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&maxAllowableOffset=0.00004291534423829546&f=json', JSON.stringify({
+    server.respondWith('GET', 'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.6953125%2C%22ymin%22%3A45.521743896993634%2C%22xmax%22%3A-122.6513671875%2C%22ymax%22%3A45.55252525134013%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&maxAllowableOffset=0.00004291534423826704&f=json', JSON.stringify({
       fields: fields,
       features: [feature6],
       objectIdFieldName: 'OBJECTID',
@@ -767,9 +767,7 @@ describe('L.esri.Layers.FeatureManager', function () {
     });
 
     layer.addTo(map);
-
     server.respond();
-
     expect(layer.createLayers).to.have.been.calledWith([{
       'type': 'Feature',
       'geometry': {
@@ -796,7 +794,7 @@ describe('L.esri.Layers.FeatureManager', function () {
   });
 
   it('should propagate events from the service', function(){
-    server.respondWith('GET', 'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.6953125%2C%22ymin%22%3A45.521743896993634%2C%22xmax%22%3A-122.6513671875%2C%22ymax%22%3A45.55252525134013%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&f=json', JSON.stringify({
+    server.respondWith('GET', new RegExp(/.*/), JSON.stringify({
       fields: fields,
       features: [],
       objectIdFieldName: 'OBJECTID',

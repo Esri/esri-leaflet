@@ -106,7 +106,6 @@ describe('L.esri.Tasks.IdentifyFeatures', function () {
 
   it('should identify features with a 2 layer definitions', function(done){
 
-    // server.respondWith('GET', url + 'identify?sr=4326&layers=all&tolerance=3&returnGeometry=true&imageDisplay=500%2C500%2C96&mapExtent=-122.66535758972167%2C45.50624163368495%2C-122.65462875366211%2C45.51376023843158&geometry=-122.66%2C45.51&geometryType=esriGeometryPoint&layerDefs=0%3ANAME%3DOregon%3B1%3ANAME%3DMultnomah&f=json', JSON.stringify(sampleResponse));
 
     var request = task.layerDef(0, 'NAME=Oregon').layerDef(1, 'NAME=Multnomah').run(function(error, featureCollection, raw){
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
@@ -120,7 +119,6 @@ describe('L.esri.Tasks.IdentifyFeatures', function () {
   });
 
   it('should identify features in a given time range', function(done){
-    // server.respondWith('GET', url + 'identify?sr=4326&layers=all&tolerance=3&returnGeometry=true&imageDisplay=500%2C500%2C96&mapExtent=-122.66535758972167%2C45.50624163368495%2C-122.65462875366211%2C45.51376023843158&geometry=-122.66%2C45.51&geometryType=esriGeometryPoint&time=1357027200000%2C1388563200000&f=json', JSON.stringify(sampleResponse));
 
     var start = new Date('January 1 2013 GMT-0800');
     var end = new Date('January 1 2014 GMT-0800');
@@ -137,7 +135,6 @@ describe('L.esri.Tasks.IdentifyFeatures', function () {
   });
 
   it('should restrict identification to specific layers', function(done){
-    // server.respondWith('GET', url + 'identify?sr=4326&layers=top&tolerance=3&returnGeometry=true&imageDisplay=500%2C500%2C96&mapExtent=-122.66535758972167%2C45.50624163368495%2C-122.65462875366211%2C45.51376023843158&geometry=-122.66%2C45.51&geometryType=esriGeometryPoint&f=json', JSON.stringify(sampleResponse));
 
     var request = task.layers('top').run(function(error, featureCollection, raw){
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
@@ -149,7 +146,6 @@ describe('L.esri.Tasks.IdentifyFeatures', function () {
   });
 
   it('should identify features and limit geometries to a given precision', function(done){
-    // server.respondWith('GET', url + 'identify?sr=4326&layers=all&tolerance=3&returnGeometry=true&imageDisplay=500%2C500%2C96&mapExtent=-122.66535758972167%2C45.50624163368495%2C-122.65462875366211%2C45.51376023843158&geometry=-122.66%2C45.51&geometryType=esriGeometryPoint&geometryPrecision=4&f=json', JSON.stringify(sampleResponse));
 
     var request = task.precision(4).run(function(error, featureCollection, raw){
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
@@ -163,7 +159,6 @@ describe('L.esri.Tasks.IdentifyFeatures', function () {
   });
 
   it('should identify features and simplify geometries', function(done){
-    // server.respondWith('GET', url + 'identify?sr=4326&layers=all&tolerance=3&returnGeometry=true&imageDisplay=500%2C500%2C96&mapExtent=-122.66535758972167%2C45.50624163368495%2C-122.65462875366211%2C45.51376023843158&geometry=-122.66%2C45.51&geometryType=esriGeometryPoint&maxAllowableOffset=0.000010728836059556101&f=json', JSON.stringify(sampleResponse));
 
     var request = task.simplify(map, 0.5).run(function(error, featureCollection, raw){
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
@@ -171,13 +166,12 @@ describe('L.esri.Tasks.IdentifyFeatures', function () {
       done();
     });
 
-    expect(request.url).to.contain('maxAllowableOffset=0.000010728836059556101');
+    expect(request.url).to.contain('maxAllowableOffset=0.000010728836059570313');
 
     request.respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, JSON.stringify(sampleResponse));
   });
 
   it('should identify features with a token', function(done){
-    // server.respondWith('GET', url + 'identify?sr=4326&layers=all&tolerance=3&returnGeometry=true&imageDisplay=500%2C500%2C96&mapExtent=-122.66535758972167%2C45.50624163368495%2C-122.65462875366211%2C45.51376023843158&geometry=-122.66%2C45.51&geometryType=esriGeometryPoint&token=foo&f=json', JSON.stringify(sampleResponse));
 
     var request = task.token('foo').run(function(error, featureCollection, raw){
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
@@ -191,7 +185,6 @@ describe('L.esri.Tasks.IdentifyFeatures', function () {
   });
 
   it('should identify features within a certain pixel tolerance', function(done){
-    // server.respondWith('GET', url + 'identify?sr=4326&layers=all&tolerance=4&returnGeometry=true&imageDisplay=500%2C500%2C96&mapExtent=-122.66535758972167%2C45.50624163368495%2C-122.65462875366211%2C45.51376023843158&geometry=-122.66%2C45.51&geometryType=esriGeometryPoint&f=json', JSON.stringify(sampleResponse));
 
     var request = task.tolerance(4).run(function(error, featureCollection, raw){
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
@@ -207,7 +200,6 @@ describe('L.esri.Tasks.IdentifyFeatures', function () {
   it('should use a service to execute the request', function(done){
     var service = L.esri.Services.mapService({url: mapServiceUrl});
 
-    // server.respondWith('GET', url + 'identify?sr=4326&layers=all&tolerance=3&returnGeometry=true&imageDisplay=500%2C500%2C96&mapExtent=-122.66535758972167%2C45.50624163368495%2C-122.65462875366211%2C45.51376023843158&geometry=-122.66%2C45.51&geometryType=esriGeometryPoint&f=json', JSON.stringify(sampleResponse));
 
     var request = service.identify().on(map).at(latlng).run(function(error, featureCollection, raw){
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
@@ -231,7 +223,6 @@ describe('L.esri.Tasks.IdentifyFeatures', function () {
   it('should use a service to execute the request with simple LatLng', function(done){
     var service = L.esri.Services.mapService({url: mapServiceUrl});
 
-    // server.respondWith('GET', url + 'identify?sr=4326&layers=all&tolerance=3&returnGeometry=true&imageDisplay=500%2C500%2C96&mapExtent=-122.66535758972167%2C45.50624163368495%2C-122.65462875366211%2C45.51376023843158&geometry=-122.66%2C45.51&geometryType=esriGeometryPoint&f=json', JSON.stringify(sampleResponse));
 
     var request = service.identify().on(map).at(rawLatlng).run(function(error, featureCollection, raw){
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);

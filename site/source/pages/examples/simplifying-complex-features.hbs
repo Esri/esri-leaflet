@@ -28,12 +28,10 @@ layout: example.hbs
     simplifyFactor: 0.35,
     precision: 5,
     fields: ['FID', 'ZIP', 'PO_NAME'],
-    style: function(feature) {
-      return {
-        color: '#000',
-        weight: 1,
-        opacity: 1
-      }
+    style: {
+      color: '#000',
+      weight: 1,
+      opacity: 1
     }
   }).addTo(map);
 
@@ -41,10 +39,10 @@ layout: example.hbs
 
   zipcodes.on('mouseout', function(e){
     document.getElementById('info-pane').innerHTML = 'Hover to Inspect';
+    zipcodes.resetFeatureStyle(oldId);
   });
 
   zipcodes.on('mouseover', function(e){
-    zipcodes.resetStyle(oldId);
     oldId = e.layer.feature.id;
     document.getElementById('info-pane').innerHTML = e.layer.feature.properties.ZIP + ' ' + e.layer.feature.properties.PO_NAME;
     e.layer.bringToFront();

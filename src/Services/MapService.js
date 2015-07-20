@@ -1,19 +1,26 @@
-EsriLeaflet.Services.MapService = EsriLeaflet.Services.Service.extend({
+import { Service } from './Service.js';
+import identifyFeatures from '../Tasks/IdentifyFeatures.js';
+import query from '../Tasks/Query.js';
+import find from '../Tasks/Find.js';
+
+export var MapService = Service.extend({
 
   identify: function () {
-    return new EsriLeaflet.Tasks.identifyFeatures(this);
+    return identifyFeatures(this);
   },
 
   find: function () {
-    return new EsriLeaflet.Tasks.Find(this);
+    return find(this);
   },
 
   query: function () {
-    return new EsriLeaflet.Tasks.Query(this);
+    return query(this);
   }
 
 });
 
-EsriLeaflet.Services.mapService = function(params){
-  return new EsriLeaflet.Services.MapService(params);
-};
+export function mapService (options) {
+  return new MapService(options);
+}
+
+export default mapService;
