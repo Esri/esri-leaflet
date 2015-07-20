@@ -85,6 +85,7 @@
     "start": "grunt",
     "lint": "semistandard src/**/*.js",
     "pretest": "npm run lint && esperanto -i src/EsriLeaflet.js -o ./dist/esri-leaflet-src.js --skip=leaflet --t umd --strict --name L.esri --bundle",
+    "posttest": "rm ./dist/esri-leaflet-src.js",
     "test": "karma start"
   }
 }
