@@ -8,6 +8,10 @@
       "babelify"
     ]
   },
+  "files": [
+    "dist/esri-leaflet.js",
+    "dist/esri-leaflet.js.map"
+  ],
   "bugs": {
     "url": "https://github.com/esri/esri-leaflet/issues"
   },
@@ -76,9 +80,9 @@
     "url": "git@github.com:Esri/esri-leaflet.git"
   },
   "scripts": {
-    "archive": "zip -r ./dist/esri-leaflet-v$(node --eval \"console.log(require('./package.json').version);\") ./dist/esri-leaflet.js ./dist/esri-leaflet.js.map",
+    "archive": "zip -r ./dist/esri-leaflet-v$(node --eval \"console.log(require('./package.json').version);\").zip ./dist/esri-leaflet.js ./dist/esri-leaflet.js.map",
     "prerelease": "npm run build",
-    "release": "gh-release --assets ./dist/esri-leaflet-v$(node --eval \"console.log(require('./package.json').version);\") && npm publish",
+    "release": "gh-release --assets ./dist/esri-leaflet-v$(node --eval \"console.log(require('./package.json').version);\").zip && npm publish",
     "build": "./scripts/build.js",
     "postbuild": "npm run archive",
     "prepublish": "npm run build",
