@@ -8,10 +8,6 @@
       "babelify"
     ]
   },
-  "files": [
-    "dist/esri-leaflet.js",
-    "dist/esri-leaflet.js.map"
-  ],
   "bugs": {
     "url": "https://github.com/esri/esri-leaflet/issues"
   },
@@ -54,6 +50,10 @@
     "sinon-chai": "2.7.0",
     "uglify-js": "^2.4.23"
   },
+  "files": [
+    "dist/esri-leaflet.js",
+    "dist/esri-leaflet.js.map"
+  ],
   "homepage": "http://esri.github.io/esri-leaflet",
   "jsnext:main": "./index.js",
   "jspm": {
@@ -80,12 +80,12 @@
     "url": "git@github.com:Esri/esri-leaflet.git"
   },
   "scripts": {
-    "release": "./scripts/release.sh",
-    "prepublish": "./scripts/build.js",
-    "start": "grunt",
     "lint": "semistandard src/**/*.js",
-    "pretest": "npm run lint && esperanto -i src/EsriLeaflet.js -o ./dist/esri-leaflet-src.js --skip=leaflet --t umd --strict --name L.esri --bundle",
     "posttest": "rm ./dist/esri-leaflet-src.js",
+    "prepublish": "./scripts/build.js",
+    "pretest": "npm run lint && esperanto -i src/EsriLeaflet.js -o ./dist/esri-leaflet-src.js --skip=leaflet --t umd --strict --name L.esri --bundle",
+    "release": "./scripts/release.sh",
+    "start": "grunt",
     "test": "karma start"
   }
 }
