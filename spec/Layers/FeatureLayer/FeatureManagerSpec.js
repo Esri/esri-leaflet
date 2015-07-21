@@ -217,7 +217,7 @@ describe('L.esri.Layers.FeatureManager', function () {
     expect(map.attributionControl._container.innerHTML).to.contain('Esri');
   });
 
-  it('should be able to remove itself to a map', function(){
+  it('should be able to remove itself from a map', function(){
     layer.addTo(map);
     map.removeLayer(layer);
     map.hasLayer(layer);

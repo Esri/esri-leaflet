@@ -4,8 +4,6 @@ import {warn} from './Util.js';
 
 var callbacks = 0;
 
-window._EsriLeafletCallbacks = {};
-
 function serialize (params) {
   var data = '';
 
@@ -130,6 +128,7 @@ export function request (url, params, callback, context) {
 }
 
 export function jsonp (url, params, callback, context) {
+  window._EsriLeafletCallbacks = window._EsriLeafletCallbacks || {};
   var callbackId = 'c' + callbacks;
 
   params.callback = 'window._EsriLeafletCallbacks.' + callbackId;

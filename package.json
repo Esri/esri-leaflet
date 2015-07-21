@@ -38,7 +38,7 @@
     "karma-sourcemap-loader": "^0.3.5",
     "load-grunt-tasks": "^0.4.0",
     "phantomjs": "^1.9.17",
-    "rollup": "^0.10.0",
+    "rollup": "^0.11.4",
     "semistandard": "^6.1.2",
     "sinon": "^1.11.1",
     "sinon-chai": "2.7.0",
@@ -74,11 +74,11 @@
     "url": "git@github.com:Esri/esri-leaflet.git"
   },
   "scripts": {
+    "prepublish": "npm run build",
+    "build": "./scripts/build.js",
     "lint": "semistandard src/**/*.js",
-    "prepublish": "./scripts/build.js",
-    "pretest": "esperanto -i src/EsriLeaflet.js -o ./dist/esri-leaflet-src.js --skip=leaflet --t umd --strict --name L.esri --bundle -m inline",
+    "pretest": "npm run build",
     "test": "npm run lint && karma start",
-    "posttest": "rm ./dist/esri-leaflet-src.js",
     "release": "./scripts/release.sh",
     "start": "grunt"
   }

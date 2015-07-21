@@ -15,7 +15,7 @@ module.exports = function (config) {
     files: [
       'node_modules/leaflet/dist/leaflet.css',
       'node_modules/leaflet/dist/leaflet-src.js',
-      'dist/esri-leaflet-src.js',
+      'dist/esri-leaflet.js',
       'spec/**/*Spec.js'
     ],
 

@@ -1,6 +1,3 @@
-// import leaflet to ensure a gloabl
-import L from 'leaflet';
-
 // import base
 import { Support } from './Support.js';
 import { Util } from './Util.js';
@@ -92,34 +89,3 @@ export { FeatureGrid };
 export { FeatureManager };
 export { FeatureLayer };
 export { featureLayer };
-
-var _isAmd = (typeof define === 'undefined') ? false : define.amd && typeof define === 'function';
-var _isCjs = (typeof exports === 'object') && (typeof module !== 'undefined');
-var _isSystem = window && window.System;
-
-if ((_isAmd || _isCjs || _isSystem) && window && window.L) {
-  window.L.esri = {
-    VERSION: VERSION,
-    Support: Support,
-    Util: Util,
-    get: get,
-    post: post,
-    request: request,
-    Tasks: Tasks,
-    Services: Services,
-    Layers: Layers,
-    BasemapLayer: BasemapLayer,
-    basemapLayer: basemapLayer,
-    TiledMapLayer: TiledMapLayer,
-    tiledMapLayer: tiledMapLayer,
-    RasterLayer: RasterLayer,
-    ImageMapLayer: ImageMapLayer,
-    imageMapLayer: imageMapLayer,
-    DynamicMapLayer: DynamicMapLayer,
-    dynamicMapLayer: dynamicMapLayer,
-    FeatureGrid: FeatureGrid,
-    FeatureManager: FeatureManager,
-    FeatureLayer: FeatureLayer,
-    featureLayer: featureLayer
-  };
-}

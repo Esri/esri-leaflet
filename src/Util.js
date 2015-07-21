@@ -220,7 +220,7 @@ function flattenMultiPolygonRings (rings) {
 
 // shallow object clone for feature properties and attributes
 // from http://jsperf.com/cloning-an-object/2
-function shallowClone (obj) {
+export function shallowClone (obj) {
   var target = {};
   for (var i in obj) {
     if (obj.hasOwnProperty(i)) {

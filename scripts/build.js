@@ -1,37 +1,45 @@
 #!/usr/bin/env node
 
-var esperanto = require('esperanto');
 var path = require('path');
-var minify = require('uglify-js').minify;
 var fs = require('fs');
+var rollup = require('rollup').rollup;
+var UglifyJS = require('uglify-js');
 var pkg = require('../package.json');
 
-var copyright = '/*! ' + pkg.name + ' - v' + pkg.version + ' - ' + new Date().toDateString() + '\n' +
-                '*   Copyright (c) ' + new Date().getFullYear() + ' Environmental Systems Research Institute, Inc.\n' +
-                '*   ' + pkg.license + ' ' +
-                '*/\n';
+var copyright = '/* ' + pkg.name + ' - v' + pkg.version + ' - ' + new Date().toDateString() + '\n' +
+                ' * Copyright (c) ' + new Date().getFullYear() + ' Environmental Systems Research Institute, Inc.\n' +
+                ' * ' + pkg.license + ' */';
 
-esperanto.bundle({
+rollup({
   entry: path.resolve('src/EsriLeaflet.js'),
-  skip: ['leaflet']
+  external: ['leaflet']
 }).then(function (bundle) {
-  var transpiled = bundle.toUmd({
-    strict: true,
+  var transpiled = bundle.generate({
+    format: 'umd',
     sourceMap: true,
-    sourceMapFile: './esri-leaflet-src.js',
-    name: 'L.esri'
+    sourceMapFile: 'esri-leaflet.js',
+    moduleName: 'L.esri'
   });
 
-  var compressed = minify(transpiled.code, {
-    fromString: true,
-    inSourceMap: JSON.parse(transpiled.map),
-    outSourceMap: './esri-leaflet.js.map'
+  var source_map = UglifyJS.SourceMap({
+    file: 'esri-leaflet.js',
+    root: process.cwd(),
+    orig: JSON.parse(transpiled.map)
   });
 
-  fs.writeFileSync(path.join('dist', 'esri-leaflet.js'), copyright + compressed.code);
-  fs.writeFileSync(path.join('dist', 'esri-leaflet.js.map'), compressed.map);
+  var stream = UglifyJS.OutputStream({
+    preamble: copyright,
+    source_map: source_map
+  });
+
+  UglifyJS.parse(transpiled.code).print(stream);
+
+  var code = stream.toString();
+  var map = source_map.toString().replace(new RegExp(path.join(process.cwd(), 'src'), 'g'), '../src');
+
+  fs.writeFileSync(path.join('dist', 'esri-leaflet.js'), code + '\n//# sourceMappingURL=./esri-leaflet.js.map');
+  fs.writeFileSync(path.join('dist', 'esri-leaflet.js.map'), map);
   process.exit(0);
-
 }).catch(function (error) {
   console.log(error);
   process.exit(1);
