@@ -20,13 +20,6 @@ export var FeatureLayer = FeatureManager.extend({
    * Layer Interface
    */
 
-  onAdd: function (map) {
-    map.on('zoomstart zoomend', function (e) {
-      this._zooming = (e.type === 'zoomstart');
-    }, this);
-    return FeatureManager.prototype.onAdd.call(this, map);
-  },
-
   onRemove: function (map) {
     for (var i in this._layers) {
       map.removeLayer(this._layers[i]);
@@ -91,8 +84,8 @@ export var FeatureLayer = FeatureManager.extend({
         this._map.addLayer(layer);
       }
 
-      // update geomerty if neccessary
-      if (layer && (layer.setLatLngs || layer.setLatLng)) {
+      // update geometry if neccessary
+      if (layer && this.options.simplifyFactor > 0 && (layer.setLatLngs || layer.setLatLng)) {
         this._updateLayer(layer, geojson);
       }
 
@@ -155,6 +148,7 @@ export var FeatureLayer = FeatureManager.extend({
   },
 
   cellEnter: function (bounds, coords) {
+    console.log(this._zooming);
     if (!this._zooming) {
       L.Util.requestAnimFrame(L.Util.bind(function () {
         var cacheKey = this._cacheKey(coords);
@@ -168,6 +162,7 @@ export var FeatureLayer = FeatureManager.extend({
   },
 
   cellLeave: function (bounds, coords) {
+    console.log(this._zooming);
     if (!this._zooming) {
       L.Util.requestAnimFrame(L.Util.bind(function () {
         var cacheKey = this._cacheKey(coords);

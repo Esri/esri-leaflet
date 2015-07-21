@@ -9,6 +9,7 @@ export var FeatureGrid = L.Layer.extend({
 
   initialize: function (options) {
     options = L.setOptions(this, options);
+    this._zooming = false;
   },
 
   onAdd: function (map) {
@@ -26,6 +27,7 @@ export var FeatureGrid = L.Layer.extend({
   getEvents: function () {
     var events = {
       moveend: this._update,
+      zoomstart: this._zoomstart,
       zoomend: this._reset
     };
 
@@ -42,6 +44,10 @@ export var FeatureGrid = L.Layer.extend({
     return this;
   },
 
+  _zoomstart: function () {
+    this._zooming = true;
+  },
+
   _reset: function () {
     this._removeCells();
 
@@ -52,6 +58,7 @@ export var FeatureGrid = L.Layer.extend({
     this._cellNumBounds = this._getCellNumBounds();
 
     this._resetWrap();
+    this._zooming = false;
   },
 
   _resetWrap: function () {
