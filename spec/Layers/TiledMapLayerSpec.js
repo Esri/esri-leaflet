@@ -1,4 +1,4 @@
-describe('L.esri.Layers.TiledMapLayer', function () {
+describe('L.esri.TiledMapLayer', function () {
   var url = 'http://services.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer';
   var layer;
   var server;
@@ -35,7 +35,7 @@ describe('L.esri.Layers.TiledMapLayer', function () {
   it('should expose the query method on the underlying service', function(){
     var spy = sinon.spy(layer.service, 'identify');
     var identify = layer.identify();
-    expect(identify).to.be.an.instanceof(L.esri.Tasks.IdentifyFeatures);
+    expect(identify).to.be.an.instanceof(L.esri.IdentifyFeatures);
     expect(identify._service).to.equal(layer.service);
   });
 
@@ -58,11 +58,11 @@ describe('L.esri.Layers.TiledMapLayer', function () {
     expect(requestendSpy.callCount).to.be.above(0);
   });
 
-  it('should have a L.esri.Layers.tiledMapLayer alias', function(){
-    layer = L.esri.Layers.tiledMapLayer({
+  it('should have a L.esri.tiledMapLayer alias', function(){
+    layer = L.esri.tiledMapLayer({
       url: url
     });
-    expect(layer).to.be.instanceof(L.esri.Layers.TiledMapLayer);
+    expect(layer).to.be.instanceof(L.esri.TiledMapLayer);
   });
 
   it('should use a token passed in options', function(){

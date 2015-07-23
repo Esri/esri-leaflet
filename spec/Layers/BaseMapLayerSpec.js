@@ -1,4 +1,4 @@
-describe('L.esri.Layers.BasemapLayer', function () {
+describe('L.esri.BasemapLayer', function () {
 
   var map;
   var server;
@@ -48,7 +48,7 @@ describe('L.esri.Layers.BasemapLayer', function () {
     var testmaps = ['Streets', 'Topographic', 'NationalGeographic', 'Oceans', 'OceansLabels','DarkGray', 'DarkGrayLabels', 'Gray', 'GrayLabels', 'Imagery', 'ImageryLabels', 'ImageryTransportation', 'ShadedRelief', 'ShadedReliefLabels', 'Terrain', 'TerrainLabels'];
     for (var i = 0, len = testmaps.length; i < len; i++) {
       var name = testmaps[i];
-      expect(L.esri.basemapLayer(name)).to.be.instanceof(L.esri.Layers.BasemapLayer);
+      expect(L.esri.basemapLayer(name)).to.be.instanceof(L.esri.BasemapLayer);
       expect(L.esri.basemapLayer(name)._url).to.equal(L.esri.BasemapLayer.TILES[name].urlTemplate);
     }
   });
@@ -80,7 +80,7 @@ describe('L.esri.Layers.BasemapLayer', function () {
     }).to.throw(/Invalid parameter/);
   });
 
-  it('should have a L.esri.Layers.basemapLayer alias', function(){
-    expect(L.esri.Layers.basemapLayer('Topographic')).to.be.instanceof(L.esri.Layers.BasemapLayer);
+  it('should have a L.esri.basemapLayer alias', function(){
+    expect(L.esri.basemapLayer('Topographic')).to.be.instanceof(L.esri.BasemapLayer);
   });
 });

@@ -1,4 +1,4 @@
-describe('L.esri.Layers.FeatureGrid', function () {
+describe('L.esri.FeatureGrid', function () {
   var MockGrid;
   var grid;
   var map;
@@ -18,7 +18,7 @@ describe('L.esri.Layers.FeatureGrid', function () {
   }
 
   beforeEach(function(){
-    MockGrid = L.esri.Layers.FeatureGrid.extend({
+    MockGrid = L.esri.FeatureGrid.extend({
       createCell: sinon.spy(),
       cellEnter: sinon.spy(),
       cellLeave: sinon.spy()

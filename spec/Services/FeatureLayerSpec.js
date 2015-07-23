@@ -1,4 +1,4 @@
-describe('L.esri.Services.FeatureLayer', function () {
+describe('L.esri.FeatureLayer', function () {
   var featureServiceUrl = 'http://services.arcgis.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0';
   var service;
   var xhr;
@@ -12,7 +12,7 @@ describe('L.esri.Services.FeatureLayer', function () {
       requests.push(xhr);
     };
 
-    service = L.esri.Services.featureLayerService({url: featureServiceUrl});
+    service = L.esri.featureLayerService({url: featureServiceUrl});
   });
 
   afterEach(function(){

@@ -5,7 +5,7 @@ describe('L.esri.Service', function () {
 
   beforeEach(function(){
     server = sinon.fakeServer.create();
-    service = L.esri.Services.service({url: serviceUrl});
+    service = L.esri.service({url: serviceUrl});
   });
 
   afterEach(function(){

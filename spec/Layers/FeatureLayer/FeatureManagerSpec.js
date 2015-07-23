@@ -1,4 +1,4 @@
-describe('L.esri.Layers.FeatureManager', function () {
+describe('L.esri.FeatureManager', function () {
   function createMap(){
     // create container
     var container = document.createElement('div');
@@ -42,7 +42,7 @@ describe('L.esri.Layers.FeatureManager', function () {
     sandbox = sinon.sandbox.create();
     oldRaf = L.Util.requestAnimFrame;
 
-    MockLayer = L.esri.Layers.FeatureManager.extend({
+    MockLayer = L.esri.FeatureManager.extend({
       createLayers: sandbox.spy(),
       addLayers: sandbox.spy(),
       removeLayers: sandbox.spy()
@@ -553,7 +553,7 @@ describe('L.esri.Layers.FeatureManager', function () {
   });
 
   it('should return true for features with a single feature with start and end time fields in the current time range', function(){
-    var layer = new L.esri.Layers.FeatureManager({
+    var layer = new L.esri.FeatureManager({
       url: url,
       from: new Date('Dec 1 2013 GMT-0800'),
       to: new Date('January 12 2014 GMT-0800'),
@@ -645,7 +645,7 @@ describe('L.esri.Layers.FeatureManager', function () {
   it('should expose the query method on the underlying service', function(){
     var spy = sinon.spy(layer.service, 'query');
     var query = layer.query();
-    expect(query).to.be.an.instanceof(L.esri.Tasks.Query);
+    expect(query).to.be.an.instanceof(L.esri.Query);
     expect(query._service).to.equal(layer.service);
   });
 

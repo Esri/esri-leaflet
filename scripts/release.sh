@@ -23,11 +23,11 @@ git commit -m "build $VERSION"
 zip -r dist/$NAME-v$VERSION.zip $FILES
 
 # run gh-release to create the tag and push release to github
-gh-release --assets $NAME-v$VERSION.zip --dry-run
+# gh-release --assets $NAME-v$VERSION.zip
 
 # publish release on NPM
 # npm publish
 
 # checkout master and cleanup release branch
-# git checkout master
-# git branch -D gh-release
+git checkout master
+git branch -D gh-release

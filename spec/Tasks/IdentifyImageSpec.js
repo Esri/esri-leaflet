@@ -1,4 +1,4 @@
-describe('L.esri.Tasks.IdentifyImage', function () {
+describe('L.esri.IdentifyImage', function () {
 
   function deepClone(obj) {
     return JSON.parse(JSON.stringify(obj));
@@ -341,7 +341,7 @@ describe('L.esri.Tasks.IdentifyImage', function () {
 
   beforeEach(function(){
     server = sinon.fakeServer.create();
-    task = L.esri.Tasks.identifyImage({url: imageServiceUrl}).at(latlng);
+    task = L.esri.identifyImage({url: imageServiceUrl}).at(latlng);
   });
 
   afterEach(function(){

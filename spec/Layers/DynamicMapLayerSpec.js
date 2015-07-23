@@ -1,4 +1,4 @@
-describe('L.esri.Layers.DynamicMapLayer', function () {
+describe('L.esri.DynamicMapLayer', function () {
   function createMap(){
     // create container
     var container = document.createElement('div');
@@ -67,14 +67,14 @@ describe('L.esri.Layers.DynamicMapLayer', function () {
     map.remove();
   });
 
- it('should have a L.esri.Layers.dynamicMapLayer alias', function(){
-    expect(L.esri.Layers.dynamicMapLayer({
+ it('should have a L.esri.dynamicMapLayer alias', function(){
+    expect(L.esri.dynamicMapLayer({
       url: url
-    })).to.be.instanceof(L.esri.Layers.DynamicMapLayer);
+    })).to.be.instanceof(L.esri.DynamicMapLayer);
   });
 
  it('should display an attribution if one was passed', function(){
-    L.esri.Layers.dynamicMapLayer({
+    L.esri.dynamicMapLayer({
       url: url,
       attribution: 'Esri'
     }).addTo(map);
@@ -148,7 +148,7 @@ describe('L.esri.Layers.DynamicMapLayer', function () {
   it('should expose the identify method on the underlying service', function(){
     var spy = sinon.spy(layer.service, 'identify');
     var identify = layer.identify();
-    expect(identify).to.be.an.instanceof(L.esri.Tasks.IdentifyFeatures);
+    expect(identify).to.be.an.instanceof(L.esri.IdentifyFeatures);
     expect(identify._service).to.equal(layer.service);
   });
 

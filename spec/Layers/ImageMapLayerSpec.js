@@ -1,4 +1,4 @@
-describe('L.esri.Layers.ImageMapLayer', function () {
+describe('L.esri.ImageMapLayer', function () {
   function createMap(){
     // create container
     var container = document.createElement('div');
@@ -66,14 +66,14 @@ describe('L.esri.Layers.ImageMapLayer', function () {
     map.remove();
   });
 
-  it('should have a L.esri.Layers.imageMapLayer alias', function(){
-    expect(L.esri.Layers.imageMapLayer({
+  it('should have a L.esri.imageMapLayer alias', function(){
+    expect(L.esri.imageMapLayer({
       url: url
-    })).to.be.instanceof(L.esri.Layers.ImageMapLayer);
+    })).to.be.instanceof(L.esri.ImageMapLayer);
   });
 
   it('should display an attribution if one was passed', function(){
-    L.esri.Layers.imageMapLayer({
+    L.esri.imageMapLayer({
       url: url,
       attribution: 'Esri'
     }).addTo(map);
@@ -150,7 +150,7 @@ describe('L.esri.Layers.ImageMapLayer', function () {
   it('should expose the identify method on the underlying service', function(){
     var spy = sinon.spy(layer.service, 'identify');
     var identify = layer.identify();
-    expect(identify).to.be.an.instanceof(L.esri.Tasks.IdentifyImage);
+    expect(identify).to.be.an.instanceof(L.esri.IdentifyImage);
     expect(identify._service).to.equal(layer.service);
   });
 

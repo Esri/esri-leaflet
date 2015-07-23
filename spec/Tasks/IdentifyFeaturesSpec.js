@@ -1,4 +1,4 @@
-describe('L.esri.Tasks.IdentifyFeatures', function () {
+describe('L.esri.IdentifyFeatures', function () {
   function createMap(){
     // create container
     var container = document.createElement('div');
@@ -65,7 +65,7 @@ describe('L.esri.Tasks.IdentifyFeatures', function () {
 
   beforeEach(function(){
     server = sinon.fakeServer.create();
-    task = L.esri.Tasks.identifyFeatures({url: mapServiceUrl}).on(map).at(latlng);
+    task = L.esri.identifyFeatures({url: mapServiceUrl}).on(map).at(latlng);
   });
 
   afterEach(function(){
@@ -198,7 +198,7 @@ describe('L.esri.Tasks.IdentifyFeatures', function () {
   });
 
   it('should use a service to execute the request', function(done){
-    var service = L.esri.Services.mapService({url: mapServiceUrl});
+    var service = L.esri.mapService({url: mapServiceUrl});
 
 
     var request = service.identify().on(map).at(latlng).run(function(error, featureCollection, raw){
@@ -221,7 +221,7 @@ describe('L.esri.Tasks.IdentifyFeatures', function () {
   });
 
   it('should use a service to execute the request with simple LatLng', function(done){
-    var service = L.esri.Services.mapService({url: mapServiceUrl});
+    var service = L.esri.mapService({url: mapServiceUrl});
 
 
     var request = service.identify().on(map).at(rawLatlng).run(function(error, featureCollection, raw){
@@ -244,7 +244,7 @@ describe('L.esri.Tasks.IdentifyFeatures', function () {
   });
 
   it('should return layerId of features in response', function(done){
-    var service = L.esri.Services.mapService({url: mapServiceUrl});
+    var service = L.esri.mapService({url: mapServiceUrl});
 
     var request = service.identify().on(map).at(rawLatlng).run(function(error, featureCollection, raw){
       expect(featureCollection.features[0].layerId).to.deep.equal(0);

@@ -1,4 +1,4 @@
-describe('L.esri.Layers.FeatureLayer', function () {
+describe('L.esri.FeatureLayer', function () {
   function createMap(){
     // create container
     var container = document.createElement('div');
@@ -120,11 +120,11 @@ describe('L.esri.Layers.FeatureLayer', function () {
     layer.createLayers(features);
   });
 
-  it('should have an alias at L.esri.Layers.featureLayer', function(){
-    var layer = L.esri.Layers.featureLayer({
+  it('should have an alias at L.esri.featureLayer', function(){
+    var layer = L.esri.featureLayer({
       url: 'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0'
     });
-    expect(layer).to.be.an.instanceof(L.esri.Layers.FeatureLayer);
+    expect(layer).to.be.an.instanceof(L.esri.FeatureLayer);
   });
 
   it('should create features on a map', function(){

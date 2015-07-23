@@ -13,8 +13,15 @@
   "dependencies": {
     "leaflet": "1.0.0-beta.1"
   },
+  "browserify": {
+    "transform": [["babelify", {
+      "whitelist": ["es6.modules"],
+      "loose": ["es6.modules"]
+    }]]
+  },
   "devDependencies": {
     "assemble": "^0.4.37",
+    "babelify": "^6.1.3",
     "chai": "2.3.0",
     "esperanto": "^0.7.3",
     "gh-release": "^2.0.0",
@@ -49,12 +56,12 @@
     "dist/esri-leaflet.js.map"
   ],
   "homepage": "http://esri.github.io/esri-leaflet",
-  "jsnext:main": "./index.js",
+  "jsnext:main": "src/EsriLeaflet.js",
   "jspm": {
-    "main": "./index.js",
-    "directories": {
-      "lib": "./lib"
-    },
+    "files": [
+      "src/**/*.js"
+    ],
+    "defaultExtension": "",
     "registry": "npm",
     "format": "es6"
   },
@@ -67,7 +74,7 @@
     "mapping"
   ],
   "license": "Apache-2.0",
-  "main": "dist/esri-leaflet.js",
+  "main": "src/EsriLeaflet.js",
   "readmeFilename": "README.md",
   "repository": {
     "type": "git",
