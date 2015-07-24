@@ -7,6 +7,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [2.0.0-beta.4](v2.0.0-beta.4)
 
+### Breaking
+
+* Nested namespaces for `L.esri.Layers`, `L.esri.Services` and `L.esri.Tasks`, ``have been removed for better compatibility with ES 2015 modules. This means you should now write `L.esri.query()` for example as opposed to `L.esri.Tasks.query()`.
+
 ### Changed
 
 * Tests are now run against the minified production code for more safty.
