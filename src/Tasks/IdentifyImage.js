@@ -1,6 +1,6 @@
 import L from 'leaflet';
-import { Identify } from './Identify.js';
-import Util from '../Util.js';
+import { Identify } from './Identify';
+import Util from '../Util';
 
 export var IdentifyImage = Identify.extend({
   setters: {

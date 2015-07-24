@@ -1,7 +1,7 @@
 import L from 'leaflet';
-import { RasterLayer } from './RasterLayer.js';
-import { cleanUrl } from '../Util.js';
-import imageService from '../Services/ImageService.js';
+import { RasterLayer } from './RasterLayer';
+import { cleanUrl } from '../Util';
+import imageService from '../Services/ImageService';
 
 export var ImageMapLayer = RasterLayer.extend({
 

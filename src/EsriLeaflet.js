@@ -1,30 +1,30 @@
-export var VERSION = '2.0.0-beta.3';
+export var VERSION = '2.0.0-beta.4';
 
 // import base
-export { Support } from './Support.js';
-export { Util } from './Util.js';
-export { get, post, request } from './Request.js';
+export { Support } from './Support';
+export { Util } from './Util';
+export { get, post, request } from './Request';
 
 // export tasks
-export { Task, task } from './Tasks/Task.js';
-export { Query, query } from './Tasks/Query.js';
-export { Find, find } from './Tasks/Find.js';
-export { Identify, identify } from './Tasks/Identify.js';
-export { IdentifyFeatures, identifyFeatures } from './Tasks/IdentifyFeatures.js';
-export { IdentifyImage, identifyImage } from './Tasks/IdentifyImage.js';
+export { Task, task } from './Tasks/Task';
+export { Query, query } from './Tasks/Query';
+export { Find, find } from './Tasks/Find';
+export { Identify, identify } from './Tasks/Identify';
+export { IdentifyFeatures, identifyFeatures } from './Tasks/IdentifyFeatures';
+export { IdentifyImage, identifyImage } from './Tasks/IdentifyImage';
 
 // export services
-export { Service, service } from './Services/Service.js';
-export { MapService, mapService } from './Services/MapService.js';
-export { ImageService, imageService } from './Services/ImageService.js';
-export { FeatureLayerService, featureLayerService } from './Services/FeatureLayerService.js';
+export { Service, service } from './Services/Service';
+export { MapService, mapService } from './Services/MapService';
+export { ImageService, imageService } from './Services/ImageService';
+export { FeatureLayerService, featureLayerService } from './Services/FeatureLayerService';
 
 // export layers
-export { BasemapLayer, basemapLayer } from './Layers/BasemapLayer.js';
-export { TiledMapLayer, tiledMapLayer } from './Layers/TiledMapLayer.js';
-export { RasterLayer } from './Layers/RasterLayer.js';
-export { ImageMapLayer, imageMapLayer } from './Layers/ImageMapLayer.js';
-export { DynamicMapLayer, dynamicMapLayer } from './Layers/DynamicMapLayer.js';
-export { FeatureGrid } from './Layers/FeatureLayer/FeatureGrid.js';
-export { FeatureManager } from './Layers/FeatureLayer/FeatureManager.js';
-export { FeatureLayer, featureLayer } from './Layers/FeatureLayer/FeatureLayer.js';
+export { BasemapLayer, basemapLayer } from './Layers/BasemapLayer';
+export { TiledMapLayer, tiledMapLayer } from './Layers/TiledMapLayer';
+export { RasterLayer } from './Layers/RasterLayer';
+export { ImageMapLayer, imageMapLayer } from './Layers/ImageMapLayer';
+export { DynamicMapLayer, dynamicMapLayer } from './Layers/DynamicMapLayer';
+export { FeatureGrid } from './Layers/FeatureLayer/FeatureGrid';
+export { FeatureManager } from './Layers/FeatureLayer/FeatureManager';
+export { FeatureLayer, featureLayer } from './Layers/FeatureLayer/FeatureLayer';

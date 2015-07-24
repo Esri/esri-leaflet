@@ -1,5 +1,5 @@
-import { Task } from './Task.js';
-import Util from '../Util.js';
+import { Task } from './Task';
+import Util from '../Util';
 
 export var Find = Task.extend({
   setters: {

@@ -1,5 +1,5 @@
 import L from 'leaflet';
-import { FeatureManager } from './FeatureManager.js';
+import { FeatureManager } from './FeatureManager';
 
 export var FeatureLayer = FeatureManager.extend({
 

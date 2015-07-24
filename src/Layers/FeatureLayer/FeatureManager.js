@@ -1,7 +1,7 @@
 import L from 'leaflet';
-import { FeatureGrid } from './FeatureGrid.js';
-import featureLayerService from '../../Services/FeatureLayerService.js';
-import { cleanUrl, warn } from '../../Util.js';
+import { FeatureGrid } from './FeatureGrid';
+import featureLayerService from '../../Services/FeatureLayerService';
+import { cleanUrl, warn } from '../../Util';
 
 export var FeatureManager = FeatureGrid.extend({
   /**

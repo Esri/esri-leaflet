@@ -1,7 +1,7 @@
-import { Service } from './Service.js';
-import identifyFeatures from '../Tasks/IdentifyFeatures.js';
-import query from '../Tasks/Query.js';
-import find from '../Tasks/Find.js';
+import { Service } from './Service';
+import identifyFeatures from '../Tasks/IdentifyFeatures';
+import query from '../Tasks/Query';
+import find from '../Tasks/Find';
 
 export var MapService = Service.extend({
 

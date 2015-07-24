@@ -1,5 +1,5 @@
 import L from 'leaflet';
-import {cors} from '../Support.js';
+import {cors} from '../Support';
 
 export var RasterLayer = L.Layer.extend({
 

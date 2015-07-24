@@ -1,7 +1,7 @@
 import L from 'leaflet';
-import {cors} from '../Support.js';
-import {cleanUrl} from '../Util.js';
-import Request from '../Request.js';
+import {cors} from '../Support';
+import {cleanUrl} from '../Util';
+import Request from '../Request';
 
 export var Task = L.Class.extend({
 
