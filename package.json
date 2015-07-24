@@ -61,7 +61,6 @@
     "files": [
       "src/**/*.js"
     ],
-    "defaultExtension": "",
     "registry": "npm",
     "format": "es6"
   },

@@ -234,7 +234,7 @@ export function shallowClone (obj) {
 export function extentToBounds (extent) {
   var sw = L.latLng(extent.ymin, extent.xmin);
   var ne = L.latLng(extent.ymax, extent.xmax);
-  return new L.LatLngBounds(sw, ne);
+  return L.latLngBounds(sw, ne);
 }
 
 // convert an LatLngBounds (Leaflet) to extent (ArcGIS)

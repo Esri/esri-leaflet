@@ -261,12 +261,12 @@ export var BasemapLayer = L.TileLayer.extend({
         var contributor = attributions.contributors[c];
         for (var i = 0; i < contributor.coverageAreas.length; i++) {
           var coverageArea = contributor.coverageAreas[i];
-          var southWest = new L.LatLng(coverageArea.bbox[0], coverageArea.bbox[1]);
-          var northEast = new L.LatLng(coverageArea.bbox[2], coverageArea.bbox[3]);
+          var southWest = L.latLng(coverageArea.bbox[0], coverageArea.bbox[1]);
+          var northEast = L.latLng(coverageArea.bbox[2], coverageArea.bbox[3]);
           this._attributions.push({
             attribution: contributor.attribution,
             score: coverageArea.score,
-            bounds: [southWest, northEast],
+            bounds: L.latLngBounds(southWest, northEast),
             minZoom: coverageArea.zoomMin,
             maxZoom: coverageArea.zoomMax
           });
@@ -289,7 +289,6 @@ export var BasemapLayer = L.TileLayer.extend({
       for (var i = 0; i < this._attributions.length; i++) {
         var attribution = this._attributions[i];
         var text = attribution.attribution;
-        //debugger;
         if (!newAttributions.match(text) && bounds.intersects(attribution.bounds) && zoom >= attribution.minZoom && zoom <= attribution.maxZoom) {
           newAttributions += (', ' + text);
         }

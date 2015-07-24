@@ -138,7 +138,7 @@ export var RasterLayer = L.Layer.extend({
       // create a new image overlay and add it to the map
       // to start loading the image
       // opacity is 0 while the image is loading
-      var image = new L.ImageOverlay(url, bounds, {
+      var image = L.imageOverlay(url, bounds, {
         opacity: 0,
         crossOrigin: this.options.useCors,
         alt: this.options.alt,
