@@ -73,7 +73,7 @@
     "mapping"
   ],
   "license": "Apache-2.0",
-  "main": "src/EsriLeaflet.js",
+  "main": "dist/esri-leaflet.js",
   "readmeFilename": "README.md",
   "repository": {
     "type": "git",
