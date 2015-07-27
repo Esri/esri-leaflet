@@ -223,12 +223,12 @@ dynamicMapLayer.bindPopup(
 
 ```js
 var map = L.map('map').setView([ 38.83,-98.5], 7);
-
 L.esri.basemapLayer('Gray').addTo(map);
 
 var url = "http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Petroleum/KGS_OilGasFields_Kansas/MapServer";
 
-L.esri.dynamicMapLayer(url, {
+L.esri.dynamicMapLayer({
+  url: url,
   opacity : 0.25
 }).addTo(map);
 
