@@ -1,11 +1,11 @@
 ---
-title: L.esri.Tasks.Task
+title: L.esri.Task
 layout: documentation.hbs
 ---
 
 # {{page.data.title}}
 
-`L.esri.Tasks.Task` is a generic class that provides the foundation for calling operations on ArcGIS Online and ArcGIS Server Services like query, find and identify.
+`L.esri.Task` is a generic class that provides the foundation for calling operations on ArcGIS Online and ArcGIS Server Services like query, find and identify.
 
 ### Constructor
 
@@ -18,8 +18,8 @@ layout: documentation.hbs
     </thead>
     <tbody>
         <tr>
-            <td><code>L.esri.Tasks.task({{{param 'Object' 'options'}}})</code><br><br>
-            <code>L.esri.Tasks.task({{{param 'Service' 'endpoint' '../../api-reference/services/service.html'}}})</code></td>
+            <td><code>L.esri.task({{{param 'Object' 'options'}}})</code><br><br>
+            <code>L.esri.task({{{param 'Service' 'endpoint' '../../api-reference/services/service.html'}}})</code></td>
             <td>Options includes a <code>url</code> parameter which refers to the ArcGIS Server or ArcGIS Online service you would like to consume.</td>
         </tr>
    </tbody>

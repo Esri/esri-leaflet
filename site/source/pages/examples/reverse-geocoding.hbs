@@ -4,8 +4,8 @@ description: Query the closest address to a given point with the Esri Leaflet Ge
 layout: example.hbs
 ---
 
-<link rel="stylesheet" href="//cdn.jsdelivr.net/leaflet.esri.geocoder/1.0.2/esri-leaflet-geocoder.css">
-<script src="//cdn.jsdelivr.net/leaflet.esri.geocoder/1.0.2/esri-leaflet-geocoder.js"></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/leaflet.esri.geocoder/2.0.0-beta.2/esri-leaflet-geocoder.css">
+<script src="//cdn.jsdelivr.net/leaflet.esri.geocoder/2.0.0-beta.2/esri-leaflet-geocoder.js"></script>
 
 <div id="map"></div>
 
@@ -16,7 +16,7 @@ layout: example.hbs
     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
   }).addTo(map);
 
-  var geocodeService = L.esri.Geocoding.Services.geocoding();
+  var geocodeService = L.esri.Geocoding.geocodeService();
 
   map.on('click', function(e) {
     geocodeService.reverse().latlng(e.latlng).run(function(error, result) {

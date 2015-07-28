@@ -15,7 +15,7 @@ layout: example.hbs
   var bikeParkingUrl = "https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Portland_Bicycle_Parking/FeatureServer/0";
 
   // query a feature service for a neighborhood
-  L.esri.Tasks.query({
+  L.esri.query({
     url: neighborhoodsUrl
   }).where("NAME='HOLLYWOOD'").run(function(error, neighborhoods){
     // draw neighborhood on the map
@@ -25,7 +25,7 @@ layout: example.hbs
     map.fitBounds(hollywood.getBounds().pad(0.5));
 
     // query all bike parking where BPSTYLE='STAPLE' inside our boundry
-    L.esri.Tasks.query({
+    L.esri.query({
       url: bikeParkingUrl
     }).where("BPSTYLE='STAPLE'").within(hollywood).run(function(error, bikeParking){
       L.geoJson(bikeParking).addTo(map);

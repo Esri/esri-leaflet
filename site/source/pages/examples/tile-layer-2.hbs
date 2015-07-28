@@ -11,6 +11,8 @@ layout: example.hbs
 
   L.esri.tiledMapLayer({
     url: "http://services.arcgisonline.com/ArcGIS/rest/services/Specialty/World_Navigation_Charts/MapServer",
-    detectRetina: false
+    detectRetina: false,
+    minZoom: 3,
+    maxZoom: 10
   }).addTo(map);
 </script>

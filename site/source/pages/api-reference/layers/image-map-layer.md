@@ -1,11 +1,9 @@
 ---
-title: L.esri.Layers.ImageMapLayer
+title: L.esri.ImageMapLayer
 layout: documentation.hbs
 ---
 
 # {{page.data.title}}
-
-<!-- Inherits from [`L.esri.Layers.RasterLayer`]({{assets}}api-reference/layers/raster-layer.html) -->
 
 Render and visualize Image Services from ArcGIS Online and ArcGIS Server.
 
@@ -204,7 +202,7 @@ imageService.query()
 | `loading` | [<`LoadingEvent`>]({{assets}}api-reference/events.html#loading-event) | Fires when new features start loading. |
 | `load` | [<`LoadEvent`>]({{assets}}api-reference/events.html#load-event) | Fires when all features in the current bounds of the map have loaded. |
 
-`L.esri.Layers.ImageMapLayer` also fires all  [`L.esri.Services.ImageService`]({{assets}}api-reference/services/image-service.html) events.
+`L.esri.ImageMapLayer` also fires all  [`L.esri.ImageService`]({{assets}}api-reference/services/image-service.html) events.
 
 ### Example
 
@@ -217,7 +215,8 @@ L.esri.basemapLayer('Gray').addTo(map);
 
 var url = "http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/World/MODIS/ImageServer";
 
-L.esri.imageMapLayer(url, {
+L.esri.imageMapLayer({
+  url: url,
   opacity : 0.25
 }).addTo(map);
 
@@ -230,7 +229,9 @@ var map = L.map('map').setView([43.50, -120.23], 7);
 
 L.esri.basemapLayer('Imagery').addTo(map);
 
-L.esri.imageMapLayer({url: 'http://imagery.oregonexplorer.info/arcgis/rest/services/NAIP_2011/NAIP_2011_Dynamic/ImageServer'})
-      .setBandIds('3,0,1')
-      .addTo(map);
+L.esri.imageMapLayer({
+  url: 'http://imagery.oregonexplorer.info/arcgis/rest/services/NAIP_2011/NAIP_2011_Dynamic/ImageServer'
+})
+  .setBandIds('3,0,1')
+  .addTo(map);
 ```
