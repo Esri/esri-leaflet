@@ -51,10 +51,6 @@
     "sinon-chai": "2.7.0",
     "uglify-js": "^2.4.23"
   },
-  "files": [
-    "src",
-    "dist"
-  ],
   "homepage": "http://esri.github.io/esri-leaflet",
   "jsnext:main": "src/EsriLeaflet.js",
   "jspm": {
@@ -78,6 +74,7 @@
   },
   "scripts": {
     "prepublish": "npm run build",
+    "prebuild": "mkdir dist",
     "build": "./scripts/build.js",
     "lint": "semistandard src/**/*.js",
     "pretest": "npm run build",

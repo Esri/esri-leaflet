@@ -32,8 +32,4 @@ debug/*.html
 site/build
 
 # Built Files
-dist/*
-!dist/README.md
-
-# Custom Gruntfile (for custom builds)
-Gruntfile.custom.js
+dist

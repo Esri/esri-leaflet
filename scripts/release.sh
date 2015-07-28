@@ -2,7 +2,6 @@
 
 # config
 VERSION=$(node --eval "console.log(require('./package.json').version);")
-FILES=$(node --eval "console.log(require('./package.json').files.join(' '));")
 NAME=$(node --eval "console.log(require('./package.json').name);")
 
 # build and test
@@ -24,7 +23,7 @@ git commit -m "build $VERSION"
 git push upstream gh-release
 
 # create a ZIP archive of the dist files
-zip -r dist/$NAME-v$VERSION.zip $FILES
+zip -r $NAME-v$VERSION.zip dist/**/*
 
 # run gh-release to create the tag and push release to github
 gh-release --assets $NAME-v$VERSION.zip
