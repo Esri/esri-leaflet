@@ -15,7 +15,7 @@ layout: example.hbs
     url: 'https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Heritage_Trees_Portland/FeatureServer/0'
   }).addTo(map);
 
-  trees.bindPopup(function (feature) {
-    return L.Util.template('<p>{COMMON_NAM}<br>{SCIENTIFIC}<br>{NOTES}</p>', feature.properties);
+  trees.bindPopup(function (evt) {
+    return L.Util.template('<p>{COMMON_NAM}<br>{SCIENTIFIC}<br>{NOTES}</p>', evt.feature.properties);
   });
 </script>

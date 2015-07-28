@@ -13,12 +13,13 @@ layout: example.hbs
   var stops = L.esri.featureLayer({
     url: 'https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Trimet_Transit_Stops/FeatureServer/0',
     pointToLayer: function (geojson, latlng) {
-      return L.circleMarker(latlng, {
-        color: '#5B7CBA',
-        weight: 2,
-        opacity: 0.85,
-        fillOpacity: 0.5
-      });
+      return L.circleMarker(latlng);
+    },
+    style:{
+      color: '#5B7CBA',
+      weight: 2,
+      opacity: 0.85,
+      fillOpacity: 0.5
     }
   }).addTo(map);
 
