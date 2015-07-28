@@ -7,7 +7,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [2.0.0-beta.5](v2.0.0-beta.5)
 
-## Fixed
+### Fixed
 
 * Removed stray `console.log` statements
 * Added missing files to NPM
