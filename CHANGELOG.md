@@ -9,7 +9,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
-* Tests are now run against the minified production code for more safty.
+* Tests are now run against the minified production code for more safety.
 
 ### Fixed
 

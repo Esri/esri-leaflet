@@ -29,10 +29,10 @@ zip -r dist/$NAME-v$VERSION.zip $FILES
 # run gh-release to create the tag and push release to github
 gh-release --assets $NAME-v$VERSION.zip
 
-# publish release on NPM
-npm publish
-
 # checkout master and delete release branch locally and on GitHub
 git checkout master
 git branch -D gh-release
 git push upstream :gh-release
+
+# publish release on NPM
+npm publish

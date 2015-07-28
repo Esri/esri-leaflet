@@ -52,15 +52,12 @@
     "uglify-js": "^2.4.23"
   },
   "files": [
-    "dist/esri-leaflet.js",
-    "dist/esri-leaflet.js.map"
+    "src",
+    "dist"
   ],
   "homepage": "http://esri.github.io/esri-leaflet",
   "jsnext:main": "src/EsriLeaflet.js",
   "jspm": {
-    "files": [
-      "src/**/*.js"
-    ],
     "registry": "npm",
     "format": "es6"
   },
