@@ -14,7 +14,7 @@ git checkout -b gh-release
 npm run prepublish
 
 # force add files
-git add $FILES -f
+git add dist -f
 
 # commit changes with a versioned commit message
 git commit -m "build $VERSION"
@@ -23,7 +23,7 @@ git commit -m "build $VERSION"
 git push upstream gh-release
 
 # create a ZIP archive of the dist files
-zip -r $NAME-v$VERSION.zip dist/**/*
+zip -r $NAME-v$VERSION.zip dist
 
 # run gh-release to create the tag and push release to github
 gh-release --assets $NAME-v$VERSION.zip
