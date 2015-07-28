@@ -5,6 +5,14 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 [Upcoming changes][unreleased]
 
+## [2.0.0-beta.5](v2.0.0-beta.5)
+
+## Fixed
+
+* Removed stray `console.log` statements
+* Added missing files to NPM
+* Fixed removing of `FeatureLayer` from maps
+
 ## [2.0.0-beta.4](v2.0.0-beta.4)
 
 ### Changed
