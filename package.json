@@ -14,10 +14,19 @@
     "leaflet": "1.0.0-beta.1"
   },
   "browserify": {
-    "transform": [["babelify", {
-      "whitelist": ["es6.modules"],
-      "loose": ["es6.modules"]
-    }]]
+    "transform": [
+      [
+        "babelify",
+        {
+          "whitelist": [
+            "es6.modules"
+          ],
+          "loose": [
+            "es6.modules"
+          ]
+        }
+      ]
+    ]
   },
   "devDependencies": {
     "assemble": "^0.4.37",
@@ -44,6 +53,7 @@
     "karma-phantomjs-launcher": "^0.2.0",
     "karma-sourcemap-loader": "^0.3.5",
     "load-grunt-tasks": "^0.4.0",
+    "mkdirp": "^0.5.1",
     "phantomjs": "^1.9.17",
     "rollup": "^0.11.4",
     "semistandard": "^6.1.2",
@@ -74,7 +84,7 @@
   },
   "scripts": {
     "prepublish": "npm run build",
-    "prebuild": "mkdir dist",
+    "prebuild": "mkdirp dist",
     "build": "./scripts/build.js",
     "lint": "semistandard src/**/*.js",
     "pretest": "npm run build",
