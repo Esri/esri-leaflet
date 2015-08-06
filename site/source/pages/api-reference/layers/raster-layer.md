@@ -1,5 +1,5 @@
 ---
-title: L.esri.Layers.RasterLayer
+title: L.esri.RasterLayer
 layout: documentation.hbs
 ---
 
