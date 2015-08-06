@@ -15,6 +15,7 @@
 // └───────────────┘
 @import 'module/modal';
 @import 'module/sidebar';
+@import 'module/card';
 @import 'module/highlight';
 
 // ┌───────────┐
@@ -22,4 +23,5 @@
 // └───────────┘
 @import 'pages/index';
 @import 'pages/doc';
-@import 'pages/doc';
+@import 'pages/tutorials';
+@import 'pages/plugins';

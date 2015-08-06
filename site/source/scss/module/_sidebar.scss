@@ -15,6 +15,17 @@
       margin-bottom: .25em;
       @include clearfix();
     }
+    a.plugin:after {
+      content: 'plugin';
+      display: inline;
+      margin-left: .25rem;
+      text-transform: uppercase;
+      background: $lighter-gray;
+      border-radius: 3px;
+      font-size: .75rem;
+      padding: .25rem;
+      letter-spacing: .5px;
+    }
   }
   h5 {
     float: left;
