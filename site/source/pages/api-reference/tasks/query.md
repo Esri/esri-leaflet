@@ -1,11 +1,11 @@
 ---
-title: L.esri.Tasks.Query
+title: L.esri.Query
 layout: documentation.hbs
 ---
 
 # {{page.data.title}}
 
-`L.esri.Tasks.Query` is an abstraction for the query API included in Feature Layers and Image Services. It provides a chainable API for building request parameters and executing queries.
+`L.esri.Query` is an abstraction for the query API included in Feature Layers and Image Services. It provides a chainable API for building request parameters and executing queries.
 
 **Note** Depending on the type of service you are querying (Feature Layer, Map Service, Image Service) and the version of ArcGIS Server that hosts the service some of these options may not be available.
 
@@ -21,10 +21,10 @@ layout: documentation.hbs
     <tbody>
         <tr>
             <td>
-            <code>L.esri.Tasks.query({{{param 'Object' 'options'}}})</code><br><br>
-            <code>L.esri.Tasks.query({{{param 'FeatureLayer' 'endpoint' '../../api-reference/services/feature-layer.html'}}})</code><br><br>
-            <code>L.esri.Tasks.query({{{param 'MapService' 'endpoint' '../../api-reference/services/map-service.html'}}})</code><br><br>
-            <code>L.esri.Tasks.query({{{param 'ImageService' 'endpoint' '../../api-reference/services/image-service.html'}}})</code>
+            <code>L.esri.query({{{param 'Object' 'options'}}})</code><br><br>
+            <code>L.esri.query({{{param 'FeatureLayer' 'endpoint' '../../api-reference/services/feature-layer.html'}}})</code><br><br>
+            <code>L.esri.query({{{param 'MapService' 'endpoint' '../../api-reference/services/map-service.html'}}})</code><br><br>
+            <code>L.esri.query({{{param 'ImageService' 'endpoint' '../../api-reference/services/image-service.html'}}})</code>
             </td>
             <td>Accepts either an `options` object or an instance of <a href="{{assets}}/api-reference/services/map-service.html">MapService</a>, <a href="{{assets}}/api-reference/services/feature-layer-service.html">FeatureLayer</a> or <a href="{{assets}}/api-reference/service/image-service.html">ImageService</a>.</td>
         </tr>
@@ -172,7 +172,7 @@ var southWest = L.latLng(45.51, -122.70);
 var northEast = L.latLng(45.52, -122.64);
 var bounds = L.latLngBounds(southWest, northEast);
 
-var query = L.esri.Tasks.query({
+var query = L.esri.query({
     url:'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0'
 });
 
@@ -189,7 +189,7 @@ query.run(function(error, featureCollection, response){
 var map = L.map('map').setView([41.64, -53.70], 3);
 L.esri.basemapLayer('Gray').addTo(map);
 
-var query = L.esri.Tasks.query({
+var query = L.esri.query({
     url: 'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0'
 });
 
@@ -203,7 +203,7 @@ query.bounds(function(error, latLngBounds, response){
 ```js
 var latlng = L.latLng(45.51, -122.70);
 
-var query = L.esri.Tasks.query({
+var query = L.esri.query({
     url:'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0'
 });
 
@@ -219,7 +219,7 @@ query.run(function(error, featureCollection, response){
 ```js
 var latlng = L.latLng(45.51, -122.70);
 
-var query = L.esri.Tasks.query({
+var query = L.esri.query({
     url: 'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0'
 });
 
@@ -241,7 +241,7 @@ var map = L.map('map').setView([41.64, -53.70], 3);
 L.esri.basemapLayer('Gray').addTo(map);
 
 
-var query = L.esri.Tasks.query({
+var query = L.esri.query({
     url:'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0'
 });
 

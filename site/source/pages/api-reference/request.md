@@ -17,7 +17,7 @@ L.esri.get = L.esri.Request.get.JSONP;
 
 ### L.esri.request(url, params, callback);
 
-Executues a GET or POST via `XMLHttpRequest` or JSONP request depending on the capabilities of the browser and the length of the request. GET is used when the browser supports CORS and the request url is less then 2000 characters. POST is used when the browser supports CORS and the request exceeds 2000 characters. JSONP is used when the request is less then 2000 characters and the browser does not support CORS.
+Executes a GET or POST via `XMLHttpRequest` or JSONP request depending on the capabilities of the browser and the length of the request. GET is used when the browser supports CORS and the request url is less then 2000 characters. POST is used when the browser supports CORS and the request exceeds 2000 characters. JSONP is used when the request is less then 2000 characters and the browser does not support CORS.
 
 #### Params
 

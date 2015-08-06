@@ -1,6 +1,6 @@
 ---
 title: Querying features
-description: Configuring a query to filter features on a <code>L.esri.Layers.FeatureLayer</code>. More information about Feature Layers can be found in the <a href="../api-reference/layers/feature-layer.html">L.esri.Layers.FeatureLayer</a> documentation.
+description: Configuring a query to filter features on a <code>L.esri.FeatureLayer</code>. More information about Feature Layers can be found in the <a href="../api-reference/layers/feature-layer.html">L.esri.FeatureLayer</a> documentation.
 layout: example.hbs
 ---
 
@@ -24,11 +24,12 @@ layout: example.hbs
 <label>
   Bus Direction
   <select id="direction">
-    <option value=''>Any</option>
-    <option value='North'>North</option>
-    <option value='South'>South</option>
-    <option value='East'>East</option>
-    <option value='West'>West</option>
+    <!-- make sure to encase string values in single quotes for valid sql -->
+    <option value='1=1'>Any</option>
+    <option value="direction='North'">North</option>
+    <option value="direction='South'">South</option>
+    <option value="direction='East'">East</option>
+    <option value="direction='West'">West</option>
   </select>
 </label>
 </div>
@@ -80,7 +81,6 @@ layout: example.hbs
   var direction = document.getElementById('direction');
 
   direction.addEventListener('change', function(){
-    // its only valid sql to encase string values in single quotes
-    stops.setWhere('direction=\'' + direction.value + '\'');
+    stops.setWhere(direction.value);
   });
 </script>

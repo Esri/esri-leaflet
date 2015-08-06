@@ -1,11 +1,11 @@
 ---
-title: L.esri.Tasks.Find
+title: L.esri.Find
 layout: documentation.hbs
 ---
 
 # {{page.data.title}}
 
-`L.esri.Tasks.Find` is an abstraction for the find API included in Map Services. It provides a chainable API for building request parameters and executing find tasks.
+`L.esri.Find` is an abstraction for the find API included in Map Services. It provides a chainable API for building request parameters and executing find tasks.
 
 ### Constructor
 
@@ -19,7 +19,7 @@ layout: documentation.hbs
     <tbody>
         <tr>
             <td>
-                <code>L.esri.Tasks.find({{{param 'MapService' 'endpoint' '../../api-reference/services/service.html'}}})</code><br><br>
+                <code>L.esri.find({{{param 'MapService' 'endpoint' '../../api-reference/services/service.html'}}})</code><br><br>
                 <code>L.esri.Tasks.find({{{param 'Object' 'options'}}})</code>
             </td>
             <td>Accepts either an <code>options</code> object or an instance of <a href="{{assets}}/api-reference/services/map-service.html">MapService</a>.</td>
@@ -129,7 +129,7 @@ layout: documentation.hbs
 ##### Finding features
 
 ```js
-var find = L.esri.Tasks.find('http://services.nationalmap.gov/arcgis/rest/services/govunits/MapServer');
+var find = L.esri.find('http://services.nationalmap.gov/arcgis/rest/services/govunits/MapServer');
 
 find.layers('18')
     .text('Colorado');
@@ -142,7 +142,7 @@ find.run(function(error, featureCollection, response){
 ##### Finding features by specified search field name
 
 ```js
-var find = L.esri.Tasks.find({
+var find = L.esri.find({
     url: 'http://services.nationalmap.gov/arcgis/rest/services/govunits/MapServer'
 });
 

@@ -4,13 +4,13 @@ description: Geocode an address and then center the map on it automatically. Thi
 layout: example.hbs
 ---
 
-<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/leaflet.esri.geocoder/1.0.2/esri-leaflet-geocoder.css">
-<script src="//cdn.jsdelivr.net/leaflet.esri.geocoder/1.0.2/esri-leaflet-geocoder.js"></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/leaflet.esri.geocoder/2.0.0-beta.2/esri-leaflet-geocoder.css">
+<script src="//cdn.jsdelivr.net/leaflet.esri.geocoder/2.0.0-beta.2/esri-leaflet-geocoder.js"></script>
 
 <div id="map"></div>
 
 <script>
-  var geocoder = L.esri.Geocoding.Services.geocoding();
+  var geocoder = L.esri.Geocoding.geocodeService();
 
   var map = L.map('map');
 

@@ -5,37 +5,12 @@
     <title>Esri Leaflet Debugging Sample</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 
-    <!-- Load Leaflet from CDN-->
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
-    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+    <!-- Load Leaflet -->
+    <link rel="stylesheet" href="../node_modules/leaflet/dist/leaflet.css" />
+    <script src="../node_modules/leaflet/dist/leaflet.js"></script>
 
     <!-- Load Esri Leaflet from source-->
-    <script src="../src/EsriLeaflet.js"></script>
-    <script src="../src/Request.js"></script>
-    <script src="../src/Util.js"></script>
-    <script src="../src/Controls/Logo.js"></script>
-
-    <script src="../src/Services/Service.js"></script>
-    <script src="../src/Services/FeatureLayerService.js"></script>
-    <script src="../src/Services/ImageService.js"></script>
-    <script src="../src/Services/MapService.js"></script>
-
-    <script src="../src/Layers/FeatureLayer/FeatureGrid.js"></script>
-    <script src="../src/Layers/FeatureLayer/FeatureManager.js"></script>
-    <script src="../src/Layers/FeatureLayer/FeatureLayer.js"></script>
-
-    <script src="../src/Layers/RasterLayer.js"></script>
-    <script src="../src/Layers/ImageMapLayer.js"></script>
-    <script src="../src/Layers/TiledMapLayer.js"></script>
-    <script src="../src/Layers/BasemapLayer.js"></script>
-    <script src="../src/Layers/DynamicMapLayer.js"></script>
-
-    <script src="../src/Tasks/Task.js"></script>
-    <script src="../src/Tasks/Find.js"></script>
-    <script src="../src/Tasks/Identify.js"></script>
-    <script src="../src/Tasks/IdentifyFeatures.js"></script>
-    <script src="../src/Tasks/IdentifyImage.js"></script>
-    <script src="../src/Tasks/Query.js"></script>
+    <script src="../dist/esri-leaflet.js"></script>
 
     <style>
       body {
@@ -54,7 +29,7 @@
         position: absolute;
         top: 10px;
         right: 10px;
-        z-index: 10;
+        z-index: 1000;
         padding: 1em;
         background: white;
       }
@@ -73,11 +48,12 @@
     /*
     make a copy of this file in the same folder if you'd like git to ignore your local changes
     */
-
     var map = L.map('map').setView([40, -100], 4);
     L.esri.basemapLayer('Topographic').addTo(map);
 
-    var fl = L.esri.featureLayer({url:'http://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer/3'}).addTo(map);
+    var fl = L.esri.featureLayer({
+      url:'http://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer/3'
+    }).addTo(map);
   </script>
 
   </body>

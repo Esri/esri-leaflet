@@ -1,11 +1,11 @@
 ---
-title: L.esri.Tasks.IdentifyImage
+title: L.esri.IdentifyImage
 layout: documentation.hbs
 ---
 
 # {{page.data.title}}
 
-`L.esri.Tasks.IdentifyImage` is an abstraction for the Identify API found in Image Services. It provides a chainable API for building request parameters and executing the request.
+`L.esri.IdentifyImage` is an abstraction for the Identify API found in Image Services. It provides a chainable API for building request parameters and executing the request.
 
 ### Constructor
 
@@ -19,8 +19,8 @@ layout: documentation.hbs
     <tbody>
         <tr>
             <td>
-            <code>L.esri.Tasks.identifyImage({{{param 'ImageService' 'endpoint' '../../api-reference/services/map-service.html'}}})</code><br><br>
-            <code>L.esri.Tasks.identifyImage({{{param 'Object' 'options'}}})</code><br></td>
+            <code>L.esri.identifyImage({{{param 'ImageService' 'endpoint' '../../api-reference/services/map-service.html'}}})</code><br><br>
+            <code>L.esri.identifyImage({{{param 'Object' 'options'}}})</code><br></td>
             <td>Accepts either an `options` object or an instance of <a href="{{assets}}/api-reference/services/image-service.html"></a>.</td>
         </tr>
     </tbody>
@@ -113,7 +113,7 @@ layout: documentation.hbs
 ```js
 var map = L.map('map').setView([36.230577, -118.253147], 10);
 
-L.esri.Tasks.identifyImage({
+L.esri.identifyImage({
     url: 'http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Earthquakes/CaliforniaDEM/ImageServer'
 })
 .at([36.230577, -118.253147])

@@ -1,6 +1,6 @@
 ---
 title: Reprojected DynamicMapLayer
-description: Map services published in projections other than Web Mercator (like <a href="http://sampleserver6.arcgisonline.com/arcgis/rest/services/SampleWorldCities/MapServer">this one</a>) will be reprojected on the fly automatically.  More information about Map Services can be found in the <a href="../api-reference/layers/dynamic-map-layer.html">L.esri.Layers.DynamicMapLayer</a> documentation.
+description: Map services published in projections other than Web Mercator (like <a href="http://sampleserver6.arcgisonline.com/arcgis/rest/services/SampleWorldCities/MapServer">this one</a>) will be reprojected on the fly automatically.  More information about Map Services can be found in the <a href="../api-reference/layers/dynamic-map-layer.html">L.esri.DynamicMapLayer</a> documentation.
 layout: example.hbs
 ---
 
@@ -12,8 +12,9 @@ layout: example.hbs
 
   //Add Gray Basemap
   L.esri.basemapLayer("Gray").addTo(map);
-  dynLayer = L.esri.dynamicMapLayer({
-    url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/SampleWorldCities/MapServer"});
+  var dynLayer = L.esri.dynamicMapLayer({
+    url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/SampleWorldCities/MapServer"
+  });
 
   map.addLayer(dynLayer);
 </script>
