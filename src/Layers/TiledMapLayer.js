@@ -46,9 +46,8 @@ export var TiledMapLayer = L.TileLayer.extend({
     this.service = mapService(options);
     this.service.addEventParent(this);
 
-    // if this is looking at the AGO tiles subdomain insert the subdomain placeholder
-    if (this.tileUrl.match('://tiles.arcgisonline.com')) {
-      this.tileUrl = this.tileUrl.replace('://tiles.arcgisonline.com', '://tiles{s}.arcgisonline.com');
+    if (arcgisonline.test(/tiles.arcgis(online)?\.com/g) {
+      this.tileUrl = this.tileUrl.replace('://tiles', '://tiles{s}');
       options.subdomains = ['1', '2', '3', '4'];
     }
 
@@ -63,7 +62,7 @@ export var TiledMapLayer = L.TileLayer.extend({
   getTileUrl: function (tilePoint) {
     return L.Util.template(this.tileUrl, L.extend({
       s: this._getSubdomain(tilePoint),
-      z: this._lodMap[tilePoint.z] || tilePoint.z, // try lod map first, then just defualt to zoom level
+      z: (this._lodMap) ? this._lodMap[tilePoint.z] : tilePoint.z, // try lod map first, then just defualt to zoom level
       x: tilePoint.x,
       y: tilePoint.y
     }, this.options));

@@ -204,8 +204,10 @@ export var BasemapLayer = L.TileLayer.extend({
     // merge passed options into the config options
     var tileOptions = L.Util.extend(config.options, options);
 
+    L.Util.setOptions(this, tileOptions);
+
     // call the initialize method on L.TileLayer to set everything up
-    L.TileLayer.prototype.initialize.call(this, config.urlTemplate, L.Util.setOptions(this, tileOptions));
+    L.TileLayer.prototype.initialize.call(this, config.urlTemplate, tileOptions);
 
     // if this basemap requires dynamic attribution set it up
     if (config.attributionUrl) {
@@ -216,6 +218,7 @@ export var BasemapLayer = L.TileLayer.extend({
       position: this.options.logoPosition
     });
   },
+
   onAdd: function (map) {
     if (!this.options.hideLogo && !map._hasEsriLogo) {
       this._logo.addTo(map);
@@ -226,10 +229,11 @@ export var BasemapLayer = L.TileLayer.extend({
       this._initPane();
     }
 
-    L.TileLayer.prototype.onAdd.call(this, map);
-
     map.on('moveend', this._updateMapAttribution, this);
+
+    L.TileLayer.prototype.onAdd.call(this, map);
   },
+
   onRemove: function (map) {
     // check to make sure the logo hasn't already been removed
     if (this._logo && this._logo._container) {
@@ -237,14 +241,16 @@ export var BasemapLayer = L.TileLayer.extend({
       map._hasEsriLogo = false;
     }
 
-    L.TileLayer.prototype.onRemove.call(this, map);
-
     map.off('moveend', this._updateMapAttribution, this);
+
+    L.TileLayer.prototype.onRemove.call(this, map);
   },
+
   getAttribution: function () {
     var attribution = '<span class="esri-attributions" style="line-height:14px; vertical-align: -3px; text-overflow:ellipsis; white-space:nowrap; overflow:hidden; display:inline-block;">' + this.options.attribution + '</span>';
     return attribution;
   },
+
   _initPane: function () {
     if (!this._map.getPane(this.options.pane)) {
       var pane = this._map.createPane(this.options.pane);
@@ -252,6 +258,7 @@ export var BasemapLayer = L.TileLayer.extend({
       pane.style.zIndex = 500;
     }
   },
+
   _getAttributionData: function (url) {
     jsonp(url, {}, L.Util.bind(function (error, attributions) {
       if (error) { return; }
@@ -280,6 +287,7 @@ export var BasemapLayer = L.TileLayer.extend({
       this._updateMapAttribution();
     }, this));
   },
+
   _updateMapAttribution: function () {
     if (this._map && this._map.attributionControl && this._attributions) {
       var newAttributions = '';
