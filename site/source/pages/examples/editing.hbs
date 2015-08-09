@@ -91,7 +91,6 @@ layout: example.hbs
       geometry: layer.toGeoJSON().geometry,
       properties: layer.feature.properties
     }, function(error, response) {
-      console.log(error, response);
       displayGreeting();
     });
   }
@@ -174,9 +173,7 @@ layout: example.hbs
   // listen to the draw created event
   map.on('draw:created', function(e) {
     // add the feature as GeoJSON (feature will be converted to ArcGIS JSON internally)
-    pedestrianDistricts.addFeature(e.layer.toGeoJSON(), function(error, response) {
-      console.log(error, response);
-    });
+    pedestrianDistricts.addFeature(e.layer.toGeoJSON());
     disableEditing = false;
   });
 
@@ -188,7 +185,9 @@ layout: example.hbs
       delArray.push(id);
     });
     pedestrianDistricts.deleteFeatures(delArray, function(error, response) {
-      console.log(error, response);
+      if (error) {
+        console.log(error, response);
+      }
     });
     disableEditing = false;
     currentlyDeleting = false;

@@ -63,7 +63,7 @@ export var BasemapLayer = L.TileLayer.extend({
           minZoom: 1,
           maxZoom: 16,
           subdomains: ['server', 'services'],
-          attribution: 'Esri'
+          attribution: 'National Geographic, Esri, DeLorme, HERE, UNEP-WCMC, USGS, NASA, ESA, METI, NRCAN, GEBCO, NOAA, increment P Corp.'
         }
       },
       DarkGray: {
@@ -74,7 +74,7 @@ export var BasemapLayer = L.TileLayer.extend({
           minZoom: 1,
           maxZoom: 16,
           subdomains: ['server', 'services'],
-          attribution: 'Esri, DeLorme, HERE'
+          attribution: 'Esri, HERE, DeLorme, MapmyIndia, © OpenStreetMap contributors'
         }
       },
       DarkGrayLabels: {
@@ -96,7 +96,7 @@ export var BasemapLayer = L.TileLayer.extend({
           minZoom: 1,
           maxZoom: 16,
           subdomains: ['server', 'services'],
-          attribution: 'Esri, NAVTEQ, DeLorme'
+          attribution: 'Esri, HERE, DeLorme, MapmyIndia, © OpenStreetMap contributors'
         }
       },
       GrayLabels: {
@@ -151,7 +151,7 @@ export var BasemapLayer = L.TileLayer.extend({
           minZoom: 1,
           maxZoom: 13,
           subdomains: ['server', 'services'],
-          attribution: 'Esri, NAVTEQ, DeLorme'
+          attribution: 'Esri, USGS'
         }
       },
       ShadedReliefLabels: {

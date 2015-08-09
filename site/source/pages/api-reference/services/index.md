@@ -7,7 +7,7 @@ layout: documentation.hbs
 
 Services wrap ArcGIS API endpoints exposing common methods for interacting with the APIs and handling proxying and authentication.
 
-* [`L.esri.Services.ImageService`]({{assets}}api-reference/services/image-service.html)
-* [`L.esri.Services.FeatureLayerService`]({{assets}}api-reference/services/feature-layer-service.html)
-* [`L.esri.Services.MapService`]({{assets}}api-reference/services/map-service.html)
-* [`L.esri.Services.Service`]({{assets}}api-reference/services/service.html)
+* [`L.esri.ImageService`]({{assets}}api-reference/services/image-service.html)
+* [`L.esri.FeatureLayerService`]({{assets}}api-reference/services/feature-layer-service.html)
+* [`L.esri.MapService`]({{assets}}api-reference/services/map-service.html)
+* [`L.esri.Service`]({{assets}}api-reference/services/service.html)

@@ -1,13 +1,13 @@
 ---
-title: L.esri.Layers.ClusteredFeatureLayer
+title: L.esri.ClusteredFeatureLayer
 layout: documentation.hbs
 ---
 
 # {{page.data.title}}
 
-`L.esri.Layers.ClusteredFeatureLayer` provides integration for Feature Layers with the [Leaflet.markercluster plugin](https://github.com/Leaflet/Leaflet.markercluster). Because of the extra dependency on Leaflet.markercluster we do not include `L.esri.Layers.ClusteredFeatureLayer` in the default build of Esri Leaflet. It lives in /dist/extras/clustered-feature-layer.js. You will also need to include your own copy of the [Leaflet.markercluster plugin](https://github.com/Leaflet/Leaflet.markercluster).
+`L.esri.ClusteredFeatureLayer` provides integration for Feature Layers with the [Leaflet.markercluster plugin](https://github.com/Leaflet/Leaflet.markercluster). Because of the extra dependency on Leaflet.markercluster we do not include `L.esri.ClusteredFeatureLayer` in the default build of Esri Leaflet. It lives in /dist/extras/clustered-feature-layer.js. You will also need to include your own copy of the [Leaflet.markercluster plugin](https://github.com/Leaflet/Leaflet.markercluster).
 
-More information about Feature Layers can be found in the [`L.esri.Layers.FeatureLayer` documentation]({{assets}}api-reference/layers/feature-layer.html).
+More information about Feature Layers can be found in the [`L.esri.FeatureLayer` documentation]({{assets}}api-reference/layers/feature-layer.html).
 
 ### Constructor
 
@@ -287,7 +287,8 @@ L.esri.basemapLayer("Streets").addTo(map);
 
 var url = "http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0";
 
-var busStops = new L.esri.ClusteredFeatureLayer(url, {
+var busStops = new L.esri.ClusteredFeatureLayer({
+  url: url,
   // Cluster Options
   polygonOptions: {
     color: "#2d84c8"

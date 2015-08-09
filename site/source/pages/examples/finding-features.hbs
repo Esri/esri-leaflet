@@ -1,6 +1,6 @@
 ---
 title: Find Features
-description: Find features on a Dynamic Map Layer. More information about Map Services can be found in the <a href="../api-reference/layers/dynamic-map-layer.html">L.esri.Layers.DynamicMapLayer</a> documentation.
+description: Find features on a Dynamic Map Layer. More information about Map Services can be found in the <a href="../api-reference/layers/dynamic-map-layer.html">L.esri.DynamicMapLayer</a> documentation.
 layout: example.hbs
 ---
 
@@ -34,7 +34,7 @@ layout: example.hbs
         opacity: 0.9
     }).addTo(map);
 
-    // make sure the dynamicMapLayer never draws on top of the graphics returned by find (otherwise popups won't be triggered)
+    // make sure the dynamicMapLayer never draws on top of the graphics returned by find (to make sure popups are triggered)
     govUnits.bringToBack();
 
     var searchText = document.getElementById('searchText');

@@ -10,7 +10,7 @@ var bgmap = L.map('background-map', {
     attributionControl: false
 });
 
-L.esri.Layers.basemapLayer('Imagery', {
+L.esri.basemapLayer('Imagery', {
   hideLogo: true
 }).addTo(bgmap);
 

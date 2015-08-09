@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 [Upcoming changes][unreleased]
 
+### Fixed
+
+* Improved NationalGeographic and Gray attribution #612
+
 ## [2.0.0-beta.5](v2.0.0-beta.5)
 
 ### Fixed
