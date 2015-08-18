@@ -21,7 +21,7 @@ layout: documentation.hbs
             <td>
             <code>L.esri.identifyImage({{{param 'ImageService' 'endpoint' '../../api-reference/services/map-service.html'}}})</code><br><br>
             <code>L.esri.identifyImage({{{param 'Object' 'options'}}})</code><br></td>
-            <td>Accepts either an `options` object or an instance of <a href="{{assets}}/api-reference/services/image-service.html"></a>.</td>
+            <td>Accepts either an `options` object or an instance of <a href="{{assets}}/api-reference/services/image-service.html">ImageService</a>.</td>
         </tr>
     </tbody>
 </table>
