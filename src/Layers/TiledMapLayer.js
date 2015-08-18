@@ -46,7 +46,8 @@ export var TiledMapLayer = L.TileLayer.extend({
     this.service = mapService(options);
     this.service.addEventParent(this);
 
-    if (arcgisonline.test(/tiles.arcgis(online)?\.com/g) {
+    var arcgisonline = new RegExp(/tiles.arcgis(online)?\.com/g);
+    if (arcgisonline.test(options.url)) {
       this.tileUrl = this.tileUrl.replace('://tiles', '://tiles{s}');
       options.subdomains = ['1', '2', '3', '4'];
     }
