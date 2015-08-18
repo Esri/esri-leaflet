@@ -18,11 +18,19 @@ describe('L.esri.TiledMapLayer', function () {
     expect(layer.tileUrl).to.equal('http://services.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer/tile/{z}/{y}/{x}');
   });
 
-  it('will modify url for tiles.arcgis.com services', function () {
+  it('will modify url for old tiles.arcgisonline.com services', function () {
     var layer = L.esri.tiledMapLayer({
       url: 'http://tiles.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer'
     });
     expect(layer.tileUrl).to.equal('http://tiles{s}.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer/tile/{z}/{y}/{x}');
+    expect(layer.options.subdomains).to.deep.equal(['1','2','3','4']);
+  });
+
+  it('will modify url for new tiles.arcgis.com services', function () {
+    var layer = L.esri.tiledMapLayer({
+      url: 'http://tiles.arcgis.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer'
+    });
+    expect(layer.tileUrl).to.equal('http://tiles{s}.arcgis.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer/tile/{z}/{y}/{x}');
     expect(layer.options.subdomains).to.deep.equal(['1','2','3','4']);
   });
 
