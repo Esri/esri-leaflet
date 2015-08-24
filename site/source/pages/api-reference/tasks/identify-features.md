@@ -1,11 +1,11 @@
 ---
-title: L.esri.Tasks.IdentifyFeatures
+title: L.esri.IdentifyFeatures
 layout: documentation.hbs
 ---
 
 # {{page.data.title}}
 
-`L.esri.Tasks.IdentifyFeatures` is an abstraction for the Identify API found in Map Services. It provides a chainable API for building request parameters and executing the request.
+`L.esri.IdentifyFeatures` is an abstraction for the Identify API found in Map Services. It provides a chainable API for building request parameters and executing the request.
 
 ### Constructor
 
@@ -19,8 +19,8 @@ layout: documentation.hbs
     <tbody>
         <tr>
             <td>
-            <code>L.esri.Tasks.identifyFeatures({{{param 'ImageService' 'endpoint' '../../api-reference/services/map-service.html'}}})</code><br><br>
-            <code>L.esri.Tasks.identifyFeatures({{{param 'Object' 'options'}}})</code><br></td>
+            <code>L.esri.identifyFeatures({{{param 'ImageService' 'endpoint' '../../api-reference/services/map-service.html'}}})</code><br><br>
+            <code>L.esri.identifyFeatures({{{param 'Object' 'options'}}})</code><br></td>
             <td>Accepts either an `options` object or an instance of <a href="{{assets}}/api-reference/services/image-service.html"></a>.</td>
         </tr>
     </tbody>
@@ -108,7 +108,7 @@ layout: documentation.hbs
 ```js
 var map = new L.Map('map').setView([ 45.543, -122.621 ], 5);
 
-L.esri.Tasks.identifyFeatures({
+L.esri.identifyFeatures({
     url: 'http://sampleserver6.arcgisonline.com/arcgis/rest/services/WorldTimeZones/MapServer'
 })
 .on(map)

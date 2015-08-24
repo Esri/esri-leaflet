@@ -1,5 +1,5 @@
 ---
-title: L.esri.Services.FeatureLayerService
+title: L.esri.FeatureLayerService
 layout: documentation.hbs
 ---
 
@@ -7,7 +7,7 @@ layout: documentation.hbs
 
 Inherits from [`L.esri.Service`]({{assets}}api-reference/services/service.html)
 
-`L.esri.Services.FeatureLayerService` is an abstraction for interacting with Feature Layers running on ArcGIS Online and ArcGIS Server that allows you to make requests to the API, as well as query, add, update and remove features from the service.
+`L.esri.FeatureLayerService` is an abstraction for interacting with Feature Layers running on ArcGIS Online and ArcGIS Server that allows you to make requests to the API, as well as query, add, update and remove features from the service.
 
 ### Constructor
 
@@ -20,7 +20,7 @@ Inherits from [`L.esri.Service`]({{assets}}api-reference/services/service.html)
     </thead>
     <tbody>
         <tr>
-            <td><code class="nobr">L.esri.Services.featureLayerService({{{param 'Object' 'options'}}})</code></td>
+            <td><code class="nobr">L.esri.featureLayerService({{{param 'Object' 'options'}}})</code></td>
             <td><code>options</code> for configuring the ArcGIS Server or ArcGIS Online feature layer you would like to consume. <code>Options</code> include a `url` parameter which refers to the ArcGIS Server or ArcGIS Online service you would like to consume.</td>
         </tr>
     </tbody>
@@ -28,11 +28,11 @@ Inherits from [`L.esri.Service`]({{assets}}api-reference/services/service.html)
 
 ### Options
 
-`L.esri.Services.FeatureLayerService` accepts all [`L.esri.Services.Service`]({{assets}}api-reference/services/service.html) options.
+`L.esri.FeatureLayerService` accepts all [`L.esri.Service`]({{assets}}api-reference/services/service.html) options.
 
 ### Events
 
-`L.esri.Services.FeatureLayerService` fires all  [`L.esri.Services.service`]({{assets}}api-reference/services/service.html) events.
+`L.esri.FeatureLayerService` fires all  [`L.esri.service`]({{assets}}api-reference/services/service.html) events.
 
 ### Methods
 
@@ -49,7 +49,7 @@ Inherits from [`L.esri.Service`]({{assets}}api-reference/services/service.html)
             <td><code>query()</code></td>
             <td><code>this</code></td>
             <td>
-                Returns a new <a href="{{assets}}api-reference/tasks/query.html"><code>L.esri.Tasks.Query</code></a> object that can be used to query this layer.<pre class="js"><code>featureLayer.query()
+                Returns a new <a href="{{assets}}api-reference/tasks/query.html"><code>L.esri.Query</code></a> object that can be used to query this layer.<pre class="js"><code>featureLayer.query()
   .within(latlngbounds)
   .where("Direction = 'WEST'")
   .run(function(error, featureCollection, response){
@@ -111,7 +111,7 @@ Inherits from [`L.esri.Service`]({{assets}}api-reference/services/service.html)
 
 ##### Adding Features
 ```js
-var service = L.esri.Services.featureLayerService({
+var service = L.esri.featureLayerService({
     url: 'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Pubic_Feature_Service/FeatureServer/0'
 });
 
@@ -138,7 +138,7 @@ service.addFeature(feature, function(error, response){
 ##### Updating Features
 
 ```js
-var service = L.esri.Services.featureLayerService({
+var service = L.esri.featureLayerService({
     url:'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Pubic_Feature_Service/FeatureServer/0'
 });
 
@@ -166,7 +166,7 @@ service.updateFeature(feature, function(error, response){
 ##### Deleting Features
 
 ```js
-var service = L.esri.Services.featureLayerService({
+var service = L.esri.featureLayerService({
     url: 'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Pubic_Feature_Service/FeatureServer/0'
 });
 
@@ -182,7 +182,7 @@ service.deleteFeature(2, function(error, response){
 ##### Querying Features
 
 ```js
-var service = L.esri.Services.featureLayerService({
+var service = L.esri.featureLayerService({
     url: 'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Pubic_Feature_Service/FeatureServer/0'
 });
 

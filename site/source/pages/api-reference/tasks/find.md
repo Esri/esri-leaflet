@@ -20,7 +20,7 @@ layout: documentation.hbs
         <tr>
             <td>
                 <code>L.esri.find({{{param 'MapService' 'endpoint' '../../api-reference/services/service.html'}}})</code><br><br>
-                <code>L.esri.Tasks.find({{{param 'Object' 'options'}}})</code>
+                <code>L.esri.find({{{param 'Object' 'options'}}})</code>
             </td>
             <td>Accepts either an <code>options</code> object or an instance of <a href="{{assets}}/api-reference/services/map-service.html">MapService</a>.</td>
         </tr>

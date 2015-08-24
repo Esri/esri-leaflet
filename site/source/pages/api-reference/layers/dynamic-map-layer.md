@@ -1,13 +1,13 @@
 ---
-title: L.esri.Layers.DynamicMapLayer
+title: L.esri.DynamicMapLayer
 layout: documentation.hbs
 ---
 
 # {{page.data.title}}
 
-<!-- Inherits from [`L.esri.Layers.RasterLayer`]({{assets}}api-reference/layers/raster-layer.html) -->
+<!-- Inherits from [`L.esri.RasterLayer`]({{assets}}api-reference/layers/raster-layer.html) -->
 
-Render and visualize Map Services from ArcGIS Online and ArcGIS Server. L.esri.Layers.DynamicMapLayer also supports custom popups and identification of features.
+Render and visualize Map Services from ArcGIS Online and ArcGIS Server. L.esri.DynamicMapLayer also supports custom popups and identification of features.
 
 Map Services are a way to expose the contents of a map as a web service and expose capabilities for exporting tile images, querying and identifying features and more.
 
@@ -198,7 +198,7 @@ dynamicMapLayer.bindPopup(
             <td><code>query()</code></td>
             <td><code>this</code></td>
             <td>
-                Returns a new <a href="{{assets}}api-reference/tasks/query.html"><code>L.esri.Tasks.Query</code></a> object that can be used to query this service.
+                Returns a new <a href="{{assets}}api-reference/tasks/query.html"><code>L.esri.Query</code></a> object that can be used to query this service.
 <pre class="js"><code>mapService.query()
   .layer(0)
   .within(latlngbounds)
@@ -217,7 +217,7 @@ dynamicMapLayer.bindPopup(
 | `loading` | [<`LoadingEvent`>]({{assets}}api-reference/events.html#loading-event) | Fires when new features start loading. |
 | `load` | [<`LoadEvent`>]({{assets}}api-reference/events.html#load-event) | Fires when all features in the current bounds of the map have loaded. |
 
-`L.esri.Layers.DynamicMapLayer` also fires all  [`L.esri.Services.MapService`]({{assets}}api-reference/services/map-service.html) events.
+`L.esri.DynamicMapLayer` also fires all  [`L.esri.MapService`]({{assets}}api-reference/services/map-service.html) events.
 
 ### Example
 
