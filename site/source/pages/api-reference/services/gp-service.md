@@ -5,7 +5,7 @@ layout: documentation.hbs
 
 # L.esri.GP.Service
 
-A basic wrapper for speaking to ArcGIS Online and ArcGIS Server Geoprocessing services.
+A basic wrapper for speaking to ArcGIS Online and ArcGIS Server Geoprocessing services.  You can find more information and the source code for this plugin [here](https://github.com/jgravois/esri-leaflet-gp).
 
 ### Constructor
 

@@ -5,7 +5,7 @@ layout: documentation.hbs
 
 # L.esri.Geocoding.GeocodeService
 
-A basic wrapper for speaking to ArcGIS Online and ArcGIS Server geocoding services. Used internally by `L.esri.Geocoding.geosearch.`
+A basic wrapper for speaking to ArcGIS Online and ArcGIS Server geocoding services. Used internally by `L.esri.Geocoding.geosearch.`  You can find more information and the source code for this plugin [here](https://github.com/Esri/esri-leaflet-geocoder).
 
 ### Constructor
 
