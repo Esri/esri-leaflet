@@ -5,7 +5,7 @@ layout: documentation.hbs
 
 # {{page.data.title}}
 
-`L.esri.Geocoding.Suggest` is an abstraction for submitting requests for geocoding suggestions.
+`L.esri.Geocoding.Suggest` is an abstraction for submitting requests for geocoding suggestions.  You can find more information and the source code for this plugin [here](https://github.com/Esri/esri-leaflet-geocoder).
 
 ### Constructor
 
