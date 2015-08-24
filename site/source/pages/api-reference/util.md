@@ -39,7 +39,7 @@ Utility methods used internally by Esri Leaflet. These methods are useful for co
         <tr>
             <td>responseToFeatureCollection({{{param 'Object' 'response'}}}, {{{param 'String' 'idAttribute'}}})</td>
             <td><code><a href="http://geojson.org/geojson-spec.html#feature-collection-objects">FeatureCollection</a></code></td>
-            <td>Converts an API response (returned by identify, query or find API methods) to a <a href="http://geojson.org/geojson-spec.html#feature-collection-objects">GeoJSON FeatureCollection</a>. This is used internally by <code><a href="{{assets}}api-reference/tasks/query.html">L.esri.Tasks.Query</a></code>, <code><a href="{{assets}}api-reference/tasks/identify.html">L.esri.Tasks.Identify</a></code> and <code><a href="{{assets}}api-reference/tasks/find.html">L.esri.Tasks.Find</a></code> to convert responses.</td>
+            <td>Converts an API response (returned by identify, query or find API methods) to a <a href="http://geojson.org/geojson-spec.html#feature-collection-objects">GeoJSON FeatureCollection</a>. This is used internally by <code><a href="{{assets}}api-reference/tasks/query.html">L.esri.Query</a></code>, <code><a href="{{assets}}api-reference/tasks/identify.html">L.esri.Identify</a></code> and <code><a href="{{assets}}api-reference/tasks/find.html">L.esri.Find</a></code> to convert responses.</td>
         </tr>
         <tr>
             <td>cleanUrl({{{param 'String' 'url'}}})</td>

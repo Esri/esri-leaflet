@@ -1,5 +1,5 @@
 ---
-title: L.esri.Services.ImageService
+title: L.esri.ImageService
 layout: documentation.hbs
 ---
 
@@ -7,7 +7,7 @@ layout: documentation.hbs
 
 Inherits from [`L.esri.Service`]({{assets}}api-reference/services/service.html)
 
-`L.esri.Services.ImageService` is an abstraction for interacting with Image Services running on ArcGIS Online and ArcGIS Server that allows you to make requests to the API, as well as query and identify features on the service.
+`L.esri.ImageService` is an abstraction for interacting with Image Services running on ArcGIS Online and ArcGIS Server that allows you to make requests to the API, as well as query and identify features on the service.
 
 ### Constructor
 
@@ -20,7 +20,7 @@ Inherits from [`L.esri.Service`]({{assets}}api-reference/services/service.html)
     </thead>
     <tbody>
         <tr>
-            <td><code class="nobr">L.esri.Services.imageService({{{param 'Object' 'options'}}})</code></td>
+            <td><code class="nobr">L.esri.imageService({{{param 'Object' 'options'}}})</code></td>
             <td><code>Options</code> for configuring the ArcGIS Server or ArcGIS Online image service you would like to consume. <code>Options</code>includes a <code>url</code> parameter which refers to the ArcGIS Server or ArcGIS Online service you would like to consume.</td>
         </tr>
     </tbody>
@@ -28,11 +28,11 @@ Inherits from [`L.esri.Service`]({{assets}}api-reference/services/service.html)
 
 ### Options
 
-`L.esri.Services.ImageService` accepts all [`L.esri.Services.Service`]({{assets}}api-reference/services/service.html) options.
+`L.esri.ImageService` accepts all [`L.esri.Service`]({{assets}}api-reference/services/service.html) options.
 
 ### Events
 
-`L.esri.Services.ImageService` fires all  [`L.esri.Services.service`]({{assets}}api-reference/services/service.html) events.
+`L.esri.ImageService` fires all  [`L.esri.service`]({{assets}}api-reference/services/service.html) events.
 
 ### Methods
 
@@ -49,7 +49,7 @@ Inherits from [`L.esri.Service`]({{assets}}api-reference/services/service.html)
             <td><code>query()</code></td>
             <td><code>this</code></td>
             <td>
-                Returns a new <a href="{{assets}}api-reference/tasks/query.html"><code>L.esri.Tasks.Query</code></a> object that can be used to query this service.
+                Returns a new <a href="{{assets}}api-reference/tasks/query.html"><code>L.esri.Query</code></a> object that can be used to query this service.
 <pre class="js"><code>imageService.query()
             .within(latlngbounds)
             .run(function(error, featureCollection, response){
