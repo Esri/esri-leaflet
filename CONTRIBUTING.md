@@ -10,7 +10,7 @@ If you think you're encountering a new bug, please feel free to log an [issue](h
 
 ### I want to contribute, what should I work on?
 
-There is a lot of room for contributions to Esri Leaflet. Make sure you checkout the [development instructions](https://github.com/Esri/esri-leaflet#development-instructions) in the readme to help you get started.
+There is a lot of room for contributions to Esri Leaflet. Make sure you check out the [development instructions](https://github.com/Esri/esri-leaflet#development-instructions) in the readme to help you get started.
 
 ##### More examples
 
@@ -18,13 +18,13 @@ The Esri Leaflet website is written using http://assemble.io/ and can be found a
 
 ##### More tests
 
-Esri Leaflet has a fairly comprehensive test suite built with [Mocha](http://visionmedia.github.io/mocha/), [Chai](http://chaijs.com/), [Sinon](http://sinonjs.org), [Karma](http://karma-runner.github.io/0.12/index.html) and [Grunt](http://gruntjs.com/). Tests can be found in at https://github.com/Esri/esri-leaflet/tree/master/spec.
+Esri Leaflet has a fairly comprehensive test suite built with [Mocha](http://visionmedia.github.io/mocha/), [Chai](http://chaijs.com/), [Sinon](http://sinonjs.org), and [Karma](http://karma-runner.github.io/0.12/index.html). The tests can be found in at https://github.com/Esri/esri-leaflet/tree/master/spec.
 
-You can run the tests with the `grunt karma:watch` to watch files and rerun test automatically and `grunt karma:coverage` (to generate a code coverage report.
+You can run the tests with `npm test`.
 
 ##### Support for new services and layer types
 
-support for new layer types and services are always needed.  The [plugin candidates](https://github.com/Esri/esri-leaflet/issues?labels=Plugin+Canidate&page=1&state=open) list is a good place to start.
+Support for new layer types and services are always needed.  The [plugin candidates](https://github.com/Esri/esri-leaflet/issues?labels=Plugin+Canidate&page=1&state=open) list is a good place to start.
 
 ### Can I publish my own Esri Leaflet plugins?
 
@@ -32,18 +32,19 @@ Of course! if you develop reusuable components for use with Esri Leaflet that yo
 
 ### Setting up a dev environment
 
-Make Sure you have the [Grunt CLI](http://gruntjs.com/getting-started) installed.
-
 1. [Fork and clone Esri Leaflet](https://help.github.com/articles/fork-a-repo)
 2. `cd` into the `esri-leaflet` folder
-5. Install the dependencies with `npm install`
-5. run `grunt` from the command line. This will start the web server locally at [http://localhost:8001](http://localhost:8001) and start watching the source files and running linting and testing commands.
-6. Make your changes and create a [pull request](https://help.github.com/articles/creating-a-pull-request)
+3. Install the dependencies with `npm install`
+4. In order to compile/minify the source code of the API in a newly created `dist` folder, run `npm run build`.
+5. If you'd like to run the website locally, run `npm start` or `grunt` from the command line. This will start the web server at [http://localhost:8001](http://localhost:8001) and start watching the website source files for changes.
+6. If you'd like to share your changes, just create a [pull request](https://help.github.com/articles/creating-a-pull-request)
+
+If you'd like to build the Esri Leaflet website locally, make sure you have the [Grunt CLI](http://gruntjs.com/getting-started) installed.
 
 ### Linting
 
-Please make sure your changes pass JS Hint. This will help make sure code is consistant throguh out Esri Leaflet. You can run JS Hint with `grunt jshint`.
+Please make sure your changes pass JS Hint. This will help make sure code is consistent throughout Esri Leaflet. After installing the node dependencies for this project you can run `npm test` so that `semistandard` can make sure all is well.
 
 ### Testing
 
-Please make sure your changes dont break existing tests. Testing is essential for determining backward compatibility and catching breaking changes. You can run tests with `grunt karma:run`, `grunt karma:watch` or `grunt karma:coverage.`
+Please make sure your changes don't break existing tests. Testing is essential for determining backward compatibility and catching breaking changes. You can run tests with `npm test` or `npm t` if you'd like to avoid typing three extra characters.
