@@ -30,14 +30,13 @@ Map Services are a way to expose the contents of a map as a web service and expo
 
 ### Options
 
-`L.esri.DynamicMapLayer` also accepts all the options you can pass to [`L.ImageOverlay`](http://leafletjs.com/reference.html#imageoverlay).
-
 Option | Type | Default | Description
 --- | --- | --- | ---
 `url` | `String` | | *Required* URL of the [Map Service](http://resources.arcgis.com/en/help/arcgis-rest-api/#/Map_Service/02r3000000w2000000/).
 `format` | `String` | `'png24'` | Output format of the image.
 `transparent` | `Boolean` | `true` | Allow the server to produce transparent images.
 `f` | `String` | `'json'` |  Server response content type.
+`attribution` | `String` | `''` |  Attribution to include in Leaflet's default control.  The [copyright text](http://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer) found in Service metadata is usually a good thing to reference.
 `bboxSR` | `Integer` | `4326` | Spatial reference of the bounding box to generate the image with. If you don't know what this is don't change it.
 `imageSR` | `Integer` | `3857` | Spatial reference of the output image. If you don't know what this is don't change it.
 `layers` | `Array` | `''` | An array of Layer IDs like `[3,4,5]` to show from the service.
