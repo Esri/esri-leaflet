@@ -11,22 +11,6 @@ All builds of Esri Leaflet are available for download on [GitHub](https://github
 <a href="https://github.com/Esri/esri-leaflet/releases/tag/v{{package.version}}" class="btn">Current Release</a>
 <a href="https://github.com/Esri/esri-leaflet/releases/" class="btn">Past Releases</a>
 
-# npm
-
-Esri Leaflet is also [available on npm](https://www.npmjs.org/package/esri-leaflet) and can be installed with the following command.
-
-```bash
-npm install esri-leaflet --save
-```
-
-# Bower
-
-Esri Leaflet is also [available on Bower](http://bower.io/search/?q=esri-leaflet) and can be installed with the following command.
-
-```bash
-bower install esri-leaflet
-```
-
 # CDN
 
 #### Esri Leaflet
@@ -50,4 +34,26 @@ bower install esri-leaflet
 
 <!-- Geoprocessing Plugin -->
 <script src="//cdn.jsdelivr.net/leaflet.esri.gp/1.0.2/esri-leaflet-gp.js"></script>
+```
+# npm
+
+Esri Leaflet is also [available on npm](https://www.npmjs.org/package/esri-leaflet) and can be installed with the following command.
+
+```bash
+npm install esri-leaflet --save
+```
+
+# Bower
+
+Esri Leaflet is [available on Bower](http://bower.io/search/?q=esri-leaflet) as well, and can be installed with the following command.
+
+```bash
+bower install esri-leaflet
+```
+
+### Older Hosted Versions
+If you're looking for hosted copy of a legacy version of the API, they can be found on the Amazon Web Server below.
+```xml
+<!-- 1.0.0-rc.6 and prior -->
+<script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.6/esri-leaflet.js"></script>
 ```
