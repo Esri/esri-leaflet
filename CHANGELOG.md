@@ -3,11 +3,12 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-[Upcoming changes][unreleased]
+### [Upcoming changes][unreleased]
 
 ### Fixed
 
 * Improved NationalGeographic and Gray attribution #612
+* Fixed removing of `FeatureLayer` from maps (again)
 
 ## [2.0.0-beta.5](v2.0.0-beta.5)
 
@@ -343,7 +344,8 @@ None
 * Add DarkGray and DarkGrayLabels to BasemapLayer. #190
 * An attributionControl on maps is now required when using BasemapLayer. #159
 
-[unreleased]: https://github.com/esri/esri-leaflet/compare/v2.0.0-beta.4...HEAD
+[unreleased]: https://github.com/esri/esri-leaflet/compare/v2.0.0-beta.5...HEAD
+[v2.0.0-beta.5]: https://github.com/esri/esri-leaflet/compare/v2.0.0-beta.4...v2.0.0-beta.5
 [v2.0.0-beta.4]: https://github.com/esri/esri-leaflet/compare/v2.0.0-beta.3...v2.0.0-beta.4
 [v2.0.0-beta.3]: https://github.com/esri/esri-leaflet/compare/v2.0.0-beta.2...v2.0.0-beta.3
 [v2.0.0-beta.2]: https://github.com/esri/esri-leaflet/compare/v2.0.0-beta.1...v2.0.0-beta.2
