@@ -431,4 +431,19 @@ describe('L.esri.FeatureLayer', function () {
 
     expect(layer.getFeature(1).options.pane).to.equal('custom');
   });
+
+  it('should not throw uncaught errors when a feature layer is removed from the map', function(){
+    map.createPane('custom');
+    layer = L.esri.featureLayer({
+      url: 'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0',
+      pane: 'custom'
+    }).addTo(map);
+
+    layer.createLayers(features);
+    expect(layer._map).to.equal(map);
+
+    map.removeLayer(layer);
+    expect(layer._map).to.not.exist;
+  });
+
 });
