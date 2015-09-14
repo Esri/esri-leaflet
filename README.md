@@ -19,11 +19,11 @@ Here is a quick example to get you started. Just copy/paste into your own `.html
 <html>
   <head>
      <!-- Load Leaflet from CDN-->
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
-    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-1.0.0-b1/leaflet.css" />
+    <script src="http://cdn.leafletjs.com/leaflet-1.0.0-b1/leaflet.js"></script>
 
-    <!-- Load Esri Leaflet from CDN -->
-    <script src="http://cdn.jsdelivr.net/leaflet.esri/1.0.0/esri-leaflet.js"></script>
+    <!-- Load Esri Leaflet locally, after cloning this repository -->
+    <script src="esri-leaflet/dist/esri-leaflet.js"></script>
 
     <style>
       html, body,  #map {
@@ -112,7 +112,7 @@ In order to compile the API yourself and/or run the tests, make sure you have th
 
 ### Dependencies
 
-* [Leaflet](http://leafletjs.com) version 0.7.3 is required.
+* [Leaflet](http://leafletjs.com) version leaflet-1.0.0-b1 is required.
 
 ### Versioning
 
