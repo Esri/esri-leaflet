@@ -161,30 +161,32 @@ export var FeatureLayer = FeatureManager.extend({
   },
 
   cellLeave: function (bounds, coords) {
-    if (!this._zooming && this._map) {
+    if (!this._zooming) {
       L.Util.requestAnimFrame(L.Util.bind(function () {
-        var cacheKey = this._cacheKey(coords);
-        var cellKey = this._cellCoordsToKey(coords);
-        var layers = this._cache[cacheKey];
-        var mapBounds = this._map.getBounds();
-        if (!this._activeCells[cellKey] && layers) {
-          var removable = true;
+        if (this._map) {
+          var cacheKey = this._cacheKey(coords);
+          var cellKey = this._cellCoordsToKey(coords);
+          var layers = this._cache[cacheKey];
+          var mapBounds = this._map.getBounds();
+          if (!this._activeCells[cellKey] && layers) {
+            var removable = true;
 
-          for (var i = 0; i < layers.length; i++) {
-            var layer = this._layers[layers[i]];
-            if (layer && layer.getBounds && mapBounds.intersects(layer.getBounds())) {
-              removable = false;
+            for (var i = 0; i < layers.length; i++) {
+              var layer = this._layers[layers[i]];
+              if (layer && layer.getBounds && mapBounds.intersects(layer.getBounds())) {
+                removable = false;
+              }
             }
-          }
 
-          if (removable) {
-            this.removeLayers(layers, !this.options.cacheLayers);
-          }
+            if (removable) {
+              this.removeLayers(layers, !this.options.cacheLayers);
+            }
 
-          if (!this.options.cacheLayers && removable) {
-            delete this._cache[cacheKey];
-            delete this._cells[cellKey];
-            delete this._activeCells[cellKey];
+            if (!this.options.cacheLayers && removable) {
+              delete this._cache[cacheKey];
+              delete this._cells[cellKey];
+              delete this._activeCells[cellKey];
+            }
           }
         }
       }, this));

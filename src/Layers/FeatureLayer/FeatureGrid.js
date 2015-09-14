@@ -21,7 +21,6 @@ export var FeatureGrid = L.Layer.extend({
 
   onRemove: function () {
     this._map.removeEventListener(this.getEvents(), this);
-    delete this._map;
     this._removeCells();
   },
 
