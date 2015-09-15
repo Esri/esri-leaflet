@@ -23,7 +23,7 @@ Here is a quick example to get you started. Just copy/paste into your own `.html
     <script src="http://cdn.leafletjs.com/leaflet-1.0.0-b1/leaflet.js"></script>
 
     <!-- Load Esri Leaflet locally, after cloning this repository -->
-    <script src="esri-leaflet/dist/esri-leaflet.js"></script>
+    <script src="http://cdn.jsdelivr.net/leaflet.esri/2.0.0-beta.5/esri-leaflet.js"></script>
 
     <style>
       html, body,  #map {
