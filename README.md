@@ -114,7 +114,13 @@ In order to compile the API yourself and/or run the tests, make sure you have th
 
 ### Dependencies
 
-* [Leaflet](http://leafletjs.com) version leaflet-1.0.0-b1 is required.
+* Esri Leaflet [1.x](https://github.com/Esri/esri-leaflet/releases/tag/v1.0.0) (available on [CDN](https://cdn.jsdelivr.net/leaflet.esri/1.0.0/esri-leaflet.js)) can be used in apps alongside:
+  *  [Leaflet](http://leafletjs.com) version 0.7.x.
+
+* Esri Leaflet [2.x](https://github.com/Esri/esri-leaflet/releases/tag/v2.0.0-beta.5) (available on [CDN](https://cdn.jsdelivr.net/leaflet.esri/2.0.0-beta.5/esri-leaflet.js)) can be used in apps alongside:
+  *  [Leaflet](http://leafletjs.com) version 1.0.0-beta1.
+
+The `master` branch of this repository is only compatible with Leaflet 1.0.x.
 
 ### Versioning
 
