@@ -5,7 +5,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### [Upcoming changes][unreleased]
 
-### [2.0.0-beta.6](v2.0.0-beta.6)
+## [2.0.0-beta.6](v2.0.0-beta.6)
 
 ### Fixed
 
