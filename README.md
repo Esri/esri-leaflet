@@ -104,13 +104,12 @@ Feel free to add your own project to this list!
 
 ### Development Instructions
 
-In order to compile the API yourself and/or run the tests, make sure you have the [Grunt CLI](http://gruntjs.com/getting-started) installed.
-
 1. [Fork and clone Esri Leaflet](https://help.github.com/articles/fork-a-repo)
 2. `cd` into the `esri-leaflet` folder
-5. Install the dependencies with `npm install`
-5. run `grunt` from the command line. This will start the web server locally at [http://localhost:8001](http://localhost:8001) and start watching the source files and running linting and testing commands.
-6. Make your changes and create a [pull request](https://help.github.com/articles/creating-a-pull-request) if you'd like to contribute
+3. Install the dependencies with `npm install`
+4. Run `npm run build` from the command line. This will compile minified source in a brand new `dist` directory.  Afterward, you can run `npm test` to make sure things are 'all good'.
+5. Make your changes and create a [pull request](https://help.github.com/articles/creating-a-pull-request)
+6. If you're interested in playing around with our website locally, just make sure you have [GruntCLI](http://gruntjs.com/getting-started) installed and run `grunt`.  This will start the web server locally at [http://localhost:8001](http://localhost:8001) and start watching the website source files for changes.
 
 ### Dependencies
 
