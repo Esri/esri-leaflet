@@ -52,8 +52,7 @@ export var BasemapLayer = L.TileLayer.extend({
           minZoom: 1,
           maxZoom: 16,
           subdomains: ['server', 'services'],
-          pane: (pointerEvents) ? 'esri-labels' : 'tilePane'
-        }
+          pane: (pointerEvents) ? 'esri-labels' : 'tilePane'        }
       },
       NationalGeographic: {
         urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}',
@@ -86,6 +85,7 @@ export var BasemapLayer = L.TileLayer.extend({
           maxZoom: 16,
           subdomains: ['server', 'services'],
           pane: (pointerEvents) ? 'esri-labels' : 'tilePane'
+
         }
       },
       Gray: {
@@ -247,7 +247,9 @@ export var BasemapLayer = L.TileLayer.extend({
   },
 
   getAttribution: function () {
-    var attribution = '<span class="esri-attributions" style="line-height:14px; vertical-align: -3px; text-overflow:ellipsis; white-space:nowrap; overflow:hidden; display:inline-block;">' + this.options.attribution + '</span>';
+    if (this.options.attribution){
+        var attribution = '<span class="esri-attributions" style="line-height:14px; vertical-align: -3px; text-overflow:ellipsis; white-space:nowrap; overflow:hidden; display:inline-block;">' + this.options.attribution + '</span>';
+        }
     return attribution;
   },
 
