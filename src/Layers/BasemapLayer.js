@@ -52,7 +52,8 @@ export var BasemapLayer = L.TileLayer.extend({
           minZoom: 1,
           maxZoom: 16,
           subdomains: ['server', 'services'],
-          pane: (pointerEvents) ? 'esri-labels' : 'tilePane'        }
+          pane: (pointerEvents) ? 'esri-labels' : 'tilePane'
+          }
       },
       NationalGeographic: {
         urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}',
