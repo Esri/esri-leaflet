@@ -248,9 +248,9 @@ export var BasemapLayer = L.TileLayer.extend({
   },
 
   getAttribution: function () {
-    if (this.options.attribution){
-        var attribution = '<span class="esri-attributions" style="line-height:14px; vertical-align: -3px; text-overflow:ellipsis; white-space:nowrap; overflow:hidden; display:inline-block;">' + this.options.attribution + '</span>';
-        }
+    if (this.options.attribution) {
+      var attribution = '<span class="esri-attributions" style="line-height:14px; vertical-align: -3px; text-overflow:ellipsis; white-space:nowrap; overflow:hidden; display:inline-block;">' + this.options.attribution + '</span>';
+    }
     return attribution;
   },
 
