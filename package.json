@@ -29,10 +29,10 @@
     ]
   },
   "devDependencies": {
-    "eslint": "^0.24.1",
     "assemble": "^0.4.37",
     "babelify": "^6.1.3",
     "chai": "2.3.0",
+    "eslint": "^0.24.1",
     "esperanto": "^0.7.3",
     "gh-release": "^2.0.0",
     "grunt": "^0.4.2",
@@ -44,6 +44,7 @@
     "grunt-newer": "^0.7.0",
     "grunt-sass": "^1.0.0",
     "highlight.js": "^8.0.0",
+    "http-server": "^0.8.5",
     "isparta": "^3.0.3",
     "istanbul": "gotwarlost/istanbul.git#source-map",
     "karma": "^0.12.16",
@@ -55,6 +56,7 @@
     "karma-sourcemap-loader": "^0.3.5",
     "load-grunt-tasks": "^0.4.0",
     "mkdirp": "^0.5.1",
+    "nodemon": "^1.7.2",
     "phantomjs": "^1.9.17",
     "rollup": "^0.11.4",
     "semistandard": "^6.1.2",
@@ -91,6 +93,11 @@
     "pretest": "npm run build",
     "test": "npm run lint && karma start",
     "release": "./scripts/release.sh",
-    "start": "grunt"
+    "serve": "nodemon --watch src --exec 'npm run build' & http-server -p 5678 -c-1 -o",
+    "start": "grunt",
+    "watch": "npm-watch"
+  },
+  "watch": {
+    "build": "src/**/*.js"
   }
 }
