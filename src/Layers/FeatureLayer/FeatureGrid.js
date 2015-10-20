@@ -39,8 +39,12 @@ export var FeatureGrid = L.Layer.extend({
     return this;
   },
 
-  removeFrom: function (map) {
+  removeFrom: function (map, reason) {
     map.removeLayer(this);
+    if(reason == "temporary"){
+      this._map = map;
+      map.addEventListener(this.getEvents(), this);
+    }
     return this;
   },
 
@@ -56,9 +60,28 @@ export var FeatureGrid = L.Layer.extend({
     this._cellsToLoad = 0;
     this._cellsTotal = 0;
     this._cellNumBounds = this._getCellNumBounds();
-
-    this._resetWrap();
+    
+    if(Object.keys(this._layers).length>0){
+      this._resetWrap();
+    } 
     this._zooming = false;
+    this._checkZoomLevels();
+  },
+
+  _checkZoomLevels: function() {
+    var zoom = this._map.getZoom();
+
+    if (zoom > this.options.maxZoom || zoom < this.options.minZoom) {
+      if(Object.keys(this._layers).length>0) {
+        this.removeFrom(this._map, "temporary");
+      }
+    }
+    else{
+      if(Object.keys(this._layers).length>0) {
+        this._map = map;
+        map.addLayer(this);
+      }
+    }
   },
 
   _resetWrap: function () {
