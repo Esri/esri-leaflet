@@ -94,10 +94,6 @@
     "test": "npm run lint && karma start",
     "release": "./scripts/release.sh",
     "serve": "nodemon --watch src --exec 'npm run build' & http-server -p 5678 -c-1 -o",
-    "start": "grunt",
-    "watch": "npm-watch"
-  },
-  "watch": {
-    "build": "src/**/*.js"
+    "start": "grunt"
   }
 }
