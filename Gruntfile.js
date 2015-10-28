@@ -89,7 +89,8 @@ module.exports = function (grunt) {
     copy: {
       assemble: {
         files: [
-          { src: 'site/source/js/script.js', dest: 'site/build/js/script.js'}
+          { src: 'site/source/js/script.js', dest: 'site/build/js/script.js'},
+          { src: 'dist/esri-leaflet.js', dest: 'site/build/js/esri-leaflet.js'}
         ]
       }
     },
