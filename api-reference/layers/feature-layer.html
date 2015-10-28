@@ -76,6 +76,7 @@
     <a href="../../../../esri-leaflet/api-reference/layers/tiled-map-layer.html">TiledMapLayer</a>
     <a href="../../../../esri-leaflet/api-reference/layers/dynamic-map-layer.html">DynamicMapLayer</a>
     <a href="../../../../esri-leaflet/api-reference/layers/image-map-layer.html">ImageMapLayer</a>
+    <a href="../../../../esri-leaflet/api-reference/layers/raster-layer.html">RasterLayer</a>
     <a href="../../../../esri-leaflet/api-reference/layers/clustered-feature-layer.html">ClusteredFeatureLayer</a>
     <a href="../../../../esri-leaflet/api-reference/layers/heatmap-feature-layer.html">HeatmapFeatureLayer</a>
   </nav>
@@ -99,7 +100,7 @@
   <h5>Base Classes</h5>
   <nav>
     <a href="../../../../esri-leaflet/api-reference/services/image-service.html">ImageService</a>
-    <a href="../../../../esri-leaflet/api-reference/services/feature-layer.html">FeatureLayerService</a>
+    <a href="../../../../esri-leaflet/api-reference/services/feature-layer-service.html">FeatureLayerService</a>
     <a href="../../../../esri-leaflet/api-reference/services/map-service.html">MapService</a>
     <a href="../../../../esri-leaflet/api-reference/services/service.html">Service</a>
   </nav>
@@ -115,7 +116,7 @@
 <p>This particular service contains only one Feature Layer. Here is the Feature Layer URL</p>
 <pre><code>http://services.arcgis.com/rOo16HdIMeOBI4Mb/ArcGIS/rest/services/Neighborhoods_pdx/FeatureServer/0</code></pre>
 <p>Note that the Feature Layer URL ends in <code>/FeatureServer/{LAYER_ID}</code>.</p>
-<p>You can create a new empty feature service with a single layer on the <a href="https://developers.arcgis.com/en/hosted-data/#/new">ArcGIS for Developers website</a> or you can use ArcGIS Online to <a href="https://developers.arcgis.com/tools/csv-to-feature-service/">create a Feature Service from a CSV or Shapefile</a>.</p>
+<p>You can create a new empty feature service with a single layer on the <a href="https://developers.arcgis.com/en/hosted-data/#/new">ArcGIS for Developers website</a> or you can use ArcGIS Online to <a href="https://doc.arcgis.com/en/arcgis-online/share-maps/publish-features.htm">create a Feature Service from a CSV or Shapefile</a>.</p>
 <h3 id="constructor">Constructor</h3>
 <table>
     <thead>
@@ -272,7 +273,7 @@
 </tr>
 </tbody>
 </table>
-<p><code>L.esri.Layers.FeatureLayer</code> also fires all  <a href="../../../../esri-leaflet/api-reference/services/feature-layer.html"><code>L.esri.Services.FeatureLayer</code></a> events.</p>
+<p><code>L.esri.Layers.FeatureLayer</code> also fires all  <a href="../../../../esri-leaflet/api-reference/services/feature-layer-service.html"><code>L.esri.Services.FeatureLayerService</code></a> events.</p>
 <p>In addition to the events above, <code>L.esri.Layers.FeatureLayer</code> also fires the following <a href="http://leafletjs.com/reference.html#event-objects">Mouse Events</a> <code>click</code>, <code>dblclick</code>, <code>mouseover</code>, <code>mouseout</code>, <code>mousemove</code>, and <code>contextmenu</code> and the following the <a href="http://leafletjs.com/reference.html#event-objects">Popup Events</a> <code>popupopen</code> and <code>popupclose</code></p>
 <h3 id="methods">Methods</h3>
 <table>

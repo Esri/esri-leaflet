@@ -76,6 +76,7 @@
     <a href="../../../esri-leaflet/api-reference/layers/tiled-map-layer.html">TiledMapLayer</a>
     <a href="../../../esri-leaflet/api-reference/layers/dynamic-map-layer.html">DynamicMapLayer</a>
     <a href="../../../esri-leaflet/api-reference/layers/image-map-layer.html">ImageMapLayer</a>
+    <a href="../../../esri-leaflet/api-reference/layers/raster-layer.html">RasterLayer</a>
     <a href="../../../esri-leaflet/api-reference/layers/clustered-feature-layer.html">ClusteredFeatureLayer</a>
     <a href="../../../esri-leaflet/api-reference/layers/heatmap-feature-layer.html">HeatmapFeatureLayer</a>
   </nav>
@@ -99,7 +100,7 @@
   <h5>Base Classes</h5>
   <nav>
     <a href="../../../esri-leaflet/api-reference/services/image-service.html">ImageService</a>
-    <a href="../../../esri-leaflet/api-reference/services/feature-layer.html">FeatureLayerService</a>
+    <a href="../../../esri-leaflet/api-reference/services/feature-layer-service.html">FeatureLayerService</a>
     <a href="../../../esri-leaflet/api-reference/services/map-service.html">MapService</a>
     <a href="../../../esri-leaflet/api-reference/services/service.html">Service</a>
   </nav>
@@ -141,7 +142,7 @@
         <tr>
             <td>responseToFeatureCollection(<nobr class="param"><span>&lt;Object&gt;</span> <code>response</code></nobr>, <nobr class="param"><span>&lt;String&gt;</span> <code>idAttribute</code></nobr>)</td>
             <td><code><a href="http://geojson.org/geojson-spec.html#feature-collection-objects">FeatureCollection</a></code></td>
-            <td>Converts an API response (returned by identify, query or find API methods) to a <a href="http://geojson.org/geojson-spec.html#feature-collection-objects">GeoJSON FeatureCollection</a>. This is used internally by <code><a href="../../../esri-leaflet/api-reference/tasks/query.html">L.esri.Tasks.Query</a></code>, <code><a href="../../../esri-leaflet/api-reference/tasks/identify.html">L.esri.Tasks.Identify</a></code> and <code><a href="../../../esri-leaflet/api-reference/tasks/find.html">L.esri.Tasks.Find</a></code> to convert responses.</td>
+            <td>Converts an API response (returned by identify, query or find API methods) to a <a href="http://geojson.org/geojson-spec.html#feature-collection-objects">GeoJSON FeatureCollection</a>. This is used internally by <code><a href="../../../esri-leaflet/api-reference/tasks/query.html">L.esri.Tasks.Query</a></code>, <code><a href="../../../esri-leaflet/api-reference/tasks/identify-features.html">L.esri.Tasks.IdentifyFeatures</a></code> and <code><a href="../../../esri-leaflet/api-reference/tasks/find.html">L.esri.Tasks.Find</a></code> to convert responses.</td>
         </tr>
         <tr>
             <td>cleanUrl(<nobr class="param"><span>&lt;String&gt;</span> <code>url</code></nobr>)</td>
