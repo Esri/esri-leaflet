@@ -8,7 +8,7 @@
   <meta charset="utf-8">
 
   
-    <title>L.esri.Services | Esri Leaflet</title>
+    <title>L.esri.RasterLayer | Esri Leaflet</title>
   
 
   
@@ -108,16 +108,121 @@
 
 
 <div class="main-content">
-  <h1 id="l-esri-services">L.esri.Services</h1>
-<p>Services wrap ArcGIS API endpoints exposing common methods for interacting with the APIs and handling proxying and authentication.</p>
-<ul>
-<li><a href="../../../../esri-leaflet/api-reference/services/image-service.html"><code>L.esri.Services.ImageService</code></a></li>
-<li><a href="../../../../esri-leaflet/api-reference/services/feature-layer-service.html"><code>L.esri.Services.FeatureLayerService</code></a></li>
-<li><a href="../../../../esri-leaflet/api-reference/services/map-service.html"><code>L.esri.Services.MapService</code></a></li>
-<li><a href="../../../../esri-leaflet/api-reference/services/service.html"><code>L.esri.Services.Service</code></a></li>
-</ul>
+  <h1 id="l-esri-rasterlayer">L.esri.RasterLayer</h1>
+<p>A generic class representing an image layer. This class can be extended to provide support for making export requests from ArcGIS REST services.</p>
+<h3 id="options">Options</h3>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>f</code></td>
+<td><code>String</code></td>
+<td><code>&#39;image&#39;</code></td>
+<td>Server response content type.</td>
+</tr>
+<tr>
+<td><code>opacity</code></td>
+<td><code>Number</code></td>
+<td><code>1</code></td>
+<td>Opacity of the layer. Should be a value between 0 and 1.</td>
+</tr>
+<tr>
+<td><code>position</code></td>
+<td><code>String</code></td>
+<td><code>&#39;front&#39;</code></td>
+<td>Position of the layer relative to other overlays.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="methods">Methods</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Method</th>
+            <th>Returns</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>bringToBack()</code></td>
+            <td><code>this</code></td>
+            <td>Redraws this layer below all other overlay layers.</td>
+        </tr>
+        <tr>
+            <td><code>bringToFront()</code></td>
+            <td><code>this</code></td>
+            <td>Redraws this layer above all other overlay layers.</td>
+        </tr>
+        <tr>
+            <td><code>getOpacity()</code></td>
+            <td><code>Float</code></td>
+            <td>Returns the current opacity of the layer.</td>
+        </tr>
+        <tr>
+            <td><code>setOpacity(<nobr class="param"><span>&lt;Float&gt;</span> <code>opacity</code></nobr>)</code></td>
+            <td><code>this</code></td>
+            <td>Sets the opacity of the layer.</td>
+        </tr>
+        <tr>
+            <td><code>getTimeRange()</code></td>
+            <td><code>Array</code></td>
+            <td>Returns the current time range being used for rendering.</td>
+        </tr>
+        <tr>
+            <td><code>setTimeRange(<nobr class="param"><span>&lt;Date&gt;</span> <code>from</code></nobr>, <nobr class="param"><span>&lt;Date&gt;</span> <code>to</code></nobr>)</code></td>
+            <td><code>this</code></td>
+            <td>Redraws the layer with he passed time range.</td>
+        </tr>
+        <tr>
+            <td><code>metadata(<nobr class="param"><span>&lt;Function&gt;</span> <code>callback</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>context</code></nobr>)</code></td>
+            <td><code>this</code></td>
+            <td>
+                Requests metadata about this Feature Layer. Callback will be called with <code>error</code> and <code>metadata</code>.
+<pre class="js"><code>featureLayer.metadata(function(error, metadata){
+  console.log(metadata);
+});</code></pre>
+            </td>
+        </tr>
+        <tr>
+            <td><code>authenticate(<nobr class="param"><span>&lt;String&gt;</span> <code>token</code></nobr>)</code></td>
+            <td><code>this</code></td>
+            <td>Authenticates this service with a new token and runs any pending requests that required a token.</td>
+        </tr>
+    </tbody>
+</table>
 
-  <p><a href="http://github.com/esri/esri-leaflet/edit/master/site/source/pages/api-reference/services/index.md">Edit this page on GitHub</a></p>
+<h3 id="events">Events</h3>
+<table>
+<thead>
+<tr>
+<th>Event</th>
+<th>Data</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>loading</code></td>
+<td><a href="../../../../esri-leaflet/api-reference/events.html#loading-event">&lt;<code>LoadingEvent</code>&gt;</a></td>
+<td>Fires when new features start loading.</td>
+</tr>
+<tr>
+<td><code>load</code></td>
+<td><a href="../../../../esri-leaflet/api-reference/events.html#load-event">&lt;<code>LoadEvent</code>&gt;</a></td>
+<td>Fires when all features in the current bounds of the map have loaded.</td>
+</tr>
+</tbody>
+</table>
+
+  <p><a href="http://github.com/esri/esri-leaflet/edit/master/site/source/pages/api-reference/layers/raster-layer.md">Edit this page on GitHub</a></p>
 </div>
   <div style='clear:both;'></div>
 </div>

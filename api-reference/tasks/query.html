@@ -76,6 +76,7 @@
     <a href="../../../../esri-leaflet/api-reference/layers/tiled-map-layer.html">TiledMapLayer</a>
     <a href="../../../../esri-leaflet/api-reference/layers/dynamic-map-layer.html">DynamicMapLayer</a>
     <a href="../../../../esri-leaflet/api-reference/layers/image-map-layer.html">ImageMapLayer</a>
+    <a href="../../../../esri-leaflet/api-reference/layers/raster-layer.html">RasterLayer</a>
     <a href="../../../../esri-leaflet/api-reference/layers/clustered-feature-layer.html">ClusteredFeatureLayer</a>
     <a href="../../../../esri-leaflet/api-reference/layers/heatmap-feature-layer.html">HeatmapFeatureLayer</a>
   </nav>
@@ -99,7 +100,7 @@
   <h5>Base Classes</h5>
   <nav>
     <a href="../../../../esri-leaflet/api-reference/services/image-service.html">ImageService</a>
-    <a href="../../../../esri-leaflet/api-reference/services/feature-layer.html">FeatureLayerService</a>
+    <a href="../../../../esri-leaflet/api-reference/services/feature-layer-service.html">FeatureLayerService</a>
     <a href="../../../../esri-leaflet/api-reference/services/map-service.html">MapService</a>
     <a href="../../../../esri-leaflet/api-reference/services/service.html">Service</a>
   </nav>
@@ -122,11 +123,11 @@
         <tr>
             <td>
             <code>L.esri.Tasks.query(<nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br>
-            <code>L.esri.Tasks.query(<nobr class="param"><span>&lt;<a href="../../api-reference/services/feature-layer.html">FeatureLayer</a>&gt;</span> <code>endpoint</code></nobr>)</code><br><br>
+            <code>L.esri.Tasks.query(<nobr class="param"><span>&lt;<a href="../../api-reference/services/feature-layer-service.html">FeatureLayerService</a>&gt;</span> <code>endpoint</code></nobr>)</code><br><br>
             <code>L.esri.Tasks.query(<nobr class="param"><span>&lt;<a href="../../api-reference/services/map-service.html">MapService</a>&gt;</span> <code>endpoint</code></nobr>)</code><br><br>
             <code>L.esri.Tasks.query(<nobr class="param"><span>&lt;<a href="../../api-reference/services/image-service.html">ImageService</a>&gt;</span> <code>endpoint</code></nobr>)</code>
             </td>
-            <td>Accepts either an <code>options</code> object or an instance of <a href="../../../../esri-leaflet//api-reference/services/map-service.html">MapService</a>, <a href="../../../../esri-leaflet//api-reference/services/feature-layer-service.html">FeatureLayer</a> or <a href="../../../../esri-leaflet//api-reference/service/image-service.html">ImageService</a>.</td>
+            <td>Accepts either an <code>options</code> object or an instance of <a href="../../../../esri-leaflet//api-reference/services/map-service.html">MapService</a>, <a href="../../../../esri-leaflet//api-reference/services/feature-layer-service.html">FeatureLayerService</a> or <a href="../../../../esri-leaflet//api-reference/services/image-service.html">ImageService</a>.</td>
         </tr>
     </tbody>
 </table>
@@ -175,22 +176,22 @@
         <tr>
             <td><code>within(<nobr class="param"><span>&lt;Geometry&gt;</span> <code>geometry</code></nobr>)</code></td>
             <td><code>this</code></td>
-            <td>Queries features from the service within (fully contained by) the passed geometry object. <code>geometry</code> can be an instance of <code>L.Marker</code>, <code>L.Polygon</code>, <code>L.Polyline</code>, <code>L.LatLng</code>, <code>L.LatLngBounds</code> and <code>L.GeoJSON</code>. It can also accept valid GeoJSON Point, Polyline, Polygon objects and GeoJSON Feature objects containing Point, Polyline, Polygon.</td>
+            <td>Queries features from the service within (fully contained by) the passed geometry object. <code>geometry</code> can be an instance of <a href="http://leafletjs.com/reference.html#marker"><code>L.Marker</code></a>, <a href="http://leafletjs.com/reference.html#polygon"><code>L.Polygon</code></a>, <a href="http://leafletjs.com/reference.html#polyline"><code>L.Polyline</code></a>, <a href="http://leafletjs.com/reference.html#latlng"><code>L.LatLng</code></a>, <a href="http://leafletjs.com/reference.html#latlngbounds"><code>L.LatLngBounds</code></a> and <a href="http://leafletjs.com/reference.html#geojson"><code>L.GeoJSON</code></a>. It can also accept valid GeoJSON <a href="http://geojson.org/geojson-spec.html#point">Point</a>, <a href="http://geojson.org/geojson-spec.html#polyline">Polyline</a>, <a href="http://geojson.org/geojson-spec.html#polygon">Polygon</a> objects and GeoJSON <a href="http://geojson.org/geojson-spec.html#feature-objects">Feature objects</a> containing Point, Polyline, Polygon.</td>
         </tr>
         <tr>
             <td><code>contains(<nobr class="param"><span>&lt;Geometry&gt;</span> <code>geometry</code></nobr>)</code></td>
             <td><code>this</code></td>
-            <td>Queries features from the service that fully contain the passed geometry object. <code>geometry</code> can be an instance of <code>L.Marker</code>, <code>L.Polygon</code>, <code>L.Polyline</code>, <code>L.LatLng</code>, <code>L.LatLngBounds</code> and <code>L.GeoJSON</code>. It can also accept valid GeoJSON Point, Polyline, Polygon objects and GeoJSON Feature objects containing Point, Polyline, Polygon.</td>
+            <td>Queries features from the service that fully contain the passed geometry object. <code>geometry</code> can be an instance of <a href="http://leafletjs.com/reference.html#marker"><code>L.Marker</code></a>, <a href="http://leafletjs.com/reference.html#polygon"><code>L.Polygon</code></a>, <a href="http://leafletjs.com/reference.html#polyline"><code>L.Polyline</code></a>, <a href="http://leafletjs.com/reference.html#latlng"><code>L.LatLng</code></a>, <a href="http://leafletjs.com/reference.html#latlngbounds"><code>L.LatLngBounds</code></a> and <a href="http://leafletjs.com/reference.html#geojson"><code>L.GeoJSON</code></a>. It can also accept valid GeoJSON <a href="http://geojson.org/geojson-spec.html#point">Point</a>, <a href="http://geojson.org/geojson-spec.html#polyline">Polyline</a>, <a href="http://geojson.org/geojson-spec.html#polygon">Polygon</a> objects and GeoJSON <a href="http://geojson.org/geojson-spec.html#feature-objects">Feature objects</a> containing Point, Polyline, Polygon.</td>
         </tr>
         <tr>
             <td><code>intersects(<nobr class="param"><span>&lt;Geometry&gt;</span> <code>geometry</code></nobr>)</code></td>
             <td><code>this</code></td>
-            <td>Queries features from the service that intersect (touch anywhere) the passed geometry object. <code>geometry</code> can be an instance of <code>L.Marker</code>, <code>L.Polygon</code>, <code>L.Polyline</code>, <code>L.LatLng</code>, <code>L.LatLngBounds</code> and <code>L.GeoJSON</code>. It can also accept valid GeoJSON Point, Polyline, Polygon objects and GeoJSON Feature objects containing Point, Polyline, Polygon.</td>
+            <td>Queries features from the service that intersect (touch anywhere) the passed geometry object. <code>geometry</code> can be an instance of <a href="http://leafletjs.com/reference.html#marker"><code>L.Marker</code></a>, <a href="http://leafletjs.com/reference.html#polygon"><code>L.Polygon</code></a>, <a href="http://leafletjs.com/reference.html#polyline"><code>L.Polyline</code></a>, <a href="http://leafletjs.com/reference.html#latlng"><code>L.LatLng</code></a>, <a href="http://leafletjs.com/reference.html#latlngbounds"><code>L.LatLngBounds</code></a> and <a href="http://leafletjs.com/reference.html#geojson"><code>L.GeoJSON</code></a>. It can also accept valid GeoJSON <a href="http://geojson.org/geojson-spec.html#point">Point</a>, <a href="http://geojson.org/geojson-spec.html#polyline">Polyline</a>, <a href="http://geojson.org/geojson-spec.html#polygon">Polygon</a> objects and GeoJSON <a href="http://geojson.org/geojson-spec.html#feature-objects">Feature objects</a> containing Point, Polyline, Polygon.</td>
         </tr>
         <tr>
             <td><code>overlap(<nobr class="param"><span>&lt;Geometry&gt;</span> <code>geometry</code></nobr>)</code></td>
             <td><code>this</code></td>
-            <td>Queries features from the service that overlap (touch but are not fully contained by) the passed geometry object. <code>geometry</code> can be an instance of <code>L.Marker</code>, <code>L.Polygon</code>, <code>L.Polyline</code>, <code>L.LatLng</code>, <code>L.LatLngBounds</code> and <code>L.GeoJSON</code>. It can also accept valid GeoJSON Point, Polyline, Polygon objects and GeoJSON Feature objects containing Point, Polyline, Polygon.</td>
+            <td>Queries features from the service that overlap (touch but are not fully contained by) the passed geometry object. <code>geometry</code> can be an instance of <a href="http://leafletjs.com/reference.html#marker"><code>L.Marker</code></a>, <a href="http://leafletjs.com/reference.html#polygon"><code>L.Polygon</code></a>, <a href="http://leafletjs.com/reference.html#polyline"><code>L.Polyline</code></a>, <a href="http://leafletjs.com/reference.html#latlng"><code>L.LatLng</code></a>, <a href="http://leafletjs.com/reference.html#latlngbounds"><code>L.LatLngBounds</code></a> and <a href="http://leafletjs.com/reference.html#geojson"><code>L.GeoJSON</code></a>. It can also accept valid GeoJSON <a href="http://geojson.org/geojson-spec.html#point">Point</a>, <a href="http://geojson.org/geojson-spec.html#polyline">Polyline</a>, <a href="http://geojson.org/geojson-spec.html#polygon">Polygon</a> objects and GeoJSON <a href="http://geojson.org/geojson-spec.html#feature-objects">Feature objects</a> objects containing Point, Polyline, Polygon.</td>
         </tr>
         <tr>
             <td><code>nearby(<nobr class="param"><span>&lt;<a href="http://leafletjs.com/reference.html#latlng">LatLng</a>&gt;</span> <code>latlng</code></nobr>, <nobr class="param"><span>&lt;Integer&gt;</span> <code>distance</code></nobr>)</code></td>
