@@ -1,6 +1,20 @@
 import L from 'leaflet';
 import {cors} from '../Support';
 
+var Overlay = L.ImageOverlay.extend({
+	onAdd: function (map) {
+		this._topLeft = map.getPixelBounds().min;
+		L.ImageOverlay.prototype.onAdd.call(this, map);
+	},
+	_reset: function (){
+		if (map.options.crs === L.CRS.EPSG3857) {
+			L.ImageOverlay.prototype._reset.call(this);
+		} else {
+			L.DomUtil.setPosition(this._image, this._topLeft.subtract(this._map.getPixelOrigin()));
+		}
+	}
+});
+
 export var RasterLayer = L.Layer.extend({
 
   options: {
@@ -15,12 +29,6 @@ export var RasterLayer = L.Layer.extend({
 
   onAdd: function (map) {
     this._update = L.Util.throttle(this._update, this.options.updateInterval, this);
-
-    if (map.options.crs && map.options.crs.code) {
-      var sr = map.options.crs.code.split(':')[1];
-      this.options.bboxSR = sr;
-      this.options.imageSR = sr;
-    }
 
     map.on('moveend', this._update, this);
 
@@ -138,7 +146,7 @@ export var RasterLayer = L.Layer.extend({
       // create a new image overlay and add it to the map
       // to start loading the image
       // opacity is 0 while the image is loading
-      var image = L.imageOverlay(url, bounds, {
+      var image = new Overlay(url, bounds, {
         opacity: 0,
         crossOrigin: this.options.useCors,
         alt: this.options.alt,
@@ -213,6 +221,7 @@ export var RasterLayer = L.Layer.extend({
     if (zoom > this.options.maxZoom || zoom < this.options.minZoom) {
       return;
     }
+
     var params = this._buildExportParams();
 
     this._requestExport(params, bounds);
