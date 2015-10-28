@@ -68,7 +68,7 @@ export var TiledMapLayer = L.TileLayer.extend({
     }, this.options));
   },
 
-  createTile:  function (coords, done){
+  createTile: function (coords, done) {
     var tile = document.createElement('img');
 
     L.DomEvent.on(tile, 'load', L.bind(this._tileOnLoad, this, done, tile));
@@ -86,7 +86,7 @@ export var TiledMapLayer = L.TileLayer.extend({
 
     // if there is no lod map or an lod map with a proper zoom load the tile
     // otherwise wait for the lod map to become available
-    if(!this._lodMap || (this._lodMap && this._lodMap[coords.z])) {
+    if (!this._lodMap || (this._lodMap && this._lodMap[coords.z])) {
       tile.src = this.getTileUrl(coords);
     } else {
       this.once('lodmap', function () {

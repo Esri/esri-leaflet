@@ -2,17 +2,17 @@ import L from 'leaflet';
 import {cors} from '../Support';
 
 var Overlay = L.ImageOverlay.extend({
-	onAdd: function (map) {
-		this._topLeft = map.getPixelBounds().min;
-		L.ImageOverlay.prototype.onAdd.call(this, map);
-	},
-	_reset: function (){
-		if (map.options.crs === L.CRS.EPSG3857) {
-			L.ImageOverlay.prototype._reset.call(this);
-		} else {
-			L.DomUtil.setPosition(this._image, this._topLeft.subtract(this._map.getPixelOrigin()));
-		}
-	}
+  onAdd: function (map) {
+    this._topLeft = map.getPixelBounds().min;
+    L.ImageOverlay.prototype.onAdd.call(this, map);
+  },
+  _reset: function () {
+    if (this._map.options.crs === L.CRS.EPSG3857) {
+      L.ImageOverlay.prototype._reset.call(this);
+    } else {
+      L.DomUtil.setPosition(this._image, this._topLeft.subtract(this._map.getPixelOrigin()));
+    }
+  }
 });
 
 export var RasterLayer = L.Layer.extend({
