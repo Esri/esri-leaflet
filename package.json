@@ -56,7 +56,6 @@
     "karma-sourcemap-loader": "^0.3.5",
     "load-grunt-tasks": "^0.4.0",
     "mkdirp": "^0.5.1",
-    "nodemon": "^1.7.2",
     "phantomjs": "^1.9.17",
     "rollup": "^0.11.4",
     "semistandard": "^6.1.2",
