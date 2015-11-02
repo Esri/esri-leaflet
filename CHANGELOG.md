@@ -91,6 +91,12 @@ L.esri.featureLayer({
 * All alternate/compact builds have been removed. They will be replaced with a new system for generating custom builds soon.
 * `L.esri.Request` has been removed. Please use `L.esri.get`, `L.esri.get.CORS`, `L.esri.get.JSONP`, `L.esri.post` or `L.esri.request` directly.
 
+## [1.0.1](v1.0.1)
+
+### Fixed
+
+* Ensure that we never try to remove the Esri logo from a map twice https://github.com/Esri/esri-leaflet/issues/667
+
 ## [1.0.0](v1.0.0)
 
 This represents the stable release of Esri Leaflet compatible with Leaflet 0.7.3. All future 1.0.X releases will be compatible with Leaflet 0.7.3 and contain only bug fixes. New features will only be added in Esri Leaflet 2.0.0 which will require Leaflet 1.0.0.
