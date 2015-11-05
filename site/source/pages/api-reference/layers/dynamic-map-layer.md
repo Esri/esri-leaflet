@@ -37,8 +37,6 @@ Option | Type | Default | Description
 `transparent` | `Boolean` | `true` | Allow the server to produce transparent images.
 `f` | `String` | `'json'` |  Server response content type.
 `attribution` | `String` | `''` |  Attribution to include in Leaflet's default control.  The [copyright text](http://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer) found in Service metadata is usually a good thing to reference.
-`bboxSR` | `Integer` | `4326` | Spatial reference of the bounding box to generate the image with. If you don't know what this is don't change it.
-`imageSR` | `Integer` | `3857` | Spatial reference of the output image. If you don't know what this is don't change it.
 `layers` | `Array` | `''` | An array of Layer IDs like `[3,4,5]` to show from the service.
 `layerDefs` | `String` `Object` | `''` | A string representing a query to run against the service before the image is rendered. This can be a string like `"STATE_NAME='Kansas' and POP2007>25000"` or an object mapping different queries to specific layers `{5:"STATE_NAME='Kansas'", 4:"STATE_NAME='Kansas'}`.
 `opacity` | `Number` | `1` | Opacity of the layer. Should be a value between 0 (completely transparent) and 1 (completely opaque).
