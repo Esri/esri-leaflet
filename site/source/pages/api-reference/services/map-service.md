@@ -62,7 +62,7 @@ Inherits from [`L.esri.Service`]({{assets}}api-reference/services/service.html)
             <td><code>identify()</code></td>
             <td><code>this</code></td>
             <td>
-                Returns a new <a href="{{assets}}api-reference/tasks/identify.html"><code>L.esri.Identify</code></a> object that can be used to identify features contained within this service.
+                Returns a new <a href="{{assets}}api-reference/tasks/identify-features.html"><code>L.esri.IdentifyFeatures</code></a> object that can be used to identify features contained within this service.
 <pre class="js"><code>mapService.identify()
         .on(map)
         .at(latlng)
