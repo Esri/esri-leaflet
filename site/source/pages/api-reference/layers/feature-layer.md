@@ -23,7 +23,7 @@ http://services.arcgis.com/rOo16HdIMeOBI4Mb/ArcGIS/rest/services/Neighborhoods_p
 
 Note that the Feature Layer URL ends in `/FeatureServer/{LAYER_ID}`.
 
-You can create a new empty feature service with a single layer on the [ArcGIS for Developers website](https://developers.arcgis.com/en/hosted-data/#/new) or you can use ArcGIS Online to [create a Feature Service from a CSV or Shapefile](https://developers.arcgis.com/tools/csv-to-feature-service/).
+You can create a new empty feature service with a single layer on the [ArcGIS for Developers website](https://developers.arcgis.com/en/hosted-data/#/new) or you can use ArcGIS Online to [create a Feature Service from a CSV or Shapefile](https://doc.arcgis.com/en/arcgis-online/share-maps/publish-features.htm).
 
 ### Constructor
 
