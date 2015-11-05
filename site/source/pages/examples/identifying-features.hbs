@@ -13,40 +13,48 @@ layout: example.hbs
     background: white;
     padding: 1em;
   }
+  .map-text a {
+    color: #79BD8F;
+    display: inline;
+  }
 </style>
 
 <div id="map"></div>
-<div id="selectedFeatures" class="leaflet-bar">No Features Selected</div>
+<div id="selectedFeatures" class="leaflet-bar map-text">Click on a
+  <a href="https://www.arcgis.com/home/item.html?id=3fcf06963b134254b73dccfbc1546eb9">NOAA weather advisory</a>
+</div>
 <script>
-  var map = L.map('map').setView([34.025, -116.203], 9);
+  var map = L.map('map').setView([38.5, -96.8], 4);
 
   L.esri.basemapLayer('Gray').addTo(map);
 
-  var federalLands = L.esri.dynamicMapLayer({
-    url: 'http://maps1.arcgisonline.com/ArcGIS/rest/services/USA_Federal_Lands/MapServer',
-    opacity: 0.5,
-    useCors: false
+  var weatherWatch = L.esri.dynamicMapLayer({
+    url: 'http://gis.srh.noaa.gov/arcgis/rest/services/watchWarn/MapServer',
+    opacity: 0.5
   }).addTo(map);
 
   var identifiedFeature;
   var pane = document.getElementById('selectedFeatures');
 
   map.on('click', function (e) {
+    pane.innerHTML = 'Loading';
     if(identifiedFeature){
       map.removeLayer(identifiedFeature);
-      pane.innerHTML = 'Loading';
     }
-    federalLands.identify().on(map).at(e.latlng).run(function(error, featureCollection){
-      if (featureCollection.features.length > 0){
+    weatherWatch.identify().on(map).at(e.latlng).run(function(error, featureCollection){
+      if (featureCollection.features.length > 0) {
         identifiedFeature = L.geoJson(featureCollection.features[0], {
           style: function(){
             return {
-              color: '#5C7DB8',
+              color: 'red',
               weight: 2
             };
           }
         }).addTo(map);
-        pane.innerHTML = featureCollection.features[0].properties.NAME1;
+        pane.innerHTML = featureCollection.features[0].properties.prod_type;
+      }
+      else {
+        pane.innerHTML = 'no features identified';
       }
     });
   });
