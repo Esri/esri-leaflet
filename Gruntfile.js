@@ -89,7 +89,8 @@ module.exports = function (grunt) {
     copy: {
       assemble: {
         files: [
-          { src: 'site/source/js/script.js', dest: 'site/build/js/script.js'}
+          { src: 'site/source/js/script.js', dest: 'site/build/js/script.js'},
+          { src: 'dist/esri-leaflet.js', dest: 'site/build/js/esri-leaflet.js'}
         ]
       }
     },
@@ -126,7 +127,7 @@ module.exports = function (grunt) {
   grunt.registerTask('default', ['docs']);
 
   // Documentation Site Tasks
-  grunt.registerTask('docs', ['assemble:dev', 'sass', 'copy', 'connect:docs', 'watch']);
+  grunt.registerTask('docs', ['assemble:dev', 'sass', 'copy', 'imagemin', 'connect:docs', 'watch']);
 
   // Documentation Site Tasks
   grunt.registerTask('docs:build', ['assemble:build', 'copy', 'imagemin', 'sass', 'gh-pages']);

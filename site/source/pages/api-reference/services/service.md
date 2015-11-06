@@ -1,9 +1,9 @@
 ---
-title: L.esri.Services.Service
+title: L.esri.Service
 layout: documentation.hbs
 ---
 
-# L.esri.Services.Service
+# L.esri.Service
 
 A generic class representing a hosted resource on ArcGIS Online or ArcGIS Server. This class can be extended to provide support for making requests and serves as a standard for authentication and proxying.
 
@@ -18,7 +18,7 @@ A generic class representing a hosted resource on ArcGIS Online or ArcGIS Server
     </thead>
     <tbody>
         <tr>
-            <td><code class="nobr">L.esri.Services.service({{{param 'Object' 'options'}}})</code></td>
+            <td><code class="nobr">L.esri.service({{{param 'Object' 'options'}}})</code></td>
             <td>Options includes a <code>url</code> parameter which refers to the ArcGIS Server or ArcGIS Online service you would like to consume.</td>
         </tr>
     </tbody>

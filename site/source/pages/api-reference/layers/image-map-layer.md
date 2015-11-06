@@ -81,7 +81,7 @@ imageMapLayer.bindPopup(
     return (value) ? 'Pixel value: ' + value : false;
   });</code></pre>
 
-                NOTE: by default, if the layer has a mosaic rule applied, then the same rule will be applied to the identify request. Conversely, if the layer has a rendering rule applied, that rule is **NOT** applied to the layer so that that the raw pixel value can be returned. If you need specific control over how these rules (and/or other identify parameters) are passed to the identify service, use <a href="{{assets}}api-reference/tasks/identify-image.html"><code>L.esri.Tasks.IdentifyImage</code></a>.
+                NOTE: by default, if the layer has a mosaic rule applied, then the same rule will be applied to the identify request. Conversely, if the layer has a rendering rule applied, that rule is **NOT** applied to the layer so that that the raw pixel value can be returned. If you need specific control over how these rules (and/or other identify parameters) are passed to the identify service, use <a href="{{assets}}api-reference/tasks/identify-image.html"><code>L.esri.IdentifyImage</code></a>.
             </td>
         </tr>
         <tr>
@@ -163,7 +163,7 @@ imageMapLayer.bindPopup(
             <td><code>query()</code></td>
             <td><code>this</code></td>
             <td>
-                Returns a new <a href="{{assets}}api-reference/tasks/query.html"><code>L.esri.Tasks.Query</code></a> object that can be used to query this service.
+                Returns a new <a href="{{assets}}api-reference/tasks/query.html"><code>L.esri.Query</code></a> object that can be used to query this service.
 <pre class="js"><code>
 imageService.query()
   .within(latlngbounds)

@@ -1,13 +1,13 @@
 ---
-title: L.esri.Layers.DynamicMapLayer
+title: L.esri.DynamicMapLayer
 layout: documentation.hbs
 ---
 
 # {{page.data.title}}
 
-<!-- Inherits from [`L.esri.Layers.RasterLayer`]({{assets}}api-reference/layers/raster-layer.html) -->
+<!-- Inherits from [`L.esri.RasterLayer`]({{assets}}api-reference/layers/raster-layer.html) -->
 
-Render and visualize Map Services from ArcGIS Online and ArcGIS Server. L.esri.Layers.DynamicMapLayer also supports custom popups and identification of features.
+Render and visualize Map Services from ArcGIS Online and ArcGIS Server. L.esri.DynamicMapLayer also supports custom popups and identification of features.
 
 Map Services are a way to expose the contents of a map as a web service and expose capabilities for exporting tile images, querying and identifying features and more.
 
@@ -30,16 +30,13 @@ Map Services are a way to expose the contents of a map as a web service and expo
 
 ### Options
 
-`L.esri.DynamicMapLayer` also accepts all the options you can pass to [`L.ImageOverlay`](http://leafletjs.com/reference.html#imageoverlay).
-
 Option | Type | Default | Description
 --- | --- | --- | ---
 `url` | `String` | | *Required* URL of the [Map Service](http://resources.arcgis.com/en/help/arcgis-rest-api/#/Map_Service/02r3000000w2000000/).
 `format` | `String` | `'png24'` | Output format of the image.
 `transparent` | `Boolean` | `true` | Allow the server to produce transparent images.
 `f` | `String` | `'json'` |  Server response content type.
-`bboxSR` | `Integer` | `4326` | Spatial reference of the bounding box to generate the image with. If you don't know what this is don't change it.
-`imageSR` | `Integer` | `3857` | Spatial reference of the output image. If you don't know what this is don't change it.
+`attribution` | `String` | `''` |  Attribution to include in Leaflet's default control.  The [copyright text](http://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer) found in Service metadata is usually a good thing to reference.
 `layers` | `Array` | `''` | An array of Layer IDs like `[3,4,5]` to show from the service.
 `layerDefs` | `String` `Object` | `''` | A string representing a query to run against the service before the image is rendered. This can be a string like `"STATE_NAME='Kansas' and POP2007>25000"` or an object mapping different queries to specific layers `{5:"STATE_NAME='Kansas'", 4:"STATE_NAME='Kansas'}`.
 `opacity` | `Number` | `1` | Opacity of the layer. Should be a value between 0 (completely transparent) and 1 (completely opaque).
@@ -198,7 +195,7 @@ dynamicMapLayer.bindPopup(
             <td><code>query()</code></td>
             <td><code>this</code></td>
             <td>
-                Returns a new <a href="{{assets}}api-reference/tasks/query.html"><code>L.esri.Tasks.Query</code></a> object that can be used to query this service.
+                Returns a new <a href="{{assets}}api-reference/tasks/query.html"><code>L.esri.Query</code></a> object that can be used to query this service.
 <pre class="js"><code>mapService.query()
   .layer(0)
   .within(latlngbounds)
@@ -217,7 +214,7 @@ dynamicMapLayer.bindPopup(
 | `loading` | [<`LoadingEvent`>]({{assets}}api-reference/events.html#loading-event) | Fires when new features start loading. |
 | `load` | [<`LoadEvent`>]({{assets}}api-reference/events.html#load-event) | Fires when all features in the current bounds of the map have loaded. |
 
-`L.esri.Layers.DynamicMapLayer` also fires all  [`L.esri.Services.MapService`]({{assets}}api-reference/services/map-service.html) events.
+`L.esri.DynamicMapLayer` also fires all  [`L.esri.MapService`]({{assets}}api-reference/services/map-service.html) events.
 
 ### Example
 

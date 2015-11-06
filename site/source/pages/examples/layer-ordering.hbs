@@ -1,0 +1,36 @@
+---
+title: Ordering Feature Layers
+description: Controlling the order of feature layers allows greater cartographic control over the rendering of layers beyond the normal tile / polygon / point ordering.
+layout: example.hbs
+---
+
+<div id="map"></div>
+
+<script>
+  var map = L.map("map").setView([45.54, -122.66], 14);
+
+  L.esri.basemapLayer("Topographic").addTo(map);
+
+  var neighborhoodsUrl = "https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Neighborhoods_pdx/FeatureServer/0";
+  var eliotFootprintsUrl = "http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Eliot%20Building%20Footprints/FeatureServer/0"
+
+  // create a map pane for neighborhoods
+  map.createPane('neighborhoods')
+  // Define the created pane when creating the feature layer
+  L.esri.featureLayer({
+    url: neighborhoodsUrl,
+    pane: 'neighborhoods',
+  }).addTo(map);
+
+  // Panes are added to the map in order - this pane will be sit on top of 'neighborhoods'
+  map.createPane('footprints')
+  map.createPane('two')
+  L.esri.featureLayer({
+    url: eliotFootprintsUrl,
+    pane: 'footprints',
+    style: function (feature) {
+      return {  color: 'white', weight: 0, fillOpacity: 1  };
+    }
+  }).addTo(map);
+
+</script>

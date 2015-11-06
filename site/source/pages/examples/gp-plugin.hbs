@@ -4,7 +4,7 @@ description: This demo relies on the <a href="http://github.com/jgravois/esri-le
 layout: example.hbs
 ---
 
-<script src="//cdn.jsdelivr.net/leaflet.esri.gp/1.0.2/esri-leaflet-gp.js"></script>
+<script src="//cdn.jsdelivr.net/leaflet.esri.gp/2.0.0/esri-leaflet-gp.js"></script>
 
 <style>
   #info-pane {
@@ -20,7 +20,7 @@ layout: example.hbs
 <div id="map"></div>
 <div id="info-pane" class="leaflet-bar">
   <label>
-  click on the map to calculate<br>5 and 10 minute drivetimes
+  click on the map to calculate<br>1 and 2 minute drivetime polygons
   </label>
 </div>
 
@@ -29,7 +29,7 @@ layout: example.hbs
 
   L.esri.basemapLayer('Gray').addTo(map);
 
-  var gpService = L.esri.GP.Services.geoprocessing({
+  var gpService = L.esri.GP.service({
     url: "http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Network/ESRI_DriveTime_US/GPServer/CreateDriveTimePolygons",
     useCors:false
   });
