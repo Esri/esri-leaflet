@@ -13,7 +13,7 @@ layout: example.hbs
   // create new Proj4Leaflet CRS:
   // 1. Proj4 and WKT definitions can be found at sites like http://epsg.io, http://spatialreference.org/ or by using gdalsrsinfo http://www.gdal.org/gdalsrsinfo.html
   // 2. Appropriate values to supply to the resolution and origin constructor options can be found in the ArcGIS Server RESTful tile server endpoint (ex: http://mapserv.utah.gov/arcgis/rest/services/BaseMaps/Terrain/MapServer)
-  // 3. The second half of the first param `26912` will be used for dymanic map layer projecting
+  // 3. The numeric code within the first parameter (ex: `26912`) will be used to project the dynamic map layer on the fly
   var crs = new L.Proj.CRS('ESRI:26912', '+proj=utm +zone=12 +ellps=GRS80 +units=m +no_defs', {
     origin: [-5120900, 9998100],
     resolutions: [
@@ -48,7 +48,7 @@ layout: example.hbs
     attribution: 'State of Utah'
   }).addTo(map);
 
-  // feature layers will be requested as WGS84 (4326) and reprojected on the client
+  // feature layers will be requested in WGS84 (4326) and reprojected on the client
   L.esri.featureLayer({
     url: "http://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_ZIP_Codes_2014/FeatureServer/0",
     simplifyFactor: 0.25,
@@ -61,7 +61,7 @@ layout: example.hbs
     }
   }).addTo(map);
 
-  // Dymanic map layers are projected on the server for the desired projection
+  // Dynamic map layers are projected by ArcGIS Server itself before the image is retrieved
   L.esri.dynamicMapLayer({
     url: "http://hydrology.esri.com/arcgis/rest/services/WorldHydroReferenceOverlay/MapServer",
   }).addTo(map);
