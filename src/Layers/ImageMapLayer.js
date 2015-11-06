@@ -125,14 +125,15 @@ export var ImageMapLayer = RasterLayer.extend({
     var size = this._map.getSize();
     var ne = this._map.options.crs.project(bounds._northEast);
     var sw = this._map.options.crs.project(bounds._southWest);
+    var sr = parseInt(this._map.options.crs.code.split(':')[1], 10);
 
     var params = {
       bbox: [sw.x, sw.y, ne.x, ne.y].join(','),
       size: size.x + ',' + size.y,
       format: this.options.format,
       transparent: this.options.transparent,
-      bboxSR: this.options.bboxSR,
-      imageSR: this.options.imageSR
+      bboxSR: sr,
+      imageSR: sr
     };
 
     if (this.options.from && this.options.to) {

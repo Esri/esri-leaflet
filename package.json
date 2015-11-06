@@ -11,7 +11,7 @@
     "John Gravois <jgravois@esri.com> (http://johngravois.com)"
   ],
   "dependencies": {
-    "leaflet": "1.0.0-beta.1"
+    "leaflet": "1.0.0-beta.2"
   },
   "browserify": {
     "transform": [
@@ -57,13 +57,13 @@
     "karma-sourcemap-loader": "^0.3.5",
     "load-grunt-tasks": "^0.4.0",
     "mkdirp": "^0.5.1",
-    "nodemon": "^1.7.2",
     "phantomjs": "^1.9.17",
     "rollup": "^0.11.4",
     "semistandard": "^6.1.2",
     "sinon": "^1.11.1",
     "sinon-chai": "2.7.0",
-    "uglify-js": "^2.4.23"
+    "uglify-js": "^2.4.23",
+    "watch": "^0.16.0"
   },
   "homepage": "http://esri.github.io/esri-leaflet",
   "jsnext:main": "src/EsriLeaflet.js",
@@ -94,7 +94,7 @@
     "pretest": "npm run build",
     "test": "npm run lint && karma start",
     "release": "./scripts/release.sh",
-    "serve": "nodemon --watch src --exec 'npm run build' & http-server -p 5678 -c-1 -o",
+    "serve": "watch 'npm run build' src & http-server -p 5678 -c-1 -o",
     "start": "grunt"
   }
 }

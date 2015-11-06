@@ -4,8 +4,7 @@ import mapService from '../Services/MapService';
 
 export var TiledMapLayer = L.TileLayer.extend({
   options: {
-    zoomOffsetAllowance: 0.1,
-    correctZoomLevels: true
+    zoomOffsetAllowance: 0.1
   },
 
   statics: {
@@ -63,19 +62,47 @@ export var TiledMapLayer = L.TileLayer.extend({
   getTileUrl: function (tilePoint) {
     return L.Util.template(this.tileUrl, L.extend({
       s: this._getSubdomain(tilePoint),
-      z: (this._lodMap) ? this._lodMap[tilePoint.z] : tilePoint.z, // try lod map first, then just defualt to zoom level
+      z: (this._lodMap && this._lodMap[tilePoint.z]) ? this._lodMap[tilePoint.z] : tilePoint.z, // try lod map first, then just defualt to zoom level
       x: tilePoint.x,
       y: tilePoint.y
     }, this.options));
   },
 
+  createTile: function (coords, done) {
+    var tile = document.createElement('img');
+
+    L.DomEvent.on(tile, 'load', L.bind(this._tileOnLoad, this, done, tile));
+    L.DomEvent.on(tile, 'error', L.bind(this._tileOnError, this, done, tile));
+
+    if (this.options.crossOrigin) {
+      tile.crossOrigin = '';
+    }
+
+    /*
+     Alt tag is set to empty string to keep screen readers from reading URL and for compliance reasons
+     http://www.w3.org/TR/WCAG20-TECHS/H67
+    */
+    tile.alt = '';
+
+    // if there is no lod map or an lod map with a proper zoom load the tile
+    // otherwise wait for the lod map to become available
+    if (!this._lodMap || (this._lodMap && this._lodMap[coords.z])) {
+      tile.src = this.getTileUrl(coords);
+    } else {
+      this.once('lodmap', function () {
+        tile.src = this.getTileUrl(coords);
+      }, this);
+    }
+
+    return tile;
+  },
+
   onAdd: function (map) {
-    if (!this._lodMap && this.options.correctZoomLevels) {
-      this._lodMap = {}; // make sure we always have an lod map even if its empty
+    if (map.options.crs === L.CRS.EPSG3857 && !this._lodMap) {
+      this._lodMap = {};
       this.metadata(function (error, metadata) {
         if (!error) {
           var sr = metadata.spatialReference.latestWkid || metadata.spatialReference.wkid;
-
           if (sr === 102100 || sr === 3857) {
             // create the zoom level data
             var arcgisLODs = metadata.tileInfo.lods;
@@ -92,16 +119,16 @@ export var TiledMapLayer = L.TileLayer.extend({
                 }
               }
             }
+
+            this.fire('lodmap');
           } else {
             warn('L.esri.TiledMapLayer is using a non-mercator spatial reference. Support may be available through Proj4Leaflet http://esri.github.io/esri-leaflet/examples/non-mercator-projection.html');
           }
         }
-
-        L.TileLayer.prototype.onAdd.call(this, map);
       }, this);
-    } else {
-      L.TileLayer.prototype.onAdd.call(this, map);
     }
+
+    L.TileLayer.prototype.onAdd.call(this, map);
   },
 
   metadata: function (callback, context) {
