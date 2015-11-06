@@ -22,11 +22,11 @@ layout: documentation.hbs
         <tr>
             <td>
             <code>L.esri.query({{{param 'Object' 'options'}}})</code><br><br>
-            <code>L.esri.query({{{param 'FeatureLayer' 'endpoint' '../../api-reference/services/feature-layer.html'}}})</code><br><br>
+            <code>L.esri.query({{{param 'FeatureLayerService' 'endpoint' '../../api-reference/services/feature-layer-service.html'}}})</code><br><br>
             <code>L.esri.query({{{param 'MapService' 'endpoint' '../../api-reference/services/map-service.html'}}})</code><br><br>
             <code>L.esri.query({{{param 'ImageService' 'endpoint' '../../api-reference/services/image-service.html'}}})</code>
             </td>
-            <td>Accepts either an `options` object or an instance of <a href="{{assets}}/api-reference/services/map-service.html">MapService</a>, <a href="{{assets}}/api-reference/services/feature-layer-service.html">FeatureLayer</a> or <a href="{{assets}}/api-reference/service/image-service.html">ImageService</a>.</td>
+            <td>Accepts either an `options` object or an instance of <a href="{{assets}}/api-reference/services/map-service.html">MapService</a>, <a href="{{assets}}/api-reference/services/feature-layer-service.html">FeatureLayerService</a> or <a href="{{assets}}/api-reference/services/image-service.html">ImageService</a>.</td>
         </tr>
     </tbody>
 </table>

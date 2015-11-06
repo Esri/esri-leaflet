@@ -7,13 +7,12 @@ layout: example.hbs
 <div id="map"></div>
 
 <script>
-  var map = L.map('map').setView([34.025, -116.203], 9);
+  var map = L.map('map').setView([41.94, -88.29], 9);
 
   L.esri.basemapLayer('Gray').addTo(map);
 
   L.esri.dynamicMapLayer({
-    url: 'http://maps1.arcgisonline.com/ArcGIS/rest/services/USA_Federal_Lands/MapServer',
-    opacity: 0.5,
-    useCors: false
+    url: 'http://hydrology.esri.com/arcgis/rest/services/WorldHydroReferenceOverlay/MapServer',
+    opacity: 1
   }).addTo(map);
 </script>

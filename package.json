@@ -39,6 +39,7 @@
     "grunt-concurrent": "^0.5.0",
     "grunt-contrib-connect": "^0.4.1",
     "grunt-contrib-copy": "^0.5.0",
+    "grunt-contrib-imagemin": "^0.9.4",
     "grunt-contrib-watch": "^0.6.1",
     "grunt-gh-pages": "^0.8.1",
     "grunt-newer": "^0.7.0",

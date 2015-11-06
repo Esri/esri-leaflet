@@ -7,21 +7,20 @@ layout: example.hbs
 <div id="map"></div>
 
 <script>
-  var map = L.map('map').setView([34.025, -116.203], 9);
+  var map = L.map('map').setView([38.5, -96.8], 4);
 
   L.esri.basemapLayer('Gray').addTo(map);
 
-  var federalLands = L.esri.dynamicMapLayer({
-    url: 'http://maps1.arcgisonline.com/ArcGIS/rest/services/USA_Federal_Lands/MapServer',
-    opacity: 0.5,
-    useCors: false
+  var weatherWatch = L.esri.dynamicMapLayer({
+    url: 'http://gis.srh.noaa.gov/arcgis/rest/services/watchWarn/MapServer',
+    opacity: 0.5
   }).addTo(map);
 
-  federalLands.bindPopup(function (error, featureCollection) {
+  weatherWatch.bindPopup(function (error, featureCollection) {
     if(error || featureCollection.features.length === 0) {
       return false;
     } else {
-      return 'Name: ' + featureCollection.features[0].properties.NAME1;
+      return 'Advisory Type: ' + featureCollection.features[0].properties.prod_type;
     }
   });
 </script>

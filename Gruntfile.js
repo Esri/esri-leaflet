@@ -126,7 +126,7 @@ module.exports = function (grunt) {
   grunt.registerTask('default', ['docs']);
 
   // Documentation Site Tasks
-  grunt.registerTask('docs', ['assemble:dev', 'sass', 'copy', 'connect:docs', 'watch']);
+  grunt.registerTask('docs', ['assemble:dev', 'sass', 'copy', 'imagemin', 'connect:docs', 'watch']);
 
   // Documentation Site Tasks
   grunt.registerTask('docs:build', ['assemble:build', 'copy', 'imagemin', 'sass', 'gh-pages']);

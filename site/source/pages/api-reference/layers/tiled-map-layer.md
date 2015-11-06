@@ -37,7 +37,6 @@ Is you have Feature Services published in ArcGIS Online you can create a static 
 | Option | Type | Default | Description |
 | --- | --- | --- | --- |
 |`url` | `String` | | *Required* URL of the [Map Service](http://resources.arcgis.com/en/help/arcgis-rest-api/#/Map_Service/02r3000000w2000000) with a tile cache.
-| `correctZoomLevels` | `Boolean` | `true` | If your tiles were generated in web mercator but at non-standard zoom levels this will remap them to the standard zoom levels.
 | `zoomOffsetAllowance` | `Number` | `0.1` | If `correctZoomLevels` is enabled this controls the amount of tolerance if the difference at each scale level for remapping tile levels.
 | `proxy` | `String` | `false` | URL of an [ArcGIS API for JavaScript proxy](https://developers.arcgis.com/javascript/jshelp/ags_proxy.html) or [ArcGIS Resource Proxy](https://github.com/Esri/resource-proxy) to use for proxying POST requests. |
 | `useCors` | `Boolean` | `true` | Dictates if the service should use CORS when making GET requests. |
@@ -75,7 +74,7 @@ Is you have Feature Services published in ArcGIS Online you can create a static 
             <td><code>identify()</code></td>
             <td><code>this</code></td>
             <td>
-                Returns a new <a href="/api-reference/tasks/identify-features.html"><code>L.esri.services.IdentifyFeatures</code></a> object that can be used to identify features on this layer. Your callback function will be passed a GeoJSON FeatureCollection with the results or an error.
+                Returns a new <a href="{{assets}}api-reference/tasks/identify-features.html"><code>L.esri.services.IdentifyFeatures</code></a> object that can be used to identify features on this layer. Your callback function will be passed a GeoJSON FeatureCollection with the results or an error.
 <pre class="js"><code>featureLayer.identify()
   .at(latlng, latlngbounds, 5)
   .run(function(error, featureCollection){

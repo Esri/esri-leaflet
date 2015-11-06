@@ -1,11 +1,11 @@
 ---
-title: L.esri.HeatMapFeatureLayer
+title: L.esri.Heat.HeatMapFeatureLayer
 layout: documentation.hbs
 ---
 
 # {{page.data.title}}
 
-`L.esri.HeatMapFeatureLayer` provides integration for Feature Layers with the [Leaflet.heat plugin](https://github.com/Leaflet/Leaflet.heat). Because of the extra dependency on Leaflet.heat we do not include `L.esri.Layers.HeatMapFeatureLayer` in the default build of Esri Leaflet. It lives in /dist/extras/heatmap-feature-layer.js. You will also need to include your own copy of the [Leaflet.heat plugin](https://github.com/Leaflet/Leaflet.heat).
+`L.esri.Heat.HeatmapFeatureLayer` provides integration for Feature Layers with the [Leaflet.heat plugin](https://github.com/Leaflet/Leaflet.heat). Because of the extra dependency on Leaflet.heat we do not include `L.esri.Heat.HeatmapFeatureLayer` in the default build of Esri Leaflet. You will need to include your own copy of the [Leaflet.heat plugin](https://github.com/Leaflet/Leaflet.heat) in your application as well.
 
 More information about Feature Layers can be found in the [`L.esri.FeatureLayer` documentation]({{assets}}api-reference/layers/feature-layer.html).
 
@@ -20,7 +20,7 @@ More information about Feature Layers can be found in the [`L.esri.FeatureLayer`
     </thead>
     <tbody>
         <tr>
-            <td><code class="nobr">L.esri.heatmapFeatureLayer({{{param 'Object' 'options'}}})</code></td>
+            <td><code class="nobr">L.esri.Heat.heatmapFeatureLayer({{{param 'Object' 'options'}}})</code></td>
             <td>You must pass a <code>url</code> to a [Feature Layer](http://resources.arcgis.com/en/help/arcgis-rest-api/#/Layer/02r3000000w6000000/) in your <code>options</code></td>
         </tr>
     </tbody>
@@ -74,7 +74,7 @@ More information about Feature Layers can be found in the [`L.esri.FeatureLayer`
         <tr>
             <td><code>precision</code></td>
             <td><code>Integer</code></td>
-            <td>How many digits of precision to request from the server. <a href="http://en.wikipedia.org/wiki/Decimal_degrees">Wikipedia</a> has a great reference of digit precision to meters.</td>
+            <td>How many digits of geometry precision to request from the server. <a href="http://en.wikipedia.org/wiki/Decimal_degrees">Wikipedia</a> has a great reference of digit precision to meters.</td>
         </tr>
         <tr>
             <td><code>token</code></td>
@@ -94,7 +94,7 @@ More information about Feature Layers can be found in the [`L.esri.FeatureLayer`
     </tbody>
 </table>
 
-`L.esri.HeatMapFeatureLayer` will also accept any options that can be passed to [Leaflet.heat](https://github.com/Leaflet/Leaflet.heat#lheatlayerlatlngs-options) to customize the appearance of the heatmap.
+`L.esri.Heat.HeatmapFeatureLayer` will also accept any options that can be passed to [Leaflet.heat](https://github.com/Leaflet/Leaflet.heat#lheatlayerlatlngs-options) to customize the appearance of the heatmap.
 
 ### Events
 
@@ -103,7 +103,7 @@ More information about Feature Layers can be found in the [`L.esri.FeatureLayer`
 | `loading` | [&lt;LoadingEvent&gt;]() | Fires when new features start loading. |
 | `load` | [&lt;Load&gt;]() | Fires when all features in the current bounds of the map have loaded. |
 
-`L.esri.Layers.FeatureLayer` also fires all  [`L.esri.Services.FeatureLayer`]({{assets}}api-reference/services/feature-layer.html) events.
+`L.esri.FeatureLayer` also fires all  [`L.esri.FeatureLayerService`]({{assets}}api-reference/services/feature-layer-service.html) events.
 
 ### Methods
 
@@ -207,7 +207,7 @@ var map = new L.Map('map').setView([40.722868115037,-73.92142295837404], 14);
 
 L.esri.basemapLayer('Gray').addTo(map);
 
-var heatmap = new L.esri.HeatmapFeatureLayer({
+var heatmap = L.esri.Heat.heatmapFeatureLayer({
   url : "http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Graffiti_Locations3/FeatureServer/0",
   radius: 12
 }).addTo(map);

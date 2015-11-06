@@ -33,13 +33,12 @@
   <link rel="stylesheet" href="{{assets}}css/style.css">
 
   <!-- leaflet -->
-  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-1.0.0-b1/leaflet.css" />
-
+  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v1.0.0-beta.2/leaflet.css" />
 
   <!-- require combined leaflet, esri leaflet and jsdelivr-rum -->
-  <script src="http://cdn.leafletjs.com/leaflet-1.0.0-b1/leaflet.js"></script>
-  <!--<script src="//cdn.jsdelivr.net/leaflet.esri/{{package.version}}/esri-leaflet.js"></script>-->
-  <script src="{{assets}}js/esri-leaflet.js"></script>
+  <script src="http://cdn.leafletjs.com/leaflet/v1.0.0-beta.2/leaflet.js"></script>
+  <script src="//cdn.jsdelivr.net/leaflet.esri/{{package.version}}/esri-leaflet.js"></script>
+  <!--<script src="{{assets}}js/esri-leaflet.js"></script>-->
   <script src="//cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
 
   {{#if siteData.isDev}}
@@ -64,6 +63,8 @@
     <div class="container">
       <a class="site-nav" href="{{assets}}" class="left logo">Esri Leaflet</a>
       <nav class="right">
+        <a class="site-nav" href="{{assets}}tutorials/">Tutorials</a>
+        <a class="site-nav" href="{{assets}}plugins/">Plugins</a>
         <a class="site-nav" href="{{assets}}examples/">Examples</a>
         <a class="site-nav" href="{{assets}}api-reference/">API Reference</a>
         <a class="site-nav" href="{{assets}}download/">Download</a>
