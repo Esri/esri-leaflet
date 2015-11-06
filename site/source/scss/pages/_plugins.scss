@@ -1,9 +1,14 @@
 .plugins {
+
+  .panel {
+    width: 33.3%;
+    float: left;
+  }
+
   .card {
+    margin: 1rem 1rem;
     h3 {
       margin: 0;
     }
-    width: 33%;
-    margin: 1rem 1rem;
   }
 }

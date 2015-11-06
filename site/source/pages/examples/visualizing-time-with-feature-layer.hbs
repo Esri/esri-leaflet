@@ -8,7 +8,7 @@ layout: example.hbs
 <script src="https://rawgit.com/Leaflet/Leaflet.heat/gh-pages/dist/leaflet-heat.js"></script>
 
 <!-- Load Heatmap Feature Layer from CDN -->
-<script src="https://cdn.jsdelivr.net/leaflet.esri.heatmap-feature-layer/1.0.2/esri-leaflet-heatmap-feature-layer-src.js"></script>
+<script src="https://cdn.jsdelivr.net/leaflet.esri.heatmap-feature-layer/2.0.0-beta.1/esri-leaflet-heatmap-feature-layer.js"></script>
 
 <style>
   #time-ranges {
@@ -63,7 +63,7 @@ layout: example.hbs
   L.esri.basemapLayer('Gray').addTo(map);
   L.esri.basemapLayer('GrayLabels').addTo(map);
 
-  var reports = L.esri.heatmapFeatureLayer({
+  var reports = L.esri.Heat.heatmapFeatureLayer({
     url: 'https://services.arcgis.com/rOo16HdIMeOBI4Mb/ArcGIS/rest/services/Graffiti_Reports/FeatureServer/0',
     timeField: 'CreatedDate',
     from: new Date(startTimeInput.value),
