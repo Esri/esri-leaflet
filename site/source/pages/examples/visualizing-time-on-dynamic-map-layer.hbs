@@ -62,7 +62,7 @@ layout: example.hbs
     useCors: false,
     layers: [0],
     // for some reason this service in particular sometimes redirects json requests to a bogus IP address
-    //f: 'image',
+    f: 'image',
     from: new Date(startTimeInput.value),
     to: new Date(endTimeInput.value)
   }).addTo(map);
