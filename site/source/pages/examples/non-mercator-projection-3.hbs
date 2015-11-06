@@ -14,7 +14,7 @@ layout: example.hbs
   // 1. Proj4 and WKT definitions can be found at sites like http://epsg.io, http://spatialreference.org/ or by using gdalsrsinfo http://www.gdal.org/gdalsrsinfo.html
   // 2. Appropriate values to supply to the resolution and origin constructor options can be found in the ArcGIS Server RESTful tile server endpoint (ex: http://mapserv.utah.gov/arcgis/rest/services/BaseMaps/Terrain/MapServer)
   // 3. The numeric code within the first parameter (ex: `26912`) will be used to project the dynamic map layer on the fly
-  var crs = new L.Proj.CRS('EPSG:26912', '+proj=utm +zone=12 +ellps=GRS80 +datum=NAD83 +units=m +no_defs', {
+  var crs = new L.Proj.CRS('ESRI:26912', '+proj=utm +zone=12 +ellps=GRS80 +units=m +no_defs', {
     origin: [-5120900, 9998100],
     resolutions: [
       4891.96999883583,
@@ -37,11 +37,11 @@ layout: example.hbs
 
   var map = L.map('map', {
     crs: crs
-  }).setView([40.381, -111.859], 4);
+  }).setView([39.515677633722326, -111.56696149338798], 2);
 
   // The min/maxZoom values provided should match the actual cache thats been published. This information can be retrieved from the service endpoint directly.
   L.esri.tiledMapLayer({
-    url: 'http://mapserv.utah.gov/arcgis/rest/services/BaseMaps/Lite/MapServer',
+    url: 'http://mapserv.utah.gov/ArcGIS/rest/services/BaseMaps/Lite/MapServer',
     maxZoom: 14,
     minZoom: 0,
     continuousWorld: true,
@@ -50,17 +50,19 @@ layout: example.hbs
 
   // feature layers will be requested in WGS84 (4326) and reprojected on the client
   L.esri.featureLayer({
-    url: 'http://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_Congressional_Districts/FeatureServer/0',
-    simplifyFactor: 0.5,
-    precision: 5,
-    style: function (feature) {
-      if(feature.properties.PARTY === 'Democrat'){
-        return {color: 'white', opacity: 0.5, fillColor: 'blue', weight: 2, fillOpacity: 0.1};
-      } else if(feature.properties.PARTY === 'Republican'){
-        return { color: 'white', opacity: 0.5, fillColor: 'red', weight: 2, fillOpacity: 0.2};
-      } else {
-        return { color: 'white', opacity: 0.5, fillColor: 'white', weight: 2, fillOpacity: 0.2};
-      }
+    url: "http://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_ZIP_Codes_2014/FeatureServer/0",
+    simplifyFactor: 0.25,
+    precision: 4,
+    style: {
+      color: "#999",
+      weight: 1,
+      fillOpacity: .15,
+      opacity: .25
     }
+  }).addTo(map);
+
+  // Dynamic map layers are projected by ArcGIS Server itself before the image is retrieved
+  L.esri.dynamicMapLayer({
+    url: "http://hydrology.esri.com/arcgis/rest/services/WorldHydroReferenceOverlay/MapServer",
   }).addTo(map);
 </script>

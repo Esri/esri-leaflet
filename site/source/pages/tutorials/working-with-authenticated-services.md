@@ -4,4 +4,8 @@ description: How to access authenticated services with Esri Leaflet.
 layout: tutorials.hbs
 ---
 
-Coming soon!
+# {{ page.data.title }}
+
+{{ page.data.description }}
+
+Coming Soon.
