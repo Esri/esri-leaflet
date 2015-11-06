@@ -1,0 +1,56 @@
+---
+title: Non-mercator projection
+description: Using non mercator tiles with <code>L.esri.Layers.TiledMapLayer</code> with the <a href="https://github.com/kartena/Proj4Leaflet">Proj4Leaflet</a> plugin. <br><br> <strong>This demo should be implemented at your own risk. Esri Leaflet only supports tiles that have been published in Web Mercator Auxiliary Sphere tiling scheme (WKID 102100/3857) at the default scales and resolutions. Strong knowledge of projections, spatial references and tiling schemes is required for this.</strong>
+layout: example.hbs
+---
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/proj4js/2.0.0/proj4.js"></script>
+<script src="https://cdn.rawgit.com/kartena/Proj4Leaflet/0.7.0/src/proj4leaflet.js"></script>
+
+<div id="map"></div>
+
+<script>
+  // create new Proj4Leaflet CRS:
+  // 1. Proj4 and WKT definitions can be found at sites like http://epsg.io, http://spatialreference.org/ or by using gdalsrsinfo http://www.gdal.org/gdalsrsinfo.html
+  // 2. Appropriate values to supply to the resolution and origin constructor options can be found in the ArcGIS Server RESTful tile server endpoint (ex: http://mapserv.utah.gov/arcgis/rest/services/BaseMaps/Terrain/MapServer)
+  // 3. The second half of the first param `26912` will be used for dymanic map layer projecting
+  var crs = new L.Proj.CRS('ESRI:2193', '+proj=tmerc +lat_0=0 +lon_0=173 +k=0.9996 +x_0=1600000 +y_0=10000000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ', {
+    origin: [-4020900, 19998100],
+    resolutions: [
+      4891.96981024998,
+      2445.98490512499,
+      1222.992452562495,
+      611.4962262813797,
+      305.74811314055756,
+      152.87405657041106,
+      76.43702828507324,
+      38.21851414253662,
+      19.10925707126831,
+      9.554628535634155,
+      4.77731426794937,
+      2.388657133974685,
+      1.1943285668550503,
+      0.5971642835598172,
+      0.29858214164761665
+    ]
+  });
+
+  var map = L.map('map', {
+    crs: crs
+  }).setView([ -43.86426854501214, 172.17210586767894], 4);
+
+  // The min/maxZoom values provided should match the actual cache thats been published. This information can be retrieved from the service endpoint directly.
+  L.esri.tiledMapLayer({
+    url: 'https://services.arcgisonline.co.nz/arcgis/rest/services/Canvas/Light/MapServer',
+    maxZoom: 15,
+    minZoom: 0,
+    continuousWorld: false,
+    attribution: 'Selected map content sourced from LINZ datasets. Crown Copyright Reserved.'
+  }).addTo(map);
+
+  // Dymanic map layers are projected on the server for the desired projection
+  L.esri.dynamicMapLayer({
+    url: "http://gis.ecan.govt.nz/ArcGIS/rest/services/Public/Hydrology/MapServer",
+    attribution: "Environment Canterbury "
+  }).addTo(map);
+</script>
