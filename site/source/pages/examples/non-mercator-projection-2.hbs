@@ -13,7 +13,7 @@ layout: example.hbs
   // create new Proj4Leaflet CRS:
   // 1. Proj4 and WKT definitions can be found at sites like http://epsg.io, http://spatialreference.org/ or by using gdalsrsinfo http://www.gdal.org/gdalsrsinfo.html
   // 2. Appropriate values to supply to the resolution and origin constructor options can be found in the ArcGIS Server RESTful tile server endpoint (ex: http://mapserv.utah.gov/arcgis/rest/services/BaseMaps/Terrain/MapServer)
-  // 3. The second half of the first param `26912` will be used for dymanic map layer projecting
+  // 3. The numeric code within the first parameter (ex: `2193`) will be used to project the dynamic map layer on the fly
   var crs = new L.Proj.CRS('ESRI:2193', '+proj=tmerc +lat_0=0 +lon_0=173 +k=0.9996 +x_0=1600000 +y_0=10000000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ', {
     origin: [-4020900, 19998100],
     resolutions: [
@@ -37,7 +37,7 @@ layout: example.hbs
 
   var map = L.map('map', {
     crs: crs
-  }).setView([ -43.86426854501214, 172.17210586767894], 4);
+  }).setView([ -43.864, 172.172], 4);
 
   // The min/maxZoom values provided should match the actual cache thats been published. This information can be retrieved from the service endpoint directly.
   L.esri.tiledMapLayer({
@@ -48,7 +48,7 @@ layout: example.hbs
     attribution: 'Selected map content sourced from LINZ datasets. Crown Copyright Reserved.'
   }).addTo(map);
 
-  // Dymanic map layers are projected on the server for the desired projection
+  // Dynamic map layers are projected by ArcGIS Server itself before the image is retrieved
   L.esri.dynamicMapLayer({
     url: "http://gis.ecan.govt.nz/ArcGIS/rest/services/Public/Hydrology/MapServer",
     attribution: "Environment Canterbury "
