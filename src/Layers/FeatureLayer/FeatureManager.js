@@ -1,9 +1,9 @@
 import L from 'leaflet';
-import { FeatureGrid } from './FeatureGrid';
 import featureLayerService from '../../Services/FeatureLayerService';
 import { cleanUrl, warn } from '../../Util';
+import VirtualGrid from 'leaflet-virtual-grid';
 
-export var FeatureManager = FeatureGrid.extend({
+export var FeatureManager = VirtualGrid.extend({
   /**
    * Options
    */
@@ -25,7 +25,7 @@ export var FeatureManager = FeatureGrid.extend({
    */
 
   initialize: function (options) {
-    FeatureGrid.prototype.initialize.call(this, options);
+    VirtualGrid.prototype.initialize.call(this, options);
 
     options.url = cleanUrl(options.url);
     options = L.setOptions(this, options);
@@ -63,11 +63,11 @@ export var FeatureManager = FeatureGrid.extend({
    */
 
   onAdd: function (map) {
-    return FeatureGrid.prototype.onAdd.call(this, map);
+    return VirtualGrid.prototype.onAdd.call(this, map);
   },
 
   onRemove: function (map) {
-    return FeatureGrid.prototype.onRemove.call(this, map);
+    return VirtualGrid.prototype.onRemove.call(this, map);
   },
 
   getAttribution: function () {
