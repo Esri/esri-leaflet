@@ -211,8 +211,7 @@ In addition to the events above, `L.esri.FeatureLayer` also fires the following 
             <td>
               Defines a function that will return HTML to be bound to a popup on each feature.
 <pre class="js"><code>featureLayer.bindPopup(function(features){
-  return
-    "Name: " + features.properties.NAME;
+  return "Name: " + features.properties.NAME;
 });</code></pre>
             </td>
         </tr>
