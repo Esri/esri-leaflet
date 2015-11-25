@@ -89,7 +89,7 @@
   "scripts": {
     "prepublish": "npm run build",
     "prebuild": "mkdirp dist",
-    "build": "./scripts/build.js",
+    "build": "node ./scripts/build.js",
     "lint": "semistandard src/**/*.js",
     "pretest": "npm run build",
     "test": "npm run lint && karma start",
