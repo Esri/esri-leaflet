@@ -64,31 +64,39 @@ export var FeatureManager = VirtualGrid.extend({
 
   onAdd: function (map) {
     /*
-    not sure if this the best way to maintain a reference to FeatureManager
-    within the event listener?
+    is this kosher? 'this' becomes the map inside the event listener.
     */
     var self = this;
 
-    map.on('zoomend', function(e) {
-      var zoom = map.getZoom();
-      if (zoom > self.service.options.maxZoom || zoom < self.service.options.minZoom) {
-        console.log('dont draw!');
-        // self.removeLayers(self._currentSnapshot);
-        // self._currentSnapshot = [];
-      }
-      else {
-        console.log('draw!');
-        /* For every cell in this._activeCells:
-
-        1. Get the cache key for the coords of the cell ` var key = this._cacheKey(coords);
-        2. If this._cache[key] exists it will be an array of feature IDs.
-        3. Call this.addLayers(this._cache[key]) to instruct the feature layer to add the layers back.
-
+    map.on('zoomend', function() {
+      if (!self._visibleZoom()) {
+        self.removeLayers(self._currentSnapshot);
+        self._currentSnapshot = [];
+      } else {
+        /*
+        for every cell in this._activeCells
+          1. Get the cache key for the coords of the cell
+          2. If this._cache[key] exists it will be an array of feature IDs.
+          3. Call this.addLayers(this._cache[key]) to instruct the feature layer to add the layers back.
         */
+        for (var i in self._activeCells) {
+          var coords = self._activeCells[i].coords;
+          var key = self._cacheKey(coords);
+          if (self._cache[key]) {
+            self.addLayers(self._cache[key]);
+          }
+        }
       }
     });
 
     return VirtualGrid.prototype.onAdd.call(this, map);
+  },
+
+  _visibleZoom: function () {
+    // check to see whether the current zoom level of the map is within the optional limit defined for the FeatureLayer
+    var zoom = this._map.getZoom();
+    if (zoom > this.options.maxZoom || zoom < this.options.minZoom) { return false }
+      else { return true }
   },
 
   onRemove: function (map) {
@@ -100,7 +108,7 @@ export var FeatureManager = VirtualGrid.extend({
   },
 
   /**
-   * Feature Managment
+   * Feature Management
    */
 
   createCell: function (bounds, coords) {
@@ -172,14 +180,9 @@ export var FeatureManager = VirtualGrid.extend({
       this._buildTimeIndexes(features);
     }
 
-    // remove this logic entirely once the new stuff is hooked up
-    // var zoom = this._map.getZoom();
-
-    // if (zoom > this.options.maxZoom ||
-    //     zoom < this.options.minZoom) { return; }
-
-    // will have to rip out the stuff below too once the new stuff is working
+    // need to PR removal of the logic below too...
     // https://github.com/patrickarlt/leaflet-virtual-grid/blob/master/src/virtual-grid.js#L100-L102
+
     this.createLayers(features);
   },
 
@@ -227,7 +230,7 @@ export var FeatureManager = VirtualGrid.extend({
 
       if (pendingRequests <= 0) {
         this._currentSnapshot = newSnapshot;
-        // schedule adding features until the next animation frame
+        // schedule adding features for the next animation frame
         L.Util.requestAnimFrame(L.Util.bind(function () {
           this.removeLayers(oldSnapshot);
           this.addLayers(newSnapshot);
