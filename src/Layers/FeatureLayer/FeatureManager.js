@@ -94,6 +94,9 @@ export var FeatureManager = VirtualGrid.extend({
 
   _visibleZoom: function () {
     // check to see whether the current zoom level of the map is within the optional limit defined for the FeatureLayer
+    if (!this._map) {
+      return false
+    }
     var zoom = this._map.getZoom();
     if (zoom > this.options.maxZoom || zoom < this.options.minZoom) { return false }
       else { return true }
