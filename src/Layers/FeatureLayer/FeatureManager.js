@@ -63,6 +63,31 @@ export var FeatureManager = VirtualGrid.extend({
    */
 
   onAdd: function (map) {
+    /*
+    not sure if this the best way to maintain a reference to FeatureManager
+    within the event listener?
+    */
+    var self = this;
+
+    map.on('zoomend', function(e) {
+      var zoom = map.getZoom();
+      if (zoom > self.service.options.maxZoom || zoom < self.service.options.minZoom) {
+        console.log('dont draw!');
+        // self.removeLayers(self._currentSnapshot);
+        // self._currentSnapshot = [];
+      }
+      else {
+        console.log('draw!');
+        /* For every cell in this._activeCells:
+
+        1. Get the cache key for the coords of the cell ` var key = this._cacheKey(coords);
+        2. If this._cache[key] exists it will be an array of feature IDs.
+        3. Call this.addLayers(this._cache[key]) to instruct the feature layer to add the layers back.
+
+        */
+      }
+    });
+
     return VirtualGrid.prototype.onAdd.call(this, map);
   },
 
@@ -147,11 +172,14 @@ export var FeatureManager = VirtualGrid.extend({
       this._buildTimeIndexes(features);
     }
 
-    var zoom = this._map.getZoom();
+    // remove this logic entirely once the new stuff is hooked up
+    // var zoom = this._map.getZoom();
 
-    if (zoom > this.options.maxZoom ||
-        zoom < this.options.minZoom) { return; }
+    // if (zoom > this.options.maxZoom ||
+    //     zoom < this.options.minZoom) { return; }
 
+    // will have to rip out the stuff below too once the new stuff is working
+    // https://github.com/patrickarlt/leaflet-virtual-grid/blob/master/src/virtual-grid.js#L100-L102
     this.createLayers(features);
   },
 
