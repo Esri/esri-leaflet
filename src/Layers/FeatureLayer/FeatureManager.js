@@ -63,46 +63,14 @@ export var FeatureManager = VirtualGrid.extend({
    */
 
   onAdd: function (map) {
-    /*
-    is this kosher? 'this' becomes the map inside the event listener.
-    */
-    var self = this;
-
-    map.on('zoomend', function() {
-      if (!self._visibleZoom()) {
-        self.removeLayers(self._currentSnapshot);
-        self._currentSnapshot = [];
-      } else {
-        /*
-        for every cell in this._activeCells
-          1. Get the cache key for the coords of the cell
-          2. If this._cache[key] exists it will be an array of feature IDs.
-          3. Call this.addLayers(this._cache[key]) to instruct the feature layer to add the layers back.
-        */
-        for (var i in self._activeCells) {
-          var coords = self._activeCells[i].coords;
-          var key = self._cacheKey(coords);
-          if (self._cache[key]) {
-            self.addLayers(self._cache[key]);
-          }
-        }
-      }
-    });
+    map.on('zoomend', this._handleZoomChange, this);
 
     return VirtualGrid.prototype.onAdd.call(this, map);
   },
 
-  _visibleZoom: function () {
-    // check to see whether the current zoom level of the map is within the optional limit defined for the FeatureLayer
-    if (!this._map) {
-      return false
-    }
-    var zoom = this._map.getZoom();
-    if (zoom > this.options.maxZoom || zoom < this.options.minZoom) { return false }
-      else { return true }
-  },
-
   onRemove: function (map) {
+    map.off('zoomend', this._handleZoomChange, this);
+
     return VirtualGrid.prototype.onRemove.call(this, map);
   },
 
@@ -410,6 +378,37 @@ export var FeatureManager = VirtualGrid.extend({
       var startDate = +feature.properties[this.options.timeField.start];
       var endDate = +feature.properties[this.options.timeField.end];
       return ((startDate >= from) && (startDate <= to)) || ((endDate >= from) && (endDate <= to));
+    }
+  },
+
+  _visibleZoom: function () {
+    // check to see whether the current zoom level of the map is within the optional limit defined for the FeatureLayer
+    if (!this._map) {
+      return false
+    }
+    var zoom = this._map.getZoom();
+    if (zoom > this.options.maxZoom || zoom < this.options.minZoom) { return false }
+      else { return true }
+  },
+
+  _handleZoomChange: function() {
+    if (!this._visibleZoom()) {
+      this.removeLayers(this._currentSnapshot);
+      this._currentSnapshot = [];
+    } else {
+      /*
+      for every cell in this._activeCells
+        1. Get the cache key for the coords of the cell
+        2. If this._cache[key] exists it will be an array of feature IDs.
+        3. Call this.addLayers(this._cache[key]) to instruct the feature layer to add the layers back.
+      */
+      for (var i in this._activeCells) {
+        var coords = this._activeCells[i].coords;
+        var key = this._cacheKey(coords);
+        if (this._cache[key]) {
+          this.addLayers(self._cache[key]);
+        }
+      }
     }
   },
 
