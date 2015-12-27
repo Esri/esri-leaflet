@@ -144,8 +144,8 @@ Esri welcomes contributions from anyone and everyone. Please see our [guidelines
 
 ### Credit
 
-* `L.esri.Layers.DynamicMapLayer` originally used code from https://github.com/sanborn/leaflet-ags/blob/master/src/AGS.Layer.Dynamic.js
-* `L.esri.Layers.TiledMapLayer` adapts some code from https://github.com/gisinc/arcgis-level-fixer
+* `L.esri.DynamicMapLayer` originally used code from [AGS.Layer.Dynamic.js](https://github.com/sanborn/leaflet-ags/blob/master/src/AGS.Layer.Dynamic.js)
+* `L.esri.TiledMapLayer` adapts some code from [arcgis-level-fixer](https://github.com/gisinc/arcgis-level-fixer)
 
 ### Licensing
 Copyright 2015 Esri

@@ -80,11 +80,11 @@ export var FeatureLayer = FeatureManager.extend({
       var layer = this._layers[geojson.id];
       var newLayer;
 
-      if (layer && !this._map.hasLayer(layer)) {
+      if (this._visibleZoom() && layer && !this._map.hasLayer(layer)) {
         this._map.addLayer(layer);
       }
 
-      // update geometry if neccessary
+      // update geometry if necessary
       if (layer && this.options.simplifyFactor > 0 && (layer.setLatLngs || layer.setLatLng)) {
         this._updateLayer(layer, geojson);
       }
@@ -110,10 +110,11 @@ export var FeatureLayer = FeatureManager.extend({
           feature: newLayer.feature
         }, true);
 
-        // add the layer if it is within the time bounds or our layer is not time enabled
-        if (!this.options.timeField || (this.options.timeField && this._featureWithinTimeRange(geojson))) {
+        // add the layer if the current zoom level is inside the range defined for the layer, it is within the current time bounds or our layer is not time enabled
+        if (this._visibleZoom() && (!this.options.timeField || (this.options.timeField && this._featureWithinTimeRange(geojson)))) {
           this._map.addLayer(newLayer);
         }
+
       }
     }
   },
