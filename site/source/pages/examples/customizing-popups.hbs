@@ -11,16 +11,15 @@ layout: example.hbs
 
   L.esri.basemapLayer('Gray').addTo(map);
 
-  var weatherWatch = L.esri.dynamicMapLayer({
-    url: 'http://gis.srh.noaa.gov/arcgis/rest/services/watchWarn/MapServer',
-    opacity: 0.5
+  var wildfireRisk = L.esri.dynamicMapLayer({
+    url: '//maps7.arcgisonline.com/arcgis/rest/services/USDA_USFS_2014_Wildfire_Hazard_Potential/MapServer'
   }).addTo(map);
 
-  weatherWatch.bindPopup(function (error, featureCollection) {
+  wildfireRisk.bindPopup(function (error, featureCollection) {
     if(error || featureCollection.features.length === 0) {
       return false;
     } else {
-      return 'Advisory Type: ' + featureCollection.features[0].properties.prod_type;
+      return 'Risk Level: ' + featureCollection.features[0].properties.CLASS_DESC;
     }
   });
 </script>

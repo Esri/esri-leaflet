@@ -1,12 +1,12 @@
 ---
 title: Editing feature layers
-description: This sample uses <a href="https://github.com/Leaflet/Leaflet.draw">Leaflet Draw</a> to help edit the geometry of features in a hosted feature service.
+description: This sample uses <a href="//github.com/Leaflet/Leaflet.draw">Leaflet Draw</a> to help edit the geometry of features in a hosted feature service.
 layout: example.hbs
 ---
 
 <!-- Leaflet Draw -->
-<script src="https://rawgit.com/Leaflet/Leaflet.draw/master/dist/leaflet.draw-src.js"></script>
-<link rel="stylesheet" href="https://rawgit.com/Leaflet/Leaflet.draw/master/dist/leaflet.draw.css">
+<script src="//rawgit.com/Leaflet/Leaflet.draw/master/dist/leaflet.draw-src.js"></script>
+<link rel="stylesheet" href="//rawgit.com/Leaflet/Leaflet.draw/master/dist/leaflet.draw.css">
 
 <style>
   #info-pane {
@@ -47,7 +47,7 @@ layout: example.hbs
 
   // add our feature layer to the map
   var pedestrianDistricts = L.esri.featureLayer({
-    url: 'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/PDX_Pedestrian_Districts/FeatureServer/0'
+    url: '//services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/PDX_Pedestrian_Districts/FeatureServer/0'
   }).addTo(map);
 
   // variable to track the layer being edited

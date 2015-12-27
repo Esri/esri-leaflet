@@ -12,7 +12,7 @@ layout: example.hbs
   L.esri.basemapLayer('Streets').addTo(map);
 
   var trees = L.esri.featureLayer({
-    url: 'https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Heritage_Trees_Portland/FeatureServer/0'
+    url: '//services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Heritage_Trees_Portland/FeatureServer/0'
   }).addTo(map);
 
   trees.query().bounds(function (error, latlngbounds) {

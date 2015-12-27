@@ -11,11 +11,12 @@ layout: example.hbs
 
   L.esri.basemapLayer("Topographic").addTo(map);
 
-  var neighborhoodsUrl = "https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Neighborhoods_pdx/FeatureServer/0";
-  var eliotFootprintsUrl = "http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Eliot%20Building%20Footprints/FeatureServer/0"
+  var neighborhoodsUrl = "//services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Neighborhoods_pdx/FeatureServer/0";
+  var eliotFootprintsUrl = "//services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Eliot%20Building%20Footprints/FeatureServer/0"
 
   // create a map pane for neighborhoods
-  map.createPane('neighborhoods')
+  map.createPane('neighborhoods');
+
   // Define the created pane when creating the feature layer
   L.esri.featureLayer({
     url: neighborhoodsUrl,
@@ -23,8 +24,8 @@ layout: example.hbs
   }).addTo(map);
 
   // Panes are added to the map in order - this pane will be sit on top of 'neighborhoods'
-  map.createPane('footprints')
-  map.createPane('two')
+  map.createPane('footprints');
+  
   L.esri.featureLayer({
     url: eliotFootprintsUrl,
     pane: 'footprints',
