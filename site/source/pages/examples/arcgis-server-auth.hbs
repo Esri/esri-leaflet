@@ -12,7 +12,7 @@ layout: example.hbs
   L.esri.basemapLayer('Topographic').addTo(map);
 
   function serverAuth(callback){
-    L.esri.post('https://sampleserver6.arcgisonline.com/arcgis/tokens/generateToken', {
+    L.esri.post('//sampleserver6.arcgisonline.com/arcgis/tokens/generateToken', {
       username: 'user1',
       password: 'user1',
       f: 'json',
@@ -24,7 +24,7 @@ layout: example.hbs
 
   serverAuth(function(error, response){
     var dl = L.esri.dynamicMapLayer({
-      url: 'https://sampleserver6.arcgisonline.com/arcgis/rest/services/Wildfire_secure_ac/MapServer',
+      url: '//sampleserver6.arcgisonline.com/arcgis/rest/services/Wildfire_secure_ac/MapServer',
       opacity: 1,
       token:  response.token
     }).addTo(map);

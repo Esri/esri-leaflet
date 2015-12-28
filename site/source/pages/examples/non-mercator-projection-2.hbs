@@ -4,8 +4,8 @@ description: Using non mercator tiles with <code>L.esri.TiledMapLayer</code> wit
 layout: example.hbs
 ---
 
-<script src="https://rawgit.com/proj4js/proj4js/2.3.12/dist/proj4-src.js"></script>
-<script src="https://rawgit.com/kartena/Proj4Leaflet/1.0.0-beta.1/src/proj4leaflet.js"></script>
+<script src="//rawgit.com/proj4js/proj4js/2.3.12/dist/proj4-src.js"></script>
+<script src="//rawgit.com/kartena/Proj4Leaflet/1.0.0-beta.1/src/proj4leaflet.js"></script>
 
 <div id="map"></div>
 
@@ -41,7 +41,7 @@ layout: example.hbs
 
   // The min/maxZoom values provided should match the actual cache thats been published. This information can be retrieved from the service endpoint directly.
   L.esri.tiledMapLayer({
-    url: 'https://services.arcgisonline.co.nz/arcgis/rest/services/Canvas/Light/MapServer',
+    url: '//services.arcgisonline.co.nz/arcgis/rest/services/Canvas/Light/MapServer',
     maxZoom: 15,
     minZoom: 0,
     continuousWorld: false,
@@ -50,7 +50,7 @@ layout: example.hbs
 
   // Dynamic map layers are projected by ArcGIS Server itself before the image is retrieved
   L.esri.dynamicMapLayer({
-    url: "http://gis.ecan.govt.nz/ArcGIS/rest/services/Public/Hydrology/MapServer",
+    url: "//gis.ecan.govt.nz/ArcGIS/rest/services/Public/Hydrology/MapServer",
     attribution: "Environment Canterbury "
   }).addTo(map);
 </script>

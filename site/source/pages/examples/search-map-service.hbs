@@ -13,7 +13,7 @@ layout: example.hbs
   var map = L.map('map').setView([40.91, -96.63], 4);
 
   L.tileLayer('//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="//osm.org/copyright">OpenStreetMap</a> contributors'
+    attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
   }).addTo(map);
 
   var arcgisOnline = L.esri.Geocoding.arcgisOnlineProvider();
@@ -23,7 +23,7 @@ layout: example.hbs
       arcgisOnline,
       new L.esri.Geocoding.MapServiceProvider({
         label: 'States and Counties',
-        url: 'http://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer',
+        url: '//sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer',
         layers: [2, 3],
         searchFields: ['NAME', 'STATE_NAME']
       })

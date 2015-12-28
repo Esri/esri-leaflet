@@ -7,12 +7,12 @@ layout: example.hbs
 <div id="map"></div>
 
 <script>
-  var map = L.map('map').setView([41.94, -88.29], 9);
+  var map = L.map('map').setView([37.71, -99.88], 4);
 
   L.esri.basemapLayer('Gray').addTo(map);
 
   L.esri.dynamicMapLayer({
-    url: 'https://hydrology.esri.com/arcgis/rest/services/WorldHydroReferenceOverlay/MapServer',
-    opacity: 1
+    url: '//server.arcgisonline.com/ArcGIS/rest/services/Specialty/Soil_Survey_Map/MapServer',
+    opacity: 0.5
   }).addTo(map);
 </script>

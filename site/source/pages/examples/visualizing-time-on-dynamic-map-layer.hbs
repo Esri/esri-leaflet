@@ -58,7 +58,7 @@ layout: example.hbs
   L.esri.basemapLayer('GrayLabels').addTo(map);
 
   var oilWells = L.esri.dynamicMapLayer({
-    url: 'http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Petroleum/KSWells/MapServer',
+    url: '//sampleserver3.arcgisonline.com/ArcGIS/rest/services/Petroleum/KSWells/MapServer',
     useCors: false,
     layers: [0],
     // for some reason this service in particular sometimes redirects json requests to a bogus IP address

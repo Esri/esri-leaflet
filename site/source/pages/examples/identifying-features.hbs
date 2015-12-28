@@ -28,9 +28,10 @@ layout: example.hbs
 
   L.esri.basemapLayer('Gray').addTo(map);
 
-  var weatherWatch = L.esri.dynamicMapLayer({
-    url: 'http://gis.srh.noaa.gov/arcgis/rest/services/watchWarn/MapServer',
-    opacity: 0.5
+  var weatherStations = L.esri.dynamicMapLayer({
+    url: '//maps1.arcgisonline.com/ArcGIS/rest/services/NWS_Weather_Stations/MapServer',
+    opacity: 0.5,
+    useCors: false
   }).addTo(map);
 
   var identifiedFeature;
@@ -41,20 +42,14 @@ layout: example.hbs
     if(identifiedFeature){
       map.removeLayer(identifiedFeature);
     }
-    weatherWatch.identify().on(map).at(e.latlng).run(function(error, featureCollection){
+    weatherStations.identify().on(map).at(e.latlng).run(function(error, featureCollection){
+      console.log(featureCollection.features[0]);
       if (featureCollection.features.length > 0) {
-        identifiedFeature = L.geoJson(featureCollection.features[0], {
-          style: function(){
-            return {
-              color: 'red',
-              weight: 2
-            };
-          }
-        }).addTo(map);
-        pane.innerHTML = featureCollection.features[0].properties.prod_type;
+        identifiedFeature = L.geoJson(featureCollection.features[0]).addTo(map);
+        pane.innerHTML = featureCollection.features[0].properties.Station_Na;
       }
       else {
-        pane.innerHTML = 'no features identified';
+        pane.innerHTML = 'No features identified.';
       }
     });
   });

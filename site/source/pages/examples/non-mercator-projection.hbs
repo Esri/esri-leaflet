@@ -4,8 +4,8 @@ description: Using non mercator tiles with <code>L.esri.TiledMapLayer</code> wit
 layout: example.hbs
 ---
 
-<script src="https://rawgit.com/proj4js/proj4js/2.3.12/dist/proj4-src.js"></script>
-<script src="https://rawgit.com/kartena/Proj4Leaflet/1.0.0-beta.1/src/proj4leaflet.js"></script>
+<script src="//rawgit.com/proj4js/proj4js/2.3.12/dist/proj4-src.js"></script>
+<script src="//rawgit.com/kartena/Proj4Leaflet/1.0.0-beta.1/src/proj4leaflet.js"></script>
 
 <div id="map"></div>
 
@@ -41,7 +41,7 @@ layout: example.hbs
 
   // The min/maxZoom values provided should match the actual cache thats been published. This information can be retrieved from the service endpoint directly.
   L.esri.tiledMapLayer({
-    url: 'http://mapserv.utah.gov/arcgis/rest/services/BaseMaps/Lite/MapServer',
+    url: '//mapserv.utah.gov/arcgis/rest/services/BaseMaps/Lite/MapServer',
     maxZoom: 14,
     minZoom: 0,
     continuousWorld: true,
@@ -50,7 +50,7 @@ layout: example.hbs
 
   // feature layers will be requested in WGS84 (4326) and reprojected on the client
   L.esri.featureLayer({
-    url: 'http://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_Congressional_Districts/FeatureServer/0',
+    url: '//services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_Congressional_Districts/FeatureServer/0',
     simplifyFactor: 0.5,
     precision: 5,
     style: function (feature) {
