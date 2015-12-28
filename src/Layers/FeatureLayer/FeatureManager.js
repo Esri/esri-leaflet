@@ -63,10 +63,14 @@ export var FeatureManager = VirtualGrid.extend({
    */
 
   onAdd: function (map) {
+    map.on('zoomend', this._handleZoomChange, this);
+
     return VirtualGrid.prototype.onAdd.call(this, map);
   },
 
   onRemove: function (map) {
+    map.off('zoomend', this._handleZoomChange, this);
+
     return VirtualGrid.prototype.onRemove.call(this, map);
   },
 
@@ -75,7 +79,7 @@ export var FeatureManager = VirtualGrid.extend({
   },
 
   /**
-   * Feature Managment
+   * Feature Management
    */
 
   createCell: function (bounds, coords) {
@@ -147,10 +151,8 @@ export var FeatureManager = VirtualGrid.extend({
       this._buildTimeIndexes(features);
     }
 
-    var zoom = this._map.getZoom();
-
-    if (zoom > this.options.maxZoom ||
-        zoom < this.options.minZoom) { return; }
+    // need to PR removal of the logic below too...
+    // https://github.com/patrickarlt/leaflet-virtual-grid/blob/master/src/virtual-grid.js#L100-L102
 
     this.createLayers(features);
   },
@@ -199,7 +201,7 @@ export var FeatureManager = VirtualGrid.extend({
 
       if (pendingRequests <= 0) {
         this._currentSnapshot = newSnapshot;
-        // schedule adding features until the next animation frame
+        // schedule adding features for the next animation frame
         L.Util.requestAnimFrame(L.Util.bind(function () {
           this.removeLayers(oldSnapshot);
           this.addLayers(newSnapshot);
@@ -376,6 +378,37 @@ export var FeatureManager = VirtualGrid.extend({
       var startDate = +feature.properties[this.options.timeField.start];
       var endDate = +feature.properties[this.options.timeField.end];
       return ((startDate >= from) && (startDate <= to)) || ((endDate >= from) && (endDate <= to));
+    }
+  },
+
+  _visibleZoom: function () {
+    // check to see whether the current zoom level of the map is within the optional limit defined for the FeatureLayer
+    if (!this._map) {
+      return false
+    }
+    var zoom = this._map.getZoom();
+    if (zoom > this.options.maxZoom || zoom < this.options.minZoom) { return false }
+      else { return true }
+  },
+
+  _handleZoomChange: function() {
+    if (!this._visibleZoom()) {
+      this.removeLayers(this._currentSnapshot);
+      this._currentSnapshot = [];
+    } else {
+      /*
+      for every cell in this._activeCells
+        1. Get the cache key for the coords of the cell
+        2. If this._cache[key] exists it will be an array of feature IDs.
+        3. Call this.addLayers(this._cache[key]) to instruct the feature layer to add the layers back.
+      */
+      for (var i in this._activeCells) {
+        var coords = this._activeCells[i].coords;
+        var key = this._cacheKey(coords);
+        if (this._cache[key]) {
+          this.addLayers(self._cache[key]);
+        }
+      }
     }
   },
 
