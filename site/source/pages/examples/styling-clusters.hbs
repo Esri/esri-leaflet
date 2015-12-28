@@ -4,13 +4,12 @@ description: Customizing the display of clusters and markers with <code>L.DivIco
 layout: example.hbs
 ---
 
-<!-- Include Leaflet.markercluster via rawgit.com, do not use in production -->
-<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/Leaflet/Leaflet.markercluster/v0.4.0/dist/MarkerCluster.Default.css">
-<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/Leaflet/Leaflet.markercluster/v0.4.0/dist/MarkerCluster.css">
-<script src="https://cdn.rawgit.com/Leaflet/Leaflet.markercluster/v0.4.0/dist/leaflet.markercluster.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/Leaflet/Leaflet.markercluster/v1.0.0-beta.2.0/dist/MarkerCluster.Default.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/Leaflet/Leaflet.markercluster/v1.0.0-beta.2.0/dist/MarkerCluster.css">
+<script src="https://cdn.rawgit.com/Leaflet/Leaflet.markercluster/v1.0.0-beta.2.0g/dist/leaflet.markercluster.js"></script>
 
 <!-- Load Clustered Feature Layer from CDN -->
-<script src="http://cdn.jsdelivr.net/leaflet.esri.clustered-feature-layer/1.0.2/esri-leaflet-clustered-feature-layer.js"></script>
+<script src="http://cdn.jsdelivr.net/leaflet.esri.clustered-feature-layer/2.0.0-beta.1/esri-leaflet-clustered-feature-layer.js"></script>
 
 <style>
   .cluster {
@@ -89,7 +88,7 @@ layout: example.hbs
 <div id="map"></div>
 
 <script>
-  var map = L.map('map').setView([45.5276173643906, -122.66736388203228], 13);
+  var map = L.map('map').setView([45.5276, -122.6674], 13);
 
   // Add ArcGIS Online basemap
   L.esri.basemapLayer('Gray').addTo(map);
@@ -127,7 +126,7 @@ layout: example.hbs
   };
 
   // create a new cluster layer
-  var stops = L.esri.clusteredFeatureLayer({
+  var stops = L.esri.Cluster.clusteredFeatureLayer({
     url: 'https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0',
     spiderfyOnMaxZoom:false,
     disableClusteringAtZoom: 16,
