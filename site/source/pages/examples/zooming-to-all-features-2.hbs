@@ -14,7 +14,7 @@ layout: example.hbs
 
   // add a graphic layer composed of selected US Counties
   var fl = L.esri.featureLayer({
-    url: 'http://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer/2',
+    url: '//sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer/2',
     where: "NAME='Los Angeles' OR NAME='San Bernardino'"
   }).addTo(map);
 
