@@ -11,7 +11,7 @@
     "John Gravois <jgravois@esri.com> (http://johngravois.com)"
   ],
   "dependencies": {
-    "leaflet": "1.0.0-beta.2"
+    "leaflet": "^1.0.0-beta.2"
   },
   "browserify": {
     "transform": [
