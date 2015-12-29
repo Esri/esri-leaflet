@@ -5,14 +5,14 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### [Upcoming changes][unreleased]
 
-## [2.0.0-beta.6](v2.0.0-beta.6)
+## [2.0.0-beta.6]
 
 ### Fixed
 
 * Improved NationalGeographic and Gray attribution #612
 * Fixed removing of `FeatureLayer` from maps (again)
 
-## [2.0.0-beta.5](v2.0.0-beta.5)
+## [2.0.0-beta.5]
 
 ### Fixed
 
@@ -20,7 +20,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Added missing files to NPM
 * Fixed removing of `FeatureLayer` from maps
 
-## [2.0.0-beta.4](v2.0.0-beta.4)
+## [2.0.0-beta.4]
 
 ### Breaking
 
@@ -40,19 +40,19 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Support for JSPM in package.json. Now you can `import featureLayer from 'esri-leaflet/src/Layers/FeatureLayer';` for more compact builds but be aware of [caveats](http://blog.izs.me/post/44149270867/why-no-directories-lib-in-node-the-less-snarky)
 * Support for browserify in the package.json. Now you can `var featureLayer = require('esri-leaflet/src/Layers/FeatureLayer');` for more compact builds but be aware of [caveats](http://blog.izs.me/post/44149270867/why-no-directories-lib-in-node-the-less-snarky)
 
-## [2.0.0-beta.3](v2.0.0-beta.3)
+## [2.0.0-beta.3]
 
 ### Fixed
 
 * Files not included in git tag.
 
-## [2.0.0-beta.2](v2.0.0-beta.2)
+## [2.0.0-beta.2]
 
 ### Fixed
 
 * Release process bugs.
 
-## [2.0.0-beta.1](v2.0.0-beta.1)
+## [2.0.0-beta.1]
 
 This release is the first release that supports [Leaflet 1.0.0-beta.1](http://leafletjs.com/2015/07/15/leaflet-1.0-beta1-released.html).
 
@@ -91,13 +91,13 @@ L.esri.featureLayer({
 * All alternate/compact builds have been removed. They will be replaced with a new system for generating custom builds soon.
 * `L.esri.Request` has been removed. Please use `L.esri.get`, `L.esri.get.CORS`, `L.esri.get.JSONP`, `L.esri.post` or `L.esri.request` directly.
 
-## [1.0.1](v1.0.1)
+## [1.0.1]
 
 ### Fixed
 
 * Ensure that we never try to remove the Esri logo from a map twice https://github.com/Esri/esri-leaflet/issues/667
 
-## [1.0.0](v1.0.0)
+## [1.0.0]
 
 This represents the stable release of Esri Leaflet compatible with Leaflet 0.7.3. All future 1.0.X releases will be compatible with Leaflet 0.7.3 and contain only bug fixes. New features will only be added in Esri Leaflet 2.0.0 which will require Leaflet 1.0.0.
 
@@ -140,7 +140,7 @@ L.esri.Services.service({
 * `L.esri.DynamicMapLayer` and `L.esri.ImageMapLayer` will now automatically use POST for large requests. https://github.com/Esri/esri-leaflet/issues/574
 * `L.esri.ImageMapLayer` now defaults to requesting `json` as opposed to an image to better handle authentication and large requests https://github.com/Esri/esri-leaflet/issues/574. If your Image Service does not support CORS you should set ``{f:'image'}`` in your options.
 
-## [Release Candidate 8](v1.0.0-rc.8)
+## [Release Candidate 8]
 
 ### Breaking Changes
 
@@ -154,7 +154,7 @@ L.esri.Services.service({
 * Properly handle using `L.CircleMarker` with `L.esri.Layers.FeatureLayer` https://github.com/Esri/esri-leaflet/issues/534
 * New `redraw` method on `L.esri.Layers.FeatureLayer` for programmatically redrawing features with their latest symbology. https://github.com/Esri/esri-leaflet/pull/550
 
-## [Release Candidate 7](v1.0.0-rc.7)
+## [Release Candidate 7]
 
 ### Breaking Changes
 
@@ -175,7 +175,7 @@ L.esri.Services.service({
 * DynamicMapLayer will now request `json` by default to better expose authentication helpers
 * Attribution for basemaps is now always requested with JSONP
 
-## [Release Candidate 6](v1.0.0-rc.6)
+## [Release Candidate 6]
 
 ### Breaking Changes
 
@@ -188,7 +188,7 @@ None
 * Layer ids will now be included with the GeoJSON response from `identify()` and `L.esri.Tasks.Identify`. https://github.com/Esri/esri-leaflet/issues/443
 * Bugfix for adding/removing certain basemap layers. https://github.com/Esri/esri-leaflet/issues/455
 
-## [Release Candidate 5](v1.0.0-rc.5)
+## [Release Candidate 5]
 
 ### Breaking Changes
 
@@ -204,7 +204,7 @@ None
 * default fill is now specified for multipolygons [#406](https://github.com/Esri/esri-leaflet/issues/406)
 * dark gray basemap now utilizes our new production service [#399](https://github.com/Esri/esri-leaflet/issues/399)
 
-## [Release Candidate 4](v1.0.0-rc.4)
+## [Release Candidate 4]
 
 ### Changes
 
@@ -212,7 +212,7 @@ None
 * Fixed a display bug when rapidly toggling L.esri.DynamicMapLayer on/off before the image completely loads [#386](https://github.com/Esri/esri-leaflet/issues/386)
 * Bower installation fixed [#378](https://github.com/Esri/esri-leaflet/issues/378)
 
-## [Release Candidate 3](v1.0.0-rc.3)
+## [Release Candidate 3]
 
 ### Changes
 
@@ -223,7 +223,7 @@ None
 * Fixed setting sr param on `L.esri.Tasks.Find` [#379](https://github.com/Esri/esri-leaflet/issues/379)
 * `bower install esri-leaflet` now works properly.
 
-## [Release Candidate 2](v1.0.0-rc.2)
+## [Release Candidate 2]
 
 ### Changes
 
@@ -235,7 +235,7 @@ None
 * Spatial methods on `L.esri.Tasks.Query` can now accept the following Leaflet types, `L.Marker`, `L.Polygon`, `L.Polyline`, `L.LatLng`, `L.LatLngBounds` and `L.GeoJSON`. It can also accept valid GeoJSON Point, Polyline, Polygon and GeoJSON Feature objects containing Point, Polyline, Polygon.
 * Most methods that accept `L.LatLng` and `L.LatLngBounds` now accept the simple [lat,lng] or [[lat,lng], [lat,lng]] forms.
 
-## [Release Candidate 1](v1.0.0-rc.1)
+## [Release Candidate 1]
 
 ### Changes
 * `L.esri.Task` now accepts `proxy` and `useCors` like `L.esri.Service`. https://github.com/Esri/esri-leaflet/pull/359
@@ -259,7 +259,7 @@ None
 
 ### Changes
 
-## [Beta 6](v0.0.1-beta.6)
+## [Beta 6]
 
 ### Breaking Changes
 
@@ -284,7 +284,7 @@ None
 * Build are no longer saved in the `/dist` folder. https://github.com/Esri/esri-leaflet/pull/307
 * [Development Roadmap](https://github.com/Esri/esri-leaflet/wiki/Roadmap) has been updated.
 
-## [Beta 5](v0.0.1-beta.5)
+## [Beta 5]
 
 ### Breaking Changes
 
@@ -321,14 +321,14 @@ None
 * new `L.esri.Tasks.Query` class for interacting with the Feature Layer query API.
 * new `L.esri.Tasks.Identify` class for interacting with Map Servers that support identify.
 
-## [Beta 4 Patch 1](v0.0.1-beta.4-patch-1)
+## [Beta 4 Patch 1]
 
 ### Changes
 
 * Patches a bug with identifying features on DynamicMapLayer
 * Various updates and fixes to examples
 
-## [Beta 4](v0.0.1-beta.4)
+## [Beta 4]
 
 ### New Demos
 * Heat map layer - http://esri.github.io/esri-leaflet/heatmaplayer.html
@@ -344,7 +344,7 @@ None
 * Add where and fields options to FeatureLayer and ClusteredFeatureLayer, and HeatmapFeatureLayer
 * Add bounds property to the metadata event when possible #216
 
-## [Beta 3](v0.0.1-beta.3)
+## [Beta 3]
 
 * Improve DynamicMapLayer panning and zooming performance. #137
 * FeatureLayer and ClusteredFeatureLayer can now load features from map services. Thanks to @odoe and @jgravois.
@@ -353,23 +353,24 @@ None
 * An attributionControl on maps is now required when using BasemapLayer. #159
 
 [unreleased]: https://github.com/esri/esri-leaflet/compare/v2.0.0-beta.6...HEAD
-[v2.0.0-beta.6]: https://github.com/esri/esri-leaflet/compare/v2.0.0-beta.5...v2.0.0-beta.6
-[v2.0.0-beta.5]: https://github.com/esri/esri-leaflet/compare/v2.0.0-beta.4...v2.0.0-beta.5
-[v2.0.0-beta.4]: https://github.com/esri/esri-leaflet/compare/v2.0.0-beta.3...v2.0.0-beta.4
-[v2.0.0-beta.3]: https://github.com/esri/esri-leaflet/compare/v2.0.0-beta.2...v2.0.0-beta.3
-[v2.0.0-beta.2]: https://github.com/esri/esri-leaflet/compare/v2.0.0-beta.1...v2.0.0-beta.2
-[v2.0.0-beta.1]: https://github.com/esri/esri-leaflet/compare/v1.0.0...v2.0.0-beta.1
-[v1.0.0]: https://github.com/esri/esri-leaflet/compare/v1.0.0-rc.8...v1.0.0
-[v1.0.0-rc.8]: https://github.com/esri/esri-leaflet/compare/v1.0.0-rc.7...v1.0.0-rc.8
-[v1.0.0-rc.7]: https://github.com/esri/esri-leaflet/compare/v1.0.0-rc.6...v1.0.0-rc.7
-[v1.0.0-rc.6]: https://github.com/esri/esri-leaflet/compare/v1.0.0-rc.5...v1.0.0-rc.6
-[v1.0.0-rc.5]: https://github.com/esri/esri-leaflet/compare/v1.0.0-rc.4...v1.0.0-rc.5
-[v1.0.0-rc.4]: https://github.com/esri/esri-leaflet/compare/v1.0.0-rc.3...v1.0.0-rc.4
-[v1.0.0-rc.3]: https://github.com/esri/esri-leaflet/compare/v1.0.0-rc.2...v1.0.0-rc.3
-[v1.0.0-rc.2]: https://github.com/esri/esri-leaflet/compare/v1.0.0-rc.1...v1.0.0-rc.2
-[v1.0.0-rc.1]: https://github.com/esri/esri-leaflet/compare/v0.0.1-beta.6...v1.0.0-rc.1
-[v0.0.1-beta.6]: https://github.com/esri/esri-leaflet/compare/v0.0.1-beta.5...v0.0.1-beta.6
-[v0.0.1-beta.5]: https://github.com/esri/esri-leaflet/compare/v0.0.1-beta.4-patch-1...v0.0.1-beta.5
-[v0.0.1-beta.4-patch-1]: https://github.com/esri/esri-leaflet/compare/v0.0.1-beta.4...v0.0.1-beta.4-patch-1
-[v0.0.1-beta.4]: https://github.com/esri/esri-leaflet/compare/v0.0.1-beta.3...v0.0.1-beta.4
-[v0.0.1-beta.3]: https://github.com/esri/esri-leaflet/compare/v0.0.1-beta.2...v0.0.1-beta.3
+[2.0.0-beta.6]: https://github.com/esri/esri-leaflet/compare/v2.0.0-beta.5...v2.0.0-beta.6
+[2.0.0-beta.5]: https://github.com/esri/esri-leaflet/compare/v2.0.0-beta.4...v2.0.0-beta.5
+[2.0.0-beta.4]: https://github.com/esri/esri-leaflet/compare/v2.0.0-beta.3...v2.0.0-beta.4
+[2.0.0-beta.3]: https://github.com/esri/esri-leaflet/compare/v2.0.0-beta.2...v2.0.0-beta.3
+[2.0.0-beta.2]: https://github.com/esri/esri-leaflet/compare/v2.0.0-beta.1...v2.0.0-beta.2
+[2.0.0-beta.1]: https://github.com/esri/esri-leaflet/compare/v1.0.0...v2.0.0-beta.1
+[1.0.1]: https://github.com/esri/esri-leaflet/compare/v1.0.0...v1.0.1
+[1.0.0]: https://github.com/esri/esri-leaflet/compare/v1.0.0-rc.8...v1.0.0
+[Release Candidate 8]: https://github.com/esri/esri-leaflet/compare/v1.0.0-rc.7...v1.0.0-rc.8
+[Release Candidate 7]: https://github.com/esri/esri-leaflet/compare/v1.0.0-rc.6...v1.0.0-rc.7
+[Release Candidate 6]: https://github.com/esri/esri-leaflet/compare/v1.0.0-rc.5...v1.0.0-rc.6
+[Release Candidate 5]: https://github.com/esri/esri-leaflet/compare/v1.0.0-rc.4...v1.0.0-rc.5
+[Release Candidate 4]: https://github.com/esri/esri-leaflet/compare/v1.0.0-rc.3...v1.0.0-rc.4
+[Release Candidate 3]: https://github.com/esri/esri-leaflet/compare/v1.0.0-rc.2...v1.0.0-rc.3
+[Release Candidate 2]: https://github.com/esri/esri-leaflet/compare/v1.0.0-rc.1...v1.0.0-rc.2
+[Release Candidate 1]: https://github.com/esri/esri-leaflet/compare/v0.0.1-beta.6...v1.0.0-rc.1
+[Beta 6]: https://github.com/esri/esri-leaflet/compare/v0.0.1-beta.5...v0.0.1-beta.6
+[Beta 5]: https://github.com/esri/esri-leaflet/compare/v0.0.1-beta.4-patch-1...v0.0.1-beta.5
+[Beta 4 Patch 1]: https://github.com/esri/esri-leaflet/compare/v0.0.1-beta.4...v0.0.1-beta.4-patch-1
+[Beta 4]: https://github.com/esri/esri-leaflet/compare/v0.0.1-beta.3...v0.0.1-beta.4
+[Beta 3]: https://github.com/esri/esri-leaflet/compare/v0.0.1-beta.2...v0.0.1-beta.3
