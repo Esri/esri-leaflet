@@ -2,6 +2,7 @@ import L from 'leaflet';
 import featureLayerService from '../../Services/FeatureLayerService';
 import { cleanUrl, warn } from '../../Util';
 import VirtualGrid from 'leaflet-virtual-grid';
+import BinarySearchIndex from 'tiny-binary-search';
 
 export var FeatureManager = VirtualGrid.extend({
   /**
@@ -503,62 +504,3 @@ export var FeatureManager = VirtualGrid.extend({
     }, this);
   }
 });
-
-/**
- * Temporal Binary Search Index
- */
-
-function BinarySearchIndex (values) {
-  this.values = values || [];
-}
-
-BinarySearchIndex.prototype._query = function (query) {
-  var minIndex = 0;
-  var maxIndex = this.values.length - 1;
-  var currentIndex;
-  var currentElement;
-
-  while (minIndex <= maxIndex) {
-    currentIndex = (minIndex + maxIndex) / 2 | 0;
-    currentElement = this.values[Math.round(currentIndex)];
-    if (+currentElement.value < +query) {
-      minIndex = currentIndex + 1;
-    } else if (+currentElement.value > +query) {
-      maxIndex = currentIndex - 1;
-    } else {
-      return currentIndex;
-    }
-  }
-
-  return ~maxIndex;
-};
-
-BinarySearchIndex.prototype.sort = function () {
-  this.values.sort(function (a, b) {
-    return +b.value - +a.value;
-  }).reverse();
-  this.dirty = false;
-};
-
-BinarySearchIndex.prototype.between = function (start, end) {
-  if (this.dirty) {
-    this.sort();
-  }
-
-  var startIndex = this._query(start);
-  var endIndex = this._query(end);
-
-  if (startIndex === 0 && endIndex === 0) {
-    return [];
-  }
-
-  startIndex = Math.abs(startIndex);
-  endIndex = (endIndex < 0) ? Math.abs(endIndex) : endIndex + 1;
-
-  return this.values.slice(startIndex, endIndex);
-};
-
-BinarySearchIndex.prototype.bulkAdd = function (items) {
-  this.dirty = true;
-  this.values = this.values.concat(items);
-};
