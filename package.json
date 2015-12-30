@@ -11,9 +11,10 @@
     "John Gravois <jgravois@esri.com> (http://johngravois.com)"
   ],
   "dependencies": {
-    "arcgis-to-geojson-utils": "^1.0.0",
-    "leaflet-virtual-grid": "^1.0.0",
-    "leaflet": "1.0.0-beta.2"
+    "arcgis-to-geojson-utils": "^1.0.1",
+    "leaflet": "^1.0.0-beta.2",
+    "leaflet-virtual-grid": "^1.0.2",
+    "tiny-binary-search": "^1.0.2"
   },
   "browserify": {
     "transform": [
