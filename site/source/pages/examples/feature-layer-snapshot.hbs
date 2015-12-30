@@ -24,7 +24,7 @@ layout: example.hbs
     // fit map to boundry
     map.fitBounds(hollywood.getBounds().pad(0.5));
 
-    // query all bike parking where BPSTYLE='STAPLE' inside our boundry
+    // query all bike parking where BPSTYLE='STAPLE' inside our boundary
     L.esri.query({
       url: bikeParkingUrl
     }).where("BPSTYLE='STAPLE'").within(hollywood).run(function(error, bikeParking){
