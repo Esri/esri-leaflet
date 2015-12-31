@@ -12,7 +12,7 @@ layout: example.hbs
   L.esri.basemapLayer('Topographic').addTo(map);
 
   function serverAuth(callback){
-    L.esri.post('//sampleserver6.arcgisonline.com/arcgis/tokens/generateToken', {
+    L.esri.post('https://sampleserver6.arcgisonline.com/arcgis/tokens/generateToken', {
       username: 'user1',
       password: 'user1',
       f: 'json',
