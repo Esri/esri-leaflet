@@ -3,7 +3,25 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-### [Upcoming changes][unreleased]
+## [Upcoming changes][unreleased]
+
+## [2.0.0-beta.7]
+
+### Added
+
+* updated website to show off our 2.x API (compatible with Leaflet `1.0.0-beta.2`) and include API reference for supported plugins.
+* new npm script to watch/recompile source
+
+### Changed
+
+* broke out several esri-leaflet components into external micro libraries ([tiny-binary-search](https://www.npmjs.com/package/tiny-binary-search), [leaflet-virtual-grid](https://www.npmjs.com/package/leaflet-virtual-grid), and [arcgis-to-geojson-utils](https://www.npmjs.com/package/arcgis-to-geojson-utils) for converting between and esri json and geojson)
+* refactored source code for better custom projection support
+
+### Fixed
+* resolved bug that caused data to display outside a specified `min/maxZoom`
+* edge case affecting time aware layers
+* bug which caused `null` to sometimes be written to the attribution control (thanks brianbancroft!)
+* made sure relevant node script commands are OS agnostic
 
 ## [2.0.0-beta.6]
 
@@ -352,7 +370,8 @@ None
 * Add DarkGray and DarkGrayLabels to BasemapLayer. #190
 * An attributionControl on maps is now required when using BasemapLayer. #159
 
-[unreleased]: https://github.com/esri/esri-leaflet/compare/v2.0.0-beta.6...HEAD
+[unreleased]: https://github.com/esri/esri-leaflet/compare/v2.0.0-beta.7...HEAD
+[2.0.0-beta.7]: https://github.com/esri/esri-leaflet/compare/v2.0.0-beta.6...v2.0.0-beta.7
 [2.0.0-beta.6]: https://github.com/esri/esri-leaflet/compare/v2.0.0-beta.5...v2.0.0-beta.6
 [2.0.0-beta.5]: https://github.com/esri/esri-leaflet/compare/v2.0.0-beta.4...v2.0.0-beta.5
 [2.0.0-beta.4]: https://github.com/esri/esri-leaflet/compare/v2.0.0-beta.3...v2.0.0-beta.4
