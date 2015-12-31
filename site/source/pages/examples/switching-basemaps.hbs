@@ -21,7 +21,7 @@ layout: example.hbs
 <div id="map"></div>
 
 <div id="basemaps-wrapper" class="leaflet-bar">
-  <select name="basemaps" id="basemaps">
+  <select name="basemaps" id="basemaps" onChange="changeBasemap(basemaps)">
     <option value="Topographic">Topographic<options>
     <option value="Streets">Streets</option>
     <option value="NationalGeographic">National Geographic<options>
@@ -63,9 +63,8 @@ layout: example.hbs
     }
   }
 
-  var basemaps = document.getElementById('basemaps');
-
-  basemaps.addEventListener('change', function(){
-    setBasemap(basemaps.value);
-  });
+  function changeBasemap(basemaps){
+  var basemap = basemaps.value;
+  setBasemap(basemap);
+  }
 </script>
