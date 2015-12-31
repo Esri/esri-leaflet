@@ -104,7 +104,7 @@
         }
 
         // no error, features
-        if(!error && featureCollection && featureCollection.features.length){
+        if(!error && featureCollection && featureCollection.features.length && !this._removed){
           // schedule adding features until the next animation frame
           EsriLeaflet.Util.requestAnimationFrame(L.Util.bind(function(){
             this._addFeatures(featureCollection.features, coords);

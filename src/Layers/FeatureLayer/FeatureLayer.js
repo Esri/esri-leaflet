@@ -30,10 +30,13 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
     map.on('zoomstart zoomend', function(e){
       this._zooming = (e.type === 'zoomstart');
     }, this);
+    this._removed = false;
+
     return EsriLeaflet.Layers.FeatureManager.prototype.onAdd.call(this, map);
   },
 
   onRemove: function(map){
+    this._removed = true;
     for (var i in this._layers) {
       map.removeLayer(this._layers[i]);
     }
