@@ -23,6 +23,22 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * bug which caused `null` to sometimes be written to the attribution control (thanks brianbancroft!)
 * made sure relevant node script commands are OS agnostic
 
+## [1.0.2]
+
+### Fixed
+
+* Make sure appropriate behavior is encountered when removing feature layers from the map while web requests are pending. #691
+
+### Fixed
+
+* Ensure that we never try to remove the Esri logo from a map twice https://github.com/Esri/esri-leaflet/issues/667
+
+## [1.0.1]
+
+### Fixed
+
+* Ensure that we never try to remove the Esri logo from a map twice https://github.com/Esri/esri-leaflet/issues/667
+
 ## [2.0.0-beta.6]
 
 ### Fixed
@@ -108,12 +124,6 @@ L.esri.featureLayer({
 
 * All alternate/compact builds have been removed. They will be replaced with a new system for generating custom builds soon.
 * `L.esri.Request` has been removed. Please use `L.esri.get`, `L.esri.get.CORS`, `L.esri.get.JSONP`, `L.esri.post` or `L.esri.request` directly.
-
-## [1.0.1]
-
-### Fixed
-
-* Ensure that we never try to remove the Esri logo from a map twice https://github.com/Esri/esri-leaflet/issues/667
 
 ## [1.0.0]
 
