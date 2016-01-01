@@ -1,4 +1,4 @@
-export var VERSION = '2.0.0-beta.6';
+export var VERSION = '2.0.0-beta.7';
 
 // import base
 export { Support } from './Support';
