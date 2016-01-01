@@ -1,11 +1,11 @@
 ---
-title: L.esri.ClusteredFeatureLayer
+title: L.esri.Cluster.ClusteredFeatureLayer
 layout: documentation.hbs
 ---
 
 # {{page.data.title}}
 
-`L.esri.ClusteredFeatureLayer` provides integration for Feature Layers with the [Leaflet.markercluster plugin](https://github.com/Leaflet/Leaflet.markercluster). Because of the extra dependency on Leaflet.markercluster we do not include `L.esri.ClusteredFeatureLayer` in the default build of Esri Leaflet. It lives in /dist/extras/clustered-feature-layer.js. You will also need to include your own copy of the [Leaflet.markercluster plugin](https://github.com/Leaflet/Leaflet.markercluster).
+`L.esri.Cluster.ClusteredFeatureLayer` provides integration for Feature Layers with the [Leaflet.markercluster plugin](https://github.com/Leaflet/Leaflet.markercluster). Because of the extra dependency on Leaflet.markercluster we do not include `L.esri.Cluster.ClusteredFeatureLayer` in the default build of Esri Leaflet.  You will also need to include your own copy of the [Leaflet.markercluster plugin](https://github.com/Leaflet/Leaflet.markercluster).
 
 More information about Feature Layers can be found in the [`L.esri.FeatureLayer` documentation]({{assets}}api-reference/layers/feature-layer.html).
 
@@ -20,7 +20,7 @@ More information about Feature Layers can be found in the [`L.esri.FeatureLayer`
     </thead>
     <tbody>
         <tr>
-            <td><code class="nobr">L.esri.clusteredFeatureLayer({{{param 'Object' 'options'}}})</code></td>
+            <td><code class="nobr">L.esri.Cluster.clusteredFeatureLayer({{{param 'Object' 'options'}}})</code></td>
             <td>You must pass a <code>url</code> to a [Feature Layer](http://resources.arcgis.com/en/help/arcgis-rest-api/#/Layer/02r3000000w6000000/) in your <code>options</code></td>
         </tr>
     </tbody>
@@ -287,13 +287,12 @@ L.esri.basemapLayer("Streets").addTo(map);
 
 var url = "http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0";
 
-var busStops = new L.esri.ClusteredFeatureLayer({
+var busStops = L.esri.Cluster.clusteredFeatureLayer({
   url: url,
   // Cluster Options
   polygonOptions: {
     color: "#2d84c8"
   },
-
   // Feature Layer Options
   pointToLayer: function (geojson, latlng) {
     return L.circleMarker(latlng, 10, {
