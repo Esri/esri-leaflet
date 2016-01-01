@@ -1,4 +1,4 @@
-/*! esri-leaflet - v1.0.1 - 2015-11-02
+/*! esri-leaflet - v1.0.2 - 2015-12-31
 *   Copyright (c) 2015 Environmental Systems Research Institute, Inc.
 *   Apache License*/
 (function (factory) {
@@ -17,7 +17,7 @@
   }
 }(function (L) {
 var EsriLeaflet = { //jshint ignore:line
-  VERSION: '1.0.0',
+  VERSION: '1.0.2',
   Layers: {},
   Services: {},
   Controls: {},
@@ -1589,7 +1589,7 @@ EsriLeaflet.Layers.FeatureGrid = L.Class.extend({
         }
 
         // no error, features
-        if(!error && featureCollection && featureCollection.features.length){
+        if(!error && featureCollection && featureCollection.features.length && !this._removed){
           // schedule adding features until the next animation frame
           EsriLeaflet.Util.requestAnimationFrame(L.Util.bind(function(){
             this._addFeatures(featureCollection.features, coords);
@@ -2060,10 +2060,13 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
     map.on('zoomstart zoomend', function(e){
       this._zooming = (e.type === 'zoomstart');
     }, this);
+    this._removed = false;
+
     return EsriLeaflet.Layers.FeatureManager.prototype.onAdd.call(this, map);
   },
 
   onRemove: function(map){
+    this._removed = true;
     for (var i in this._layers) {
       map.removeLayer(this._layers[i]);
     }
