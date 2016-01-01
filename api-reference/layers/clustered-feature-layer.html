@@ -8,7 +8,7 @@
   <meta charset="utf-8">
 
   
-    <title>L.esri.ClusteredFeatureLayer | Esri Leaflet</title>
+    <title>L.esri.Cluster.ClusteredFeatureLayer | Esri Leaflet</title>
   
 
   
@@ -78,7 +78,7 @@
     <a href="../../../../esri-leaflet/api-reference/layers/dynamic-map-layer.html">Dynamic Map Layer</a>
     <a href="../../../../esri-leaflet/api-reference/layers/image-map-layer.html">Image Map Layer</a>
     <a class="plugin" href="../../../../esri-leaflet/api-reference/layers/heatmap-feature-layer.html">Heatmap Feature Layer</a>
-    <a class="plugin" href="../../../../esri-leaflet/api-reference/layers/coming-soon.html">Clustered Feature Layer</a>
+    <a class="plugin" href="../../../../esri-leaflet/api-reference/layers/clustered-feature-layer.html">Clustered Feature Layer</a>
   </nav>
 
   <h5>Controls</h5>
@@ -121,8 +121,8 @@
 
 
 <div class="main-content">
-  <h1 id="l-esri-clusteredfeaturelayer">L.esri.ClusteredFeatureLayer</h1>
-<p><code>L.esri.ClusteredFeatureLayer</code> provides integration for Feature Layers with the <a href="https://github.com/Leaflet/Leaflet.markercluster">Leaflet.markercluster plugin</a>. Because of the extra dependency on Leaflet.markercluster we do not include <code>L.esri.ClusteredFeatureLayer</code> in the default build of Esri Leaflet. It lives in /dist/extras/clustered-feature-layer.js. You will also need to include your own copy of the <a href="https://github.com/Leaflet/Leaflet.markercluster">Leaflet.markercluster plugin</a>.</p>
+  <h1 id="l-esri-cluster-clusteredfeaturelayer">L.esri.Cluster.ClusteredFeatureLayer</h1>
+<p><code>L.esri.Cluster.ClusteredFeatureLayer</code> provides integration for Feature Layers with the <a href="https://github.com/Leaflet/Leaflet.markercluster">Leaflet.markercluster plugin</a>. Because of the extra dependency on Leaflet.markercluster we do not include <code>L.esri.Cluster.ClusteredFeatureLayer</code> in the default build of Esri Leaflet.  You will also need to include your own copy of the <a href="https://github.com/Leaflet/Leaflet.markercluster">Leaflet.markercluster plugin</a>.</p>
 <p>More information about Feature Layers can be found in the <a href="../../../../esri-leaflet/api-reference/layers/feature-layer.html"><code>L.esri.FeatureLayer</code> documentation</a>.</p>
 <h3 id="constructor">Constructor</h3>
 <table>
@@ -134,7 +134,7 @@
     </thead>
     <tbody>
         <tr>
-            <td><code class="nobr">L.esri.clusteredFeatureLayer(<nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code></td>
+            <td><code class="nobr">L.esri.Cluster.clusteredFeatureLayer(<nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code></td>
             <td>You must pass a <code>url</code> to a <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Layer/02r3000000w6000000/">Feature Layer</a> in your <code>options</code></td>
         </tr>
     </tbody>
@@ -421,13 +421,12 @@ L.esri.basemapLayer(<span class="string">"Streets"</span>).addTo(map);
 
 <span class="keyword">var</span> url = <span class="string">"http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0"</span>;
 
-<span class="keyword">var</span> busStops = <span class="keyword">new</span> L.esri.ClusteredFeatureLayer({
+<span class="keyword">var</span> busStops = L.esri.Cluster.clusteredFeatureLayer({
   url: url,
   <span class="comment">// Cluster Options</span>
   polygonOptions: {
     color: <span class="string">"#2d84c8"</span>
   },
-
   <span class="comment">// Feature Layer Options</span>
   pointToLayer: <span class="function"><span class="keyword">function</span> <span class="params">(geojson, latlng)</span> {</span>
     <span class="keyword">return</span> L.circleMarker(latlng, <span class="number">10</span>, {
