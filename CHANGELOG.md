@@ -1,8 +1,14 @@
 # Changelog
 
+## 1.0.2
+
+### Fixed
+
+* Make sure appropriate behavior is encountered when removing feature layers from the map while web requests are pending. #691
+
 ## 1.0.1
 
-Fixed
+### Fixed
 
 * Ensure that we never try to remove the Esri logo from a map twice https://github.com/Esri/esri-leaflet/issues/667
 
