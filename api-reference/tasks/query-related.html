@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]> <html class="ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html class="ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html class="ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html class="ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="not-ie"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+
+  
+    <title>L.esri.Related.Query | Esri Leaflet</title>
+  
+
+  
+
+  <meta name="description" content="Esri Leaflet">
+  <meta name="viewport" content="width=device-width">
+
+  <!--[if lt IE 9]>
+    <script src="//cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv-printshiv.js"></script>
+  <![endif]-->
+
+  <!-- google fonts -->
+  <link href='//fonts.googleapis.com/css?family=Vollkorn:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="//brick.a.ssl.fastly.net/Source+Code+Pro:300">
+  <link href='//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+
+  <!-- stylesheet -->
+  <link rel="stylesheet" href="../../../../esri-leaflet/css/style.css">
+
+  <!-- leaflet -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.0-beta.2/leaflet.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.0-beta.2/leaflet.js"></script>
+
+  
+    <script src="//cdn.jsdelivr.net/leaflet.esri/2.0.0-beta.7/esri-leaflet.js"></script>
+    <script src="//cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
+  
+
+  <!-- Google Analytics -->
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-44963317-3', 'auto');
+    ga('send', 'pageview');
+  </script>
+  <!-- End Google Analytics -->
+</head>
+<body>
+  <div class="page-content ">
+    <div class="container">
+      <a class="site-nav" href="../../../../esri-leaflet/" class="left logo">Esri Leaflet</a>
+      <nav class="right">
+        <a class="site-nav" href="../../../../esri-leaflet/tutorials/">Tutorials</a>
+        <a class="site-nav" href="../../../../esri-leaflet/plugins/">Plugins</a>
+        <a class="site-nav" href="../../../../esri-leaflet/examples/">Examples</a>
+        <a class="site-nav" href="../../../../esri-leaflet/api-reference/">API Reference</a>
+        <a class="site-nav" href="../../../../esri-leaflet/download/">Download</a>
+        <a class="site-nav" href="https://github.com/Esri/esri-leaflet">View on GitHub</a>
+      </nav>
+    </div>
+    <div id="background-map" class="background-map"></div>
+
+  
+
+<div class="container white">
+  
+
+<aside class="sidebar">
+  <h5>Layers</h5>
+  <nav>
+    <a href="../../../../esri-leaflet/api-reference/layers/basemap-layer.html">Basemap Layer</a>
+    <a href="../../../../esri-leaflet/api-reference/layers/feature-layer.html">Feature Layer</a>
+    <a href="../../../../esri-leaflet/api-reference/layers/tiled-map-layer.html">Tiled Map Layer</a>
+    <a href="../../../../esri-leaflet/api-reference/layers/dynamic-map-layer.html">Dynamic Map Layer</a>
+    <a href="../../../../esri-leaflet/api-reference/layers/image-map-layer.html">Image Map Layer</a>
+    <a class="plugin" href="../../../../esri-leaflet/api-reference/layers/heatmap-feature-layer.html">Heatmap Feature Layer</a>
+    <a class="plugin" href="../../../../esri-leaflet/api-reference/layers/coming-soon.html">Clustered Feature Layer</a>
+  </nav>
+
+  <h5>Controls</h5>
+  <nav>
+    <a class="plugin" href="../../../../esri-leaflet/api-reference/controls/geosearch.html" class="plugin">Geosearch</a>
+  </nav>
+
+  <h5>Tasks</h5>
+  <nav>
+    <a href="../../../../esri-leaflet/api-reference/tasks/query.html">Query</a>
+    <a href="../../../../esri-leaflet/api-reference/tasks/find.html">Find</a>
+    <a href="../../../../esri-leaflet/api-reference/tasks/identify-features.html">Identify Features</a>
+    <a href="../../../../esri-leaflet/api-reference/tasks/identify-image.html">Identify Image</a>
+    <a class="plugin" href="../../../../esri-leaflet/api-reference/tasks/geocode.html">Geocode</a>
+    <a class="plugin" href="../../../../esri-leaflet/api-reference/tasks/reverse-geocode.html">Reverse Geocode</a>
+    <a class="plugin" href="../../../../esri-leaflet/api-reference/tasks/suggest.html">Suggest</a>
+    <a class="plugin" href="../../../../esri-leaflet/api-reference/tasks/gp-task.html">Geoprocessing Task</a>
+    <a class="plugin" href="../../../../esri-leaflet/api-reference/tasks/query-related.html">Query Related</a>
+  </nav>
+
+  <h5>Base Classes</h5>
+  <nav>
+    <a href="../../../../esri-leaflet/api-reference/services/image-service.html">ImageService</a>
+    <a href="../../../../esri-leaflet/api-reference/services/feature-layer-service.html">FeatureLayerService</a>
+    <a href="../../../../esri-leaflet/api-reference/services/map-service.html">MapService</a>
+    <a class="plugin" href="../../../../esri-leaflet/api-reference/services/geocode-service.html">Geocode Service</a>
+    <a class="plugin" href="../../../../esri-leaflet/api-reference/services/gp-service.html">Geoprocessing Service</a>
+    <a href="../../../../esri-leaflet/api-reference/tasks/task.html">Task</a>
+    <a href="../../../../esri-leaflet/api-reference/services/service.html">Service</a>
+    <a href="../../../../esri-leaflet/api-reference/layers/raster-layer.html">Raster Layer</a>
+  </nav>
+
+  <h5>Misc.</h5>
+  <nav>
+    <a href="../../../../esri-leaflet/api-reference/request.html">Request</a>
+    <a href="../../../../esri-leaflet/api-reference/util.html">Util</a>
+    <a href="../../../../esri-leaflet/api-reference/events.html">Events</a>
+  </nav>
+</aside>
+
+
+<div class="main-content">
+  <h1 id="l-esri-related-query">L.esri.Related.Query</h1>
+<p>An abstraction to assist querying related tables published in ArcGIS Server or ArcGIS Online.  You can find more information and the source code for this plugin <a href="https://github.com/jgravois/esri-leaflet-related">here</a>.</p>
+<h3 id="constructor">Constructor</h3>
+<p>Extends <a href="task.html"><code>L.esri.Task</code></a></p>
+<table>
+    <thead>
+        <tr>
+            <th>Constructor</th>
+            <td>Options</td>
+            <td>Description</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>L.esri.Related.query(<nobr class="param"><span>&lt;L.esri.FeatureLayer&gt;</span> <code>endpoint</code></nobr>)</code><br>or<br><code>L.esri.Related.query(<nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code></td>
+            <td><code><code>&lt;L.esri.FeatureLayer&gt;</code> or <code>&lt;Options&gt;</code></code></td>
+            <td>Accepts either an <code>options</code> object or an instance of <a href="../layers/feature-layer.html"><code>L.esri.FeatureLayer</code></a>.</td>
+        </tr>
+    </tbody>
+</table>
+
+<h3 id="options">Options</h3>
+<p>Accepts all <a href="task.html#options"><code>L.esri.Task</code></a> options. When used, the <code>url</code> option is required.</p>
+<h3 id="methods">Methods</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Method</th>
+            <td>Returns</td>
+            <td>Description</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>objectIds(<nobr class="param"><span>&lt;Array&gt;</span> <code>objectIds</code></nobr> or <nobr class="param"><span>&lt;String&gt;</span> <code>objectId</code></nobr>)</code></td>
+            <td><code><code>this</code></code></td>
+            <td>The ObjectId(s) of the features to query for related records.</td>
+        </tr>
+        <tr>
+            <td><code>relationshipId(<nobr class="param"><span>&lt;String&gt;</span> <code>relationship id</code></nobr>)</code></td>
+            <td><code><code>this</code></code></td>
+            <td>The id of the relationship itself.</td>
+        </tr>
+        <tr>
+            <td><code>run(<nobr class="param"><span>&lt;Function&gt;</span> <code>callback</code></nobr>)</code></td>
+            <td><code><code>this</code></code></td>
+            <td>Executes the query, passing the previously supplied input parameters.</td>
+        </tr>
+        <tr>
+            <td><code>fields(<nobr class="param"><span>&lt;Array&gt;</span> <code>fields</code></nobr> or <nobr class="param"><span>&lt;String&gt;</span> <code>field</code></nobr>)</code></td>
+            <td><code><code>this</code></code></td>
+            <td>(Optional) Indicates which fields from matched records to include in response (default is &#39;all&#39;).</td>
+        </tr>
+        <tr>
+            <td><code>returnGeometry(<nobr class="param"><span>&lt;Boolean&gt;</span> <code>true</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>value</code></nobr>)</code></td>
+            <td><code><code>this</code></code></td>
+            <td>(Optional) Indicates whether or request the geometry of response features (default is true).</td>
+        </tr>
+        <tr>
+            <td><code>returnZ(<nobr class="param"><span>&lt;Boolean&gt;</span> <code>true</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>value</code></nobr>)</code></td>
+            <td><code><code>this</code></code></td>
+            <td>(Optional) Indicates whether to request information about elevation in response features (default is true).</td>
+        </tr>
+        <tr>
+            <td><code>returnM(<nobr class="param"><span>&lt;Boolean&gt;</span> <code>true</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>value</code></nobr>)</code></td>
+            <td><code><code>this</code></code></td>
+            <td>(Optional) Indicates whether to request information about 4-D M values in response features (default is false).</td>
+        </tr>
+        <tr>
+            <td><code>precision(<nobr class="param"><span>&lt;Number&gt;</span> <code>number</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>value</code></nobr>)</code></td>
+            <td><code><code>this</code></code></td>
+            <td>(Optional) Indicates the desired decimal precision of response feature geometries.</td>
+        </tr>
+        <tr>
+            <td><code>definitionExpression(<nobr class="param"><span>&lt;String&gt;</span> <code>sqlfilter</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>value</code></nobr>)</code></td>
+            <td><code><code>this</code></code></td>
+            <td>(Optional) An opportunity to specify a SQL <code>where</code> clause to further filter results. (Example: &quot;STATE_NAME = &#39;California&#39;&quot;)</td>
+        </tr>
+    </tbody>
+</table>
+
+<h3 id="results">Results</h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>features</code></td>
+<td><code>[&lt;L.geoJson&gt;]</code></td>
+<td>The result of a valid request will be composed of an array of <a href="http://leafletjs.com/reference.html#geojson">L.geoJson</a> features.</td>
+</tr>
+</tbody>
+</table>
+<p>Example</p>
+<pre><code class="language-js">{
+  features: [{
+    <span class="string">"type"</span>: <span class="string">"Feature"</span>,
+    <span class="string">"properties"</span>: {
+      ...
+    },
+    <span class="string">"id"</span>: <span class="number">1</span>
+  },
+  ...
+  ]
+}</code></pre>
+
+  <p><a href="http://github.com/esri/esri-leaflet/edit/master/site/source/pages/api-reference/tasks/query-related.md">Edit this page on GitHub</a></p>
+</div>
+  <div style='clear:both;'></div>
+</div>
+<div class="container centered-text">
+  <p class="copyright">Esri Leaflet is a project from the <a href="http://pdx.esri.com">Esri PDX R&amp;D Center</a> and the <a href="https://github.com/Esri/esri-leaflet/graphs/contributors">Esri Community</a></p>
+</div>
+
+  </div>
+  <script src="../../../../esri-leaflet/js/script.js"></script>
+  </body>
+</html>

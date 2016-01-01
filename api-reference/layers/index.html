@@ -29,13 +29,12 @@
   <link rel="stylesheet" href="../../../../esri-leaflet/css/style.css">
 
   <!-- leaflet -->
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/leaflet/0.7.3/leaflet.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.0-beta.2/leaflet.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.0-beta.2/leaflet.js"></script>
 
-  <!-- require combined leaflet, esri leaflet and jsdelivr-rum -->
-  <script src="//cdn.jsdelivr.net/leaflet/latest/leaflet.js"></script>
-  <script src="//cdn.jsdelivr.net/leaflet.esri/1.0.0/esri-leaflet.js"></script>
-  <script src="//cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
-
+  
+    <script src="//cdn.jsdelivr.net/leaflet.esri/2.0.0-beta.7/esri-leaflet.js"></script>
+    <script src="//cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
   
 
   <!-- Google Analytics -->
@@ -55,6 +54,8 @@
     <div class="container">
       <a class="site-nav" href="../../../../esri-leaflet/" class="left logo">Esri Leaflet</a>
       <nav class="right">
+        <a class="site-nav" href="../../../../esri-leaflet/tutorials/">Tutorials</a>
+        <a class="site-nav" href="../../../../esri-leaflet/plugins/">Plugins</a>
         <a class="site-nav" href="../../../../esri-leaflet/examples/">Examples</a>
         <a class="site-nav" href="../../../../esri-leaflet/api-reference/">API Reference</a>
         <a class="site-nav" href="../../../../esri-leaflet/download/">Download</a>
@@ -69,25 +70,45 @@
   
 
 <aside class="sidebar">
-  <h5>L.esri.Layers</h5>
+  <h5>Layers</h5>
   <nav>
-    <a href="../../../../esri-leaflet/api-reference/layers/basemap-layer.html">BasemapLayer</a>
-    <a href="../../../../esri-leaflet/api-reference/layers/feature-layer.html">FeatureLayer</a>
-    <a href="../../../../esri-leaflet/api-reference/layers/tiled-map-layer.html">TiledMapLayer</a>
-    <a href="../../../../esri-leaflet/api-reference/layers/dynamic-map-layer.html">DynamicMapLayer</a>
-    <a href="../../../../esri-leaflet/api-reference/layers/image-map-layer.html">ImageMapLayer</a>
-    <a href="../../../../esri-leaflet/api-reference/layers/raster-layer.html">RasterLayer</a>
-    <a href="../../../../esri-leaflet/api-reference/layers/clustered-feature-layer.html">ClusteredFeatureLayer</a>
-    <a href="../../../../esri-leaflet/api-reference/layers/heatmap-feature-layer.html">HeatmapFeatureLayer</a>
+    <a href="../../../../esri-leaflet/api-reference/layers/basemap-layer.html">Basemap Layer</a>
+    <a href="../../../../esri-leaflet/api-reference/layers/feature-layer.html">Feature Layer</a>
+    <a href="../../../../esri-leaflet/api-reference/layers/tiled-map-layer.html">Tiled Map Layer</a>
+    <a href="../../../../esri-leaflet/api-reference/layers/dynamic-map-layer.html">Dynamic Map Layer</a>
+    <a href="../../../../esri-leaflet/api-reference/layers/image-map-layer.html">Image Map Layer</a>
+    <a class="plugin" href="../../../../esri-leaflet/api-reference/layers/heatmap-feature-layer.html">Heatmap Feature Layer</a>
+    <a class="plugin" href="../../../../esri-leaflet/api-reference/layers/coming-soon.html">Clustered Feature Layer</a>
   </nav>
 
-  <h5>L.esri.Tasks</h5>
+  <h5>Controls</h5>
+  <nav>
+    <a class="plugin" href="../../../../esri-leaflet/api-reference/controls/geosearch.html" class="plugin">Geosearch</a>
+  </nav>
+
+  <h5>Tasks</h5>
   <nav>
     <a href="../../../../esri-leaflet/api-reference/tasks/query.html">Query</a>
     <a href="../../../../esri-leaflet/api-reference/tasks/find.html">Find</a>
     <a href="../../../../esri-leaflet/api-reference/tasks/identify-features.html">Identify Features</a>
     <a href="../../../../esri-leaflet/api-reference/tasks/identify-image.html">Identify Image</a>
+    <a class="plugin" href="../../../../esri-leaflet/api-reference/tasks/geocode.html">Geocode</a>
+    <a class="plugin" href="../../../../esri-leaflet/api-reference/tasks/reverse-geocode.html">Reverse Geocode</a>
+    <a class="plugin" href="../../../../esri-leaflet/api-reference/tasks/suggest.html">Suggest</a>
+    <a class="plugin" href="../../../../esri-leaflet/api-reference/tasks/gp-task.html">Geoprocessing Task</a>
+    <a class="plugin" href="../../../../esri-leaflet/api-reference/tasks/query-related.html">Query Related</a>
+  </nav>
+
+  <h5>Base Classes</h5>
+  <nav>
+    <a href="../../../../esri-leaflet/api-reference/services/image-service.html">ImageService</a>
+    <a href="../../../../esri-leaflet/api-reference/services/feature-layer-service.html">FeatureLayerService</a>
+    <a href="../../../../esri-leaflet/api-reference/services/map-service.html">MapService</a>
+    <a class="plugin" href="../../../../esri-leaflet/api-reference/services/geocode-service.html">Geocode Service</a>
+    <a class="plugin" href="../../../../esri-leaflet/api-reference/services/gp-service.html">Geoprocessing Service</a>
     <a href="../../../../esri-leaflet/api-reference/tasks/task.html">Task</a>
+    <a href="../../../../esri-leaflet/api-reference/services/service.html">Service</a>
+    <a href="../../../../esri-leaflet/api-reference/layers/raster-layer.html">Raster Layer</a>
   </nav>
 
   <h5>Misc.</h5>
@@ -96,14 +117,6 @@
     <a href="../../../../esri-leaflet/api-reference/util.html">Util</a>
     <a href="../../../../esri-leaflet/api-reference/events.html">Events</a>
   </nav>
-
-  <h5>Base Classes</h5>
-  <nav>
-    <a href="../../../../esri-leaflet/api-reference/services/image-service.html">ImageService</a>
-    <a href="../../../../esri-leaflet/api-reference/services/feature-layer-service.html">FeatureLayerService</a>
-    <a href="../../../../esri-leaflet/api-reference/services/map-service.html">MapService</a>
-    <a href="../../../../esri-leaflet/api-reference/services/service.html">Service</a>
-  </nav>
 </aside>
 
 
@@ -111,13 +124,13 @@
   <h1 id="l-esri-layers">L.esri.Layers</h1>
 <p>Layers provide visualization capabilities for data hosted in Feature Services, Map Services and Image Services.</p>
 <ul>
-<li><a href="../../../../esri-leaflet/api-reference/layers/basemap-layer.html"><code>L.esri.Layers.BasemapLayer</code></a></li>
-<li><a href="../../../../esri-leaflet/api-reference/layers/dynamic-map-layer.html"><code>L.esri.Layers.DynamicMapLayer</code></a></li>
-<li><a href="../../../../esri-leaflet/api-reference/layers/image-map-layer.html"><code>L.esri.Layers.ImageMapLayer</code></a></li>
-<li><a href="../../../../esri-leaflet/api-reference/layers/tiled-map-layer.html"><code>L.esri.Layers.TiledMapLayer</code></a></li>
-<li><a href="../../../../esri-leaflet/api-reference/layers/feature-layer.html"><code>L.esri.Layers.FeatureLayer</code></a></li>
-<li><a href="../../../../esri-leaflet/api-reference/layers/clustered-feature-layer.html"><code>L.esri.Layers.ClusteredFeatureLayer</code></a></li>
-<li><a href="../../../../esri-leaflet/api-reference/layers/heatmap-feature-layer.html"><code>L.esri.Layers.HeatmapFeatureLayer</code></a></li>
+<li><a href="../../../../esri-leaflet/api-reference/layers/basemap-layer.html"><code>L.esri.BasemapLayer</code></a></li>
+<li><a href="../../../../esri-leaflet/api-reference/layers/dynamic-map-layer.html"><code>L.esri.DynamicMapLayer</code></a></li>
+<li><a href="../../../../esri-leaflet/api-reference/layers/image-map-layer.html"><code>L.esri.ImageMapLayer</code></a></li>
+<li><a href="../../../../esri-leaflet/api-reference/layers/tiled-map-layer.html"><code>L.esri.TiledMapLayer</code></a></li>
+<li><a href="../../../../esri-leaflet/api-reference/layers/feature-layer.html"><code>L.esri.FeatureLayer</code></a></li>
+<li><a href="../../../../esri-leaflet/api-reference/layers/clustered-feature-layer.html"><code>L.esri.ClusteredFeatureLayer</code></a></li>
+<li><a href="../../../../esri-leaflet/api-reference/layers/heatmap-feature-layer.html"><code>L.esri.HeatmapFeatureLayer</code></a></li>
 </ul>
 
   <p><a href="http://github.com/esri/esri-leaflet/edit/master/site/source/pages/api-reference/layers/index.md">Edit this page on GitHub</a></p>

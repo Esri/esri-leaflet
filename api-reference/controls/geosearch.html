@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]> <html class="ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html class="ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html class="ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html class="ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="not-ie"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+
+  
+    <title>L.esri.Geocoding.Geosearch | Esri Leaflet</title>
+  
+
+  
+
+  <meta name="description" content="Esri Leaflet">
+  <meta name="viewport" content="width=device-width">
+
+  <!--[if lt IE 9]>
+    <script src="//cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv-printshiv.js"></script>
+  <![endif]-->
+
+  <!-- google fonts -->
+  <link href='//fonts.googleapis.com/css?family=Vollkorn:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="//brick.a.ssl.fastly.net/Source+Code+Pro:300">
+  <link href='//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+
+  <!-- stylesheet -->
+  <link rel="stylesheet" href="../../../../esri-leaflet/css/style.css">
+
+  <!-- leaflet -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.0-beta.2/leaflet.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.0-beta.2/leaflet.js"></script>
+
+  
+    <script src="//cdn.jsdelivr.net/leaflet.esri/2.0.0-beta.7/esri-leaflet.js"></script>
+    <script src="//cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
+  
+
+  <!-- Google Analytics -->
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-44963317-3', 'auto');
+    ga('send', 'pageview');
+  </script>
+  <!-- End Google Analytics -->
+</head>
+<body>
+  <div class="page-content ">
+    <div class="container">
+      <a class="site-nav" href="../../../../esri-leaflet/" class="left logo">Esri Leaflet</a>
+      <nav class="right">
+        <a class="site-nav" href="../../../../esri-leaflet/tutorials/">Tutorials</a>
+        <a class="site-nav" href="../../../../esri-leaflet/plugins/">Plugins</a>
+        <a class="site-nav" href="../../../../esri-leaflet/examples/">Examples</a>
+        <a class="site-nav" href="../../../../esri-leaflet/api-reference/">API Reference</a>
+        <a class="site-nav" href="../../../../esri-leaflet/download/">Download</a>
+        <a class="site-nav" href="https://github.com/Esri/esri-leaflet">View on GitHub</a>
+      </nav>
+    </div>
+    <div id="background-map" class="background-map"></div>
+
+  
+
+<div class="container white">
+  
+
+<aside class="sidebar">
+  <h5>Layers</h5>
+  <nav>
+    <a href="../../../../esri-leaflet/api-reference/layers/basemap-layer.html">Basemap Layer</a>
+    <a href="../../../../esri-leaflet/api-reference/layers/feature-layer.html">Feature Layer</a>
+    <a href="../../../../esri-leaflet/api-reference/layers/tiled-map-layer.html">Tiled Map Layer</a>
+    <a href="../../../../esri-leaflet/api-reference/layers/dynamic-map-layer.html">Dynamic Map Layer</a>
+    <a href="../../../../esri-leaflet/api-reference/layers/image-map-layer.html">Image Map Layer</a>
+    <a class="plugin" href="../../../../esri-leaflet/api-reference/layers/heatmap-feature-layer.html">Heatmap Feature Layer</a>
+    <a class="plugin" href="../../../../esri-leaflet/api-reference/layers/coming-soon.html">Clustered Feature Layer</a>
+  </nav>
+
+  <h5>Controls</h5>
+  <nav>
+    <a class="plugin" href="../../../../esri-leaflet/api-reference/controls/geosearch.html" class="plugin">Geosearch</a>
+  </nav>
+
+  <h5>Tasks</h5>
+  <nav>
+    <a href="../../../../esri-leaflet/api-reference/tasks/query.html">Query</a>
+    <a href="../../../../esri-leaflet/api-reference/tasks/find.html">Find</a>
+    <a href="../../../../esri-leaflet/api-reference/tasks/identify-features.html">Identify Features</a>
+    <a href="../../../../esri-leaflet/api-reference/tasks/identify-image.html">Identify Image</a>
+    <a class="plugin" href="../../../../esri-leaflet/api-reference/tasks/geocode.html">Geocode</a>
+    <a class="plugin" href="../../../../esri-leaflet/api-reference/tasks/reverse-geocode.html">Reverse Geocode</a>
+    <a class="plugin" href="../../../../esri-leaflet/api-reference/tasks/suggest.html">Suggest</a>
+    <a class="plugin" href="../../../../esri-leaflet/api-reference/tasks/gp-task.html">Geoprocessing Task</a>
+    <a class="plugin" href="../../../../esri-leaflet/api-reference/tasks/query-related.html">Query Related</a>
+  </nav>
+
+  <h5>Base Classes</h5>
+  <nav>
+    <a href="../../../../esri-leaflet/api-reference/services/image-service.html">ImageService</a>
+    <a href="../../../../esri-leaflet/api-reference/services/feature-layer-service.html">FeatureLayerService</a>
+    <a href="../../../../esri-leaflet/api-reference/services/map-service.html">MapService</a>
+    <a class="plugin" href="../../../../esri-leaflet/api-reference/services/geocode-service.html">Geocode Service</a>
+    <a class="plugin" href="../../../../esri-leaflet/api-reference/services/gp-service.html">Geoprocessing Service</a>
+    <a href="../../../../esri-leaflet/api-reference/tasks/task.html">Task</a>
+    <a href="../../../../esri-leaflet/api-reference/services/service.html">Service</a>
+    <a href="../../../../esri-leaflet/api-reference/layers/raster-layer.html">Raster Layer</a>
+  </nav>
+
+  <h5>Misc.</h5>
+  <nav>
+    <a href="../../../../esri-leaflet/api-reference/request.html">Request</a>
+    <a href="../../../../esri-leaflet/api-reference/util.html">Util</a>
+    <a href="../../../../esri-leaflet/api-reference/events.html">Events</a>
+  </nav>
+</aside>
+
+
+<div class="main-content">
+  <h1 id="l-esri-geocoding-geosearch">L.esri.Geocoding.Geosearch</h1>
+<p><code>L.esri.Geocoding.Geosearch</code> is a control for auto-complete enabled search.  You can find more information and the source code for this plugin <a href="https://github.com/Esri/esri-leaflet-geocoder">here</a>.</p>
+<h3 id="constructor">Constructor</h3>
+<p>Extends <a href="http://leafletjs.com/reference.html#control"><code>L.Control</code></a></p>
+<table>
+    <thead>
+        <tr>
+            <th>Constructor</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+            <code>L.esri.Geocoding.geosearch(<nobr class="param"><span>&lt;GeosearchObject&gt;</span> <code>options</code></nobr>)</code><br><br>
+            </td>
+            <td>Creates a new Geosearch control</td>
+        </tr>
+    </tbody>
+</table>
+
+<h3 id="options">Options</h3>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>position</code></td>
+<td><code>String</code></td>
+<td><code>&#39;topleft&#39;</code></td>
+<td>Expects a valid Leaflet <a href="http://leafletjs.com/reference.html#control-positions">control position</a>.</td>
+</tr>
+<tr>
+<td><code>zoomToResult</code></td>
+<td><code>Boolean</code></td>
+<td><code>true</code></td>
+<td>Determines whether or not the map will zoom to the result after geocoding is complete.</td>
+</tr>
+<tr>
+<td><code>useMapBounds</code></td>
+<td><code>Boolean</code> or <code>Integer</code></td>
+<td><code>12</code></td>
+<td>Determines if and when the geocoder should use the bounds of the map to filter search results. If <code>true</code> the geocoder will always return results in the current map bounds. If <code>false</code> it will always search the world. If an integer (like <code>11</code>) is passed, the geocoder will use the bounds of the map for searching only if the map is currently zoomed in far enough.</td>
+</tr>
+<tr>
+<td><code>collapseAfterResult</code></td>
+<td><code>Boolean</code></td>
+<td><code>true</code></td>
+<td>Determines whether or not the geocoder should collapse after a result is found.</td>
+</tr>
+<tr>
+<td><code>expanded</code></td>
+<td><code>Boolean</code></td>
+<td><code>false</code></td>
+<td>Determines whether or not the geocoder starts in an expanded state.</td>
+</tr>
+<tr>
+<td><code>maxResults</code></td>
+<td><code>Integer</code></td>
+<td><code>25</code></td>
+<td>Determines how many results to request from geocoding services.  Hard limit for the <a href="https://developers.arcgis.com/rest/geocode/api-reference/overview-world-geocoding-service.htm">ArcGIS World Geocoding Service</a> is 50.</td>
+</tr>
+<tr>
+<td><code>allowMultipleResults</code></td>
+<td><code>Boolean</code></td>
+<td><code>true</code></td>
+<td>If set to <code>true</code> and the user submits the form without a suggestion, the control will geocode the current text in the input.</td>
+</tr>
+<tr>
+<td><code>providers</code></td>
+<td><code>Array</code></td>
+<td>See description</td>
+<td>An array of <a href="#Providers">providers</a> to search.</td>
+</tr>
+<tr>
+<td><code>placeholder</code></td>
+<td><code>String</code></td>
+<td>&#39;Search for places or addresses&#39;</td>
+<td>Placeholder text for the search input.</td>
+</tr>
+<tr>
+<td><code>title</code></td>
+<td><code>String</code></td>
+<td>&#39;Location Search&#39;</td>
+<td>Title text for the search input. Shows as a tooltip on hover.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="events">Events</h3>
+<table>
+<thead>
+<tr>
+<th>Event</th>
+<th>Data</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>results</td>
+<td><a href="#Results"><code>&lt;ResultsEvent&gt;</code></a></td>
+<td>Fired when results are returned from the geocoder.</td>
+</tr>
+</tbody>
+</table>
+<p>Events from each provider will match the events fired by <a href="../services/service.html"><code>L.esri.Service</code></a>.</p>
+<h3 id="methods">Methods</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Method</th>
+            <th>Returns</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>clear()</code></td>
+            <td><code>this</code></td>
+            <td>Clears the current text and collapses the control if <code>collapseAfterResult</code> is true.
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<h3 id="styling">Styling</h3>
+<p>For reference here is the internal DOM structure of the geocoder</p>
+<pre><code class="language-xml"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"geocoder-control leaflet-control"</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">input</span> <span class="attribute">class</span>=<span class="value">"geocoder-control-input leaflet-bar"</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">ul</span> <span class="attribute">class</span>=<span class="value">"geocoder-control-suggestions leaflet-bar"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">li</span> <span class="attribute">class</span>=<span class="value">"geocoder-control-suggestion geocoder-control-selected"</span>&gt;</span>The Selected Result<span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">li</span> <span class="attribute">class</span>=<span class="value">"geocoder-control-suggestion"</span>&gt;</span>Another Result<span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">div</span>&gt;</span></code></pre>
+<h3 id="providers">Providers</h3>
+<p>The <code>Geosearch</code> control can also search for results from a variety of sources including Feature Layers and Map Services. This is done with plain text matching and is not &quot;real&quot; geocoding. But it allows you to mix custom results into a search box.</p>
+<pre><code class="language-js"><span class="keyword">var</span> arcgisOnline = L.esri.Geocoding.arcgisOnlineProvider();
+<span class="keyword">var</span> gisDay = L.esri.Geocoding.featureLayerProvider({
+  url: <span class="string">'https://services.arcgis.com/uCXeTVveQzP4IIcx/arcgis/rest/services/GIS_Day_Final/FeatureServer/0'</span>,
+  searchFields: [<span class="string">'Name'</span>, <span class="string">'Organization'</span>], <span class="comment">// Search these fields for text matches</span>
+  label: <span class="string">'GIS Day Events'</span>, <span class="comment">// Group suggestions under this header</span>
+  formatSuggestion: <span class="function"><span class="keyword">function</span><span class="params">(feature)</span>{</span>
+    <span class="keyword">return</span> feature.properties.Name + <span class="string">' - '</span> + feature.properties.Organization; <span class="comment">// format suggestions like this.</span>
+  }
+});
+
+L.esri.Geocoding.Controls.geosearch({
+  providers: [arcgisOnline, gisDay] <span class="comment">// will geocode via ArcGIS Online and search the GIS Day feature service.</span>
+}).addTo(map);</code></pre>
+<h4 id="available-providers">Available Providers</h4>
+<ul>
+<li><p><code>L.esri.Geocoding.arcgisOnlineProvider</code><br>uses the ArcGIS Online World Geocoding service.</p>
+</li>
+<li><p><code>L.esri.Geocoding.featureLayerProvider</code><br>gets results by querying a Feature Layer for text matches.</p>
+</li>
+<li><p><code>L.esri.Geocoding.mapServiceProvider</code><br>uses the find and query methods of ArcGIS Server Map Services to get text matches.</p>
+</li>
+<li><p><code>L.esri.Geocoding.geocodeServiceProvider</code><br>uses an ArcGIS Server Geocode Service (and supports suggestions from ArcGIS Server 10.3+ enabled endpoints).</p>
+</li>
+</ul>
+<h4 id="providers">Providers</h4>
+<p>All providers share the following options:</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>label</td>
+<td><code>String</code></td>
+<td><code>&#39;Provider Type&#39;</code></td>
+<td>Text that will be used to group suggestions (when more than one provider is used).</td>
+</tr>
+<tr>
+<td>maxResults</td>
+<td><code>Integer</code></td>
+<td><code>5</code></td>
+<td>Maximum number of results to show for the provider.</td>
+</tr>
+<tr>
+<td>attribution</td>
+<td><code>string</code></td>
+<td><code>Varies by provider</code></td>
+<td>Adds attribution to the map to credit the source.</td>
+</tr>
+</tbody>
+</table>
+<h5 id="arcgisonlineprovider">arcgisOnlineProvider</h5>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>countries</code></td>
+<td><code>String</code> <code>[Strings]</code></td>
+<td>null</td>
+<td>Limit results to one or more countries. Any ISO 3166 2 or 3 digit <a href="https://developers.arcgis.com/rest/geocode/api-reference/geocode-coverage.htm">country code supported by the ArcGIS World Geocode service</a> is allowed. <em>Note</em> using an array of country codes may result in inaccurate results even when a specific suggestion is supplied.</td>
+</tr>
+<tr>
+<td><code>categories</code></td>
+<td><code>String</code> <code>[Strings]</code></td>
+<td>null</td>
+<td>Limit results to one or more categories. See the <a href="https://developers.arcgis.com/rest/geocode/api-reference/geocoding-category-filtering.htm#ESRI_SECTION1_502B3FE2028145D7B189C25B1A00E17B">list of valid categories</a> for possible values.</td>
+</tr>
+<tr>
+<td><code>forStorage</code></td>
+<td><code>Boolean</code></td>
+<td>false</td>
+<td>Indicates whether results will be stored permanently.  More information can be found <a href="https://developers.arcgis.com/rest/geocode/api-reference/geocoding-free-vs-paid.htm">here</a>.</td>
+</tr>
+</tbody>
+</table>
+<p>Results from the <code>arcgisOnlineProvider</code> will have an additional <code>properties</code> key which will correspond with <a href="https://developers.arcgis.com/rest/geocode/api-reference/geocoding-service-output.htm#ESRI_SECTION1_42D7D3D0231241E9B656C01438209440">all available fields on the ArcGIS Online World Geocode service</a></p>
+<h5 id="geocodeserviceprovider">geocodeServiceProvider</h5>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>url</code></td>
+<td><code>String</code></td>
+<td><em>Required</em></td>
+<td>The URL for the service that will be searched.</td>
+</tr>
+<tr>
+<td><code>label</code></td>
+<td><code>String</code></td>
+<td><code>&#39;Geocode Service&#39;</code></td>
+<td>Text that will be used to group suggestions under when more than one provider is being used.</td>
+</tr>
+<tr>
+<td><code>maxResults</code></td>
+<td><code>Integer</code></td>
+<td>5</td>
+<td>Maximum number of results to show for this provider.</td>
+</tr>
+</tbody>
+</table>
+<p>Results from the <code>geocodeServiceProvider</code> will have an additional <code>properties</code> key which will correspond with all the available fields in the service.</p>
+<h5 id="featurelayerprovider">featureLayerProvider</h5>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>url</code></td>
+<td><code>String</code></td>
+<td><em>Required</em></td>
+<td>The URL for the service that will be searched.</td>
+</tr>
+<tr>
+<td><code>searchFields</code></td>
+<td><code>String</code> <code>Array[Strings]</code></td>
+<td>None</td>
+<td>An array of fields to search for text.</td>
+</tr>
+<tr>
+<td><code>formatSuggestion</code></td>
+<td><code>Function</code></td>
+<td>See Description</td>
+<td>Formatting function for the suggestion text. Receives feature information and returns a string.</td>
+</tr>
+<tr>
+<td><code>bufferRadius</code></td>
+<td><code>Integer</code></td>
+<td>If a service or layer contains points, buffer points by this radius to create bounds.</td>
+</tr>
+</tbody>
+</table>
+<p>Results from the <code>featureLayerProvider</code> will have an additional <code>properties</code> key which will contain all the information for the feature and a <code>geojson</code> key that will contain a <a href="http://geojson.org/">GeoJSON</a> representation of the feature.</p>
+<h5 id="mapserviceprovider">mapServiceProvider</h5>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>url</code></td>
+<td><code>String</code></td>
+<td><em>Required</em></td>
+<td>The URL for the service that will be searched.</td>
+</tr>
+<tr>
+<td><code>searchFields</code></td>
+<td><code>String</code> <code>Array[Strings]</code></td>
+<td>None</td>
+<td>An array of fields to search for text.</td>
+</tr>
+<tr>
+<td><code>layer</code></td>
+<td><code>Integer</code></td>
+<td><code>0</code></td>
+<td>The layer to find text matches on. Can also be an array of layer identifiers.</td>
+</tr>
+<tr>
+<td><code>formatSuggestion</code></td>
+<td><code>Function</code></td>
+<td>See Description</td>
+<td>Formatting function for the suggestion text. Receives feature information and returns a string.</td>
+</tr>
+<tr>
+<td><code>bufferRadius</code>,</td>
+<td><code>Integer</code> <code>Array[Integers]</code></td>
+<td>Buffer point results by this radius to create bounds.</td>
+</tr>
+</tbody>
+</table>
+<p>Results from the <code>mapServiceProvider</code> will have an additional <code>properties</code> key which will contain all the information for the feature and a <code>geojson</code> key that will contain a <a href="http://geojson.org/">GeoJSON</a> representation of the feature.</p>
+<p>Events from each provider will match the events fired by <a href="../services/service.html"><code>L.esri.Service</code></a>.</p>
+<h4 id="results">Results</h4>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>bounds</code></td>
+<td><a href="http://leafletjs.com/reference.html#latlngbounds"><code>L.LatLngBounds</code></a></td>
+<td>The bounds around this suggestion. Helpful for zooming to results like cities and states.</td>
+</tr>
+<tr>
+<td><code>latlng</code></td>
+<td><a href="http://leafletjs.com/reference.html#latlng"><code>L.LatLng</code></a></td>
+<td>The center of the results.</td>
+</tr>
+<tr>
+<td><code>results</code></td>
+<td><a href="#result-object"><code>[&lt;ResultObject&gt;]</code></a></td>
+<td>An array of <a href="#result-object">result objects</a>.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="result-object">Result Object</h4>
+<p>A single result from a provider. You should not rely on all these properties being present in every result object. Some providers may add additional properties.</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>text</code></td>
+<td><code>String</code></td>
+<td>The text that was passed to the provider.</td>
+</tr>
+<tr>
+<td><code>bounds</code></td>
+<td><a href="http://leafletjs.com/reference.html#latlngbounds"><code>L.LatLngBounds</code></a></td>
+<td>The bounds around this result. Helpful for zooming to results like cities and states.</td>
+</tr>
+<tr>
+<td><code>latlng</code></td>
+<td><a href="http://leafletjs.com/reference.html#latlng"><code>L.LatLng</code></a></td>
+<td>The center of the result.</td>
+</tr>
+</tbody>
+</table>
+<p>The result object will also contain any additional properties from the provider. See the <a href="#available-providers">available providers</a> for more informationc.</p>
+
+  <p><a href="http://github.com/esri/esri-leaflet/edit/master/site/source/pages/api-reference/controls/geosearch.md">Edit this page on GitHub</a></p>
+</div>
+  <div style='clear:both;'></div>
+</div>
+<div class="container centered-text">
+  <p class="copyright">Esri Leaflet is a project from the <a href="http://pdx.esri.com">Esri PDX R&amp;D Center</a> and the <a href="https://github.com/Esri/esri-leaflet/graphs/contributors">Esri Community</a></p>
+</div>
+
+  </div>
+  <script src="../../../../esri-leaflet/js/script.js"></script>
+  </body>
+</html>

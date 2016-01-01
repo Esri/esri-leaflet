@@ -12,7 +12,7 @@
   
 
   
-    <meta name="description" content="Using non mercator tiles with &lt;code&gt;L.esri.Layers.TiledMapLayer&lt;/code&gt; with the &lt;a href=&quot;https://github.com/kartena/Proj4Leaflet&quot;&gt;Proj4Leaflet&lt;/a&gt; plugin. &lt;br&gt;&lt;br&gt; &lt;strong&gt;This demo should be implemented at your own risk. Esri Leaflet only supports tiles that have been published in Web Mercator Auxiliary Sphere tiling scheme (WKID 102100/3857) at the default scales and resolutions. Strong knowledge of projections, spatial references and tiling schemes is required for this.&lt;/strong&gt;">
+    <meta name="description" content="Using non mercator tiles with &lt;code&gt;L.esri.TiledMapLayer&lt;/code&gt; with the &lt;a href=&quot;https://github.com/kartena/Proj4Leaflet&quot;&gt;Proj4Leaflet&lt;/a&gt; plugin. &lt;br&gt;&lt;br&gt; &lt;strong&gt;This demo should be implemented at your own risk. Esri Leaflet only supports tiles that have been published in Web Mercator Auxiliary Sphere tiling scheme (WKID 102100/3857). Strong knowledge of projections, spatial references and tiling schemes is required for this.&lt;/strong&gt;">
   
 
   <meta name="description" content="Esri Leaflet">
@@ -31,13 +31,12 @@
   <link rel="stylesheet" href="../../../esri-leaflet/css/style.css">
 
   <!-- leaflet -->
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/leaflet/0.7.3/leaflet.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.0-beta.2/leaflet.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.0-beta.2/leaflet.js"></script>
 
-  <!-- require combined leaflet, esri leaflet and jsdelivr-rum -->
-  <script src="//cdn.jsdelivr.net/leaflet/latest/leaflet.js"></script>
-  <script src="//cdn.jsdelivr.net/leaflet.esri/1.0.0/esri-leaflet.js"></script>
-  <script src="//cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
-
+  
+    <script src="//cdn.jsdelivr.net/leaflet.esri/2.0.0-beta.7/esri-leaflet.js"></script>
+    <script src="//cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
   
 
   <!-- Google Analytics -->
@@ -57,6 +56,8 @@
     <div class="container">
       <a class="site-nav" href="../../../esri-leaflet/" class="left logo">Esri Leaflet</a>
       <nav class="right">
+        <a class="site-nav" href="../../../esri-leaflet/tutorials/">Tutorials</a>
+        <a class="site-nav" href="../../../esri-leaflet/plugins/">Plugins</a>
         <a class="site-nav" href="../../../esri-leaflet/examples/">Examples</a>
         <a class="site-nav" href="../../../esri-leaflet/api-reference/">API Reference</a>
         <a class="site-nav" href="../../../esri-leaflet/download/">Download</a>
@@ -93,40 +94,49 @@
     <a href="../../../esri-leaflet/examples/zooming-to-all-features-1.html">Zoom to all features #1</a>
     <a href="../../../esri-leaflet/examples/zooming-to-all-features-2.html">Zoom to all features #2</a>
     <a href="../../../esri-leaflet/examples/labeling-features.html">Labeling Features</a>
+    <a href="../../../esri-leaflet/examples/layer-ordering.html">Ordering Layers</a>
+
+    <a href="../../../esri-leaflet/examples/visualize-points-as-a-heatmap.html">Points as a heatmap</a>
+    <a href="../../../esri-leaflet/examples/styling-heatmaps.html">Styling a heatmap</a>
+    <a href="../../../esri-leaflet/examples/visualizing-time-with-feature-layer.html">Time enabled services</a>
     <a href="../../../esri-leaflet/examples/clustering-feature-layers.html">Clustering points</a>
     <a href="../../../esri-leaflet/examples/styling-clusters.html">Styling clusters</a>
-    <a href="../../../esri-leaflet/examples/visualize-points-as-a-heatmap.html">Points as a heatmap</a>
-    <a href="../../../esri-leaflet/examples/styling-heatmaps.html">Styling heatmaps</a>
-    <a href="../../../esri-leaflet/examples/visualizing-time-with-feature-layer.html">Time enabled services</a>
-    <a href="../../../esri-leaflet/examples/feature-layer-snapshot.html">Layer "snapshots"</a>
-    <a href="../../../esri-leaflet/examples/editing.html">Editing</a>
+    <!--<a href="../../../esri-leaflet/examples/editing.html">Editing</a>-->
   </nav>
 
   <h5>Tile Layers</h5>
   <nav>
     <a href="../../../esri-leaflet/examples/tile-layer-1.html">Tiles from a Map Service #1</a>
     <a href="../../../esri-leaflet/examples/tile-layer-2.html">Tiles from a Map Service #2</a>
-    <a href="../../../esri-leaflet/examples/non-mercator-projection.html">Non-mercator tiles</a>
   </nav>
 
   <h5>Dynamic Map Layer</h5>
   <nav>
-    <a href="../../../esri-leaflet/examples/simple-dynamic-map-layer.html">Simple DynamicMapLayer</a>
+    <a href="../../../esri-leaflet/examples/simple-dynamic-map-layer.html">Simple Dynamic Map Layer</a>
     <a href="../../../esri-leaflet/examples/identifying-features.html">Identifying Features</a>
-    <a href="../../../esri-leaflet/examples/finding-features.html">Finding Features</a>
     <a href="../../../esri-leaflet/examples/customizing-popups.html">Custom popups</a>
     <a href="../../../esri-leaflet/examples/visualizing-time-on-dynamic-map-layer.html">Time Ranges</a>
-    <a href="../../../esri-leaflet/examples/dynamic-map-layer-reprojected.html">Reprojecting on the fly</a>
   </nav>
 
   <h5>Image Map Layer</h5>
   <nav>
-    <a href="../../../esri-leaflet/examples/simple-image-map-layer.html">Simple ImageMapLayer</a>
-    <a href="../../../esri-leaflet/examples/infrared-imagery.html">Infrared Imagery using BandIDs</a>
+    <a href="../../../esri-leaflet/examples/simple-image-map-layer.html">Simple Image Map Layer</a>
     <a href="../../../esri-leaflet/examples/image-map-layer-rendering-rule.html">Rendering Rule</a>
     <a href="../../../esri-leaflet/examples/identifying-imagery.html">Identify Imagery</a>
     <a href="../../../esri-leaflet/examples/image-map-layer-mosaic-rule.html">Mosaic Rule</a>
     <a href="../../../esri-leaflet/examples/imagery-popups.html">Custom popups</a>
+  </nav>
+
+  <h5>Non-Mercator Projections</h5>
+  <nav>
+    <a href="../../../esri-leaflet/examples/non-mercator-projection.html">Tiles + Feature Layer</a>
+    <a href="../../../esri-leaflet/examples/non-mercator-projection-2.html">Tiles + Dynamic Map Layer</a>
+  </nav>
+
+  <h5>Query</h5>
+  <nav>
+    <a href="../../../esri-leaflet/examples/feature-layer-snapshot.html">Layer "snapshot"</a>
+    <a href="../../../esri-leaflet/examples/query-no-map.html">Query without a map</a>
   </nav>
 
   <h5>Authentication</h5>
@@ -147,7 +157,7 @@
 
   <h5>Other Plugins</h5>
   <nav>
-    <a href="../../../esri-leaflet/examples/gp-plugin.html">Geoprocessing plugin</a>
+    <a href="../../../esri-leaflet/examples/gp-plugin.html">Geoprocessing</a>
     <a href="../../../esri-leaflet/examples/renderers-plugin.html">Renderers plugin</a>
   </nav>
 
@@ -163,22 +173,21 @@
 <div class="example-content">
 <div class="wrap">
   <h1>Non-mercator projection</h1>
-  <p>Using non mercator tiles with <code>L.esri.Layers.TiledMapLayer</code> with the <a href="https://github.com/kartena/Proj4Leaflet">Proj4Leaflet</a> plugin. <br><br> <strong>This demo should be implemented at your own risk. Esri Leaflet only supports tiles that have been published in Web Mercator Auxiliary Sphere tiling scheme (WKID 102100/3857) at the default scales and resolutions. Strong knowledge of projections, spatial references and tiling schemes is required for this.</strong></p>
+  <p>Using non mercator tiles with <code>L.esri.TiledMapLayer</code> with the <a href="https://github.com/kartena/Proj4Leaflet">Proj4Leaflet</a> plugin. <br><br> <strong>This demo should be implemented at your own risk. Esri Leaflet only supports tiles that have been published in Web Mercator Auxiliary Sphere tiling scheme (WKID 102100/3857). Strong knowledge of projections, spatial references and tiling schemes is required for this.</strong></p>
 </div>
 <div id="map-wrapper">
   
 
-<script src="//cdnjs.cloudflare.com/ajax/libs/proj4js/2.0.0/proj4.js"></script>
-<script src="https://cdn.rawgit.com/kartena/Proj4Leaflet/0.7.0/src/proj4leaflet.js"></script>
+<script src="//rawgit.com/proj4js/proj4js/2.3.12/dist/proj4-src.js"></script>
+<script src="//rawgit.com/kartena/Proj4Leaflet/1.0.0-beta.1/src/proj4leaflet.js"></script>
 
 <div id="map"></div>
 
 <script>
-  /*
-    create new Proj4Leaflet CRS:
-    1. Proj4 and WKT definitions can be found at sites like http://epsg.io
-    2. appropriate values to supply to the resolution and origin constructor options can be found in the ArcGIS Server RESTful tile server endpoint (ex: http://mapserv.utah.gov/arcgis/rest/services/BaseMaps/Terrain/MapServer)
-  */
+  // create new Proj4Leaflet CRS:
+  // 1. Proj4 and WKT definitions can be found at sites like http://epsg.io, http://spatialreference.org/ or by using gdalsrsinfo http://www.gdal.org/gdalsrsinfo.html
+  // 2. Appropriate values to supply to the resolution and origin constructor options can be found in the ArcGIS Server RESTful tile server endpoint (ex: http://mapserv.utah.gov/arcgis/rest/services/BaseMaps/Terrain/MapServer)
+  // 3. The numeric code within the first parameter (ex: `26912`) will be used to project the dynamic map layer on the fly
   var crs = new L.Proj.CRS('EPSG:26912', '+proj=utm +zone=12 +ellps=GRS80 +datum=NAD83 +units=m +no_defs', {
     origin: [-5120900, 9998100],
     resolutions: [
@@ -202,17 +211,31 @@
 
   var map = L.map('map', {
     crs: crs
-  }).setView([40.381, -111.859], 5);
+  }).setView([40.381, -111.859], 4);
 
-  /*
-    The min/maxZoom values provided should match the actual cache thats been published. This information can be retrieved from the service endpoint directly.
-  */
+  // The min/maxZoom values provided should match the actual cache thats been published. This information can be retrieved from the service endpoint directly.
   L.esri.tiledMapLayer({
-    url: 'http://mapserv.utah.gov/arcgis/rest/services/BaseMaps/Terrain/MapServer',
+    url: '//mapserv.utah.gov/arcgis/rest/services/BaseMaps/Lite/MapServer',
     maxZoom: 14,
     minZoom: 0,
     continuousWorld: true,
     attribution: 'State of Utah'
+  }).addTo(map);
+
+  // feature layers will be requested in WGS84 (4326) and reprojected on the client
+  L.esri.featureLayer({
+    url: '//services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_Congressional_Districts/FeatureServer/0',
+    simplifyFactor: 0.5,
+    precision: 5,
+    style: function (feature) {
+      if(feature.properties.PARTY === 'Democrat'){
+        return {color: 'white', opacity: 0.5, fillColor: 'blue', weight: 2, fillOpacity: 0.1};
+      } else if(feature.properties.PARTY === 'Republican'){
+        return { color: 'white', opacity: 0.5, fillColor: 'red', weight: 2, fillOpacity: 0.2};
+      } else {
+        return { color: 'white', opacity: 0.5, fillColor: 'white', weight: 2, fillOpacity: 0.2};
+      }
+    }
   }).addTo(map);
 </script>
 
@@ -224,11 +247,11 @@
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">name</span>=<span class="value">'viewport'</span> <span class="attribute">content</span>=<span class="value">'initial-scale=1,maximum-scale=1,user-scalable=no'</span> /&gt;</span>
 
   <span class="comment">&lt;!-- Load Leaflet from CDN--&gt;</span>
-  <span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"//cdn.jsdelivr.net/leaflet/0.7.3/leaflet.css"</span> /&gt;</span>
-  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"//cdn.jsdelivr.net/leaflet/0.7.3/leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"http://cdn.leafletjs.com/leaflet/v1.0.0-beta.2/leaflet.css"</span> /&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"http://cdn.leafletjs.com/leaflet/v1.0.0-beta.2/leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
   <span class="comment">&lt;!-- Load Esri Leaflet from CDN --&gt;</span>
-  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"//cdn.jsdelivr.net/leaflet.esri/1.0.0/esri-leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"//cdn.jsdelivr.net/leaflet.esri/2.0.0-beta.7/esri-leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
   <span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css">
     <span class="tag">body</span> <span class="rules">{ <span class="rule"><span class="attribute">margin</span>:<span class="value"><span class="number">0</span></span></span>; <span class="rule"><span class="attribute">padding</span>:<span class="value"><span class="number">0</span></span></span>; <span class="rule">}</span></span>
@@ -237,17 +260,16 @@
 <span class="tag">&lt;/<span class="title">head</span>&gt;</span>
 <span class="tag">&lt;<span class="title">body</span>&gt;</span>
 
-<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"//cdnjs.cloudflare.com/ajax/libs/proj4js/2.0.0/proj4.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
-<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://cdn.rawgit.com/kartena/Proj4Leaflet/0.7.0/src/proj4leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"//rawgit.com/proj4js/proj4js/2.3.12/dist/proj4-src.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"//rawgit.com/kartena/Proj4Leaflet/1.0.0-beta.1/src/proj4leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
-  <span class="comment">/*
-    create new Proj4Leaflet CRS:
-    1. Proj4 and WKT definitions can be found at sites like http://epsg.io
-    2. appropriate values to supply to the resolution and origin constructor options can be found in the ArcGIS Server RESTful tile server endpoint (ex: http://mapserv.utah.gov/arcgis/rest/services/BaseMaps/Terrain/MapServer)
-  */</span>
+  <span class="comment">// create new Proj4Leaflet CRS:</span>
+  <span class="comment">// 1. Proj4 and WKT definitions can be found at sites like http://epsg.io, http://spatialreference.org/ or by using gdalsrsinfo http://www.gdal.org/gdalsrsinfo.html</span>
+  <span class="comment">// 2. Appropriate values to supply to the resolution and origin constructor options can be found in the ArcGIS Server RESTful tile server endpoint (ex: http://mapserv.utah.gov/arcgis/rest/services/BaseMaps/Terrain/MapServer)</span>
+  <span class="comment">// 3. The numeric code within the first parameter (ex: `26912`) will be used to project the dynamic map layer on the fly</span>
   <span class="keyword">var</span> crs = <span class="keyword">new</span> L.Proj.CRS(<span class="string">'EPSG:26912'</span>, <span class="string">'+proj=utm +zone=12 +ellps=GRS80 +datum=NAD83 +units=m +no_defs'</span>, {
     origin: [-<span class="number">5120900</span>, <span class="number">9998100</span>],
     resolutions: [
@@ -271,17 +293,31 @@
 
   <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>, {
     crs: crs
-  }).setView([<span class="number">40.381</span>, -<span class="number">111.859</span>], <span class="number">5</span>);
+  }).setView([<span class="number">40.381</span>, -<span class="number">111.859</span>], <span class="number">4</span>);
 
-  <span class="comment">/*
-    The min/maxZoom values provided should match the actual cache thats been published. This information can be retrieved from the service endpoint directly.
-  */</span>
+  <span class="comment">// The min/maxZoom values provided should match the actual cache thats been published. This information can be retrieved from the service endpoint directly.</span>
   L.esri.tiledMapLayer({
-    url: <span class="string">'http://mapserv.utah.gov/arcgis/rest/services/BaseMaps/Terrain/MapServer'</span>,
+    url: <span class="string">'//mapserv.utah.gov/arcgis/rest/services/BaseMaps/Lite/MapServer'</span>,
     maxZoom: <span class="number">14</span>,
     minZoom: <span class="number">0</span>,
     continuousWorld: <span class="literal">true</span>,
     attribution: <span class="string">'State of Utah'</span>
+  }).addTo(map);
+
+  <span class="comment">// feature layers will be requested in WGS84 (4326) and reprojected on the client</span>
+  L.esri.featureLayer({
+    url: <span class="string">'//services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_Congressional_Districts/FeatureServer/0'</span>,
+    simplifyFactor: <span class="number">0.5</span>,
+    precision: <span class="number">5</span>,
+    style: <span class="function"><span class="keyword">function</span> <span class="params">(feature)</span> {</span>
+      <span class="keyword">if</span>(feature.properties.PARTY === <span class="string">'Democrat'</span>){
+        <span class="keyword">return</span> {color: <span class="string">'white'</span>, opacity: <span class="number">0.5</span>, fillColor: <span class="string">'blue'</span>, weight: <span class="number">2</span>, fillOpacity: <span class="number">0.1</span>};
+      } <span class="keyword">else</span> <span class="keyword">if</span>(feature.properties.PARTY === <span class="string">'Republican'</span>){
+        <span class="keyword">return</span> { color: <span class="string">'white'</span>, opacity: <span class="number">0.5</span>, fillColor: <span class="string">'red'</span>, weight: <span class="number">2</span>, fillOpacity: <span class="number">0.2</span>};
+      } <span class="keyword">else</span> {
+        <span class="keyword">return</span> { color: <span class="string">'white'</span>, opacity: <span class="number">0.5</span>, fillColor: <span class="string">'white'</span>, weight: <span class="number">2</span>, fillOpacity: <span class="number">0.2</span>};
+      }
+    }
   }).addTo(map);
 </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 

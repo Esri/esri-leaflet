@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]> <html class="ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html class="ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html class="ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html class="ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="not-ie"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+
+  
+    <title>Esri Leaflet</title>
+  
+
+  
+
+  <meta name="description" content="Esri Leaflet">
+  <meta name="viewport" content="width=device-width">
+
+  <!--[if lt IE 9]>
+    <script src="//cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv-printshiv.js"></script>
+  <![endif]-->
+
+  <!-- google fonts -->
+  <link href='//fonts.googleapis.com/css?family=Vollkorn:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="//brick.a.ssl.fastly.net/Source+Code+Pro:300">
+  <link href='//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+
+  <!-- stylesheet -->
+  <link rel="stylesheet" href="../../../esri-leaflet/css/style.css">
+
+  <!-- leaflet -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.0-beta.2/leaflet.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.0-beta.2/leaflet.js"></script>
+
+  
+    <script src="//cdn.jsdelivr.net/leaflet.esri/2.0.0-beta.7/esri-leaflet.js"></script>
+    <script src="//cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
+  
+
+  <!-- Google Analytics -->
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-44963317-3', 'auto');
+    ga('send', 'pageview');
+  </script>
+  <!-- End Google Analytics -->
+</head>
+<body>
+  <div class="page-content plugins">
+    <div class="container">
+      <a class="site-nav" href="../../../esri-leaflet/" class="left logo">Esri Leaflet</a>
+      <nav class="right">
+        <a class="site-nav" href="../../../esri-leaflet/tutorials/">Tutorials</a>
+        <a class="site-nav" href="../../../esri-leaflet/plugins/">Plugins</a>
+        <a class="site-nav" href="../../../esri-leaflet/examples/">Examples</a>
+        <a class="site-nav" href="../../../esri-leaflet/api-reference/">API Reference</a>
+        <a class="site-nav" href="../../../esri-leaflet/download/">Download</a>
+        <a class="site-nav" href="https://github.com/Esri/esri-leaflet">View on GitHub</a>
+      </nav>
+    </div>
+    <div id="background-map" class="background-map"></div>
+
+  
+
+<div class="container">
+  <div class="row clearfix">
+    <div class="panel">
+      <div class="card">
+        <h3><a href="https://github.com/Esri/esri-leaflet-geocoder/">Geocoder</a></h3>
+        <p>
+          Includes a search box control you can add to your map, as well as low level tools for making geocoding requests.
+        </p>
+        <iframe src="https://ghbtns.com/github-btn.html?user=esri&repo=esri-leaflet-geocoder&type=fork&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
+        <br>
+        <iframe src="https://ghbtns.com/github-btn.html?user=esri&repo=esri-leaflet-geocoder&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="card">
+        <h3><a href="https://github.com/Esri/esri-leaflet-renderers">Renderers</a></h3>
+        <p>
+          Ensure that symbology defined by ArcGIS Server and ArcGIS Online for  feature layers is inherited in Leaflet.
+        </p>
+        <iframe src="https://ghbtns.com/github-btn.html?user=esri&repo=esri-leaflet-renderers&type=fork&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
+        <br>
+        <iframe src="https://ghbtns.com/github-btn.html?user=esri&repo=esri-leaflet-renderers&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="card">
+        <h3><a href="https://github.com/Esri/esri-leaflet-heatmap-feature-layer">Heatmap Feature Layer</a></h3>
+        <p>
+          Visualize feature layers with heatmaps via <a href="https://github.com/Leaflet/Leaflet.heat">Leaflet.heat</a>.
+        </p>
+        <iframe src="https://ghbtns.com/github-btn.html?user=esri&repo=esri-leaflet-heatmap-feature-layer&type=fork&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
+        <br>
+        <iframe src="https://ghbtns.com/github-btn.html?user=esri&repo=esri-leaflet-heatmap-feature-layer&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <div class="row clearfix">
+    <div class="panel">
+      <div class="card">
+        <h3><a href="https://github.com/Esri/esri-leaflet-clustered-feature-layer">Clustered Feature Layer</a></h3>
+        <p>
+          Visualize feature layers using clustering with the help of <a href="https://github.com/Leaflet/Leaflet.markercluster">Leaflet.markercluster</a> (coming soon for Leaflet 1.0.0).
+        </p>
+        <iframe src="https://ghbtns.com/github-btn.html?user=esri&repo=esri-leaflet-clustered-feature-layer&type=fork&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
+        <br>
+        <iframe src="https://ghbtns.com/github-btn.html?user=esri&repo=esri-leaflet-clustered-feature-layer&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="card">
+        <h3><a href="https://github.com/jgravois/esri-leaflet-gp">Geoprocessing</a></h3>
+        <p>
+          Plugin to assist in working with ArcGIS Geoprocessing Services.
+        </p>
+        <iframe src="https://ghbtns.com/github-btn.html?user=jgravois&repo=esri-leaflet-gp&type=fork&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
+        <br>
+        <iframe src="https://ghbtns.com/github-btn.html?user=jgravois&repo=esri-leaflet-gp&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="card">
+        <h3><a href="https://github.com/jgravois/esri-leaflet-related">Related Records</a></h3>
+        <p>
+          Plugin to assist in querying ArcGIS Services for related records.
+        </p>
+        <iframe src="https://ghbtns.com/github-btn.html?user=jgravois&repo=esri-leaflet-related&type=fork&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
+        <br>
+        <iframe src="https://ghbtns.com/github-btn.html?user=jgravois&repo=esri-leaflet-related&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  </div>
+  <script src="../../../esri-leaflet/js/script.js"></script>
+  </body>
+</html>

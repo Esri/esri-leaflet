@@ -8,7 +8,7 @@
   <meta charset="utf-8">
 
   
-    <title>L.esri.Services.ImageService | Esri Leaflet</title>
+    <title>L.esri.ImageService | Esri Leaflet</title>
   
 
   
@@ -29,13 +29,12 @@
   <link rel="stylesheet" href="../../../../esri-leaflet/css/style.css">
 
   <!-- leaflet -->
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/leaflet/0.7.3/leaflet.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.0-beta.2/leaflet.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.0-beta.2/leaflet.js"></script>
 
-  <!-- require combined leaflet, esri leaflet and jsdelivr-rum -->
-  <script src="//cdn.jsdelivr.net/leaflet/latest/leaflet.js"></script>
-  <script src="//cdn.jsdelivr.net/leaflet.esri/1.0.0/esri-leaflet.js"></script>
-  <script src="//cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
-
+  
+    <script src="//cdn.jsdelivr.net/leaflet.esri/2.0.0-beta.7/esri-leaflet.js"></script>
+    <script src="//cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
   
 
   <!-- Google Analytics -->
@@ -55,6 +54,8 @@
     <div class="container">
       <a class="site-nav" href="../../../../esri-leaflet/" class="left logo">Esri Leaflet</a>
       <nav class="right">
+        <a class="site-nav" href="../../../../esri-leaflet/tutorials/">Tutorials</a>
+        <a class="site-nav" href="../../../../esri-leaflet/plugins/">Plugins</a>
         <a class="site-nav" href="../../../../esri-leaflet/examples/">Examples</a>
         <a class="site-nav" href="../../../../esri-leaflet/api-reference/">API Reference</a>
         <a class="site-nav" href="../../../../esri-leaflet/download/">Download</a>
@@ -69,25 +70,45 @@
   
 
 <aside class="sidebar">
-  <h5>L.esri.Layers</h5>
+  <h5>Layers</h5>
   <nav>
-    <a href="../../../../esri-leaflet/api-reference/layers/basemap-layer.html">BasemapLayer</a>
-    <a href="../../../../esri-leaflet/api-reference/layers/feature-layer.html">FeatureLayer</a>
-    <a href="../../../../esri-leaflet/api-reference/layers/tiled-map-layer.html">TiledMapLayer</a>
-    <a href="../../../../esri-leaflet/api-reference/layers/dynamic-map-layer.html">DynamicMapLayer</a>
-    <a href="../../../../esri-leaflet/api-reference/layers/image-map-layer.html">ImageMapLayer</a>
-    <a href="../../../../esri-leaflet/api-reference/layers/raster-layer.html">RasterLayer</a>
-    <a href="../../../../esri-leaflet/api-reference/layers/clustered-feature-layer.html">ClusteredFeatureLayer</a>
-    <a href="../../../../esri-leaflet/api-reference/layers/heatmap-feature-layer.html">HeatmapFeatureLayer</a>
+    <a href="../../../../esri-leaflet/api-reference/layers/basemap-layer.html">Basemap Layer</a>
+    <a href="../../../../esri-leaflet/api-reference/layers/feature-layer.html">Feature Layer</a>
+    <a href="../../../../esri-leaflet/api-reference/layers/tiled-map-layer.html">Tiled Map Layer</a>
+    <a href="../../../../esri-leaflet/api-reference/layers/dynamic-map-layer.html">Dynamic Map Layer</a>
+    <a href="../../../../esri-leaflet/api-reference/layers/image-map-layer.html">Image Map Layer</a>
+    <a class="plugin" href="../../../../esri-leaflet/api-reference/layers/heatmap-feature-layer.html">Heatmap Feature Layer</a>
+    <a class="plugin" href="../../../../esri-leaflet/api-reference/layers/coming-soon.html">Clustered Feature Layer</a>
   </nav>
 
-  <h5>L.esri.Tasks</h5>
+  <h5>Controls</h5>
+  <nav>
+    <a class="plugin" href="../../../../esri-leaflet/api-reference/controls/geosearch.html" class="plugin">Geosearch</a>
+  </nav>
+
+  <h5>Tasks</h5>
   <nav>
     <a href="../../../../esri-leaflet/api-reference/tasks/query.html">Query</a>
     <a href="../../../../esri-leaflet/api-reference/tasks/find.html">Find</a>
     <a href="../../../../esri-leaflet/api-reference/tasks/identify-features.html">Identify Features</a>
     <a href="../../../../esri-leaflet/api-reference/tasks/identify-image.html">Identify Image</a>
+    <a class="plugin" href="../../../../esri-leaflet/api-reference/tasks/geocode.html">Geocode</a>
+    <a class="plugin" href="../../../../esri-leaflet/api-reference/tasks/reverse-geocode.html">Reverse Geocode</a>
+    <a class="plugin" href="../../../../esri-leaflet/api-reference/tasks/suggest.html">Suggest</a>
+    <a class="plugin" href="../../../../esri-leaflet/api-reference/tasks/gp-task.html">Geoprocessing Task</a>
+    <a class="plugin" href="../../../../esri-leaflet/api-reference/tasks/query-related.html">Query Related</a>
+  </nav>
+
+  <h5>Base Classes</h5>
+  <nav>
+    <a href="../../../../esri-leaflet/api-reference/services/image-service.html">ImageService</a>
+    <a href="../../../../esri-leaflet/api-reference/services/feature-layer-service.html">FeatureLayerService</a>
+    <a href="../../../../esri-leaflet/api-reference/services/map-service.html">MapService</a>
+    <a class="plugin" href="../../../../esri-leaflet/api-reference/services/geocode-service.html">Geocode Service</a>
+    <a class="plugin" href="../../../../esri-leaflet/api-reference/services/gp-service.html">Geoprocessing Service</a>
     <a href="../../../../esri-leaflet/api-reference/tasks/task.html">Task</a>
+    <a href="../../../../esri-leaflet/api-reference/services/service.html">Service</a>
+    <a href="../../../../esri-leaflet/api-reference/layers/raster-layer.html">Raster Layer</a>
   </nav>
 
   <h5>Misc.</h5>
@@ -96,21 +117,13 @@
     <a href="../../../../esri-leaflet/api-reference/util.html">Util</a>
     <a href="../../../../esri-leaflet/api-reference/events.html">Events</a>
   </nav>
-
-  <h5>Base Classes</h5>
-  <nav>
-    <a href="../../../../esri-leaflet/api-reference/services/image-service.html">ImageService</a>
-    <a href="../../../../esri-leaflet/api-reference/services/feature-layer-service.html">FeatureLayerService</a>
-    <a href="../../../../esri-leaflet/api-reference/services/map-service.html">MapService</a>
-    <a href="../../../../esri-leaflet/api-reference/services/service.html">Service</a>
-  </nav>
 </aside>
 
 
 <div class="main-content">
-  <h1 id="l-esri-services-imageservice">L.esri.Services.ImageService</h1>
+  <h1 id="l-esri-imageservice">L.esri.ImageService</h1>
 <p>Inherits from <a href="../../../../esri-leaflet/api-reference/services/service.html"><code>L.esri.Service</code></a></p>
-<p><code>L.esri.Services.ImageService</code> is an abstraction for interacting with Image Services running on ArcGIS Online and ArcGIS Server that allows you to make requests to the API, as well as query and identify features on the service.</p>
+<p><code>L.esri.ImageService</code> is an abstraction for interacting with Image Services running on ArcGIS Online and ArcGIS Server that allows you to make requests to the API, as well as query and identify features on the service.</p>
 <h3 id="constructor">Constructor</h3>
 <table>
     <thead>
@@ -121,16 +134,16 @@
     </thead>
     <tbody>
         <tr>
-            <td><code class="nobr">L.esri.Services.imageService(<nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code></td>
+            <td><code class="nobr">L.esri.imageService(<nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code></td>
             <td><code>Options</code> for configuring the ArcGIS Server or ArcGIS Online image service you would like to consume. <code>Options</code>includes a <code>url</code> parameter which refers to the ArcGIS Server or ArcGIS Online service you would like to consume.</td>
         </tr>
     </tbody>
 </table>
 
 <h3 id="options">Options</h3>
-<p><code>L.esri.Services.ImageService</code> accepts all <a href="../../../../esri-leaflet/api-reference/services/service.html"><code>L.esri.Services.Service</code></a> options.</p>
+<p><code>L.esri.ImageService</code> accepts all <a href="../../../../esri-leaflet/api-reference/services/service.html"><code>L.esri.Service</code></a> options.</p>
 <h3 id="events">Events</h3>
-<p><code>L.esri.Services.ImageService</code> fires all  <a href="../../../../esri-leaflet/api-reference/services/service.html"><code>L.esri.Services.service</code></a> events.</p>
+<p><code>L.esri.ImageService</code> fires all  <a href="../../../../esri-leaflet/api-reference/services/service.html"><code>L.esri.service</code></a> events.</p>
 <h3 id="methods">Methods</h3>
 <table>
     <thead>
@@ -145,7 +158,7 @@
             <td><code>query()</code></td>
             <td><code>this</code></td>
             <td>
-                Returns a new <a href="../../../../esri-leaflet/api-reference/tasks/query.html"><code>L.esri.Tasks.Query</code></a> object that can be used to query this service.
+                Returns a new <a href="../../../../esri-leaflet/api-reference/tasks/query.html"><code>L.esri.Query</code></a> object that can be used to query this service.
 <pre class="js"><code>imageService.query()
             .within(latlngbounds)
             .run(function(error, featureCollection, response){
