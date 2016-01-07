@@ -35,7 +35,8 @@ layout: example.hbs
   var clientID = 'FxeCTSwkrA9yqVGS';
   var accessToken;
   var callbacks = [];
-  var callbackPage = '//esri.github.io/esri-leaflet/examples/oauth/callback.html';
+  var callbackPage = window.location.protocol +
+    '//esri.github.io/esri-leaflet/examples/oauth/callback.html';
 
   var authPane = document.getElementById('auth');
   var signInButton = document.getElementById('sign-in');
