@@ -32,20 +32,10 @@
     ]
   },
   "devDependencies": {
-    "assemble": "^0.4.37",
     "babelify": "^6.1.3",
     "chai": "2.3.0",
     "eslint": "^1.10.2",
     "gh-release": "^2.0.0",
-    "grunt": "^0.4.2",
-    "grunt-concurrent": "^0.5.0",
-    "grunt-contrib-connect": "^0.4.1",
-    "grunt-contrib-copy": "^0.5.0",
-    "grunt-contrib-imagemin": "^1.0.0",
-    "grunt-contrib-watch": "^0.6.1",
-    "grunt-gh-pages": "^0.8.1",
-    "grunt-newer": "^0.7.0",
-    "grunt-sass": "^1.0.0",
     "highlight.js": "^8.0.0",
     "http-server": "^0.8.5",
     "isparta": "^3.0.3",
@@ -97,7 +87,6 @@
     "pretest": "npm run build",
     "test": "npm run lint && karma start",
     "release": "./scripts/release.sh",
-    "serve": "watch 'npm run build' src & http-server -p 5678 -c-1 -o",
-    "start": "grunt"
+    "start": "watch 'npm run build' src & http-server -p 5678 -c-1 -o"
   }
 }
