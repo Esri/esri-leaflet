@@ -385,14 +385,15 @@ export var FeatureManager = VirtualGrid.extend({
   _visibleZoom: function () {
     // check to see whether the current zoom level of the map is within the optional limit defined for the FeatureLayer
     if (!this._map) {
-      return false
+      return false;
     }
     var zoom = this._map.getZoom();
-    if (zoom > this.options.maxZoom || zoom < this.options.minZoom) { return false }
-      else { return true }
+    if (zoom > this.options.maxZoom || zoom < this.options.minZoom) {
+      return false;
+    } else { return true; }
   },
 
-  _handleZoomChange: function() {
+  _handleZoomChange: function () {
     if (!this._visibleZoom()) {
       this.removeLayers(this._currentSnapshot);
       this._currentSnapshot = [];
@@ -407,7 +408,7 @@ export var FeatureManager = VirtualGrid.extend({
         var coords = this._activeCells[i].coords;
         var key = this._cacheKey(coords);
         if (this._cache[key]) {
-          this.addLayers(self._cache[key]);
+          this.addLayers(this._cache[key]);
         }
       }
     }

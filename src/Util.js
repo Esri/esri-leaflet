@@ -35,7 +35,7 @@ export function boundsToExtent (bounds) {
 }
 
 // GeoJSON -> ArcGIS
-var g2a = GeojsonUtil.geojsonToArcGIS
+var g2a = GeojsonUtil.geojsonToArcGIS;
 export { g2a as geojsonToArcGIS };
 
 // ArcGS -> GeoJSON
@@ -97,24 +97,24 @@ export function isArcgisOnline (url) {
 export function geojsonTypeToArcGIS (geoJsonType) {
   var arcgisGeometryType;
   switch (geoJsonType) {
-  case 'Point':
-    arcgisGeometryType = 'esriGeometryPoint';
-    break;
-  case 'MultiPoint':
-    arcgisGeometryType = 'esriGeometryMultipoint';
-    break;
-  case 'LineString':
-    arcgisGeometryType = 'esriGeometryPolyline';
-    break;
-  case 'MultiLineString':
-    arcgisGeometryType = 'esriGeometryPolyline';
-    break;
-  case 'Polygon':
-    arcgisGeometryType = 'esriGeometryPolygon';
-    break;
-  case 'MultiPolygon':
-    arcgisGeometryType = 'esriGeometryPolygon';
-    break;
+    case 'Point':
+      arcgisGeometryType = 'esriGeometryPoint';
+      break;
+    case 'MultiPoint':
+      arcgisGeometryType = 'esriGeometryMultipoint';
+      break;
+    case 'LineString':
+      arcgisGeometryType = 'esriGeometryPolyline';
+      break;
+    case 'MultiLineString':
+      arcgisGeometryType = 'esriGeometryPolyline';
+      break;
+    case 'Polygon':
+      arcgisGeometryType = 'esriGeometryPolygon';
+      break;
+    case 'MultiPolygon':
+      arcgisGeometryType = 'esriGeometryPolygon';
+      break;
   }
 
   return arcgisGeometryType;
