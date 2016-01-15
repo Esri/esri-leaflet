@@ -76,11 +76,22 @@ function createRequest (callback, context) {
     }
   };
 
+  httpRequest.ontimeout = function () {
+    this.onerror();
+  };
+
   return httpRequest;
 }
 
 function xmlHttpPost (url, params, callback, context) {
   var httpRequest = createRequest(callback, context);
+
+  if (typeof context !== 'undefined' && context !== null) {
+    if (typeof context.options !== 'undefined') {
+      httpRequest.timeout = context.options.timeout;
+    }
+  }
+
   httpRequest.open('POST', url);
   httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
   httpRequest.send(serialize(params));
@@ -90,6 +101,12 @@ function xmlHttpPost (url, params, callback, context) {
 
 function xmlHttpGet (url, params, callback, context) {
   var httpRequest = createRequest(callback, context);
+
+  if (typeof context !== 'undefined' && context !== null) {
+    if (typeof context.options !== 'undefined') {
+      httpRequest.timeout = context.options.timeout;
+    }
+  }
 
   httpRequest.open('GET', url + '?' + serialize(params), true);
   httpRequest.send(null);
@@ -101,6 +118,13 @@ function xmlHttpGet (url, params, callback, context) {
 export function request (url, params, callback, context) {
   var paramString = serialize(params);
   var httpRequest = createRequest(callback, context);
+
+  if (typeof context !== 'undefined' && context !== null) {
+    if (typeof context.options !== 'undefined') {
+      httpRequest.timeout = context.options.timeout;
+    }
+  }
+
   var requestLength = (url + '?' + paramString).length;
 
   // request is less then 2000 characters and the browser supports CORS, make GET request with XMLHttpRequest

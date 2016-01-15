@@ -870,4 +870,51 @@ describe('L.esri.FeatureManager', function () {
 
   });
 
+  it('should keep an accurate count of active requests even when they error', function(){
+    var triggered = false;
+
+    layer.on("load", function(ev){
+      triggered = true;
+    });
+
+    var southWest = L.latLng(29.53522956294847, -98.4375),
+        northEast = L.latLng(30.14512718337613, -97.734375),
+        bounds = L.latLngBounds(southWest, northEast);
+    var point = L.point(200, 300);
+
+    server.respondWith('GET', new RegExp(/.*/), JSON.stringify({
+      fields: fields
+    }));
+
+    layer._requestFeatures(bounds, point, function(){return;});
+    
+    server.respondWith('GET', new RegExp(/.*/), JSON.stringify({
+      fields: fields
+    }));
+
+    layer._requestFeatures(bounds, point, function(){return;});
+
+    expect(layer._activeRequests).to.equal(2);
+    
+
+    server.respondWith("GET", new RegExp(/.*/),
+                [500, { "Content-Type": "application/json" },
+                 '']);
+    layer._requestFeatures(bounds, point, function(){return;})
+
+    server.respond();
+    server.respond();
+    server.respond();
+
+    expect(layer._activeRequests).to.equal(0);
+    expect(triggered).to.be.true;
+
+
+
+
+
+  })
+
+  
+
 });
