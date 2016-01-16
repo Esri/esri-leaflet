@@ -3,7 +3,41 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-### [Upcoming changes][unreleased]
+## [Upcoming changes][unreleased]
+
+## [2.0.0-beta.7]
+
+### Added
+
+* updated website to show off our 2.x API (compatible with Leaflet `1.0.0-beta.2`) and include API reference for supported plugins.
+* new npm script to watch/recompile source
+
+### Changed
+
+* broke out several esri-leaflet components into external micro libraries ([tiny-binary-search](https://www.npmjs.com/package/tiny-binary-search), [leaflet-virtual-grid](https://www.npmjs.com/package/leaflet-virtual-grid), and [arcgis-to-geojson-utils](https://www.npmjs.com/package/arcgis-to-geojson-utils) for converting between and esri json and geojson)
+* refactored source code for better custom projection support
+
+### Fixed
+* resolved bug that caused data to display outside a specified `min/maxZoom`
+* edge case affecting time aware layers
+* bug which caused `null` to sometimes be written to the attribution control (thanks brianbancroft!)
+* made sure relevant node script commands are OS agnostic
+
+## [1.0.2]
+
+### Fixed
+
+* Make sure appropriate behavior is encountered when removing feature layers from the map while web requests are pending. #691
+
+### Fixed
+
+* Ensure that we never try to remove the Esri logo from a map twice https://github.com/Esri/esri-leaflet/issues/667
+
+## [1.0.1]
+
+### Fixed
+
+* Ensure that we never try to remove the Esri logo from a map twice https://github.com/Esri/esri-leaflet/issues/667
 
 ## [2.0.0-beta.6]
 
@@ -90,12 +124,6 @@ L.esri.featureLayer({
 
 * All alternate/compact builds have been removed. They will be replaced with a new system for generating custom builds soon.
 * `L.esri.Request` has been removed. Please use `L.esri.get`, `L.esri.get.CORS`, `L.esri.get.JSONP`, `L.esri.post` or `L.esri.request` directly.
-
-## [1.0.1]
-
-### Fixed
-
-* Ensure that we never try to remove the Esri logo from a map twice https://github.com/Esri/esri-leaflet/issues/667
 
 ## [1.0.0]
 
@@ -352,14 +380,16 @@ None
 * Add DarkGray and DarkGrayLabels to BasemapLayer. #190
 * An attributionControl on maps is now required when using BasemapLayer. #159
 
-[unreleased]: https://github.com/esri/esri-leaflet/compare/v2.0.0-beta.6...HEAD
+[unreleased]: https://github.com/esri/esri-leaflet/compare/v2.0.0-beta.7...HEAD
+[2.0.0-beta.7]: https://github.com/esri/esri-leaflet/compare/v2.0.0-beta.6...v2.0.0-beta.7
+[1.0.2]: https://github.com/esri/esri-leaflet/compare/v1.0.1...v1.0.2
+[1.0.1]: https://github.com/esri/esri-leaflet/compare/v1.0.0...v1.0.1
 [2.0.0-beta.6]: https://github.com/esri/esri-leaflet/compare/v2.0.0-beta.5...v2.0.0-beta.6
 [2.0.0-beta.5]: https://github.com/esri/esri-leaflet/compare/v2.0.0-beta.4...v2.0.0-beta.5
 [2.0.0-beta.4]: https://github.com/esri/esri-leaflet/compare/v2.0.0-beta.3...v2.0.0-beta.4
 [2.0.0-beta.3]: https://github.com/esri/esri-leaflet/compare/v2.0.0-beta.2...v2.0.0-beta.3
 [2.0.0-beta.2]: https://github.com/esri/esri-leaflet/compare/v2.0.0-beta.1...v2.0.0-beta.2
 [2.0.0-beta.1]: https://github.com/esri/esri-leaflet/compare/v1.0.0...v2.0.0-beta.1
-[1.0.1]: https://github.com/esri/esri-leaflet/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/esri/esri-leaflet/compare/v1.0.0-rc.8...v1.0.0
 [Release Candidate 8]: https://github.com/esri/esri-leaflet/compare/v1.0.0-rc.7...v1.0.0-rc.8
 [Release Candidate 7]: https://github.com/esri/esri-leaflet/compare/v1.0.0-rc.6...v1.0.0-rc.7

@@ -19,16 +19,15 @@ Here is a quick example to get you started. Just copy/paste into your own `.html
 <html>
   <head>
      <!-- Load Leaflet from CDN-->
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-1.0.0-b1/leaflet.css" />
-    <script src="http://cdn.leafletjs.com/leaflet-1.0.0-b1/leaflet.js"></script>
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v1.0.0-beta.2/leaflet.css" />
+    <script src="http://cdn.leafletjs.com/leaflet/v1.0.0-beta.2/leaflet.js"></script>
 
     <!-- Load Esri Leaflet locally, after cloning this repository -->
-    <script src="http://cdn.jsdelivr.net/leaflet.esri/2.0.0-beta.5/esri-leaflet.js"></script>
+    <script src="http://cdn.jsdelivr.net/leaflet.esri/2.0.0-beta.7/esri-leaflet.js"></script>
 
     <style>
-      html, body,  #map {
-        width : 100%;
-        height : 100%;
+      html, body, #map {
+        margin:0; padding:0;  width : 100%; height : 100%;
       }
     </style>
   </head>
@@ -48,8 +47,8 @@ Here is a quick example to get you started. Just copy/paste into your own `.html
 
       var popupTemplate = "<h3>{NAME}</h3>{ACRES} Acres<br><small>Property ID: {PROPERTYID}<small>";
 
-      parks.bindPopup(function(feature){
-        return L.Util.template(popupTemplate, feature.properties)
+      parks.bindPopup(function(e){
+        return L.Util.template(popupTemplate, e.feature.properties)
       });
     </script>
   </body>
@@ -58,7 +57,7 @@ Here is a quick example to get you started. Just copy/paste into your own `.html
 
 ### Documentation & Examples
 
-A full [API Reference](http://esri.github.io/esri-leaflet/api-reference/) and plenty of [sample code](http://esri.github.io/esri-leaflet/examples/) can be found at the [Esri Leaflet](http://esri.github.io/esri-leaflet/) website.
+A full [API Reference](http://esri.github.io/esri-leaflet/api-reference/) and plenty of [sample code](http://esri.github.io/esri-leaflet/examples/) can be found at the [Esri Leaflet](http://esri.github.io/esri-leaflet/) website.  The source code for the site can be found [here](https://github.com/Esri/esri-leaflet-doc).
 
 ### Development Roadmap
 
@@ -70,7 +69,9 @@ Find a bug or want to request a new feature?  Please let us know by submitting a
 
 Please take a look at [previously logged issues](https://github.com/Esri/esri-leaflet/issues?labels=FAQ&milestone=&page=1&state=closed) that resolve common problems.
 
-You can also post issues on [GIS Stackexchange](http://gis.stackexchange.com/questions/ask?tags=esri-leaflet,leaflet) an/or the [Esri Leaflet place](https://geonet.esri.com/discussion/create.jspa?sr=pmenu&containerID=1841&containerType=700&tags=esri-leaflet,leaflet) on GeoNet.
+You can also post issues on [GIS Stackexchange](http://gis.stackexchange.com/questions/ask?tags=esri-leaflet,leaflet) and/or the [Esri Leaflet place](https://geonet.esri.com/discussion/create.jspa?sr=pmenu&containerID=1841&containerType=700&tags=esri-leaflet,leaflet) on GeoNet.
+
+Did you notice a problem with the Esri Leaflet website?  Please [let us know](https://github.com/Esri/esri-leaflet-doc/issues)!
 
 ### Frequently Asked Questions
 
@@ -114,11 +115,11 @@ Feel free to add your own project to this list!
 
 ### Dependencies
 
-* Esri Leaflet [1.x](https://github.com/Esri/esri-leaflet/releases/tag/v1.0.0) (available on [CDN](https://cdn.jsdelivr.net/leaflet.esri/1.0.0/esri-leaflet.js)) can be used in apps alongside:
+* Esri Leaflet [1.x](https://github.com/Esri/esri-leaflet/releases/tag/v1.0.2) (available on [CDN](https://cdn.jsdelivr.net/leaflet.esri/1.0.2/esri-leaflet.js)) can be used in apps alongside:
   *  [Leaflet](http://leafletjs.com) version 0.7.x.
 
-* Esri Leaflet [2.x](https://github.com/Esri/esri-leaflet/releases/tag/v2.0.0-beta.5) (available on [CDN](https://cdn.jsdelivr.net/leaflet.esri/2.0.0-beta.5/esri-leaflet.js)) can be used in apps alongside:
-  *  [Leaflet](http://leafletjs.com) version 1.0.0-beta1.
+* Esri Leaflet [2.x](https://github.com/Esri/esri-leaflet/releases/tag/v2.0.0-beta.5) (available on [CDN](https://cdn.jsdelivr.net/leaflet.esri/2.0.0-beta.7/esri-leaflet.js)) can be used in apps alongside:
+  *  [Leaflet](http://leafletjs.com) version 1.0.0-beta2.
 
 The `master` branch of this repository is only compatible with Leaflet 1.0.x.
 

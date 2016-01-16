@@ -1,7 +1,7 @@
 {
   "name": "esri-leaflet",
   "description": "Leaflet plugins for consuming ArcGIS Online and ArcGIS Server services.",
-  "version": "2.0.0-beta.6",
+  "version": "2.0.0-beta.7",
   "author": "Patrick Arlt <parlt@esri.com> (http://patrickarlt.com)",
   "bugs": {
     "url": "https://github.com/esri/esri-leaflet/issues"
@@ -11,9 +11,10 @@
     "John Gravois <jgravois@esri.com> (http://johngravois.com)"
   ],
   "dependencies": {
-    "arcgis-to-geojson-utils": "^1.0.0",
+    "arcgis-to-geojson-utils": "^1.0.1",
+    "leaflet": "^1.0.0-beta.2",
     "leaflet-virtual-grid": "^1.0.3",
-    "leaflet": "1.0.0-beta.2"
+    "tiny-binary-search": "^1.0.2"
   },
   "browserify": {
     "transform": [
@@ -31,41 +32,32 @@
     ]
   },
   "devDependencies": {
-    "assemble": "^0.4.37",
     "babelify": "^6.1.3",
     "chai": "2.3.0",
     "eslint": "^1.10.2",
     "gh-release": "^2.0.0",
-    "grunt": "^0.4.2",
-    "grunt-concurrent": "^0.5.0",
-    "grunt-contrib-connect": "^0.4.1",
-    "grunt-contrib-copy": "^0.5.0",
-    "grunt-contrib-imagemin": "^1.0.0",
-    "grunt-contrib-watch": "^0.6.1",
-    "grunt-gh-pages": "^0.8.1",
-    "grunt-newer": "^0.7.0",
-    "grunt-sass": "^1.0.0",
     "highlight.js": "^8.0.0",
     "http-server": "^0.8.5",
     "isparta": "^3.0.3",
-    "istanbul": "gotwarlost/istanbul.git#source-map",
+    "istanbul": "^0.4.2",
     "karma": "^0.12.16",
     "karma-chai-sinon": "^0.1.3",
-    "karma-coverage": "douglasduteil/karma-coverage#next",
+    "karma-coverage": "^0.5.3",
     "karma-mocha": "^0.1.0",
     "karma-mocha-reporter": "^0.2.5",
     "karma-phantomjs-launcher": "^0.2.0",
     "karma-sourcemap-loader": "^0.3.5",
     "load-grunt-tasks": "^0.4.0",
     "mkdirp": "^0.5.1",
+    "mocha": "^2.3.4",
     "phantomjs": "^1.9.17",
-    "rollup": "^0.11.4",
+    "rollup": "^0.19.0",
     "semistandard": "^7.0.4",
     "sinon": "^1.11.1",
     "sinon-chai": "2.7.0",
     "snazzy": "^2.0.1",
-    "uglify-js": "^2.4.23",
-    "watch": "^0.16.0"
+    "uglify-js": "^2.6.1",
+    "watch": "^0.17.1"
   },
   "homepage": "http://esri.github.io/esri-leaflet",
   "jsnext:main": "src/EsriLeaflet.js",
@@ -96,7 +88,6 @@
     "pretest": "npm run build",
     "test": "npm run lint && karma start",
     "release": "./scripts/release.sh",
-    "serve": "watch 'npm run build' src & http-server -p 5678 -c-1 -o",
-    "start": "grunt"
+    "start": "watch 'npm run build' src & http-server -p 5678 -c-1 -o"
   }
 }

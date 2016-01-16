@@ -114,7 +114,6 @@ export var FeatureLayer = FeatureManager.extend({
         if (this._visibleZoom() && (!this.options.timeField || (this.options.timeField && this._featureWithinTimeRange(geojson)))) {
           this._map.addLayer(newLayer);
         }
-
       }
     }
   },
