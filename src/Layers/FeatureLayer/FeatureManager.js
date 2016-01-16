@@ -406,7 +406,7 @@ export var FeatureManager = VirtualGrid.extend({
         var coords = this._activeCells[i].coords;
         var key = this._cacheKey(coords);
         if (this._cache[key]) {
-          this.addLayers(self._cache[key]);
+          this.addLayers(this._cache[key]);
         }
       }
     }
