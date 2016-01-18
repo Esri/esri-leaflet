@@ -51,7 +51,9 @@
     "mkdirp": "^0.5.1",
     "mocha": "^2.3.4",
     "phantomjs": "^1.9.17",
-    "rollup": "^0.19.0",
+    "rollup": "^0.24.1",
+    "rollup-plugin-npm": "^1.2.1",
+    "rollup-plugin-uglify": "^0.1.0",
     "semistandard": "^7.0.4",
     "sinon": "^1.11.1",
     "sinon-chai": "2.7.0",
@@ -83,11 +85,11 @@
   "scripts": {
     "prepublish": "npm run build",
     "prebuild": "mkdirp dist",
-    "build": "node ./scripts/build.js",
+    "build": "rollup -c rollup.conf.js",
     "lint": "semistandard src/**/*.js | snazzy",
     "pretest": "npm run build",
     "test": "npm run lint && karma start",
     "release": "./scripts/release.sh",
-    "start": "watch 'npm run build' src & http-server -p 5678 -c-1 -o"
+    "start": "watch 'npm run build' src & http-server -p 5000 -c-1 -o"
   }
 }

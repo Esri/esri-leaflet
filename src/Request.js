@@ -1,6 +1,6 @@
 import L from 'leaflet';
 import Support from './Support';
-import {warn} from './Util';
+import { warn } from './Util';
 
 var callbacks = 0;
 
