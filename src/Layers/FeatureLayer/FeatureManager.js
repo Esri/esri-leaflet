@@ -116,6 +116,10 @@ export var FeatureManager = VirtualGrid.extend({
         this._postProcessFeatures(bounds);
       }
 
+      if (error) {
+        this._postProcessFeatures(bounds);
+      }
+
       if (callback) {
         callback.call(this, error, featureCollection);
       }
