@@ -452,7 +452,7 @@ describe('L.esri.FeatureLayer', function () {
       url: 'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0',
       pane: 'custom'
     });
-    expect(layer.service.options.timeout).to.equal(5000);
+    expect(layer.service.options.timeout).to.equal(0);
 
     layer.service.setTimeout(1500);
     expect(layer.service.options.timeout).to.equal(1500);

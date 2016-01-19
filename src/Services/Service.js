@@ -8,7 +8,7 @@ export var Service = L.Evented.extend({
   options: {
     proxy: false,
     useCors: cors,
-    timeout: 5000
+    timeout: 0
   },
 
   initialize: function (options) {
@@ -40,6 +40,10 @@ export var Service = L.Evented.extend({
     this.options.token = token;
     this._runQueue();
     return this;
+  },
+
+  getTimeout: function () {
+    return this.options.timeout;
   },
 
   setTimeout: function (timeout) {
