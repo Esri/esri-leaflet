@@ -8,6 +8,13 @@ If you're just looking for help, you'll probably attract the most eyes if you po
 
 If you think you're encountering a new bug, please feel free to log an [issue](https://github.com/Esri/esri-leaflet/issues/new) and include the steps to reproduce the problem (and preferably a running sample).
 
+**Please include the following in your issue:**
+* Browser
+* Browser version
+* Leaflet version `L.version`
+* Esri Leaflet version `L.esri.VERSION`
+* Bundling tool (webpack, browserify, Require JS) if any
+
 ### I want to contribute, what should I work on?
 
 There is a lot of room for contributions to Esri Leaflet. Make sure you check out the [development instructions](https://github.com/Esri/esri-leaflet#development-instructions) in the readme to help you get started.
