@@ -62,12 +62,6 @@ export var RasterLayer = L.Layer.extend({
     this._map.off('moveend', this._update, this);
   },
 
-  getEvents: function () {
-    return {
-      moveend: this._update
-    };
-  },
-
   bindPopup: function (fn, popupOptions) {
     this._shouldRenderPopup = false;
     this._lastClick = false;
