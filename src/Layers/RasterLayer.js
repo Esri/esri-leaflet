@@ -207,6 +207,9 @@ EsriLeaflet.Layers.RasterLayer =  L.Class.extend({
     }
 
     if (zoom > this.options.maxZoom || zoom < this.options.minZoom) {
+      if (this._currentImage) {
+        this._currentImage._map.removeLayer(this._currentImage);
+      }
       return;
     }
     var params = this._buildExportParams();
