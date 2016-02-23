@@ -7,7 +7,8 @@ export var Service = L.Evented.extend({
 
   options: {
     proxy: false,
-    useCors: cors
+    useCors: cors,
+    timeout: 0
   },
 
   initialize: function (options) {
@@ -41,6 +42,14 @@ export var Service = L.Evented.extend({
     return this;
   },
 
+  getTimeout: function () {
+    return this.options.timeout;
+  },
+
+  setTimeout: function (timeout) {
+    this.options.timeout = timeout;
+  },
+
   _request: function (method, path, params, callback, context) {
     this.fire('requeststart', {
       url: this.options.url + path,
@@ -61,9 +70,9 @@ export var Service = L.Evented.extend({
       var url = (this.options.proxy) ? this.options.proxy + '?' + this.options.url + path : this.options.url + path;
 
       if ((method === 'get' || method === 'request') && !this.options.useCors) {
-        return Request.get.JSONP(url, params, wrappedCallback);
+        return Request.get.JSONP(url, params, wrappedCallback, context);
       } else {
-        return Request[method](url, params, wrappedCallback);
+        return Request[method](url, params, wrappedCallback, context);
       }
     }
   },
