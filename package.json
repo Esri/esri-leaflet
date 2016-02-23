@@ -37,7 +37,7 @@
     "mkdirp": "^0.5.1",
     "mocha": "^2.3.4",
     "phantomjs": "^1.9.17",
-    "rollup": "^0.24.1",
+    "rollup": "^0.25.4",
     "rollup-plugin-node-resolve": "^1.4.0",
     "rollup-plugin-npm": "^1.2.1",
     "rollup-plugin-uglify": "^0.1.0",
@@ -71,9 +71,8 @@
     "url": "git@github.com:Esri/esri-leaflet.git"
   },
   "scripts": {
-    "build": "esri-leaflet-bundler",
-    "lint": "semistandard src/**/*.js | snazzy",
     "build": "rollup -c profiles/debug.js & rollup -c profiles/production.js",
+    "lint": "semistandard src/**/*.js | snazzy",
     "prebuild": "mkdirp dist",
     "prepublish": "npm run build",
     "pretest": "npm run build",

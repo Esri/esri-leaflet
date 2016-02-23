@@ -22,7 +22,8 @@ export default {
     json()
   ],
   globals: {
-    'leaflet': 'L'
+    'leaflet': 'L',
+    'esri-leaflet': 'L.esri'
   },
   banner: copyright
 }
