@@ -1,7 +1,7 @@
 {
   "name": "esri-leaflet",
   "description": "Leaflet plugins for consuming ArcGIS Online and ArcGIS Server services.",
-  "version": "2.0.0-beta.7",
+  "version": "2.0.0-beta.8",
   "author": "Patrick Arlt <parlt@esri.com> (http://patrickarlt.com)",
   "browser": "dist/esri-lealet-debug.js",
   "bugs": {
