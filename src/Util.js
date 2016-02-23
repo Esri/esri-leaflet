@@ -1,16 +1,16 @@
 import L from 'leaflet';
-// import {
-//   geojsonToArcGIS as g2a,
-//   arcgisToGeoJSON as a2g
-// } from 'arcgis-to-geojson-utils';
-//
-// export function geojsonToArcGIS (geojson) {
-//   return g2a(geojson);
-// }
-//
-// export function arcgisToGeoJSON (arcgis) {
-//   return a2g(arcgis)
-// }
+import {
+  geojsonToArcGIS as g2a,
+  arcgisToGeoJSON as a2g
+} from 'arcgis-to-geojson-utils';
+
+export function geojsonToArcGIS (geojson) {
+  return g2a(geojson);
+}
+
+export function arcgisToGeoJSON (arcgis) {
+  return a2g(arcgis)
+}
 
 // shallow object clone for feature properties and attributes
 // from http://jsperf.com/cloning-an-object/2
@@ -96,32 +96,32 @@ export function isArcgisOnline (url) {
   once the functionality makes its way to ArcGIS Server*/
   return (/\.arcgis\.com.*?FeatureServer/g).test(url);
 }
-//
-// export function geojsonTypeToArcGIS (geoJsonType) {
-//   var arcgisGeometryType;
-//   switch (geoJsonType) {
-//     case 'Point':
-//       arcgisGeometryType = 'esriGeometryPoint';
-//       break;
-//     case 'MultiPoint':
-//       arcgisGeometryType = 'esriGeometryMultipoint';
-//       break;
-//     case 'LineString':
-//       arcgisGeometryType = 'esriGeometryPolyline';
-//       break;
-//     case 'MultiLineString':
-//       arcgisGeometryType = 'esriGeometryPolyline';
-//       break;
-//     case 'Polygon':
-//       arcgisGeometryType = 'esriGeometryPolygon';
-//       break;
-//     case 'MultiPolygon':
-//       arcgisGeometryType = 'esriGeometryPolygon';
-//       break;
-//   }
-//
-//   return arcgisGeometryType;
-// }
+
+export function geojsonTypeToArcGIS (geoJsonType) {
+  var arcgisGeometryType;
+  switch (geoJsonType) {
+    case 'Point':
+      arcgisGeometryType = 'esriGeometryPoint';
+      break;
+    case 'MultiPoint':
+      arcgisGeometryType = 'esriGeometryMultipoint';
+      break;
+    case 'LineString':
+      arcgisGeometryType = 'esriGeometryPolyline';
+      break;
+    case 'MultiLineString':
+      arcgisGeometryType = 'esriGeometryPolyline';
+      break;
+    case 'Polygon':
+      arcgisGeometryType = 'esriGeometryPolygon';
+      break;
+    case 'MultiPolygon':
+      arcgisGeometryType = 'esriGeometryPolygon';
+      break;
+  }
+
+  return arcgisGeometryType;
+}
 
 export function warn () {
   if (console && console.warn) {

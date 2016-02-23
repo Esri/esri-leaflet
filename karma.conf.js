@@ -15,7 +15,7 @@ module.exports = function (config) {
     files: [
       'node_modules/leaflet/dist/leaflet.css',
       'node_modules/leaflet/dist/leaflet-src.js',
-      'dist/esri-leaflet.js',
+      'dist/esri-leaflet-debug.js',
       'spec/**/*Spec.js'
     ],
 
@@ -27,7 +27,6 @@ module.exports = function (config) {
     preprocessors: {
       'dist/**/*.js': ['sourcemap', 'coverage']
     },
-
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
