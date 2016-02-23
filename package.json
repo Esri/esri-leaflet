@@ -41,7 +41,7 @@
     "rollup-plugin-node-resolve": "^1.4.0",
     "rollup-plugin-npm": "^1.2.1",
     "rollup-plugin-uglify": "^0.1.0",
-    "semistandard": "^7.0.4",
+    "semistandard": "^7.0.5",
     "sinon": "^1.11.1",
     "sinon-chai": "2.7.0",
     "snazzy": "^2.0.1",
