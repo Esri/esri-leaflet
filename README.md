@@ -65,10 +65,6 @@ Here is a quick example to get you started. Just copy/paste into your own `.html
 
 A full [API Reference](http://esri.github.io/esri-leaflet/api-reference/) and plenty of [sample code](http://esri.github.io/esri-leaflet/examples/) can be found at the [Esri Leaflet](http://esri.github.io/esri-leaflet/) website.  The source code for the site can be found [here](https://github.com/Esri/esri-leaflet-doc).
 
-### Development Roadmap
-
-If you are interested in contributing to Esri Leaflet or seeing what is coming up next check out the [development roadmap](https://github.com/Esri/esri-leaflet/wiki/Roadmap).
-
 ### Issues
 
 Find a bug or want to request a new feature?  Please let us know by submitting an [issue](https://github.com/Esri/esri-leaflet/issues).
@@ -90,7 +86,6 @@ Did you notice a problem with the Esri Leaflet website?  Please [let us know](ht
 * [I have an idea! What should I do?](https://github.com//Esri/esri-leaflet/wiki/FAQ#i-have-an-idea-what-should-i-do)
 * [When will you support "x"?](https://github.com//Esri/esri-leaflet/wiki/FAQ#when-will-you-support-x)
 * [Can you implement feature "x"?](https://github.com//Esri/esri-leaflet/wiki/FAQ#can-you-implement-feature-x)
-* [When will feature "x" get done?](https://github.com//Esri/esri-leaflet/wiki/FAQ#when-will-feature-x-get-done)
 * [I want to contribute. How can I help?](https://github.com//Esri/esri-leaflet/wiki/FAQ#i-want-to-contribute-how-can-i-help)
 * [I built something with Esri Leaflet can I show you?](https://github.com//Esri/esri-leaflet/wiki/FAQ#i-built-something-with-esri-leaflet-can-i-show-you)
 * [I built a reusable component (layer type, api wrapper, ui control etc...) can I contribute it to Esri Leaflet?](https://github.com//Esri/esri-leaflet/wiki/FAQ#i-built-a-reusable-component-layer-type-api-wrapper-ui-control-etc-can-i-contribute-it-to-esri-leaflet)
