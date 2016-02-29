@@ -109,7 +109,7 @@ Feel free to add your own project to this list!
 1. [Fork and clone Esri Leaflet](https://help.github.com/articles/fork-a-repo)
 2. `cd` into the `esri-leaflet` folder
 3. Install the dependencies with `npm install`
-4. Run `npm run serve` from the command line. This will compile minified source in a brand new `dist` directory, launch a tiny webserver and begin watching the raw source for changes.
+4. Run `npm start` from the command line. This will compile minified source in a brand new `dist` directory, launch a tiny webserver and begin watching the raw source for changes.
 5. Run `npm test` to make sure you haven't introduced a new 'feature' accidently.
 6. Make your changes and create a [pull request](https://help.github.com/articles/creating-a-pull-request)
 7. If you're interested in playing around with our website locally, just make sure you have [GruntCLI](http://gruntjs.com/getting-started) installed and run `grunt`.  This will start the web server locally at [http://localhost:8001](http://localhost:8001) and start watching the website source files for changes.
