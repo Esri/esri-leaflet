@@ -5,6 +5,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Upcoming changes][unreleased]
 
+### Changed
+
+* Build system refactored to use latest Rollup and Rollup plugins.
+* Reworked bundling directives for various modules systems to resolve and simplify various issues
+   * WebPack users no longer have to use the Babel loader.
+   * Babelify with Babel 6 now works
+
 ## [1.0.3]
 
 ### Fixed
