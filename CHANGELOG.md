@@ -5,12 +5,18 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Upcoming changes][unreleased]
 
+## [2.0.0-beta.8]
+
 ### Changed
 
 * Build system refactored to use latest Rollup and Rollup plugins.
 * Reworked bundling directives for various modules systems to resolve and simplify various issues
    * WebPack users no longer have to use the Babel loader.
    * Babelify with Babel 6 now works
+
+### Added
+
+* `timeout` parameter for `FeatureLayer` https://github.com/Esri/esri-leaflet/pull/730 Thanks @nathanhilbert
 
 ## [1.0.3]
 
@@ -395,6 +401,7 @@ None
 * An attributionControl on maps is now required when using BasemapLayer. #159
 
 [unreleased]: https://github.com/esri/esri-leaflet/compare/v2.0.0-beta.7...HEAD
+[2.0.0-beta.8]: https://github.com/esri/esri-leaflet/compare/v2.0.0-beta.7...v2.0.0-beta.8
 [2.0.0-beta.7]: https://github.com/esri/esri-leaflet/compare/v2.0.0-beta.6...v2.0.0-beta.7
 [1.0.3]: https://github.com/esri/esri-leaflet/compare/v1.0.2...v1.0.3
 [1.0.2]: https://github.com/esri/esri-leaflet/compare/v1.0.1...v1.0.2
