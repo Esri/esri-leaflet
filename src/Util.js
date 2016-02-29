@@ -4,12 +4,12 @@ import {
   arcgisToGeoJSON as a2g
 } from 'arcgis-to-geojson-utils';
 
-export function geojsonToArcGIS (geojson) {
-  return g2a(geojson);
+export function geojsonToArcGIS (geojson, idAttr) {
+  return g2a(geojson, idAttr);
 }
 
-export function arcgisToGeoJSON (arcgis) {
-  return a2g(arcgis)
+export function arcgisToGeoJSON (arcgis, idAttr) {
+  return a2g(arcgis, idAttr);
 }
 
 // shallow object clone for feature properties and attributes
@@ -70,7 +70,8 @@ export function responseToFeatureCollection (response, idAttribute) {
   var features = response.features || response.results;
   if (features.length) {
     for (var i = features.length - 1; i >= 0; i--) {
-      featureCollection.features.push(arcgisToGeoJSON(features[i], objectIdField));
+      var feature = arcgisToGeoJSON(features[i], objectIdField);
+      featureCollection.features.push(feature);
     }
   }
 
