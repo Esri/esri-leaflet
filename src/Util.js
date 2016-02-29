@@ -1,5 +1,16 @@
 import L from 'leaflet';
-import * as GeojsonUtil from 'arcgis-to-geojson-utils';
+import {
+  geojsonToArcGIS as g2a,
+  arcgisToGeoJSON as a2g
+} from 'arcgis-to-geojson-utils';
+
+export function geojsonToArcGIS (geojson, idAttr) {
+  return g2a(geojson, idAttr);
+}
+
+export function arcgisToGeoJSON (arcgis, idAttr) {
+  return a2g(arcgis, idAttr);
+}
 
 // shallow object clone for feature properties and attributes
 // from http://jsperf.com/cloning-an-object/2
@@ -34,14 +45,6 @@ export function boundsToExtent (bounds) {
   };
 }
 
-// GeoJSON -> ArcGIS
-var g2a = GeojsonUtil.geojsonToArcGIS;
-export { g2a as geojsonToArcGIS };
-
-// ArcGS -> GeoJSON
-var a2g = GeojsonUtil.arcgisToGeoJSON;
-export { a2g as arcgisToGeojson };
-
 export function responseToFeatureCollection (response, idAttribute) {
   var objectIdField;
 
@@ -67,7 +70,8 @@ export function responseToFeatureCollection (response, idAttribute) {
   var features = response.features || response.results;
   if (features.length) {
     for (var i = features.length - 1; i >= 0; i--) {
-      featureCollection.features.push(GeojsonUtil.arcgisToGeoJSON(features[i], objectIdField));
+      var feature = arcgisToGeoJSON(features[i], objectIdField);
+      featureCollection.features.push(feature);
     }
   }
 
@@ -133,8 +137,8 @@ export var Util = {
   isArcgisOnline: isArcgisOnline,
   geojsonTypeToArcGIS: geojsonTypeToArcGIS,
   responseToFeatureCollection: responseToFeatureCollection,
-  geojsonToArcGIS: g2a,
-  arcgisToGeojson: a2g,
+  geojsonToArcGIS: geojsonToArcGIS,
+  arcgisToGeoJSON: arcgisToGeoJSON,
   boundsToExtent: boundsToExtent,
   extentToBounds: extentToBounds
 };
