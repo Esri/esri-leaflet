@@ -187,6 +187,17 @@ export var BasemapLayer = L.TileLayer.extend({
           subdomains: ['server', 'services'],
           pane: (pointerEvents) ? 'esri-labels' : 'tilePane'
         }
+      },
+      USATopo: {
+        urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer/tile/{z}/{y}/{x}',
+        options: {
+          hideLogo: false,
+          logoPosition: 'bottomright',
+          minZoom: 1,
+          maxZoom: 15,
+          subdomains: ['server', 'services'],
+          attribution: 'National Geographic Society, i-cubed'
+        }
       }
     }
   },
