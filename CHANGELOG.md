@@ -399,8 +399,7 @@ None
 * FeatureLayer, DynamicMapLayer and ClusteredFeatureLayer all accept a token option for accessing services that require authentication and fire a `authenticationrequired` event when they encounter a need for a token. Thanks to @aaronpk for the Oauth demos. #139
 * Add DarkGray and DarkGrayLabels to BasemapLayer. #190
 * An attributionControl on maps is now required when using BasemapLayer. #159
-
-[unreleased]: https://github.com/esri/esri-leaflet/compare/v2.0.0-beta.7...HEAD
+[unreleased]: https://github.com/esri/esri-leaflet/compare/v2.0.0-beta.8...HEAD
 [2.0.0-beta.8]: https://github.com/esri/esri-leaflet/compare/v2.0.0-beta.7...v2.0.0-beta.8
 [2.0.0-beta.7]: https://github.com/esri/esri-leaflet/compare/v2.0.0-beta.6...v2.0.0-beta.7
 [1.0.3]: https://github.com/esri/esri-leaflet/compare/v1.0.2...v1.0.3
