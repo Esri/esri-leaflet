@@ -28,15 +28,16 @@
   <!-- stylesheet -->
   <link rel="stylesheet" href="../../css/style.css">
 
-  <!-- leaflet -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.0-beta.2/leaflet.css" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.0-beta.2/leaflet.js"></script>
+  <!-- Load Leaflet from CDN-->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet/1.0.0-beta.2/leaflet.css" />
+  <script src="https://cdn.jsdelivr.net/leaflet/1.0.0-beta.2/leaflet.js"></script>
 
-  <script src="//cdn.jsdelivr.net/leaflet.esri/2.0.0-beta.7/esri-leaflet.js"></script>
-  <script src="//cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
+  <!-- Load Esri Leaflet from CDN -->
+  <script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.0-beta.8/esri-leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
 
   
-    
+
   
 
   <!-- Google Analytics -->
@@ -360,7 +361,7 @@ dynamicMapLayer.bindPopup(
             <td>
                 Returns a new <a href="../..//api-reference/tasks/identify-features.html"><code>L.esri.services.IdentifyFeatures</code></a> object that can be used to identify features on this layer. Your callback function will be passed a <a href="http://geojson.org/geojson-spec.html#feature-collection-objects">GeoJSON FeatureCollection</a> with the results or an error.
 <pre class="js"><code>dynamicMapLayer.identify()
-  .at(latlng, latlngbounds, 5)
+  .at(latlng)
   .run(function(error, featureCollection){
     console.log(featureCollection);
   });</code></pre>

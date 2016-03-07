@@ -30,15 +30,16 @@
   <!-- stylesheet -->
   <link rel="stylesheet" href="../css/style.css">
 
-  <!-- leaflet -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.0-beta.2/leaflet.css" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.0-beta.2/leaflet.js"></script>
+  <!-- Load Leaflet from CDN-->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet/1.0.0-beta.2/leaflet.css" />
+  <script src="https://cdn.jsdelivr.net/leaflet/1.0.0-beta.2/leaflet.js"></script>
 
-  <script src="//cdn.jsdelivr.net/leaflet.esri/2.0.0-beta.7/esri-leaflet.js"></script>
-  <script src="//cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
+  <!-- Load Esri Leaflet from CDN -->
+  <script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.0-beta.8/esri-leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
 
   
-    
+
   
 
   <!-- Google Analytics -->
@@ -197,15 +198,15 @@
 
 <div id="map"></div>
 <div id="selectedFeatures" class="leaflet-bar map-text">Click on a
-  <a href="https://www.arcgis.com/home/item.html?id=3fcf06963b134254b73dccfbc1546eb9">NOAA weather advisory</a>
+  <a href="https://tmservices1.esri.com/arcgis/rest/services/LiveFeeds/Earthquakes/MapServer">USGS</a> earthquake.
 </div>
 <script>
   var map = L.map('map').setView([38.5, -96.8], 4);
 
   L.esri.basemapLayer('Gray').addTo(map);
 
-  var weatherStations = L.esri.dynamicMapLayer({
-    url: '//maps1.arcgisonline.com/ArcGIS/rest/services/NWS_Weather_Stations/MapServer',
+  var earthquakes = L.esri.dynamicMapLayer({
+    url: 'https://tmservices1.esri.com/arcgis/rest/services/LiveFeeds/Earthquakes/MapServer',
     opacity: 0.5,
     useCors: false
   }).addTo(map);
@@ -218,11 +219,11 @@
     if(identifiedFeature){
       map.removeLayer(identifiedFeature);
     }
-    weatherStations.identify().on(map).at(e.latlng).run(function(error, featureCollection){
+    earthquakes.identify().on(map).at(e.latlng).run(function(error, featureCollection){
       console.log(featureCollection.features[0]);
       if (featureCollection.features.length > 0) {
         identifiedFeature = L.geoJson(featureCollection.features[0]).addTo(map);
-        pane.innerHTML = featureCollection.features[0].properties.Station_Na;
+        pane.innerHTML = "magnitude: " + featureCollection.features[0].properties.MAGNITUDE;
       }
       else {
         pane.innerHTML = 'No features identified.';
@@ -239,11 +240,11 @@
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">name</span>=<span class="value">'viewport'</span> <span class="attribute">content</span>=<span class="value">'initial-scale=1,maximum-scale=1,user-scalable=no'</span> /&gt;</span>
 
   <span class="comment">&lt;!-- Load Leaflet from CDN--&gt;</span>
-  <span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"http://cdn.leafletjs.com/leaflet/v1.0.0-beta.2/leaflet.css"</span> /&gt;</span>
-  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"http://cdn.leafletjs.com/leaflet/v1.0.0-beta.2/leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"https://cdn.jsdelivr.net/leaflet/1.0.0-beta.2/leaflet.css"</span> /&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://cdn.jsdelivr.net/leaflet/1.0.0-beta.2/leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
   <span class="comment">&lt;!-- Load Esri Leaflet from CDN --&gt;</span>
-  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"//cdn.jsdelivr.net/leaflet.esri/2.0.0-beta.7/esri-leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://cdn.jsdelivr.net/leaflet.esri/2.0.0-beta.8/esri-leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
   <span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css">
     <span class="tag">body</span> <span class="rules">{ <span class="rule"><span class="attribute">margin</span>:<span class="value"><span class="number">0</span></span></span>; <span class="rule"><span class="attribute">padding</span>:<span class="value"><span class="number">0</span></span></span>; <span class="rule">}</span></span>
@@ -269,15 +270,15 @@
 
 <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"selectedFeatures"</span> <span class="attribute">class</span>=<span class="value">"leaflet-bar map-text"</span>&gt;</span>Click on a
-  <span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"https://www.arcgis.com/home/item.html?id=3fcf06963b134254b73dccfbc1546eb9"</span>&gt;</span>NOAA weather advisory<span class="tag">&lt;/<span class="title">a</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"https://tmservices1.esri.com/arcgis/rest/services/LiveFeeds/Earthquakes/MapServer"</span>&gt;</span>USGS<span class="tag">&lt;/<span class="title">a</span>&gt;</span> earthquake.
 <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
   <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">38.5</span>, -<span class="number">96.8</span>], <span class="number">4</span>);
 
   L.esri.basemapLayer(<span class="string">'Gray'</span>).addTo(map);
 
-  <span class="keyword">var</span> weatherStations = L.esri.dynamicMapLayer({
-    url: <span class="string">'//maps1.arcgisonline.com/ArcGIS/rest/services/NWS_Weather_Stations/MapServer'</span>,
+  <span class="keyword">var</span> earthquakes = L.esri.dynamicMapLayer({
+    url: <span class="string">'https://tmservices1.esri.com/arcgis/rest/services/LiveFeeds/Earthquakes/MapServer'</span>,
     opacity: <span class="number">0.5</span>,
     useCors: <span class="literal">false</span>
   }).addTo(map);
@@ -290,11 +291,11 @@
     <span class="keyword">if</span>(identifiedFeature){
       map.removeLayer(identifiedFeature);
     }
-    weatherStations.identify().on(map).at(e.latlng).run(<span class="function"><span class="keyword">function</span><span class="params">(error, featureCollection)</span>{</span>
+    earthquakes.identify().on(map).at(e.latlng).run(<span class="function"><span class="keyword">function</span><span class="params">(error, featureCollection)</span>{</span>
       console.log(featureCollection.features[<span class="number">0</span>]);
       <span class="keyword">if</span> (featureCollection.features.length &gt; <span class="number">0</span>) {
         identifiedFeature = L.geoJson(featureCollection.features[<span class="number">0</span>]).addTo(map);
-        pane.innerHTML = featureCollection.features[<span class="number">0</span>].properties.Station_Na;
+        pane.innerHTML = <span class="string">"magnitude: "</span> + featureCollection.features[<span class="number">0</span>].properties.MAGNITUDE;
       }
       <span class="keyword">else</span> {
         pane.innerHTML = <span class="string">'No features identified.'</span>;
