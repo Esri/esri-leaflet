@@ -209,7 +209,7 @@
 </div>
 
 <script>
-  var clientID = 'FxeCTSwkrA9yqVGS';
+  var clientID = 'uoiMRafhECiH5uNE';
   var accessToken;
   var callbacks = [];
   var protocol = window.location.protocol;
@@ -230,7 +230,7 @@
 
   // this function will be called when the oauth process is complete
   window.oauthCallback = function(token) {
-    L.esri.get('//www.arcgis.com/sharing/rest/portals/self', {
+    L.esri.get('https://www.arcgis.com/sharing/rest/portals/self', {
       token: token
     }, function(error, response){
       authPane.innerHTML = '<label>Hi '+response.user.username+' your token is <input value="'+token+'"></label>';
@@ -297,7 +297,7 @@
 <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
-  <span class="keyword">var</span> clientID = <span class="string">'FxeCTSwkrA9yqVGS'</span>;
+  <span class="keyword">var</span> clientID = <span class="string">'uoiMRafhECiH5uNE'</span>;
   <span class="keyword">var</span> accessToken;
   <span class="keyword">var</span> callbacks = [];
   <span class="keyword">var</span> protocol = window.location.protocol;
@@ -318,7 +318,7 @@
 
   <span class="comment">// this function will be called when the oauth process is complete</span>
   window.oauthCallback = <span class="function"><span class="keyword">function</span><span class="params">(token)</span> {</span>
-    L.esri.get(<span class="string">'//www.arcgis.com/sharing/rest/portals/self'</span>, {
+    L.esri.get(<span class="string">'https://www.arcgis.com/sharing/rest/portals/self'</span>, {
       token: token
     }, <span class="function"><span class="keyword">function</span><span class="params">(error, response)</span>{</span>
       authPane.innerHTML = <span class="string">'&lt;label&gt;Hi '</span>+response.user.username+<span class="string">' your token is &lt;input value="'</span>+token+<span class="string">'"&gt;&lt;/label&gt;'</span>;
