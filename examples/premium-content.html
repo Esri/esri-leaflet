@@ -209,7 +209,7 @@
 </div>
 
 <script>
-  var clientID = 'FxeCTSwkrA9yqVGS';
+  var clientID = 'uoiMRafhECiH5uNE';
   var accessToken;
   var callbacks = [];
   var protocol = window.location.protocol;
@@ -244,7 +244,7 @@
   signInButton.addEventListener('click', function(e){
     oauth(function(token){
       trafficLayer = L.esri.dynamicMapLayer({
-        url: '//traffic.arcgis.com/arcgis/rest/services/World/Traffic/MapServer',
+        url: 'https://traffic.arcgis.com/arcgis/rest/services/World/Traffic/MapServer',
         token: token
       }).addTo(map);
       trafficLayer.on('authenticationrequired', function(e){
@@ -306,7 +306,7 @@
 <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
-  <span class="keyword">var</span> clientID = <span class="string">'FxeCTSwkrA9yqVGS'</span>;
+  <span class="keyword">var</span> clientID = <span class="string">'uoiMRafhECiH5uNE'</span>;
   <span class="keyword">var</span> accessToken;
   <span class="keyword">var</span> callbacks = [];
   <span class="keyword">var</span> protocol = window.location.protocol;
@@ -341,7 +341,7 @@
   signInButton.addEventListener(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span><span class="params">(e)</span>{</span>
     oauth(<span class="function"><span class="keyword">function</span><span class="params">(token)</span>{</span>
       trafficLayer = L.esri.dynamicMapLayer({
-        url: <span class="string">'//traffic.arcgis.com/arcgis/rest/services/World/Traffic/MapServer'</span>,
+        url: <span class="string">'https://traffic.arcgis.com/arcgis/rest/services/World/Traffic/MapServer'</span>,
         token: token
       }).addTo(map);
       trafficLayer.on(<span class="string">'authenticationrequired'</span>, <span class="function"><span class="keyword">function</span><span class="params">(e)</span>{</span>

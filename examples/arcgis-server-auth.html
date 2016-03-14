@@ -201,7 +201,7 @@
 
   serverAuth(function(error, response){
     var dl = L.esri.dynamicMapLayer({
-      url: '//sampleserver6.arcgisonline.com/arcgis/rest/services/Wildfire_secure_ac/MapServer',
+      url: 'https://sampleserver6.arcgisonline.com/arcgis/rest/services/Wildfire_secure_ac/MapServer',
       opacity: 1,
       token:  response.token
     }).addTo(map);
@@ -255,7 +255,7 @@
 
   serverAuth(<span class="function"><span class="keyword">function</span><span class="params">(error, response)</span>{</span>
     <span class="keyword">var</span> dl = L.esri.dynamicMapLayer({
-      url: <span class="string">'//sampleserver6.arcgisonline.com/arcgis/rest/services/Wildfire_secure_ac/MapServer'</span>,
+      url: <span class="string">'https://sampleserver6.arcgisonline.com/arcgis/rest/services/Wildfire_secure_ac/MapServer'</span>,
       opacity: <span class="number">1</span>,
       token:  response.token
     }).addTo(map);
