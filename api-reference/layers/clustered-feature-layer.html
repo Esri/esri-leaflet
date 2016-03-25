@@ -418,8 +418,12 @@
 </table>
 
 <h3 id="example">Example</h3>
+<p>Live sample <a href="http://esri.github.io/esri-leaflet/examples/clustering-feature-layers.html">here</a>.</p>
+<pre><code class="language-xml"><span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">type</span>=<span class="value">"text/css"</span> <span class="attribute">href</span>=<span class="value">"./MarkerCluster.Default.css"</span>&gt;</span>
+<span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">type</span>=<span class="value">"text/css"</span> <span class="attribute">href</span>=<span class="value">"./MarkerCluster.css"</span>&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"./leaflet.markercluster.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+<span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">.<span class="regexp">/esri-leaflet-clustered-feature-layer.js</span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></code></pre>
 <pre><code class="language-js"><span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">45.53</span>,-<span class="number">122.64</span>], <span class="number">16</span>);
-
 L.esri.basemapLayer(<span class="string">"Streets"</span>).addTo(map);
 
 <span class="keyword">var</span> url = <span class="string">"http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0"</span>;

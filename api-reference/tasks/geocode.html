@@ -231,6 +231,8 @@
 </table>
 
 <h3 id="examples">Examples</h3>
+<pre><code class="language-xml"><span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"./esri-leaflet-geocoder.css"</span>&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"./esri-leaflet-geocoder.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></code></pre>
 <pre><code class="language-js">L.esri.Geocoding.geocode().text(<span class="string">'380 New York St, Redlands, California, 92373'</span>).run(<span class="function"><span class="keyword">function</span><span class="params">(err, results, response)</span>{</span>
   console.log(results);
 });</code></pre>

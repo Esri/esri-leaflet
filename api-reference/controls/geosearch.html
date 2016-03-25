@@ -187,12 +187,6 @@
 <td>Determines whether or not the geocoder starts in an expanded state.</td>
 </tr>
 <tr>
-<td><code>maxResults</code></td>
-<td><code>Integer</code></td>
-<td><code>25</code></td>
-<td>Determines how many results to request from geocoding services.  Hard limit for the <a href="https://developers.arcgis.com/rest/geocode/api-reference/overview-world-geocoding-service.htm">ArcGIS World Geocoding Service</a> is 50.</td>
-</tr>
-<tr>
 <td><code>allowMultipleResults</code></td>
 <td><code>Boolean</code></td>
 <td><code>true</code></td>
@@ -272,6 +266,8 @@
 <span class="tag">&lt;/<span class="title">div</span>&gt;</span></code></pre>
 <h3 id="providers">Providers</h3>
 <p>The <code>Geosearch</code> control can also search for results from a variety of sources including Feature Layers and Map Services. This is done with plain text matching and is not &quot;real&quot; geocoding. But it allows you to mix custom results into a search box.</p>
+<pre><code class="language-xml"><span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"./esri-leaflet-geocoder.css"</span>&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"./esri-leaflet-geocoder.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></code></pre>
 <pre><code class="language-js"><span class="keyword">var</span> arcgisOnline = L.esri.Geocoding.arcgisOnlineProvider();
 <span class="keyword">var</span> gisDay = L.esri.Geocoding.featureLayerProvider({
   url: <span class="string">'https://services.arcgis.com/uCXeTVveQzP4IIcx/arcgis/rest/services/GIS_Day_Final/FeatureServer/0'</span>,
@@ -318,7 +314,7 @@ L.esri.Geocoding.Controls.geosearch({
 <td>maxResults</td>
 <td><code>Integer</code></td>
 <td><code>5</code></td>
-<td>Maximum number of results to show for the provider.</td>
+<td>Maximum number of results to show for the provider.  Hard limit for the <a href="https://developers.arcgis.com/rest/geocode/api-reference/overview-world-geocoding-service.htm">ArcGIS World Geocoding Service</a> is 50.</td>
 </tr>
 <tr>
 <td>attribution</td>
