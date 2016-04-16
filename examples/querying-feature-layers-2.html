@@ -188,7 +188,7 @@
 
   L.esri.basemapLayer('Streets').addTo(map);
   var stops = L.esri.featureLayer({
-    url: '//services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Trimet_Transit_Stops/FeatureServer/0',
+    url: 'https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Trimet_Transit_Stops/FeatureServer/0',
     pointToLayer: function (geojson, latlng) {
       return L.circleMarker(latlng);
     },
@@ -250,7 +250,7 @@
 
   L.esri.basemapLayer(<span class="string">'Streets'</span>).addTo(map);
   <span class="keyword">var</span> stops = L.esri.featureLayer({
-    url: <span class="string">'//services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Trimet_Transit_Stops/FeatureServer/0'</span>,
+    url: <span class="string">'https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Trimet_Transit_Stops/FeatureServer/0'</span>,
     pointToLayer: <span class="function"><span class="keyword">function</span> <span class="params">(geojson, latlng)</span> {</span>
       <span class="keyword">return</span> L.circleMarker(latlng);
     },

@@ -201,7 +201,7 @@
   L.esri.basemapLayer('Gray').addTo(map);
 
   var zipcodes = L.esri.featureLayer({
-    url: '//services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_ZIP_Codes/FeatureServer/0',
+    url: 'https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_ZIP_Codes/FeatureServer/0',
     simplifyFactor: 0.35,
     precision: 5,
     fields: ['FID', 'ZIP', 'PO_NAME'],
@@ -272,7 +272,7 @@
   L.esri.basemapLayer(<span class="string">'Gray'</span>).addTo(map);
 
   <span class="keyword">var</span> zipcodes = L.esri.featureLayer({
-    url: <span class="string">'//services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_ZIP_Codes/FeatureServer/0'</span>,
+    url: <span class="string">'https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_ZIP_Codes/FeatureServer/0'</span>,
     simplifyFactor: <span class="number">0.35</span>,
     precision: <span class="number">5</span>,
     fields: [<span class="string">'FID'</span>, <span class="string">'ZIP'</span>, <span class="string">'PO_NAME'</span>],

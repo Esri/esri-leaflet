@@ -241,7 +241,7 @@
   L.esri.basemapLayer('GrayLabels').addTo(map);
 
   var reports = L.esri.Heat.heatmapFeatureLayer({
-    url: '//services.arcgis.com/rOo16HdIMeOBI4Mb/ArcGIS/rest/services/Graffiti_Reports/FeatureServer/0',
+    url: 'https://services.arcgis.com/rOo16HdIMeOBI4Mb/ArcGIS/rest/services/Graffiti_Reports/FeatureServer/0',
     timeField: 'CreatedDate',
     from: new Date(startTimeInput.value),
     to: new Date(endTimeInput.value),
@@ -335,7 +335,7 @@
   L.esri.basemapLayer(<span class="string">'GrayLabels'</span>).addTo(map);
 
   <span class="keyword">var</span> reports = L.esri.Heat.heatmapFeatureLayer({
-    url: <span class="string">'//services.arcgis.com/rOo16HdIMeOBI4Mb/ArcGIS/rest/services/Graffiti_Reports/FeatureServer/0'</span>,
+    url: <span class="string">'https://services.arcgis.com/rOo16HdIMeOBI4Mb/ArcGIS/rest/services/Graffiti_Reports/FeatureServer/0'</span>,
     timeField: <span class="string">'CreatedDate'</span>,
     from: <span class="keyword">new</span> Date(startTimeInput.value),
     to: <span class="keyword">new</span> Date(endTimeInput.value),
