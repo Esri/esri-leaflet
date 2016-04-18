@@ -27,6 +27,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [2.0.0-beta.7]
 
+### Breaking
+
+* `L.esri.Util.arcgisToGeoJson` is now `L.esri.Util.arcgisToGeoJSON`
+
 ### Added
 
 * updated website to show off our 2.x API (compatible with Leaflet `1.0.0-beta.2`) and include API reference for supported plugins.
