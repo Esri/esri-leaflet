@@ -22,4 +22,4 @@ What happens is [X].
 
 I was expecting [Y].
 
-(if possible, please use our template to create a [jsbin](http://jsbin.com/xecawi/edit?html,output) that demonstrates the problem)
+(if possible, please use our template to create a [jsbin](http://jsbin.com/dofowurugi/edit?html,output) that demonstrates the problem)
