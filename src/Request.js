@@ -118,6 +118,16 @@ function xmlHttpGet (url, params, callback, context) {
 export function request (url, params, callback, context) {
   var paramString = serialize(params);
   var httpRequest = createRequest(callback, context);
+  var requestLength = (url + '?' + paramString).length;
+
+  // get around ie10/11 bug which requires that the request be opened before a timeout is applied
+  if (requestLength <= 2000 && Support.cors) {
+    httpRequest.open('GET', url + '?' + paramString);
+
+  } else if (requestLength > 2000 && Support.cors) {
+    httpRequest.open('POST', url);
+    httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  }
 
   if (typeof context !== 'undefined' && context !== null) {
     if (typeof context.options !== 'undefined') {
@@ -125,17 +135,12 @@ export function request (url, params, callback, context) {
     }
   }
 
-  var requestLength = (url + '?' + paramString).length;
-
   // request is less then 2000 characters and the browser supports CORS, make GET request with XMLHttpRequest
   if (requestLength <= 2000 && Support.cors) {
-    httpRequest.open('GET', url + '?' + paramString);
     httpRequest.send(null);
 
   // request is less more then 2000 characters and the browser supports CORS, make POST request with XMLHttpRequest
   } else if (requestLength > 2000 && Support.cors) {
-    httpRequest.open('POST', url);
-    httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     httpRequest.send(paramString);
 
   // request is less more then 2000 characters and the browser does not support CORS, make a JSONP request
