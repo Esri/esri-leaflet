@@ -107,7 +107,7 @@ Feel free to add your own project to this list!
 
 1. [Fork and clone Esri Leaflet](https://help.github.com/articles/fork-a-repo)
 2. `cd` into the `esri-leaflet` folder
-3. Install the dependencies with `npm install`
+3. Install the [`package.json`](https://github.com/Esri/esri-leaflet/blob/master/package.json#L14-L49) dependencies by running `npm install`
 4. Run `npm start` from the command line. This will compile minified source in a brand new `dist` directory, launch a tiny webserver and begin watching the raw source for changes.
 5. Run `npm test` to make sure you haven't introduced a new 'feature' accidently.
 6. Make your changes and create a [pull request](https://help.github.com/articles/creating-a-pull-request)
