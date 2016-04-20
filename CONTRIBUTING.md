@@ -25,7 +25,7 @@ The Esri Leaflet website is written using http://assemble.io/ and can be found a
 
 ##### More tests
 
-Esri Leaflet has a fairly comprehensive test suite built with [Mocha](http://visionmedia.github.io/mocha/), [Chai](http://chaijs.com/), [Sinon](http://sinonjs.org), and [Karma](http://karma-runner.github.io/0.12/index.html). The tests can be found in at https://github.com/Esri/esri-leaflet/tree/master/spec.
+Esri Leaflet has a fairly comprehensive test suite built with [Mocha](http://mochajs.org/), [Chai](http://chaijs.com/), [Sinon](http://sinonjs.org), and [Karma](http://karma-runner.github.io/0.12/index.html). The tests can be found in at https://github.com/Esri/esri-leaflet/tree/master/spec.
 
 You can run the tests with `npm test`.
 
@@ -41,7 +41,7 @@ Of course! if you develop reusuable components for use with Esri Leaflet that yo
 
 1. [Fork and clone Esri Leaflet](https://help.github.com/articles/fork-a-repo)
 2. `cd` into the `esri-leaflet` folder
-3. Install the dependencies with `npm install`
+3. Install the [`package.json`](https://github.com/Esri/esri-leaflet/blob/master/package.json#L14-L49) dependencies by running `npm install`
 4. In order to compile/minify the source code of the API in a newly created `dist` folder, run `npm run build`.
 5. If you'd like to run the website locally, run `npm start` or `grunt` from the command line. This will start the web server at [http://localhost:8001](http://localhost:8001) and start watching the website source files for changes.
 6. If you'd like to share your changes, just create a [pull request](https://help.github.com/articles/creating-a-pull-request)
@@ -54,4 +54,4 @@ Please make sure your changes pass JS Hint. This will help make sure code is con
 
 ### Testing
 
-Please make sure your changes don't break existing tests. Testing is essential for determining backward compatibility and catching breaking changes. You can run tests with `npm test` or `npm t` if you'd like to avoid typing three extra characters.
+Please make sure your changes don't break existing tests. Testing is essential for determining backward compatibility and catching breaking changes. You can run tests with `npm test` (or `npm t` if you'd like to avoid typing three extra characters).
