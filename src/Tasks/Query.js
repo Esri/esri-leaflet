@@ -97,8 +97,8 @@ export var Query = Task.extend({
   run: function (callback, context) {
     this._cleanParams();
 
-    // if the service is hosted on arcgis online request geojson directly
-    if (Util.isArcgisOnline(this.options.url)) {
+    // services hosted on ArcGIS Online also support requesting geojson directly
+    if (this.options.isModern || Util.isArcgisOnline(this.options.url)) {
       this.params.f = 'geojson';
 
       return this.request(function (error, response) {
@@ -217,8 +217,7 @@ export var Query = Task.extend({
       return;
     }
 
-    // warn the user if we havn't found a
-    /* global console */
+    // warn the user if we havn't found an appropriate object
     Util.warn('invalid geometry passed to spatial query. Should be an L.LatLng, L.LatLngBounds or L.Marker or a GeoJSON Point Line or Polygon object');
 
     return;
