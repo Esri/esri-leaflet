@@ -159,13 +159,7 @@ export function request (url, params, callback, context) {
 export function jsonp (url, params, callback, context) {
   window._EsriLeafletCallbacks = window._EsriLeafletCallbacks || {};
   var callbackId = 'c' + callbacks;
-
   params.callback = 'window._EsriLeafletCallbacks.' + callbackId;
-
-  var script = L.DomUtil.create('script', null, document.body);
-  script.type = 'text/javascript';
-  script.src = url + '?' + serialize(params);
-  script.id = callbackId;
 
   window._EsriLeafletCallbacks[callbackId] = function (response) {
     if (window._EsriLeafletCallbacks[callbackId] !== true) {
@@ -191,6 +185,11 @@ export function jsonp (url, params, callback, context) {
       window._EsriLeafletCallbacks[callbackId] = true;
     }
   };
+
+  var script = L.DomUtil.create('script', null, document.body);
+  script.type = 'text/javascript';
+  script.src = url + '?' + serialize(params);
+  script.id = callbackId;
 
   callbacks++;
 
