@@ -125,6 +125,15 @@ export var ImageMapLayer = RasterLayer.extend({
     var size = this._map.getSize();
     var ne = this._map.options.crs.project(bounds._northEast);
     var sw = this._map.options.crs.project(bounds._southWest);
+
+    // ensure that we don't ask ArcGIS Server for a taller image than we have actual map displaying
+    var top = this._map.latLngToLayerPoint(bounds._northEast);
+    var bottom = this._map.latLngToLayerPoint(bounds._southWest);
+
+    if (top.y > 0 || bottom.y < size.y) {
+      size.y = bottom.y - top.y;
+    }
+
     var sr = parseInt(this._map.options.crs.code.split(':')[1], 10);
 
     var params = {
