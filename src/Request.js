@@ -85,14 +85,13 @@ function createRequest (callback, context) {
 
 function xmlHttpPost (url, params, callback, context) {
   var httpRequest = createRequest(callback, context);
+  httpRequest.open('POST', url);
 
   if (typeof context !== 'undefined' && context !== null) {
     if (typeof context.options !== 'undefined') {
       httpRequest.timeout = context.options.timeout;
     }
   }
-
-  httpRequest.open('POST', url);
   httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
   httpRequest.send(serialize(params));
 
@@ -101,14 +100,13 @@ function xmlHttpPost (url, params, callback, context) {
 
 function xmlHttpGet (url, params, callback, context) {
   var httpRequest = createRequest(callback, context);
+  httpRequest.open('GET', url + '?' + serialize(params), true);
 
   if (typeof context !== 'undefined' && context !== null) {
     if (typeof context.options !== 'undefined') {
       httpRequest.timeout = context.options.timeout;
     }
   }
-
-  httpRequest.open('GET', url + '?' + serialize(params), true);
   httpRequest.send(null);
 
   return httpRequest;
