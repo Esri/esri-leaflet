@@ -5,6 +5,20 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Upcoming changes][unreleased]
 
+## [2.0.0]
+
+### Added
+
+* new 'USATopo' `L.esri.basemapLayer` option.
+* boilerplate issue template
+
+### Fixed
+
+* Worked around IE10,11 bug that caused `L.esri.featureLayer`s not to draw https://github.com/Esri/esri-leaflet/pull/770
+* Ensured `L.esri.imageMapLayer` are overlaid appropriately at world scale https://github.com/Esri/esri-leaflet/pull/774
+* Ensured copyright text makes it into the minified, concatenated build of the library
+* create script tag after JSONP callback function is defined https://github.com/Esri/esri-leaflet/issues/762
+
 ## [2.0.0-beta.8]
 
 ### Changed
@@ -82,7 +96,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Breaking
 
-* Nested namespaces for `L.esri.Layers`, `L.esri.Services` and `L.esri.Tasks`, ``have been removed for better compatibility with ES 2015 modules. This means you should now write `L.esri.query()` for example as opposed to `L.esri.Tasks.query()`.
+* Nested namespaces for `L.esri.Layers`, `L.esri.Services` and `L.esri.Tasks` have been removed for better compatibility with ES 2015 modules. This means you should now write `L.esri.query()` for example as opposed to `L.esri.Tasks.query()`.
 
 ### Changed
 
@@ -403,7 +417,9 @@ None
 * FeatureLayer, DynamicMapLayer and ClusteredFeatureLayer all accept a token option for accessing services that require authentication and fire a `authenticationrequired` event when they encounter a need for a token. Thanks to @aaronpk for the Oauth demos. #139
 * Add DarkGray and DarkGrayLabels to BasemapLayer. #190
 * An attributionControl on maps is now required when using BasemapLayer. #159
-[unreleased]: https://github.com/esri/esri-leaflet/compare/v2.0.0-beta.8...HEAD
+
+[unreleased]: https://github.com/esri/esri-leaflet/compare/v2.0.0...HEAD
+[2.0.0]: https://github.com/esri/esri-leaflet/compare/v2.0.0-beta.8...v2.0.0
 [2.0.0-beta.8]: https://github.com/esri/esri-leaflet/compare/v2.0.0-beta.7...v2.0.0-beta.8
 [2.0.0-beta.7]: https://github.com/esri/esri-leaflet/compare/v2.0.0-beta.6...v2.0.0-beta.7
 [1.0.3]: https://github.com/esri/esri-leaflet/compare/v1.0.2...v1.0.3
