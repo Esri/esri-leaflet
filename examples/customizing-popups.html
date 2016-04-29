@@ -34,8 +34,10 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.1/leaflet.css" />
   <script src="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.1/leaflet-src.js"></script>
 
-  <!-- Load Esri Leaflet from CDN -->
-  <script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.0-beta.8/esri-leaflet.js"></script>
+  <!-- Load Esri Leaflet -->
+  <!--script src="/js/linked/dist/esri-leaflet-debug.js"></script-->
+  <script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.0/esri-leaflet-debug.js"></script>
+
   <script src="https://cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
 
   
@@ -185,11 +187,10 @@
 
 <script>
   var map = L.map('map').setView([38.5, -96.8], 4);
-
   L.esri.basemapLayer('Gray').addTo(map);
 
   var wildfireRisk = L.esri.dynamicMapLayer({
-    url: '//maps7.arcgisonline.com/arcgis/rest/services/USDA_USFS_2014_Wildfire_Hazard_Potential/MapServer'
+    url: 'https://maps7.arcgisonline.com/arcgis/rest/services/USDA_USFS_2014_Wildfire_Hazard_Potential/MapServer'
   }).addTo(map);
 
   wildfireRisk.bindPopup(function (error, featureCollection) {
@@ -213,7 +214,7 @@
   <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://cdn.jsdelivr.net/leaflet/1.0.0-rc.1/leaflet-src.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
   <span class="comment">&lt;!-- Load Esri Leaflet from CDN --&gt;</span>
-  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://cdn.jsdelivr.net/leaflet.esri/2.0.0-beta.8/esri-leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://cdn.jsdelivr.net/leaflet.esri/2.0.0/esri-leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
   <span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css">
     <span class="tag">body</span> <span class="rules">{ <span class="rule"><span class="attribute">margin</span>:<span class="value"><span class="number">0</span></span></span>; <span class="rule"><span class="attribute">padding</span>:<span class="value"><span class="number">0</span></span></span>; <span class="rule">}</span></span>
@@ -226,11 +227,10 @@
 
 <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
   <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">38.5</span>, -<span class="number">96.8</span>], <span class="number">4</span>);
-
   L.esri.basemapLayer(<span class="string">'Gray'</span>).addTo(map);
 
   <span class="keyword">var</span> wildfireRisk = L.esri.dynamicMapLayer({
-    url: <span class="string">'//maps7.arcgisonline.com/arcgis/rest/services/USDA_USFS_2014_Wildfire_Hazard_Potential/MapServer'</span>
+    url: <span class="string">'https://maps7.arcgisonline.com/arcgis/rest/services/USDA_USFS_2014_Wildfire_Hazard_Potential/MapServer'</span>
   }).addTo(map);
 
   wildfireRisk.bindPopup(<span class="function"><span class="keyword">function</span> <span class="params">(error, featureCollection)</span> {</span>

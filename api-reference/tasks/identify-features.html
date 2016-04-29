@@ -32,8 +32,10 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.1/leaflet.css" />
   <script src="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.1/leaflet-src.js"></script>
 
-  <!-- Load Esri Leaflet from CDN -->
-  <script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.0-beta.8/esri-leaflet.js"></script>
+  <!-- Load Esri Leaflet -->
+  <!--script src="/js/linked/dist/esri-leaflet-debug.js"></script-->
+  <script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.0/esri-leaflet-debug.js"></script>
+
   <script src="https://cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
 
   
@@ -208,7 +210,10 @@
         <tr>
             <td><code>layers(<nobr class="param"><span>&lt;String&gt;</span> <code>layers</code></nobr>)</code></td>
             <td><code>this</code></td>
-            <td>The string representing which layers should be identified.</td>
+            <td>
+              By default, only the topmost feature will be identified, but it is possible to specify both an alternative strategy and array of individual layers.  See the REST API <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/index.html#/Identify_Map_Service/02r300000113000000/">documentation</a> for more information about valid combinations.<br>
+              ex: <code>.layers(&#39;all:0&#39;)</code>.
+            </td>
         </tr>
         <tr>
             <td><code>precision(<nobr class="param"><span>&lt;Integer&gt;</span> <code>precision</code></nobr>)</code></td>

@@ -34,8 +34,10 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.1/leaflet.css" />
   <script src="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.1/leaflet-src.js"></script>
 
-  <!-- Load Esri Leaflet from CDN -->
-  <script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.0-beta.8/esri-leaflet.js"></script>
+  <!-- Load Esri Leaflet -->
+  <!--script src="/js/linked/dist/esri-leaflet-debug.js"></script-->
+  <script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.0/esri-leaflet-debug.js"></script>
+
   <script src="https://cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
 
   
@@ -184,8 +186,12 @@
 <div id="map"></div>
 
 <script>
-  var map = L.map('map').setView([34.326, -117.697], 12);
+  // workaround for old ie
+  if (!window.location.origin) {
+    window.location.origin = window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port: '');
+  }
 
+  var map = L.map('map').setView([34.326, -117.697], 12);
   L.esri.basemapLayer('Topographic').addTo(map);
 
   function serverAuth(callback){
@@ -226,7 +232,7 @@
   <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://cdn.jsdelivr.net/leaflet/1.0.0-rc.1/leaflet-src.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
   <span class="comment">&lt;!-- Load Esri Leaflet from CDN --&gt;</span>
-  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://cdn.jsdelivr.net/leaflet.esri/2.0.0-beta.8/esri-leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://cdn.jsdelivr.net/leaflet.esri/2.0.0/esri-leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
   <span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css">
     <span class="tag">body</span> <span class="rules">{ <span class="rule"><span class="attribute">margin</span>:<span class="value"><span class="number">0</span></span></span>; <span class="rule"><span class="attribute">padding</span>:<span class="value"><span class="number">0</span></span></span>; <span class="rule">}</span></span>
@@ -238,8 +244,12 @@
 <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
-  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">34.326</span>, -<span class="number">117.697</span>], <span class="number">12</span>);
+  <span class="comment">// workaround for old ie</span>
+  <span class="keyword">if</span> (!window.location.origin) {
+    window.location.origin = window.location.protocol + <span class="string">"//"</span> + window.location.hostname + (window.location.port ? <span class="string">':'</span> + window.location.port: <span class="string">''</span>);
+  }
 
+  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">34.326</span>, -<span class="number">117.697</span>], <span class="number">12</span>);
   L.esri.basemapLayer(<span class="string">'Topographic'</span>).addTo(map);
 
   <span class="function"><span class="keyword">function</span> <span class="title">serverAuth</span><span class="params">(callback)</span>{</span>

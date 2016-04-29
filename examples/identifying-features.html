@@ -34,8 +34,10 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.1/leaflet.css" />
   <script src="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.1/leaflet-src.js"></script>
 
-  <!-- Load Esri Leaflet from CDN -->
-  <script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.0-beta.8/esri-leaflet.js"></script>
+  <!-- Load Esri Leaflet -->
+  <!--script src="/js/linked/dist/esri-leaflet-debug.js"></script-->
+  <script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.0/esri-leaflet-debug.js"></script>
+
   <script src="https://cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
 
   
@@ -223,7 +225,9 @@
       console.log(featureCollection.features[0]);
       if (featureCollection.features.length > 0) {
         identifiedFeature = L.geoJson(featureCollection.features[0]).addTo(map);
-        pane.innerHTML = "magnitude: " + featureCollection.features[0].properties.MAGNITUDE;
+        // string to number to string = trimmed zeros.  the wonders of JavaScript
+        var magTrimmed = parseFloat(featureCollection.features[0].properties.MAGNITUDE).toString();
+        pane.innerHTML = "magnitude: " + magTrimmed;
       }
       else {
         pane.innerHTML = 'No features identified.';
@@ -244,7 +248,7 @@
   <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://cdn.jsdelivr.net/leaflet/1.0.0-rc.1/leaflet-src.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
   <span class="comment">&lt;!-- Load Esri Leaflet from CDN --&gt;</span>
-  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://cdn.jsdelivr.net/leaflet.esri/2.0.0-beta.8/esri-leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://cdn.jsdelivr.net/leaflet.esri/2.0.0/esri-leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
   <span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css">
     <span class="tag">body</span> <span class="rules">{ <span class="rule"><span class="attribute">margin</span>:<span class="value"><span class="number">0</span></span></span>; <span class="rule"><span class="attribute">padding</span>:<span class="value"><span class="number">0</span></span></span>; <span class="rule">}</span></span>
@@ -295,7 +299,9 @@
       console.log(featureCollection.features[<span class="number">0</span>]);
       <span class="keyword">if</span> (featureCollection.features.length &gt; <span class="number">0</span>) {
         identifiedFeature = L.geoJson(featureCollection.features[<span class="number">0</span>]).addTo(map);
-        pane.innerHTML = <span class="string">"magnitude: "</span> + featureCollection.features[<span class="number">0</span>].properties.MAGNITUDE;
+        <span class="comment">// string to number to string = trimmed zeros.  the wonders of JavaScript</span>
+        <span class="keyword">var</span> magTrimmed = parseFloat(featureCollection.features[<span class="number">0</span>].properties.MAGNITUDE).toString();
+        pane.innerHTML = <span class="string">"magnitude: "</span> + magTrimmed;
       }
       <span class="keyword">else</span> {
         pane.innerHTML = <span class="string">'No features identified.'</span>;
