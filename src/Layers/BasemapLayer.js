@@ -1,5 +1,4 @@
 import L from 'leaflet';
-import logo from '../Controls/Logo';
 import { jsonp } from '../Request';
 import { pointerEvents } from '../Support';
 
@@ -12,8 +11,6 @@ export var BasemapLayer = L.TileLayer.extend({
         urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
         attributionUrl: 'https://static.arcgis.com/attribution/World_Street_Map',
         options: {
-          hideLogo: false,
-          logoPosition: 'bottomright',
           minZoom: 1,
           maxZoom: 19,
           subdomains: ['server', 'services'],
@@ -24,8 +21,6 @@ export var BasemapLayer = L.TileLayer.extend({
         urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',
         attributionUrl: 'https://static.arcgis.com/attribution/World_Topo_Map',
         options: {
-          hideLogo: false,
-          logoPosition: 'bottomright',
           minZoom: 1,
           maxZoom: 19,
           subdomains: ['server', 'services'],
@@ -36,8 +31,6 @@ export var BasemapLayer = L.TileLayer.extend({
         urlTemplate: tileProtocol + '//{s}.arcgisonline.com/arcgis/rest/services/Ocean/World_Ocean_Base/MapServer/tile/{z}/{y}/{x}',
         attributionUrl: 'https://static.arcgis.com/attribution/Ocean_Basemap',
         options: {
-          hideLogo: false,
-          logoPosition: 'bottomright',
           minZoom: 1,
           maxZoom: 16,
           subdomains: ['server', 'services'],
@@ -47,8 +40,6 @@ export var BasemapLayer = L.TileLayer.extend({
       OceansLabels: {
         urlTemplate: tileProtocol + '//{s}.arcgisonline.com/arcgis/rest/services/Ocean/World_Ocean_Reference/MapServer/tile/{z}/{y}/{x}',
         options: {
-          hideLogo: true,
-          logoPosition: 'bottomright',
           minZoom: 1,
           maxZoom: 16,
           subdomains: ['server', 'services'],
@@ -58,30 +49,24 @@ export var BasemapLayer = L.TileLayer.extend({
       NationalGeographic: {
         urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}',
         options: {
-          hideLogo: false,
-          logoPosition: 'bottomright',
           minZoom: 1,
           maxZoom: 16,
           subdomains: ['server', 'services'],
-          attribution: 'National Geographic, Esri, DeLorme, HERE, UNEP-WCMC, USGS, NASA, ESA, METI, NRCAN, GEBCO, NOAA, increment P Corp.'
+          attribution: 'National Geographic, DeLorme, HERE, UNEP-WCMC, USGS, NASA, ESA, METI, NRCAN, GEBCO, NOAA, increment P Corp.'
         }
       },
       DarkGray: {
         urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}',
         options: {
-          hideLogo: false,
-          logoPosition: 'bottomright',
           minZoom: 1,
           maxZoom: 16,
           subdomains: ['server', 'services'],
-          attribution: 'Esri, HERE, DeLorme, MapmyIndia, © OpenStreetMap contributors'
+          attribution: 'HERE, DeLorme, MapmyIndia, &copy; OpenStreetMap contributors'
         }
       },
       DarkGrayLabels: {
         urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}',
         options: {
-          hideLogo: true,
-          logoPosition: 'bottomright',
           minZoom: 1,
           maxZoom: 16,
           subdomains: ['server', 'services'],
@@ -92,19 +77,15 @@ export var BasemapLayer = L.TileLayer.extend({
       Gray: {
         urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}',
         options: {
-          hideLogo: false,
-          logoPosition: 'bottomright',
           minZoom: 1,
           maxZoom: 16,
           subdomains: ['server', 'services'],
-          attribution: 'Esri, HERE, DeLorme, MapmyIndia, © OpenStreetMap contributors'
+          attribution: 'HERE, DeLorme, MapmyIndia, &copy; OpenStreetMap contributors'
         }
       },
       GrayLabels: {
         urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}',
         options: {
-          hideLogo: true,
-          logoPosition: 'bottomright',
           minZoom: 1,
           maxZoom: 16,
           subdomains: ['server', 'services'],
@@ -114,19 +95,15 @@ export var BasemapLayer = L.TileLayer.extend({
       Imagery: {
         urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
         options: {
-          hideLogo: false,
-          logoPosition: 'bottomright',
           minZoom: 1,
           maxZoom: 19,
           subdomains: ['server', 'services'],
-          attribution: 'Esri, DigitalGlobe, GeoEye, i-cubed, USDA, USGS, AEX, Getmapping, Aerogrid, IGN, IGP, swisstopo, and the GIS User Community'
+          attribution: 'DigitalGlobe, GeoEye, i-cubed, USDA, USGS, AEX, Getmapping, Aerogrid, IGN, IGP, swisstopo, and the GIS User Community'
         }
       },
       ImageryLabels: {
         urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}',
         options: {
-          hideLogo: true,
-          logoPosition: 'bottomright',
           minZoom: 1,
           maxZoom: 19,
           subdomains: ['server', 'services'],
@@ -136,8 +113,6 @@ export var BasemapLayer = L.TileLayer.extend({
       ImageryTransportation: {
         urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/Reference/World_Transportation/MapServer/tile/{z}/{y}/{x}',
         options: {
-          hideLogo: true,
-          logoPosition: 'bottomright',
           minZoom: 1,
           maxZoom: 19,
           subdomains: ['server', 'services'],
@@ -147,19 +122,15 @@ export var BasemapLayer = L.TileLayer.extend({
       ShadedRelief: {
         urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}',
         options: {
-          hideLogo: false,
-          logoPosition: 'bottomright',
           minZoom: 1,
           maxZoom: 13,
           subdomains: ['server', 'services'],
-          attribution: 'Esri, USGS'
+          attribution: 'USGS'
         }
       },
       ShadedReliefLabels: {
         urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places_Alternate/MapServer/tile/{z}/{y}/{x}',
         options: {
-          hideLogo: true,
-          logoPosition: 'bottomright',
           minZoom: 1,
           maxZoom: 12,
           subdomains: ['server', 'services'],
@@ -169,19 +140,15 @@ export var BasemapLayer = L.TileLayer.extend({
       Terrain: {
         urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/{z}/{y}/{x}',
         options: {
-          hideLogo: false,
-          logoPosition: 'bottomright',
           minZoom: 1,
           maxZoom: 13,
           subdomains: ['server', 'services'],
-          attribution: 'Esri, USGS, NOAA'
+          attribution: 'USGS, NOAA'
         }
       },
       TerrainLabels: {
         urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/Reference/World_Reference_Overlay/MapServer/tile/{z}/{y}/{x}',
         options: {
-          hideLogo: true,
-          logoPosition: 'bottomright',
           minZoom: 1,
           maxZoom: 13,
           subdomains: ['server', 'services'],
@@ -191,12 +158,10 @@ export var BasemapLayer = L.TileLayer.extend({
       USATopo: {
         urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer/tile/{z}/{y}/{x}',
         options: {
-          hideLogo: false,
-          logoPosition: 'bottomright',
           minZoom: 1,
           maxZoom: 15,
           subdomains: ['server', 'services'],
-          attribution: 'National Geographic Society, i-cubed'
+          attribution: 'USGS, National Geographic Society, i-cubed'
         }
       }
     }
@@ -225,17 +190,10 @@ export var BasemapLayer = L.TileLayer.extend({
     if (config.attributionUrl) {
       this._getAttributionData(config.attributionUrl);
     }
-
-    this._logo = logo({
-      position: this.options.logoPosition
-    });
   },
 
   onAdd: function (map) {
-    if (!this.options.hideLogo && !map._hasEsriLogo) {
-      this._logo.addTo(map);
-      map._hasEsriLogo = true;
-    }
+    map.attributionControl.addAttribution('<a href="https://www.esri.com">&copy; Esri</a>');
 
     if (this.options.pane === 'esri-labels') {
       this._initPane();
@@ -247,11 +205,7 @@ export var BasemapLayer = L.TileLayer.extend({
   },
 
   onRemove: function (map) {
-    // check to make sure the logo hasn't already been removed
-    if (this._logo && this._logo._container) {
-      map.removeControl(this._logo);
-      map._hasEsriLogo = false;
-    }
+    map.attributionControl.removeAttribution('<a href="https://www.esri.com">&copy; Esri</a>');
 
     map.off('moveend', this._updateMapAttribution, this);
 
@@ -260,7 +214,9 @@ export var BasemapLayer = L.TileLayer.extend({
 
   getAttribution: function () {
     if (this.options.attribution) {
-      var attribution = '<span class="esri-attributions" style="line-height:14px; vertical-align: -3px; text-overflow:ellipsis; white-space:nowrap; overflow:hidden; display:inline-block;">' + this.options.attribution + '</span>';
+      // the extra 10 pixels are for the ellipsis itself
+      var maxWidth = (this._map.getSize().x - 10);
+      var attribution = '<span class="esri-attributions" style="line-height:14px; vertical-align: -3px; text-overflow:ellipsis; white-space:nowrap; overflow:hidden; display:inline-block; max-width:' + maxWidth + 'px;">' + this.options.attribution + '</span>';
     }
     return attribution;
   },
@@ -280,17 +236,20 @@ export var BasemapLayer = L.TileLayer.extend({
 
       for (var c = 0; c < attributions.contributors.length; c++) {
         var contributor = attributions.contributors[c];
-        for (var i = 0; i < contributor.coverageAreas.length; i++) {
-          var coverageArea = contributor.coverageAreas[i];
-          var southWest = L.latLng(coverageArea.bbox[0], coverageArea.bbox[1]);
-          var northEast = L.latLng(coverageArea.bbox[2], coverageArea.bbox[3]);
-          this._attributions.push({
-            attribution: contributor.attribution,
-            score: coverageArea.score,
-            bounds: L.latLngBounds(southWest, northEast),
-            minZoom: coverageArea.zoomMin,
-            maxZoom: coverageArea.zoomMax
-          });
+
+        if (contributor.attribution !== 'Esri') {
+          for (var i = 0; i < contributor.coverageAreas.length; i++) {
+            var coverageArea = contributor.coverageAreas[i];
+            var southWest = L.latLng(coverageArea.bbox[0], coverageArea.bbox[1]);
+            var northEast = L.latLng(coverageArea.bbox[2], coverageArea.bbox[3]);
+            this._attributions.push({
+              attribution: contributor.attribution,
+              score: coverageArea.score,
+              bounds: L.latLngBounds(southWest, northEast),
+              minZoom: coverageArea.zoomMin,
+              maxZoom: coverageArea.zoomMax
+            });
+          }
         }
       }
 
