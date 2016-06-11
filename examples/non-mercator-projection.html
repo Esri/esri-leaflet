@@ -188,6 +188,9 @@ in production you'd be better off hosting these libraries yourself -->
 <script src="https://rawgit.com/proj4js/proj4js/2.3.12/dist/proj4-src.js"></script>
 <script src="https://rawgit.com/kartena/Proj4Leaflet/1.0.0-beta.1/src/proj4leaflet.js"></script>
 
+<!-- Load shapeMarkers from CDN -->
+<script src="https://cdn.jsdelivr.net/leaflet.shapemarkers/1.0.4/leaflet-shape-markers.js"></script>
+
 <div id="map"></div>
 
 <script>
@@ -196,53 +199,48 @@ in production you'd be better off hosting these libraries yourself -->
   2. Appropriate values to supply to the resolution and origin constructor options can be found in the ArcGIS Server RESTful tile server endpoint (ex: http://mapserv.utah.gov/arcgis/rest/services/BaseMaps/Terrain/MapServer)
   3. The numeric code within the first parameter (ex: `26912`) will be used to project the dynamic map layer on the fly
   */
-  var crs = new L.Proj.CRS('EPSG:26912', '+proj=utm +zone=12 +ellps=GRS80 +datum=NAD83 +units=m +no_defs', {
-    origin: [-5120900, 9998100],
+  var crs = new L.Proj.CRS('EPSG:27700', '+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +towgs84=446.448,-125.157,542.06,0.15,0.247,0.842,-20.489 +units=m +no_defs', {
+    origin: [-5782271.75658968, 5469787.26875647],
     resolutions: [
-      4891.96999883583,
-      2445.98499994708,
-      1222.99250010583,
-      611.496250052917,
-      305.748124894166,
-      152.8740625,
-      76.4370312632292,
-      38.2185156316146,
-      19.1092578131615,
-      9.55462890525781,
-      4.77731445262891,
-      2.38865722657904,
-      1.19432861315723,
-      0.597164306578613,
-      0.298582153289307
+      132.291931250529,
+      119.062738125476,
+      105.833545000423,
+      52.9167725002117,
+      26.4583862501058,
+      19.8437896875794,
+      13.2291931250529,
+      5.29167725002117,
+      2.64583862501058,
+      1.32291931250529,
+      0.661459656252646,
+      0.330729828126323,
+      0.132291931250529,
+      0.0661459656252646,
+      0.0264583862501058
     ]
   });
 
   var map = L.map('map', {
     crs: crs
-  }).setView([40.381, -111.859], 4);
+  }).setView([52.9548, -1.1581], 4);
 
   // The min/maxZoom values provided should match the actual cache thats been published. This information can be retrieved from the service endpoint directly.
   L.esri.tiledMapLayer({
-    url: '//mapserv.utah.gov/arcgis/rest/services/BaseMaps/Lite/MapServer',
+    url: 'http://webmaps.nottinghamcity.gov.uk/ArcGIS/rest/services/basemap/Greyscale/MapServer',
     maxZoom: 14,
     minZoom: 0,
     continuousWorld: true,
-    attribution: 'State of Utah'
+    attribution: 'City of Nottingham'
   }).addTo(map);
 
   // feature layers will be requested in WGS84 (4326) and reprojected on the client
-  L.esri.featureLayer({
-    url: 'https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_Congressional_Districts/FeatureServer/0',
-    simplifyFactor: 0.5,
-    precision: 5,
-    style: function (feature) {
-      if(feature.properties.PARTY === 'Democrat'){
-        return {color: 'white', opacity: 0.5, fillColor: 'blue', weight: 2, fillOpacity: 0.1};
-      } else if(feature.properties.PARTY === 'Republican'){
-        return { color: 'white', opacity: 0.5, fillColor: 'red', weight: 2, fillOpacity: 0.2};
-      } else {
-        return { color: 'white', opacity: 0.5, fillColor: 'white', weight: 2, fillOpacity: 0.2};
-      }
+  var hospitals = L.esri.featureLayer({
+    url: 'http://webmaps.nottinghamcity.gov.uk/ArcGIS/rest/services/Health_and_Social_Care/external_health_msd/MapServer/7',
+    pointToLayer (geojson, latlng) {
+      return L.shapeMarkers.crossMarker(latlng, 25, {
+        color: 'red',
+        weight: 6
+      })
     }
   }).addTo(map);
 </script>
@@ -273,6 +271,9 @@ in production you'd be better off hosting these libraries yourself --&gt;</span>
 <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://rawgit.com/proj4js/proj4js/2.3.12/dist/proj4-src.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://rawgit.com/kartena/Proj4Leaflet/1.0.0-beta.1/src/proj4leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
+<span class="comment">&lt;!-- Load shapeMarkers from CDN --&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://cdn.jsdelivr.net/leaflet.shapemarkers/1.0.4/leaflet-shape-markers.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+
 <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
@@ -281,53 +282,48 @@ in production you'd be better off hosting these libraries yourself --&gt;</span>
   2. Appropriate values to supply to the resolution and origin constructor options can be found in the ArcGIS Server RESTful tile server endpoint (ex: http://mapserv.utah.gov/arcgis/rest/services/BaseMaps/Terrain/MapServer)
   3. The numeric code within the first parameter (ex: `26912`) will be used to project the dynamic map layer on the fly
   */</span>
-  <span class="keyword">var</span> crs = <span class="keyword">new</span> L.Proj.CRS(<span class="string">'EPSG:26912'</span>, <span class="string">'+proj=utm +zone=12 +ellps=GRS80 +datum=NAD83 +units=m +no_defs'</span>, {
-    origin: [-<span class="number">5120900</span>, <span class="number">9998100</span>],
+  <span class="keyword">var</span> crs = <span class="keyword">new</span> L.Proj.CRS(<span class="string">'EPSG:27700'</span>, <span class="string">'+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +towgs84=446.448,-125.157,542.06,0.15,0.247,0.842,-20.489 +units=m +no_defs'</span>, {
+    origin: [-<span class="number">5782271.75658968</span>, <span class="number">5469787.26875647</span>],
     resolutions: [
-      <span class="number">4891.96999883583</span>,
-      <span class="number">2445.98499994708</span>,
-      <span class="number">1222.99250010583</span>,
-      <span class="number">611.496250052917</span>,
-      <span class="number">305.748124894166</span>,
-      <span class="number">152.8740625</span>,
-      <span class="number">76.4370312632292</span>,
-      <span class="number">38.2185156316146</span>,
-      <span class="number">19.1092578131615</span>,
-      <span class="number">9.55462890525781</span>,
-      <span class="number">4.77731445262891</span>,
-      <span class="number">2.38865722657904</span>,
-      <span class="number">1.19432861315723</span>,
-      <span class="number">0.597164306578613</span>,
-      <span class="number">0.298582153289307</span>
+      <span class="number">132.291931250529</span>,
+      <span class="number">119.062738125476</span>,
+      <span class="number">105.833545000423</span>,
+      <span class="number">52.9167725002117</span>,
+      <span class="number">26.4583862501058</span>,
+      <span class="number">19.8437896875794</span>,
+      <span class="number">13.2291931250529</span>,
+      <span class="number">5.29167725002117</span>,
+      <span class="number">2.64583862501058</span>,
+      <span class="number">1.32291931250529</span>,
+      <span class="number">0.661459656252646</span>,
+      <span class="number">0.330729828126323</span>,
+      <span class="number">0.132291931250529</span>,
+      <span class="number">0.0661459656252646</span>,
+      <span class="number">0.0264583862501058</span>
     ]
   });
 
   <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>, {
     crs: crs
-  }).setView([<span class="number">40.381</span>, -<span class="number">111.859</span>], <span class="number">4</span>);
+  }).setView([<span class="number">52.9548</span>, -<span class="number">1.1581</span>], <span class="number">4</span>);
 
   <span class="comment">// The min/maxZoom values provided should match the actual cache thats been published. This information can be retrieved from the service endpoint directly.</span>
   L.esri.tiledMapLayer({
-    url: <span class="string">'//mapserv.utah.gov/arcgis/rest/services/BaseMaps/Lite/MapServer'</span>,
+    url: <span class="string">'http://webmaps.nottinghamcity.gov.uk/ArcGIS/rest/services/basemap/Greyscale/MapServer'</span>,
     maxZoom: <span class="number">14</span>,
     minZoom: <span class="number">0</span>,
     continuousWorld: <span class="literal">true</span>,
-    attribution: <span class="string">'State of Utah'</span>
+    attribution: <span class="string">'City of Nottingham'</span>
   }).addTo(map);
 
   <span class="comment">// feature layers will be requested in WGS84 (4326) and reprojected on the client</span>
-  L.esri.featureLayer({
-    url: <span class="string">'https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_Congressional_Districts/FeatureServer/0'</span>,
-    simplifyFactor: <span class="number">0.5</span>,
-    precision: <span class="number">5</span>,
-    style: <span class="function"><span class="keyword">function</span> <span class="params">(feature)</span> {</span>
-      <span class="keyword">if</span>(feature.properties.PARTY === <span class="string">'Democrat'</span>){
-        <span class="keyword">return</span> {color: <span class="string">'white'</span>, opacity: <span class="number">0.5</span>, fillColor: <span class="string">'blue'</span>, weight: <span class="number">2</span>, fillOpacity: <span class="number">0.1</span>};
-      } <span class="keyword">else</span> <span class="keyword">if</span>(feature.properties.PARTY === <span class="string">'Republican'</span>){
-        <span class="keyword">return</span> { color: <span class="string">'white'</span>, opacity: <span class="number">0.5</span>, fillColor: <span class="string">'red'</span>, weight: <span class="number">2</span>, fillOpacity: <span class="number">0.2</span>};
-      } <span class="keyword">else</span> {
-        <span class="keyword">return</span> { color: <span class="string">'white'</span>, opacity: <span class="number">0.5</span>, fillColor: <span class="string">'white'</span>, weight: <span class="number">2</span>, fillOpacity: <span class="number">0.2</span>};
-      }
+  <span class="keyword">var</span> hospitals = L.esri.featureLayer({
+    url: <span class="string">'http://webmaps.nottinghamcity.gov.uk/ArcGIS/rest/services/Health_and_Social_Care/external_health_msd/MapServer/7'</span>,
+    pointToLayer (geojson, latlng) {
+      <span class="keyword">return</span> L.shapeMarkers.crossMarker(latlng, <span class="number">25</span>, {
+        color: <span class="string">'red'</span>,
+        weight: <span class="number">6</span>
+      })
     }
   }).addTo(map);
 </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>

@@ -1,4 +1,4 @@
-/* esri-leaflet - v2.0.0 - Fri Apr 29 2016 10:58:58 GMT-0700 (PDT)
+/* esri-leaflet - v2.0.0 - Wed Jun 08 2016 11:49:14 GMT-0700 (PDT)
  * Copyright (c) 2016 Environmental Systems Research Institute, Inc.
  * Apache-2.0 */
 (function (global, factory) {

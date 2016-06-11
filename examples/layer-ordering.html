@@ -186,12 +186,13 @@
 <div id="map"></div>
 
 <script>
-  var map = L.map("map").setView([45.54, -122.66], 14);
+  var map = L.map("map").setView([45.5384, -122.6695], 16);
 
   L.esri.basemapLayer("Topographic").addTo(map);
 
   var neighborhoodsUrl = "https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Neighborhoods_pdx/FeatureServer/0";
-  var eliotFootprintsUrl = "https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Eliot%20Building%20Footprints/FeatureServer/0"
+  var eliotFootprintsUrl = "https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Eliot%20Building%20Footprints/FeatureServer/0";
+  var blockPointsUrl = "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer/0";
 
   // create a map pane for neighborhoods
   map.createPane('neighborhoods');
@@ -210,6 +211,19 @@
     pane: 'footprints',
     style: function (feature) {
       return {  color: 'white', weight: 0, fillOpacity: 1  };
+    }
+  }).addTo(map);
+
+  map.createPane('blockpoints');
+
+  // for point GeoJSON, Leafet expects custom panes to be passed returned by pointToLayer()
+  L.esri.featureLayer({
+    url: blockPointsUrl,
+    pointToLayer: function (geojson, latlng) {
+      return L.circleMarker(latlng, {
+        pane: 'blockpoints',
+        color: 'green'
+      });
     }
   }).addTo(map);
 
@@ -239,12 +253,13 @@
 <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
-  <span class="keyword">var</span> map = L.map(<span class="string">"map"</span>).setView([<span class="number">45.54</span>, -<span class="number">122.66</span>], <span class="number">14</span>);
+  <span class="keyword">var</span> map = L.map(<span class="string">"map"</span>).setView([<span class="number">45.5384</span>, -<span class="number">122.6695</span>], <span class="number">16</span>);
 
   L.esri.basemapLayer(<span class="string">"Topographic"</span>).addTo(map);
 
   <span class="keyword">var</span> neighborhoodsUrl = <span class="string">"https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Neighborhoods_pdx/FeatureServer/0"</span>;
-  <span class="keyword">var</span> eliotFootprintsUrl = <span class="string">"https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Eliot%20Building%20Footprints/FeatureServer/0"</span>
+  <span class="keyword">var</span> eliotFootprintsUrl = <span class="string">"https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Eliot%20Building%20Footprints/FeatureServer/0"</span>;
+  <span class="keyword">var</span> blockPointsUrl = <span class="string">"https://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer/0"</span>;
 
   <span class="comment">// create a map pane for neighborhoods</span>
   map.createPane(<span class="string">'neighborhoods'</span>);
@@ -263,6 +278,19 @@
     pane: <span class="string">'footprints'</span>,
     style: <span class="function"><span class="keyword">function</span> <span class="params">(feature)</span> {</span>
       <span class="keyword">return</span> {  color: <span class="string">'white'</span>, weight: <span class="number">0</span>, fillOpacity: <span class="number">1</span>  };
+    }
+  }).addTo(map);
+
+  map.createPane(<span class="string">'blockpoints'</span>);
+
+  <span class="comment">// for point GeoJSON, Leafet expects custom panes to be passed returned by pointToLayer()</span>
+  L.esri.featureLayer({
+    url: blockPointsUrl,
+    pointToLayer: <span class="function"><span class="keyword">function</span> <span class="params">(geojson, latlng)</span> {</span>
+      <span class="keyword">return</span> L.circleMarker(latlng, {
+        pane: <span class="string">'blockpoints'</span>,
+        color: <span class="string">'green'</span>
+      });
     }
   }).addTo(map);
 

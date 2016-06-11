@@ -135,7 +135,7 @@
 <p>If you are working with an asynchronous service or one with a custom operation name and don&#39;t indicate corresponding information in the constructor, you&#39;ll have to leave the plugin enough time to make a roundtrip to the server to inquire before calling <code>run()</code>.</p>
 <p>The GP.task &#39;initialized&#39; event is intended to help with this timing.</p>
 <pre><code class="language-js"><span class="keyword">var</span> myService = L.esri.GP.service({
-    url: <span class="string">"http://elevation.arcgis.com/arcgis/rest/services/Tools/ElevationAsync/GPServer/Profile"</span>
+    url: <span class="string">"https://elevation.arcgis.com/arcgis/rest/services/Tools/ElevationSync/GPServer/Profile"</span>
   });
 <span class="keyword">var</span> myTask = myService.createTask();
 
@@ -208,11 +208,11 @@ myTask.on(<span class="string">'initialized'</span>, <span class="function"><spa
     <span class="comment">// actual parameter name and data type are dependent on the service itself</span>
     outputParamName: <span class="xml"><span class="tag">&lt;<span class="title">L.GeoJSON</span>&gt;</span> || <span class="tag">&lt;<span class="title">string</span>&gt;</span> || <span class="tag">&lt;<span class="title">boolean</span>&gt;</span>,
     outputGPFileParamName: {
-        url: "http://server/arcgis/rest/directories/arcgisoutput/./_ags_856aed6eb_.png"
+        url: "https://server/arcgis/rest/directories/arcgisoutput/./_ags_856aed6eb_.png"
       }
     },
     jobId: "j7123be34ccfe45b4b47a51e867e0084b",
-    mapService: "http://server/arcgis/rest/services/GPServiceName/MapServer/jobs/j7123be34ccfe45b4b47a51e867e0084b/"
+    mapService: "https://server/arcgis/rest/services/GPServiceName/MapServer/jobs/j7123be34ccfe45b4b47a51e867e0084b/"
   }
 ]</span></code></pre>
 

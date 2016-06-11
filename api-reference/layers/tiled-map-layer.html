@@ -129,7 +129,7 @@
   <h1 id="l-esri-tiledmaplayer">L.esri.TiledMapLayer</h1>
 <p>Inherits from <a href="http://leafletjs.com/reference.html#tilelayer"><code>L.TileLayer</code></a></p>
 <p>Access tiles from ArcGIS Online and ArcGIS Server as well as visualize and identify features.</p>
-<p>Is you have Feature Services published in ArcGIS Online you can create a static set of tiles using your Feature Service. You can find details about that process in the <a href="http://doc.arcgis.com/en/arcgis-online/share-maps/publish-tiles.htm#ESRI_SECTION1_F68FCBD33BD54117B23232D41A762E89">ArcGIS Online Help</a></p>
+<p>If you have published a Feature Service in ArcGIS Online you can use it to create a static set of tiles. You can find details about that process in the <a href="http://doc.arcgis.com/en/arcgis-online/share-maps/publish-tiles.htm#ESRI_SECTION1_F68FCBD33BD54117B23232D41A762E89">ArcGIS Online Help</a></p>
 <p><strong>Your map service must be published using the Web Mercator Auxiliary Sphere tiling scheme (WKID 102100/3857) and the default scale options used by Google Maps, Bing Maps and <a href="http://resources.arcgis.com/en/help/arcgisonline-content/index.html#//011q00000002000000">ArcGIS Online</a>. Esri Leaflet will not support any other spatial reference for tile layers.</strong></p>
 <h3 id="constructor">Constructor</h3>
 <table>
@@ -238,7 +238,7 @@
 <pre><code class="language-js"><span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">37.7614</span>, -<span class="number">122.3911</span>], <span class="number">12</span>);
 
 L.esri.tiledMapLayer({
-  url: <span class="string">'http://services.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer'</span>,
+  url: <span class="string">'https://services.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer'</span>,
   maxZoom: <span class="number">15</span>
 }).addTo(map);</code></pre>
 

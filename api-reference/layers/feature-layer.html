@@ -130,9 +130,9 @@
 <p><code>L.esri.FeatureLayer</code> is used to visualize and query vector geographic data hosted in both ArcGIS Online and published using ArcGIS Server.</p>
 <p>Feature Layers are provided by Feature Services which can contain multiple layers. Feature Layers expose vector geographic information as a web service that can be visualized, styled, queried and edited.</p>
 <p>Here is a sample Feature Service URL</p>
-<pre><code>http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Neighborhoods_pdx/</code></pre>
+<pre><code>https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Neighborhoods_pdx/</code></pre>
 <p>This particular service contains only one Feature Layer. Here is the Feature Layer URL</p>
-<pre><code>http://services.arcgis.com/rOo16HdIMeOBI4Mb/ArcGIS/rest/services/Neighborhoods_pdx/FeatureServer/0</code></pre>
+<pre><code>https://services.arcgis.com/rOo16HdIMeOBI4Mb/ArcGIS/rest/services/Neighborhoods_pdx/FeatureServer/0</code></pre>
 <p>Note that the Feature Layer URL ends in <code>/FeatureServer/{LAYER_ID}</code>.</p>
 <p>You can create a new empty feature service with a single layer on the <a href="https://developers.arcgis.com/en/hosted-data/#/new">ArcGIS for Developers website</a> or you can use ArcGIS Online to <a href="https://doc.arcgis.com/en/arcgis-online/share-maps/publish-features.htm">create a Feature Service from a CSV or Shapefile</a>.</p>
 <h3 id="constructor">Constructor</h3>
@@ -169,7 +169,7 @@
         <tr>
             <td><code>pointToLayer(<nobr class="param"><span>&lt;<a href="http://geojson.org/geojson-spec.html#feature-objects">GeoJSON Feature</a>&gt;</span> <code>feature</code></nobr>, <nobr class="param"><span>&lt;<a href="http://leafletjs.com/reference.html#latlng">LatLng</a>&gt;</span> <code>latlng</code></nobr>)</code></td>
             <td><code>Function</code></td>
-            <td>Function that will be used for creating layers for GeoJSON points (if not specified, simple markers will be created).</td>
+            <td>Function that will be used for creating layers for GeoJSON points.  If the option is not specified, simple markers will be created).  For point layers, custom panes should be passed through pointToLayer (example <a href="../../examples/layer-ordering.html">here</a>).</td>
         </tr>
         <tr>
             <td><code>style(<nobr class="param"><span>&lt;<a href="http://geojson.org/geojson-spec.html#feature-objects">GeoJSON Feature</a>&gt;</span> <code>feature</code></nobr>, <nobr class="param"><span>&lt;<a href="http://leafletjs.com/reference.html#ilayer">ILayer</a>&gt;</span> <code>layer</code></nobr>)</code></td>
@@ -259,7 +259,12 @@
         <tr>
             <td><code>pane</code></td>
             <td><code>String</code></td>
-            <td>The map pane to render on. Usually <code>overlayPane</code> for vectors and <code>markerPane</code> for markers.</td>
+            <td>A custom map pane to render lines and polygons on. For point geometries, custom panes should be passed through <code>pointToLayer()</code>.</td>
+        </tr>
+        <tr>
+            <td><code>ignoreRenderer</code></td>
+            <td><code>Boolean</code></td>
+            <td>When utilizing esri-leaflet-renderers <a href="https://github.com/Esri/esri-leaflet-renderers/releases/tag/v2.0.1">&#39;2.0.2&#39;</a> or above, this option makes it possible to override the symbology defined by the service itself .</td>
         </tr>
     </tbody>
 </table>
@@ -471,7 +476,7 @@ featureLayer.query()
 L.esri.basemapLayer(<span class="string">"Streets"</span>).addTo(map);
 
 <span class="keyword">var</span> busStops = L.esri.featureLayer({
-  url: <span class="string">'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0/'</span>
+  url: <span class="string">'https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0/'</span>
 }).addTo(map);</code></pre>
 
   <p><a href="http://github.com/Esri/esri-leaflet-doc/edit/master/src/pages/api-reference/layers/feature-layer.md">Edit this page on GitHub</a></p>

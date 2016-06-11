@@ -207,7 +207,7 @@
 <h4 id="identify-task">Identify task</h4>
 <pre><code class="language-js"><span class="keyword">var</span> map = <span class="keyword">new</span> L.Map(<span class="string">'map'</span>).setView([ <span class="number">45.543</span>, -<span class="number">122.621</span> ], <span class="number">5</span>);
 
-<span class="keyword">var</span> service = L.esri.mapService(<span class="string">'http://sampleserver6.arcgisonline.com/arcgis/rest/services/WorldTimeZones/MapServer'</span>);
+<span class="keyword">var</span> service = L.esri.mapService(<span class="string">'https://sampleserver6.arcgisonline.com/arcgis/rest/services/WorldTimeZones/MapServer'</span>);
 
 service.identify()
     .on(map)
@@ -218,7 +218,7 @@ service.identify()
     });</code></pre>
 <h4 id="find-task">Find task</h4>
 <pre><code class="language-js"><span class="keyword">var</span> service = L.esri.mapService({
-    url: <span class="string">'http://services.nationalmap.gov/arcgis/rest/services/govunits/MapServer'</span>
+    url: <span class="string">'https://services.nationalmap.gov/arcgis/rest/services/govunits/MapServer'</span>
 });
 
 service.find()

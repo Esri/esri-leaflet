@@ -200,7 +200,7 @@
   var searchControl = L.esri.Geocoding.geosearch({
     providers: [
       arcgisOnline,
-      new L.esri.Geocoding.FeatureLayerProvider({
+      L.esri.Geocoding.featureLayerProvider({
         url: 'https://services.arcgis.com/uCXeTVveQzP4IIcx/arcgis/rest/services/gisday/FeatureServer/0/',
         searchFields: ['Name', 'Organization'],
         label: 'GIS Day Events',
@@ -251,7 +251,7 @@
   <span class="keyword">var</span> searchControl = L.esri.Geocoding.geosearch({
     providers: [
       arcgisOnline,
-      <span class="keyword">new</span> L.esri.Geocoding.FeatureLayerProvider({
+      L.esri.Geocoding.featureLayerProvider({
         url: <span class="string">'https://services.arcgis.com/uCXeTVveQzP4IIcx/arcgis/rest/services/gisday/FeatureServer/0/'</span>,
         searchFields: [<span class="string">'Name'</span>, <span class="string">'Organization'</span>],
         label: <span class="string">'GIS Day Events'</span>,

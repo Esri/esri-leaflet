@@ -185,8 +185,8 @@
 
 <!-- Include Proj4JS via rawgit.com
 in production you'd be better off hosting these libraries yourself -->
-<script src="//rawgit.com/proj4js/proj4js/2.3.12/dist/proj4-src.js"></script>
-<script src="//rawgit.com/kartena/Proj4Leaflet/1.0.0-beta.1/src/proj4leaflet.js"></script>
+<script src="https://rawgit.com/proj4js/proj4js/2.3.12/dist/proj4-src.js"></script>
+<script src="https://rawgit.com/kartena/Proj4Leaflet/1.0.0-beta.1/src/proj4leaflet.js"></script>
 
 <div id="map"></div>
 
@@ -194,46 +194,47 @@ in production you'd be better off hosting these libraries yourself -->
   /* create new Proj4Leaflet CRS:
   1. Proj4 and WKT definitions can be found at sites like http://epsg.io, http://spatialreference.org/ or by using gdalsrsinfo http://www.gdal.org/gdalsrsinfo.html
   2. Appropriate values to supply to the resolution and origin constructor options can be found in the ArcGIS Server RESTful tile server endpoint (ex: http://mapserv.utah.gov/arcgis/rest/services/BaseMaps/Terrain/MapServer)
-  3. The numeric code within the first parameter (ex: `2193`) will be used to project the dynamic map layer on the fly
+  3. The numeric code within the first parameter (ex: `26912`) will be used to project the dynamic map layer on the fly
   */
-  var crs = new L.Proj.CRS('ESRI:2193', '+proj=tmerc +lat_0=0 +lon_0=173 +k=0.9996 +x_0=1600000 +y_0=10000000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ', {
-    origin: [-4020900, 19998100],
+  var crs = new L.Proj.CRS('EPSG:27700', '+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +towgs84=446.448,-125.157,542.06,0.15,0.247,0.842,-20.489 +units=m +no_defs', {
+    origin: [-5782271.75658968, 5469787.26875647],
     resolutions: [
-      4891.96981024998,
-      2445.98490512499,
-      1222.992452562495,
-      611.4962262813797,
-      305.74811314055756,
-      152.87405657041106,
-      76.43702828507324,
-      38.21851414253662,
-      19.10925707126831,
-      9.554628535634155,
-      4.77731426794937,
-      2.388657133974685,
-      1.1943285668550503,
-      0.5971642835598172,
-      0.29858214164761665
+      132.291931250529,
+      119.062738125476,
+      105.833545000423,
+      52.9167725002117,
+      26.4583862501058,
+      19.8437896875794,
+      13.2291931250529,
+      5.29167725002117,
+      2.64583862501058,
+      1.32291931250529,
+      0.661459656252646,
+      0.330729828126323,
+      0.132291931250529,
+      0.0661459656252646,
+      0.0264583862501058
     ]
   });
 
   var map = L.map('map', {
     crs: crs
-  }).setView([ -43.864, 172.172], 4);
+  }).setView([52.9548, -1.1581], 4);
 
   // The min/maxZoom values provided should match the actual cache thats been published. This information can be retrieved from the service endpoint directly.
   L.esri.tiledMapLayer({
-    url: '//services.arcgisonline.co.nz/arcgis/rest/services/Canvas/Light/MapServer',
-    maxZoom: 15,
+    url: 'http://webmaps.nottinghamcity.gov.uk/ArcGIS/rest/services/basemap/Greyscale/MapServer',
+    maxZoom: 14,
     minZoom: 0,
-    continuousWorld: false,
-    attribution: 'Selected map content sourced from LINZ datasets. Crown Copyright Reserved.'
+    continuousWorld: true,
+    attribution: 'City of Nottingham'
   }).addTo(map);
 
   // Dynamic map layers are projected by ArcGIS Server itself before the image is retrieved
   L.esri.dynamicMapLayer({
-    url: "//gis.ecan.govt.nz/ArcGIS/rest/services/Public/Hydrology/MapServer",
-    attribution: "Environment Canterbury "
+    url: "http://webmaps.nottinghamcity.gov.uk/ArcGIS/rest/services/Health_and_Social_Care/external_health_msd/MapServer",
+    f: 'img',
+    layers: [3,7,11,12]
   }).addTo(map);
 </script>
 
@@ -260,8 +261,8 @@ in production you'd be better off hosting these libraries yourself -->
 
 <span class="comment">&lt;!-- Include Proj4JS via rawgit.com
 in production you'd be better off hosting these libraries yourself --&gt;</span>
-<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"//rawgit.com/proj4js/proj4js/2.3.12/dist/proj4-src.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
-<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"//rawgit.com/kartena/Proj4Leaflet/1.0.0-beta.1/src/proj4leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://rawgit.com/proj4js/proj4js/2.3.12/dist/proj4-src.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://rawgit.com/kartena/Proj4Leaflet/1.0.0-beta.1/src/proj4leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 
@@ -269,46 +270,47 @@ in production you'd be better off hosting these libraries yourself --&gt;</span>
   <span class="comment">/* create new Proj4Leaflet CRS:
   1. Proj4 and WKT definitions can be found at sites like http://epsg.io, http://spatialreference.org/ or by using gdalsrsinfo http://www.gdal.org/gdalsrsinfo.html
   2. Appropriate values to supply to the resolution and origin constructor options can be found in the ArcGIS Server RESTful tile server endpoint (ex: http://mapserv.utah.gov/arcgis/rest/services/BaseMaps/Terrain/MapServer)
-  3. The numeric code within the first parameter (ex: `2193`) will be used to project the dynamic map layer on the fly
+  3. The numeric code within the first parameter (ex: `26912`) will be used to project the dynamic map layer on the fly
   */</span>
-  <span class="keyword">var</span> crs = <span class="keyword">new</span> L.Proj.CRS(<span class="string">'ESRI:2193'</span>, <span class="string">'+proj=tmerc +lat_0=0 +lon_0=173 +k=0.9996 +x_0=1600000 +y_0=10000000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs '</span>, {
-    origin: [-<span class="number">4020900</span>, <span class="number">19998100</span>],
+  <span class="keyword">var</span> crs = <span class="keyword">new</span> L.Proj.CRS(<span class="string">'EPSG:27700'</span>, <span class="string">'+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +towgs84=446.448,-125.157,542.06,0.15,0.247,0.842,-20.489 +units=m +no_defs'</span>, {
+    origin: [-<span class="number">5782271.75658968</span>, <span class="number">5469787.26875647</span>],
     resolutions: [
-      <span class="number">4891.96981024998</span>,
-      <span class="number">2445.98490512499</span>,
-      <span class="number">1222.992452562495</span>,
-      <span class="number">611.4962262813797</span>,
-      <span class="number">305.74811314055756</span>,
-      <span class="number">152.87405657041106</span>,
-      <span class="number">76.43702828507324</span>,
-      <span class="number">38.21851414253662</span>,
-      <span class="number">19.10925707126831</span>,
-      <span class="number">9.554628535634155</span>,
-      <span class="number">4.77731426794937</span>,
-      <span class="number">2.388657133974685</span>,
-      <span class="number">1.1943285668550503</span>,
-      <span class="number">0.5971642835598172</span>,
-      <span class="number">0.29858214164761665</span>
+      <span class="number">132.291931250529</span>,
+      <span class="number">119.062738125476</span>,
+      <span class="number">105.833545000423</span>,
+      <span class="number">52.9167725002117</span>,
+      <span class="number">26.4583862501058</span>,
+      <span class="number">19.8437896875794</span>,
+      <span class="number">13.2291931250529</span>,
+      <span class="number">5.29167725002117</span>,
+      <span class="number">2.64583862501058</span>,
+      <span class="number">1.32291931250529</span>,
+      <span class="number">0.661459656252646</span>,
+      <span class="number">0.330729828126323</span>,
+      <span class="number">0.132291931250529</span>,
+      <span class="number">0.0661459656252646</span>,
+      <span class="number">0.0264583862501058</span>
     ]
   });
 
   <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>, {
     crs: crs
-  }).setView([ -<span class="number">43.864</span>, <span class="number">172.172</span>], <span class="number">4</span>);
+  }).setView([<span class="number">52.9548</span>, -<span class="number">1.1581</span>], <span class="number">4</span>);
 
   <span class="comment">// The min/maxZoom values provided should match the actual cache thats been published. This information can be retrieved from the service endpoint directly.</span>
   L.esri.tiledMapLayer({
-    url: <span class="string">'//services.arcgisonline.co.nz/arcgis/rest/services/Canvas/Light/MapServer'</span>,
-    maxZoom: <span class="number">15</span>,
+    url: <span class="string">'http://webmaps.nottinghamcity.gov.uk/ArcGIS/rest/services/basemap/Greyscale/MapServer'</span>,
+    maxZoom: <span class="number">14</span>,
     minZoom: <span class="number">0</span>,
-    continuousWorld: <span class="literal">false</span>,
-    attribution: <span class="string">'Selected map content sourced from LINZ datasets. Crown Copyright Reserved.'</span>
+    continuousWorld: <span class="literal">true</span>,
+    attribution: <span class="string">'City of Nottingham'</span>
   }).addTo(map);
 
   <span class="comment">// Dynamic map layers are projected by ArcGIS Server itself before the image is retrieved</span>
   L.esri.dynamicMapLayer({
-    url: <span class="string">"//gis.ecan.govt.nz/ArcGIS/rest/services/Public/Hydrology/MapServer"</span>,
-    attribution: <span class="string">"Environment Canterbury "</span>
+    url: <span class="string">"http://webmaps.nottinghamcity.gov.uk/ArcGIS/rest/services/Health_and_Social_Care/external_health_msd/MapServer"</span>,
+    f: <span class="string">'img'</span>,
+    layers: [<span class="number">3</span>,<span class="number">7</span>,<span class="number">11</span>,<span class="number">12</span>]
   }).addTo(map);
 </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 

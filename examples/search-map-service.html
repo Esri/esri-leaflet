@@ -200,7 +200,7 @@
   var searchControl = L.esri.Geocoding.geosearch({
     providers: [
       arcgisOnline,
-      new L.esri.Geocoding.MapServiceProvider({
+      L.esri.Geocoding.mapServiceProvider({
         label: 'States and Counties',
         url: 'https://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer',
         layers: [2, 3],
@@ -248,7 +248,7 @@
   <span class="keyword">var</span> searchControl = L.esri.Geocoding.geosearch({
     providers: [
       arcgisOnline,
-      <span class="keyword">new</span> L.esri.Geocoding.MapServiceProvider({
+      L.esri.Geocoding.mapServiceProvider({
         label: <span class="string">'States and Counties'</span>,
         url: <span class="string">'https://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer'</span>,
         layers: [<span class="number">2</span>, <span class="number">3</span>],

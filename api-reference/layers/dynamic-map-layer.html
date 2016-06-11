@@ -186,7 +186,7 @@
 <td><code>attribution</code></td>
 <td><code>String</code></td>
 <td><code>&#39;&#39;</code></td>
-<td>Attribution to include in Leaflet&#39;s default control.  The <a href="http://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer">copyright text</a> found in Service metadata is usually a good thing to reference.</td>
+<td>Attribution to include in Leaflet&#39;s default control.  The <a href="https://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer">copyright text</a> found in Service metadata is usually a good thing to reference.</td>
 </tr>
 <tr>
 <td><code>layers</code></td>
@@ -289,7 +289,7 @@ dynamicMapLayer.bindPopup(
         <tr>
             <td><code>getLayers()</code></td>
             <td><code>Array</code></td>
-            <td>Returns the array of layers on the MapService that are being shown.</td>
+            <td>Returns the array of visible layers specified in the layer constructor.</td>
         </tr>
         <tr>
             <td><code>setLayers(<nobr class="param"><span>&lt;Array&gt;</span> <code>layers</code></nobr>)</code></td>
@@ -425,7 +425,7 @@ dynamicMapLayer.bindPopup(
 <pre><code class="language-js"><span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([ <span class="number">38.83</span>,-<span class="number">98.5</span>], <span class="number">7</span>);
 L.esri.basemapLayer(<span class="string">'Gray'</span>).addTo(map);
 
-<span class="keyword">var</span> url = <span class="string">"http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Petroleum/KGS_OilGasFields_Kansas/MapServer"</span>;
+<span class="keyword">var</span> url = <span class="string">"https://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Petroleum/KGS_OilGasFields_Kansas/MapServer"</span>;
 
 L.esri.dynamicMapLayer({
   url: url,

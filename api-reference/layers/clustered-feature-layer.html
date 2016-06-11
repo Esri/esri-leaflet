@@ -428,7 +428,7 @@
 <pre><code class="language-js"><span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">45.53</span>,-<span class="number">122.64</span>], <span class="number">16</span>);
 L.esri.basemapLayer(<span class="string">"Streets"</span>).addTo(map);
 
-<span class="keyword">var</span> url = <span class="string">"http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0"</span>;
+<span class="keyword">var</span> url = <span class="string">"https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0"</span>;
 
 <span class="keyword">var</span> busStops = L.esri.Cluster.clusteredFeatureLayer({
   url: url,

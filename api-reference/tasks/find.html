@@ -268,7 +268,7 @@
 
 <h3 id="example">Example</h3>
 <h5 id="finding-features">Finding features</h5>
-<pre><code class="language-js"><span class="keyword">var</span> find = L.esri.find(<span class="string">'http://services.nationalmap.gov/arcgis/rest/services/govunits/MapServer'</span>);
+<pre><code class="language-js"><span class="keyword">var</span> find = L.esri.find(<span class="string">'https://services.nationalmap.gov/arcgis/rest/services/govunits/MapServer'</span>);
 
 find.layers(<span class="string">'18'</span>)
     .text(<span class="string">'Colorado'</span>);
@@ -278,7 +278,7 @@ find.run(<span class="function"><span class="keyword">function</span><span class
 });</code></pre>
 <h5 id="finding-features-by-specified-search-field-name">Finding features by specified search field name</h5>
 <pre><code class="language-js"><span class="keyword">var</span> find = L.esri.find({
-    url: <span class="string">'http://services.nationalmap.gov/arcgis/rest/services/govunits/MapServer'</span>
+    url: <span class="string">'https://services.nationalmap.gov/arcgis/rest/services/govunits/MapServer'</span>
 });
 
 find.layers(<span class="string">'13'</span>)

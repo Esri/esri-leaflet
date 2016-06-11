@@ -330,7 +330,7 @@ L.esri.Geocoding.Controls.geosearch({
 <td>maxResults</td>
 <td><code>Integer</code></td>
 <td><code>5</code></td>
-<td>Maximum number of results to show for the provider.  Hard limit for the <a href="https://developers.arcgis.com/rest/geocode/api-reference/overview-world-geocoding-service.htm">ArcGIS World Geocoding Service</a> is 50.</td>
+<td>Maximum number of results to show for the provider.  Hard limit for suggestions from the <a href="https://developers.arcgis.com/rest/geocode/api-reference/overview-world-geocoding-service.htm">ArcGIS World Geocoding Service</a> is 15.</td>
 </tr>
 <tr>
 <td>attribution</td>
@@ -394,12 +394,6 @@ L.esri.Geocoding.Controls.geosearch({
 <td><code>String</code></td>
 <td><code>&#39;Geocode Service&#39;</code></td>
 <td>Text that will be used to group suggestions under when more than one provider is being used.</td>
-</tr>
-<tr>
-<td><code>maxResults</code></td>
-<td><code>Integer</code></td>
-<td>5</td>
-<td>Maximum number of results to show for this provider.</td>
 </tr>
 </tbody>
 </table>
@@ -477,7 +471,7 @@ L.esri.Geocoding.Controls.geosearch({
 <td>Formatting function for the suggestion text. Receives feature information and returns a string.</td>
 </tr>
 <tr>
-<td><code>bufferRadius</code>,</td>
+<td><code>bufferRadius</code></td>
 <td><code>Integer</code> <code>Array[Integers]</code></td>
 <td>Buffer point results by this radius to create bounds.</td>
 </tr>
@@ -540,7 +534,7 @@ L.esri.Geocoding.Controls.geosearch({
 </tr>
 </tbody>
 </table>
-<p>The result object will also contain any additional properties from the provider. See the <a href="#available-providers">available providers</a> for more informationc.</p>
+<p>The result object will also contain any additional properties from the provider. See the <a href="#available-providers">available providers</a> for more information.</p>
 
   <p><a href="http://github.com/Esri/esri-leaflet-doc/edit/master/src/pages/api-reference/controls/geosearch.md">Edit this page on GitHub</a></p>
 </div>

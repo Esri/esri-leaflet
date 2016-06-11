@@ -311,7 +311,7 @@
 <span class="keyword">var</span> bounds = L.latLngBounds(southWest, northEast);
 
 <span class="keyword">var</span> query = L.esri.query({
-    url:<span class="string">'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0'</span>
+    url:<span class="string">'https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0'</span>
 });
 
 query.within(bounds);
@@ -324,7 +324,7 @@ query.run(<span class="function"><span class="keyword">function</span><span clas
 L.esri.basemapLayer(<span class="string">'Gray'</span>).addTo(map);
 
 <span class="keyword">var</span> query = L.esri.query({
-    url: <span class="string">'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0'</span>
+    url: <span class="string">'https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0'</span>
 });
 
 query.bounds(<span class="function"><span class="keyword">function</span><span class="params">(error, latLngBounds, response)</span>{</span>
@@ -334,7 +334,7 @@ query.bounds(<span class="function"><span class="keyword">function</span><span c
 <pre><code class="language-js"><span class="keyword">var</span> latlng = L.latLng(<span class="number">45.51</span>, -<span class="number">122.70</span>);
 
 <span class="keyword">var</span> query = L.esri.query({
-    url:<span class="string">'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0'</span>
+    url:<span class="string">'https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0'</span>
 });
 
 query.nearby(latlng, <span class="number">500</span>);
@@ -346,7 +346,7 @@ query.run(<span class="function"><span class="keyword">function</span><span clas
 <pre><code class="language-js"><span class="keyword">var</span> latlng = L.latLng(<span class="number">45.51</span>, -<span class="number">122.70</span>);
 
 <span class="keyword">var</span> query = L.esri.query({
-    url: <span class="string">'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0'</span>
+    url: <span class="string">'https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0'</span>
 });
 
 query.nearby(latlng, <span class="number">2000</span>).where(<span class="string">"direction='East'"</span>).orderBy(<span class="string">'stop_id'</span>, <span class="string">'ASC'</span>);
@@ -364,7 +364,7 @@ L.esri.basemapLayer(<span class="string">'Gray'</span>).addTo(map);
 
 
 <span class="keyword">var</span> query = L.esri.query({
-    url:<span class="string">'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0'</span>
+    url:<span class="string">'https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0'</span>
 });
 
 query.where(<span class="string">"zone_id='B'"</span>).bounds(<span class="function"><span class="keyword">function</span><span class="params">(error, latLngBounds, response)</span>{</span>
