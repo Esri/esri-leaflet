@@ -199,47 +199,38 @@ in production you'd be better off hosting these libraries yourself -->
   2. Appropriate values to supply to the resolution and origin constructor options can be found in the ArcGIS Server RESTful tile server endpoint (ex: http://mapserv.utah.gov/arcgis/rest/services/BaseMaps/Terrain/MapServer)
   3. The numeric code within the first parameter (ex: `26912`) will be used to project the dynamic map layer on the fly
   */
-  var crs = new L.Proj.CRS('EPSG:27700', '+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +towgs84=446.448,-125.157,542.06,0.15,0.247,0.842,-20.489 +units=m +no_defs', {
-    origin: [-5782271.75658968, 5469787.26875647],
+  var crs = new L.Proj.CRS('EPSG:54009', '+proj=moll +lon_0=0 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs', {
+    origin: [-19844104.7157449, 29766157.3486128],
     resolutions: [
-      132.291931250529,
-      119.062738125476,
-      105.833545000423,
-      52.9167725002117,
-      26.4583862501058,
-      19.8437896875794,
-      13.2291931250529,
-      5.29167725002117,
-      2.64583862501058,
-      1.32291931250529,
-      0.661459656252646,
-      0.330729828126323,
-      0.132291931250529,
-      0.0661459656252646,
-      0.0264583862501058
+      66145.9656252646,
+      33072.9828126323,
+      16933.3672000677,
+      8466.68360003387
     ]
   });
 
   var map = L.map('map', {
     crs: crs
-  }).setView([52.9548, -1.1581], 4);
+  }).setView([0,0], 0);
 
   // The min/maxZoom values provided should match the actual cache thats been published. This information can be retrieved from the service endpoint directly.
   L.esri.tiledMapLayer({
-    url: 'http://webmaps.nottinghamcity.gov.uk/ArcGIS/rest/services/basemap/Greyscale/MapServer',
-    maxZoom: 14,
+    url: 'http://maverick.arcgis.com/ArcGIS/rest/services/World_Mollweide/MapServer',
+    maxZoom: 3,
     minZoom: 0,
     continuousWorld: true,
-    attribution: 'City of Nottingham'
+    attribution: 'maverick',
+    errorTileUrl: 'http://downloads2.esri.com/support/TechArticles/blank256.png'
   }).addTo(map);
 
   // feature layers will be requested in WGS84 (4326) and reprojected on the client
-  var hospitals = L.esri.featureLayer({
-    url: 'http://webmaps.nottinghamcity.gov.uk/ArcGIS/rest/services/Health_and_Social_Care/external_health_msd/MapServer/7',
+  var cities = L.esri.featureLayer({
+    url: 'http://sampleserver6.arcgisonline.com/arcgis/rest/services/WorldTimeZones/MapServer/0',
+    where: 'POP_RANK < 3',
     pointToLayer (geojson, latlng) {
-      return L.shapeMarkers.crossMarker(latlng, 25, {
-        color: 'red',
-        weight: 6
+      return L.shapeMarkers.diamondMarker(latlng, 5, {
+        color: '#0099FF',
+        weight: 2
       })
     }
   }).addTo(map);
@@ -282,47 +273,38 @@ in production you'd be better off hosting these libraries yourself --&gt;</span>
   2. Appropriate values to supply to the resolution and origin constructor options can be found in the ArcGIS Server RESTful tile server endpoint (ex: http://mapserv.utah.gov/arcgis/rest/services/BaseMaps/Terrain/MapServer)
   3. The numeric code within the first parameter (ex: `26912`) will be used to project the dynamic map layer on the fly
   */</span>
-  <span class="keyword">var</span> crs = <span class="keyword">new</span> L.Proj.CRS(<span class="string">'EPSG:27700'</span>, <span class="string">'+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +towgs84=446.448,-125.157,542.06,0.15,0.247,0.842,-20.489 +units=m +no_defs'</span>, {
-    origin: [-<span class="number">5782271.75658968</span>, <span class="number">5469787.26875647</span>],
+  <span class="keyword">var</span> crs = <span class="keyword">new</span> L.Proj.CRS(<span class="string">'EPSG:54009'</span>, <span class="string">'+proj=moll +lon_0=0 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs'</span>, {
+    origin: [-<span class="number">19844104.7157449</span>, <span class="number">29766157.3486128</span>],
     resolutions: [
-      <span class="number">132.291931250529</span>,
-      <span class="number">119.062738125476</span>,
-      <span class="number">105.833545000423</span>,
-      <span class="number">52.9167725002117</span>,
-      <span class="number">26.4583862501058</span>,
-      <span class="number">19.8437896875794</span>,
-      <span class="number">13.2291931250529</span>,
-      <span class="number">5.29167725002117</span>,
-      <span class="number">2.64583862501058</span>,
-      <span class="number">1.32291931250529</span>,
-      <span class="number">0.661459656252646</span>,
-      <span class="number">0.330729828126323</span>,
-      <span class="number">0.132291931250529</span>,
-      <span class="number">0.0661459656252646</span>,
-      <span class="number">0.0264583862501058</span>
+      <span class="number">66145.9656252646</span>,
+      <span class="number">33072.9828126323</span>,
+      <span class="number">16933.3672000677</span>,
+      <span class="number">8466.68360003387</span>
     ]
   });
 
   <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>, {
     crs: crs
-  }).setView([<span class="number">52.9548</span>, -<span class="number">1.1581</span>], <span class="number">4</span>);
+  }).setView([<span class="number">0</span>,<span class="number">0</span>], <span class="number">0</span>);
 
   <span class="comment">// The min/maxZoom values provided should match the actual cache thats been published. This information can be retrieved from the service endpoint directly.</span>
   L.esri.tiledMapLayer({
-    url: <span class="string">'http://webmaps.nottinghamcity.gov.uk/ArcGIS/rest/services/basemap/Greyscale/MapServer'</span>,
-    maxZoom: <span class="number">14</span>,
+    url: <span class="string">'http://maverick.arcgis.com/ArcGIS/rest/services/World_Mollweide/MapServer'</span>,
+    maxZoom: <span class="number">3</span>,
     minZoom: <span class="number">0</span>,
     continuousWorld: <span class="literal">true</span>,
-    attribution: <span class="string">'City of Nottingham'</span>
+    attribution: <span class="string">'maverick'</span>,
+    errorTileUrl: <span class="string">'http://downloads2.esri.com/support/TechArticles/blank256.png'</span>
   }).addTo(map);
 
   <span class="comment">// feature layers will be requested in WGS84 (4326) and reprojected on the client</span>
-  <span class="keyword">var</span> hospitals = L.esri.featureLayer({
-    url: <span class="string">'http://webmaps.nottinghamcity.gov.uk/ArcGIS/rest/services/Health_and_Social_Care/external_health_msd/MapServer/7'</span>,
+  <span class="keyword">var</span> cities = L.esri.featureLayer({
+    url: <span class="string">'http://sampleserver6.arcgisonline.com/arcgis/rest/services/WorldTimeZones/MapServer/0'</span>,
+    where: <span class="string">'POP_RANK &lt; 3'</span>,
     pointToLayer (geojson, latlng) {
-      <span class="keyword">return</span> L.shapeMarkers.crossMarker(latlng, <span class="number">25</span>, {
-        color: <span class="string">'red'</span>,
-        weight: <span class="number">6</span>
+      <span class="keyword">return</span> L.shapeMarkers.diamondMarker(latlng, <span class="number">5</span>, {
+        color: <span class="string">'#0099FF'</span>,
+        weight: <span class="number">2</span>
       })
     }
   }).addTo(map);
