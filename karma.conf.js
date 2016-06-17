@@ -12,11 +12,18 @@ module.exports = function (config) {
     frameworks: ['mocha', 'chai-sinon'],
 
     // list of files / patterns to load in the browser
+    // not sure why tests are failing when files are loaded in bulk
+    
     files: [
       'node_modules/leaflet/dist/leaflet.css',
       'node_modules/leaflet/dist/leaflet-src.js',
       'dist/esri-leaflet-debug.js',
-      'spec/**/*Spec.js'
+      // 'spec/**/*Spec.js'
+      'spec/Layers/*Spec.js',
+      'spec/Layers/FeatureLayer/*Spec.js',
+      'spec/Services/*Spec.js',
+      'spec/Tasks/*Spec.js',
+      'spec/*Spec.js'
     ],
 
     // list of files to exclude
@@ -41,7 +48,7 @@ module.exports = function (config) {
 
     // level of logging
     // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-    logLevel: config.LOG_DEBUG,
+    logLevel: config.LOG_WARN,
 
     // enable / disable watching file and executing tests whenever any file changes
     autoWatch: true,

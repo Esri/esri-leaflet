@@ -92,9 +92,7 @@ export function cleanUrl (url) {
 }
 
 export function isArcgisOnline (url) {
-  /* hosted feature services can emit geojson natively.
-  our check for 'geojson' support will need to be revisted
-  once the functionality makes its way to ArcGIS Server*/
+  /* hosted feature services can emit geojson natively. */
   return (/\.arcgis\.com.*?FeatureServer/g).test(url);
 }
 
