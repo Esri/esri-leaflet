@@ -214,8 +214,8 @@ export var BasemapLayer = L.TileLayer.extend({
 
   getAttribution: function () {
     if (this.options.attribution) {
-      // the extra 10 pixels are for the ellipsis itself
-      var maxWidth = (this._map.getSize().x - 10);
+      // the extra 55 pixels are for the ellipsis and leaflet's own attribution
+      var maxWidth = (this._map.getSize().x - 55);
       var attribution = '<span class="esri-attributions" style="line-height:14px; vertical-align: -3px; text-overflow:ellipsis; white-space:nowrap; overflow:hidden; display:inline-block; max-width:' + maxWidth + 'px;">' + this.options.attribution + '</span>';
     }
     return attribution;
