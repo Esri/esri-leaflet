@@ -64,6 +64,14 @@ export var FeatureManager = VirtualGrid.extend({
    */
 
   onAdd: function (map) {
+    // check to see whether service is 10.4 or above (and can emit GeoJSON natively)
+    this.service.metadata(function (error, metadata) {
+      var supportedFormats = metadata.supportedQueryFormats;
+      if (supportedFormats && supportedFormats.indexOf('geoJSON') !== -1) {
+        this.service.options.isModern = true;
+      }
+    }, this);
+
     map.on('zoomend', this._handleZoomChange, this);
 
     return VirtualGrid.prototype.onAdd.call(this, map);
