@@ -454,7 +454,7 @@ describe('L.esri.Query', function () {
   });
 
   it('should limit queries for pagination', function(done){
-    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&limit=10&f=json', JSON.stringify(sampleQueryResponse));
+    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&resultRecordCount=10&f=json', JSON.stringify(sampleQueryResponse));
 
     task.limit(10).run(function(error, featureCollection, raw){
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
@@ -466,7 +466,7 @@ describe('L.esri.Query', function () {
   });
 
   it('should offset queries for pagination', function(done){
-    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&offset=10&f=json', JSON.stringify(sampleQueryResponse));
+    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&resultOffset=10&f=json', JSON.stringify(sampleQueryResponse));
 
     task.offset(10).run(function(error, featureCollection, raw){
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
