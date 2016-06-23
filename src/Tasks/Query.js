@@ -4,8 +4,8 @@ import Util from '../Util';
 
 export var Query = Task.extend({
   setters: {
-    'offset': 'offset',
-    'limit': 'limit',
+    'offset': 'resultOffset',
+    'limit': 'resultRecordCount',
     'fields': 'outFields',
     'precision': 'geometryPrecision',
     'featureIds': 'objectIds',
