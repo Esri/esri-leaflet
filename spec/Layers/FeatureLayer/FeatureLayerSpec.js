@@ -18,17 +18,17 @@ describe('L.esri.FeatureLayer', function () {
   var layer;
   var map = createMap();
   var features = [{
-        type: 'Feature',
-        id: 1,
-        geometry: {
-          type: 'LineString',
-          coordinates: [[-122, 45], [-121, 40]]
-        },
-        properties: {
-          time: new Date('January 1 2014').valueOf(),
-          type: 'good'
-        }
-      },{
+    type: 'Feature',
+    id: 1,
+    geometry: {
+      type: 'LineString',
+      coordinates: [[-122, 45], [-121, 40]]
+    },
+    properties: {
+      time: new Date('January 1 2014').valueOf(),
+      type: 'good'
+    }
+  },{
     type: 'Feature',
     id: 2,
     geometry: {
@@ -145,6 +145,25 @@ describe('L.esri.FeatureLayer', function () {
     layer.removeLayers([1]);
   });
 
+  it('should fire a removefeature event when the featureLayer is removed from the map', function(done){
+    layer = L.esri.featureLayer({
+      url: 'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0',
+      timeField: 'time',
+      pointToLayer: function(feature, latlng){
+        return L.circleMarker(latlng);
+      }
+    }).addTo(map);
+
+    layer.createLayers(features);
+
+    layer.on('removefeature', function(e){
+      expect(e.feature.id).to.equal(2);
+      done();
+    });
+
+    map.removeLayer(layer);
+  });
+
   it('should add features back to a map', function(){
     layer.removeLayers([1]);
     layer.addLayers([1]);
@@ -158,6 +177,27 @@ describe('L.esri.FeatureLayer', function () {
     });
     layer.removeLayers([1]);
     layer.addLayers([1]);
+  });
+
+  it('should fire an addfeature event when a featureLayer is readded to the map', function(done){
+    layer = L.esri.featureLayer({
+      url: 'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0',
+      timeField: 'time',
+      pointToLayer: function(feature, latlng){
+        return L.circleMarker(latlng);
+      }
+    }).addTo(map);
+
+    layer.createLayers(features);
+    map.removeLayer(layer);
+
+    layer.on('addfeature', function(e){
+      expect(e.feature.id).to.equal(2);
+      done();
+    });
+
+    map.addLayer(layer);
+    layer.createLayers(features);
   });
 
   it('should not add features outside the time range', function(){
