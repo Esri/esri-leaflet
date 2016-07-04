@@ -23,6 +23,11 @@ export var FeatureLayer = FeatureManager.extend({
   onRemove: function (map) {
     for (var i in this._layers) {
       map.removeLayer(this._layers[i]);
+      // trigger the event when the entire featureLayer is removed from the map
+      this.fire('removefeature', {
+        feature: this._layers[i].feature,
+        permanent: false
+      }, true);
     }
 
     return FeatureManager.prototype.onRemove.call(this, map);
@@ -82,6 +87,9 @@ export var FeatureLayer = FeatureManager.extend({
 
       if (this._visibleZoom() && layer && !this._map.hasLayer(layer)) {
         this._map.addLayer(layer);
+        this.fire('addfeature', {
+          feature: layer.feature
+        }, true);
       }
 
       // update geometry if necessary
@@ -112,6 +120,9 @@ export var FeatureLayer = FeatureManager.extend({
 
         // add the layer if the current zoom level is inside the range defined for the layer, it is within the current time bounds or our layer is not time enabled
         if (this._visibleZoom() && (!this.options.timeField || (this.options.timeField && this._featureWithinTimeRange(geojson)))) {
+          this.fire('addfeature', {
+            feature: newLayer.feature
+          }, true);
           this._map.addLayer(newLayer);
         }
       }
