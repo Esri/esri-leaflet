@@ -1,6 +1,6 @@
 {
   "name": "esri-leaflet",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Leaflet plugins for consuming ArcGIS Online and ArcGIS Server services",
   "main": "dist/esri-leaflet.js",
   "repository": {

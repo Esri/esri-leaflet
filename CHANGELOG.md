@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.4
+
+### Fixed
+
+* ensure we remove all Esri logos from the map #795
+* ensure addfeature and removefeature events are emitted when L.esri.featureLayers are added to and removed from the map. #788
+
 ## 1.0.3
 
 ### Fixed
