@@ -5,6 +5,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Upcoming changes][unreleased]
 
+## [1.0.4]
+
+### Fixed
+
+* ensure we remove all Esri logos from the map #795
+* ensure addfeature and removefeature events are emitted when L.esri.featureLayers are added to and removed from the map. #788
+
 ## [2.0.0]
 
 ### Added
@@ -37,7 +44,6 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 
 * Ensure all visual relics of `L.esri.dynamicMapLayer` are removed outside `minZoom` and `maxZoom` defined for the layer #744
-
 
 ## [2.0.0-beta.7]
 
@@ -422,6 +428,7 @@ None
 [2.0.0]: https://github.com/esri/esri-leaflet/compare/v2.0.0-beta.8...v2.0.0
 [2.0.0-beta.8]: https://github.com/esri/esri-leaflet/compare/v2.0.0-beta.7...v2.0.0-beta.8
 [2.0.0-beta.7]: https://github.com/esri/esri-leaflet/compare/v2.0.0-beta.6...v2.0.0-beta.7
+[1.0.4]: https://github.com/esri/esri-leaflet/compare/v1.0.3...v1.0.4
 [1.0.3]: https://github.com/esri/esri-leaflet/compare/v1.0.2...v1.0.3
 [1.0.2]: https://github.com/esri/esri-leaflet/compare/v1.0.1...v1.0.2
 [1.0.1]: https://github.com/esri/esri-leaflet/compare/v1.0.0...v1.0.1
