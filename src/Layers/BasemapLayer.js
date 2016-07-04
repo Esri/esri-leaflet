@@ -228,7 +228,7 @@
     },
     onRemove: function(map){
       // check to make sure the logo hasn't already been removed
-      if(!map._hasEsriLogo && this._logo && this._logo._container){
+      if(map._hasEsriLogo && this._logo && this._logo._container){
         map.removeControl(this._logo);
         map._hasEsriLogo = false;
       }
