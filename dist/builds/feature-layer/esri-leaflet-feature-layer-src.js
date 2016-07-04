@@ -1,4 +1,4 @@
-/*! esri-leaflet - v1.0.3 - 2016-02-22
+/*! esri-leaflet - v1.0.3 - 2016-07-03
 *   Copyright (c) 2016 Environmental Systems Research Institute, Inc.
 *   Apache License*/
 (function (factory) {
@@ -2069,6 +2069,9 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
     this._removed = true;
     for (var i in this._layers) {
       map.removeLayer(this._layers[i]);
+      this.fire('removefeature', {
+        feature: this._layers[i].feature
+      });
     }
 
     return EsriLeaflet.Layers.FeatureManager.prototype.onRemove.call(this, map);
@@ -2129,6 +2132,9 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
 
       if(layer && !this._map.hasLayer(layer)){
         this._map.addLayer(layer);
+        this.fire('addfeature', {
+          feature: layer.feature
+        });
       }
 
       // update geomerty if neccessary
@@ -2182,6 +2188,9 @@ EsriLeaflet.Layers.FeatureLayer = EsriLeaflet.Layers.FeatureManager.extend({
         // add the layer if it is within the time bounds or our layer is not time enabled
         if(!this.options.timeField || (this.options.timeField && this._featureWithinTimeRange(geojson)) ){
           this._map.addLayer(newLayer);
+          this.fire('addfeature', {
+            feature: newLayer.feature
+          });
         }
       }
     }
