@@ -14,7 +14,7 @@ export var BasemapLayer = L.TileLayer.extend({
           minZoom: 1,
           maxZoom: 19,
           subdomains: ['server', 'services'],
-          attribution: 'Esri'
+          attribution: ''
         }
       },
       Topographic: {
@@ -24,7 +24,7 @@ export var BasemapLayer = L.TileLayer.extend({
           minZoom: 1,
           maxZoom: 19,
           subdomains: ['server', 'services'],
-          attribution: 'Esri'
+          attribution: ''
         }
       },
       Oceans: {
@@ -34,7 +34,7 @@ export var BasemapLayer = L.TileLayer.extend({
           minZoom: 1,
           maxZoom: 16,
           subdomains: ['server', 'services'],
-          attribution: 'Esri'
+          attribution: ''
         }
       },
       OceansLabels: {
