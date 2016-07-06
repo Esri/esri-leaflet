@@ -135,8 +135,12 @@ export var RasterLayer = L.Layer.extend({
     return this;
   },
 
-  _renderImage: function (url, bounds) {
+  _renderImage: function (url, bounds, contentType) {
     if (this._map) {
+      // if no output directory has been specified for a service, MIME data will be returned
+      if (contentType) {
+        url = 'data:' + contentType + ';base64,' + url;
+      }
       // create a new image overlay and add it to the map
       // to start loading the image
       // opacity is 0 while the image is loading
