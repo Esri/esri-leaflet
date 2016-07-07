@@ -1,4 +1,5 @@
 import L from 'leaflet';
+import { jsonp } from './Request';
 import {
   geojsonToArcGIS as g2a,
   arcgisToGeoJSON as a2g
@@ -128,6 +129,72 @@ export function warn () {
   }
 }
 
+export function _getAttributionData (url, map) {
+  jsonp(url, {}, L.Util.bind(function (error, attributions) {
+    if (error) { return; }
+    map._esriAttributions = [];
+    for (var c = 0; c < attributions.contributors.length; c++) {
+      var contributor = attributions.contributors[c];
+
+      if (contributor.attribution !== 'Esri') {
+        for (var i = 0; i < contributor.coverageAreas.length; i++) {
+          var coverageArea = contributor.coverageAreas[i];
+          var southWest = L.latLng(coverageArea.bbox[0], coverageArea.bbox[1]);
+          var northEast = L.latLng(coverageArea.bbox[2], coverageArea.bbox[3]);
+          map._esriAttributions.push({
+            attribution: contributor.attribution,
+            score: coverageArea.score,
+            bounds: L.latLngBounds(southWest, northEast),
+            minZoom: coverageArea.zoomMin,
+            maxZoom: coverageArea.zoomMax
+          });
+        }
+      }
+    }
+
+    map._esriAttributions.sort(function (a, b) {
+      return b.score - a.score;
+    });
+
+    // pass the same argument as the map's 'moveend' event
+    var obj = { target: map };
+    this._updateMapAttribution(obj);
+  }, this));
+}
+
+export function _updateMapAttribution (evt) {
+  map = evt.target;
+  var oldAttributions = map._esriAttributions;
+
+  if (map && map.attributionControl && oldAttributions) {
+    var newAttributions = '';
+    var bounds = map.getBounds();
+    var wrappedBounds = L.latLngBounds(
+      bounds.getSouthWest().wrap(),
+      bounds.getNorthEast().wrap()
+    );
+    var zoom = map.getZoom();
+
+    for (var i = 0; i < oldAttributions.length; i++) {
+      var attribution = oldAttributions[i];
+      var text = attribution.attribution;
+
+      if (!newAttributions.match(text) && attribution.bounds.intersects(wrappedBounds) && zoom >= attribution.minZoom && zoom <= attribution.maxZoom) {
+        newAttributions += (', ' + text);
+      }
+    }
+    newAttributions = newAttributions.substr(2);
+    var attributionElement = map.attributionControl._container.querySelector('.esri-attributions');
+
+    attributionElement.innerHTML = newAttributions;
+    attributionElement.style.maxWidth = (map.getSize().x * 0.65) + 'px';
+
+    map.fire('attributionupdated', {
+      attribution: newAttributions
+    });
+  }
+}
+
 export var Util = {
   shallowClone: shallowClone,
   warn: warn,
@@ -138,7 +205,9 @@ export var Util = {
   geojsonToArcGIS: geojsonToArcGIS,
   arcgisToGeoJSON: arcgisToGeoJSON,
   boundsToExtent: boundsToExtent,
-  extentToBounds: extentToBounds
+  extentToBounds: extentToBounds,
+  _getAttributionData: _getAttributionData,
+  _updateMapAttribution: _updateMapAttribution
 };
 
 export default Util;
