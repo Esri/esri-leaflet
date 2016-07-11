@@ -8,7 +8,7 @@
   <meta charset="utf-8">
 
   
-    <title>Request | Esri Leaflet</title>
+    <title>request | Esri Leaflet</title>
   
 
   
@@ -118,7 +118,7 @@
 
   <h5>Misc.</h5>
   <nav>
-    <a href="../api-reference/request.html">Request</a>
+    <a href="../api-reference/request.html">request</a>
     <a href="../api-reference/util.html">Util</a>
     <a href="../api-reference/events.html">Events</a>
   </nav>
@@ -126,7 +126,7 @@
 
 
 <div class="main-content">
-  <h1 id="l-esri-request">L.esri.Request</h1>
+  <h1 id="l-esri-request">L.esri.request</h1>
 <p>Generic methods for GET and POST requests to ArcGIS Online or ArcGIS Server resources. These methods will handle serializing the input parameters and parsing of the response, making them available in a callback function via a response and error property similar to Node.js.</p>
 <p>GET requests will be made with <code>XMLHttpRequest</code> (via CORS) if the browser supports it and will fallback to JSONP. POST requests will always be made with <code>XMLHttpRequest</code> (via CORS) but the <a href="https://developers.arcgis.com/javascript/jshelp/ags_proxy.html">ArcGIS API for JavaScript proxy</a> and the <a href="https://github.com/Esri/resource-proxy">ArcGIS Resource Proxy</a> are support via <a href="../api-reference/services/service.html"><code>L.esri.Service</code></a>.</p>
 <p>If you are using a version of ArcGIS Server before 10.1 your server does not support CORS by default. You can either enable CORS support on your server (documentation is available at <a href="http://enable-cors.org/">http://enable-cors.org/</a>) or, if you cannot or do not want to enable CORS, use the following code to make all requests utilize JSONP.</p>
