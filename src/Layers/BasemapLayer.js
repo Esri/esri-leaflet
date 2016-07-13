@@ -183,6 +183,10 @@ export var BasemapLayer = L.TileLayer.extend({
 
     L.Util.setOptions(this, tileOptions);
 
+    if (this.options.token) {
+      config.urlTemplate += ('?token=' + this.options.token);
+    }
+
     // call the initialize method on L.TileLayer to set everything up
     L.TileLayer.prototype.initialize.call(this, config.urlTemplate, tileOptions);
 
