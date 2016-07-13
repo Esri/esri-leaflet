@@ -214,7 +214,7 @@
     var map = L.map('map').setView([36.230577, -118.253147], 10);
 
     var hillshade = L.esri.imageMapLayer({
-      url: '//sampleserver3.arcgisonline.com/ArcGIS/rest/services/Earthquakes/CaliforniaDEM/ImageServer',
+      url: 'https://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Earthquakes/CaliforniaDEM/ImageServer',
       renderingRule: renderingRule,
       useCors: false
     }).addTo(map);
@@ -285,7 +285,7 @@
     <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">36.230577</span>, -<span class="number">118.253147</span>], <span class="number">10</span>);
 
     <span class="keyword">var</span> hillshade = L.esri.imageMapLayer({
-      url: <span class="string">'//sampleserver3.arcgisonline.com/ArcGIS/rest/services/Earthquakes/CaliforniaDEM/ImageServer'</span>,
+      url: <span class="string">'https://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Earthquakes/CaliforniaDEM/ImageServer'</span>,
       renderingRule: renderingRule,
       useCors: <span class="literal">false</span>
     }).addTo(map);
