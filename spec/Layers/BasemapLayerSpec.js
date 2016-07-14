@@ -1,12 +1,25 @@
 describe('L.esri.BasemapLayer', function () {
 
+  function createMap(){
+    // create container
+    var container = document.createElement('div');
+
+    // give container a width/height
+    container.setAttribute('style', 'width:500px; height: 500px;');
+
+    // add container to body
+    document.body.appendChild(container);
+
+    return L.map(container).setView([37.75, -122.45], 5);
+  }
+
   var map;
   var server;
   var clock;
   var mockAttributions = {
     'contributors': [
       {
-        'attribution': 'Esri',
+        'attribution': 'SkyNet',
         'coverageAreas': [
           {
             'zoomMax': 19,
@@ -34,8 +47,7 @@ describe('L.esri.BasemapLayer', function () {
     clock = sinon.useFakeTimers();
     server = sinon.fakeServer.create();
     server.respondWith('GET', new RegExp(/.*/), JSON.stringify(mockAttributions));
-    map = L.map(document.createElement('div'));
-    map.setView([37.75, -122.45], 5);
+    map = createMap();
   });
 
   afterEach(function(){
@@ -80,7 +92,32 @@ describe('L.esri.BasemapLayer', function () {
     }).to.throw(/Invalid parameter/);
   });
 
-  it('should have a L.esri.basemapLayer alias', function(){
+  it('should have an L.esri.basemapLayer alias', function(){
     expect(L.esri.basemapLayer('Topographic')).to.be.instanceof(L.esri.BasemapLayer);
   });
+
+  // /*
+  // need to figure out how to wire up the mockAttributions to
+  // test display when map is panned beyond the dateline
+  //
+  // i dont understand how to spoof http responses for inner logic private function calls
+  // like the jsonp request made inside L.esri.Util._getAttributionData();
+  // */
+  // it('can display attribution when panned beyond the dateline', function () {
+  //   var baseLayer = L.esri.basemapLayer('Streets');
+  //   map.addLayer(baseLayer);
+  //   // L.esri.Util._getAttributionData(baseLayer.options.attributionUrl, map);
+  //   // map.setView([ 37.30, 360], 10);
+  //   clock.tick(151);
+  //
+  //   var check = false;
+  //   for(var prop in map.attributionControl._attributions) {
+  //       // console.log(prop);
+  //       if (prop.match(/SkyNet/i) != null) {
+  //         test = true;
+  //       };
+  //   }
+  //
+  //   expect(check).to.equal(true);
+  // });
 });
