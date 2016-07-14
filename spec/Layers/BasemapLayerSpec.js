@@ -86,6 +86,12 @@ describe('L.esri.BasemapLayer', function () {
     expect(map.hasLayer(baseLayer)).to.equal(true);
   });
 
+  it('will append tokens when fetching tiles if necessary', function () {
+    var baseLayer = L.esri.basemapLayer('Streets', {token: 'bogus'} );
+    map.addLayer(baseLayer);
+    expect(baseLayer._url).to.contain('token=bogus');
+  });
+
   it('will throw an error given invalid basemap name', function () {
     expect(function () {
       L.esri.basemapLayer('junk');
