@@ -184,12 +184,18 @@ export var BasemapLayer = L.TileLayer.extend({
 
     L.Util.setOptions(this, tileOptions);
 
+    if (this.options.token) {
+      config.urlTemplate += ('?token=' + this.options.token);
+    }
+
     // call the initialize method on L.TileLayer to set everything up
     L.TileLayer.prototype.initialize.call(this, config.urlTemplate, tileOptions);
   },
 
   onAdd: function (map) {
-    map.attributionControl.addAttribution('<a href="https://www.esri.com">&copy; Esri</a>');
+    if (map.attributionControl) {
+      map.attributionControl.addAttribution('<a href="https://www.esri.com">&copy; Esri</a>');
+    }
 
     if (this.options.pane === 'esri-labels') {
       this._initPane();
@@ -204,8 +210,10 @@ export var BasemapLayer = L.TileLayer.extend({
   },
 
   onRemove: function (map) {
-    map.attributionControl.removeAttribution('<a href="https://www.esri.com">&copy; Esri</a>');
-    map.off('moveend', Util._updateMapAttribution, this);
+    if (map.attributionControl) {
+      map.attributionControl.removeAttribution('<a href="https://www.esri.com">&copy; Esri</a>');
+    }
+    map.off('moveend', this._updateMapAttribution, this);
     L.TileLayer.prototype.onRemove.call(this, map);
   },
 
