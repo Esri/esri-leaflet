@@ -30,18 +30,14 @@
   <!-- stylesheet -->
   <link rel="stylesheet" href="../css/style.css">
 
-  <!-- Load Leaflet from CDN-->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.1/leaflet.css" />
-  <script src="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.1/leaflet-src.js"></script>
-
-  <!-- Load Esri Leaflet -->
-  <!--script src="/js/linked/dist/esri-leaflet-debug.js"></script-->
-  <script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.0/esri-leaflet-debug.js"></script>
-
-  <script src="https://cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
-
   
 
+    <!-- use CDN -->
+    <script src="https://cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.1/leaflet.css" />
+    <script src="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.1/leaflet-src.js"></script>
+    <script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.0/esri-leaflet-debug.js"></script>
   
 
   <!-- Google Analytics -->
@@ -217,7 +213,7 @@
 
   map.createPane('blockpoints');
 
-  // for point GeoJSON, Leafet expects custom panes to be passed returned by pointToLayer()
+  // for point GeoJSON, Leafet expects custom panes to be returned in pointToLayer()
   L.esri.featureLayer({
     url: blockPointsUrl,
     pointToLayer: function (geojson, latlng) {
@@ -284,7 +280,7 @@
 
   map.createPane(<span class="string">'blockpoints'</span>);
 
-  <span class="comment">// for point GeoJSON, Leafet expects custom panes to be passed returned by pointToLayer()</span>
+  <span class="comment">// for point GeoJSON, Leafet expects custom panes to be returned in pointToLayer()</span>
   L.esri.featureLayer({
     url: blockPointsUrl,
     pointToLayer: <span class="function"><span class="keyword">function</span> <span class="params">(geojson, latlng)</span> {</span>

@@ -30,18 +30,14 @@
   <!-- stylesheet -->
   <link rel="stylesheet" href="../css/style.css">
 
-  <!-- Load Leaflet from CDN-->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.1/leaflet.css" />
-  <script src="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.1/leaflet-src.js"></script>
-
-  <!-- Load Esri Leaflet -->
-  <!--script src="/js/linked/dist/esri-leaflet-debug.js"></script-->
-  <script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.0/esri-leaflet-debug.js"></script>
-
-  <script src="https://cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
-
   
 
+    <!-- use CDN -->
+    <script src="https://cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.1/leaflet.css" />
+    <script src="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.1/leaflet-src.js"></script>
+    <script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.0/esri-leaflet-debug.js"></script>
   
 
   <!-- Google Analytics -->
@@ -222,7 +218,7 @@
 
   var trafficLayer;
 
-  var map = L.map('map').setView([34.045, -118.195], 12);
+  var map = L.map('map').setView([34.045, -118.195], 13);
 
   L.esri.basemapLayer('Streets').addTo(map);
 
@@ -319,7 +315,7 @@
 
   <span class="keyword">var</span> trafficLayer;
 
-  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">34.045</span>, -<span class="number">118.195</span>], <span class="number">12</span>);
+  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">34.045</span>, -<span class="number">118.195</span>], <span class="number">13</span>);
 
   L.esri.basemapLayer(<span class="string">'Streets'</span>).addTo(map);
 

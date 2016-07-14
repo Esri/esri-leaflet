@@ -28,18 +28,14 @@
   <!-- stylesheet -->
   <link rel="stylesheet" href="../../css/style.css">
 
-  <!-- Load Leaflet from CDN-->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.1/leaflet.css" />
-  <script src="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.1/leaflet-src.js"></script>
-
-  <!-- Load Esri Leaflet -->
-  <!--script src="/js/linked/dist/esri-leaflet-debug.js"></script-->
-  <script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.0/esri-leaflet-debug.js"></script>
-
-  <script src="https://cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
-
   
 
+    <!-- use CDN -->
+    <script src="https://cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.1/leaflet.css" />
+    <script src="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.1/leaflet-src.js"></script>
+    <script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.0/esri-leaflet-debug.js"></script>
   
 
   <!-- Google Analytics -->
@@ -128,9 +124,10 @@
 <div class="main-content">
   <h1 id="l-esri-tiledmaplayer">L.esri.TiledMapLayer</h1>
 <p>Inherits from <a href="http://leafletjs.com/reference.html#tilelayer"><code>L.TileLayer</code></a></p>
-<p>Access tiles from ArcGIS Online and ArcGIS Server as well as visualize and identify features.</p>
-<p>If you have published a Feature Service in ArcGIS Online you can use it to create a static set of tiles. You can find details about that process in the <a href="http://doc.arcgis.com/en/arcgis-online/share-maps/publish-tiles.htm#ESRI_SECTION1_F68FCBD33BD54117B23232D41A762E89">ArcGIS Online Help</a></p>
-<p><strong>Your map service must be published using the Web Mercator Auxiliary Sphere tiling scheme (WKID 102100/3857) and the default scale options used by Google Maps, Bing Maps and <a href="http://resources.arcgis.com/en/help/arcgisonline-content/index.html#//011q00000002000000">ArcGIS Online</a>. Esri Leaflet will not support any other spatial reference for tile layers.</strong></p>
+<p>Access tiles from ArcGIS Online and ArcGIS Server to visualize and identify features. If you have published a Feature Service in ArcGIS Online, it can be used to create a static set of tiles as well. You can find details about that process in the <a href="http://doc.arcgis.com/en/arcgis-online/share-maps/publish-tiles.htm#ESRI_SECTION1_F68FCBD33BD54117B23232D41A762E89">ArcGIS Online Help</a>.</p>
+<blockquote>
+<p>Your map service must be published using the Web Mercator Auxiliary Sphere tiling scheme (WKID 102100/3857) and the default scale options used by Google Maps, Bing Maps and <a href="http://resources.arcgis.com/en/help/arcgisonline-content/index.html#//011q00000002000000">ArcGIS Online</a>. Esri Leaflet will not support any other spatial reference for tile layers.</p>
+</blockquote>
 <h3 id="constructor">Constructor</h3>
 <table>
     <thead>
@@ -142,7 +139,7 @@
     <tbody>
         <tr>
             <td><code class="nobr">L.esri.tiledMapLayer(<nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code></td>
-            <td>The <code>options</code> parameter can accept the same options as <a href="http://leafletjs.com/reference.html#tilelayer"><code>L.ImageOverlay</code></a>. You also must pass a <code>url</code> key in your <code>options</code>.</td>
+            <td>The <code>options</code> parameter can accept the same options as <a href="http://leafletjs.com/reference.html#tilelayer"><code>L.tileLayer</code></a>. The only required parameter is <code>url</code>.</td>
         </tr>
     </tbody>
 </table>
@@ -163,7 +160,7 @@
 <td><code>url</code></td>
 <td><code>String</code></td>
 <td></td>
-<td><em>Required</em> URL of the <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Map_Service/02r3000000w2000000">Map Service</a> with a tile cache.</td>
+<td><em>Required</em>: URL of the <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Map_Service/02r3000000w2000000">Map Service</a> with a tile cache.</td>
 </tr>
 <tr>
 <td><code>zoomOffsetAllowance</code></td>
@@ -175,7 +172,7 @@
 <td><code>proxy</code></td>
 <td><code>String</code></td>
 <td><code>false</code></td>
-<td>URL of an <a href="https://developers.arcgis.com/javascript/jshelp/ags_proxy.html">ArcGIS API for JavaScript proxy</a> or <a href="https://github.com/Esri/resource-proxy">ArcGIS Resource Proxy</a> to use for proxying POST requests.</td>
+<td>URL of an <a href="https://developers.arcgis.com/javascript/jshelp/ags_proxy.html">ArcGIS API for JavaScript proxy</a> or <a href="https://github.com/Esri/resource-proxy">ArcGIS Resource Proxy</a> to use for proxying requests.</td>
 </tr>
 <tr>
 <td><code>useCors</code></td>

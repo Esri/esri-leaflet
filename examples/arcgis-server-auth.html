@@ -30,18 +30,14 @@
   <!-- stylesheet -->
   <link rel="stylesheet" href="../css/style.css">
 
-  <!-- Load Leaflet from CDN-->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.1/leaflet.css" />
-  <script src="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.1/leaflet-src.js"></script>
-
-  <!-- Load Esri Leaflet -->
-  <!--script src="/js/linked/dist/esri-leaflet-debug.js"></script-->
-  <script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.0/esri-leaflet-debug.js"></script>
-
-  <script src="https://cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
-
   
 
+    <!-- use CDN -->
+    <script src="https://cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.1/leaflet.css" />
+    <script src="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.1/leaflet-src.js"></script>
+    <script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.0/esri-leaflet-debug.js"></script>
   
 
   <!-- Google Analytics -->
@@ -192,7 +188,7 @@
     window.location.origin = window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port: '');
   }
 
-  var map = L.map('map').setView([34.326, -117.697], 12);
+  var map = L.map('map').setView([34.089, -116.865], 9);
   L.esri.basemapLayer('Topographic').addTo(map);
 
   function serverAuth(callback){
@@ -250,7 +246,7 @@
     window.location.origin = window.location.protocol + <span class="string">"//"</span> + window.location.hostname + (window.location.port ? <span class="string">':'</span> + window.location.port: <span class="string">''</span>);
   }
 
-  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">34.326</span>, -<span class="number">117.697</span>], <span class="number">12</span>);
+  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">34.089</span>, -<span class="number">116.865</span>], <span class="number">9</span>);
   L.esri.basemapLayer(<span class="string">'Topographic'</span>).addTo(map);
 
   <span class="function"><span class="keyword">function</span> <span class="title">serverAuth</span><span class="params">(callback)</span>{</span>

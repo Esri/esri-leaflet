@@ -30,18 +30,14 @@
   <!-- stylesheet -->
   <link rel="stylesheet" href="../css/style.css">
 
-  <!-- Load Leaflet from CDN-->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.1/leaflet.css" />
-  <script src="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.1/leaflet-src.js"></script>
-
-  <!-- Load Esri Leaflet -->
-  <!--script src="/js/linked/dist/esri-leaflet-debug.js"></script-->
-  <script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.0/esri-leaflet-debug.js"></script>
-
-  <script src="https://cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
-
   
 
+    <!-- use CDN -->
+    <script src="https://cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.1/leaflet.css" />
+    <script src="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.1/leaflet-src.js"></script>
+    <script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.0/esri-leaflet-debug.js"></script>
   
 
   <!-- Google Analytics -->
@@ -209,9 +205,8 @@
     precision: 5,
     fields: ['FID', 'ZIP', 'PO_NAME'],
     style: {
-      color: '#000',
-      weight: 1,
-      opacity: 1
+      color: '#A9A9A9',
+      weight: 1
     }
   }).addTo(map);
 
@@ -279,9 +274,8 @@
     precision: <span class="number">5</span>,
     fields: [<span class="string">'FID'</span>, <span class="string">'ZIP'</span>, <span class="string">'PO_NAME'</span>],
     style: {
-      color: <span class="string">'#000'</span>,
-      weight: <span class="number">1</span>,
-      opacity: <span class="number">1</span>
+      color: <span class="string">'#A9A9A9'</span>,
+      weight: <span class="number">1</span>
     }
   }).addTo(map);
 

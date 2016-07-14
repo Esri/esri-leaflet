@@ -30,18 +30,14 @@
   <!-- stylesheet -->
   <link rel="stylesheet" href="../css/style.css">
 
-  <!-- Load Leaflet from CDN-->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.1/leaflet.css" />
-  <script src="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.1/leaflet-src.js"></script>
-
-  <!-- Load Esri Leaflet -->
-  <!--script src="/js/linked/dist/esri-leaflet-debug.js"></script-->
-  <script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.0/esri-leaflet-debug.js"></script>
-
-  <script src="https://cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
-
   
 
+    <!-- use CDN -->
+    <script src="https://cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.1/leaflet.css" />
+    <script src="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.1/leaflet-src.js"></script>
+    <script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.0/esri-leaflet-debug.js"></script>
   
 
   <!-- Google Analytics -->
@@ -214,7 +210,7 @@ in production you'd be better off hosting these libraries yourself -->
   // The min/maxZoom values provided should match the actual cache thats been published. This information can be retrieved from the service endpoint directly.
   L.esri.tiledMapLayer({
     url: 'http://maverick.arcgis.com/ArcGIS/rest/services/World_Mollweide/MapServer',
-    // overlay is misaligned at world scale, needs looked into.
+    // to do: overlay is misaligned at world scale, needs to figure out why.
     maxZoom: 3,
     minZoom: 3,
     continuousWorld: true,
@@ -280,7 +276,7 @@ in production you'd be better off hosting these libraries yourself --&gt;</span>
   <span class="comment">// The min/maxZoom values provided should match the actual cache thats been published. This information can be retrieved from the service endpoint directly.</span>
   L.esri.tiledMapLayer({
     url: <span class="string">'http://maverick.arcgis.com/ArcGIS/rest/services/World_Mollweide/MapServer'</span>,
-    <span class="comment">// overlay is misaligned at world scale, needs looked into.</span>
+    <span class="comment">// to do: overlay is misaligned at world scale, needs to figure out why.</span>
     maxZoom: <span class="number">3</span>,
     minZoom: <span class="number">3</span>,
     continuousWorld: <span class="literal">true</span>,

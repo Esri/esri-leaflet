@@ -30,18 +30,14 @@
   <!-- stylesheet -->
   <link rel="stylesheet" href="../css/style.css">
 
-  <!-- Load Leaflet from CDN-->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.1/leaflet.css" />
-  <script src="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.1/leaflet-src.js"></script>
-
-  <!-- Load Esri Leaflet -->
-  <!--script src="/js/linked/dist/esri-leaflet-debug.js"></script-->
-  <script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.0/esri-leaflet-debug.js"></script>
-
-  <script src="https://cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
-
   
 
+    <!-- use CDN -->
+    <script src="https://cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.1/leaflet.css" />
+    <script src="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.1/leaflet-src.js"></script>
+    <script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.0/esri-leaflet-debug.js"></script>
   
 
   <!-- Google Analytics -->
@@ -212,13 +208,13 @@ in production you'd be better off hosting these libraries yourself -->
 
   var map = L.map('map', {
     crs: crs
-  }).setView([0,0], 0);
+  }).setView([0,0], 1);
 
   // The min/maxZoom values provided should match the actual cache thats been published. This information can be retrieved from the service endpoint directly.
   L.esri.tiledMapLayer({
     url: 'http://maverick.arcgis.com/ArcGIS/rest/services/World_Mollweide/MapServer',
     maxZoom: 3,
-    minZoom: 0,
+    minZoom: 1,
     continuousWorld: true,
     attribution: 'maverick',
     errorTileUrl: 'http://downloads2.esri.com/support/TechArticles/blank256.png'
@@ -286,13 +282,13 @@ in production you'd be better off hosting these libraries yourself --&gt;</span>
 
   <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>, {
     crs: crs
-  }).setView([<span class="number">0</span>,<span class="number">0</span>], <span class="number">0</span>);
+  }).setView([<span class="number">0</span>,<span class="number">0</span>], <span class="number">1</span>);
 
   <span class="comment">// The min/maxZoom values provided should match the actual cache thats been published. This information can be retrieved from the service endpoint directly.</span>
   L.esri.tiledMapLayer({
     url: <span class="string">'http://maverick.arcgis.com/ArcGIS/rest/services/World_Mollweide/MapServer'</span>,
     maxZoom: <span class="number">3</span>,
-    minZoom: <span class="number">0</span>,
+    minZoom: <span class="number">1</span>,
     continuousWorld: <span class="literal">true</span>,
     attribution: <span class="string">'maverick'</span>,
     errorTileUrl: <span class="string">'http://downloads2.esri.com/support/TechArticles/blank256.png'</span>

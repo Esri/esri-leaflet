@@ -30,18 +30,14 @@
   <!-- stylesheet -->
   <link rel="stylesheet" href="../css/style.css">
 
-  <!-- Load Leaflet from CDN-->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.1/leaflet.css" />
-  <script src="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.1/leaflet-src.js"></script>
-
-  <!-- Load Esri Leaflet -->
-  <!--script src="/js/linked/dist/esri-leaflet-debug.js"></script-->
-  <script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.0/esri-leaflet-debug.js"></script>
-
-  <script src="https://cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
-
   
 
+    <!-- use CDN -->
+    <script src="https://cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.1/leaflet.css" />
+    <script src="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.1/leaflet-src.js"></script>
+    <script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.0/esri-leaflet-debug.js"></script>
   
 
   <!-- Google Analytics -->
@@ -213,7 +209,7 @@
   </select>
 </div>
 <script>
-  var map = L.map("map").setView([45.525231693565054, -122.62836456298828], 11);
+  var map = L.map("map").setView([45.525, -122.628], 11);
 
   L.esri.basemapLayer("Topographic").addTo(map);
 
@@ -222,18 +218,19 @@
     url: "https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Neighborhoods_pdx/FeatureServer/0",
     style: {
       color: 'gray',
-      weight: 1
+      weight: 1,
+      opacity: 0.4
     }
   }).addTo(map);
 
   // create a bounds object to query against
   var bounds = L.latLngBounds([
-    [45.494555728818014, -122.69153594970703],
-    [45.538098589494005, -122.60845184326172]
+    [45.494556, -122.691536],
+    [45.538100, -122.608452]
   ]);
 
   // create a marker object to query against
-  var marker = L.marker([45.57103404296416, -122.68638610839842 ]).addTo(map);
+  var marker = L.marker([45.571034, -122.686386]).addTo(map);
 
   // create a rectangle to visualize the bounds
   var rect = L.rectangle(bounds, {
@@ -243,9 +240,9 @@
 
   // create a line to query against
   var line = L.polyline([
-    [45.55925642651572, -122.61188507080078],
-    [45.50225636595613, -122.56278991699217],
-    [45.48324350868221, -122.62046813964844]
+    [45.559256, -122.611885],
+    [45.502256, -122.562790],
+    [45.483244, -122.620468]
   ], {
     color: 'blue',
     weight: 2
@@ -253,14 +250,14 @@
 
   // create a polygon to query against
   var polygon = L.polygon([
-    [45.48926092988004, -122.73719787597655],
-    [45.48637264792543, -122.68844604492186],
-    [45.46253867087026, -122.68226623535156],
-    [45.441103561983795, -122.69359588623047],
-    [45.44471679159555, -122.7224349975586],
-    [45.46109386344247, -122.73822784423828],
-    [45.482521374942834, -122.7341079711914 ],
-    [45.48926092988004, -122.73719787597655]
+    [45.489261, -122.737198],
+    [45.486373, -122.688446],
+    [45.462539, -122.682266],
+    [45.441104, -122.693596],
+    [45.444717, -122.722435],
+    [45.461094, -122.738228],
+    [45.482521, -122.734108],
+    [45.489261, -122.737198]
   ], {
     color: 'blue',
     weight: 2
@@ -364,7 +361,7 @@
   <span class="tag">&lt;/<span class="title">select</span>&gt;</span>
 <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
-  <span class="keyword">var</span> map = L.map(<span class="string">"map"</span>).setView([<span class="number">45.525231693565054</span>, -<span class="number">122.62836456298828</span>], <span class="number">11</span>);
+  <span class="keyword">var</span> map = L.map(<span class="string">"map"</span>).setView([<span class="number">45.525</span>, -<span class="number">122.628</span>], <span class="number">11</span>);
 
   L.esri.basemapLayer(<span class="string">"Topographic"</span>).addTo(map);
 
@@ -373,18 +370,19 @@
     url: <span class="string">"https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Neighborhoods_pdx/FeatureServer/0"</span>,
     style: {
       color: <span class="string">'gray'</span>,
-      weight: <span class="number">1</span>
+      weight: <span class="number">1</span>,
+      opacity: <span class="number">0.4</span>
     }
   }).addTo(map);
 
   <span class="comment">// create a bounds object to query against</span>
   <span class="keyword">var</span> bounds = L.latLngBounds([
-    [<span class="number">45.494555728818014</span>, -<span class="number">122.69153594970703</span>],
-    [<span class="number">45.538098589494005</span>, -<span class="number">122.60845184326172</span>]
+    [<span class="number">45.494556</span>, -<span class="number">122.691536</span>],
+    [<span class="number">45.538100</span>, -<span class="number">122.608452</span>]
   ]);
 
   <span class="comment">// create a marker object to query against</span>
-  <span class="keyword">var</span> marker = L.marker([<span class="number">45.57103404296416</span>, -<span class="number">122.68638610839842</span> ]).addTo(map);
+  <span class="keyword">var</span> marker = L.marker([<span class="number">45.571034</span>, -<span class="number">122.686386</span>]).addTo(map);
 
   <span class="comment">// create a rectangle to visualize the bounds</span>
   <span class="keyword">var</span> rect = L.rectangle(bounds, {
@@ -394,9 +392,9 @@
 
   <span class="comment">// create a line to query against</span>
   <span class="keyword">var</span> line = L.polyline([
-    [<span class="number">45.55925642651572</span>, -<span class="number">122.61188507080078</span>],
-    [<span class="number">45.50225636595613</span>, -<span class="number">122.56278991699217</span>],
-    [<span class="number">45.48324350868221</span>, -<span class="number">122.62046813964844</span>]
+    [<span class="number">45.559256</span>, -<span class="number">122.611885</span>],
+    [<span class="number">45.502256</span>, -<span class="number">122.562790</span>],
+    [<span class="number">45.483244</span>, -<span class="number">122.620468</span>]
   ], {
     color: <span class="string">'blue'</span>,
     weight: <span class="number">2</span>
@@ -404,14 +402,14 @@
 
   <span class="comment">// create a polygon to query against</span>
   <span class="keyword">var</span> polygon = L.polygon([
-    [<span class="number">45.48926092988004</span>, -<span class="number">122.73719787597655</span>],
-    [<span class="number">45.48637264792543</span>, -<span class="number">122.68844604492186</span>],
-    [<span class="number">45.46253867087026</span>, -<span class="number">122.68226623535156</span>],
-    [<span class="number">45.441103561983795</span>, -<span class="number">122.69359588623047</span>],
-    [<span class="number">45.44471679159555</span>, -<span class="number">122.7224349975586</span>],
-    [<span class="number">45.46109386344247</span>, -<span class="number">122.73822784423828</span>],
-    [<span class="number">45.482521374942834</span>, -<span class="number">122.7341079711914</span> ],
-    [<span class="number">45.48926092988004</span>, -<span class="number">122.73719787597655</span>]
+    [<span class="number">45.489261</span>, -<span class="number">122.737198</span>],
+    [<span class="number">45.486373</span>, -<span class="number">122.688446</span>],
+    [<span class="number">45.462539</span>, -<span class="number">122.682266</span>],
+    [<span class="number">45.441104</span>, -<span class="number">122.693596</span>],
+    [<span class="number">45.444717</span>, -<span class="number">122.722435</span>],
+    [<span class="number">45.461094</span>, -<span class="number">122.738228</span>],
+    [<span class="number">45.482521</span>, -<span class="number">122.734108</span>],
+    [<span class="number">45.489261</span>, -<span class="number">122.737198</span>]
   ], {
     color: <span class="string">'blue'</span>,
     weight: <span class="number">2</span>
