@@ -6,7 +6,7 @@ describe('L.esri.DynamicMapLayer', function () {
     // give container a width/height
     container.setAttribute('style', 'width:500px; height: 500px;');
 
-    // add contianer to body
+    // add container to body
     document.body.appendChild(container);
 
     return L.map(container).setView([37.75, -122.45], 12);

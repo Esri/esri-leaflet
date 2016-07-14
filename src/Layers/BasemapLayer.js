@@ -1,6 +1,6 @@
 import L from 'leaflet';
-import { jsonp } from '../Request';
 import { pointerEvents } from '../Support';
+import { Util } from '../Util';
 
 var tileProtocol = (window.location.protocol !== 'https:') ? 'http:' : 'https:';
 
@@ -9,32 +9,32 @@ export var BasemapLayer = L.TileLayer.extend({
     TILES: {
       Streets: {
         urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
-        attributionUrl: 'https://static.arcgis.com/attribution/World_Street_Map',
         options: {
           minZoom: 1,
           maxZoom: 19,
           subdomains: ['server', 'services'],
-          attribution: ''
+          attribution: 'USGS, NOAA',
+          attributionUrl: 'https://static.arcgis.com/attribution/World_Street_Map'
         }
       },
       Topographic: {
         urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',
-        attributionUrl: 'https://static.arcgis.com/attribution/World_Topo_Map',
         options: {
           minZoom: 1,
           maxZoom: 19,
           subdomains: ['server', 'services'],
-          attribution: ''
+          attribution: 'USGS, NOAA',
+          attributionUrl: 'https://static.arcgis.com/attribution/World_Topo_Map'
         }
       },
       Oceans: {
         urlTemplate: tileProtocol + '//{s}.arcgisonline.com/arcgis/rest/services/Ocean/World_Ocean_Base/MapServer/tile/{z}/{y}/{x}',
-        attributionUrl: 'https://static.arcgis.com/attribution/Ocean_Basemap',
         options: {
           minZoom: 1,
           maxZoom: 16,
           subdomains: ['server', 'services'],
-          attribution: ''
+          attribution: 'USGS, NOAA',
+          attributionUrl: 'https://static.arcgis.com/attribution/Ocean_Basemap'
         }
       },
       OceansLabels: {
@@ -166,6 +166,7 @@ export var BasemapLayer = L.TileLayer.extend({
       }
     }
   },
+
   initialize: function (key, options) {
     var config;
 
@@ -185,11 +186,6 @@ export var BasemapLayer = L.TileLayer.extend({
 
     // call the initialize method on L.TileLayer to set everything up
     L.TileLayer.prototype.initialize.call(this, config.urlTemplate, tileOptions);
-
-    // if this basemap requires dynamic attribution set it up
-    if (config.attributionUrl) {
-      this._getAttributionData(config.attributionUrl);
-    }
   },
 
   onAdd: function (map) {
@@ -198,27 +194,19 @@ export var BasemapLayer = L.TileLayer.extend({
     if (this.options.pane === 'esri-labels') {
       this._initPane();
     }
-
-    map.on('moveend', this._updateMapAttribution, this);
+    // some basemaps can supply dynamic attribution
+    if (this.options.attributionUrl) {
+      Util._getAttributionData(this.options.attributionUrl, map);
+    }
+    map.on('moveend', Util._updateMapAttribution);
 
     L.TileLayer.prototype.onAdd.call(this, map);
   },
 
   onRemove: function (map) {
     map.attributionControl.removeAttribution('<a href="https://www.esri.com">&copy; Esri</a>');
-
-    map.off('moveend', this._updateMapAttribution, this);
-
+    map.off('moveend', Util._updateMapAttribution, this);
     L.TileLayer.prototype.onRemove.call(this, map);
-  },
-
-  getAttribution: function () {
-    if (this.options.attribution) {
-      // the extra 55 pixels are for the ellipsis and leaflet's own attribution
-      var maxWidth = (this._map.getSize().x - 55);
-      var attribution = '<span class="esri-attributions" style="line-height:14px; vertical-align: -3px; text-overflow:ellipsis; white-space:nowrap; overflow:hidden; display:inline-block; max-width:' + maxWidth + 'px;">' + this.options.attribution + '</span>';
-    }
-    return attribution;
   },
 
   _initPane: function () {
@@ -229,61 +217,13 @@ export var BasemapLayer = L.TileLayer.extend({
     }
   },
 
-  _getAttributionData: function (url) {
-    jsonp(url, {}, L.Util.bind(function (error, attributions) {
-      if (error) { return; }
-      this._attributions = [];
-
-      for (var c = 0; c < attributions.contributors.length; c++) {
-        var contributor = attributions.contributors[c];
-
-        if (contributor.attribution !== 'Esri') {
-          for (var i = 0; i < contributor.coverageAreas.length; i++) {
-            var coverageArea = contributor.coverageAreas[i];
-            var southWest = L.latLng(coverageArea.bbox[0], coverageArea.bbox[1]);
-            var northEast = L.latLng(coverageArea.bbox[2], coverageArea.bbox[3]);
-            this._attributions.push({
-              attribution: contributor.attribution,
-              score: coverageArea.score,
-              bounds: L.latLngBounds(southWest, northEast),
-              minZoom: coverageArea.zoomMin,
-              maxZoom: coverageArea.zoomMax
-            });
-          }
-        }
-      }
-
-      this._attributions.sort(function (a, b) {
-        return b.score - a.score;
-      });
-
-      this._updateMapAttribution();
-    }, this));
-  },
-
-  _updateMapAttribution: function () {
-    if (this._map && this._map.attributionControl && this._attributions) {
-      var newAttributions = '';
-      var bounds = this._map.getBounds();
-      var zoom = this._map.getZoom();
-
-      for (var i = 0; i < this._attributions.length; i++) {
-        var attribution = this._attributions[i];
-        var text = attribution.attribution;
-        if (!newAttributions.match(text) && bounds.intersects(attribution.bounds) && zoom >= attribution.minZoom && zoom <= attribution.maxZoom) {
-          newAttributions += (', ' + text);
-        }
-      }
-      newAttributions = newAttributions.substr(2);
-      var attributionElement = this._map.attributionControl._container.querySelector('.esri-attributions');
-
-      attributionElement.innerHTML = newAttributions;
-      attributionElement.style.maxWidth = (this._map.getSize().x * 0.65) + 'px';
-
-      this.fire('attributionupdated', {
-        attribution: newAttributions
-      });
+  getAttribution: function () {
+    if (this.options.attribution) {
+      // the extra 55 pixels are for the ellipsis and leaflet's own attribution
+      var maxWidth = (this._map.getSize().x - 55);
+      var attribution = '<span class="esri-attributions" style="line-height:14px; vertical-align: -3px; text-overflow:ellipsis; white-space:nowrap; overflow:hidden; display:inline-block; max-width:' + maxWidth + 'px;">' + this.options.attribution + '</span>';
     }
+    return attribution;
   }
 });
 
