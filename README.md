@@ -55,7 +55,7 @@ The easiest way to get started is to load Esri Leaflet via [CDN](http://www.jsde
      <script src="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.1/leaflet.js"></script>
 
     <!-- Load Esri Leaflet locally, after cloning this repository -->
-    <script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.0/esri-leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.1/esri-leaflet.js"></script>
 
     <style>
       html, body, #map {
@@ -150,11 +150,11 @@ If you'd like to inspect and modify the source of Esri Leaflet, follow the instr
 
 ### Dependencies
 
-* Esri Leaflet [1.x](https://github.com/Esri/esri-leaflet/releases/tag/v1.0.2) (available on [CDN](https://cdn.jsdelivr.net/leaflet.esri/1.0.2/esri-leaflet.js)) can be used in apps alongside:
+* Esri Leaflet [1.x](https://github.com/Esri/esri-leaflet/releases/tag/v1.0.3) (available on [CDN](https://cdn.jsdelivr.net/leaflet.esri/1.0.3/esri-leaflet.js)) can be used in apps alongside:
   *  [Leaflet](http://leafletjs.com) version 0.7.x.
 
-* Esri Leaflet [2.x](https://github.com/Esri/esri-leaflet/releases/tag/v2.0.0-beta.5) (available on [CDN](https://cdn.jsdelivr.net/leaflet.esri/2.0.0-beta.7/esri-leaflet.js)) can be used in apps alongside:
-  *  [Leaflet](http://leafletjs.com) version 1.0.0-beta2.
+* Esri Leaflet [2.x](https://github.com/Esri/esri-leaflet/releases/tag/v2.0.1) (available on [CDN](https://cdn.jsdelivr.net/leaflet.esri/2.0.1/esri-leaflet.js)) can be used in apps alongside:
+  *  [Leaflet](http://leafletjs.com) version 1.0.0-rc.X.
 
 The `master` branch of this repository is only compatible with Leaflet 1.0.x.
 
@@ -173,8 +173,8 @@ Esri welcomes contributions from anyone and everyone. Please see our [guidelines
 * `L.esri.DynamicMapLayer` originally used code from [AGS.Layer.Dynamic.js](https://github.com/sanborn/leaflet-ags/blob/master/src/AGS.Layer.Dynamic.js)
 * `L.esri.TiledMapLayer` adapts some code from [arcgis-level-fixer](https://github.com/gisinc/arcgis-level-fixer)
 
-### License
-Copyright 2015 Esri
+### Licensing
+Copyright 2016 Esri
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
