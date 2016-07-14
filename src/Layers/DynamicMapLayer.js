@@ -157,7 +157,11 @@ export var DynamicMapLayer = RasterLayer.extend({
     if (this.options.f === 'json') {
       this.service.request('export', params, function (error, response) {
         if (error) { return; } // we really can't do anything here but authenticate or requesterror will fire
-        this._renderImage(response.href, bounds);
+        if (response.href) {
+          this._renderImage(response.href, bounds);
+        } else {
+          this._renderImage(response.imageData, bounds, response.contentType);
+        }
       }, this);
     } else {
       params.f = 'image';
