@@ -1,8 +1,15 @@
 # Esri Leaflet
 
-[![Build Status](https://travis-ci.org/Esri/esri-leaflet.svg?branch=master)](https://travis-ci.org/Esri/esri-leaflet)
+[![npm version][npm-img]][npm-url]
+[![build status][travis-img]][travis-url]
+[![apache licensed](https://img.shields.io/badge/license-Apache-green.svg?style=flat-square)](https://raw.githubusercontent.com/Esri/esri-leaflet/master/LICENSE)
 
-[Leaflet](http://leafletjs.com/) plugins for working with a handful of the most popular [ArcGIS Service](http://developers.arcgis.com) types. This includes Esri [basemaps](http://esri.github.io/esri-leaflet/examples/switching-basemaps.html) and [feature services](http://esri.github.io/esri-leaflet/examples/simple-feature-layer.html), as well as [tiled](http://esri.github.io/esri-leaflet/examples/tile-layer-2.html) map, [dynamic](http://esri.github.io/esri-leaflet/examples/simple-dynamic-map-layer.html) map and [image](http://esri.github.io/esri-leaflet/examples/simple-image-map-layer.html)  services.  
+[npm-img]: https://img.shields.io/npm/v/esri-leaflet.svg?style=flat-square
+[npm-url]: https://www.npmjs.com/package/esri-leaflet
+[travis-img]: https://img.shields.io/travis/Esri/esri-leaflet/master.svg?style=flat-square
+[travis-url]: https://travis-ci.org/Esri/esri-leaflet
+
+[Leaflet](http://leafletjs.com/) plugins for working with a handful of the most popular [ArcGIS Service](http://developers.arcgis.com) types. This includes Esri [basemaps](http://esri.github.io/esri-leaflet/examples/switching-basemaps.html) and [feature services](http://esri.github.io/esri-leaflet/examples/simple-feature-layer.html), as well as [tiled](http://esri.github.io/esri-leaflet/examples/tile-layer-2.html) map, [dynamic](http://esri.github.io/esri-leaflet/examples/simple-dynamic-map-layer.html) map and [image](http://esri.github.io/esri-leaflet/examples/simple-image-map-layer.html)  services.
 
 > Esri Leaflet is maintained with :heart: by folks spanning multiple teams within Esri, but we provide no guarantee of individual features, nor a traditional product lifecycle to support planning.  
 
@@ -12,11 +19,30 @@ We are proud to facilitate a project which requires participation from our diver
 
 Support for [Geocoding](https://github.com/Esri/esri-leaflet-geocoder) services and [Geoprocessing](https://github.com/jgravois/esri-leaflet-gp) services, as well as service defined [rendering](https://github.com/esri/esri-leaflet-renderers) are available as well (via additional plugins).
 
-### Demos
-We've written [loads of demos](http://esri.github.io/esri-leaflet/examples/) showing many of the features of Esri Leaflet.
+## Table of Contents
 
-### Example
-Here is a quick example to get you started. Just copy/paste into your own `.html` file and run.
+- [Getting Started](#getting-started)
+  - [Demos](#demos)
+  - [Example](#example)
+  - [API Reference](#api-reference)
+  - [Additional Plugins](#additional-plugins)
+  - [Frequently Asked Questions](#frequently-asked-questions)
+  - [Issues](#issues)
+  - [Dependencies](#dependencies)
+- [Going Deeper](#going-deeper)
+  - [Development Instructions](#development-instructions)
+  - [Versioning](#versioning)
+  - [Contributing](#contributing)
+- [Credit](#credit)
+- [License](#license)
+
+## Demos
+We've shared lots of sample code showing off many of the features of Esri Leaflet.
+
+http://esri.github.io/esri-leaflet/examples/
+
+## Example
+The easiest way to get started is to load Esri Leaflet via [CDN](http://www.jsdelivr.com/projects/leaflet.esri). Here is an example you can copy/paste into your own `.html` file.
 
 ![App](https://raw.github.com/Esri/esri-leaflet/master/esri-leaflet.png)
 
@@ -60,21 +86,27 @@ Here is a quick example to get you started. Just copy/paste into your own `.html
 </html>
 ```
 
-### Documentation & Examples
+## API Reference
 
-A full [API Reference](http://esri.github.io/esri-leaflet/api-reference/) and plenty of [sample code](http://esri.github.io/esri-leaflet/examples/) can be found at the [Esri Leaflet](http://esri.github.io/esri-leaflet/) website.  The source code for the site can be found [here](https://github.com/Esri/esri-leaflet-doc).
+A full API Reference can be found in the Esri Leaflet website.
 
-### Issues
+http://esri.github.io/esri-leaflet/api-reference/
 
-Find a bug or want to request a new feature?  Please let us know by submitting an [issue](https://github.com/Esri/esri-leaflet/issues).
+The source code for the documentation site can be found in the repository below.  If you notice a typo or other problem, please [let us know](https://github.com/Esri/esri-leaflet-doc/issues)!
 
-Please take a look at [previously logged issues](https://github.com/Esri/esri-leaflet/issues?labels=FAQ&milestone=&page=1&state=closed) that resolve common problems.
+https://github.com/Esri/esri-leaflet-doc
 
-You can also post issues on [GIS Stackexchange](http://gis.stackexchange.com/questions/ask?tags=esri-leaflet,leaflet) and/or the [Esri Leaflet place](https://geonet.esri.com/discussion/create.jspa?sr=pmenu&containerID=1841&containerType=700&tags=esri-leaflet,leaflet) on GeoNet.
+## Additional Plugins
 
-Did you notice a problem with the Esri Leaflet website?  Please [let us know](https://github.com/Esri/esri-leaflet-doc/issues)!
+Many folks have written plugins to customize and extend Leaflet.
 
-### Frequently Asked Questions
+http://leafletjs.com/plugins.html
+
+You can also pick and choose additional Esri Leaflet plugins.
+
+http://esri.github.io/esri-leaflet/plugins/)
+
+## Frequently Asked Questions
 
 * [What exactly is Esri Leaflet?  Is it a replacement for Leaflet?](https://github.com/Esri/esri-leaflet/wiki/FAQ#what-is-esri-leaflet)
 * [Will Esri Leaflet replace the ArcGIS API for JavaScript?](https://github.com//Esri/esri-leaflet/wiki/FAQ#will-esri-leaflet-replace-the-arcgis-api-for-javascript)
@@ -95,23 +127,26 @@ Did you notice a problem with the Esri Leaflet website?  Please [let us know](ht
 * [What versions of ArcGIS Server does Esri Leaflet support?](https://github.com//Esri/esri-leaflet/wiki/FAQ#what-versions-of-arcgis-server-does-esri-leaflet-support)
 * [Upgrading the version of Esri Leaflet used in my app broke everything!](https://github.com//Esri/esri-leaflet/wiki/FAQ#upgrading-the-version-of-esri-leaflet-used-in-my-app-broke-everything)
 
-### Projects Using Esri Leaflet
+## Issues
 
-* [Geotrigger Editor](https://github.com/Esri/geotrigger-editor)
-* [Geotrigger Faker](https://github.com/Esri/geotrigger-faker)
-* [ArcGIS for Developers](https://developers.arcgis.com/en/)
 
-Feel free to add your own project to this list!
+If something isn't working the way you expected, please take a look at [previously logged issues](https://github.com/Esri/esri-leaflet/issues?labels=FAQ&milestone=&page=1&state=closed) that resolve common problems first.  Have you found a new bug?  Want to request a new feature?  We'd love to hear from you.  Please let us know by submitting an [issue](https://github.com/Esri/esri-leaflet/issues).
+
+
+If you're looking for help you can also post issues on [GIS Stackexchange](http://gis.stackexchange.com/questions/ask?tags=esri-leaflet,leaflet) and/or the [Esri Leaflet place](https://geonet.esri.com/discussion/create.jspa?sr=pmenu&containerID=1841&containerType=700&tags=esri-leaflet,leaflet) on GeoNet.
+
+## Going Deeper
 
 ### Development Instructions
+
+If you'd like to inspect and modify the source of Esri Leaflet, follow the instructions below to set up a local development environment.
 
 1. [Fork and clone Esri Leaflet](https://help.github.com/articles/fork-a-repo)
 2. `cd` into the `esri-leaflet` folder
 3. Install the [`package.json`](https://github.com/Esri/esri-leaflet/blob/master/package.json#L14-L49) dependencies by running `npm install`
 4. Run `npm start` from the command line. This will compile minified source in a brand new `dist` directory, launch a tiny webserver and begin watching the raw source for changes.
-5. Run `npm test` to make sure you haven't introduced a new 'feature' accidently.
+5. Run `npm test` to make sure you haven't introduced a new 'feature' accidentally.
 6. Make your changes and create a [pull request](https://help.github.com/articles/creating-a-pull-request)
-7. If you're interested in playing around with our website locally, just make sure you have [GruntCLI](http://gruntjs.com/getting-started) installed and run `grunt`.  This will start the web server locally at [http://localhost:8001](http://localhost:8001) and start watching the website source files for changes.
 
 ### Dependencies
 
@@ -125,17 +160,7 @@ The `master` branch of this repository is only compatible with Leaflet 1.0.x.
 
 ### Versioning
 
-For transparency into the release cycle and in striving to maintain backward compatibility, Esri Leaflet is maintained under the Semantic Versioning guidelines and will adhere to these rules whenever possible.
-
-Releases will be numbered with the following format:
-
-`<major>.<minor>.<patch>`
-
-And constructed with the following guidelines:
-
-* Breaking backward compatibility **bumps the major** while resetting minor and patch
-* New additions without breaking backward compatibility **bumps the minor** while resetting the patch
-* Bug fixes and misc changes **bumps only the patch**
+For transparency into the release cycle and in striving to maintain backward compatibility, Esri Leaflet is maintained under Semantic Versioning guidelines and will adhere to these rules whenever possible.
 
 For more information on SemVer, please visit <http://semver.org/>.
 
@@ -148,7 +173,7 @@ Esri welcomes contributions from anyone and everyone. Please see our [guidelines
 * `L.esri.DynamicMapLayer` originally used code from [AGS.Layer.Dynamic.js](https://github.com/sanborn/leaflet-ags/blob/master/src/AGS.Layer.Dynamic.js)
 * `L.esri.TiledMapLayer` adapts some code from [arcgis-level-fixer](https://github.com/gisinc/arcgis-level-fixer)
 
-### Licensing
+### License
 Copyright 2015 Esri
 
 Licensed under the Apache License, Version 2.0 (the "License");
