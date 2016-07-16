@@ -5,6 +5,20 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Upcoming changes][unreleased]
 
+## [2.0.1]
+
+### Added
+* users can now pass tokens to `basemapLayer` [#800](https://github.com/Esri/esri-leaflet/pull/800)
+
+### Fixed
+* to avoid broken tile thumbnails, a generic blank tile is referenced automatically by `tiledMapLayer`. [#784](https://github.com/Esri/esri-leaflet/pull/784)
+* ensure addfeature and removefeature events are emitted when `featureLayer`s are added to and removed from the map. [#788](https://github.com/Esri/esri-leaflet/pull/788)
+* base64 `dynamicMapLayer` responses are now parsed appropriately [#796](https://github.com/Esri/esri-leaflet/pull/796)
+
+### Changed
+* the esri logo is no longer displayed when hosted basemaps are used. It has been replaced by '&copy; Esri' in the map attribution. [#783](https://github.com/Esri/esri-leaflet/pull/783)
+* Internal methods used to display dynamic attribution for tiled services with supporting static services were moved into L.esri.Util. [#799](https://github.com/Esri/esri-leaflet/pull/799)
+
 ## [1.0.4]
 
 ### Fixed
@@ -424,7 +438,8 @@ None
 * Add DarkGray and DarkGrayLabels to BasemapLayer. #190
 * An attributionControl on maps is now required when using BasemapLayer. #159
 
-[unreleased]: https://github.com/esri/esri-leaflet/compare/v2.0.0...HEAD
+[unreleased]: https://github.com/esri/esri-leaflet/compare/v2.0.1...HEAD
+[2.0.1]: https://github.com/esri/esri-leaflet/compare/v2.0.0...v2.0.1
 [2.0.0]: https://github.com/esri/esri-leaflet/compare/v2.0.0-beta.8...v2.0.0
 [2.0.0-beta.8]: https://github.com/esri/esri-leaflet/compare/v2.0.0-beta.7...v2.0.0-beta.8
 [2.0.0-beta.7]: https://github.com/esri/esri-leaflet/compare/v2.0.0-beta.6...v2.0.0-beta.7
