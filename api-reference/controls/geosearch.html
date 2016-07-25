@@ -351,7 +351,7 @@ L.esri.Geocoding.Controls.geosearch({
 <td><code>countries</code></td>
 <td><code>String</code> <code>[Strings]</code></td>
 <td>null</td>
-<td>Limit results to one or more countries. Any ISO 3166 2 or 3 digit <a href="https://developers.arcgis.com/rest/geocode/api-reference/geocode-coverage.htm">country code supported by the ArcGIS World Geocode service</a> is allowed. <em>Note</em> using an array of country codes may result in inaccurate results even when a specific suggestion is supplied.</td>
+<td>Limit results to one or more countries. Any ISO 3166 2 or 3 digit <a href="https://developers.arcgis.com/rest/geocode/api-reference/geocode-coverage.htm">country code</a>  supported by the ArcGIS World Geocode service is allowed. <em>Note</em>: using an array of country codes may result in inaccurate results even when a specific suggestion is supplied.</td>
 </tr>
 <tr>
 <td><code>categories</code></td>
@@ -365,9 +365,15 @@ L.esri.Geocoding.Controls.geosearch({
 <td>false</td>
 <td>Indicates whether results will be stored permanently.  More information can be found <a href="https://developers.arcgis.com/rest/geocode/api-reference/geocoding-free-vs-paid.htm">here</a>.</td>
 </tr>
+<tr>
+<td><code>token</code></td>
+<td><code>String</code></td>
+<td><code>null</code></td>
+<td>Will use this token to authenticate all calls to the service.</td>
+</tr>
 </tbody>
 </table>
-<p>Results from the <code>arcgisOnlineProvider</code> will have an additional <code>properties</code> key which will correspond with <a href="https://developers.arcgis.com/rest/geocode/api-reference/geocoding-service-output.htm#ESRI_SECTION1_42D7D3D0231241E9B656C01438209440">all available fields on the ArcGIS Online World Geocode service</a></p>
+<p>Results from the <code>arcgisOnlineProvider</code> will have an additional <code>properties</code> key which will correspond with <a href="https://developers.arcgis.com/rest/geocode/api-reference/geocoding-service-output.htm#ESRI_SECTION1_42D7D3D0231241E9B656C01438209440">all available fields</a> in the World Geocode service</p>
 <h5 id="geocodeserviceprovider">geocodeServiceProvider</h5>
 <table>
 <thead>

@@ -141,6 +141,7 @@
     </tbody>
 </table>
 
+
 <h5 id="basemaps">Basemaps</h5>
 <p>These maps have worldwide coverage at a variety of zoom levels.</p>
 <ul>
@@ -167,7 +168,25 @@
 <li><code>TerrainLabels</code> - Labels for pairing with the <code>Terrain</code> base map</li>
 </ul>
 <h3 id="options">Options</h3>
-<p><code>L.esri.TiledMapLayer</code> accepts all <a href="http://leafletjs.com/reference.html#tilelayer-options"><code>L.TileLayer</code></a> options.</p>
+<p><code>L.esri.basemapLayer</code> also accepts all <a href="http://leafletjs.com/reference.html#tilelayer-options"><code>L.TileLayer</code></a> options.</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>token</code></td>
+<td><code>String</code></td>
+<td><code>null</code></td>
+<td>Will use this token to authenticate all calls to the service.</td>
+</tr>
+</tbody>
+</table>
 <h3 id="methods">Methods</h3>
 <p><code>L.esri.BasemapLayer</code> inherits all methods from <a href="http://leafletjs.com/reference.html#tilelayer"><code>L.TileLayer</code></a>.</p>
 <h3 id="events">Events</h3>
