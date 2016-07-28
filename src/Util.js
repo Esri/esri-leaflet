@@ -163,7 +163,7 @@ export function _getAttributionData (url, map) {
 }
 
 export function _updateMapAttribution (evt) {
-  map = evt.target;
+  var map = evt.target;
   var oldAttributions = map._esriAttributions;
 
   if (map && map.attributionControl && oldAttributions) {
