@@ -1,25 +1,19 @@
-var map;
 var bgmap = L.map('background-map', {
-    center: [68.41, 16.53],
+    center: [37.739, -117.986],
     zoom: 10,
     scrollWheelZoom: false,
-    doubleClickZoom: true,
     touchZoom: true,
     zoomControl: false,
     tap: false,
-    attributionControl: false
+    attributionControl: false,
+    layers: [L.esri.basemapLayer('Imagery')]
 });
-
-L.esri.basemapLayer('Imagery', {
-  hideLogo: true
-}).addTo(bgmap);
 
 if (map) {
   map.scrollWheelZoom.disable();
-  map.on("click", accidentalScroll);
+  map.once("click", accidentalScroll, map);
 }
 
 function accidentalScroll() {
   map.scrollWheelZoom.enable();
-  map.off("click", accidentalScroll);
 }

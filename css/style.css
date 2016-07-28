@@ -310,15 +310,15 @@ body {
   .background-map .leaflet-map-pane {
     opacity: .35; }
   .background-map.leaflet-container {
-    background-color: rgba(157, 120, 210, 0.85);
+    background-color: rgba(36, 132, 210, 0.85);
     -webkit-animation-iteration-count: infinite;
-    -webkit-animation-duration: 300s;
+    -webkit-animation-duration: 120s;
     -webkit-animation-name: colorshift;
     -moz-animation-iteration-count: infinite;
-    -moz-animation-duration: 300s;
+    -moz-animation-duration: 120s;
     -moz-animation-name: colorshift;
     animation-iteration-count: infinite;
-    animation-duration: 300s;
+    animation-duration: 120s;
     animation-name: colorshift; }
 
 .not-ie .background-map img {
@@ -328,25 +328,25 @@ body {
 
 @keyframes colorshift {
   0% {
-    background-color: rgba(157, 120, 210, 0.85); }
-  33% {
     background-color: rgba(36, 132, 210, 0.85); }
+  33% {
+    background-color: rgba(121, 189, 143, 0.85); }
   66% {
-    background-color: rgba(121, 189, 143, 0.85); } }
+    background-color: rgba(157, 120, 210, 0.85); } }
 @-webkit-keyframes colorshift {
   0% {
-    background-color: rgba(157, 120, 210, 0.85); }
-  33% {
     background-color: rgba(36, 132, 210, 0.85); }
+  33% {
+    background-color: rgba(121, 189, 143, 0.85); }
   66% {
-    background-color: rgba(121, 189, 143, 0.85); } }
+    background-color: rgba(157, 120, 210, 0.85); } }
 @-moz-keyframes colorshift {
   0% {
-    background-color: rgba(157, 120, 210, 0.85); }
-  33% {
     background-color: rgba(36, 132, 210, 0.85); }
+  33% {
+    background-color: rgba(121, 189, 143, 0.85); }
   66% {
-    background-color: rgba(121, 189, 143, 0.85); } }
+    background-color: rgba(157, 120, 210, 0.85); } }
 .btn {
   display: inline-block;
   padding: 1em;

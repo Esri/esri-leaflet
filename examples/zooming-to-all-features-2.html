@@ -35,8 +35,8 @@
     <!-- use CDN -->
     <script src="https://cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.1/leaflet.css" />
-    <script src="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.1/leaflet-src.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.2/leaflet.css" />
+    <script src="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.2/leaflet-src.js"></script>
     <script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.1/esri-leaflet-debug.js"></script>
   
 
@@ -195,7 +195,7 @@
   }).addTo(map);
 
   // listen for when all features have been retrieved from the server
-  fl.on("load", function(evt) {
+  fl.once("load", function(evt) {
     // create a new empty Leaflet bounds object
     var bounds = L.latLngBounds([]);
     // loop through the features returned by the server
@@ -208,9 +208,6 @@
 
     // once we've looped through all the features, zoom the map to the extent of the collection
     map.fitBounds(bounds);
-
-    // unwire the event listener so that it only fires once when the page is loaded
-    fl.off('load');
   });
 
 </script>
@@ -223,8 +220,8 @@
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">name</span>=<span class="value">'viewport'</span> <span class="attribute">content</span>=<span class="value">'initial-scale=1,maximum-scale=1,user-scalable=no'</span> /&gt;</span>
 
   <span class="comment">&lt;!-- Load Leaflet from CDN--&gt;</span>
-  <span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"https://cdn.jsdelivr.net/leaflet/1.0.0-rc.1/leaflet.css"</span> /&gt;</span>
-  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://cdn.jsdelivr.net/leaflet/1.0.0-rc.1/leaflet-src.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"https://cdn.jsdelivr.net/leaflet/1.0.0-rc.2/leaflet.css"</span> /&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://cdn.jsdelivr.net/leaflet/1.0.0-rc.2/leaflet-src.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
   <span class="comment">&lt;!-- Load Esri Leaflet from CDN --&gt;</span>
   <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://cdn.jsdelivr.net/leaflet.esri/2.0.1/esri-leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
@@ -251,7 +248,7 @@
   }).addTo(map);
 
   <span class="comment">// listen for when all features have been retrieved from the server</span>
-  fl.on(<span class="string">"load"</span>, <span class="function"><span class="keyword">function</span><span class="params">(evt)</span> {</span>
+  fl.once(<span class="string">"load"</span>, <span class="function"><span class="keyword">function</span><span class="params">(evt)</span> {</span>
     <span class="comment">// create a new empty Leaflet bounds object</span>
     <span class="keyword">var</span> bounds = L.latLngBounds([]);
     <span class="comment">// loop through the features returned by the server</span>
@@ -264,9 +261,6 @@
 
     <span class="comment">// once we've looped through all the features, zoom the map to the extent of the collection</span>
     map.fitBounds(bounds);
-
-    <span class="comment">// unwire the event listener so that it only fires once when the page is loaded</span>
-    fl.off(<span class="string">'load'</span>);
   });
 
 </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
