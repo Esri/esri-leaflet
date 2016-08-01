@@ -192,6 +192,9 @@ export var ImageMapLayer = RasterLayer.extend({
     if (this.options.f === 'json') {
       this.service.request('exportImage', params, function (error, response) {
         if (error) { return; } // we really can't do anything here but authenticate or requesterror will fire
+        if (this.options.token) {
+          response.href += ('?token=' + this.options.token);
+        }
         this._renderImage(response.href, bounds);
       }, this);
     } else {
