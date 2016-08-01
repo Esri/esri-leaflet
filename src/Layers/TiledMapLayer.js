@@ -102,7 +102,7 @@ export var TiledMapLayer = L.TileLayer.extend({
     if (map.options.crs === L.CRS.EPSG3857 && !this._lodMap) {
       this._lodMap = {};
       this.metadata(function (error, metadata) {
-        if (!error) {
+        if (!error && metadata.spatialReference) {
           var sr = metadata.spatialReference.latestWkid || metadata.spatialReference.wkid;
           if (sr === 102100 || sr === 3857) {
             // create the zoom level data
