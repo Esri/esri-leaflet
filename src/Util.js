@@ -136,19 +136,17 @@ export function _getAttributionData (url, map) {
     for (var c = 0; c < attributions.contributors.length; c++) {
       var contributor = attributions.contributors[c];
 
-      if (contributor.attribution !== 'Esri') {
-        for (var i = 0; i < contributor.coverageAreas.length; i++) {
-          var coverageArea = contributor.coverageAreas[i];
-          var southWest = L.latLng(coverageArea.bbox[0], coverageArea.bbox[1]);
-          var northEast = L.latLng(coverageArea.bbox[2], coverageArea.bbox[3]);
-          map._esriAttributions.push({
-            attribution: contributor.attribution,
-            score: coverageArea.score,
-            bounds: L.latLngBounds(southWest, northEast),
-            minZoom: coverageArea.zoomMin,
-            maxZoom: coverageArea.zoomMax
-          });
-        }
+      for (var i = 0; i < contributor.coverageAreas.length; i++) {
+        var coverageArea = contributor.coverageAreas[i];
+        var southWest = L.latLng(coverageArea.bbox[0], coverageArea.bbox[1]);
+        var northEast = L.latLng(coverageArea.bbox[2], coverageArea.bbox[3]);
+        map._esriAttributions.push({
+          attribution: contributor.attribution,
+          score: coverageArea.score,
+          bounds: L.latLngBounds(southWest, northEast),
+          minZoom: coverageArea.zoomMin,
+          maxZoom: coverageArea.zoomMax
+        });
       }
     }
 
@@ -187,7 +185,8 @@ export function _updateMapAttribution (evt) {
     var attributionElement = map.attributionControl._container.querySelector('.esri-attributions');
 
     attributionElement.innerHTML = newAttributions;
-    attributionElement.style.maxWidth = (map.getSize().x * 0.65) + 'px';
+    var maxWidth = (map.getSize().x - 160);
+    attributionElement.style.maxWidth = maxWidth + 'px';
 
     map.fire('attributionupdated', {
       attribution: newAttributions

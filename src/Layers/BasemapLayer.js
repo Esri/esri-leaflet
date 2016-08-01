@@ -193,8 +193,10 @@ export var BasemapLayer = L.TileLayer.extend({
   },
 
   onAdd: function (map) {
+    map._esriBasemapCount ? map._esriBasemapCount += 1 : map._esriBasemapCount = 1;
+    // Update attribution when Esri hosted basemaps are loaded
     if (map.attributionControl) {
-      map.attributionControl.addAttribution('<a href="https://www.esri.com">&copy; Esri</a>');
+      map.attributionControl.setPrefix('<a href="http://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> | Powered by <a href="https://www.esri.com">Esri</a>');
     }
 
     if (this.options.pane === 'esri-labels') {
@@ -210,9 +212,12 @@ export var BasemapLayer = L.TileLayer.extend({
   },
 
   onRemove: function (map) {
-    if (map.attributionControl) {
-      map.attributionControl.removeAttribution('<a href="https://www.esri.com">&copy; Esri</a>');
+    map._esriBasemapCount -= 1;
+    // if no Esri basemaps are displayed, revert attribution changes
+    if (map.attributionControl && map._esriBasemapCount < 1) {
+      map.attributionControl.setPrefix('<a href="http://leafletjs.com" title="A JS library for interactive maps">Leaflet</a>');
     }
+
     map.off('moveend', this._updateMapAttribution, this);
     L.TileLayer.prototype.onRemove.call(this, map);
   },
@@ -227,9 +232,9 @@ export var BasemapLayer = L.TileLayer.extend({
 
   getAttribution: function () {
     if (this.options.attribution) {
-      // the extra 55 pixels are for the ellipsis and leaflet's own attribution
-      var maxWidth = (this._map.getSize().x - 55);
-      var attribution = '<span class="esri-attributions" style="line-height:14px; vertical-align: -3px; text-overflow:ellipsis; white-space:nowrap; overflow:hidden; display:inline-block; max-width:' + maxWidth + 'px;">' + this.options.attribution + '</span>';
+      // the extra 160 pixels are for the ellipsis and the prefix attribution
+      var maxWidth = (this._map.getSize().x - 160);
+      var attribution = '<span class="esri-attributions" style="line-height:14px; vertical-align: -3px; text-overflow:ellipsis; white-space:nowrap; overflow:hidden; display:inline-block; max-width: ' + maxWidth + 'px;">' + this.options.attribution + '</span>';
     }
     return attribution;
   }
