@@ -237,10 +237,9 @@ export var BasemapLayer = L.TileLayer.extend({
   },
 
   getAttribution: function () {
+    // Util.calcAttributionWidth(this._map)
     if (this.options.attribution) {
-      // the extra 160 pixels are for the ellipsis and the prefix attribution
-      var maxWidth = (this._map.getSize().x - 160);
-      var attribution = '<span class="esri-attributions" style="line-height:14px; vertical-align: -3px; text-overflow:ellipsis; white-space:nowrap; overflow:hidden; display:inline-block; max-width: ' + maxWidth + 'px;">' + this.options.attribution + '</span>';
+      var attribution = '<span class="esri-attributions" style="line-height:14px; vertical-align: -3px; text-overflow:ellipsis; white-space:nowrap; overflow:hidden; display:inline-block; max-width:' + Util.calcAttributionWidth(this._map) + ';">' + this.options.attribution + '</span>';
     }
     return attribution;
   }

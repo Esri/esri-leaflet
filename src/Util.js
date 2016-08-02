@@ -185,13 +185,17 @@ export function _updateMapAttribution (evt) {
     var attributionElement = map.attributionControl._container.querySelector('.esri-attributions');
 
     attributionElement.innerHTML = newAttributions;
-    var maxWidth = (map.getSize().x - 160);
-    attributionElement.style.maxWidth = maxWidth + 'px';
+    attributionElement.style.maxWidth = calcAttributionWidth(map);
 
     map.fire('attributionupdated', {
       attribution: newAttributions
     });
   }
+}
+
+export function calcAttributionWidth (map) {
+  // the extra 160 pixels are for the prefix attribution and ellipsis
+  return (map.getSize().x - 160) + 'px';
 }
 
 export var Util = {
@@ -206,7 +210,8 @@ export var Util = {
   boundsToExtent: boundsToExtent,
   extentToBounds: extentToBounds,
   _getAttributionData: _getAttributionData,
-  _updateMapAttribution: _updateMapAttribution
+  _updateMapAttribution: _updateMapAttribution,
+  calcAttributionWidth: calcAttributionWidth
 };
 
 export default Util;
