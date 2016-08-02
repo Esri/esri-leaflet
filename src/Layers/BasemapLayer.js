@@ -204,8 +204,8 @@ export var BasemapLayer = L.TileLayer.extend({
     if (this.options.attributionUrl) {
       Util._getAttributionData(this.options.attributionUrl, map);
     }
-    map.on('moveend', Util._updateMapAttribution);
 
+    map.on('moveend', Util._updateMapAttribution);
     L.TileLayer.prototype.onAdd.call(this, map);
   },
 
@@ -213,7 +213,8 @@ export var BasemapLayer = L.TileLayer.extend({
     if (map.attributionControl) {
       map.attributionControl.removeAttribution('<a href="https://www.esri.com">&copy; Esri</a>');
     }
-    map.off('moveend', this._updateMapAttribution, this);
+
+    map.off('moveend', Util._updateMapAttribution);
     L.TileLayer.prototype.onRemove.call(this, map);
   },
 
@@ -233,6 +234,7 @@ export var BasemapLayer = L.TileLayer.extend({
     }
     return attribution;
   }
+
 });
 
 export function basemapLayer (key, options) {

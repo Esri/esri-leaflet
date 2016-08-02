@@ -183,6 +183,7 @@ export function _updateMapAttribution (evt) {
         newAttributions += (', ' + text);
       }
     }
+
     newAttributions = newAttributions.substr(2);
     var attributionElement = map.attributionControl._container.querySelector('.esri-attributions');
 
