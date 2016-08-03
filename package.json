@@ -1,7 +1,7 @@
 {
   "name": "esri-leaflet",
   "description": "Leaflet plugins for consuming ArcGIS Online and ArcGIS Server services.",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "author": "Patrick Arlt <parlt@esri.com> (http://patrickarlt.com)",
   "browser": "dist/esri-leaflet-debug.js",
   "bugs": {
@@ -13,7 +13,7 @@
   ],
   "dependencies": {
     "arcgis-to-geojson-utils": "^1.0.1",
-    "leaflet": "^1.0.0-rc.1",
+    "leaflet": "^1.0.0-rc.2",
     "leaflet-virtual-grid": "^1.0.3",
     "tiny-binary-search": "^1.0.2"
   },
