@@ -5,6 +5,19 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Upcoming changes][unreleased]
 
+## [2.0.2]
+
+### Added
+* support for `ImageMapLayer` services that require a token to be passed in a request for raw images [#812](https://github.com/Esri/esri-leaflet/pull/812)
+* more graceful handling of stubborn `TiledMapLayer` services [#810](https://github.com/Esri/esri-leaflet/pull/810)
+
+### Fixed
+* bug which resulted in global `map` scope creep [#814](https://github.com/Esri/esri-leaflet/issues/818)
+* bug which caused distortion in featureLayer display [#814](https://github.com/Esri/esri-leaflet/issues/818)
+
+### Changed
+* Attribution text which is displayed for hosted Esri basemaps is now 'Powered by [Esri](https://www.esri.com)'
+
 ## [2.0.1]
 
 ### Added
@@ -438,7 +451,8 @@ None
 * Add DarkGray and DarkGrayLabels to BasemapLayer. #190
 * An attributionControl on maps is now required when using BasemapLayer. #159
 
-[unreleased]: https://github.com/esri/esri-leaflet/compare/v2.0.1...HEAD
+[unreleased]: https://github.com/esri/esri-leaflet/compare/v2.0.2...HEAD
+[2.0.1]: https://github.com/esri/esri-leaflet/compare/v2.0.1...v2.0.2
 [2.0.1]: https://github.com/esri/esri-leaflet/compare/v2.0.0...v2.0.1
 [2.0.0]: https://github.com/esri/esri-leaflet/compare/v2.0.0-beta.8...v2.0.0
 [2.0.0-beta.8]: https://github.com/esri/esri-leaflet/compare/v2.0.0-beta.7...v2.0.0-beta.8
