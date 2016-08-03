@@ -136,19 +136,17 @@ export function _getAttributionData (url, map) {
     for (var c = 0; c < attributions.contributors.length; c++) {
       var contributor = attributions.contributors[c];
 
-      if (contributor.attribution !== 'Esri') {
-        for (var i = 0; i < contributor.coverageAreas.length; i++) {
-          var coverageArea = contributor.coverageAreas[i];
-          var southWest = L.latLng(coverageArea.bbox[0], coverageArea.bbox[1]);
-          var northEast = L.latLng(coverageArea.bbox[2], coverageArea.bbox[3]);
-          map._esriAttributions.push({
-            attribution: contributor.attribution,
-            score: coverageArea.score,
-            bounds: L.latLngBounds(southWest, northEast),
-            minZoom: coverageArea.zoomMin,
-            maxZoom: coverageArea.zoomMax
-          });
-        }
+      for (var i = 0; i < contributor.coverageAreas.length; i++) {
+        var coverageArea = contributor.coverageAreas[i];
+        var southWest = L.latLng(coverageArea.bbox[0], coverageArea.bbox[1]);
+        var northEast = L.latLng(coverageArea.bbox[2], coverageArea.bbox[3]);
+        map._esriAttributions.push({
+          attribution: contributor.attribution,
+          score: coverageArea.score,
+          bounds: L.latLngBounds(southWest, northEast),
+          minZoom: coverageArea.zoomMin,
+          maxZoom: coverageArea.zoomMax
+        });
       }
     }
 
@@ -188,12 +186,17 @@ export function _updateMapAttribution (evt) {
     var attributionElement = map.attributionControl._container.querySelector('.esri-attributions');
 
     attributionElement.innerHTML = newAttributions;
-    attributionElement.style.maxWidth = (map.getSize().x * 0.65) + 'px';
+    attributionElement.style.maxWidth = calcAttributionWidth(map);
 
     map.fire('attributionupdated', {
       attribution: newAttributions
     });
   }
+}
+
+export function calcAttributionWidth (map) {
+  // the extra 160 pixels are for the prefix attribution and ellipsis
+  return (map.getSize().x - 160) + 'px';
 }
 
 export var Util = {
@@ -208,7 +211,8 @@ export var Util = {
   boundsToExtent: boundsToExtent,
   extentToBounds: extentToBounds,
   _getAttributionData: _getAttributionData,
-  _updateMapAttribution: _updateMapAttribution
+  _updateMapAttribution: _updateMapAttribution,
+  calcAttributionWidth: calcAttributionWidth
 };
 
 export default Util;

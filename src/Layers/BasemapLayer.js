@@ -6,6 +6,7 @@ var tileProtocol = (window.location.protocol !== 'https:') ? 'http:' : 'https:';
 
 export var BasemapLayer = L.TileLayer.extend({
   statics: {
+    ATTRIBUTIONPREFIX: '<a href="http://leafletjs.com" title="A JS library for interactive maps">Leaflet</a>',
     TILES: {
       Streets: {
         urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
@@ -70,7 +71,8 @@ export var BasemapLayer = L.TileLayer.extend({
           minZoom: 1,
           maxZoom: 16,
           subdomains: ['server', 'services'],
-          pane: (pointerEvents) ? 'esri-labels' : 'tilePane'
+          pane: (pointerEvents) ? 'esri-labels' : 'tilePane',
+          attribution: ''
 
         }
       },
@@ -89,7 +91,8 @@ export var BasemapLayer = L.TileLayer.extend({
           minZoom: 1,
           maxZoom: 16,
           subdomains: ['server', 'services'],
-          pane: (pointerEvents) ? 'esri-labels' : 'tilePane'
+          pane: (pointerEvents) ? 'esri-labels' : 'tilePane',
+          attribution: ''
         }
       },
       Imagery: {
@@ -107,7 +110,8 @@ export var BasemapLayer = L.TileLayer.extend({
           minZoom: 1,
           maxZoom: 19,
           subdomains: ['server', 'services'],
-          pane: (pointerEvents) ? 'esri-labels' : 'tilePane'
+          pane: (pointerEvents) ? 'esri-labels' : 'tilePane',
+          attribution: ''
         }
       },
       ImageryTransportation: {
@@ -134,7 +138,8 @@ export var BasemapLayer = L.TileLayer.extend({
           minZoom: 1,
           maxZoom: 12,
           subdomains: ['server', 'services'],
-          pane: (pointerEvents) ? 'esri-labels' : 'tilePane'
+          pane: (pointerEvents) ? 'esri-labels' : 'tilePane',
+          attribution: ''
         }
       },
       Terrain: {
@@ -152,7 +157,8 @@ export var BasemapLayer = L.TileLayer.extend({
           minZoom: 1,
           maxZoom: 13,
           subdomains: ['server', 'services'],
-          pane: (pointerEvents) ? 'esri-labels' : 'tilePane'
+          pane: (pointerEvents) ? 'esri-labels' : 'tilePane',
+          attribution: ''
         }
       },
       USATopo: {
@@ -176,7 +182,7 @@ export var BasemapLayer = L.TileLayer.extend({
     } else if (typeof key === 'string' && BasemapLayer.TILES[key]) {
       config = BasemapLayer.TILES[key];
     } else {
-      throw new Error('L.esri.BasemapLayer: Invalid parameter. Use one of "Streets", "Topographic", "Oceans", "OceansLabels", "NationalGeographic", "Gray", "GrayLabels", "DarkGray", "DarkGrayLabels", "Imagery", "ImageryLabels", "ImageryTransportation", "ShadedRelief", "ShadedReliefLabels", "Terrain" or "TerrainLabels"');
+      throw new Error('L.esri.BasemapLayer: Invalid parameter. Use one of "Streets", "Topographic", "Oceans", "OceansLabels", "NationalGeographic", "Gray", "GrayLabels", "DarkGray", "DarkGrayLabels", "Imagery", "ImageryLabels", "ImageryTransportation", "ShadedRelief", "ShadedReliefLabels", "Terrain", "TerrainLabels" or "USATopo"');
     }
 
     // merge passed options into the config options
@@ -193,8 +199,10 @@ export var BasemapLayer = L.TileLayer.extend({
   },
 
   onAdd: function (map) {
+    map._esriBasemapCount ? map._esriBasemapCount += 1 : map._esriBasemapCount = 1;
+    // Update attribution when Esri hosted basemaps are loaded
     if (map.attributionControl) {
-      map.attributionControl.addAttribution('<a href="https://www.esri.com">&copy; Esri</a>');
+      map.attributionControl.setPrefix(BasemapLayer.ATTRIBUTIONPREFIX + ' | Powered by <a href="https://www.esri.com">Esri</a>');
     }
 
     if (this.options.pane === 'esri-labels') {
@@ -206,12 +214,15 @@ export var BasemapLayer = L.TileLayer.extend({
     }
 
     map.on('moveend', Util._updateMapAttribution);
+
     L.TileLayer.prototype.onAdd.call(this, map);
   },
 
   onRemove: function (map) {
-    if (map.attributionControl) {
-      map.attributionControl.removeAttribution('<a href="https://www.esri.com">&copy; Esri</a>');
+    map._esriBasemapCount -= 1;
+    // if no Esri basemaps are displayed, revert attribution changes
+    if (map.attributionControl && map._esriBasemapCount < 1) {
+      map.attributionControl.setPrefix(BasemapLayer.ATTRIBUTIONPREFIX);
     }
 
     map.off('moveend', Util._updateMapAttribution);
@@ -228,13 +239,10 @@ export var BasemapLayer = L.TileLayer.extend({
 
   getAttribution: function () {
     if (this.options.attribution) {
-      // the extra 55 pixels are for the ellipsis and leaflet's own attribution
-      var maxWidth = (this._map.getSize().x - 55);
-      var attribution = '<span class="esri-attributions" style="line-height:14px; vertical-align: -3px; text-overflow:ellipsis; white-space:nowrap; overflow:hidden; display:inline-block; max-width:' + maxWidth + 'px;">' + this.options.attribution + '</span>';
+      var attribution = '<span class="esri-attributions" style="line-height:14px; vertical-align: -3px; text-overflow:ellipsis; white-space:nowrap; overflow:hidden; display:inline-block; max-width:' + Util.calcAttributionWidth(this._map) + ';">' + this.options.attribution + '</span>';
     }
     return attribution;
   }
-
 });
 
 export function basemapLayer (key, options) {
