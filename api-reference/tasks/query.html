@@ -35,7 +35,7 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.2/leaflet.css" />
     <script src="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.2/leaflet-src.js"></script>
-    <script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.1/esri-leaflet-debug.js"></script>
+    <script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.2/esri-leaflet-debug.js"></script>
   
 
   <!-- Google Analytics -->
@@ -250,7 +250,7 @@
         <tr>
             <td><code>orderBy(<nobr class="param"><span>&lt;String&gt;</span> <code>fieldName</code></nobr>, <nobr class="param"><span>&lt;String&gt;</span> <code>order</code></nobr>)</code></td>
             <td><code>this</code></td>
-            <td>Order the output features on certain field either ascending or descending. This can be called multiple times to define a very detailed sort order.</td>
+            <td>Sort output features using values from an individual field. <code>&quot;ASC&quot;</code> (ascending) is the default sort order, but <code>&quot;DESC&quot;</code> can be passed as an alternative.  This method can be called more than once to apply advanced sorting.</td>
         </tr>
         <tr>
             <td><code>featureIds(<nobr class="param"><span>&lt;Array&gt;</span> <code>ids</code></nobr>)</code></td>

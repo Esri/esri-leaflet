@@ -1,3 +1,4 @@
+var map;
 var bgmap = L.map('background-map', {
     center: [37.739, -117.986],
     zoom: 10,
@@ -6,7 +7,7 @@ var bgmap = L.map('background-map', {
     zoomControl: false,
     tap: false,
     attributionControl: false,
-    layers: [L.esri.basemapLayer('Imagery')]
+    layers: [L.esri.basemapLayer('Topographic')]
 });
 
 if (map) {
