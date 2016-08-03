@@ -212,6 +212,7 @@ export var BasemapLayer = L.TileLayer.extend({
     if (this.options.attributionUrl) {
       Util._getAttributionData(this.options.attributionUrl, map);
     }
+
     map.on('moveend', Util._updateMapAttribution);
 
     L.TileLayer.prototype.onAdd.call(this, map);
@@ -224,7 +225,7 @@ export var BasemapLayer = L.TileLayer.extend({
       map.attributionControl.setPrefix(BasemapLayer.ATTRIBUTIONPREFIX);
     }
 
-    map.off('moveend', this._updateMapAttribution, this);
+    map.off('moveend', Util._updateMapAttribution);
     L.TileLayer.prototype.onRemove.call(this, map);
   },
 
@@ -237,7 +238,6 @@ export var BasemapLayer = L.TileLayer.extend({
   },
 
   getAttribution: function () {
-    // Util.calcAttributionWidth(this._map)
     if (this.options.attribution) {
       var attribution = '<span class="esri-attributions" style="line-height:14px; vertical-align: -3px; text-overflow:ellipsis; white-space:nowrap; overflow:hidden; display:inline-block; max-width:' + Util.calcAttributionWidth(this._map) + ';">' + this.options.attribution + '</span>';
     }
