@@ -21,7 +21,7 @@ There is a lot of room for contributions to Esri Leaflet. Make sure you check ou
 
 ##### More examples
 
-The Esri Leaflet website is written using http://assemble.io/ and can be found at https://github.com/Esri/esri-leaflet/tree/master/site/source. You can use the existing examples as a reference.
+The Esri Leaflet website is written using http://assemble.io/ and can be found at https://github.com/Esri/esri-leaflet-doc/tree/master/src. You can use the existing examples as a reference.
 
 ##### More tests
 
