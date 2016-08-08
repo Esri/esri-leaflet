@@ -452,7 +452,7 @@ None
 * An attributionControl on maps is now required when using BasemapLayer. #159
 
 [unreleased]: https://github.com/esri/esri-leaflet/compare/v2.0.2...HEAD
-[2.0.1]: https://github.com/esri/esri-leaflet/compare/v2.0.1...v2.0.2
+[2.0.2]: https://github.com/esri/esri-leaflet/compare/v2.0.1...v2.0.2
 [2.0.1]: https://github.com/esri/esri-leaflet/compare/v2.0.0...v2.0.1
 [2.0.0]: https://github.com/esri/esri-leaflet/compare/v2.0.0-beta.8...v2.0.0
 [2.0.0-beta.8]: https://github.com/esri/esri-leaflet/compare/v2.0.0-beta.7...v2.0.0-beta.8
