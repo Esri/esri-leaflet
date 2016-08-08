@@ -121,7 +121,6 @@ export function request (url, params, callback, context) {
   // get around ie10/11 bug which requires that the request be opened before a timeout is applied
   if (requestLength <= 2000 && Support.cors) {
     httpRequest.open('GET', url + '?' + paramString);
-
   } else if (requestLength > 2000 && Support.cors) {
     httpRequest.open('POST', url);
     httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');

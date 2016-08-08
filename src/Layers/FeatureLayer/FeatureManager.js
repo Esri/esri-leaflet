@@ -70,6 +70,9 @@ export var FeatureManager = VirtualGrid.extend({
       if (supportedFormats && supportedFormats.indexOf('geoJSON') !== -1) {
         this.service.options.isModern = true;
       }
+      if (error) {
+        console.log(error);
+      }
     }, this);
 
     map.on('zoomend', this._handleZoomChange, this);
