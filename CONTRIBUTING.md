@@ -31,7 +31,7 @@ You can run the tests with `npm test`.
 
 ##### Support for new services and layer types
 
-Support for new layer types and services are always needed.  The [plugin candidates](https://github.com/Esri/esri-leaflet/issues?labels=Plugin+Canidate&page=1&state=open) list is a good place to start.
+Support for new layer types and services are always needed.  The [plugin candidates](https://github.com/Esri/esri-leaflet/issues?labels=Plugin+Candidate&page=1&state=open) list is a good place to start.
 
 ### Can I publish my own Esri Leaflet plugins?
 
