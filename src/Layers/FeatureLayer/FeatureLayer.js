@@ -108,6 +108,11 @@ export var FeatureLayer = FeatureManager.extend({
           this.options.onEachFeature(newLayer.feature, newLayer);
         }
 
+        // bind a popup if we have one
+        if (this._popup && newLayer.bindPopup) {
+          newLayer.bindPopup(this._popup(newLayer.feature, newLayer));
+        }
+
         // cache the layer
         this._layers[newLayer.feature.id] = newLayer;
 
@@ -201,6 +206,26 @@ export var FeatureLayer = FeatureManager.extend({
           }
         }
       }, this));
+    }
+  },
+
+  /**
+   * Popup Methods
+   */
+
+  bindPopup: function (fn, options) {
+    this._popup = fn;
+    for (var i in this._layers) {
+      var layer = this._layers[i];
+      var popupContent = this._popup(layer.feature, layer);
+      layer.bindPopup(popupContent, options);
+    }
+  },
+
+  unbindPopup: function () {
+    this._popup = null;
+    for (var i in this._layers) {
+      this._layers[i].unbindPopup();
     }
   },
 
