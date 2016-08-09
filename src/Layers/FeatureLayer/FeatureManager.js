@@ -67,7 +67,7 @@ export var FeatureManager = VirtualGrid.extend({
     // check to see whether service is 10.4 or above (and can emit GeoJSON natively)
     this.service.metadata(function (error, metadata) {
       var supportedFormats = metadata.supportedQueryFormats;
-      if (supportedFormats && supportedFormats.indexOf('geoJSON') !== -1) {
+      if (!error && supportedFormats && supportedFormats.indexOf('geoJSON') !== -1) {
         this.service.options.isModern = true;
       }
     }, this);
