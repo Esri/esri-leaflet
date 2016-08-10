@@ -131,6 +131,7 @@
 <pre><code>https://services.arcgis.com/rOo16HdIMeOBI4Mb/ArcGIS/rest/services/Neighborhoods_pdx/FeatureServer/0</code></pre>
 <p>Note that the Feature Layer URL ends in <code>/FeatureServer/{LAYER_ID}</code>.</p>
 <p>You can create a new empty feature service with a single layer on the <a href="https://developers.arcgis.com/en/hosted-data/#/new">ArcGIS for Developers website</a> or you can use ArcGIS Online to <a href="https://doc.arcgis.com/en/arcgis-online/share-maps/publish-features.htm">create a Feature Service from a CSV or Shapefile</a>.</p>
+<p><code>L.esri.FeatureLayer</code> divides the current map extent into a grid of individual cells and uses them to fire queries to fetch nearby features. This technique is comparable to <a href="https://developers.arcgis.com/javascript/3/jshelp/best_practices_feature_layers.html">MODE_ONDEMAND</a> in the ArcGIS API for JavaScript.</p>
 <h3 id="constructor">Constructor</h3>
 <table>
     <thead>

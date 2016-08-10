@@ -31,13 +31,13 @@
   <link rel="stylesheet" href="../css/style.css">
 
   
-    <!-- 'livereload' for development -->
-    <script src="//localhost:35729/livereload.js"></script>
 
-    <!-- Load local linked resources -->
-    <link rel="stylesheet" href="/js/linked/leaflet-dist/leaflet.css" />
-    <script src="/js/linked/leaflet-dist/leaflet-src.js"></script>
-    <script src="/js/linked/esri-leaflet-dist/esri-leaflet-debug.js"></script>
+    <!-- use CDN -->
+    <script src="https://cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.3/leaflet.css" />
+    <script src="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.3/leaflet-src.js"></script>
+    <script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.2/esri-leaflet-debug.js"></script>
   
 
   <!-- Google Analytics -->
@@ -135,7 +135,7 @@
 <span class="tag">&lt;/<span class="title">html</span>&gt;</span></code></pre>
 <h5 id="create-a-container-for-the-map">Create a Container for the Map</h5>
 <p>We are now ready to create a container for our map.  This will be a  <code>&lt;div&gt;</code>  element within the  <code>&lt;body&gt;</code>  element.  We must provide it with an <code>id</code> attribute.  The <code>id</code> will be passed into the code that creates the Leaflet map.  We will use an <code>id</code> of <strong>map</strong>.</p>
-<p>For our map to display, we must set the height and width for this element.  Since we want it to fill the whole page, we&#39;ll make sure there to remove all margins and padding too.</p>
+<p>For our map to display, we must set the height and width for this element.  Since we want it to fill the whole page, we&#39;ll make sure to remove all margins and padding too.</p>
 <pre><code class="language-xml"><span class="doctype">&lt;!doctype html&gt;</span>
 <span class="tag">&lt;<span class="title">html</span> <span class="attribute">lang</span>=<span class="value">"en"</span>&gt;</span>
 <span class="tag">&lt;<span class="title">head</span>&gt;</span>
@@ -167,7 +167,7 @@
 <span class="tag">&lt;/<span class="title">html</span>&gt;</span></code></pre>
 <h5 id="construct-the-map-object">Construct the Map Object</h5>
 <p>Now its time to write some JavaScript!  This belongs inside a <code>&lt;script&gt;</code> tag inside the <code>&lt;body&gt;</code>.</p>
-<p>Our first step is to create a map object. In our constructor we must provide the <code>id</code> of the element containing the map.  Its a good idea to specify latitude and longitude coordinates for the center of the map, and the initial zoom level too.</p>
+<p>Our first step is to create a map object. In our constructor we must provide the <code>id</code> of the element containing the map.  In order to set the initial location, we&#39;ll specify the latitude and longitude coordinates for the center of the map and the zoom level.</p>
 <blockquote>
 <p>Its helpful to cross reference help documents to double-check syntax and learn more about what is possible.  Check out the <a href="http://leafletjs.com/reference.html#map-usage" title="Leaflet Map Object">Leaflet.js documentation</a> for more information about additional map constructor options.</p>
 </blockquote>
