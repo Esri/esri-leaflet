@@ -134,8 +134,10 @@ describe('L.esri.TiledMapLayer', function () {
 
     layer.on('load', function(){
       layer.metadata(function(err, meta){
-        copywriteText = meta.copywriteText;
-        expect(map.attributionControl._container.innerHTML).to.contain(copywriteText);
+        if(meta && meta.hasOwnProperty(copywriteText)){
+          copywriteText = meta.copywriteText;
+          expect(map.attributionControl._container.innerHTML).to.contain(copywriteText);
+        }
       });
     });
 
