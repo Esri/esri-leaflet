@@ -127,20 +127,19 @@ describe('L.esri.TiledMapLayer', function () {
   });
 
   it('should display a metadata attribution if one is present and no attribution option was passed', function(){
-    var copywriteText;
+    var copyrightText;
     layer = L.esri.tiledMapLayer({
       url: url
     }).addTo(map);
 
     layer.on('load', function(){
       layer.metadata(function(err, meta){
-        if(meta && meta.hasOwnProperty(copywriteText)){
-          copywriteText = meta.copywriteText;
-          expect(map.attributionControl._container.innerHTML).to.contain(copywriteText);
+        if(meta && meta.hasOwnProperty(copyrightText)){
+          copyrightText = meta.copyrightText;
+          expect(map.attributionControl._container.innerHTML).to.contain(copyrightText);
         }
       });
     });
-
   });
 
 });
