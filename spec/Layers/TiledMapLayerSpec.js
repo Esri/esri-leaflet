@@ -1,4 +1,17 @@
 describe('L.esri.TiledMapLayer', function () {
+  function createMap(){
+    // create container
+    var container = document.createElement('div');
+
+    // give container a width/height
+    container.setAttribute('style', 'width:500px; height: 500px;');
+
+    // add contianer to body
+    document.body.appendChild(container);
+
+    return L.map(container).setView([37.75, -122.45], 12);
+  }
+
   var url = 'http://services.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer';
   var layer;
   var server;
@@ -8,6 +21,7 @@ describe('L.esri.TiledMapLayer', function () {
     layer = L.esri.tiledMapLayer({
       url: url
     });
+    map = createMap();
   });
 
   afterEach(function(){
@@ -102,4 +116,30 @@ describe('L.esri.TiledMapLayer', function () {
 
     expect(layer.tileUrl).to.equal('http://services.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer/tile/{z}/{y}/{x}?token=bar');
   });
+
+  it('should display an attribution if one was passed', function(){
+    L.esri.tiledMapLayer({
+      url: url,
+      attribution: 'Esri'
+    }).addTo(map);
+
+    expect(map.attributionControl._container.innerHTML).to.contain('Esri');
+  });
+
+  it('should display a metadata attribution if one is present and no attribution option was passed', function(){
+    var copyrightText;
+    layer = L.esri.tiledMapLayer({
+      url: url
+    }).addTo(map);
+
+    layer.on('load', function(){
+      layer.metadata(function(err, meta){
+        if(meta && meta.hasOwnProperty(copyrightText)){
+          copyrightText = meta.copyrightText;
+          expect(map.attributionControl._container.innerHTML).to.contain(copyrightText);
+        }
+      });
+    });
+  });
+
 });
