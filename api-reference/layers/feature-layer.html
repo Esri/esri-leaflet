@@ -29,10 +29,11 @@
   <link rel="stylesheet" href="../../css/style.css">
 
   
-
     <!-- use CDN -->
     <script src="https://cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
+  
 
+  
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.3/leaflet.css" />
     <script src="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.3/leaflet-src.js"></script>
     <script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.2/esri-leaflet-debug.js"></script>
@@ -124,6 +125,7 @@
 <div class="main-content">
   <h1 id="l-esri-featurelayer">L.esri.FeatureLayer</h1>
 <p><code>L.esri.FeatureLayer</code> is used to visualize and query vector geographic data hosted in both ArcGIS Online and published using ArcGIS Server.</p>
+<p>Inherits from <a href="http://leafletjs.com/reference-1.0.0.html#layer">L.Layer</a></p>
 <p>Feature Layers are provided by Feature Services which can contain multiple layers. Feature Layers expose vector geographic information as a web service that can be visualized, styled, queried and edited.</p>
 <p>Here is a sample Feature Service URL</p>
 <pre><code>https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Neighborhoods_pdx/</code></pre>
@@ -340,21 +342,6 @@
             <td>Given the ID of a feature, reset that feature to the original style.</td>
         </tr>
         <tr>
-            <td><code>bindPopup(<nobr class="param"><span>&lt;Function&gt;</span> <code>fn</code></nobr>, <nobr class="param"><span>&lt;<a href="http://leafletjs.com/reference.html#popup-options">PopupOptions</a>&gt;</span> <code>popupOptions</code></nobr>)</code></td>
-            <td><code>this</code></td>
-            <td>
-              Defines a function that will return HTML to be bound to a popup on each feature.
-<pre class="js"><code>featureLayer.bindPopup(function(features){
-  return &quot;Name: &quot; + features.properties.NAME;
-});</code></pre>
-            </td>
-        </tr>
-        <tr>
-            <td><code>unbindPopup()</code></td>
-            <td><code>this</code></td>
-            <td>Removed a popup previously bound with <code>bindPopup</code>.</td>
-        </tr>
-        <tr>
             <td><code>eachFeature(<nobr class="param"><span>&lt;Function&gt;</span> <code>fn</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>context</code></nobr>)</code></td>
             <td><code>this</code></td>
             <td>
@@ -462,6 +449,20 @@ featureLayer.query()
                     <li>Requires authentication as a user who has permission to edit the service in ArcGIS Online or the user who created the service.</li>
                     <li>Requires the <code>Delete</code> capability be enabled on the service. You can check if this operation exists by checking the metadata of your service under capabilities.</li>
                 </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><code>redraw(<nobr class="param"><span>&lt;String or Integer&gt;</span> <code>id</code></nobr>)</code></td>
+            <td><code>this</code></td>
+            <td>
+                Redraws a feature with the provided id from the feature layer.
+            </td>
+        </tr>
+        <tr>
+            <td><code>reset()</code></td>
+            <td><code>this</code></td>
+            <td>
+                Redraws all features from the feature layer that exist on the map.
             </td>
         </tr>
     </tbody>

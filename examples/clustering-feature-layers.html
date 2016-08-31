@@ -31,10 +31,11 @@
   <link rel="stylesheet" href="../css/style.css">
 
   
-
     <!-- use CDN -->
     <script src="https://cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
+  
 
+  
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.3/leaflet.css" />
     <script src="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.3/leaflet-src.js"></script>
     <script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.2/esri-leaflet-debug.js"></script>
@@ -132,6 +133,7 @@
     <a href="../examples/identifying-imagery.html">Identify Imagery</a>
     <a href="../examples/image-map-layer-mosaic-rule.html">Mosaic Rule</a>
     <a href="../examples/imagery-popups.html">Custom Popups</a>
+    <a href="../examples/visualizing-time-on-image-layer.html">Time Ranges</a>
   </nav>
 
   <h5>Non-Mercator Projections</h5>
@@ -193,7 +195,7 @@ in production you'd be better off hosting these libraries yourself -->
 <script src="https://cdn.rawgit.com/Leaflet/Leaflet.markercluster/v1.0.0-beta.2.0/dist/leaflet.markercluster.js"></script>
 
 <!-- Load Clustered Feature Layer from CDN -->
-<script src="https://cdn.jsdelivr.net/leaflet.esri.clustered-feature-layer/2.0.0-beta.1/esri-leaflet-clustered-feature-layer.js"></script>
+<script src="https://unpkg.com/esri-leaflet-cluster@2.0.0"></script>
 
 <div id="map"></div>
 
@@ -201,7 +203,9 @@ in production you'd be better off hosting these libraries yourself -->
   var map = L.map('map').setView([45.526, -122.667], 15);
 
   L.esri.basemapLayer('Streets').addTo(map);
-  L.esri.Cluster.clusteredFeatureLayer({
+
+  //  (new constructor syntax at 2.0.0)
+  L.esri.Cluster.featureLayer({
     url: 'https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Trimet_Transit_Stops/FeatureServer/0'
   }).addTo(map);
 </script>
@@ -234,7 +238,7 @@ in production you'd be better off hosting these libraries yourself --&gt;</span>
 <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://cdn.rawgit.com/Leaflet/Leaflet.markercluster/v1.0.0-beta.2.0/dist/leaflet.markercluster.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 <span class="comment">&lt;!-- Load Clustered Feature Layer from CDN --&gt;</span>
-<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://cdn.jsdelivr.net/leaflet.esri.clustered-feature-layer/2.0.0-beta.1/esri-leaflet-clustered-feature-layer.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/esri-leaflet-cluster@2.0.0"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 
@@ -242,7 +246,9 @@ in production you'd be better off hosting these libraries yourself --&gt;</span>
   <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">45.526</span>, -<span class="number">122.667</span>], <span class="number">15</span>);
 
   L.esri.basemapLayer(<span class="string">'Streets'</span>).addTo(map);
-  L.esri.Cluster.clusteredFeatureLayer({
+
+  <span class="comment">//  (new constructor syntax at 2.0.0)</span>
+  L.esri.Cluster.featureLayer({
     url: <span class="string">'https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Trimet_Transit_Stops/FeatureServer/0'</span>
   }).addTo(map);
 </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>

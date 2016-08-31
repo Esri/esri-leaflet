@@ -29,10 +29,11 @@
   <link rel="stylesheet" href="../../css/style.css">
 
   
-
     <!-- use CDN -->
     <script src="https://cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
+  
 
+  
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.3/leaflet.css" />
     <script src="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.3/leaflet-src.js"></script>
     <script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.2/esri-leaflet-debug.js"></script>
@@ -301,21 +302,6 @@
     weight: feature.properties.pixelWidth
   };
 })</code></pre>
-        <tr>
-            <td><code>bindPopup(<nobr class="param"><span>&lt;Function&gt;</span> <code>fn</code></nobr>, <nobr class="param"><span>&lt;<a href="http://leafletjs.com/reference.html#popup-options">PopupOptions</a>&gt;</span> <code>popupOptions</code></nobr>)</code></td>
-            <td><code>this</code></td>
-            <td>
-              Defines a function that will return HTML to be bound to a popup on each feature.
-<pre class="js"><code>featureLayer.bindPopup(function(features){
-  return &quot;Name: &quot; + features.properties.NAME;
-});</code></pre>
-            </td>
-        </tr>
-        <tr>
-            <td><code>unbindPopup()</code></td>
-            <td><code>this</code></td>
-            <td>Removed a popup previously bound with <code>bindPopup</code>.</td>
-        </tr>
         <tr>
             <td><code>eachFeature(<nobr class="param"><span>&lt;Function&gt;</span> <code>fn</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>context</code></nobr>)</code></td>
             <td><code>this</code></td>

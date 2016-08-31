@@ -18,3 +18,11 @@ if (map) {
 function accidentalScroll() {
   map.scrollWheelZoom.enable();
 }
+
+// Automatically generate links on the heading elements on a page
+var pageHeadings = document.querySelectorAll("h2, h3, h4, h5, h6")
+for (i = 0; i < pageHeadings.length; ++i) {
+  pageHeadings[i].addEventListener("click", function(){
+    window.location.hash = this.id;
+  });
+}

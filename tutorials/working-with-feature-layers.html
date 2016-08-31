@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]> <html class="ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html class="ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html class="ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html class="ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="not-ie"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+
+  
+    <title>Working with feature layers | Esri Leaflet</title>
+  
+
+  
+    <meta name="description" content="Learn how to use feature layers in Leaflet.">
+  
+
+  <meta name="description" content="Esri Leaflet">
+  <meta name="viewport" content="width=device-width">
+
+  <!--[if lt IE 9]>
+    <script src="//cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv-printshiv.js"></script>
+  <![endif]-->
+
+  <!-- google fonts -->
+  <link href='//fonts.googleapis.com/css?family=Vollkorn:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="//brick.a.ssl.fastly.net/Source+Code+Pro:300">
+  <link href='//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+
+  <!-- stylesheet -->
+  <link rel="stylesheet" href="../css/style.css">
+
+  
+    <!-- use CDN -->
+    <script src="https://cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.3/leaflet.css" />
+    <script src="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.3/leaflet-src.js"></script>
+    <script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.2/esri-leaflet-debug.js"></script>
+  
+
+  <!-- Google Analytics -->
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-44963317-3', 'auto');
+    ga('send', 'pageview');
+  </script>
+  <!-- End Google Analytics -->
+</head>
+<body>
+  <div class="page-content ">
+    <div class="container">
+      <a class="site-nav" href="../" class="left logo">Esri Leaflet</a>
+      <nav class="right">
+        <a class="site-nav" href="../tutorials/">Tutorials</a>
+        <a class="site-nav" href="../plugins/">Plugins</a>
+        <a class="site-nav" href="../examples/">Examples</a>
+        <a class="site-nav" href="../api-reference/">API Reference</a>
+        <a class="site-nav" href="../download/">Download</a>
+        <a class="site-nav" href="https://github.com/Esri/esri-leaflet">View on GitHub</a>
+      </nav>
+    </div>
+    <div id="background-map" class="background-map"></div>
+
+  
+
+<div class="container white">
+  
+
+<aside class="sidebar">
+  <h5>General</h5>
+  <nav>
+    <a href="create-your-first-app.html">Create your First App</a>
+    <a href="introduction-to-layer-types.html">Introduction to Layer Types</a>
+    <a href="discovering-content.html">Discovering Content</a>
+    <a href="working-with-authenticated-services.html">Working with Authenticated Services</a>
+  </nav>
+
+  <h5>Migration Guides</h5>
+  <nav>
+    <a href="migrating-1-to-2.html">1.0.0 to 2.0.0</a>
+    <a href="migrating-release-candidates-to-1.html">Release Candidates to 1.0.0</a>
+  </nav>
+
+  <h5>Module Systems</h5>
+  <nav>
+    <a href="using-with-browserify.html">Browserify</a>
+    <a href="using-with-webpack.html">WebPack</a>
+    <a href="using-with-jspm.html">JSPM</a>
+    <a href="using-with-requirejs.html">RequireJS</a>
+  </nav>
+</aside>
+
+
+<div class="main-content">
+  <h1 id="working-with-feature-layers">Working with feature layers</h1>
+<p>Learn how to use feature layers in Leaflet.</p>
+<p>This tutorial assumes you know how to create a basic Leaflet map.  To learn how to do this, please visit the <a href="http://esri.github.io/esri-leaflet/tutorials/create-your-first-app.html" title="Create your first app">Create your first app</a> tutorial.</p>
+<h5 id="copy-starter-html-page">Copy Starter HTML Page</h5>
+<p>Start by copying this skeleton code which outlines the structure of a single page website and save it in your own new <code>.html</code> file.  The code includes a <code>&lt;script&gt;</code> that constructs the Leaflet map object and adds a basemap from ArcGIS Online.</p>
+<pre><code class="language-xml"><span class="doctype">&lt;!doctype html&gt;</span>
+<span class="tag">&lt;<span class="title">html</span> <span class="attribute">lang</span>=<span class="value">"en"</span>&gt;</span>
+<span class="tag">&lt;<span class="title">head</span>&gt;</span>  
+  <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">"utf-8"</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Leaflet Map with a Feature Layer<span class="tag">&lt;/<span class="title">title</span>&gt;</span>  
+  <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">name</span>=<span class="value">'viewport'</span> <span class="attribute">content</span>=<span class="value">'initial-scale=1,maximum-scale=1,user-scalable=no'</span> /&gt;</span>
+
+  <span class="comment">&lt;!-- Load Leaflet from CDN--&gt;</span>
+  <span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"https://npmcdn.com/leaflet@0.7.7/dist/leaflet.css"</span> /&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://npmcdn.com/leaflet@0.7.7/dist/leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+
+  <span class="comment">&lt;!-- Load Esri Leaflet from CDN --&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://cdn.jsdelivr.net/leaflet.esri/1.0.4/esri-leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+
+  <span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css">
+    <span class="tag">html</span>,
+    <span class="tag">body</span>,
+    <span class="id">#map</span> <span class="rules">{
+      <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">100</span>%</span></span>;
+      <span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">100</span>%</span></span>;
+      <span class="rule"><span class="attribute">margin</span>:<span class="value"> <span class="number">0</span></span></span>;
+      <span class="rule"><span class="attribute">padding</span>:<span class="value"> <span class="number">0</span></span></span>;
+    <span class="rule">}</span></span>
+  </span><span class="tag">&lt;/<span class="title">style</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">head</span>&gt;</span>
+<span class="tag">&lt;<span class="title">body</span>&gt;</span>    
+    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+
+    <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
+        <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>, {
+          center: [<span class="number">45.526</span>, -<span class="number">122.667</span>],
+          zoom: <span class="number">13</span>
+        });
+
+        <span class="keyword">var</span> esriStreets = L.esri.basemapLayer(<span class="string">'Streets'</span>).addTo(map);    
+    </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>    
+<span class="tag">&lt;/<span class="title">body</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">html</span>&gt;</span></code></pre>
+<h5 id="add-a-feature-layer-to-the-map">Add a Feature Layer to the Map</h5>
+<p>We will add a REST service using the <code>L.esri.featureLayer</code> class from the Esri Leaflet plugin.  This can be either a <strong>Map Service</strong> or <strong>Feature Service</strong>.  You must provide the url for the service.  You can learn more about map and feature services at the <a href="http://esri.github.io/esri-leaflet/tutorials/introduction-to-layer-types.html" title="Introduction to Layer Types Tutorial">Introduction to Layer Types</a> tutorial.</p>
+<p>Below is an example for creating a Feature Layer using both types of services:</p>
+<pre><code class="language-JavaScript">var portlandHeritageTrees = L.esri.featureLayer({url: &#39;https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Heritage_Trees_Portland/FeatureServer/0&#39;});
+
+var worldCities =  L.esri.featureLayer({url: &#39;http://sampleserver6.arcgisonline.com/arcgis/rest/services/SampleWorldCities/MapServer/0&#39;});</code></pre>
+<p>In order to display our new layer, we need to add it to our map using Leaflet&#39;s <code>addTo()</code> method.  We can chain this method directly to the object constructor, or call it in a separate line.  In our sample, we&#39;ll use the chaining approach.</p>
+<pre><code class="language-JavaScript">var portlandHeritageTrees = L.esri.featureLayer({url: &#39;https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Heritage_Trees_Portland/FeatureServer/0&#39;}).addTo(map);</code></pre>
+<p>If we save and refresh our map, we should see many blue markers on the map, which are the features from the service.  Leaflet is applying a default style to the features.  It is up to you to define the styles for the data tha that is drawn. See the links below for examples of doing this:</p>
+<blockquote>
+<p><a href="http://esri.github.io/esri-leaflet/tutorials/introduction-to-layer-types.html" title="Styling Points Feature Layer">Styling Points</a></p>
+<p><a href="http://esri.github.io/esri-leaflet/examples/styling-feature-layer-polylines.html" title="Styling Lines Feature Layer">Styling Lines</a></p>
+<p><a href="http://esri.github.io/esri-leaflet/examples/styling-feature-layer-polygons.html" title="Styling Polygon Feature Layer">Styling Polygons</a></p>
+</blockquote>
+<p>It&#39;s helpful to cross reference help documents to double-check syntax and learn more about what is possible.  Check out the <a href="http://esri.github.io/esri-leaflet/api-reference/layers/feature-layer.html" title="Esri Feature Layer">Esri Leaflet documentation</a> for more information about additional feature layer constructor options.</p>
+<h5 id="add-esri-leaflet-renderers-plugin">Add Esri Leaflet Renderers Plugin</h5>
+<p>If we want to use the symbology set when a service was published, we&#39;ll need to add the <a href="https://github.com/Esri/esri-leaflet-renderers" title="Esri Leaflet Renderers">Esri Leaflet Renderers</a> helper library.  We&#39;ll add a <code>&lt;script&gt;</code> for this plugin in the <code>&lt;head&gt;</code> element on the page.</p>
+<pre><code class="language-xml"><span class="comment">&lt;!-- Load Esri Leaflet Renderers from CDN --&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://cdn.jsdelivr.net/leaflet.esri.renderers/1.0.1/esri-leaflet-renderers.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></code></pre>
+<p>If we save and refresh our map, we&#39;ll now see the trees displayed as red circles.  </p>
+<h5 id="add-a-popup-to-feature-layer">Add a Popup to Feature Layer</h5>
+<p>Now we will add a popup to our feature layer.  The popup can contain both static text and dynamic text from the fields in the service.  We&#39;ll use the <code>bindPopup</code> method to create the popup.  You can learn more about popups in Leaflet by visting the <a href="http://leafletjs.com/reference.html#popup" title="Leaflet Popup Documentation">documentation</a>.</p>
+<p>We will create the content for the popup using Leaflet&#39;s <a href="http://leafletjs.com/reference.html#util-template" title="Leaflet Utility Template">Utility Template</a>.  We place the name of fields from the service in  curly brackets <strong>{ }</strong>, and add <code>feature.properties</code> at the end of the <code>L.Util.template</code> to access the fields. </p>
+<pre><code class="language-JavaScript">portlandHeritageTrees.bindPopup(function(feature) {
+    return L.Util.template(&#39;&lt;h3&gt;{COMMON_NAM}&lt;/h3&gt;&lt;hr /&gt;&lt;p&gt;This tree is located at {ADDRESS} and its scientific name is {SCIENTIFIC}.&#39;, feature.properties);
+});</code></pre>
+<p>If we save and refresh our map, we are able to click on the features and a popup will open.</p>
+<h5 id="final-html-file">Final HTML File</h5>
+<p>Here is what the final <code>html</code> file should look like for this tutorial:</p>
+<pre><code class="language-xml"><span class="doctype">&lt;!doctype html&gt;</span>
+<span class="tag">&lt;<span class="title">html</span> <span class="attribute">lang</span>=<span class="value">"en"</span>&gt;</span>
+<span class="tag">&lt;<span class="title">head</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">"utf-8"</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Leaflet Map with a Feature Layer<span class="tag">&lt;/<span class="title">title</span>&gt;</span>  
+  <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">name</span>=<span class="value">'viewport'</span> <span class="attribute">content</span>=<span class="value">'initial-scale=1,maximum-scale=1,user-scalable=no'</span> /&gt;</span>
+
+  <span class="comment">&lt;!-- Load Leaflet from CDN--&gt;</span>
+  <span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"https://npmcdn.com/leaflet@0.7.7/dist/leaflet.css"</span> /&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://npmcdn.com/leaflet@0.7.7/dist/leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+
+  <span class="comment">&lt;!-- Load Esri Leaflet from CDN --&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://cdn.jsdelivr.net/leaflet.esri/1.0.4/esri-leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+
+  <span class="comment">&lt;!-- Load Esri Leaflet Renderers from CDN --&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://cdn.jsdelivr.net/leaflet.esri.renderers/1.0.1/esri-leaflet-renderers.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>  
+
+  <span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css">
+    <span class="tag">html</span>,
+    <span class="tag">body</span>,
+    <span class="id">#map</span> <span class="rules">{
+      <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">100</span>%</span></span>;
+      <span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">100</span>%</span></span>;
+      <span class="rule"><span class="attribute">margin</span>:<span class="value"> <span class="number">0</span></span></span>;
+      <span class="rule"><span class="attribute">padding</span>:<span class="value"> <span class="number">0</span></span></span>;
+    <span class="rule">}</span></span>
+  </span><span class="tag">&lt;/<span class="title">style</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">head</span>&gt;</span>
+<span class="tag">&lt;<span class="title">body</span>&gt;</span>    
+    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+
+    <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
+        <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>, {
+          center: [<span class="number">45.526</span>, -<span class="number">122.667</span>],
+          zoom: <span class="number">13</span>
+        });
+
+        <span class="keyword">var</span> esriStreets = L.esri.basemapLayer(<span class="string">'Streets'</span>).addTo(map);
+
+        <span class="keyword">var</span> portlandHeritageTrees = L.esri.featureLayer({url: <span class="string">'https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Heritage_Trees_Portland/FeatureServer/0'</span>}).addTo(map);
+
+        portlandHeritageTrees.bindPopup(<span class="function"><span class="keyword">function</span><span class="params">(feature)</span> {</span>
+            <span class="keyword">return</span> L.Util.template(<span class="string">'&lt;h3&gt;{COMMON_NAM}&lt;/h3&gt;&lt;hr /&gt;&lt;p&gt;This tree is located at {ADDRESS} and its scientific name is {SCIENTIFIC}.'</span>, feature.properties);
+        });          
+    </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>    
+<span class="tag">&lt;/<span class="title">body</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">html</span>&gt;</span></code></pre>
+
+  <p><a href="http://github.com/esri/esri-leaflet-doc/edit/master/src/pages/tutorials/working-with-feature-layers.md">Edit this page on GitHub</a></p>
+</div>
+
+  <div style='clear:both;'></div>
+</div>
+<div class="container centered-text">
+  <p class="copyright">Esri Leaflet is a project from the <a href="http://pdx.esri.com">Esri PDX R&amp;D Center</a> and the <a href="https://github.com/Esri/esri-leaflet/graphs/contributors">Esri Community</a></p>
+</div>
+
+  </div>
+  <script src="../js/script.js"></script>
+  </body>
+</html>
