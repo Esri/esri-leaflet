@@ -11,13 +11,15 @@
 
 [Leaflet](http://leafletjs.com/) plugins for working with a handful of the most popular [ArcGIS Service](http://developers.arcgis.com) types. This includes Esri [basemaps](http://esri.github.io/esri-leaflet/examples/switching-basemaps.html) and [feature services](http://esri.github.io/esri-leaflet/examples/simple-feature-layer.html), as well as [tiled](http://esri.github.io/esri-leaflet/examples/tile-layer-2.html) map, [dynamic](http://esri.github.io/esri-leaflet/examples/simple-dynamic-map-layer.html) map and [image](http://esri.github.io/esri-leaflet/examples/simple-image-map-layer.html)  services.
 
-> Esri Leaflet is maintained with :heart: by folks spanning multiple teams within Esri, but we provide no guarantee of individual features, nor a traditional product lifecycle to support planning.  
+> Esri Leaflet is maintained with :heart: by folks spanning multiple teams within Esri, but we provide no guarantee of individual features, nor a traditional product lifecycle to support planning.
 
 The goal of this project is **not** to replace the [ArcGIS API for JavaScript](https://developers.arcgis.com/en/javascript/) but rather to provide small components for *only some* aspects of the ArcGIS platform for developers who prefer to build mapping applications with [Leaflet](http://leafletjs.com/).
 
 We are proud to facilitate a project which requires participation from our diverse user community in order to thrive and we welcome contributions from those [just getting their feet wet](https://github.com/Esri/esri-leaflet/issues/647) in open-source.
 
 Support for [Geocoding](https://github.com/Esri/esri-leaflet-geocoder) services and [Geoprocessing](https://github.com/jgravois/esri-leaflet-gp) services, as well as service defined [rendering](https://github.com/esri/esri-leaflet-renderers) are available as well (via additional plugins).
+
+> If you'd like to display Esri services in *any* Leaflet application, we ask that you adhere to our [Terms of Use](#terms) and attribution requirements.
 
 ## Table of Contents
 
@@ -33,6 +35,7 @@ Support for [Geocoding](https://github.com/Esri/esri-leaflet-geocoder) services 
   - [Development Instructions](#development-instructions)
   - [Versioning](#versioning)
   - [Contributing](#contributing)
+- [Terms](#terms)
 - [Credit](#credit)
 - [License](#license)
 
@@ -108,6 +111,7 @@ http://esri.github.io/esri-leaflet/plugins/)
 
 ## Frequently Asked Questions
 
+* [What are the terms of use for ArcGIS Online services?](#terms)
 * [What exactly is Esri Leaflet?  Is it a replacement for Leaflet?](https://github.com/Esri/esri-leaflet/wiki/FAQ#what-is-esri-leaflet)
 * [Will Esri Leaflet replace the ArcGIS API for JavaScript?](https://github.com//Esri/esri-leaflet/wiki/FAQ#will-esri-leaflet-replace-the-arcgis-api-for-javascript)
 * [What is the benefit of using Esri Leaflet over using Leaflet all by itself?](https://github.com//Esri/esri-leaflet/wiki/FAQ#why-use-esri-leaflet)
@@ -120,7 +124,6 @@ http://esri.github.io/esri-leaflet/plugins/)
 * [I want to contribute. How can I help?](https://github.com//Esri/esri-leaflet/wiki/FAQ#i-want-to-contribute-how-can-i-help)
 * [I built something with Esri Leaflet can I show you?](https://github.com//Esri/esri-leaflet/wiki/FAQ#i-built-something-with-esri-leaflet-can-i-show-you)
 * [I built a reusable component (layer type, api wrapper, ui control etc...) can I contribute it to Esri Leaflet?](https://github.com//Esri/esri-leaflet/wiki/FAQ#i-built-a-reusable-component-layer-type-api-wrapper-ui-control-etc-can-i-contribute-it-to-esri-leaflet)
-* [What are the terms of use for Esri map tiles?](https://github.com//Esri/esri-leaflet/wiki/FAQ#what-are-the-terms-of-use-for-esri-map-tiles)
 * [Which services require authentication?](https://github.com//Esri/esri-leaflet/wiki/FAQ#which-services-require-authentication)
 * [What are some good Leaflet Plugins?](https://github.com//Esri/esri-leaflet/wiki/FAQ#what-are-some-good-leaflet-plugins)
 * [What browsers does Esri Leaflet support?](https://github.com//Esri/esri-leaflet/wiki/FAQ#what-browsers-does-esri-leaflet-support)
@@ -168,12 +171,33 @@ For more information on SemVer, please visit <http://semver.org/>.
 
 Esri welcomes contributions from anyone and everyone. Please see our [guidelines for contributing](https://github.com/Esri/esri-leaflet/blob/master/CONTRIBUTING.md).
 
+### Terms
+
+If you display an ArcGIS Online service in **any** Leaflet application, we require that you:
+
+1. Sign up for a [free developer account](https://developers.arcgis.com/).
+2. Display Esri attribution and recognize data providers.
+
+Using this plugin, it couldn't be easier to follow the terms.  Just select your basemap and the appropriate credits will always be displayed in Leaflet's own [Attribution control](http://leafletjs.com/reference.html#control-attribution) as users pan/zoom automatically.
+
+```js
+L.esri.basemapLayer('Topographic').addTo(map);
+```
+
+![attribution](https://raw.github.com/Esri/esri-leaflet/master/attribution.png)
+
+If you need more than 1 million [map transactions](http://doc.arcgis.com/en/arcgis-online/reference/transaction-limits.htm) per month, please let us know.
+
+https://developers.arcgis.com/terms/attribution/
+https://developers.arcgis.com/terms/
+
 ### Credit
 
 * `L.esri.DynamicMapLayer` originally used code from [AGS.Layer.Dynamic.js](https://github.com/sanborn/leaflet-ags/blob/master/src/AGS.Layer.Dynamic.js)
 * `L.esri.TiledMapLayer` adapts some code from [arcgis-level-fixer](https://github.com/gisinc/arcgis-level-fixer)
 
 ### Licensing
+
 Copyright 2016 Esri
 
 Licensed under the Apache License, Version 2.0 (the "License");
