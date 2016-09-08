@@ -51,6 +51,14 @@ export var RasterLayer = L.Layer.extend({
       this._map.on('click', this._getPopupData, this);
       this._map.on('dblclick', this._resetPopupState, this);
     }
+
+    // add copyright text listed in service metadata
+    this.metadata(function (err, metadata) {
+      if (!err && !this.options.attribution && map.attributionControl && metadata.copyrightText) {
+        this.options.attribution = metadata.copyrightText;
+        map.attributionControl.addAttribution(this.getAttribution());
+      }
+    }, this);
   },
 
   onRemove: function (map) {
