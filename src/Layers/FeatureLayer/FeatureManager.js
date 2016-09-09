@@ -67,11 +67,18 @@ export var FeatureManager = VirtualGrid.extend({
     // include 'Powered by Esri' in map attribution
     setEsriAttribution(map);
 
-    // check to see whether service is 10.4 or above (and can emit GeoJSON natively)
-    this.service.metadata(function (error, metadata) {
-      var supportedFormats = metadata.supportedQueryFormats;
-      if (!error && supportedFormats && supportedFormats.indexOf('geoJSON') !== -1) {
-        this.service.options.isModern = true;
+    this.service.metadata(function (err, metadata) {
+      if (!err) {
+        var supportedFormats = metadata.supportedQueryFormats;
+        // check to see whether service can emit GeoJSON natively
+        if (supportedFormats && supportedFormats.indexOf('geoJSON') !== -1) {
+          this.service.options.isModern = true;
+        }
+        // add copyright text listed in service metadata
+        if (!this.options.attribution && map.attributionControl && metadata.copyrightText) {
+          this.options.attribution = metadata.copyrightText;
+          map.attributionControl.addAttribution(this.getAttribution());
+        }
       }
     }, this);
 

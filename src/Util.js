@@ -130,13 +130,46 @@ export function warn () {
 }
 
 export function calcAttributionWidth (map) {
-  // the extra 160 pixels are for the prefix attribution and ellipsis
-  return (map.getSize().x - 160) + 'px';
+  // slightly less than the width of the map
+  return (map.getSize().x - 20) + 'px';
 }
 
 export function setEsriAttribution (map) {
   if (map.attributionControl && !map.attributionControl._esriAttributionAdded) {
     map.attributionControl.setPrefix('<a href="http://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> | Powered by <a href="https://www.esri.com">Esri</a>');
+
+    // define a new css class in JS to trim attribution into a single line
+    var style = document.createElement('style');
+    style.type = 'text/css';
+    style.innerHTML = '.truncated-attribution {' +
+      'vertical-align: -3px;' +
+      'white-space: nowrap;' +
+      'overflow: hidden;' +
+      'text-overflow: ellipsis;' +
+      'display: inline-block;' +
+      'max-width:' + L.esri.Util.calcAttributionWidth(map) +';'
+    '}';
+
+    document.getElementsByTagName('head')[0].appendChild(style);
+    L.DomUtil.addClass(map.attributionControl._container, 'truncated-attribution');
+
+    // show all attribution when the mouse is hovered over the control for a little while
+    map.attributionControl._container.addEventListener("mouseenter", function (e) {
+      var attributionExpandTimeout = setTimeout(function () {
+        L.DomUtil.removeClass(map.attributionControl._container, 'truncated-attribution');
+      }, 250);
+
+      map.attributionControl._container.addEventListener("mouseleave", function (e) {
+        clearTimeout(attributionExpandTimeout);
+        L.DomUtil.addClass(map.attributionControl._container, 'truncated-attribution');
+      });
+    });
+
+    // update the width used to truncate when the map itself is resized
+    map.on('resize', function (e) {
+      map.attributionControl._container.style.maxWidth = L.esri.Util.calcAttributionWidth(e.target);
+    });
+
     map.attributionControl._esriAttributionAdded = true;
   }
 }
@@ -168,7 +201,7 @@ export function _getAttributionData (url, map) {
 
     // pass the same argument as the map's 'moveend' event
     var obj = { target: map };
-    this._updateMapAttribution(obj);
+    _updateMapAttribution(obj);
   }, this));
 }
 
@@ -195,7 +228,7 @@ export function _updateMapAttribution (evt) {
     }
 
     newAttributions = newAttributions.substr(2);
-    var attributionElement = map.attributionControl._container.querySelector('.esri-attributions');
+    var attributionElement = map.attributionControl._container.querySelector('.esri-dynamic-attribution');
 
     attributionElement.innerHTML = newAttributions;
     attributionElement.style.maxWidth = calcAttributionWidth(map);
