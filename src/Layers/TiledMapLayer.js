@@ -1,5 +1,5 @@
 import L from 'leaflet';
-import {warn, cleanUrl} from '../Util';
+import { warn, cleanUrl, setEsriAttribution } from '../Util';
 import mapService from '../Services/MapService';
 
 export var TiledMapLayer = L.TileLayer.extend({
@@ -99,6 +99,9 @@ export var TiledMapLayer = L.TileLayer.extend({
   },
 
   onAdd: function (map) {
+    // include 'Powered by Esri' in map attribution
+    setEsriAttribution(map);
+
     if (map.options.crs === L.CRS.EPSG3857 && !this._lodMap) {
       this._lodMap = {};
       this.metadata(function (error, metadata) {

@@ -129,6 +129,18 @@ export function warn () {
   }
 }
 
+export function calcAttributionWidth (map) {
+  // the extra 160 pixels are for the prefix attribution and ellipsis
+  return (map.getSize().x - 160) + 'px';
+}
+
+export function setEsriAttribution (map) {
+  if (map.attributionControl && !map.attributionControl._esriAttributionAdded) {
+    map.attributionControl.setPrefix('<a href="http://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> | Powered by <a href="https://www.esri.com">Esri</a>');
+    map.attributionControl._esriAttributionAdded = true;
+  }
+}
+
 export function _getAttributionData (url, map) {
   jsonp(url, {}, L.Util.bind(function (error, attributions) {
     if (error) { return; }
@@ -194,11 +206,6 @@ export function _updateMapAttribution (evt) {
   }
 }
 
-export function calcAttributionWidth (map) {
-  // the extra 160 pixels are for the prefix attribution and ellipsis
-  return (map.getSize().x - 160) + 'px';
-}
-
 export var Util = {
   shallowClone: shallowClone,
   warn: warn,
@@ -210,9 +217,10 @@ export var Util = {
   arcgisToGeoJSON: arcgisToGeoJSON,
   boundsToExtent: boundsToExtent,
   extentToBounds: extentToBounds,
+  calcAttributionWidth: calcAttributionWidth,
+  setEsriAttribution: setEsriAttribution,
   _getAttributionData: _getAttributionData,
-  _updateMapAttribution: _updateMapAttribution,
-  calcAttributionWidth: calcAttributionWidth
+  _updateMapAttribution: _updateMapAttribution
 };
 
 export default Util;

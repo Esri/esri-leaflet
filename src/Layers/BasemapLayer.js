@@ -1,12 +1,16 @@
 import L from 'leaflet';
 import { pointerEvents } from '../Support';
-import { Util } from '../Util';
+import {
+  calcAttributionWidth,
+  setEsriAttribution,
+  _getAttributionData,
+  _updateMapAttribution
+} from '../Util';
 
 var tileProtocol = (window.location.protocol !== 'https:') ? 'http:' : 'https:';
 
 export var BasemapLayer = L.TileLayer.extend({
   statics: {
-    ATTRIBUTIONPREFIX: '<a href="http://leafletjs.com" title="A JS library for interactive maps">Leaflet</a>',
     TILES: {
       Streets: {
         urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
@@ -199,33 +203,24 @@ export var BasemapLayer = L.TileLayer.extend({
   },
 
   onAdd: function (map) {
-    map._esriBasemapCount ? map._esriBasemapCount += 1 : map._esriBasemapCount = 1;
-    // Update attribution when Esri hosted basemaps are loaded
-    if (map.attributionControl) {
-      map.attributionControl.setPrefix(BasemapLayer.ATTRIBUTIONPREFIX + ' | Powered by <a href="https://www.esri.com">Esri</a>');
-    }
+    // include 'Powered by Esri' in map attribution
+    setEsriAttribution(map);
 
     if (this.options.pane === 'esri-labels') {
       this._initPane();
     }
     // some basemaps can supply dynamic attribution
     if (this.options.attributionUrl) {
-      Util._getAttributionData(this.options.attributionUrl, map);
+      _getAttributionData(this.options.attributionUrl, map);
     }
 
-    map.on('moveend', Util._updateMapAttribution);
+    map.on('moveend', _updateMapAttribution);
 
     L.TileLayer.prototype.onAdd.call(this, map);
   },
 
   onRemove: function (map) {
-    map._esriBasemapCount -= 1;
-    // if no Esri basemaps are displayed, revert attribution changes
-    if (map.attributionControl && map._esriBasemapCount < 1) {
-      map.attributionControl.setPrefix(BasemapLayer.ATTRIBUTIONPREFIX);
-    }
-
-    map.off('moveend', Util._updateMapAttribution);
+    map.off('moveend', _updateMapAttribution);
     L.TileLayer.prototype.onRemove.call(this, map);
   },
 
@@ -239,7 +234,7 @@ export var BasemapLayer = L.TileLayer.extend({
 
   getAttribution: function () {
     if (this.options.attribution) {
-      var attribution = '<span class="esri-attributions" style="line-height:14px; vertical-align: -3px; text-overflow:ellipsis; white-space:nowrap; overflow:hidden; display:inline-block; max-width:' + Util.calcAttributionWidth(this._map) + ';">' + this.options.attribution + '</span>';
+      var attribution = '<span class="esri-attributions" style="line-height:14px; vertical-align: -3px; text-overflow:ellipsis; white-space:nowrap; overflow:hidden; display:inline-block; max-width:' + calcAttributionWidth(this._map) + ';">' + this.options.attribution + '</span>';
     }
     return attribution;
   }
