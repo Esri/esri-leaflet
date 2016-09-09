@@ -1,6 +1,6 @@
 import L from 'leaflet';
 import featureLayerService from '../../Services/FeatureLayerService';
-import { cleanUrl, warn } from '../../Util';
+import { cleanUrl, warn, setEsriAttribution } from '../../Util';
 import VirtualGrid from 'leaflet-virtual-grid';
 import BinarySearchIndex from 'tiny-binary-search';
 
@@ -64,6 +64,9 @@ export var FeatureManager = VirtualGrid.extend({
    */
 
   onAdd: function (map) {
+    // include 'Powered by Esri' in map attribution
+    setEsriAttribution(map);
+
     // check to see whether service is 10.4 or above (and can emit GeoJSON natively)
     this.service.metadata(function (error, metadata) {
       var supportedFormats = metadata.supportedQueryFormats;
