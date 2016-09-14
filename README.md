@@ -47,7 +47,7 @@ http://esri.github.io/esri-leaflet/examples/
 ## Example
 The easiest way to get started is to load Esri Leaflet via [CDN](https://unpkg.com/esri-leaflet). Here is an example you can copy/paste into your own `.html` file.
 
-![App](https://raw.github.com/Esri/esri-leaflet/master/esri-leaflet.png)
+![App](https://raw.github.com/Esri/esri-leaflet/master/example.png)
 
 ```html
 <!DOCTYPE html>

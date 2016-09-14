@@ -25,5 +25,10 @@ coverage
 # Debugging Files
 working
 
-# Docs Build
-site/build
+# for a tidy, compact npm release
+debug/
+spec/
+scripts/
+example.png
+.npmignore
+*.zip
