@@ -45,20 +45,20 @@ We've shared lots of sample code showing off many of the features of Esri Leafle
 http://esri.github.io/esri-leaflet/examples/
 
 ## Example
-The easiest way to get started is to load Esri Leaflet via [CDN](http://www.jsdelivr.com/projects/leaflet.esri). Here is an example you can copy/paste into your own `.html` file.
+The easiest way to get started is to load Esri Leaflet via [CDN](https://unpkg.com/esri-leaflet). Here is an example you can copy/paste into your own `.html` file.
 
-![App](https://raw.github.com/Esri/esri-leaflet/master/esri-leaflet.png)
+![App](https://raw.github.com/Esri/esri-leaflet/master/example.png)
 
 ```html
 <!DOCTYPE html>
 <html>
   <head>
      <!-- Load Leaflet from CDN-->
-     <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.2/leaflet.css" />
-     <script src="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.2/leaflet.js"></script>
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.3/leaflet.css" />
+     <script src="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.3/leaflet.js"></script>
 
     <!-- Load Esri Leaflet locally, after cloning this repository -->
-    <script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.2/esri-leaflet.js"></script>
+    <script src="https://unpkg.com/esri-leaflet@2.0.3"></script>
 
     <style>
       html, body, #map {
@@ -156,7 +156,7 @@ If you'd like to inspect and modify the source of Esri Leaflet, follow the instr
 * Esri Leaflet [1.x](https://github.com/Esri/esri-leaflet/releases/tag/v1.0.3) (available on [CDN](https://cdn.jsdelivr.net/leaflet.esri/1.0.3/esri-leaflet.js)) can be used in apps alongside:
   *  [Leaflet](http://leafletjs.com) version 0.7.x.
 
-* Esri Leaflet [2.x](https://github.com/Esri/esri-leaflet/releases/tag/v2.0.2) (available on [CDN](https://cdn.jsdelivr.net/leaflet.esri/2.0.2/esri-leaflet.js)) can be used in apps alongside:
+* Esri Leaflet [2.x](https://github.com/Esri/esri-leaflet/releases/tag/v2.0.2) (available on [CDN](https://unpkg.com/esri-leaflet@2.0.3)) can be used in apps alongside:
   *  [Leaflet](http://leafletjs.com) version 1.0.0-rc.X.
 
 The `master` branch of this repository is only compatible with Leaflet 1.0.x.
