@@ -5,6 +5,14 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Upcoming changes][unreleased]
 
+## [2.0.3]
+
+### Added
+* attribution from service metadata is now automatically displayed in Leaflet's attribution control for all layer types [#832](https://github.com/Esri/esri-leaflet/pull/832), [#842](https://github.com/Esri/esri-leaflet/pull/842) (thank you[@tyleralves](https://github.com/tyleralves)!)
+* `Powered by Esri` is now displayed in Leaflet's attribution control when *any* layer type is added to the map, not just L.esri.basemapLayer.
+* the attribution control is restricted to a single line, but expands to show all data contributors on mouse hover.
+* support for `DynamicMapLayer` services that require a token to be passed in a request for raw images [#830](https://github.com/Esri/esri-leaflet/pull/830) (thank you[@jaredbrookswhite](https://github.com/jaredbrookswhite)!)
+
 ## [2.0.2]
 
 ### Added
@@ -451,7 +459,8 @@ None
 * Add DarkGray and DarkGrayLabels to BasemapLayer. #190
 * An attributionControl on maps is now required when using BasemapLayer. #159
 
-[unreleased]: https://github.com/esri/esri-leaflet/compare/v2.0.2...HEAD
+[unreleased]: https://github.com/esri/esri-leaflet/compare/v2.0.3...HEAD
+[2.0.3]: https://github.com/esri/esri-leaflet/compare/v2.0.2...v2.0.3
 [2.0.2]: https://github.com/esri/esri-leaflet/compare/v2.0.1...v2.0.2
 [2.0.1]: https://github.com/esri/esri-leaflet/compare/v2.0.0...v2.0.1
 [2.0.0]: https://github.com/esri/esri-leaflet/compare/v2.0.0-beta.8...v2.0.0
