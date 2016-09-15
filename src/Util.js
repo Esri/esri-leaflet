@@ -154,7 +154,7 @@ export function setEsriAttribution (map) {
       'vertical-align: -3px;' +
       'white-space: nowrap;' +
       'overflow: hidden;' +
-      'text-overflow: "john";' +
+      'text-overflow: ellipsis;' +
       'display: inline-block;' +
       'transition: 0s white-space;' +
       'transition-delay: 1s;' +
