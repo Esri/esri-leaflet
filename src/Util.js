@@ -138,32 +138,31 @@ export function setEsriAttribution (map) {
   if (map.attributionControl && !map.attributionControl._esriAttributionAdded) {
     map.attributionControl.setPrefix('<a href="http://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> | Powered by <a href="https://www.esri.com">Esri</a>');
 
+    var hoverAttributionStyle = document.createElement('style');
+    hoverAttributionStyle.type = 'text/css';
+    hoverAttributionStyle.innerHTML = '.esri-truncated-attribution:hover {' +
+      'white-space: normal;'
+    '}';
+
+    document.getElementsByTagName('head')[0].appendChild(hoverAttributionStyle);
+    L.DomUtil.addClass(map.attributionControl._container, 'esri-truncated-attribution:hover');
+
     // define a new css class in JS to trim attribution into a single line
-    var style = document.createElement('style');
-    style.type = 'text/css';
-    style.innerHTML = '.truncated-attribution {' +
+    var attributionStyle = document.createElement('style');
+    attributionStyle.type = 'text/css';
+    attributionStyle.innerHTML = '.esri-truncated-attribution {' +
       'vertical-align: -3px;' +
       'white-space: nowrap;' +
       'overflow: hidden;' +
-      'text-overflow: ellipsis;' +
+      'text-overflow: "john";' +
       'display: inline-block;' +
+      'transition: 0s white-space;' +
+      'transition-delay: 1s;' +
       'max-width:' + L.esri.Util.calcAttributionWidth(map) +';'
     '}';
 
-    document.getElementsByTagName('head')[0].appendChild(style);
-    L.DomUtil.addClass(map.attributionControl._container, 'truncated-attribution');
-
-    // show all attribution when the mouse is hovered over the control for a little while
-    map.attributionControl._container.addEventListener("mouseenter", function (e) {
-      var attributionExpandTimeout = setTimeout(function () {
-        L.DomUtil.removeClass(map.attributionControl._container, 'truncated-attribution');
-      }, 250);
-
-      map.attributionControl._container.addEventListener("mouseleave", function (e) {
-        clearTimeout(attributionExpandTimeout);
-        L.DomUtil.addClass(map.attributionControl._container, 'truncated-attribution');
-      });
-    });
+    document.getElementsByTagName('head')[0].appendChild(attributionStyle);
+    L.DomUtil.addClass(map.attributionControl._container, 'esri-truncated-attribution');
 
     // update the width used to truncate when the map itself is resized
     map.on('resize', function (e) {
