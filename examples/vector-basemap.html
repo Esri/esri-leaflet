@@ -8,11 +8,11 @@
   <meta charset="utf-8">
 
   
-    <title>Getting service metadata | Esri Leaflet</title>
+    <title>Vector Basemaps | Esri Leaflet</title>
   
 
   
-    <meta name="description" content="Retrieving service metadata such as name, bounding box and capabilities. More information about Feature Layers can be found in the &lt;a href=&quot;../api-reference/layers/feature-layer.html&quot;&gt;L.esri.FeatureLayer&lt;/a&gt; documentation.">
+    <meta name="description" content="Display ArcGIS Online vector basemaps. Notice that the map attribution updates automatically as users pan and zoom in accordance with Esri&#x27;s &lt;a href=&#x27;https://github.com/esri/esri-leaflet#terms&#x27;&gt;Terms of Use&lt;/a&gt;.">
   
 
   <meta name="description" content="Esri Leaflet">
@@ -181,43 +181,65 @@
 
 <div class="example-content">
 <div class="wrap">
-  <h1>Getting service metadata</h1>
-  <p>Retrieving service metadata such as name, bounding box and capabilities. More information about Feature Layers can be found in the <a href="../api-reference/layers/feature-layer.html">L.esri.FeatureLayer</a> documentation.</p>
+  <h1>Vector Basemaps</h1>
+  <p>Display ArcGIS Online vector basemaps. Notice that the map attribution updates automatically as users pan and zoom in accordance with Esri's <a href='https://github.com/esri/esri-leaflet#terms'>Terms of Use</a>.</p>
 </div>
 <div id="map-wrapper">
   
 
+<script src="https://unpkg.com/esri-leaflet-vector@1.0.1"></script>
+
 <style>
-  #info {
+  #basemaps-wrapper {
     position: absolute;
     top: 10px;
     right: 10px;
-    z-index: 1000;
+    z-index: 400;
     background: white;
-    padding: 1em;
+    padding: 10px;
+  }
+  #basemaps {
+    margin-bottom: 5px;
   }
 </style>
 
 <div id="map"></div>
-<div id="info" class="leaflet-bar"></div>
+
+<div id="basemaps-wrapper" class="leaflet-bar">
+  <select name="basemaps" id="basemaps" onChange="changeBasemap(basemaps)">
+    <option value="Topographic">Topographic</option>
+    <option value="Gray">Gray</option>
+    <option value="DarkGray">Dark Gray</option>
+    <option value="Navigation">Navigation</option>
+    <option value="Streets">Streets</option>
+    <option value="StreetsNight">Streets Night</option>
+    <option value="StreetsRelief">Streets Relief</option>
+  </select>
+</div>
+
 <script>
-  var map = L.map('map').setView([45.526, -122.667], 13);
+  var map = L.map('map').setView([-33.87, 150.77], 10);
+  var layer = L.esri.Vector.basemap('Topographic').addTo(map);
 
-  L.esri.basemapLayer('Streets').addTo(map);
-  var stops = L.esri.featureLayer({
-    url: 'https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Heritage_Trees_Portland/FeatureServer/0'
-  }).addTo(map);
+  function setBasemap(basemap) {
+    if (layer) {
+      map.removeLayer(layer);
+    }
 
-  stops.metadata(function (error, metadata) {
-    document.getElementById('info').innerHTML = metadata.name;
-  });
+    layer = L.esri.Vector.basemap(basemap);
+    map.addLayer(layer);
+  }
+
+  function changeBasemap(basemaps){
+    var basemap = basemaps.value;
+    setBasemap(basemap);
+  }
 </script>
-
 </div>
 <pre><code class="language-xml"><span class="tag">&lt;<span class="title">html</span>&gt;</span>
 <span class="tag">&lt;<span class="title">head</span>&gt;</span>
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">utf-8</span> /&gt;</span>
-  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Getting service metadata<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Vector Basemaps<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">name</span>=<span class="value">'viewport'</span> <span class="attribute">content</span>=<span class="value">'initial-scale=1,maximum-scale=1,user-scalable=no'</span> /&gt;</span>
 
   <span class="comment">&lt;!-- Load Leaflet from CDN--&gt;</span>
@@ -234,37 +256,60 @@
 <span class="tag">&lt;/<span class="title">head</span>&gt;</span>
 <span class="tag">&lt;<span class="title">body</span>&gt;</span>
 
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/esri-leaflet-vector@1.0.1"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+
 <span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css">
-  <span class="id">#info</span> <span class="rules">{
+  <span class="id">#basemaps-wrapper</span> <span class="rules">{
     <span class="rule"><span class="attribute">position</span>:<span class="value"> absolute</span></span>;
     <span class="rule"><span class="attribute">top</span>:<span class="value"> <span class="number">10</span>px</span></span>;
     <span class="rule"><span class="attribute">right</span>:<span class="value"> <span class="number">10</span>px</span></span>;
-    <span class="rule"><span class="attribute">z-index</span>:<span class="value"> <span class="number">1000</span></span></span>;
+    <span class="rule"><span class="attribute">z-index</span>:<span class="value"> <span class="number">400</span></span></span>;
     <span class="rule"><span class="attribute">background</span>:<span class="value"> white</span></span>;
-    <span class="rule"><span class="attribute">padding</span>:<span class="value"> <span class="number">1</span>em</span></span>;
+    <span class="rule"><span class="attribute">padding</span>:<span class="value"> <span class="number">10</span>px</span></span>;
+  <span class="rule">}</span></span>
+  <span class="id">#basemaps</span> <span class="rules">{
+    <span class="rule"><span class="attribute">margin-bottom</span>:<span class="value"> <span class="number">5</span>px</span></span>;
   <span class="rule">}</span></span>
 </span><span class="tag">&lt;/<span class="title">style</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
-<span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"info"</span> <span class="attribute">class</span>=<span class="value">"leaflet-bar"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+
+<span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"basemaps-wrapper"</span> <span class="attribute">class</span>=<span class="value">"leaflet-bar"</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">select</span> <span class="attribute">name</span>=<span class="value">"basemaps"</span> <span class="attribute">id</span>=<span class="value">"basemaps"</span> <span class="attribute">onChange</span>=<span class="value">"changeBasemap(basemaps)"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"Topographic"</span>&gt;</span>Topographic<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"Gray"</span>&gt;</span>Gray<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"DarkGray"</span>&gt;</span>Dark Gray<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"Navigation"</span>&gt;</span>Navigation<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"Streets"</span>&gt;</span>Streets<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"StreetsNight"</span>&gt;</span>Streets Night<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"StreetsRelief"</span>&gt;</span>Streets Relief<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">select</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+
 <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
-  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">45.526</span>, -<span class="number">122.667</span>], <span class="number">13</span>);
+  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([-<span class="number">33.87</span>, <span class="number">150.77</span>], <span class="number">10</span>);
+  <span class="keyword">var</span> layer = L.esri.Vector.basemap(<span class="string">'Topographic'</span>).addTo(map);
 
-  L.esri.basemapLayer(<span class="string">'Streets'</span>).addTo(map);
-  <span class="keyword">var</span> stops = L.esri.featureLayer({
-    url: <span class="string">'https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Heritage_Trees_Portland/FeatureServer/0'</span>
-  }).addTo(map);
+  <span class="function"><span class="keyword">function</span> <span class="title">setBasemap</span><span class="params">(basemap)</span> {</span>
+    <span class="keyword">if</span> (layer) {
+      map.removeLayer(layer);
+    }
 
-  stops.metadata(<span class="function"><span class="keyword">function</span> <span class="params">(error, metadata)</span> {</span>
-    document.getElementById(<span class="string">'info'</span>).innerHTML = metadata.name;
-  });
+    layer = L.esri.Vector.basemap(basemap);
+    map.addLayer(layer);
+  }
+
+  <span class="function"><span class="keyword">function</span> <span class="title">changeBasemap</span><span class="params">(basemaps)</span>{</span>
+    <span class="keyword">var</span> basemap = basemaps.value;
+    setBasemap(basemap);
+  }
 </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 <span class="tag">&lt;/<span class="title">body</span>&gt;</span>
 <span class="tag">&lt;/<span class="title">html</span>&gt;</span></code></pre>
 
 <div class="wrap">
-  <p><a href="http://github.com/Esri/esri-leaflet-doc/edit/master/src/pages/examples/getting-service-metadata.hbs">Edit this sample on GitHub</a></p>
+  <p><a href="http://github.com/Esri/esri-leaflet-doc/edit/master/src/pages/examples/vector-basemap.hbs">Edit this sample on GitHub</a></p>
 </div>
 </div>
 

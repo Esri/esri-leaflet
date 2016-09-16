@@ -29,14 +29,12 @@
   <link rel="stylesheet" href="../css/style.css">
 
   
-    <!-- use CDN -->
-    <script src="https://cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
   
 
   
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.3/leaflet.css" />
-    <script src="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.3/leaflet-src.js"></script>
-    <script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.2/esri-leaflet-debug.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.0-rc.3/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.0.0-rc.3/dist/leaflet-src.js"></script>
+    <script src="https://unpkg.com/esri-leaflet@2.0.3"></script>
   
 
   <!-- Google Analytics -->
@@ -86,7 +84,7 @@
       <div class="card">
         <h3><a href="https://github.com/Esri/esri-leaflet-renderers">Renderers</a></h3>
         <p>
-          Ensure that symbology defined by ArcGIS Server and ArcGIS Online for  feature layers is inherited in Leaflet.
+          Ensure that symbology defined by ArcGIS Server and ArcGIS Online for feature layers is inherited in Leaflet.
         </p>
         <iframe src="https://ghbtns.com/github-btn.html?user=esri&repo=esri-leaflet-renderers&type=fork&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
         <br>
@@ -96,18 +94,42 @@
 
     <div class="panel">
       <div class="card">
-        <h3><a href="https://github.com/Esri/esri-leaflet-heatmap-feature-layer">Heatmap Feature Layer</a></h3>
+        <h3><a href="https://github.com/Esri/esri-leaflet-vector/">Vector Tiles</a></h3>
         <p>
-          Visualize feature layers with heatmaps via <a href="https://github.com/Leaflet/Leaflet.heat">Leaflet.heat</a>.
+          A plugin for Esri Leaflet to visualize Vector tiles from ArcGIS Online.
         </p>
-        <iframe src="https://ghbtns.com/github-btn.html?user=esri&repo=esri-leaflet-heatmap&type=fork&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
+        <iframe src="https://ghbtns.com/github-btn.html?user=esri&repo=esri-leaflet-vector&type=fork&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
         <br>
-        <iframe src="https://ghbtns.com/github-btn.html?user=esri&repo=esri-leaflet-heatmap&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
+        <iframe src="https://ghbtns.com/github-btn.html?user=esri&repo=esri-leaflet-vector&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
       </div>
     </div>
   </div>
 
   <div class="row clearfix">
+    <div class="panel">
+      <div class="card">
+        <h3><a href="https://github.com/ynunokawa/L.esri.WebMap">WebMap</a></h3>
+        <p>
+          A plugin for loading Web maps created in <a href='https://www.arcgis.com'>ArcGIS</a> using their id!
+        </p>
+        <iframe src="https://ghbtns.com/github-btn.html?user=ynunokawa&repo=L.esri.WebMap&type=fork&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
+        <br>
+        <iframe src="https://ghbtns.com/github-btn.html?user=ynunokawa&repo=L.esri.WebMap&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="card">
+          <h3><a href="https://github.com/rowanwins/esri-leaflet-stream">Stream Feature Layer</a></h3>
+          <p>
+            A plugin for displaying Stream layers published to ArcGIS Server using <a href="http://www.esri.com/software/arcgis/arcgisserver/extensions/geoevent-extension">GeoEvent</a>.
+          </p>
+          <iframe src="https://ghbtns.com/github-btn.html?user=rowanwins&repo=esri-leaflet-stream&type=fork&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
+          <br>
+          <iframe src="https://ghbtns.com/github-btn.html?user=rowanwins&repo=esri-leaflet-stream&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
+      </div>
+    </div>
+
     <div class="panel">
       <div class="card">
         <h3><a href="https://github.com/Esri/esri-leaflet-clustered-feature-layer">Clustered Feature Layer</a></h3>
@@ -119,7 +141,47 @@
         <iframe src="https://ghbtns.com/github-btn.html?user=esri&repo=esri-leaflet-cluster&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
       </div>
     </div>
+  </div>
 
+  <div class="row clearfix">
+    <div class="panel">
+      <div class="card">
+        <h3><a href="https://github.com/Esri/esri-leaflet-heatmap-feature-layer">Heatmap Feature Layer</a></h3>
+        <p>
+          Visualize feature layers with heatmaps via <a href="https://github.com/Leaflet/Leaflet.heat">Leaflet.heat</a>.
+        </p>
+        <iframe src="https://ghbtns.com/github-btn.html?user=esri&repo=esri-leaflet-heatmap&type=fork&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
+        <br>
+        <iframe src="https://ghbtns.com/github-btn.html?user=esri&repo=esri-leaflet-heatmap&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="card">
+        <h3><a href="https://github.com/SVoyt/esri-leaflet-dynamic-advanced">Dynamic Map Layer</a></h3>
+        <p>
+          A more advanced DynamicMapLayer implementation that includes support for continuous panning across the dateline.
+        </p>
+        <iframe src="https://ghbtns.com/github-btn.html?user=svoyt&repo=esri-leaflet-dynamic-advanced&type=fork&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
+        <br>
+        <iframe src="https://ghbtns.com/github-btn.html?user=svoyt&repo=esri-leaflet-dynamic-advanced&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="card">
+        <h3><a href="https://github.com/Esri/Leaflet.shapeMarkers">shapeMarkers</a></h3>
+        <p>
+          Generic, fixed size, shape marker symbols for points in Leaflet.
+        </p>
+        <iframe src="https://ghbtns.com/github-btn.html?user=Esri&repo=Leaflet.shapeMarkers&type=fork&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
+        <br>
+        <iframe src="https://ghbtns.com/github-btn.html?user=Esri&repo=Leaflet.shapeMarkers&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <div class="row clearfix">
     <div class="panel">
       <div class="card">
         <h3><a href="https://github.com/jgravois/esri-leaflet-gp">Geoprocessing</a></h3>
@@ -134,67 +196,18 @@
 
     <div class="panel">
       <div class="card">
-        <h3><a href="https://github.com/jgravois/esri-leaflet-related">Related Records</a></h3>
-        <p>
-          Plugin to assist in querying ArcGIS Services for related records.
-        </p>
-        <iframe src="https://ghbtns.com/github-btn.html?user=jgravois&repo=esri-leaflet-related&type=fork&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
-        <br>
-        <iframe src="https://ghbtns.com/github-btn.html?user=jgravois&repo=esri-leaflet-related&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
-        </div>
+      <h3><a href="https://github.com/jgravois/esri-leaflet-related">Related Records</a></h3>
+      <p>
+        Plugin to assist in querying ArcGIS Services for related records.
+      </p>
+      <iframe src="https://ghbtns.com/github-btn.html?user=jgravois&repo=esri-leaflet-related&type=fork&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
+      <br>
+      <iframe src="https://ghbtns.com/github-btn.html?user=jgravois&repo=esri-leaflet-related&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
       </div>
-
-      <div class="panel">
-        <div class="card">
-          <h3><a href="https://github.com/Esri/Leaflet.shapeMarkers">shapeMarkers</a></h3>
-          <p>
-            Generic, fixed size, shape marker symbols for points in Leaflet.
-          </p>
-          <iframe src="https://ghbtns.com/github-btn.html?user=Esri&repo=Leaflet.shapeMarkers&type=fork&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
-          <br>
-          <iframe src="https://ghbtns.com/github-btn.html?user=Esri&repo=Leaflet.shapeMarkers&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
-        </div>
-      </div>
-
-      <div class="panel">
-        <div class="card">
-          <h3><a href="https://github.com/SVoyt/esri-leaflet-dynamic-advanced">DynamicMapLayer Advanced</a></h3>
-          <p>
-            As named, a more advanced Dynamic Map Layer implementation that includes support for continuous panning across the dateline.
-          </p>
-          <iframe src="https://ghbtns.com/github-btn.html?user=svoyt&repo=esri-leaflet-dynamic-advanced&type=fork&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
-          <br>
-          <iframe src="https://ghbtns.com/github-btn.html?user=svoyt&repo=esri-leaflet-dynamic-advanced&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
-        </div>
-      </div>
-
-      <div class="panel">
-        <div class="card">
-          <h3><a href="https://github.com/ynunokawa/L.esri.WebMap">WebMap</a></h3>
-          <p>
-            A plugin for loading Web maps created in <a href='https://www.arcgis.com'>ArcGIS</a> using their id!
-          </p>
-          <iframe src="https://ghbtns.com/github-btn.html?user=ynunokawa&repo=L.esri.WebMap&type=fork&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
-          <br>
-          <iframe src="https://ghbtns.com/github-btn.html?user=ynunokawa&repo=L.esri.WebMap&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
-        </div>
-      </div>
-
-      <div class="panel">
-        <div class="card">
-          <h3><a href="https://github.com/rowanwins/esri-leaflet-stream">StreamFeatureLayer</a></h3>
-          <p>
-            A plugin for displaying Stream layers published to ArcGIS Server using <a href="http://www.esri.com/software/arcgis/arcgisserver/extensions/geoevent-extension">GeoEvent</a>.
-          </p>
-          <iframe src="https://ghbtns.com/github-btn.html?user=rowanwins&repo=esri-leaflet-stream&type=fork&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
-          <br>
-          <iframe src="https://ghbtns.com/github-btn.html?user=rowanwins&repo=esri-leaflet-stream&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
-        </div>
-      </div>
-
     </div>
   </div>
 </div>
+
 
   </div>
   <script src="../js/script.js"></script>
