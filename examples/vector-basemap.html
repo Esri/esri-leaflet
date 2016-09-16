@@ -187,7 +187,7 @@
 <div id="map-wrapper">
   
 
-<script src="https://unpkg.com/esri-leaflet-vector@1.0.1"></script>
+<script src="https://unpkg.com/esri-leaflet-vector@1.0.2"></script>
 
 <style>
   #basemaps-wrapper {
@@ -207,6 +207,9 @@
 
 <div id="basemaps-wrapper" class="leaflet-bar">
   <select name="basemaps" id="basemaps" onChange="changeBasemap(basemaps)">
+    <option value="Newspaper">Newspaper</option>
+    <option value="Spring">Spring</option>
+    <option value="MidCentury">Mid-Century</option>
     <option value="Topographic">Topographic</option>
     <option value="Gray">Gray</option>
     <option value="DarkGray">Dark Gray</option>
@@ -218,8 +221,8 @@
 </div>
 
 <script>
-  var map = L.map('map').setView([-33.87, 150.77], 10);
-  var layer = L.esri.Vector.basemap('Topographic').addTo(map);
+  var map = L.map('map').setView([40, -4], 6);
+  var layer = L.esri.Vector.basemap('Newspaper').addTo(map);
 
   function setBasemap(basemap) {
     if (layer) {
@@ -256,7 +259,7 @@
 <span class="tag">&lt;/<span class="title">head</span>&gt;</span>
 <span class="tag">&lt;<span class="title">body</span>&gt;</span>
 
-<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/esri-leaflet-vector@1.0.1"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/esri-leaflet-vector@1.0.2"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css">
   <span class="id">#basemaps-wrapper</span> <span class="rules">{
@@ -276,6 +279,9 @@
 
 <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"basemaps-wrapper"</span> <span class="attribute">class</span>=<span class="value">"leaflet-bar"</span>&gt;</span>
   <span class="tag">&lt;<span class="title">select</span> <span class="attribute">name</span>=<span class="value">"basemaps"</span> <span class="attribute">id</span>=<span class="value">"basemaps"</span> <span class="attribute">onChange</span>=<span class="value">"changeBasemap(basemaps)"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"Newspaper"</span>&gt;</span>Newspaper<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"Spring"</span>&gt;</span>Spring<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"MidCentury"</span>&gt;</span>Mid-Century<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
     <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"Topographic"</span>&gt;</span>Topographic<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
     <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"Gray"</span>&gt;</span>Gray<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
     <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"DarkGray"</span>&gt;</span>Dark Gray<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
@@ -287,8 +293,8 @@
 <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
-  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([-<span class="number">33.87</span>, <span class="number">150.77</span>], <span class="number">10</span>);
-  <span class="keyword">var</span> layer = L.esri.Vector.basemap(<span class="string">'Topographic'</span>).addTo(map);
+  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">40</span>, -<span class="number">4</span>], <span class="number">6</span>);
+  <span class="keyword">var</span> layer = L.esri.Vector.basemap(<span class="string">'Newspaper'</span>).addTo(map);
 
   <span class="function"><span class="keyword">function</span> <span class="title">setBasemap</span><span class="params">(basemap)</span> {</span>
     <span class="keyword">if</span> (layer) {
