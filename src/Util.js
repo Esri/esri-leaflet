@@ -48,6 +48,8 @@ export function boundsToExtent (bounds) {
 
 export function responseToFeatureCollection (response, idAttribute) {
   var objectIdField;
+  var features = response.features || response.results;
+  var count = features.length;
 
   if (idAttribute) {
     objectIdField = idAttribute;
@@ -60,16 +62,23 @@ export function responseToFeatureCollection (response, idAttribute) {
         break;
       }
     }
-  } else {
-    objectIdField = 'OBJECTID';
+  } else if (count) {
+    /* as a last resort, check for common ID fieldnames in the first feature returned
+    not foolproof. identifyFeatures can returned a mixed array of features. */
+    for (var key in features[0].attributes) {
+      if (key.match(/^(OBJECTID|FID|OID|ID)$/i)) {
+        objectIdField = key;
+        break;
+      };
+    }
   }
 
   var featureCollection = {
     type: 'FeatureCollection',
     features: []
   };
-  var features = response.features || response.results;
-  if (features.length) {
+
+  if (count) {
     for (var i = features.length - 1; i >= 0; i--) {
       var feature = arcgisToGeoJSON(features[i], objectIdField);
       featureCollection.features.push(feature);
