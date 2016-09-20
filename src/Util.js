@@ -130,8 +130,8 @@ export function warn () {
 }
 
 export function calcAttributionWidth (map) {
-  // slightly less than the width of the map
-  return (map.getSize().x - 20) + 'px';
+  // either crop at 55px or user defined buffer
+  return (map.getSize().x - ((map.options.constrainAttributionWidth) ? map.options.constrainAttributionWidth : 55)) + 'px';
 }
 
 export function setEsriAttribution (map) {
