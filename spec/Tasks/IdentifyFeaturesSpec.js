@@ -95,7 +95,6 @@ describe('L.esri.IdentifyFeatures', function () {
 
   it('should identify features with a layer definition', function(done){
     var request = task.layerDef(0, 'NAME=Oregon').run(function(error, featureCollection, raw){
-      console.log(featureCollection.features[0]);
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleResponse);
       done();
