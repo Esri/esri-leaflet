@@ -158,7 +158,7 @@ export function setEsriAttribution (map) {
       'display: inline-block;' +
       'transition: 0s white-space;' +
       'transition-delay: 1s;' +
-      'max-width:' + L.esri.Util.calcAttributionWidth(map) +';'
+      'max-width:' + calcAttributionWidth(map) +';'
     '}';
 
     document.getElementsByTagName('head')[0].appendChild(attributionStyle);
@@ -166,7 +166,7 @@ export function setEsriAttribution (map) {
 
     // update the width used to truncate when the map itself is resized
     map.on('resize', function (e) {
-      map.attributionControl._container.style.maxWidth = L.esri.Util.calcAttributionWidth(e.target);
+      map.attributionControl._container.style.maxWidth = calcAttributionWidth(e.target);
     });
 
     map.attributionControl._esriAttributionAdded = true;
