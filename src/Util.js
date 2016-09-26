@@ -160,7 +160,7 @@ export function setEsriAttribution (map) {
       'display: inline-block;' +
       'transition: 0s white-space;' +
       'transition-delay: 1s;' +
-      'max-width: ' + calcAttributionWidth(map); +';';
+      'max-width: ' + calcAttributionWidth(map) + ';' +
     '}';
 
     document.getElementsByTagName('head')[0].appendChild(attributionStyle);
