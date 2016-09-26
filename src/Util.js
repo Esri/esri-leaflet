@@ -143,7 +143,7 @@ export function setEsriAttribution (map) {
     var hoverAttributionStyle = document.createElement('style');
     hoverAttributionStyle.type = 'text/css';
     hoverAttributionStyle.innerHTML = '.esri-truncated-attribution:hover {' +
-      'white-space: normal;';
+      'white-space: normal;' +
     '}';
 
     document.getElementsByTagName('head')[0].appendChild(hoverAttributionStyle);
@@ -160,7 +160,7 @@ export function setEsriAttribution (map) {
       'display: inline-block;' +
       'transition: 0s white-space;' +
       'transition-delay: 1s;' +
-      'max-width:' + calcAttributionWidth(map) +';'
+      'max-width: ' + calcAttributionWidth(map); +';';
     '}';
 
     document.getElementsByTagName('head')[0].appendChild(attributionStyle);
