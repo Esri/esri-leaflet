@@ -585,6 +585,11 @@ pre .xml .cdata {
   box-sizing: border-box;
   position: relative;
   background-color: white; }
+  .main-content h1, .main-content h2, .main-content h3, .main-content h4 {
+    transition: 0.4s; }
+    .main-content h1:hover, .main-content h2:hover, .main-content h3:hover, .main-content h4:hover {
+      color: #868e96;
+      cursor: pointer; }
   .main-content h3, .main-content h4 {
     margin-top: 1.5rem; }
   .main-content h5 {

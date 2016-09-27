@@ -29,13 +29,12 @@
   <link rel="stylesheet" href="../css/style.css">
 
   
+  
 
-    <!-- use CDN -->
-    <script src="https://cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.3/leaflet.css" />
-    <script src="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.3/leaflet-src.js"></script>
-    <script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.2/esri-leaflet-debug.js"></script>
+  
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.0/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.0.0/dist/leaflet-src.js"></script>
+    <script src="https://unpkg.com/esri-leaflet@2.0.3"></script>
   
 
   <!-- Google Analytics -->
@@ -74,6 +73,7 @@
   <h5>Layers</h5>
   <nav>
     <a href="../api-reference/layers/basemap-layer.html">Basemap Layer</a>
+    <a class="plugin" href="../api-reference/layers/vector-basemap.html">Vector Basemap</a>
     <a href="../api-reference/layers/feature-layer.html">Feature Layer</a>
     <a href="../api-reference/layers/tiled-map-layer.html">Tiled Map Layer</a>
     <a href="../api-reference/layers/dynamic-map-layer.html">Dynamic Map Layer</a>
@@ -132,8 +132,8 @@
 <li><a href="../api-reference/layers/raster-layer.html"><code>L.esri.RasterLayer</code></a></li>
 <li><a href="../api-reference/layers/tiled-map-layer.html"><code>L.esri.TiledMapLayer</code></a></li>
 <li><a href="../api-reference/layers/feature-layer.html"><code>L.esri.FeatureLayer</code></a></li>
-<li><a href="../api-reference/layers/clustered-feature-layer.html"><code>L.esri.Cluster.ClusteredFeatureLayer</code></a></li>
-<li><a href="../api-reference/layers/heatmap-feature-layer.html"><code>L.esri.Heat.HeatmapFeatureLayer</code></a></li>
+<li><a href="../api-reference/layers/clustered-feature-layer.html"><code>L.esri.Cluster.FeatureLayer</code></a></li>
+<li><a href="../api-reference/layers/heatmap-feature-layer.html"><code>L.esri.Heat.FeatureLayer</code></a></li>
 </ul>
 <h3 id="tasks">Tasks</h3>
 <p><code>Tasks</code> are wrappers for commonly used API methods on ArcGIS services. They expose commonly used parameters to make them more accessible to Leaflet.</p>

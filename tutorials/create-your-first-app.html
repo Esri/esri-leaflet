@@ -31,13 +31,12 @@
   <link rel="stylesheet" href="../css/style.css">
 
   
+  
 
-    <!-- use CDN -->
-    <script src="https://cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.3/leaflet.css" />
-    <script src="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.3/leaflet-src.js"></script>
-    <script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.2/esri-leaflet-debug.js"></script>
+  
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.0/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.0.0/dist/leaflet-src.js"></script>
+    <script src="https://unpkg.com/esri-leaflet@2.0.3"></script>
   
 
   <!-- Google Analytics -->
@@ -77,8 +76,9 @@
   <nav>
     <a href="create-your-first-app.html">Create your First App</a>
     <a href="introduction-to-layer-types.html">Introduction to Layer Types</a>
-    <a href="discovering-content.html">Discovering Content</a>
+    <a href="working-with-feature-layers.html">Working with Feature Layers</a>
     <a href="working-with-authenticated-services.html">Working with Authenticated Services</a>
+    <a href="discovering-content.html">Discovering Content</a>
   </nav>
 
   <h5>Migration Guides</h5>
@@ -106,10 +106,10 @@
 <span class="tag">&lt;<span class="title">html</span> <span class="attribute">lang</span>=<span class="value">"en"</span>&gt;</span>
 <span class="tag">&lt;<span class="title">head</span>&gt;</span>
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">"utf-8"</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Leaflet Map with a Basemap<span class="tag">&lt;/<span class="title">title</span>&gt;</span>  
+  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Leaflet Map with a Basemap<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">name</span>=<span class="value">'viewport'</span> <span class="attribute">content</span>=<span class="value">'initial-scale=1,maximum-scale=1,user-scalable=no'</span> /&gt;</span>
 <span class="tag">&lt;/<span class="title">head</span>&gt;</span>
-<span class="tag">&lt;<span class="title">body</span>&gt;</span>  
+<span class="tag">&lt;<span class="title">body</span>&gt;</span>
 <span class="tag">&lt;/<span class="title">body</span>&gt;</span>
 <span class="tag">&lt;/<span class="title">html</span>&gt;</span></code></pre>
 <h5 id="add-javascript-and-css-tags-for-our-app-s-dependencies">Add JavaScript and CSS tags for our app&#39;s dependencies</h5>
@@ -120,17 +120,17 @@
 <span class="tag">&lt;<span class="title">html</span> <span class="attribute">lang</span>=<span class="value">"en"</span>&gt;</span>
 <span class="tag">&lt;<span class="title">head</span>&gt;</span>
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">"utf-8"</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Leaflet Map with a Basemap<span class="tag">&lt;/<span class="title">title</span>&gt;</span>  
+  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Leaflet Map with a Basemap<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">name</span>=<span class="value">'viewport'</span> <span class="attribute">content</span>=<span class="value">'initial-scale=1,maximum-scale=1,user-scalable=no'</span> /&gt;</span>
 
   <span class="comment">&lt;!-- lets load Leaflet's .js and .css from CDN--&gt;</span>
-  <span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"https://npmcdn.com/leaflet@0.7.7/dist/leaflet.css"</span> /&gt;</span>
-  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://npmcdn.com/leaflet@0.7.7/dist/leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"https://unpkg.com/leaflet@0.7.7/dist/leaflet.css"</span> /&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/leaflet@0.7.7/dist/leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
   <span class="comment">&lt;!-- Load Esri Leaflet from CDN.  it has no .css stylesheet of its own, only .js --&gt;</span>
   <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://cdn.jsdelivr.net/leaflet.esri/1.0.4/esri-leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 <span class="tag">&lt;/<span class="title">head</span>&gt;</span>
-<span class="tag">&lt;<span class="title">body</span>&gt;</span>  
+<span class="tag">&lt;<span class="title">body</span>&gt;</span>
 <span class="tag">&lt;/<span class="title">body</span>&gt;</span>
 <span class="tag">&lt;/<span class="title">html</span>&gt;</span></code></pre>
 <h5 id="create-a-container-for-the-map">Create a Container for the Map</h5>
@@ -140,12 +140,12 @@
 <span class="tag">&lt;<span class="title">html</span> <span class="attribute">lang</span>=<span class="value">"en"</span>&gt;</span>
 <span class="tag">&lt;<span class="title">head</span>&gt;</span>
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">"utf-8"</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Leaflet Map with a Basemap<span class="tag">&lt;/<span class="title">title</span>&gt;</span>  
+  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Leaflet Map with a Basemap<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">name</span>=<span class="value">'viewport'</span> <span class="attribute">content</span>=<span class="value">'initial-scale=1,maximum-scale=1,user-scalable=no'</span> /&gt;</span>
 
   <span class="comment">&lt;!-- Load Leaflet from CDN--&gt;</span>
-  <span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"https://npmcdn.com/leaflet@0.7.7/dist/leaflet.css"</span> /&gt;</span>
-  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://npmcdn.com/leaflet@0.7.7/dist/leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"https://unpkg.com/leaflet@0.7.7/dist/leaflet.css"</span> /&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/leaflet@0.7.7/dist/leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
   <span class="comment">&lt;!-- Load Esri Leaflet from CDN --&gt;</span>
   <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://cdn.jsdelivr.net/leaflet.esri/1.0.4/esri-leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
@@ -175,12 +175,12 @@
 <span class="tag">&lt;<span class="title">html</span> <span class="attribute">lang</span>=<span class="value">"en"</span>&gt;</span>
 <span class="tag">&lt;<span class="title">head</span>&gt;</span>
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">"utf-8"</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Leaflet Map with a Basemap<span class="tag">&lt;/<span class="title">title</span>&gt;</span>  
+  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Leaflet Map with a Basemap<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">name</span>=<span class="value">'viewport'</span> <span class="attribute">content</span>=<span class="value">'initial-scale=1,maximum-scale=1,user-scalable=no'</span> /&gt;</span>
 
   <span class="comment">&lt;!-- Load Leaflet from CDN--&gt;</span>
-  <span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"https://npmcdn.com/leaflet@0.7.7/dist/leaflet.css"</span> /&gt;</span>
-  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://npmcdn.com/leaflet@0.7.7/dist/leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"https://unpkg.com/leaflet@0.7.7/dist/leaflet.css"</span> /&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/leaflet@0.7.7/dist/leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
   <span class="comment">&lt;!-- Load Esri Leaflet from CDN --&gt;</span>
   <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://cdn.jsdelivr.net/leaflet.esri/1.0.4/esri-leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
@@ -212,6 +212,9 @@
 <p>If we save and refresh our page after this step, we should see a gray background for the map, zoom controls in the top-left and attribution text in the bottom-right.</p>
 <h5 id="adding-a-basemap-from-arcgis-online">Adding a Basemap from ArcGIS Online</h5>
 <p>Now it is time to add an ArcGIS Online basemap to our map.  For this we will use the  <code>L.esri.basemapLayer</code>  class from the Esri Leaflet plugin.  Please refer to the <a href="http://esri.github.io/esri-leaflet/api-reference/layers/basemap-layer.html" title="ESRI Leaflet Reference">API Reference</a> for more information on this class.</p>
+<blockquote>
+<p>The <a href="https://github.com/esri/esri-leaflet#terms">Terms of Use</a> for Esri hosted services apply to <em>all</em> Leaflet applications.</p>
+</blockquote>
 <p>Below are a few different basemaps we can use from ArcGIS Online:</p>
 <ul>
 <li>Streets</li>
@@ -227,12 +230,12 @@ L.esri.basemapLayer(<span class="string">'Streets'</span>);</code></pre>
 <span class="tag">&lt;<span class="title">html</span> <span class="attribute">lang</span>=<span class="value">"en"</span>&gt;</span>
 <span class="tag">&lt;<span class="title">head</span>&gt;</span>
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">"utf-8"</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Leaflet Map with a Basemap<span class="tag">&lt;/<span class="title">title</span>&gt;</span>  
+  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Leaflet Map with a Basemap<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">name</span>=<span class="value">'viewport'</span> <span class="attribute">content</span>=<span class="value">'initial-scale=1,maximum-scale=1,user-scalable=no'</span> /&gt;</span>
 
   <span class="comment">&lt;!-- Load Leaflet from CDN--&gt;</span>
-  <span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"https://npmcdn.com/leaflet@0.7.7/dist/leaflet.css"</span> /&gt;</span>
-  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://npmcdn.com/leaflet@0.7.7/dist/leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"https://unpkg.com/leaflet@0.7.7/dist/leaflet.css"</span> /&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/leaflet@0.7.7/dist/leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
   <span class="comment">&lt;!-- Load Esri Leaflet from CDN --&gt;</span>
   <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://cdn.jsdelivr.net/leaflet.esri/1.0.4/esri-leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
@@ -256,7 +259,7 @@ L.esri.basemapLayer(<span class="string">'Streets'</span>);</code></pre>
           center: [<span class="number">37.75</span>, -<span class="number">122.23</span>],
           zoom: <span class="number">10</span>
         });
-        <span class="keyword">var</span> esriStreets = L.esri.basemapLayer(<span class="string">'Streets'</span>).addTo(map);    
+        <span class="keyword">var</span> esriStreets = L.esri.basemapLayer(<span class="string">'Streets'</span>).addTo(map);
     </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 <span class="tag">&lt;/<span class="title">body</span>&gt;</span>
 <span class="tag">&lt;/<span class="title">html</span>&gt;</span></code></pre>

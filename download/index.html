@@ -29,13 +29,12 @@
   <link rel="stylesheet" href="../css/style.css">
 
   
+  
 
-    <!-- use CDN -->
-    <script src="https://cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.3/leaflet.css" />
-    <script src="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.3/leaflet-src.js"></script>
-    <script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.2/esri-leaflet-debug.js"></script>
+  
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.0/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.0.0/dist/leaflet-src.js"></script>
+    <script src="https://unpkg.com/esri-leaflet@2.0.3"></script>
   
 
   <!-- Google Analytics -->
@@ -70,24 +69,30 @@
 <div class="container white single">
   <h1 id="download">Download</h1>
 <p>All builds of Esri Leaflet are available for download on <a href="https://github.com/Esri/esri-leaflet/releases/">GitHub</a>.</p>
-<p><a href="https://github.com/Esri/esri-leaflet/releases/tag/v2.0.2" class="btn">Current Release</a>
+<p><a href="https://github.com/Esri/esri-leaflet/releases/tag/v2.0.3" class="btn">Current Release</a>
 <a href="https://github.com/Esri/esri-leaflet/releases/" class="btn">Past Releases</a></p>
 <h1 id="cdn">CDN</h1>
 <h4 id="esri-leaflet">Esri Leaflet</h4>
-<pre><code class="language-xml"><span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://cdn.jsdelivr.net/leaflet.esri/2.0.2/esri-leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></code></pre>
+<pre><code class="language-xml"><span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/esri-leaflet@2.0.3"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></code></pre>
 <h4 id="other-plugins">Other Plugins</h4>
-<pre><code class="language-xml"><span class="comment">&lt;!-- Clustered Feature Layer --&gt;</span>
-<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://cdn.jsdelivr.net/leaflet.esri.clustered-feature-layer/2.0.0-beta.1/esri-leaflet-clustered-feature-layer.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+<pre><code class="language-xml"><span class="comment">&lt;!-- ArcGIS Online Vector Basemaps --&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/esri-leaflet-vector@1.0.0"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+
+<span class="comment">&lt;!-- Clustered Feature Layer --&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/esri-leaflet-cluster@2.0.0"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+
+<span class="comment">&lt;!-- Heatmap Feature Layer --&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/esri-leaflet-heatmap@2.0.0"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 <span class="comment">&lt;!-- Geocoding Control --&gt;</span>
-<span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"https://cdn.jsdelivr.net/leaflet.esri.geocoder/2.1.1/esri-leaflet-geocoder.css"</span>&gt;</span>
-<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://cdn.jsdelivr.net/leaflet.esri.geocoder/2.1.1/esri-leaflet-geocoder.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+<span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"https://unpkg.com/esri-leaflet-geocoder@2.1.4/dist/esri-leaflet-geocoder.css"</span>&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/esri-leaflet-geocoder@2.1.4"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 <span class="comment">&lt;!-- Renderers Plugin --&gt;</span>
-<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://cdn.jsdelivr.net/leaflet.esri.renderers/2.0.2/esri-leaflet-renderers.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/esri-leaflet-renderers@2.0.2"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 <span class="comment">&lt;!-- Geoprocessing Plugin --&gt;</span>
-<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://cdn.jsdelivr.net/leaflet.esri.gp/2.0.2/esri-leaflet-gp.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></code></pre>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/esri-leaflet-gp@2.0.1"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></code></pre>
 <h1 id="npm">npm</h1>
 <p>Esri Leaflet is also <a href="https://www.npmjs.org/package/esri-leaflet">available on npm</a> and can be installed with the following command.</p>
 <pre><code class="language-bash">npm install esri-leaflet --save</code></pre>

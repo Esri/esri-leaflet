@@ -29,13 +29,12 @@
   <link rel="stylesheet" href="../../css/style.css">
 
   
+  
 
-    <!-- use CDN -->
-    <script src="https://cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.3/leaflet.css" />
-    <script src="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.3/leaflet-src.js"></script>
-    <script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.2/esri-leaflet-debug.js"></script>
+  
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.0/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.0.0/dist/leaflet-src.js"></script>
+    <script src="https://unpkg.com/esri-leaflet@2.0.3"></script>
   
 
   <!-- Google Analytics -->
@@ -74,6 +73,7 @@
   <h5>Layers</h5>
   <nav>
     <a href="../../api-reference/layers/basemap-layer.html">Basemap Layer</a>
+    <a class="plugin" href="../../api-reference/layers/vector-basemap.html">Vector Basemap</a>
     <a href="../../api-reference/layers/feature-layer.html">Feature Layer</a>
     <a href="../../api-reference/layers/tiled-map-layer.html">Tiled Map Layer</a>
     <a href="../../api-reference/layers/dynamic-map-layer.html">Dynamic Map Layer</a>
@@ -210,7 +210,7 @@
         <tr>
             <td><code>nearby(<nobr class="param"><span>&lt;<a href="http://leafletjs.com/reference.html#latlng">LatLng</a>&gt;</span> <code>latlng</code></nobr>, <nobr class="param"><span>&lt;Integer&gt;</span> <code>distance</code></nobr>)</code></td>
             <td><code>this</code></td>
-            <td>Queries features a given distance in meters around a <a href="http://leafletjs.com/reference.html#latlng">LatLng</a>. <small>Only available for Feature Layers hosted on ArcGIS Online or ArcGIS Server 10.3.</small></td>
+            <td>Queries features a given distance in meters around a <a href="http://leafletjs.com/reference.html#latlng">LatLng</a>. <small>Only available for Feature Layers hosted on ArcGIS Online or ArcGIS Server 10.3 that include the capability <code>supportQueryWithDistance</code>.</small></td>
         </tr>
         <tr>
             <td><code>where(<nobr class="param"><span>&lt;String&gt;</span> <code>where</code></nobr>)</code></td>

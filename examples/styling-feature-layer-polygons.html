@@ -31,13 +31,12 @@
   <link rel="stylesheet" href="../css/style.css">
 
   
+  
 
-    <!-- use CDN -->
-    <script src="https://cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.3/leaflet.css" />
-    <script src="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.3/leaflet-src.js"></script>
-    <script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.2/esri-leaflet-debug.js"></script>
+  
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.0/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.0.0/dist/leaflet-src.js"></script>
+    <script src="https://unpkg.com/esri-leaflet@2.0.3"></script>
   
 
   <!-- Google Analytics -->
@@ -79,6 +78,7 @@
     <a href="../examples/basemap-with-labels.html">Basemap with Labels</a>
     <a href="../examples/switching-basemaps.html">Switching Basemaps</a>
     <a href="../examples/retina-basemap.html">Retina Basemap</a>
+    <a href="../examples/vector-basemap.html">Vector Basemaps</a>
   </nav>
 
   <h5>Feature Layers</h5>
@@ -108,7 +108,6 @@
     <a href="../examples/visualizing-time-with-feature-layer.html">Time Enabled Services</a>
     <a href="../examples/clustering-feature-layers.html">Clustering Points</a>
     <a href="../examples/styling-clusters.html">Styling Clusters</a>
-    <a href="../examples/stream-plugin.html">Stream Layer</a>
   </nav>
 
   <h5>Tile Layers</h5>
@@ -132,6 +131,7 @@
     <a href="../examples/identifying-imagery.html">Identify Imagery</a>
     <a href="../examples/image-map-layer-mosaic-rule.html">Mosaic Rule</a>
     <a href="../examples/imagery-popups.html">Custom Popups</a>
+    <a href="../examples/visualizing-time-on-image-layer.html">Time Ranges</a>
   </nav>
 
   <h5>Non-Mercator Projections</h5>
@@ -164,9 +164,10 @@
 
   <h5>Other Plugins</h5>
   <nav>
-    <a href="../examples/gp-plugin.html">Geoprocessing</a>
     <a href="../examples/renderers-plugin.html">Server Side Rendering</a>
+    <a href="../examples/stream-plugin.html">Stream Layer</a>
     <a href="../examples/webmap.html?id=22c504d229f14c789c5b49ebff38b941">Loading Webmaps</a>
+    <a href="../examples/gp-plugin.html">Geoprocessing</a>
   </nav>
 
   <h5>Misc.</h5>
@@ -219,11 +220,11 @@
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">name</span>=<span class="value">'viewport'</span> <span class="attribute">content</span>=<span class="value">'initial-scale=1,maximum-scale=1,user-scalable=no'</span> /&gt;</span>
 
   <span class="comment">&lt;!-- Load Leaflet from CDN--&gt;</span>
-  <span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"https://cdn.jsdelivr.net/leaflet/1.0.0-rc.3/leaflet.css"</span> /&gt;</span>
-  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://cdn.jsdelivr.net/leaflet/1.0.0-rc.3/leaflet-src.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"https://unpkg.com/leaflet@1.0.0/dist/leaflet.css"</span> /&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/leaflet@1.0.0/dist/leaflet-src.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
   <span class="comment">&lt;!-- Load Esri Leaflet from CDN --&gt;</span>
-  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://cdn.jsdelivr.net/leaflet.esri/2.0.2/esri-leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/esri-leaflet@2.0.3"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
   <span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css">
     <span class="tag">body</span> <span class="rules">{ <span class="rule"><span class="attribute">margin</span>:<span class="value"><span class="number">0</span></span></span>; <span class="rule"><span class="attribute">padding</span>:<span class="value"><span class="number">0</span></span></span>; <span class="rule">}</span></span>

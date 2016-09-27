@@ -8,7 +8,7 @@
   <meta charset="utf-8">
 
   
-    <title>L.esri.Cluster.ClusteredFeatureLayer | Esri Leaflet</title>
+    <title>L.esri.Cluster.FeatureLayer | Esri Leaflet</title>
   
 
   
@@ -29,13 +29,12 @@
   <link rel="stylesheet" href="../../css/style.css">
 
   
+  
 
-    <!-- use CDN -->
-    <script src="https://cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.3/leaflet.css" />
-    <script src="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.3/leaflet-src.js"></script>
-    <script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.2/esri-leaflet-debug.js"></script>
+  
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.0/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.0.0/dist/leaflet-src.js"></script>
+    <script src="https://unpkg.com/esri-leaflet@2.0.3"></script>
   
 
   <!-- Google Analytics -->
@@ -74,6 +73,7 @@
   <h5>Layers</h5>
   <nav>
     <a href="../../api-reference/layers/basemap-layer.html">Basemap Layer</a>
+    <a class="plugin" href="../../api-reference/layers/vector-basemap.html">Vector Basemap</a>
     <a href="../../api-reference/layers/feature-layer.html">Feature Layer</a>
     <a href="../../api-reference/layers/tiled-map-layer.html">Tiled Map Layer</a>
     <a href="../../api-reference/layers/dynamic-map-layer.html">Dynamic Map Layer</a>
@@ -122,8 +122,8 @@
 
 
 <div class="main-content">
-  <h1 id="l-esri-cluster-clusteredfeaturelayer">L.esri.Cluster.ClusteredFeatureLayer</h1>
-<p><code>L.esri.Cluster.ClusteredFeatureLayer</code> provides integration for Feature Layers with the <a href="https://github.com/Leaflet/Leaflet.markercluster">Leaflet.markercluster plugin</a>. Because of the extra dependency on Leaflet.markercluster we do not include <code>L.esri.Cluster.ClusteredFeatureLayer</code> in the default build of Esri Leaflet.  You will also need to include your own copy of the <a href="https://github.com/Leaflet/Leaflet.markercluster">Leaflet.markercluster plugin</a>.</p>
+  <h1 id="l-esri-cluster-featurelayer">L.esri.Cluster.FeatureLayer</h1>
+<p><code>L.esri.Cluster.FeatureLayer</code> provides integration for Feature Layers with the <a href="https://github.com/Leaflet/Leaflet.markercluster">Leaflet.markercluster plugin</a>. Because of the extra dependency on Leaflet.markercluster we do not include <code>L.esri.Cluster.FeatureLayer</code> in the default build of Esri Leaflet.  You will also need to include your own copy of the <a href="https://github.com/Leaflet/Leaflet.markercluster">Leaflet.markercluster plugin</a>.</p>
 <p>More information about Feature Layers can be found in the <a href="../../api-reference/layers/feature-layer.html"><code>L.esri.FeatureLayer</code> documentation</a>.</p>
 <h3 id="constructor">Constructor</h3>
 <table>
@@ -135,7 +135,7 @@
     </thead>
     <tbody>
         <tr>
-            <td><code class="nobr">L.esri.Cluster.clusteredFeatureLayer(<nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code></td>
+            <td><code class="nobr">L.esri.Cluster.featureLayer(<nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code></td>
             <td>You must pass a <code>url</code> to a <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Layer/02r3000000w6000000/">Feature Layer</a> in your <code>options</code></td>
         </tr>
     </tbody>
@@ -268,7 +268,7 @@
 </tbody>
 </table>
 <p><code>L.esri.FeatureLayer</code> also fires all  <a href="../../api-reference/services/feature-layer-service.html"><code>L.esri.FeatureLayerService</code></a> events.</p>
-<p>In additon to these events <code>L.esri.FeatureLayer</code> also fires the following <a href="http://leafletjs.com/reference.html#event-objects">Mouse Events</a> <code>click</code>, <code>dblclick</code>, <code>mouseover</code>, <code>mouseout</code>, <code>mousemove</code>, and <code>contextmenu</code>, <code>clusterclick</code>, <code>clusterdblclick</code>, <code>clustermouseover</code>, <code>clustermousemove</code>, and <code>clustercontextmenu</code> as well as the following the <a href="http://leafletjs.com/reference.html#event-objects">Popup Events</a> <code>popupopen</code> and <code>popupclose</code>.</p>
+<p>In additon to these events <code>L.esri.Cluster.FeatureLayer</code> also fires the following <a href="http://leafletjs.com/reference.html#event-objects">Mouse Events</a> <code>click</code>, <code>dblclick</code>, <code>mouseover</code>, <code>mouseout</code>, <code>mousemove</code>, and <code>contextmenu</code>, <code>clusterclick</code>, <code>clusterdblclick</code>, <code>clustermouseover</code>, <code>clustermousemove</code>, and <code>clustercontextmenu</code> as well as the following the <a href="http://leafletjs.com/reference.html#event-objects">Popup Events</a> <code>popupopen</code> and <code>popupclose</code>.</p>
 <h3 id="methods">Methods</h3>
 <table>
     <thead>
@@ -405,13 +405,13 @@
 <pre><code class="language-xml"><span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">type</span>=<span class="value">"text/css"</span> <span class="attribute">href</span>=<span class="value">"./MarkerCluster.Default.css"</span>&gt;</span>
 <span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">type</span>=<span class="value">"text/css"</span> <span class="attribute">href</span>=<span class="value">"./MarkerCluster.css"</span>&gt;</span>
 <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"./leaflet.markercluster.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
-<span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">.<span class="regexp">/esri-leaflet-clustered-feature-layer.js</span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></code></pre>
+<span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">.<span class="regexp">/esri-leaflet-cluster.js</span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></code></pre>
 <pre><code class="language-js"><span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">45.53</span>,-<span class="number">122.64</span>], <span class="number">16</span>);
 L.esri.basemapLayer(<span class="string">"Streets"</span>).addTo(map);
 
 <span class="keyword">var</span> url = <span class="string">"https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0"</span>;
 
-<span class="keyword">var</span> busStops = L.esri.Cluster.clusteredFeatureLayer({
+<span class="keyword">var</span> busStops = L.esri.Cluster.featureLayer({
   url: url,
   <span class="comment">// Cluster Options</span>
   polygonOptions: {

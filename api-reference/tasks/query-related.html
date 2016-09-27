@@ -29,13 +29,12 @@
   <link rel="stylesheet" href="../../css/style.css">
 
   
+  
 
-    <!-- use CDN -->
-    <script src="https://cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.3/leaflet.css" />
-    <script src="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.3/leaflet-src.js"></script>
-    <script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.2/esri-leaflet-debug.js"></script>
+  
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.0/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.0.0/dist/leaflet-src.js"></script>
+    <script src="https://unpkg.com/esri-leaflet@2.0.3"></script>
   
 
   <!-- Google Analytics -->
@@ -74,6 +73,7 @@
   <h5>Layers</h5>
   <nav>
     <a href="../../api-reference/layers/basemap-layer.html">Basemap Layer</a>
+    <a class="plugin" href="../../api-reference/layers/vector-basemap.html">Vector Basemap</a>
     <a href="../../api-reference/layers/feature-layer.html">Feature Layer</a>
     <a href="../../api-reference/layers/tiled-map-layer.html">Tiled Map Layer</a>
     <a href="../../api-reference/layers/dynamic-map-layer.html">Dynamic Map Layer</a>
@@ -215,8 +215,8 @@
 <tbody>
 <tr>
 <td><code>features</code></td>
-<td><code>[&lt;L.geoJson&gt;]</code></td>
-<td>The result of a valid request will be composed of an array of <a href="http://leafletjs.com/reference.html#geojson">L.geoJson</a> features.</td>
+<td><code>[&lt;L.geoJSON&gt;]</code></td>
+<td>The result of a valid request will be composed of an array of <a href="http://leafletjs.com/reference.html#geojson">L.geoJSON</a> features.</td>
 </tr>
 </tbody>
 </table>

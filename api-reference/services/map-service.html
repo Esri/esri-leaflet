@@ -29,13 +29,12 @@
   <link rel="stylesheet" href="../../css/style.css">
 
   
+  
 
-    <!-- use CDN -->
-    <script src="https://cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.3/leaflet.css" />
-    <script src="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.3/leaflet-src.js"></script>
-    <script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.2/esri-leaflet-debug.js"></script>
+  
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.0/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.0.0/dist/leaflet-src.js"></script>
+    <script src="https://unpkg.com/esri-leaflet@2.0.3"></script>
   
 
   <!-- Google Analytics -->
@@ -74,6 +73,7 @@
   <h5>Layers</h5>
   <nav>
     <a href="../../api-reference/layers/basemap-layer.html">Basemap Layer</a>
+    <a class="plugin" href="../../api-reference/layers/vector-basemap.html">Vector Basemap</a>
     <a href="../../api-reference/layers/feature-layer.html">Feature Layer</a>
     <a href="../../api-reference/layers/tiled-map-layer.html">Tiled Map Layer</a>
     <a href="../../api-reference/layers/dynamic-map-layer.html">Dynamic Map Layer</a>
@@ -203,7 +203,9 @@
 <h4 id="identify-task">Identify task</h4>
 <pre><code class="language-js"><span class="keyword">var</span> map = <span class="keyword">new</span> L.Map(<span class="string">'map'</span>).setView([ <span class="number">45.543</span>, -<span class="number">122.621</span> ], <span class="number">5</span>);
 
-<span class="keyword">var</span> service = L.esri.mapService(<span class="string">'https://sampleserver6.arcgisonline.com/arcgis/rest/services/WorldTimeZones/MapServer'</span>);
+<span class="keyword">var</span> service = L.esri.mapService({
+    url: <span class="string">'https://sampleserver6.arcgisonline.com/arcgis/rest/services/WorldTimeZones/MapServer'</span>
+});
 
 service.identify()
     .on(map)

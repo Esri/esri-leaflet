@@ -31,13 +31,12 @@
   <link rel="stylesheet" href="../css/style.css">
 
   
+  
 
-    <!-- use CDN -->
-    <script src="https://cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.3/leaflet.css" />
-    <script src="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.3/leaflet-src.js"></script>
-    <script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.2/esri-leaflet-debug.js"></script>
+  
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.0/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.0.0/dist/leaflet-src.js"></script>
+    <script src="https://unpkg.com/esri-leaflet@2.0.3"></script>
   
 
   <!-- Google Analytics -->
@@ -77,8 +76,9 @@
   <nav>
     <a href="create-your-first-app.html">Create your First App</a>
     <a href="introduction-to-layer-types.html">Introduction to Layer Types</a>
-    <a href="discovering-content.html">Discovering Content</a>
+    <a href="working-with-feature-layers.html">Working with Feature Layers</a>
     <a href="working-with-authenticated-services.html">Working with Authenticated Services</a>
+    <a href="discovering-content.html">Discovering Content</a>
   </nav>
 
   <h5>Migration Guides</h5>
@@ -100,7 +100,64 @@
 <div class="main-content">
   <h1 id="introduction-to-layer-types">Introduction to Layer Types</h1>
 <p>Learn how to differentiate between the layer types that make up the ArcGIS platform.</p>
-<p>Coming Soon.</p>
+<h2 id="feature-layers">Feature Layers</h2>
+<p>A <a href="http://esri.github.io/esri-leaflet/api-reference/layers/feature-layer.html">Feature Layer</a> involves pulling down the feature data for a particular layer in the JSON format from an ArcGIS Server instance to your web app. This means pulling down the information related to an individual feature such as its vertices as well as the attributes. Esri-Leaflet then takes the JSON data and renders it on your map.</p>
+<p>Feature Layers are great because they contain all the attribute information which means additional operations such as creating popups are really easy beacuse the app already has all the information is needs. </p>
+<p>The challenge with Feature Layers is that they can potentially require transferring large amounts of data from the server to the client. Because all the vertices and attributes are sent this means you may be requesting a really big JSON object containing each and every vertice for a complex set of polygons. For example you wouldn&#39;t want to use a Feature Layer if you were drawing draw tax parcels for the whole of the USA. To address this issue Esri-Leaflet provides a few options. Firstly by default Esri-Leaflet only requests the features within the current map extent meaning you&#39;re not requesting features that you probably don&#39;t need. Secondly Esri-Leaflet provides additional options to allows you to trim down the data size, these include only requesting specific attributes, generalizing geometries, or setting where clauses. However even after you&#39;ve optimized your setup there will always be a limit to the amount of features which it makes sense to try and display clientside, this will be dependant on your particular service, browser and app.</p>
+<h3 id="how-to-consume-feature-layers-from-arcgis-server">How to consume Feature Layers from ArcGIS Server</h3>
+<p>Feature Layers can be created in Esri-Leaflet from both <code>MapServer</code> or <code>FeatureServer</code> services published by ArcGIS Server. To utilise a <code>MapServer</code> service you need to specify a particular layer by appending the layer index, eg &quot;ESRI_Population_World/MapServer<em>/0</em>&quot;.</p>
+<p>So for example both of these are valid uses </p>
+<pre><code class="language-js"><span class="comment">// NOTE - The FeatureServer part of this url</span>
+L.esri.featureLayer({
+    url: <span class="string">'.../ArcGIS/rest/services/BloomfieldHillsMichigan/LandusePlanning/FeatureServer/0'</span>
+})
+
+<span class="comment">// Note the MapServer part of this url </span>
+<span class="comment">// Remember to append a layer index eg '/0'</span>
+L.esri.featureLayer({
+    url: <span class="string">'.../ArcGIS/rest/services/Demographics/ESRI_Population_World/MapServer/0'</span>
+})</code></pre>
+<p>If you want to edit data in the browser then you will need to be consuming a <code>FeatureServer</code> service.</p>
+<h3 id="what-does-the-data-look-like-">What does the data look like?</h3>
+<p>When you request a feature layer from an ArcGIS Server the response will look something like </p>
+<pre><code class="language-js">{<span class="string">"type"</span>:<span class="string">"FeatureCollection"</span>,<span class="string">"crs"</span>:{<span class="string">"type"</span>:<span class="string">"name"</span>,<span class="string">"properties"</span>:{<span class="string">"name"</span>:<span class="string">"EPSG:4326"</span>}},
+ <span class="string">"features"</span>:[
+     {<span class="string">"type"</span>:<span class="string">"Feature"</span>,
+     <span class="string">"id"</span>:<span class="number">2</span>,
+     <span class="string">"geometry"</span>:{<span class="string">"type"</span>:<span class="string">"Point"</span>,<span class="string">"coordinates"</span>:[-<span class="number">122.647466</span>,<span class="number">45.543523</span>]},
+     <span class="string">"properties"</span>:{<span class="string">"FID"</span>:<span class="number">2</span>,<span class="string">"GEODB_OID"</span>:<span class="number">144</span>,<span class="string">"OBJECTID"</span>:<span class="number">144</span>,<span class="string">"TREEID"</span>:<span class="number">164</span>,<span class="string">"STATUS"</span>:<span class="string">"Heritage"</span>,<span class="string">"SCIENTIFIC"</span>:<span class="string">"Platanus x acerifolia"</span>,<span class="string">"COMMON_NAM"</span>:<span class="string">"London planetree"</span>,<span class="string">"STATEID"</span>:<span class="string">"1N1E26AC  12000"</span>,<span class="string">"ADDRESS"</span>:<span class="string">"1728 NE STANTON ST"</span>,<span class="string">"HEIGHT"</span>:<span class="number">82</span>,<span class="string">"SPREAD"</span>:<span class="number">85</span>,<span class="string">"CIRCUMFERE"</span>:<span class="number">15.44</span>,<span class="string">"DIAMETER"</span>:<span class="number">59</span>,<span class="string">"YEAR"</span>:<span class="number">1997</span>,<span class="string">"OWNER"</span>:<span class="string">"Private, Front Yard"</span>,<span class="string">"NOTES"</span>:<span class="string">"south side between NE 17th Ave and NE 18th Ave"</span>}
+     }
+  ]
+}</code></pre>
+<p>You can see in the above sample that we have some location information in the <code>coordinates</code> array as well as the feature properties in the <code>properties</code> object.</p>
+<h2 id="dynamic-map-layers">Dynamic Map Layers</h2>
+<p>A <a href="http://esri.github.io/esri-leaflet/api-reference/layers/dynamic-map-layer.html">Dynamic Map Layer</a> involves pulling down a representation of your data from an ArcGIS Server instance to your web app, this means an image such as a jpg or a png. Esri-Leaflet then takes care of placing the image on the correct part of the map for you.</p>
+<p>The benefit of a Dynamic Map Layer is that only the final representation of the data is sent to the client in the form of an image, this is hugely beneficial when dealing with large datasets with complex geometries. Rather than sending megabytes of data, an image can be sent instead. Dynamic Map Layers are also handy as images are rendered on the fly by the server, this is beneficial if your dataset is constantly changing. </p>
+<p>The downside of a Dynamic Map Layer is that if you require additional information about a feature (such as attribute information to generate a popup) then you&#39;re app will request additional information from the server which can be time-consuming. Esri-Leaflet does cover most of the common use cases for these additional requests (such as <a href="http://esri.github.io/esri-leaflet/examples/customizing-popups.html">generating popups</a>) however you will notice that popups are not as responsive as with a Feature Layer.</p>
+<h3 id="how-to-consume-dynamic-map-layers-from-arcgis-server">How to consume Dynamic Map Layers from ArcGIS Server</h3>
+<p>Dynamic Map Layers can be created in Esri-Leaflet from a <code>MapServer</code> service published by ArcGIS Server. </p>
+<pre><code class="language-js"><span class="comment">// NOTE - The url contains 'MapServer'</span>
+L.esri.dynamicMapLayer({
+    url: <span class="string">'https://services.arcgisonline.com/arcgis/rest/services/Specialty/Soil_Survey_Map/MapServer'</span>
+})</code></pre>
+<h3 id="what-does-the-data-look-like-">What does the data look like?</h3>
+<p>When you request a Dynamic Map Layer from an ArcGIS Server the response might look something like 
+<img src="https://services.arcgisonline.com/arcgis/rest/directories/arcgisoutput/Specialty/Soil_Survey_Map_MapServer/_ags_map7ec03f83fc184c65b3e98b240810d139.png" alt="Map tile">
+As you can see, it is simply an image!</p>
+<h2 id="tiled-map-layers">Tiled Map Layers</h2>
+<p>A <a href="http://esri.github.io/esri-leaflet/api-reference/layers/tiled-map-layer.html">Tiled Map Layer</a> is similar to a Dynamic Map Layer however it involves pulling down a pre-rendered representation of your data from a tile cache in ArcGIS Server.</p>
+<p>The benefit of a Tiled Map Layer is that it can respond more quickly than a Dynamic Map Layer as an image has already been rendered and is available on the server. Tile Map Layers are typically used for basemaps.</p>
+<p>The downside of a Tiled Map Layer is that it can take up a lot of space on your server as each tile has to be pre-rendered. Your tiles also only represent the state of your data when the tile was created, they don&#39;t automatically update to refect changes to your data.</p>
+<h3 id="how-to-consume-tiled-map-layers-from-arcgis-server">How to consume Tiled Map Layers from ArcGIS Server</h3>
+<p>Tiled Map Layers can be created in Esri-Leaflet from a <code>MapServer</code> service published by ArcGIS Server that contains a <code>Single Fused Map Cache</code>, you would create the cache when you publish a layer in ArcGIS Server.</p>
+<pre><code class="language-js"><span class="comment">// NOTE - When you visit the url you will see information relating to the tile cache</span>
+L.esri.tiledMapLayer({
+    url: <span class="string">'https://services.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer'</span>
+})</code></pre>
+<h3 id="what-does-the-data-look-like-">What does the data look like?</h3>
+<p>When you request a Tiled Map Layer from an ArcGIS Server the response might look something like
+<img src="http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/PublicSafety/PublicSafetyBasemap/MapServer/tile/6/146/267" alt="Map tile">
+As you can see, it is simply an image!</p>
 
   <p><a href="http://github.com/esri/esri-leaflet-doc/edit/master/src/pages/tutorials/introduction-to-layer-types.md">Edit this page on GitHub</a></p>
 </div>

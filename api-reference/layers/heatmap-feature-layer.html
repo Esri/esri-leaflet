@@ -8,7 +8,7 @@
   <meta charset="utf-8">
 
   
-    <title>L.esri.Heat.HeatMapFeatureLayer | Esri Leaflet</title>
+    <title>L.esri.Heat.FeatureLayer | Esri Leaflet</title>
   
 
   
@@ -29,13 +29,12 @@
   <link rel="stylesheet" href="../../css/style.css">
 
   
+  
 
-    <!-- use CDN -->
-    <script src="https://cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.3/leaflet.css" />
-    <script src="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.3/leaflet-src.js"></script>
-    <script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.2/esri-leaflet-debug.js"></script>
+  
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.0/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.0.0/dist/leaflet-src.js"></script>
+    <script src="https://unpkg.com/esri-leaflet@2.0.3"></script>
   
 
   <!-- Google Analytics -->
@@ -74,6 +73,7 @@
   <h5>Layers</h5>
   <nav>
     <a href="../../api-reference/layers/basemap-layer.html">Basemap Layer</a>
+    <a class="plugin" href="../../api-reference/layers/vector-basemap.html">Vector Basemap</a>
     <a href="../../api-reference/layers/feature-layer.html">Feature Layer</a>
     <a href="../../api-reference/layers/tiled-map-layer.html">Tiled Map Layer</a>
     <a href="../../api-reference/layers/dynamic-map-layer.html">Dynamic Map Layer</a>
@@ -122,8 +122,8 @@
 
 
 <div class="main-content">
-  <h1 id="l-esri-heat-heatmapfeaturelayer">L.esri.Heat.HeatMapFeatureLayer</h1>
-<p><code>L.esri.Heat.HeatmapFeatureLayer</code> provides integration for Feature Layers with the <a href="https://github.com/Leaflet/Leaflet.heat">Leaflet.heat plugin</a>. Because of the extra dependency on Leaflet.heat we do not include <code>L.esri.Heat.HeatmapFeatureLayer</code> in the default build of Esri Leaflet. You will need to include your own copy of the <a href="https://github.com/Leaflet/Leaflet.heat">Leaflet.heat plugin</a> in your application as well.</p>
+  <h1 id="l-esri-heat-featurelayer">L.esri.Heat.FeatureLayer</h1>
+<p><code>L.esri.Heat.FeatureLayer</code> provides integration for Feature Layers with the <a href="https://github.com/Leaflet/Leaflet.heat">Leaflet.heat plugin</a>. Because of the extra dependency on Leaflet.heat we do not include <code>L.esri.Heat.FeatureLayer</code> in the default build of Esri Leaflet. You will need to include your own copy of the <a href="https://github.com/Leaflet/Leaflet.heat">Leaflet.heat plugin</a> in your application as well.</p>
 <p>More information about Feature Layers can be found in the <a href="../../api-reference/layers/feature-layer.html"><code>L.esri.FeatureLayer</code> documentation</a>.</p>
 <h3 id="constructor">Constructor</h3>
 <table>
@@ -135,7 +135,7 @@
     </thead>
     <tbody>
         <tr>
-            <td><code class="nobr">L.esri.Heat.heatmapFeatureLayer(<nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code></td>
+            <td><code class="nobr">L.esri.Heat.featureLayer(<nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code></td>
             <td>You must pass a <code>url</code> to a <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Layer/02r3000000w6000000/">Feature Layer</a> in your <code>options</code></td>
         </tr>
     </tbody>
@@ -209,7 +209,7 @@
     </tbody>
 </table>
 
-<p><code>L.esri.Heat.HeatmapFeatureLayer</code> will also accept any options that can be passed to <a href="https://github.com/Leaflet/Leaflet.heat#lheatlayerlatlngs-options">Leaflet.heat</a> to customize the appearance of the heatmap.</p>
+<p><code>L.esri.Heat.FeatureLayer</code> will also accept any options that can be passed to <a href="https://github.com/Leaflet/Leaflet.heat#lheatlayerlatlngs-options">Leaflet.heat</a> to customize the appearance of the heatmap.</p>
 <h3 id="events">Events</h3>
 <table>
 <thead>
@@ -232,7 +232,7 @@
 </tr>
 </tbody>
 </table>
-<p><code>L.esri.FeatureLayer</code> also fires all  <a href="../../api-reference/services/feature-layer-service.html"><code>L.esri.FeatureLayerService</code></a> events.</p>
+<p><code>L.esri.Heat.FeatureLayer</code> also fires all  <a href="../../api-reference/services/feature-layer-service.html"><code>L.esri.FeatureLayerService</code></a> events.</p>
 <h3 id="methods">Methods</h3>
 <table>
     <thead>
@@ -330,11 +330,11 @@
 <h3 id="example">Example</h3>
 <p>Live sample <a href="http://esri.github.io/esri-leaflet/examples/visualize-points-as-a-heatmap.html">here</a>.</p>
 <pre><code class="language-xml"><span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"./leaflet-heat.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
-<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"./esri-leaflet-heatmap-feature-layer.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></code></pre>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"./esri-leaflet-heatmap.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></code></pre>
 <pre><code class="language-js"><span class="keyword">var</span> map = <span class="keyword">new</span> L.Map(<span class="string">'map'</span>).setView([<span class="number">40.722868115037</span>,-<span class="number">73.92142295837404</span>], <span class="number">14</span>);
 L.esri.basemapLayer(<span class="string">'Gray'</span>).addTo(map);
 
-<span class="keyword">var</span> heatmap = L.esri.Heat.heatmapFeatureLayer({
+<span class="keyword">var</span> heatmap = L.esri.Heat.featureLayer({
   url : <span class="string">"https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Graffiti_Locations3/FeatureServer/0"</span>,
   radius: <span class="number">12</span>
 }).addTo(map);</code></pre>
