@@ -29,12 +29,13 @@
   <link rel="stylesheet" href="../../css/style.css">
 
   
-  
 
-  
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.0-rc.3/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.0.0-rc.3/dist/leaflet-src.js"></script>
-    <script src="https://unpkg.com/esri-leaflet@2.0.3"></script>
+    <!-- use CDN -->
+    <script src="https://cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.3/leaflet.css" />
+    <script src="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.3/leaflet-src.js"></script>
+    <script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.2/esri-leaflet-debug.js"></script>
   
 
   <!-- Google Analytics -->
@@ -73,7 +74,6 @@
   <h5>Layers</h5>
   <nav>
     <a href="../../api-reference/layers/basemap-layer.html">Basemap Layer</a>
-    <a class="plugin" href="../../api-reference/layers/vector-basemap.html">Vector Basemap</a>
     <a href="../../api-reference/layers/feature-layer.html">Feature Layer</a>
     <a href="../../api-reference/layers/tiled-map-layer.html">Tiled Map Layer</a>
     <a href="../../api-reference/layers/dynamic-map-layer.html">Dynamic Map Layer</a>
@@ -425,8 +425,7 @@ L.esri.basemapLayer(<span class="string">'Gray'</span>).addTo(map);
 
 L.esri.dynamicMapLayer({
   url: url,
-  opacity : <span class="number">0.25</span>,
-  useCors: <span class="literal">false</span>
+  opacity : <span class="number">0.25</span>
 }).addTo(map);</code></pre>
 
   <p><a href="http://github.com/Esri/esri-leaflet-doc/edit/master/src/pages/api-reference/layers/dynamic-map-layer.md">Edit this page on GitHub</a></p>
