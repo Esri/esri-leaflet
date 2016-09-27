@@ -34,7 +34,7 @@ describe('L.esri.Query', function () {
   var rawGeoJsonFeature = {"type": "Feature"}
   rawGeoJsonFeature.geometry = rawGeoJsonPolygon;
 
-  var geoJsonPolygon = L.geoJson(rawGeoJsonPolygon);
+  var geoJsonPolygon = L.geoJSON(rawGeoJsonPolygon);
 
   var featureLayerUrl = 'http://gis.example.com/mock/arcgis/rest/services/MockFeatureService/FeatureServer/0/';
   var mapServiceUrl = 'http://gis.example.com/mock/arcgis/rest/services/MockMapService/MapServer/';
