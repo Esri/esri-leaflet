@@ -1,5 +1,7 @@
+/* eslint-env mocha */
+/* eslint-disable handle-callback-err */
 describe('L.esri.options', function () {
-  function createMap() {
+  function createMap () {
     // create container
     var container = document.createElement('div');
 
@@ -12,17 +14,17 @@ describe('L.esri.options', function () {
     return L.map(container).setView([37.75, -122.45], 5);
   }
 
-  beforeEach(function(){
-    //remove all the stylesheets that have already been added to the document
-    Array.prototype.forEach.call(document.querySelectorAll('style,[rel="stylesheet"],[type="text/css"]'), function(element){
-      try{
-        element.parentNode.removeChild(element)
+  beforeEach(function () {
+    // remove all the stylesheets that have already been added to the document
+    Array.prototype.forEach.call(document.querySelectorAll('style,[rel="stylesheet"],[type="text/css"]'), function (element) {
+      try {
+        element.parentNode.removeChild(element);
         // console.log('this gets called many times');
-      }catch(err){}
+      } catch (err) {}
     });
-  })
+  });
 
-  afterEach(function(){
+  afterEach(function () {
     map.remove();
   });
 
@@ -33,8 +35,8 @@ describe('L.esri.options', function () {
     L.esri.basemapLayer('Gray').addTo(map);
 
     // hacky way to inspect the css rule itself
-    expect(document.styleSheets[1].rules[0].style.maxWidth).to.equal("445px");
-    expect(document.styleSheets[1].rules[0].selectorText).to.equal(".esri-truncated-attribution");
+    expect(document.styleSheets[1].rules[0].style.maxWidth).to.equal('445px');
+    expect(document.styleSheets[1].rules[0].selectorText).to.equal('.esri-truncated-attribution');
   });
 
   it('should allow for controlling attribution width', function () {
@@ -44,7 +46,8 @@ describe('L.esri.options', function () {
     L.esri.basemapLayer('Gray').addTo(map);
 
     // hacky way to inspect the css rule itself
-    expect(document.styleSheets[1].rules[0].style.maxWidth).to.equal("300px");
-    expect(document.styleSheets[1].rules[0].selectorText).to.equal(".esri-truncated-attribution");
+    expect(document.styleSheets[1].rules[0].style.maxWidth).to.equal('300px');
+    expect(document.styleSheets[1].rules[0].selectorText).to.equal('.esri-truncated-attribution');
   });
 });
+/* eslint-enable handle-callback-err*/

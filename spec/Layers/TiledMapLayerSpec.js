@@ -1,5 +1,7 @@
+/* eslint-env mocha */
+/* eslint-disable handle-callback-err */
 describe('L.esri.TiledMapLayer', function () {
-  function createMap(){
+  function createMap () {
     // create container
     var container = document.createElement('div');
 
@@ -15,8 +17,9 @@ describe('L.esri.TiledMapLayer', function () {
   var url = 'http://services.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer';
   var layer;
   var server;
+  var map;
 
-  beforeEach(function(){
+  beforeEach(function () {
     server = sinon.fakeServer.create();
     layer = L.esri.tiledMapLayer({
       url: url
@@ -24,7 +27,7 @@ describe('L.esri.TiledMapLayer', function () {
     map = createMap();
   });
 
-  afterEach(function(){
+  afterEach(function () {
     server.restore();
   });
 
@@ -37,7 +40,7 @@ describe('L.esri.TiledMapLayer', function () {
       url: 'http://tiles.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer'
     });
     expect(layer.tileUrl).to.equal('http://tiles{s}.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer/tile/{z}/{y}/{x}');
-    expect(layer.options.subdomains).to.deep.equal(['1','2','3','4']);
+    expect(layer.options.subdomains).to.deep.equal(['1', '2', '3', '4']);
   });
 
   it('will modify url for new tiles.arcgis.com services', function () {
@@ -45,23 +48,23 @@ describe('L.esri.TiledMapLayer', function () {
       url: 'http://tiles.arcgis.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer'
     });
     expect(layer.tileUrl).to.equal('http://tiles{s}.arcgis.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer/tile/{z}/{y}/{x}');
-    expect(layer.options.subdomains).to.deep.equal(['1','2','3','4']);
+    expect(layer.options.subdomains).to.deep.equal(['1', '2', '3', '4']);
   });
 
-  it('should expose the authenticate method on the underlying service', function(){
+  it('should expose the authenticate method on the underlying service', function () {
     var spy = sinon.spy(layer.service, 'authenticate');
     layer.authenticate('foo');
     expect(spy).to.have.been.calledWith('foo');
   });
 
-  it('should expose the query method on the underlying service', function(){
-    var spy = sinon.spy(layer.service, 'identify');
+  it('should expose the query method on the underlying service', function () {
+    // var spy = sinon.spy(layer.service, 'identify');
     var identify = layer.identify();
     expect(identify).to.be.an.instanceof(L.esri.IdentifyFeatures);
     expect(identify._service).to.equal(layer.service);
   });
 
-  it('should propagate events from the service', function(){
+  it('should propagate events from the service', function () {
     server.respondWith('GET', 'http://services.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer&f=json', JSON.stringify({
       currentVersion: 10.2
     }));
@@ -72,7 +75,7 @@ describe('L.esri.TiledMapLayer', function () {
     layer.on('requeststart', requeststartSpy);
     layer.on('requestend', requestendSpy);
 
-    layer.metadata(function(){});
+    layer.metadata(function () {});
 
     server.respond();
 
@@ -80,14 +83,14 @@ describe('L.esri.TiledMapLayer', function () {
     expect(requestendSpy.callCount).to.be.above(0);
   });
 
-  it('should have a L.esri.tiledMapLayer alias', function(){
+  it('should have a L.esri.tiledMapLayer alias', function () {
     layer = L.esri.tiledMapLayer({
       url: url
     });
     expect(layer).to.be.instanceof(L.esri.TiledMapLayer);
   });
 
-  it('should use a token passed in options', function(){
+  it('should use a token passed in options', function () {
     layer = L.esri.tiledMapLayer({
       url: url,
       token: 'foo'
@@ -96,7 +99,7 @@ describe('L.esri.TiledMapLayer', function () {
     expect(layer.tileUrl).to.equal('http://services.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer/tile/{z}/{y}/{x}?token=foo');
   });
 
-  it('should use a token passed with authenticate()', function(){
+  it('should use a token passed with authenticate()', function () {
     layer = L.esri.tiledMapLayer({
       url: url
     });
@@ -106,7 +109,7 @@ describe('L.esri.TiledMapLayer', function () {
     expect(layer.tileUrl).to.equal('http://services.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer/tile/{z}/{y}/{x}?token=foo');
   });
 
-  it('should reauthenticate with a token authenticate()', function(){
+  it('should reauthenticate with a token authenticate()', function () {
     layer = L.esri.tiledMapLayer({
       url: url,
       token: 'foo'
@@ -117,7 +120,7 @@ describe('L.esri.TiledMapLayer', function () {
     expect(layer.tileUrl).to.equal('http://services.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer/tile/{z}/{y}/{x}?token=bar');
   });
 
-  it('should display an attribution if one was passed', function(){
+  it('should display an attribution if one was passed', function () {
     L.esri.tiledMapLayer({
       url: url,
       attribution: 'Esri'
@@ -126,20 +129,20 @@ describe('L.esri.TiledMapLayer', function () {
     expect(map.attributionControl._container.innerHTML).to.contain('Esri');
   });
 
-  it('should display a metadata attribution if one is present and no attribution option was passed', function(){
+  it('should display a metadata attribution if one is present and no attribution option was passed', function () {
     var copyrightText;
     layer = L.esri.tiledMapLayer({
       url: url
     }).addTo(map);
 
-    layer.on('load', function(){
-      layer.metadata(function(err, meta){
-        if(meta && meta.hasOwnProperty(copyrightText)){
+    layer.on('load', function () {
+      layer.metadata(function (err, meta) {
+        if (meta && meta.hasOwnProperty(copyrightText)) {
           copyrightText = meta.copyrightText;
           expect(map.attributionControl._container.innerHTML).to.contain(copyrightText);
         }
       });
     });
   });
-
 });
+/* eslint-enable handle-callback-err*/

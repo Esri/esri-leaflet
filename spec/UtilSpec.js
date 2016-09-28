@@ -1,3 +1,4 @@
+/* eslint-env mocha */
 describe('L.esri.Util', function () {
   var sampleExtent = {
     xmin: -122.70,
@@ -8,8 +9,8 @@ describe('L.esri.Util', function () {
   };
 
   var sampleBounds = new L.LatLngBounds([
-    [45.50, -122.70], //sw lat, lng
-    [45.52, -122.64] //ne lat lng
+    [45.50, -122.70], // sw lat, lng
+    [45.52, -122.64] // ne lat lng
   ]);
 
   var hostedFeatureServiceUrl = 'http://services.arcgis.com/rOo.../arcgis/rest/services/RawsomeServiceName/FeatureServer/0';
@@ -34,17 +35,17 @@ describe('L.esri.Util', function () {
     expect(extent.ymax).to.equal(sampleBounds.getNorthEast().lat);
   });
 
-  it('should trim whitespace from urls with cleanUrl', function(){
+  it('should trim whitespace from urls with cleanUrl', function () {
     var url = L.esri.Util.cleanUrl('  http://arcgis.com/  ');
     expect(url).to.equal('http://arcgis.com/');
   });
 
-  it('should add a trailing slash to the url with cleanUrl', function(){
+  it('should add a trailing slash to the url with cleanUrl', function () {
     var url = L.esri.Util.cleanUrl('http://arcgis.com');
     expect(url).to.equal('http://arcgis.com/');
   });
 
-  it('shouldnt trim spaces in the middle', function(){
+  it('shouldnt trim spaces in the middle', function () {
     var url = L.esri.Util.cleanUrl('   http://arcgis.com/cool folder/anotherfolder ');
     expect(url).to.equal('http://arcgis.com/cool folder/anotherfolder/');
   });
@@ -54,5 +55,4 @@ describe('L.esri.Util', function () {
     expect(L.esri.Util.isArcgisOnline(otherServiceUrl)).to.be.false;
     expect(L.esri.Util.isArcgisOnline(normalFeatureServiceUrl)).to.be.false;
   });
-
 });
