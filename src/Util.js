@@ -1,6 +1,6 @@
 import L from 'leaflet';
 import { jsonp } from './Request';
-import { Options } from './Options';
+import { options } from './Options';
 
 import {
   geojsonToArcGIS as g2a,
@@ -71,7 +71,7 @@ export function responseToFeatureCollection (response, idAttribute) {
       if (key.match(/^(OBJECTID|FID|OID|ID)$/i)) {
         objectIdField = key;
         break;
-      };
+      }
     }
   }
 
@@ -142,7 +142,7 @@ export function warn () {
 
 export function calcAttributionWidth (map) {
   // either crop at 55px or user defined buffer
-  return (map.getSize().x - Options.attributionWidthOffset) + 'px';
+  return (map.getSize().x - options.attributionWidthOffset) + 'px';
 }
 
 export function setEsriAttribution (map) {
