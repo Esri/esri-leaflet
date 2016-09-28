@@ -22,9 +22,6 @@ describe('L.esri.Query', function () {
   var bounds = L.latLngBounds([[45.5, -122.66], [45.51, -122.65]]);
   var latlng = L.latLng(45.51, -122.66);
 
-  // var rawBounds = [[45.5, -122.66], [ 45.51, -122.65]];
-  // var rawLatLng = [45.51, -122.66];
-
   var rawGeoJsonPolygon = {
     'type': 'Polygon',
     'coordinates': [[

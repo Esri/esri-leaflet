@@ -1,4 +1,3 @@
-// npm import { rollup } from 'rollup';
 import json from 'rollup-plugin-json';
 import nodeResolve from 'rollup-plugin-node-resolve';
 
