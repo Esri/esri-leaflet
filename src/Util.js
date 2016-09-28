@@ -1,5 +1,7 @@
 import L from 'leaflet';
 import { jsonp } from './Request';
+import { Options } from './Options';
+
 import {
   geojsonToArcGIS as g2a,
   arcgisToGeoJSON as a2g
@@ -139,8 +141,8 @@ export function warn () {
 }
 
 export function calcAttributionWidth (map) {
-  // slightly less than the width of the map
-  return (map.getSize().x - 20) + 'px';
+  // either crop at 55px or user defined buffer
+  return (map.getSize().x - Options.attributionWidthOffset) + 'px';
 }
 
 export function setEsriAttribution (map) {
@@ -150,7 +152,7 @@ export function setEsriAttribution (map) {
     var hoverAttributionStyle = document.createElement('style');
     hoverAttributionStyle.type = 'text/css';
     hoverAttributionStyle.innerHTML = '.esri-truncated-attribution:hover {' +
-      'white-space: normal;'
+      'white-space: normal;' +
     '}';
 
     document.getElementsByTagName('head')[0].appendChild(hoverAttributionStyle);
@@ -167,7 +169,7 @@ export function setEsriAttribution (map) {
       'display: inline-block;' +
       'transition: 0s white-space;' +
       'transition-delay: 1s;' +
-      'max-width:' + calcAttributionWidth(map) +';'
+      'max-width: ' + calcAttributionWidth(map) + ';' +
     '}';
 
     document.getElementsByTagName('head')[0].appendChild(attributionStyle);
