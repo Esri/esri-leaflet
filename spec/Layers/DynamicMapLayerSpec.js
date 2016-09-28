@@ -1,4 +1,5 @@
 /* eslint-env mocha */
+/* eslint-disable handle-callback-err */
 describe('L.esri.DynamicMapLayer', function () {
   function createMap () {
     // create container
@@ -323,9 +324,7 @@ describe('L.esri.DynamicMapLayer', function () {
     server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/identify\?sr=4326&layers=visible&tolerance=3&returnGeometry=true&imageDisplay=500%2C500%2C96&mapExtent=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&geometry=-?\d+\.\d+%2C-?\d+\.\d+&geometryType=esriGeometryPoint&f=json/), JSON.stringify(sampleResponse));
 
     layer.bindPopup(function (error, featureCollection) {
-      if (!error) {
-        return featureCollection.features.length + ' Feature(s)';
-      }
+      return featureCollection.features.length + ' Feature(s)';
     });
 
     layer.addTo(map);
@@ -348,9 +347,7 @@ describe('L.esri.DynamicMapLayer', function () {
     layer.addTo(map);
 
     layer.bindPopup(function (error, featureCollection) {
-      if (!error) {
-        return featureCollection.features.length + ' Feature(s)';
-      }
+      return featureCollection.features.length + ' Feature(s)';
     });
 
     map.fire('click', {
@@ -369,9 +366,7 @@ describe('L.esri.DynamicMapLayer', function () {
     var spy = sinon.spy(map, 'off');
     layer.addTo(map);
     layer.bindPopup(function (error, featureCollection) {
-      if (!error) {
-        return featureCollection.features.length + ' Feature(s)';
-      }
+      return featureCollection.features.length + ' Feature(s)';
     });
 
     layer.unbindPopup();
@@ -387,9 +382,7 @@ describe('L.esri.DynamicMapLayer', function () {
     layer.addTo(map);
 
     layer.bindPopup(function (error, featureCollection) {
-      if (!error) {
-        return featureCollection.features.length + ' Feature(s)';
-      }
+      return featureCollection.features.length + ' Feature(s)';
     });
 
     map.removeLayer(layer);
@@ -409,3 +402,4 @@ describe('L.esri.DynamicMapLayer', function () {
     server.respond();
   });
 });
+/* eslint-enable handle-callback-err */
