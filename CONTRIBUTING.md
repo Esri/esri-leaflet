@@ -54,4 +54,4 @@ Please make sure your changes pass JS Hint. This will help make sure code is con
 
 ### Testing
 
-Please make sure your changes don't break existing tests. Testing is essential for determining backward compatibility and catching breaking changes. You can run tests with `npm test` (or `npm t` if you'd like to avoid typing three extra characters).
+Please make sure your changes don't break existing tests. Testing is essential for determining backward compatibility and catching breaking changes. You can run tests with `npm test` (or `npm t`, or `npm run test` if you're not into the whole brevity thing).

@@ -53,9 +53,9 @@ The easiest way to get started is to load Esri Leaflet via [CDN](https://unpkg.c
 <!DOCTYPE html>
 <html>
   <head>
-     <!-- Load Leaflet from CDN-->
-     <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.3/leaflet.css" />
-     <script src="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.3/leaflet.js"></script>
+    <!-- Load Leaflet from CDN-->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.0/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.0.0/dist/leaflet-src.js"></script>
 
     <!-- Load Esri Leaflet locally, after cloning this repository -->
     <script src="https://unpkg.com/esri-leaflet@2.0.3"></script>
@@ -116,7 +116,7 @@ http://esri.github.io/esri-leaflet/plugins/)
 * [Will Esri Leaflet replace the ArcGIS API for JavaScript?](https://github.com//Esri/esri-leaflet/wiki/FAQ#will-esri-leaflet-replace-the-arcgis-api-for-javascript)
 * [What is the benefit of using Esri Leaflet over using Leaflet all by itself?](https://github.com//Esri/esri-leaflet/wiki/FAQ#why-use-esri-leaflet)
 * [What are the goals of Esri Leaflet?](https://github.com//Esri/esri-leaflet/wiki/FAQ#what-are-the-goals-of-esri-leaflet)
-* [Can I use Esri Leaflet with Leaflet Version 1.0.0-beta1?](https://github.com//Esri/esri-leaflet/wiki/FAQ#can-i-use-esri-leaflet-with-leaflet-version-100-beta1)
+* [Can I use Esri Leaflet with Leaflet Version 1.0.x?](https://github.com/Esri/esri-leaflet/wiki/FAQ#can-i-use-esri-leaflet-with-leaflet-version-10x)
 * [How do you decide what features get included in Esri Leaflet?](https://github.com//Esri/esri-leaflet/wiki/FAQ#how-do-you-decide-what-features-get-included-in-esri-leaflet)
 * [I have an idea! What should I do?](https://github.com//Esri/esri-leaflet/wiki/FAQ#i-have-an-idea-what-should-i-do)
 * [When will you support "x"?](https://github.com//Esri/esri-leaflet/wiki/FAQ#when-will-you-support-x)
@@ -157,7 +157,7 @@ If you'd like to inspect and modify the source of Esri Leaflet, follow the instr
   *  [Leaflet](http://leafletjs.com) version 0.7.x.
 
 * Esri Leaflet [2.x](https://github.com/Esri/esri-leaflet/releases/tag/v2.0.2) (available on [CDN](https://unpkg.com/esri-leaflet@2.0.3)) can be used in apps alongside:
-  *  [Leaflet](http://leafletjs.com) version 1.0.0-rc.X.
+  *  [Leaflet](http://leafletjs.com) version 1.0.x.
 
 The `master` branch of this repository is only compatible with Leaflet 1.0.x.
 
