@@ -1,10 +1,11 @@
+/* eslint-env mocha */
+/* eslint-disable handle-callback-err*/
 describe('L.esri.IdentifyImage', function () {
-
-  function deepClone(obj) {
+  function deepClone (obj) {
     return JSON.parse(JSON.stringify(obj));
   }
 
-  function createMap(){
+  function createMap () {
     // create container
     var container = document.createElement('div');
 
@@ -29,19 +30,19 @@ describe('L.esri.IdentifyImage', function () {
   var imageServiceUrl = 'http://services.arcgis.com/mock/arcgis/rest/services/MockImageService/ImageServer/';
 
   var sampleResponse = {
-    'objectId' : 0,
-    'name' : 'Pixel',
-    'value' : '-17.5575',
-    'location' :
+    'objectId': 0,
+    'name': 'Pixel',
+    'value': '-17.5575',
+    'location':
     {
       'x': -122.81,
       'y': 45.48,
-      'spatialReference' : {
+      'spatialReference': {
         'wkid': 4326
       }
-    }, 'properties' : null,
-    'catalogItems' : null,
-    'catalogItemVisibilities' : []
+    }, 'properties': null,
+    'catalogItems': null,
+    'catalogItemVisibilities': []
   };
 
   var sampleResults = {
@@ -54,7 +55,7 @@ describe('L.esri.IdentifyImage', function () {
       'crs': {
         'type': 'EPSG',
         'properties': {
-           'code': 4326
+          'code': 4326
         }
       },
       'properties': {
@@ -67,36 +68,36 @@ describe('L.esri.IdentifyImage', function () {
   };
 
   var sampleResponseWithCatalogItems = {
-    'objectId' : 0,
-    'name' : 'Pixel',
-    'value' : '17, 22, 39, 45',
-    'location' :
+    'objectId': 0,
+    'name': 'Pixel',
+    'value': '17, 22, 39, 45',
+    'location':
     {
-      'x' : -13527177.6374152,
-      'y' : 5837991.41167063,
-      'spatialReference' : {
-        'wkid' : 54004
+      'x': -13527177.6374152,
+      'y': 5837991.41167063,
+      'spatialReference': {
+        'wkid': 54004
       }
     },
-    'properties' :
+    'properties':
     {
-      'Values' : [
+      'Values': [
         '10 18 34 43',
         '17 22 39 45'
       ]
     },
-    'catalogItems' :
+    'catalogItems':
     {
-      'objectIdFieldName' : 'OBJECTID',
-      'spatialReference' : {
-        'wkid' : 54004
+      'objectIdFieldName': 'OBJECTID',
+      'spatialReference': {
+        'wkid': 54004
       },
-      'geometryType' : 'esriGeometryPolygon',
-      'features' : [
+      'geometryType': 'esriGeometryPolygon',
+      'features': [
         {
-          'geometry' :
+          'geometry':
           {
-            'rings' :
+            'rings':
             [
               [
                 [-13460551.7089, 5854521.5319],
@@ -119,36 +120,36 @@ describe('L.esri.IdentifyImage', function () {
               ]
             ]
           },
-          'attributes' :
+          'attributes':
           {
-            'OBJECTID' : 6,
-            'Name' : 'p046r028_7t19990907.met;p046r028_7t19990907.met',
-            'MinPS' : 0,
-            'MaxPS' : 28.5,
-            'LowPS' : 14.25,
-            'HighPS' : 114,
-            'Category' : 1,
-            'Tag' : 'Pansharpened',
-            'GroupName' : 'p046r028_7t19990907',
-            'ProductName' : 'Level1',
-            'CenterX' : -13624980.3112093,
-            'CenterY' : 5756154.02144619,
-            'ZOrder' : null,
-            'SOrder' : null,
-            'StereoID' : '',
-            'SensorName' : 'Landsat-7-ETM+',
-            'AcquisitionDate' : 936662400000,
-            'SunAzimuth' : 150.8831799,
-            'SunElevation' : 46.5205819,
-            'CloudCover' : 0,
-            'Shape_Length' : 1058133.67231272,
-            'Shape_Area' : 69904833443.6272
+            'OBJECTID': 6,
+            'Name': 'p046r028_7t19990907.met;p046r028_7t19990907.met',
+            'MinPS': 0,
+            'MaxPS': 28.5,
+            'LowPS': 14.25,
+            'HighPS': 114,
+            'Category': 1,
+            'Tag': 'Pansharpened',
+            'GroupName': 'p046r028_7t19990907',
+            'ProductName': 'Level1',
+            'CenterX': -13624980.3112093,
+            'CenterY': 5756154.02144619,
+            'ZOrder': null,
+            'SOrder': null,
+            'StereoID': '',
+            'SensorName': 'Landsat-7-ETM+',
+            'AcquisitionDate': 936662400000,
+            'SunAzimuth': 150.8831799,
+            'SunElevation': 46.5205819,
+            'CloudCover': 0,
+            'Shape_Length': 1058133.67231272,
+            'Shape_Area': 69904833443.6272
           }
         },
         {
-          'geometry' :
+          'geometry':
           {
-            'rings' :
+            'rings':
             [
               [
                 [-13292489.9099, 5855431.779],
@@ -171,66 +172,66 @@ describe('L.esri.IdentifyImage', function () {
               ]
             ]
           },
-          'attributes' :
+          'attributes':
           {
-            'OBJECTID' : 2,
-            'Name' : 'p045r028_7t19991002.met;p045r028_7t19991002.met',
-            'MinPS' : 0,
-            'MaxPS' : 28.5,
-            'LowPS' : 14.25,
-            'HighPS' : 114,
-            'Category' : 1,
-            'Tag' : 'Pansharpened',
-            'GroupName' : 'p045r028_7t19991002',
-            'ProductName' : 'Level1',
-            'CenterX' : -13456998.9817332,
-            'CenterY' : 5756986.51347787,
-            'ZOrder' : null,
-            'SOrder' : null,
-            'StereoID' : '',
-            'SensorName' : 'Landsat-7-ETM+',
-            'AcquisitionDate' : 938822400000,
-            'SunAzimuth' : 157.6031865,
-            'SunElevation' : 37.975699,
-            'CloudCover' : 50,
-            'Shape_Length' : 1058012.72377166,
-            'Shape_Area' : 69884678121.7441
+            'OBJECTID': 2,
+            'Name': 'p045r028_7t19991002.met;p045r028_7t19991002.met',
+            'MinPS': 0,
+            'MaxPS': 28.5,
+            'LowPS': 14.25,
+            'HighPS': 114,
+            'Category': 1,
+            'Tag': 'Pansharpened',
+            'GroupName': 'p045r028_7t19991002',
+            'ProductName': 'Level1',
+            'CenterX': -13456998.9817332,
+            'CenterY': 5756986.51347787,
+            'ZOrder': null,
+            'SOrder': null,
+            'StereoID': '',
+            'SensorName': 'Landsat-7-ETM+',
+            'AcquisitionDate': 938822400000,
+            'SunAzimuth': 157.6031865,
+            'SunElevation': 37.975699,
+            'CloudCover': 50,
+            'Shape_Length': 1058012.72377166,
+            'Shape_Area': 69884678121.7441
           }
         }
       ]
     },
-    'catalogItemVisibilities' : [
+    'catalogItemVisibilities': [
       0.671180049953907,
       0.328819950035319
     ]
   };
 
   var sampleResultsWithCatlaogItems = {
-  'pixel': {
-    'type': 'Feature',
-    'geometry': {
-      'type': 'Point',
-      'coordinates': [-13527177.6374152, 5837991.41167063]
-    },
-    'crs': {
-      'type': 'EPSG',
+    'pixel': {
+      'type': 'Feature',
+      'geometry': {
+        'type': 'Point',
+        'coordinates': [-13527177.6374152, 5837991.41167063]
+      },
+      'crs': {
+        'type': 'EPSG',
+        'properties': {
+          'code': 54004
+        }
+      },
       'properties': {
-         'code': 54004
-      }
+        'OBJECTID': 0,
+        'name': 'Pixel',
+        'value': '17, 22, 39, 45',
+        'values': [
+          '10 18 34 43',
+          '17 22 39 45'
+        ]
+      },
+      'id': 0
     },
-    'properties': {
-      'OBJECTID': 0,
-      'name': 'Pixel',
-      'value': '17, 22, 39, 45',
-      'values': [
-        '10 18 34 43',
-        '17 22 39 45'
-      ]
-    },
-    'id': 0
-  },
-  'catalogItems': {
-    'type':'FeatureCollection',
+    'catalogItems': {
+      'type': 'FeatureCollection',
       'features': [{
         'type': 'Feature',
         'geometry': {
@@ -339,19 +340,19 @@ describe('L.esri.IdentifyImage', function () {
     }
   };
 
-  beforeEach(function(){
+  beforeEach(function () {
     server = sinon.fakeServer.create();
     task = L.esri.identifyImage({url: imageServiceUrl}).at(latlng);
   });
 
-  afterEach(function(){
+  afterEach(function () {
     server.restore();
   });
 
-  it('should identify a pixel value at location', function(done){
+  it('should identify a pixel value at location', function (done) {
     server.respondWith('GET', imageServiceUrl + 'identify?returnGeometry=false&geometry=%7B%22x%22%3A-122.66%2C%22y%22%3A45.51%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPoint&f=json', JSON.stringify(sampleResponse));
 
-    var request = task.run(function(error, results, raw){
+    var request = task.run(function (error, results, raw) {
       expect(results).to.deep.equal(sampleResults);
       expect(raw).to.deep.equal(sampleResponse);
       done();
@@ -362,10 +363,10 @@ describe('L.esri.IdentifyImage', function () {
     server.respond();
   });
 
-  it('should identify a pixel value at location with simple LatLng', function(done){
+  it('should identify a pixel value at location with simple LatLng', function (done) {
     server.respondWith('GET', imageServiceUrl + 'identify?returnGeometry=false&geometry=%7B%22x%22%3A-122.66%2C%22y%22%3A45.51%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPoint&f=json', JSON.stringify(sampleResponse));
 
-    var request = task.at(rawLatlng).run(function(error, results, raw){
+    var request = task.at(rawLatlng).run(function (error, results, raw) {
       expect(results).to.deep.equal(sampleResults);
       expect(raw).to.deep.equal(sampleResponse);
       done();
@@ -376,14 +377,14 @@ describe('L.esri.IdentifyImage', function () {
     server.respond();
   });
 
-  it('should identify a pixel value with mosaic rule', function(done){
-    var mosaicRule = {mosaicMethod:'esriMosaicLockRaster','lockRasterIds':[8]};
+  it('should identify a pixel value with mosaic rule', function (done) {
+    var mosaicRule = {mosaicMethod: 'esriMosaicLockRaster', 'lockRasterIds': [8]};
     server.respondWith('GET', imageServiceUrl + 'identify?returnGeometry=false&geometry=%7B%22x%22%3A-122.66%2C%22y%22%3A45.51%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A%22esriMosaicLockRaster%22%2C%22lockRasterIds%22%3A%5B8%5D%7D&f=json', JSON.stringify(sampleResponse));
 
     task.setMosaicRule(mosaicRule);
     expect(task.getMosaicRule()).to.deep.equal(mosaicRule);
 
-    task.run(function(error, results, raw){
+    task.run(function (error, results, raw) {
       expect(results).to.deep.equal(sampleResults);
       expect(raw).to.deep.equal(sampleResponse);
       done();
@@ -392,14 +393,14 @@ describe('L.esri.IdentifyImage', function () {
     server.respond();
   });
 
-  it('should identify a pixel value with rendering rule', function(done){
-    var renderingRule = {rasterFunction : 'RFTAspectColor'};
+  it('should identify a pixel value with rendering rule', function (done) {
+    var renderingRule = {rasterFunction: 'RFTAspectColor'};
     server.respondWith('GET', imageServiceUrl + 'identify?returnGeometry=false&geometry=%7B%22x%22%3A-122.66%2C%22y%22%3A45.51%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPoint&renderingRule=%7B%22rasterFunction%22%3A%22RFTAspectColor%22%7D&f=json', JSON.stringify(sampleResponse));
 
     task.setRenderingRule(renderingRule);
     expect(task.getRenderingRule()).to.deep.equal(renderingRule);
 
-    task.run(function(error, results, raw){
+    task.run(function (error, results, raw) {
       expect(results).to.deep.equal(sampleResults);
       expect(raw).to.deep.equal(sampleResponse);
       done();
@@ -408,7 +409,7 @@ describe('L.esri.IdentifyImage', function () {
     server.respond();
   });
 
-  it('should identify a pixel value with a pixel size array', function(done){
+  it('should identify a pixel value with a pixel size array', function (done) {
     var pixelSize = [15, 15];
 
     server.respondWith('GET', imageServiceUrl + 'identify?returnGeometry=false&geometry=%7B%22x%22%3A-122.66%2C%22y%22%3A45.51%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPoint&pixelSize=15%2C15&f=json', JSON.stringify(sampleResponse));
@@ -417,7 +418,7 @@ describe('L.esri.IdentifyImage', function () {
 
     expect(task.getPixelSize()).to.equal(pixelSize);
 
-    task.run(function(error, results, raw){
+    task.run(function (error, results, raw) {
       expect(results).to.deep.equal(sampleResults);
       expect(raw).to.deep.equal(sampleResponse);
       done();
@@ -426,7 +427,7 @@ describe('L.esri.IdentifyImage', function () {
     server.respond();
   });
 
-  it('should identify a pixel value with a pixel size string', function(done){
+  it('should identify a pixel value with a pixel size string', function (done) {
     var pixelSize = '1,1';
 
     server.respondWith('GET', imageServiceUrl + 'identify?returnGeometry=false&geometry=%7B%22x%22%3A-122.66%2C%22y%22%3A45.51%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPoint&pixelSize=1%2C1&f=json', JSON.stringify(sampleResponse));
@@ -434,7 +435,7 @@ describe('L.esri.IdentifyImage', function () {
     task.setPixelSize(pixelSize);
     expect(task.getPixelSize()).to.equal(pixelSize);
 
-    task.run(function(error, results, raw){
+    task.run(function (error, results, raw) {
       expect(results).to.deep.equal(sampleResults);
       expect(raw).to.deep.equal(sampleResponse);
       done();
@@ -443,11 +444,11 @@ describe('L.esri.IdentifyImage', function () {
     server.respond();
   });
 
-  it('should return catalog items', function(done){
+  it('should return catalog items', function (done) {
     server.respondWith('GET', imageServiceUrl + 'identify?returnGeometry=true&geometry=%7B%22x%22%3A-122.66%2C%22y%22%3A45.51%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPoint&returnCatalogItems=true&f=json', JSON.stringify(sampleResponseWithCatalogItems));
 
     task.returnGeometry(true).returnCatalogItems(true);
-    task.run(function(error, results, raw) {
+    task.run(function (error, results, raw) {
       expect(results).to.deep.equal(sampleResultsWithCatlaogItems);
       expect(raw).to.deep.equal(sampleResponseWithCatalogItems);
       done();
@@ -456,17 +457,17 @@ describe('L.esri.IdentifyImage', function () {
     server.respond();
   });
 
-  it('should return catalog items w/o geometry', function(done){
+  it('should return catalog items w/o geometry', function (done) {
     var sampleResponseWithCatalogItemsNoGeometry = deepClone(sampleResponseWithCatalogItems);
     var sampleResutlsWithCatalogItemsNoGeomerty = deepClone(sampleResultsWithCatlaogItems);
     for (var i = sampleResponseWithCatalogItemsNoGeometry.catalogItems.features.length - 1; i >= 0; i--) {
-      delete(sampleResponseWithCatalogItemsNoGeometry.catalogItems.features[i].geometry);
+      delete (sampleResponseWithCatalogItemsNoGeometry.catalogItems.features[i].geometry);
       sampleResutlsWithCatalogItemsNoGeomerty.catalogItems.features[i].geometry = null;
     }
     server.respondWith('GET', imageServiceUrl + 'identify?returnGeometry=false&geometry=%7B%22x%22%3A-122.66%2C%22y%22%3A45.51%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPoint&returnCatalogItems=true&f=json', JSON.stringify(sampleResponseWithCatalogItemsNoGeometry));
 
     task.returnCatalogItems(true);
-    task.run(function(error, results, raw) {
+    task.run(function (error, results, raw) {
       expect(results).to.deep.equal(sampleResutlsWithCatalogItemsNoGeomerty);
       expect(raw).to.deep.equal(sampleResponseWithCatalogItemsNoGeometry);
       done();
@@ -474,5 +475,5 @@ describe('L.esri.IdentifyImage', function () {
 
     server.respond();
   });
-
 });
+/* eslint-enable handle-callback-err*/

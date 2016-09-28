@@ -1,5 +1,7 @@
+/* eslint-env mocha */
+/* eslint-disable handle-callback-err*/
 describe('L.esri.FeatureManager', function () {
-  function createMap(){
+  function createMap () {
     // create container
     var container = document.createElement('div');
 
@@ -24,8 +26,8 @@ describe('L.esri.FeatureManager', function () {
   var oldRaf;
   var requests;
 
-  beforeEach(function(){
-    xhr = sinon.useFakeXMLHttpRequest();
+  beforeEach(function () {
+    xhr = sinon.useFakeXMLHttpRequest(); // eslint-disable-line no-native-reassign
     requests = [];
 
     xhr.onCreate = function (xhr) {
@@ -33,11 +35,11 @@ describe('L.esri.FeatureManager', function () {
     };
   });
 
-  afterEach(function(){
+  afterEach(function () {
     requests = [];
   });
 
-  beforeEach(function(){
+  beforeEach(function () {
     server = sinon.fakeServer.create();
     sandbox = sinon.sandbox.create();
     oldRaf = L.Util.requestAnimFrame;
@@ -52,16 +54,16 @@ describe('L.esri.FeatureManager', function () {
       url: url,
       timeField: 'Time',
       attribution: 'Esri',
-      minZoom : 1,
-      maxZoom : 15
+      minZoom: 1,
+      maxZoom: 15
     });
 
-    L.Util.requestAnimFrame = function(cd){
+    L.Util.requestAnimFrame = function (cd) {
       cd();
     };
   });
 
-  afterEach(function(){
+  afterEach(function () {
     server.restore();
     sandbox.restore();
     L.Util.requestAnimFrame = oldRaf;
@@ -75,7 +77,7 @@ describe('L.esri.FeatureManager', function () {
       'sqlType': 'sqlTypeInteger',
       'domain': null,
       'defaultValue': null
-    },{
+    }, {
       'name': 'Name',
       'type': 'esriFieldTypeString',
       'alias': 'Name',
@@ -83,7 +85,7 @@ describe('L.esri.FeatureManager', function () {
       'length': 256,
       'domain': null,
       'defaultValue': null
-    },{
+    }, {
       'name': 'Type',
       'type': 'esriFieldTypeString',
       'alias': 'Type',
@@ -194,11 +196,11 @@ describe('L.esri.FeatureManager', function () {
     'geometry': {
       'rings': [
         [
-          [-109.02,36.98],
-          [-109.02,40.97],
-          [-102.06,40.97],
-          [-102.06,37.01],
-          [-109.02,36.98]
+          [-109.02, 36.98],
+          [-109.02, 40.97],
+          [-102.06, 40.97],
+          [-102.06, 37.01],
+          [-109.02, 36.98]
         ]
       ],
       'spatialReference': {
@@ -207,24 +209,24 @@ describe('L.esri.FeatureManager', function () {
     }
   };
 
-  it('should be able to add itself to a map', function(){
+  it('should be able to add itself to a map', function () {
     layer.addTo(map);
     expect(map.hasLayer(layer)).to.equal(true);
   });
 
-  it('should display an attribution if one was passed', function(){
+  it('should display an attribution if one was passed', function () {
     layer.addTo(map);
     expect(map.attributionControl._container.innerHTML).to.contain('Esri');
   });
 
-  it('should be able to remove itself from a map', function(){
+  it('should be able to remove itself from a map', function () {
     layer.addTo(map);
     map.removeLayer(layer);
     map.hasLayer(layer);
     expect(map.hasLayer(layer)).to.equal(false);
   });
 
-  it('should create features based on the current view of the map', function(){
+  it('should create features based on the current view of the map', function () {
     server.respondWith('GET', 'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.6953125%2C%22ymin%22%3A45.521743896993634%2C%22xmax%22%3A-122.6513671875%2C%22ymax%22%3A45.55252525134013%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&f=json', JSON.stringify({
       fields: fields,
       features: [feature1, feature2],
@@ -240,7 +242,7 @@ describe('L.esri.FeatureManager', function () {
         'type': 'Feature',
         'geometry': {
           'type': 'Point',
-          'coordinates': [-122.673342,45.537161]
+          'coordinates': [-122.673342, 45.537161]
         },
         'properties': {
           'OBJECTID': 2,
@@ -254,7 +256,7 @@ describe('L.esri.FeatureManager', function () {
         'type': 'Feature',
         'geometry': {
           'type': 'Point',
-          'coordinates': [-122.673339,45.537134]
+          'coordinates': [-122.673339, 45.537134]
         },
         'properties': {
           'OBJECTID': 1,
@@ -265,10 +267,9 @@ describe('L.esri.FeatureManager', function () {
         'id': 1
       }
     ]);
-
   });
 
-  it('should fire a drawlimitexceeded event when there are more features then can be requested', function(done){
+  it('should fire a drawlimitexceeded event when there are more features then can be requested', function (done) {
     server.respondWith('GET', 'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.6953125%2C%22ymin%22%3A45.521743896993634%2C%22xmax%22%3A-122.6513671875%2C%22ymax%22%3A45.55252525134013%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&f=json', JSON.stringify({
       fields: fields,
       features: [],
@@ -278,7 +279,7 @@ describe('L.esri.FeatureManager', function () {
 
     layer.addTo(map);
 
-    layer.on('drawlimitexceeded', function(e){
+    layer.on('drawlimitexceeded', function (e) {
       expect(e.type).to.equal('drawlimitexceeded');
       done();
     });
@@ -286,7 +287,7 @@ describe('L.esri.FeatureManager', function () {
     server.respond();
   });
 
-  it('should filter existing features with a single time field', function(){
+  it('should filter existing features with a single time field', function () {
     server.respondWith('GET', 'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.6953125%2C%22ymin%22%3A45.521743896993634%2C%22xmax%22%3A-122.6513671875%2C%22ymax%22%3A45.55252525134013%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&f=json', JSON.stringify({
       fields: fields,
       features: [feature2, feature3],
@@ -308,7 +309,7 @@ describe('L.esri.FeatureManager', function () {
     expect(layer.addLayers).to.have.been.calledWith([2]);
   });
 
-  it('should load more features with a single time field', function(){
+  it('should load more features with a single time field', function () {
     server.respondWith('GET', 'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.6953125%2C%22ymin%22%3A45.521743896993634%2C%22xmax%22%3A-122.6513671875%2C%22ymax%22%3A45.55252525134013%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&time=1385884800000%2C1389340800000&f=json', JSON.stringify({
       fields: fields,
       features: [feature1],
@@ -325,7 +326,7 @@ describe('L.esri.FeatureManager', function () {
       'type': 'Feature',
       'geometry': {
         'type': 'Point',
-        'coordinates': [-122.673339,45.537134]
+        'coordinates': [-122.673339, 45.537134]
       },
       'properties': {
         'OBJECTID': 1,
@@ -352,7 +353,7 @@ describe('L.esri.FeatureManager', function () {
       'type': 'Feature',
       'geometry': {
         'type': 'Point',
-        'coordinates': [-122.673342,45.537161]
+        'coordinates': [-122.673342, 45.537161]
       },
       'properties': {
         'OBJECTID': 2,
@@ -364,7 +365,7 @@ describe('L.esri.FeatureManager', function () {
     }]);
   });
 
-  it('should filter existing features with a start and end time field', function(){
+  it('should filter existing features with a start and end time field', function () {
     layer = new MockLayer({
       url: url,
       timeField: {
@@ -394,7 +395,7 @@ describe('L.esri.FeatureManager', function () {
     expect(layer.addLayers).to.have.been.calledWith([5, 5]);
   });
 
-  it('should load more features  with a start and end time field', function(){
+  it('should load more features  with a start and end time field', function () {
     layer = new MockLayer({
       url: url,
       timeField: {
@@ -417,7 +418,7 @@ describe('L.esri.FeatureManager', function () {
     expect(layer.createLayers).to.have.been.calledWith([{
       'geometry': {
         'type': 'Point',
-        'coordinates': [-122.673342,45.537161]
+        'coordinates': [-122.673342, 45.537161]
       },
       'id': 4,
       'properties': {
@@ -447,7 +448,7 @@ describe('L.esri.FeatureManager', function () {
     expect(layer.createLayers).to.have.been.calledWith([{
       'geometry': {
         'type': 'Point',
-        'coordinates': [-122.629394,45.537134]
+        'coordinates': [-122.629394, 45.537134]
       },
       'id': 5,
       'properties': {
@@ -461,14 +462,14 @@ describe('L.esri.FeatureManager', function () {
     }]);
   });
 
-  it('should filter features with a where parameter', function(){
-    server.respondWith('GET', /Type%3D\'Active\'/g, JSON.stringify({
+  it('should filter features with a where parameter', function () {
+    server.respondWith('GET', /Type%3D'Active'/g, JSON.stringify({
       fields: fields,
       features: [feature1],
       objectIdFieldName: 'OBJECTID'
     }));
 
-    server.respondWith('GET', /Type%3D\'Inactive\'/g, JSON.stringify({
+    server.respondWith('GET', /Type%3D'Inactive'/g, JSON.stringify({
       fields: fields,
       features: [feature2],
       objectIdFieldName: 'OBJECTID'
@@ -483,7 +484,7 @@ describe('L.esri.FeatureManager', function () {
       'type': 'Feature',
       'geometry': {
         'type': 'Point',
-        'coordinates': [-122.673339,45.537134]
+        'coordinates': [-122.673339, 45.537134]
       },
       'properties': {
         'OBJECTID': 1,
@@ -506,7 +507,7 @@ describe('L.esri.FeatureManager', function () {
       'type': 'Feature',
       'geometry': {
         'type': 'Point',
-        'coordinates': [-122.673342,45.537161]
+        'coordinates': [-122.673342, 45.537161]
       },
       'properties': {
         'OBJECTID': 2,
@@ -518,14 +519,14 @@ describe('L.esri.FeatureManager', function () {
     }]);
   });
 
-  it('should return true for features with a single time field in the current time range', function(){
+  it('should return true for features with a single time field in the current time range', function () {
     layer.setTimeRange(new Date('Dec 1 2013 GMT-0800'), new Date('January 10 2014 GMT-0800'));
 
     expect(layer._featureWithinTimeRange({
       'type': 'Feature',
       'geometry': {
         'type': 'Point',
-        'coordinates': [-122.673339,45.537134]
+        'coordinates': [-122.673339, 45.537134]
       },
       'properties': {
         'OBJECTID': 1,
@@ -540,7 +541,7 @@ describe('L.esri.FeatureManager', function () {
       'type': 'Feature',
       'geometry': {
         'type': 'Point',
-        'coordinates': [-122.673342,45.537161]
+        'coordinates': [-122.673342, 45.537161]
       },
       'properties': {
         'OBJECTID': 2,
@@ -552,7 +553,7 @@ describe('L.esri.FeatureManager', function () {
     })).not.to.equal(true);
   });
 
-  it('should return true for features with a single feature with start and end time fields in the current time range', function(){
+  it('should return true for features with a single feature with start and end time fields in the current time range', function () {
     var layer = new L.esri.FeatureManager({
       url: url,
       from: new Date('Dec 1 2013 GMT-0800'),
@@ -567,7 +568,7 @@ describe('L.esri.FeatureManager', function () {
       'type': 'Feature',
       'geometry': {
         'type': 'Point',
-        'coordinates': [-122.673339,45.537134]
+        'coordinates': [-122.673339, 45.537134]
       },
       'properties': {
         'OBJECTID': 1,
@@ -583,7 +584,7 @@ describe('L.esri.FeatureManager', function () {
       'type': 'Feature',
       'geometry': {
         'type': 'Point',
-        'coordinates': [-122.673342,45.537161]
+        'coordinates': [-122.673342, 45.537161]
       },
       'properties': {
         'OBJECTID': 2,
@@ -596,12 +597,12 @@ describe('L.esri.FeatureManager', function () {
     })).to.equal(false);
   });
 
-  it('should return false when no time range is set', function(){
+  it('should return false when no time range is set', function () {
     expect(layer._featureWithinTimeRange({
       'type': 'Feature',
       'geometry': {
         'type': 'Point',
-        'coordinates': [-122.673339,45.537134]
+        'coordinates': [-122.673339, 45.537134]
       },
       'properties': {
         'OBJECTID': 1,
@@ -614,36 +615,36 @@ describe('L.esri.FeatureManager', function () {
     })).to.equal(true);
   });
 
-  it('should be able to get the time range', function(){
+  it('should be able to get the time range', function () {
     layer.setTimeRange(new Date('January 13 2014 GMT-0800'), new Date('January 16 2014 GMT-0800'));
     expect(layer.getTimeRange()).to.deep.equal([new Date('January 13 2014 GMT-0800'), new Date('January 16 2014 GMT-0800')]);
   });
 
-  it('should be able to get the where', function(){
+  it('should be able to get the where', function () {
     expect(layer.getWhere()).to.equal('1=1');
   });
 
-  it('should be able to reset the where', function(){
+  it('should be able to reset the where', function () {
     layer.setWhere('Type="Active"');
     layer.setWhere();
     expect(layer.getWhere()).to.equal('1=1');
   });
 
-  it('should expose the authenticate method on the underlying service', function(){
+  it('should expose the authenticate method on the underlying service', function () {
     var spy = sinon.spy(layer.service, 'authenticate');
     layer.authenticate('foo');
     expect(spy).to.have.been.calledWith('foo');
   });
 
-  it('should expose the metadata method on the underlying service', function(){
+  it('should expose the metadata method on the underlying service', function () {
     var spy = sinon.spy(layer.service, 'metadata');
     var callback = sinon.spy();
     layer.metadata(callback);
     expect(spy).to.have.been.calledWith(callback);
   });
 
-  it('should expose the query method on the underlying service', function(){
-    var spy = sinon.spy(layer.service, 'query');
+  it('should expose the query method on the underlying service', function () {
+    // var spy = sinon.spy(layer.service, 'query');
     var query = layer.query();
     expect(query).to.be.an.instanceof(L.esri.Query);
     expect(query._service).to.equal(layer.service);
@@ -681,11 +682,11 @@ describe('L.esri.FeatureManager', function () {
   //   }));
   // });
 
-  it('should wrap the updateFeature method on the underlying service and refresh', function(done){
+  it('should wrap the updateFeature method on the underlying service and refresh', function (done) {
     server.respondWith('POST', 'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/updateFeatures', JSON.stringify({
-      'updateResults' : [{
-        'objectId' : 1,
-        'success' : true
+      'updateResults': [{
+        'objectId': 1,
+        'success': true
       }]
     }));
 
@@ -699,7 +700,7 @@ describe('L.esri.FeatureManager', function () {
       properties: {
         foo: 'bar'
       }
-    }, function(error, response){
+    }, function (error, response) {
       expect(response).to.deep.equal({
         'objectId': 1,
         'success': true
@@ -710,15 +711,15 @@ describe('L.esri.FeatureManager', function () {
     server.respond();
   });
 
-  it('should wrap the removeFeature method on the underlying service', function(done){
+  it('should wrap the removeFeature method on the underlying service', function (done) {
     server.respondWith('POST', 'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/deleteFeatures', JSON.stringify({
-      'deleteResults' : [{
-        'objectId' : 1,
-        'success' : true
+      'deleteResults': [{
+        'objectId': 1,
+        'success': true
       }]
     }));
 
-    layer.deleteFeature(1, function(error, response){
+    layer.deleteFeature(1, function (error, response) {
       expect(layer.removeLayers).to.have.been.calledWith([1]);
       expect(response).to.deep.equal({
         'objectId': 1,
@@ -730,18 +731,18 @@ describe('L.esri.FeatureManager', function () {
     server.respond();
   });
 
-  it('should wrap the removeFeatures method on the underlying service', function(done){
+  it('should wrap the removeFeatures method on the underlying service', function (done) {
     server.respondWith('POST', 'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/deleteFeatures', JSON.stringify({
-      'deleteResults' : [{
-        'objectId' : 1,
-        'success' : true
-      },{
-        'objectId' : 2,
-        'success' : true
+      'deleteResults': [{
+        'objectId': 1,
+        'success': true
+      }, {
+        'objectId': 2,
+        'success': true
       }]
     }));
 
-    layer.deleteFeatures([1,2], function(error, response){
+    layer.deleteFeatures([1, 2], function (error, response) {
       expect(layer.removeLayers).to.have.been.calledWith([1]);
       expect(layer.removeLayers).to.have.been.calledWith([2]);
       expect(response[1]).to.deep.equal({
@@ -754,11 +755,11 @@ describe('L.esri.FeatureManager', function () {
     server.respond();
   });
 
-  it('should support generalizing geometries', function(){
+  it('should support generalizing geometries', function () {
     server.respondWith('GET', 'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.6953125%2C%22ymin%22%3A45.521743896993634%2C%22xmax%22%3A-122.6513671875%2C%22ymax%22%3A45.55252525134013%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&maxAllowableOffset=0.00004291534423826704&f=json', JSON.stringify({
       fields: fields,
       features: [feature6],
-      objectIdFieldName: 'OBJECTID',
+      objectIdFieldName: 'OBJECTID'
     }));
 
     var layer = new MockLayer({
@@ -774,11 +775,11 @@ describe('L.esri.FeatureManager', function () {
         'type': 'Polygon',
         'coordinates': [
           [
-            [-109.02,36.98],
-            [-109.02,40.97],
-            [-102.06,40.97],
-            [-102.06,37.01],
-            [-109.02,36.98]
+            [-109.02, 36.98],
+            [-109.02, 40.97],
+            [-102.06, 40.97],
+            [-102.06, 37.01],
+            [-109.02, 36.98]
           ]
         ]
       },
@@ -793,7 +794,7 @@ describe('L.esri.FeatureManager', function () {
     }]);
   });
 
-  it('should propagate events from the service', function(){
+  it('should propagate events from the service', function () {
     server.respondWith('GET', new RegExp(/.*/), JSON.stringify({
       fields: fields,
       features: [],
@@ -816,7 +817,6 @@ describe('L.esri.FeatureManager', function () {
   });
 
   it('should NOT draw layers when the zoom level is outside allowed range', function (done) {
-
     map.setZoom(14);
 
     server.respondWith('GET', 'http://services.arcgis.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.6953125%2C%22ymin%22%3A45.521743896993634%2C%22xmax%22%3A-122.6513671875%2C%22ymax%22%3A45.55252525134013%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&f=json', JSON.stringify({
@@ -828,7 +828,6 @@ describe('L.esri.FeatureManager', function () {
     layer.addTo(map);
 
     map.once('zoomend', function () {
-
       server.respond();
 
       expect(layer._visibleZoom()).to.be.false;
@@ -841,7 +840,6 @@ describe('L.esri.FeatureManager', function () {
 
   // this test needs reworked
   it('should create layers when the zoom level is inside allowed range', function (done) {
-
     map.setZoom(14);
 
     server.respondWith('GET', 'http://services.arcgis.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.6953125%2C%22ymin%22%3A45.521743896993634%2C%22xmax%22%3A-122.6513671875%2C%22ymax%22%3A45.55252525134013%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&f=json', JSON.stringify({
@@ -853,7 +851,6 @@ describe('L.esri.FeatureManager', function () {
     layer.addTo(map);
 
     map.once('zoomend', function () {
-
       server.respond();
 
       expect(layer._visibleZoom()).to.be.true;
@@ -862,44 +859,41 @@ describe('L.esri.FeatureManager', function () {
       // layer.on('addfeature', requestSpy);
       // expect(requestSpy.callCount).to.be.above(0);
       done();
-
     });
 
     map.setZoom(11);
-
-
   });
 
-  it('should keep an accurate count of active requests even when they error', function(){
+  it('should keep an accurate count of active requests even when they error', function () {
     var triggered = false;
 
-    layer.on("load", function(ev){
+    layer.on('load', function (ev) {
       triggered = true;
     });
 
-    var southWest = L.latLng(29.53522956294847, -98.4375),
-        northEast = L.latLng(30.14512718337613, -97.734375),
-        bounds = L.latLngBounds(southWest, northEast);
+    var southWest = L.latLng(29.53522956294847, -98.4375);
+    var northEast = L.latLng(30.14512718337613, -97.734375);
+    var bounds = L.latLngBounds(southWest, northEast);
     var point = L.point(200, 300);
 
     server.respondWith('GET', new RegExp(/.*/), JSON.stringify({
       fields: fields
     }));
 
-    layer._requestFeatures(bounds, point, function(){return;});
-    
+    layer._requestFeatures(bounds, point, function () { return; });
+
     server.respondWith('GET', new RegExp(/.*/), JSON.stringify({
       fields: fields
     }));
 
-    layer._requestFeatures(bounds, point, function(){return;});
+    layer._requestFeatures(bounds, point, function () { return; });
 
     expect(layer._activeRequests).to.equal(2);
 
-    server.respondWith("GET", new RegExp(/.*/),
-                [500, { "Content-Type": "application/json" },
+    server.respondWith('GET', new RegExp(/.*/),
+                [500, { 'Content-Type': 'application/json' },
                  '']);
-    layer._requestFeatures(bounds, point, function(){return;})
+    layer._requestFeatures(bounds, point, function () { return; });
 
     server.respond();
     server.respond();
@@ -907,9 +901,6 @@ describe('L.esri.FeatureManager', function () {
 
     expect(layer._activeRequests).to.equal(0);
     expect(triggered).to.be.true;
-
-  })
-
-  
-
+  });
 });
+/* eslint-enable handle-callback-err*/

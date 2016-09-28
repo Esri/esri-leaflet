@@ -19,7 +19,6 @@
   },
   "devDependencies": {
     "chai": "2.3.0",
-    "eslint": "^1.10.2",
     "gh-release": "^2.0.0",
     "highlight.js": "^8.0.0",
     "http-server": "^0.8.5",
@@ -71,12 +70,15 @@
   },
   "scripts": {
     "build": "rollup -c profiles/debug.js & rollup -c profiles/production.js",
-    "lint": "semistandard \"src/**\" \"src/**/*.js\" | snazzy",
+    "lint": "semistandard | snazzy",
     "prebuild": "mkdirp dist",
     "prepublish": "npm run build",
     "pretest": "npm run build",
     "release": "./scripts/release.sh",
     "start": "watch 'npm run build' src & http-server -p 5000 -c-1 -o",
     "test": "npm run lint && karma start"
+  },
+  "semistandard": {
+    "globals": [ "expect", "L", "XMLHttpRequest", "sinon", "xhr" ]
   }
 }

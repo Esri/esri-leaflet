@@ -1,5 +1,7 @@
+/* eslint-env mocha */
+/* eslint-disable handle-callback-err */
 describe('L.esri.DynamicMapLayer', function () {
-  function createMap(){
+  function createMap () {
     // create container
     var container = document.createElement('div');
 
@@ -12,7 +14,7 @@ describe('L.esri.DynamicMapLayer', function () {
     return L.map(container).setView([37.75, -122.45], 12);
   }
 
-  var base64Image = 'iVBORw0KGgoAAAANSUhEUgAAAH0AAAB9CAMAAAC4XpwXAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyhpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMDY3IDc5LjE1Nzc0NywgMjAxNS8wMy8zMC0yMzo0MDo0MiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6RjNGODI5NzkyMjYwMTFFNUJEOEJCNkRDM0Q3NUQxQ0UiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6RjNGODI5N0EyMjYwMTFFNUJEOEJCNkRDM0Q3NUQxQ0UiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpGM0Y4Mjk3NzIyNjAxMUU1QkQ4QkI2REMzRDc1RDFDRSIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpGM0Y4Mjk3ODIyNjAxMUU1QkQ4QkI2REMzRDc1RDFDRSIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PrtQ3ewAAAAwUExURbS0tN3d3dLS0qurq4yMjNbW1pOTk76+vqKios7OzpqamsbGxuXl5YSEhM/Pz8zMzOLy6/8AAAGBSURBVHja7Nu7cgMhDAVQIfESCuL//zYidpLOSUNIcXEBw6znrHgImiX2e4Vp3SzkF3GHDh06dOjQoUOHDh06dOjQoUOHDh06dOjQoUOH/u90LfzTI1zKId2N2uuHVUma6hGdbcrryNT7HMf0LD+Nq/d6Uuf981J0zzGX+HOJSld08V4Zvfo5PTVqvVknVY4GNeaYajJ26cZL+WjsbzJ7rr1OSlbziKrNWnNLkmtV3/rJ2Ckvm1R2a1q0gmXJpvECmcrh2EOPqpW6W6qZUq8fb5SpxY44H7uGzqFLXiv0MVLLZnWMTnw+dn/qn7E/9Bh5M/272L/nnfa8U8pydt5njzWve9XNntbXmh/VUuyEbDHyIx/S3aSVJmpiLM1jv1Mk/uiR2oo+9zvRIX2fccYlKl87sT3SHsmbTfNHrtudf3m+F5kyIs/cuV2oSx2N1x09jhcvvG7p+06BWyV06NChQ4cOHTp06NChQ4cOHTp06NChQ4cO/df6ulno6nfQ7wIMAAxMgKYG08xRAAAAAElFTkSuQmCC'
+  var base64Image = 'iVBORw0KGgoAAAANSUhEUgAAAH0AAAB9CAMAAAC4XpwXAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyhpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMDY3IDc5LjE1Nzc0NywgMjAxNS8wMy8zMC0yMzo0MDo0MiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6RjNGODI5NzkyMjYwMTFFNUJEOEJCNkRDM0Q3NUQxQ0UiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6RjNGODI5N0EyMjYwMTFFNUJEOEJCNkRDM0Q3NUQxQ0UiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpGM0Y4Mjk3NzIyNjAxMUU1QkQ4QkI2REMzRDc1RDFDRSIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpGM0Y4Mjk3ODIyNjAxMUU1QkQ4QkI2REMzRDc1RDFDRSIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PrtQ3ewAAAAwUExURbS0tN3d3dLS0qurq4yMjNbW1pOTk76+vqKios7OzpqamsbGxuXl5YSEhM/Pz8zMzOLy6/8AAAGBSURBVHja7Nu7cgMhDAVQIfESCuL//zYidpLOSUNIcXEBw6znrHgImiX2e4Vp3SzkF3GHDh06dOjQoUOHDh06dOjQoUOHDh06dOjQoUOH/u90LfzTI1zKId2N2uuHVUma6hGdbcrryNT7HMf0LD+Nq/d6Uuf981J0zzGX+HOJSld08V4Zvfo5PTVqvVknVY4GNeaYajJ26cZL+WjsbzJ7rr1OSlbziKrNWnNLkmtV3/rJ2Ckvm1R2a1q0gmXJpvECmcrh2EOPqpW6W6qZUq8fb5SpxY44H7uGzqFLXiv0MVLLZnWMTnw+dn/qn7E/9Bh5M/272L/nnfa8U8pydt5njzWve9XNntbXmh/VUuyEbDHyIx/S3aSVJmpiLM1jv1Mk/uiR2oo+9zvRIX2fccYlKl87sT3SHsmbTfNHrtudf3m+F5kyIs/cuV2oSx2N1x09jhcvvG7p+06BWyV06NChQ4cOHTp06NChQ4cOHTp06NChQ4cO/df6ulno6nfQ7wIMAAxMgKYG08xRAAAAAElFTkSuQmCC';
   var Image1 = 'data:image/png;base64,' + base64Image;
   var Image2 = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAH0AAAB9CAMAAAC4XpwXAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyhpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMDY3IDc5LjE1Nzc0NywgMjAxNS8wMy8zMC0yMzo0MDo0MiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MDI5MjEwNkEyMjYxMTFFNUJEOEJCNkRDM0Q3NUQxQ0UiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6MDI5MjEwNkIyMjYxMTFFNUJEOEJCNkRDM0Q3NUQxQ0UiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDowMjkyMTA2ODIyNjExMUU1QkQ4QkI2REMzRDc1RDFDRSIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDowMjkyMTA2OTIyNjExMUU1QkQ4QkI2REMzRDc1RDFDRSIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PpxjvssAAAAwUExURd3d3bOzs9LS0qurq4uLi9bW1ry8vMnJyZubm5KSkoODg6SkpOPj48TExM/Pz8zMzIOgIpEAAAGeSURBVHja7NvLbsQgDAVQbGPzGuz//9tCuumqUdXSVOplpEEaoTkYjMkmif25ximebMkfxB06dOjQoUOHDh06dOjQoUOHDh06dOjQoUOHDh3639OVy80IVuUzuheym8FcRCYf0Xl20c9HRMu5fYH/kp5vdKU+Iw89pvP+uKrvPWb1Enp1vjdcpYe2cS72STZmGeTBNowmM4lRYZexvky83C3QN/QX9draaJ1SabmuznJreaaxuvCV8tTtmJ4oR+mkeax5lNltsSy5eLaUSZdfm/s5va21NW17Hh6ZUq0r/DIb2U43tTW1OBi7z2x86RFt63rptVZbeVdz8O/oH2NfK1/mFXqK39Dtfd8lM+USe99FdTTmU3ofL+k+r6z7kPO1vef8XDPK9dCJ8yKmJlFkuhhf5918/UJtqkud+7yTDDtSba47jldgq7Tt2+4qe0z0mn3yVet2xdP7i/Dn7vdVXKWuOvPM04W7tGocz+jh6srxlB7xjT/AUyV06NChQ4cOHTp06NChQ4cOHTp06NChQ4f+//R4sqVH34N+E2AAO/CAbzhay1gAAAAASUVORK5CYII=';
   var WithLayers = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAH0AAAB9CAMAAAC4XpwXAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyhpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMDY3IDc5LjE1Nzc0NywgMjAxNS8wMy8zMC0yMzo0MDo0MiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MkU1NjVEN0MyMjZBMTFFNUI1NTc5NjAwMkVENUQwM0IiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6MkU1NjVEN0QyMjZBMTFFNUI1NTc5NjAwMkVENUQwM0IiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDoyRTU2NUQ3QTIyNkExMUU1QjU1Nzk2MDAyRUQ1RDAzQiIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDoyRTU2NUQ3QjIyNkExMUU1QjU1Nzk2MDAyRUQ1RDAzQiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Plrqc7EAAABgUExURaioqL29vba2tsbGxrm5uaGhobi4uLOzs5ycnMTExKampr+/v7KysrCwsMDAwMLCwq2traSkpMvLy5+fn6+vr8PDw6KiosjIyKOjo6Wlpa6urqurq8rKyp6enpmZmczMzKKB4ZgAAAEfSURBVHja7NXZboMwEIVhLzhQCMRAWEOY93/L2k26qb1Erir9vkAGIX0+gz0o+cuh0NHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0T/HJUuqF91sVSWVEekmEe3jw/aSSG/trt0kdgi5VXLdn/q8D+pVpN6t6Nk1Tz0vZ5FVm1CVdbEi51HLNt4O1Y3yanlkfst+O5un7oawqqxWL7KVJmyHax5eWY7NXhXZff2ie/OuF13QbdmKDEV5CroOW0Plh+p2H3rzq+5s0GUOpbZLo+NHCLebO/bEFZ1qfuixHLWLuo9HcByHR3Z796m6TRcv4/Qx/TZJ0usmlbLX8ZdBR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR/8H+qsAAwABe1cCMD1LDwAAAABJRU5ErkJggg==';
@@ -50,10 +52,10 @@ describe('L.esri.DynamicMapLayer', function () {
     ]
   };
 
-  beforeEach(function(){
+  beforeEach(function () {
     clock = sinon.useFakeTimers();
     server = sinon.fakeServer.create();
-    server.respondWith('GET',new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png24&transparent=true&bboxSR=3857&imageSR=3857&f=json/), JSON.stringify({
+    server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png24&transparent=true&bboxSR=3857&imageSR=3857&f=json/), JSON.stringify({
       href: Image1
     }));
     layer = L.esri.dynamicMapLayer({
@@ -62,29 +64,29 @@ describe('L.esri.DynamicMapLayer', function () {
     map = createMap();
   });
 
-  afterEach(function(){
+  afterEach(function () {
     clock.restore();
     server.restore();
     map.remove();
   });
 
- it('should have a L.esri.dynamicMapLayer alias', function(){
+  it('should have a L.esri.dynamicMapLayer alias', function () {
     expect(L.esri.dynamicMapLayer({
       url: url
     })).to.be.instanceof(L.esri.DynamicMapLayer);
   });
 
- it('should display an attribution if one was passed', function(){
+  it('should display an attribution if one was passed', function () {
     L.esri.dynamicMapLayer({
       url: url,
       attribution: 'Esri'
     }).addTo(map);
 
     expect(map.attributionControl._container.innerHTML).to.contain('Esri');
- });
+  });
 
-  it('will fire a loading event when it starts loading', function(done){
-    layer.on('loading', function(e){
+  it('will fire a loading event when it starts loading', function (done) {
+    layer.on('loading', function (e) {
       expect(e.type).to.equal('loading');
       done();
     });
@@ -92,8 +94,8 @@ describe('L.esri.DynamicMapLayer', function () {
     server.respond();
   });
 
-  it('will fire a load event when it completes loading', function(done){
-    layer.on('load', function(e){
+  it('will fire a load event when it completes loading', function (done) {
+    layer.on('load', function (e) {
       expect(e.type).to.equal('load');
       done();
     });
@@ -101,17 +103,17 @@ describe('L.esri.DynamicMapLayer', function () {
     server.respond();
   });
 
-  it('will load a new image when the map moves', function(done){
+  it('will load a new image when the map moves', function (done) {
     layer.addTo(map);
 
-    layer.once('load', function(){
-      layer.once('load', function(){
+    layer.once('load', function () {
+      layer.once('load', function () {
         expect(layer._currentImage._url).to.equal(Image2);
         done();
       });
       clock.tick(151);
-      map.setView([ 37.30, -121.96], 10);
-      server.respondWith('GET',new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png24&transparent=true&bboxSR=3857&imageSR=3857&f=json/), JSON.stringify({
+      map.setView([37.30, -121.96], 10);
+      server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png24&transparent=true&bboxSR=3857&imageSR=3857&f=json/), JSON.stringify({
         href: Image2
       }));
       server.respond();
@@ -119,8 +121,8 @@ describe('L.esri.DynamicMapLayer', function () {
     server.respond();
   });
 
-  it('can be added to a map', function(done){
-    layer.on('load', function(){
+  it('can be added to a map', function (done) {
+    layer.on('load', function () {
       expect(layer._currentImage).to.be.an.instanceof(L.ImageOverlay);
       expect(layer._currentImage._url).to.equal(Image1);
       expect(layer._currentImage._bounds).to.deep.equal(map.getBounds());
@@ -130,8 +132,8 @@ describe('L.esri.DynamicMapLayer', function () {
     server.respond();
   });
 
-  it('can be removed from a map', function(done){
-    layer.on('load', function(){
+  it('can be removed from a map', function (done) {
+    layer.on('load', function () {
       layer.removeFrom(map);
       expect(map.hasLayer(layer._currentImage)).to.equal(false);
       done();
@@ -140,20 +142,20 @@ describe('L.esri.DynamicMapLayer', function () {
     server.respond();
   });
 
-  it('should expose the authenticate method on the underlying service', function(){
+  it('should expose the authenticate method on the underlying service', function () {
     var spy = sinon.spy(layer.service, 'authenticate');
     layer.authenticate('foo');
     expect(spy).to.have.been.calledWith('foo');
   });
 
-  it('should expose the identify method on the underlying service', function(){
-    var spy = sinon.spy(layer.service, 'identify');
+  it('should expose the identify method on the underlying service', function () {
+    // var spy = sinon.spy(layer.service, 'identify');
     var identify = layer.identify();
     expect(identify).to.be.an.instanceof(L.esri.IdentifyFeatures);
     expect(identify._service).to.equal(layer.service);
   });
 
-  it('should propagate events from the service', function(done){
+  it('should propagate events from the service', function (done) {
     server.respondWith('GET', 'http://services.arcgis.com/mock/arcgis/rest/services/MockMapService/MapServer&f=json', JSON.stringify({
       currentVersion: 10.2
     }));
@@ -164,7 +166,7 @@ describe('L.esri.DynamicMapLayer', function () {
     layer.on('requeststart', requeststartSpy);
     layer.on('requestend', requestendSpy);
 
-    layer.metadata(function(){
+    layer.metadata(function () {
       done();
     });
 
@@ -174,8 +176,8 @@ describe('L.esri.DynamicMapLayer', function () {
     expect(requestendSpy.callCount).to.be.above(0);
   });
 
-  it('should bring itself to the front', function(done){
-    layer.on('load', function(){
+  it('should bring itself to the front', function (done) {
+    layer.on('load', function () {
       var spy = sinon.spy(layer._currentImage, 'bringToFront');
       layer.bringToFront();
       expect(spy.callCount).to.be.above(0);
@@ -185,8 +187,8 @@ describe('L.esri.DynamicMapLayer', function () {
     server.respond();
   });
 
-  it('should bring itself to the front', function(done){
-    layer.on('load', function(){
+  it('should bring itself to the front', function (done) {
+    layer.on('load', function () {
       var spy = sinon.spy(layer._currentImage, 'bringToBack');
       layer.bringToBack();
       expect(spy.callCount).to.be.above(0);
@@ -196,10 +198,10 @@ describe('L.esri.DynamicMapLayer', function () {
     server.respond();
   });
 
-  it('should get and set opacity', function(done){
+  it('should get and set opacity', function (done) {
     expect(layer.getOpacity()).to.equal(1);
 
-    layer.on('load', function(){
+    layer.on('load', function () {
       var spy = sinon.spy(layer._currentImage, 'setOpacity');
       layer.setOpacity(0.5);
       expect(layer.getOpacity()).to.equal(0.5);
@@ -211,13 +213,12 @@ describe('L.esri.DynamicMapLayer', function () {
     server.respond();
   });
 
-  it('should get and set visible layers', function(done){
-
+  it('should get and set visible layers', function (done) {
     server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png24&transparent=true&bboxSR=3857&imageSR=3857&layers=show%3A0%2C1%2C2&f=json/), JSON.stringify({
       href: WithLayers
     }));
 
-    layer.once('load', function(){
+    layer.once('load', function () {
       expect(layer._currentImage._url).to.equal(WithLayers);
       done();
     });
@@ -228,12 +229,12 @@ describe('L.esri.DynamicMapLayer', function () {
     server.respond();
   });
 
-  it('should get and set time ranges', function(done){
+  it('should get and set time ranges', function (done) {
     server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png24&transparent=true&bboxSR=3857&imageSR=3857&time=1389254400000%2C1389513600000&f=json/), JSON.stringify({
       href: WithTime
     }));
 
-    layer.once('load', function(){
+    layer.once('load', function () {
       expect(layer._currentImage._url).to.equal(WithTime);
       done();
     });
@@ -244,12 +245,12 @@ describe('L.esri.DynamicMapLayer', function () {
     server.respond();
   });
 
-  it('should get and set extra time options', function(done){
+  it('should get and set extra time options', function (done) {
     server.respondWith('GET', new RegExp(/http:\/\/services\.arcgis\.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png24&transparent=true&bboxSR=3857&imageSR=3857&timeOptions=%7B%22foo%22%3A%22bar%22%7D&time=1389254400000%2C1389513600000&f=json/), JSON.stringify({
       href: WithTimeTimeOptions
     }));
 
-    layer.once('load', function(){
+    layer.once('load', function () {
       expect(layer._currentImage._url).to.equal(WithTimeTimeOptions);
       done();
     });
@@ -262,12 +263,12 @@ describe('L.esri.DynamicMapLayer', function () {
     server.respond();
   });
 
-  it('should get and set layer definitions', function(done){
+  it('should get and set layer definitions', function (done) {
     server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png24&transparent=true&bboxSR=3857&imageSR=3857&layerDefs=%7B%221%22%3A%22Foo%3DBar%22%7D&f=json/), JSON.stringify({
       href: WithDefs
     }));
 
-    layer.once('load', function(){
+    layer.once('load', function () {
       expect(layer._currentImage._url).to.equal(WithDefs);
       done();
     });
@@ -279,12 +280,12 @@ describe('L.esri.DynamicMapLayer', function () {
     server.respond();
   });
 
-  it('should pass a token if one is set', function(done){
+  it('should pass a token if one is set', function (done) {
     server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png24&transparent=true&bboxSR=3857&imageSR=3857&token=foo&f=json/), JSON.stringify({
       href: WithToken
     }));
 
-    layer.once('load', function(){
+    layer.once('load', function () {
       expect(layer._currentImage._url).to.equal(WithToken);
       done();
     });
@@ -294,7 +295,7 @@ describe('L.esri.DynamicMapLayer', function () {
     server.respond();
   });
 
-  it('should be able to request an image directly from the export service', function(){
+  it('should be able to request an image directly from the export service', function () {
     layer = L.esri.dynamicMapLayer({
       url: url,
       f: 'image'
@@ -304,13 +305,13 @@ describe('L.esri.DynamicMapLayer', function () {
     expect(spy.getCall(0).args[0]).to.match(new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png24&transparent=true&bboxSR=3857&imageSR=3857&f=image/));
   });
 
-  it('should be able to parse real base64 images from the export service', function(done){
+  it('should be able to parse real base64 images from the export service', function (done) {
     server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png24&transparent=true&bboxSR=3857&imageSR=3857&f=json/), JSON.stringify({
       imageData: base64Image,
       contentType: 'image/png'
     }));
 
-    layer.once('load', function(){
+    layer.once('load', function () {
       expect(layer._currentImage._url).to.equal(Image1);
       done();
     });
@@ -319,11 +320,11 @@ describe('L.esri.DynamicMapLayer', function () {
     server.respond();
   });
 
-  it('should bind a popup to the layer', function(){
+  it('should bind a popup to the layer', function () {
     server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/identify\?sr=4326&layers=visible&tolerance=3&returnGeometry=true&imageDisplay=500%2C500%2C96&mapExtent=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&geometry=-?\d+\.\d+%2C-?\d+\.\d+&geometryType=esriGeometryPoint&f=json/), JSON.stringify(sampleResponse));
 
-    layer.bindPopup(function(error, featureCollection){
-      return featureCollection.features.length  + ' Feature(s)';
+    layer.bindPopup(function (error, featureCollection) {
+      return featureCollection.features.length + ' Feature(s)';
     });
 
     layer.addTo(map);
@@ -340,13 +341,13 @@ describe('L.esri.DynamicMapLayer', function () {
     expect(layer._popup.getLatLng()).to.equal(map.getCenter());
   });
 
-  it('should bind a popup to the layer if the layer is already on a map', function(){
+  it('should bind a popup to the layer if the layer is already on a map', function () {
     server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/identify\?sr=4326&layers=visible&tolerance=3&returnGeometry=true&imageDisplay=500%2C500%2C96&mapExtent=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&geometry=-?\d+\.\d+%2C-?\d+\.\d+&geometryType=esriGeometryPoint&f=json/), JSON.stringify(sampleResponse));
 
     layer.addTo(map);
 
-    layer.bindPopup(function(error, featureCollection){
-      return featureCollection.features.length  + ' Feature(s)';
+    layer.bindPopup(function (error, featureCollection) {
+      return featureCollection.features.length + ' Feature(s)';
     });
 
     map.fire('click', {
@@ -361,11 +362,11 @@ describe('L.esri.DynamicMapLayer', function () {
     expect(layer._popup.getLatLng()).to.equal(map.getCenter());
   });
 
-  it('should unbind a popup from the layer', function(){
+  it('should unbind a popup from the layer', function () {
     var spy = sinon.spy(map, 'off');
     layer.addTo(map);
-    layer.bindPopup(function(error, featureCollection){
-      return featureCollection.features.length  + ' Feature(s)';
+    layer.bindPopup(function (error, featureCollection) {
+      return featureCollection.features.length + ' Feature(s)';
     });
 
     layer.unbindPopup();
@@ -375,13 +376,13 @@ describe('L.esri.DynamicMapLayer', function () {
     expect(spy).to.have.been.calledWith('dblclick', layer._resetPopupState, layer);
   });
 
-  it('should unbind the popup events when the layer is removed', function(){
+  it('should unbind the popup events when the layer is removed', function () {
     var spy = sinon.spy(map, 'off');
 
     layer.addTo(map);
 
-    layer.bindPopup(function(error, featureCollection){
-      return featureCollection.features.length  + ' Feature(s)';
+    layer.bindPopup(function (error, featureCollection) {
+      return featureCollection.features.length + ' Feature(s)';
     });
 
     map.removeLayer(layer);
@@ -390,15 +391,15 @@ describe('L.esri.DynamicMapLayer', function () {
     expect(spy).to.have.been.calledWith('dblclick', layer._resetPopupState, layer);
   });
 
-  it('should render an images at the back if specified', function(done){
+  it('should render an images at the back if specified', function (done) {
     layer.bringToBack();
     var spy = sinon.spy(layer, 'bringToBack');
-    layer.on('load', function(){
+    layer.on('load', function () {
       expect(spy.callCount).to.equal(1);
       done();
     });
     layer.addTo(map);
     server.respond();
   });
-
 });
+/* eslint-enable handle-callback-err */
