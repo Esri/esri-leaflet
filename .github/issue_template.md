@@ -4,13 +4,11 @@ ie: Chrome 51, IE11
 
 * Version of Leaflet (`L.version`):
 
-0.7.7, 1.0.0-rc.3?
+0.7.7, 1.0.0?
 
 * Version of esri Leaflet (`L.esri.VERSION`):
 
 1.0.4, 2.0.3, `master`?
-
-
 
 Steps to reproduce the error:
 
