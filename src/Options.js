@@ -1,5 +1,5 @@
-export var Options = {
+export var options = {
   attributionWidthOffset: 55
 };
 
-export default Options;
+export default options;
