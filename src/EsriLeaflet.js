@@ -3,7 +3,7 @@ export {version as VERSION} from '../package.json';
 
 // import base
 export { Support } from './Support';
-export { Options } from './Options';
+export { options } from './Options';
 export { Util } from './Util';
 export { get, post, request } from './Request';
 
