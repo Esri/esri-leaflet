@@ -31,7 +31,7 @@ describe('L.esri.IdentifyFeatures', function () {
         'displayFieldName': 'Name',
         'value': '0',
         'attributes': {
-          'OBJECTID': 1,
+          'objectid': 1,
           'Name': 'Site'
         },
         'geometryType': 'esriGeometryPoint',
@@ -46,6 +46,7 @@ describe('L.esri.IdentifyFeatures', function () {
     ]
   };
 
+  // use 'objectid' instead of 'OBJECTID' to trap irregular casing
   var sampleFeatureCollection = {
     'type': 'FeatureCollection',
     'features': [{
@@ -55,7 +56,7 @@ describe('L.esri.IdentifyFeatures', function () {
         'coordinates': [-122.81, 45.48]
       },
       'properties': {
-        'OBJECTID': 1,
+        'objectid': 1,
         'Name': 'Site'
       },
       'id': 1,
@@ -105,8 +106,6 @@ describe('L.esri.IdentifyFeatures', function () {
   });
 
   it('should identify features with a 2 layer definitions', function(done){
-
-
     var request = task.layerDef(0, 'NAME=Oregon').layerDef(1, 'NAME=Multnomah').run(function(error, featureCollection, raw){
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleResponse);
