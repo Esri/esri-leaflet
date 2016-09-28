@@ -1,5 +1,7 @@
+/* eslint-env mocha */
+/* eslint-disable handle-callback-err*/
 describe('L.esri.IdentifyFeatures', function () {
-  function createMap(){
+  function createMap () {
     // create container
     var container = document.createElement('div');
 
@@ -64,17 +66,17 @@ describe('L.esri.IdentifyFeatures', function () {
     }]
   };
 
-  beforeEach(function(){
+  beforeEach(function () {
     server = sinon.fakeServer.create();
     task = L.esri.identifyFeatures({url: mapServiceUrl}).on(map).at(latlng);
   });
 
-  afterEach(function(){
+  afterEach(function () {
     server.restore();
   });
 
-  it('should identify features', function(done){
-    var request = task.run(function(error, featureCollection, raw){
+  it('should identify features', function (done) {
+    var request = task.run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleResponse);
       done();
@@ -93,8 +95,8 @@ describe('L.esri.IdentifyFeatures', function () {
     request.respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, JSON.stringify(sampleResponse));
   });
 
-  it('should identify features with a layer definition', function(done){
-    var request = task.layerDef(0, 'NAME=Oregon').run(function(error, featureCollection, raw){
+  it('should identify features with a layer definition', function (done) {
+    var request = task.layerDef(0, 'NAME=Oregon').run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleResponse);
       done();
@@ -105,8 +107,8 @@ describe('L.esri.IdentifyFeatures', function () {
     request.respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, JSON.stringify(sampleResponse));
   });
 
-  it('should identify features with a 2 layer definitions', function(done){
-    var request = task.layerDef(0, 'NAME=Oregon').layerDef(1, 'NAME=Multnomah').run(function(error, featureCollection, raw){
+  it('should identify features with a 2 layer definitions', function (done) {
+    var request = task.layerDef(0, 'NAME=Oregon').layerDef(1, 'NAME=Multnomah').run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleResponse);
       done();
@@ -117,12 +119,11 @@ describe('L.esri.IdentifyFeatures', function () {
     request.respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, JSON.stringify(sampleResponse));
   });
 
-  it('should identify features in a given time range', function(done){
-
+  it('should identify features in a given time range', function (done) {
     var start = new Date('January 1 2013 GMT-0800');
     var end = new Date('January 1 2014 GMT-0800');
 
-    var request = task.between(start, end).run(function(error, featureCollection, raw){
+    var request = task.between(start, end).run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleResponse);
       done();
@@ -133,9 +134,8 @@ describe('L.esri.IdentifyFeatures', function () {
     request.respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, JSON.stringify(sampleResponse));
   });
 
-  it('should restrict identification to specific layers', function(done){
-
-    var request = task.layers('top').run(function(error, featureCollection, raw){
+  it('should restrict identification to specific layers', function (done) {
+    var request = task.layers('top').run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleResponse);
       done();
@@ -144,9 +144,8 @@ describe('L.esri.IdentifyFeatures', function () {
     request.respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, JSON.stringify(sampleResponse));
   });
 
-  it('should identify features and limit geometries to a given precision', function(done){
-
-    var request = task.precision(4).run(function(error, featureCollection, raw){
+  it('should identify features and limit geometries to a given precision', function (done) {
+    var request = task.precision(4).run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleResponse);
       done();
@@ -157,9 +156,8 @@ describe('L.esri.IdentifyFeatures', function () {
     request.respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, JSON.stringify(sampleResponse));
   });
 
-  it('should identify features and simplify geometries', function(done){
-
-    var request = task.simplify(map, 0.5).run(function(error, featureCollection, raw){
+  it('should identify features and simplify geometries', function (done) {
+    var request = task.simplify(map, 0.5).run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleResponse);
       done();
@@ -170,9 +168,8 @@ describe('L.esri.IdentifyFeatures', function () {
     request.respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, JSON.stringify(sampleResponse));
   });
 
-  it('should identify features with a token', function(done){
-
-    var request = task.token('foo').run(function(error, featureCollection, raw){
+  it('should identify features with a token', function (done) {
+    var request = task.token('foo').run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleResponse);
       done();
@@ -183,9 +180,8 @@ describe('L.esri.IdentifyFeatures', function () {
     request.respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, JSON.stringify(sampleResponse));
   });
 
-  it('should identify features within a certain pixel tolerance', function(done){
-
-    var request = task.tolerance(4).run(function(error, featureCollection, raw){
+  it('should identify features within a certain pixel tolerance', function (done) {
+    var request = task.tolerance(4).run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleResponse);
       done();
@@ -196,11 +192,10 @@ describe('L.esri.IdentifyFeatures', function () {
     request.respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, JSON.stringify(sampleResponse));
   });
 
-  it('should use a service to execute the request', function(done){
+  it('should use a service to execute the request', function (done) {
     var service = L.esri.mapService({url: mapServiceUrl});
 
-
-    var request = service.identify().on(map).at(latlng).run(function(error, featureCollection, raw){
+    var request = service.identify().on(map).at(latlng).run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleResponse);
       done();
@@ -219,11 +214,10 @@ describe('L.esri.IdentifyFeatures', function () {
     request.respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, JSON.stringify(sampleResponse));
   });
 
-  it('should use a service to execute the request with simple LatLng', function(done){
+  it('should use a service to execute the request with simple LatLng', function (done) {
     var service = L.esri.mapService({url: mapServiceUrl});
 
-
-    var request = service.identify().on(map).at(rawLatlng).run(function(error, featureCollection, raw){
+    var request = service.identify().on(map).at(rawLatlng).run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleResponse);
       done();
@@ -242,10 +236,10 @@ describe('L.esri.IdentifyFeatures', function () {
     request.respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, JSON.stringify(sampleResponse));
   });
 
-  it('should return layerId of features in response', function(done){
+  it('should return layerId of features in response', function (done) {
     var service = L.esri.mapService({url: mapServiceUrl});
 
-    var request = service.identify().on(map).at(rawLatlng).run(function(error, featureCollection, raw){
+    var request = service.identify().on(map).at(rawLatlng).run(function (error, featureCollection, raw) {
       expect(featureCollection.features[0].layerId).to.deep.equal(0);
       expect(raw).to.deep.equal(sampleResponse);
       done();
@@ -253,5 +247,5 @@ describe('L.esri.IdentifyFeatures', function () {
 
     request.respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, JSON.stringify(sampleResponse));
   });
-
 });
+/* eslint-enable handle-callback-err*/
