@@ -73,13 +73,14 @@
   <h5>Layers</h5>
   <nav>
     <a href="../../api-reference/layers/basemap-layer.html">Basemap Layer</a>
-    <a class="plugin" href="../../api-reference/layers/vector-basemap.html">Vector Basemap</a>
     <a href="../../api-reference/layers/feature-layer.html">Feature Layer</a>
     <a href="../../api-reference/layers/tiled-map-layer.html">Tiled Map Layer</a>
     <a href="../../api-reference/layers/dynamic-map-layer.html">Dynamic Map Layer</a>
     <a href="../../api-reference/layers/image-map-layer.html">Image Map Layer</a>
+    <a class="plugin" href="../../api-reference/layers/vector-basemap.html">Vector Basemap</a>
     <a class="plugin" href="../../api-reference/layers/heatmap-feature-layer.html">Heatmap Feature Layer</a>
     <a class="plugin" href="../../api-reference/layers/clustered-feature-layer.html">Clustered Feature Layer</a>
+    <a class="plugin" href="../../api-reference/layers/vector-layer.html">Vector Layer</a>
   </nav>
 
   <h5>Controls</h5>
@@ -145,9 +146,9 @@
 <h5 id="vector-basemaps">Vector Basemaps</h5>
 <p>Worldwide coverage at a variety of zoom levels.</p>
 <ul>
-<li><code>Newspaper</code> (added in 1.0.2)</li>
-<li><code>MidCentury</code> (added in 1.0.2)</li>
-<li><code>Spring</code> (added in 1.0.2)</li>
+<li><code>Newspaper</code> (added in <code>1.0.2</code>)</li>
+<li><code>MidCentury</code> (added in <code>1.0.2</code>)</li>
+<li><code>Spring</code> (added in <code>1.0.2</code>)</li>
 <li><code>Gray</code></li>
 <li><code>DarkGray</code></li>
 <li><code>Topographic</code></li>
@@ -160,9 +161,8 @@
 <p><code>L.esri.Vector.Basemap</code> accepts all <a href="http://leafletjs.com/reference-1.0.0.html#layer"><code>L.Layer</code></a> options.</p>
 <h3 id="methods">Methods</h3>
 <p><code>L.esri.Vector.Basemap</code> inherits all methods from <a href="http://leafletjs.com/reference-1.0.0.html#layer"><code>L.Layer</code></a>.</p>
-<h3 id="events">Events</h3>
-<p><code>L.esri.TiledMapLayer</code> fires all  <a href="http://leafletjs.com/reference-1.0.0.html#layer"><code>L.Layer</code></a> events.</p>
 <h3 id="example">Example</h3>
+<pre><code class="language-xml"><span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"./esri-leaflet-vector.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></code></pre>
 <pre><code class="language-js"><span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">37.75</span>,-<span class="number">122.45</span>], <span class="number">12</span>);
 L.esri.Vector.basemap(<span class="string">"Newspaper"</span>).addTo(map);</code></pre>
 

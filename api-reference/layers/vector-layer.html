@@ -8,7 +8,7 @@
   <meta charset="utf-8">
 
   
-    <title>L.esri.Services | Esri Leaflet</title>
+    <title>L.esri.Vector.Layer | Esri Leaflet</title>
   
 
   
@@ -123,16 +123,41 @@
 
 
 <div class="main-content">
-  <h1 id="l-esri-services">L.esri.Services</h1>
-<p>Services wrap ArcGIS API endpoints exposing common methods for interacting with the APIs and handling proxying and authentication.</p>
-<ul>
-<li><a href="../../api-reference/services/image-service.html"><code>L.esri.ImageService</code></a></li>
-<li><a href="../../api-reference/services/feature-layer-service.html"><code>L.esri.FeatureLayerService</code></a></li>
-<li><a href="../../api-reference/services/map-service.html"><code>L.esri.MapService</code></a></li>
-<li><a href="../../api-reference/services/service.html"><code>L.esri.Service</code></a></li>
-</ul>
+  <h1 id="l-esri-vector-layer">L.esri.Vector.Layer</h1>
+<p><code>L.esri.Vector.Layer</code> is used to display vector tile services and attributes data providers appropriately. The <a href="https://github.com/esri/esri-leaflet#terms">Terms of Use</a> for Esri hosted services apply to <em>all</em> Leaflet applications.</p>
+<p>Inherits from <a href="http://leafletjs.com/reference-1.0.0.html#layer"><code>L.Layer</code></a></p>
+<h3 id="constructor">Constructor</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Constructor</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code class="nobr">L.esri.Vector.layer(<nobr class="param"><span>&lt;String&gt;</span> <code>id</code></nobr>, , <nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code></td>
+            <td><code>key</code> refers to the specific vector tile layer you&#39;d like to add.
+        </tr>
+    </tbody>
+</table>
 
-  <p><a href="http://github.com/Esri/esri-leaflet-doc/edit/master/src/pages/api-reference/services/index.md">Edit this page on GitHub</a></p>
+
+<h5 id="custom-vector-tile-services">Custom Vector Tile Services</h5>
+<p>Whether you&#39;ve made a small tweak to one of Esri&#39;s hosted vector basemaps or published your own vector tile service from scratch you can draw the layer in Esri Leaflet by referencing the item&#39;s <a href="http://www.arcgis.com/home/item.html?id=bd505ce3efff479bb4e87b182f180159"><code>id</code></a>.</p>
+<blockquote>
+<p>See this blog for more information: <a href="https://blogs.esri.com/esri/arcgis/2015/11/19/how-to-customize-esri-vector-basemaps/">https://blogs.esri.com/esri/arcgis/2015/11/19/how-to-customize-esri-vector-basemaps/</a></p>
+</blockquote>
+<h3 id="options">Options</h3>
+<p><code>L.esri.Vector.Layer</code> accepts all <a href="http://leafletjs.com/reference-1.0.0.html#layer"><code>L.Layer</code></a> options.</p>
+<h3 id="methods">Methods</h3>
+<p><code>L.esri.Vector.Layer</code> inherits all methods from <a href="http://leafletjs.com/reference-1.0.0.html#layer"><code>L.Layer</code></a>.</p>
+<h3 id="example">Example</h3>
+<pre><code class="language-xml"><span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"./esri-leaflet-vector.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></code></pre>
+<pre><code class="language-js"><span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">37.75</span>,-<span class="number">122.45</span>], <span class="number">12</span>);
+L.esri.Vector.layer(<span class="string">'bd505ce3efff479bb4e87b182f180159'</span>).addTo(map);</code></pre>
+
+  <p><a href="http://github.com/Esri/esri-leaflet-doc/edit/master/src/pages/api-reference/layers/vector-layer.md">Edit this page on GitHub</a></p>
 </div>
 
   <div style='clear:both;'></div>
