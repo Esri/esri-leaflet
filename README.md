@@ -188,8 +188,8 @@ L.esri.basemapLayer('Topographic').addTo(map);
 
 If you need more than 1 million [map transactions](http://doc.arcgis.com/en/arcgis-online/reference/transaction-limits.htm) per month, please let us know.
 
-https://developers.arcgis.com/terms/attribution/
-https://developers.arcgis.com/terms/
+* [Esri Attribution Requirements](https://developers.arcgis.com/terms/attribution/)
+* [ArcGIS Online Terms of Use](https://developers.arcgis.com/terms/)
 
 ### Credit
 
