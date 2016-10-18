@@ -5,6 +5,21 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Upcoming changes][unreleased]
 
+## [2.0.4]
+
+### Changed
+* The default maximum width of Leaflet's attribution control is now `55px.
+less than the map itself 
+
+### Added
+* A custom width crop can be configured via `L.esri.options.attributionWidthOffset`
+* `L.esri.query` now supports GeoJSON MultiPolygons
+
+### Fixed
+* test suite code is now linted
+* `responseToFeatureCollection` now uses a case insensitive regex to look for common indexing field names
+* `GeoJSON` / `geoJSON` casing is now used consistently
+
 ## [2.0.3]
 
 ### Added
@@ -459,7 +474,8 @@ None
 * Add DarkGray and DarkGrayLabels to BasemapLayer. #190
 * An attributionControl on maps is now required when using BasemapLayer. #159
 
-[unreleased]: https://github.com/esri/esri-leaflet/compare/v2.0.3...HEAD
+[unreleased]: https://github.com/esri/esri-leaflet/compare/v2.0.4...HEAD
+[2.0.4]: https://github.com/esri/esri-leaflet/compare/v2.0.3...v2.0.4
 [2.0.3]: https://github.com/esri/esri-leaflet/compare/v2.0.2...v2.0.3
 [2.0.2]: https://github.com/esri/esri-leaflet/compare/v2.0.1...v2.0.2
 [2.0.1]: https://github.com/esri/esri-leaflet/compare/v2.0.0...v2.0.1
