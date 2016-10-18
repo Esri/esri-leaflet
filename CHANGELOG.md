@@ -9,14 +9,15 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 * The default maximum width of Leaflet's attribution control is now `55px.
-less than the map itself 
+less than the map itself [#842](https://github.com/Esri/esri-leaflet/pull/842)
 
 ### Added
-* A custom width crop can be configured via `L.esri.options.attributionWidthOffset`
-* `L.esri.query` now supports GeoJSON MultiPolygons
+* A custom width crop can be configured via `L.esri.options.attributionWidthOffset` [#849](https://github.com/Esri/esri-leaflet/pull/849)
+* `L.esri.query` now supports GeoJSON MultiPolygons [#866](https://github.com/Esri/esri-leaflet/pull/866) (thank you[@whyvez](https://github.com/whyvez)!)
 
 ### Fixed
-* test suite code is now linted
+* Last references to global namespaces have been removed from `L.esri.Util` [#852](https://github.com/Esri/esri-leaflet/pull/852) (thank you[@hamhands](https://github.com/hamhands)!)
+* started linting our test suite
 * `responseToFeatureCollection` now uses a case insensitive regex to look for common indexing field names
 * `GeoJSON` / `geoJSON` casing is now used consistently
 
