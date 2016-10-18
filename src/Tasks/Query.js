@@ -211,7 +211,7 @@ export var Query = Task.extend({
     }
 
     // confirm that our GeoJSON is a point, line or polygon
-    if (geometry.type === 'Point' || geometry.type === 'LineString' || geometry.type === 'Polygon') {
+    if (geometry.type === 'Point' || geometry.type === 'LineString' || geometry.type === 'Polygon' || geometry.type === 'MultiPolygon') {
       this.params.geometry = Util.geojsonToArcGIS(geometry);
       this.params.geometryType = Util.geojsonTypeToArcGIS(geometry.type);
       return;
