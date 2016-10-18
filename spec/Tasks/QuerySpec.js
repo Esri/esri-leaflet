@@ -29,6 +29,14 @@ describe('L.esri.Query', function () {
     ]]
   };
 
+  var rawGeoJsonMultiPolygon = {
+    'type': 'MultiPolygon',
+    'coordinates': [
+      [[[-97, 39], [-97, 41], [-94, 41], [-94, 39], [-97, 39]]],
+      [[[-96, 39.5], [-96, 40.5], [-95, 40.5], [-95, 39.5], [-96, 39.5]]]
+    ]
+  };
+
   var rawGeoJsonFeature = {'type': 'Feature'};
   rawGeoJsonFeature.geometry = rawGeoJsonPolygon;
 
@@ -249,6 +257,18 @@ describe('L.esri.Query', function () {
     server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&inSr=4326&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelContains&f=json', JSON.stringify(sampleQueryResponse));
 
     task.within(rawGeoJsonPolygon).run(function (error, featureCollection, raw) {
+      expect(featureCollection).to.deep.equal(sampleFeatureCollection);
+      expect(raw).to.deep.equal(sampleQueryResponse);
+      done();
+    });
+
+    server.respond();
+  });
+
+  it('should query features within a geojson multipolygon geometry', function (done) {
+    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&inSr=4326&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%2C%5B%5B-96%2C39.5%5D%2C%5B-96%2C40.5%5D%2C%5B-95%2C40.5%5D%2C%5B-95%2C39.5%5D%2C%5B-96%2C39.5%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelContains&f=json', JSON.stringify(sampleQueryResponse));
+
+    task.within(rawGeoJsonMultiPolygon).run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleQueryResponse);
       done();
