@@ -218,7 +218,7 @@ export var Query = Task.extend({
     }
 
     // warn the user if we havn't found an appropriate object
-    Util.warn('invalid geometry passed to spatial query. Should be an L.LatLng, L.LatLngBounds or L.Marker or a GeoJSON Point Line or Polygon object');
+    Util.warn('invalid geometry passed to spatial query. Should be L.LatLng, L.LatLngBounds, L.Marker or a GeoJSON Point, Line, Polygon or MultiPolygon object');
 
     return;
   }
