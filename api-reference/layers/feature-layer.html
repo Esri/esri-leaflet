@@ -34,7 +34,7 @@
   
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.0/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.0.0/dist/leaflet-src.js"></script>
-    <script src="https://unpkg.com/esri-leaflet@2.0.3"></script>
+    <script src="https://unpkg.com/esri-leaflet@2.0.4"></script>
   
 
   <!-- Google Analytics -->
@@ -124,14 +124,13 @@
 
 <div class="main-content">
   <h1 id="l-esri-featurelayer">L.esri.FeatureLayer</h1>
-<p><code>L.esri.FeatureLayer</code> is used to visualize and query vector geographic data hosted in both ArcGIS Online and published using ArcGIS Server.</p>
+<p><code>L.esri.FeatureLayer</code> is used to visualize, style, query and edit vector geographic data hosted in both ArcGIS Online and published using ArcGIS Server.  Copyright text from the service is added to map attribution automatically.</p>
 <p>Inherits from <a href="http://leafletjs.com/reference-1.0.0.html#layer">L.Layer</a></p>
-<p>Feature Layers are provided by Feature Services which can contain multiple layers. Feature Layers expose vector geographic information as a web service that can be visualized, styled, queried and edited.</p>
-<p>Here is a sample Feature Service URL</p>
-<pre><code>https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Neighborhoods_pdx/</code></pre>
-<p>This particular service contains only one Feature Layer. Here is the Feature Layer URL</p>
-<pre><code>https://services.arcgis.com/rOo16HdIMeOBI4Mb/ArcGIS/rest/services/Neighborhoods_pdx/FeatureServer/0</code></pre>
-<p>Note that the Feature Layer URL ends in <code>/FeatureServer/{LAYER_ID}</code>.</p>
+<p>Feature Layers reference an individual data source in either a parent <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/index.html#/Map_Service/02r3000000w2000000/">Map Service</a> or <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/index.html#/Feature_Service/02r3000000z2000000/">Feature Service</a> that can contain multiple layers.  You can see a sample Map Service URL below:</p>
+<pre><code>http://sampleserver6.arcgisonline.com/arcgis/rest/services/Hurricanes/MapServer</code></pre>
+<p>This particular service includes two different data sources.  The URL for the &#39;Hurricane Tracks&#39; feature layer will end in a number (representing its position among the other layers).</p>
+<pre><code>http://sampleserver6.arcgisonline.com/arcgis/rest/services/Hurricanes/MapServer/1</code></pre>
+<p><strong>Feature Layer URLs always end in a number (ex: <code>/FeatureServer/{LAYER_ID}</code> or <code>/MapServer/{LAYER_ID}</code>).</strong></p>
 <p>You can create a new empty feature service with a single layer on the <a href="https://developers.arcgis.com/en/hosted-data/#/new">ArcGIS for Developers website</a> or you can use ArcGIS Online to <a href="https://doc.arcgis.com/en/arcgis-online/share-maps/publish-features.htm">create a Feature Service from a CSV or Shapefile</a>.</p>
 <p><code>L.esri.FeatureLayer</code> divides the current map extent into a grid of individual cells and uses them to fire queries to fetch nearby features. This technique is comparable to <a href="https://developers.arcgis.com/javascript/3/jshelp/best_practices_feature_layers.html">MODE_ONDEMAND</a> in the ArcGIS API for JavaScript.</p>
 <h3 id="constructor">Constructor</h3>

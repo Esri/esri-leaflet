@@ -34,7 +34,7 @@
   
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.0/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.0.0/dist/leaflet-src.js"></script>
-    <script src="https://unpkg.com/esri-leaflet@2.0.3"></script>
+    <script src="https://unpkg.com/esri-leaflet@2.0.4"></script>
   
 
   <!-- Google Analytics -->
@@ -461,10 +461,10 @@ L.esri.Geocoding.Controls.geosearch({
 <td>An array of fields to search for text.</td>
 </tr>
 <tr>
-<td><code>layer</code></td>
-<td><code>Integer</code></td>
-<td><code>0</code></td>
-<td>The layer to find text matches on. Can also be an array of layer identifiers.</td>
+<td><code>layers</code></td>
+<td><code>Integer</code> <code>Array[Integers]</code></td>
+<td><code>[0]</code></td>
+<td>An array of layer identifiers to find text matches on. </td>
 </tr>
 <tr>
 <td><code>formatSuggestion</code></td>

@@ -34,7 +34,7 @@
   
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.0/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.0.0/dist/leaflet-src.js"></script>
-    <script src="https://unpkg.com/esri-leaflet@2.0.3"></script>
+    <script src="https://unpkg.com/esri-leaflet@2.0.4"></script>
   
 
   <!-- Google Analytics -->
@@ -125,7 +125,8 @@
 <div class="main-content">
   <h1 id="l-esri-tiledmaplayer">L.esri.TiledMapLayer</h1>
 <p>Inherits from <a href="http://leafletjs.com/reference.html#tilelayer"><code>L.TileLayer</code></a></p>
-<p>Access tiles from ArcGIS Online and ArcGIS Server to visualize and identify features. If you have published a Feature Service in ArcGIS Online, it can be used to create a static set of tiles as well. You can find details about that process in the <a href="http://doc.arcgis.com/en/arcgis-online/share-maps/publish-tiles.htm#ESRI_SECTION1_F68FCBD33BD54117B23232D41A762E89">ArcGIS Online Help</a>.</p>
+<p>Access tiles from ArcGIS Online and ArcGIS Server to visualize and identify features. Copyright text from the service is added to map attribution automatically. </p>
+<p>If you have published a Feature Service in ArcGIS Online, it can be used to create a static set of tiles as well. You can find details about that process in the <a href="http://doc.arcgis.com/en/arcgis-online/share-maps/publish-tiles.htm#ESRI_SECTION1_F68FCBD33BD54117B23232D41A762E89">ArcGIS Online Help</a>.</p>
 <blockquote>
 <p>Your map service must be published using the Web Mercator Auxiliary Sphere tiling scheme (WKID 102100/3857) and the default scale options used by Google Maps, Bing Maps and <a href="http://resources.arcgis.com/en/help/arcgisonline-content/index.html#//011q00000002000000">ArcGIS Online</a>. Esri Leaflet will not support any other spatial reference for tile layers.</p>
 </blockquote>
@@ -167,7 +168,7 @@
 <td><code>zoomOffsetAllowance</code></td>
 <td><code>Number</code></td>
 <td><code>0.1</code></td>
-<td>If <code>correctZoomLevels</code> is enabled this controls the amount of tolerance if the difference at each scale level for remapping tile levels.</td>
+<td>If <code>correctZoomLevels</code> is enabled this controls the amount of tolerance for the difference at each scale level for remapping tile levels.</td>
 </tr>
 <tr>
 <td><code>proxy</code></td>

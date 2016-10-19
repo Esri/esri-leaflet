@@ -36,7 +36,7 @@
   
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.0/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.0.0/dist/leaflet-src.js"></script>
-    <script src="https://unpkg.com/esri-leaflet@2.0.3"></script>
+    <script src="https://unpkg.com/esri-leaflet@2.0.4"></script>
   
 
   <!-- Google Analytics -->
@@ -100,12 +100,16 @@
 <div class="main-content">
   <h1 id="introduction-to-layer-types">Introduction to Layer Types</h1>
 <p>Learn how to differentiate between the layer types that make up the ArcGIS platform.</p>
+<blockquote>
+<p>Note: Copyright text from ArcGIS services are added to map attribution automatically. The <a href="https://github.com/esri/esri-leaflet#terms">Terms of Use</a> for Esri hosted services apply to <em>all</em> Leaflet applications.</p>
+</blockquote>
 <h2 id="feature-layers">Feature Layers</h2>
-<p>A <a href="http://esri.github.io/esri-leaflet/api-reference/layers/feature-layer.html">Feature Layer</a> involves pulling down the feature data for a particular layer in the JSON format from an ArcGIS Server instance to your web app. This means pulling down the information related to an individual feature such as its vertices as well as the attributes. Esri-Leaflet then takes the JSON data and renders it on your map.</p>
-<p>Feature Layers are great because they contain all the attribute information which means additional operations such as creating popups are really easy beacuse the app already has all the information is needs. </p>
-<p>The challenge with Feature Layers is that they can potentially require transferring large amounts of data from the server to the client. Because all the vertices and attributes are sent this means you may be requesting a really big JSON object containing each and every vertice for a complex set of polygons. For example you wouldn&#39;t want to use a Feature Layer if you were drawing draw tax parcels for the whole of the USA. To address this issue Esri-Leaflet provides a few options. Firstly by default Esri-Leaflet only requests the features within the current map extent meaning you&#39;re not requesting features that you probably don&#39;t need. Secondly Esri-Leaflet provides additional options to allows you to trim down the data size, these include only requesting specific attributes, generalizing geometries, or setting where clauses. However even after you&#39;ve optimized your setup there will always be a limit to the amount of features which it makes sense to try and display clientside, this will be dependant on your particular service, browser and app.</p>
+<p>A <a href="http://esri.github.io/esri-leaflet/api-reference/layers/feature-layer.html">Feature Layer</a> involves requesting feature attributes and geometry from ArcGIS Online or ArcGIS Server to display in your web app. Individual features are exposed to the developer as GeoJSON, whether the service fulfilling the request emits the format natively or not.</p>
+<p>Feature Layers are great because they contain all the attribute information, this makes things like creating popups really snappy because the client app already has all the information it needs. </p>
+<p>That said, Feature Layers can potentially transfer large amounts of data from the server to the client. For example you wouldn&#39;t want to use a Feature Layer if you were drawing draw tax parcels for the whole of the USA. To address this Esri Leaflet provides a few options. By default we only request features within the current map extent.  This allows you to extract a manageable number of a features from a service with lots of data on the back end.</p>
+<p>Esri Leaflet provides other mechanisms to optimize performance as well. You can control which attributes are fetched, generalizing geometry before it is downloaded and filter data using SQL clauses. However even after you&#39;ve optimized your setup there will always be a limit to the amount of features which it makes sense to try and display clientside, this limit depends on the individual service, and the browser being used.</p>
 <h3 id="how-to-consume-feature-layers-from-arcgis-server">How to consume Feature Layers from ArcGIS Server</h3>
-<p>Feature Layers can be created in Esri-Leaflet from both <code>MapServer</code> or <code>FeatureServer</code> services published by ArcGIS Server. To utilise a <code>MapServer</code> service you need to specify a particular layer by appending the layer index, eg &quot;ESRI_Population_World/MapServer<em>/0</em>&quot;.</p>
+<p>Feature Layers can be created in Esri Leaflet from both <code>MapServer</code> or <code>FeatureServer</code> services published by ArcGIS Server. To utilise a <code>MapServer</code> service you need to specify a particular layer by appending the layer index, eg &quot;ESRI_Population_World/MapServer<em>/0</em>&quot;.</p>
 <p>So for example both of these are valid uses </p>
 <pre><code class="language-js"><span class="comment">// NOTE - The FeatureServer part of this url</span>
 L.esri.featureLayer({
@@ -155,9 +159,8 @@ L.esri.tiledMapLayer({
     url: <span class="string">'https://services.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer'</span>
 })</code></pre>
 <h3 id="what-does-the-data-look-like-">What does the data look like?</h3>
-<p>When you request a Tiled Map Layer from an ArcGIS Server the response might look something like
-<img src="http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/PublicSafety/PublicSafetyBasemap/MapServer/tile/6/146/267" alt="Map tile">
-As you can see, it is simply an image!</p>
+<p>You can see an example Tiled Map Layer response from ArcGIS Server below. It is simply an image!</p>
+<p><img src="http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/PublicSafety/PublicSafetyBasemap/MapServer/tile/6/146/267" alt="Map tile"></p>
 
   <p><a href="http://github.com/esri/esri-leaflet-doc/edit/master/src/pages/tutorials/introduction-to-layer-types.md">Edit this page on GitHub</a></p>
 </div>
