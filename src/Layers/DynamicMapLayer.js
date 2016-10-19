@@ -134,7 +134,7 @@ export var DynamicMapLayer = RasterLayer.extend({
       params.layers = 'show:' + this.options.layers.join(',');
     }
 
-    if (this.options.layerDefs) {
+    if (this.options.layerDefs && typeof this.options.layerDefs !== 'string') {
       params.layerDefs = JSON.stringify(this.options.layerDefs);
     }
 
