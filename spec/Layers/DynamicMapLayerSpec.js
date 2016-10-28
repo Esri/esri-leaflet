@@ -263,7 +263,7 @@ describe('L.esri.DynamicMapLayer', function () {
     server.respond();
   });
 
-  it('should get and set layer definitions', function (done) {
+  it('should get and set a JSON layer definitions', function (done) {
     server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png24&transparent=true&bboxSR=3857&imageSR=3857&layerDefs=%7B%221%22%3A%22Foo%3DBar%22%7D&f=json/), JSON.stringify({
       href: WithDefs
     }));
@@ -275,6 +275,23 @@ describe('L.esri.DynamicMapLayer', function () {
 
     layer.setLayerDefs({ 1: 'Foo=Bar' });
     expect(layer.getLayerDefs()).to.deep.equal({ 1: 'Foo=Bar' });
+
+    layer.addTo(map);
+    server.respond();
+  });
+
+  it('should get and set a string layer definition', function (done) {
+    server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png24&transparent=true&bboxSR=3857&imageSR=3857&layerDefs=Foo%3DBar&f=json/), JSON.stringify({
+      href: WithDefs
+    }));
+
+    layer.once('load', function () {
+      expect(layer._currentImage._url).to.equal(WithDefs);
+      done();
+    });
+
+    layer.setLayerDefs('Foo=Bar');
+    expect(layer.getLayerDefs()).to.equal('Foo=Bar');
 
     layer.addTo(map);
     server.respond();
