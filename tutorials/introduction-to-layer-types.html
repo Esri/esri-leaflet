@@ -34,8 +34,8 @@
   
 
   
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.0/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.0.0/dist/leaflet-src.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet-src.js"></script>
     <script src="https://unpkg.com/esri-leaflet@2.0.4"></script>
   
 
@@ -145,13 +145,13 @@ L.esri.dynamicMapLayer({
     url: <span class="string">'https://services.arcgisonline.com/arcgis/rest/services/Specialty/Soil_Survey_Map/MapServer'</span>
 })</code></pre>
 <h3 id="what-does-the-data-look-like-">What does the data look like?</h3>
-<p>When you request a Dynamic Map Layer from an ArcGIS Server the response might look something like 
-<img src="https://services.arcgisonline.com/arcgis/rest/directories/arcgisoutput/Specialty/Soil_Survey_Map_MapServer/_ags_map7ec03f83fc184c65b3e98b240810d139.png" alt="Map tile">
-As you can see, it is simply an image!</p>
+<p>When you request a Dynamic Map Layer from an ArcGIS Server the response might look something like the following:</p>
+<p><img src="https://services.arcgisonline.com/arcgis/rest/services/Specialty/Soil_Survey_Map/MapServer/export?bbox=-15214026.109881485,1868732.467515991,-7337954.715376922,8365268.375529694&amp;size=600,200&amp;dpi=96&amp;format=png24&amp;transparent=true&amp;bboxSR=3857&amp;imageSR=3857&amp;f=image" alt="Map tile"></p>
+<p>As you can see, it is simply an image!</p>
 <h2 id="tiled-map-layers">Tiled Map Layers</h2>
 <p>A <a href="http://esri.github.io/esri-leaflet/api-reference/layers/tiled-map-layer.html">Tiled Map Layer</a> is similar to a Dynamic Map Layer however it involves pulling down a pre-rendered representation of your data from a tile cache in ArcGIS Server.</p>
 <p>The benefit of a Tiled Map Layer is that it can respond more quickly than a Dynamic Map Layer as an image has already been rendered and is available on the server. Tile Map Layers are typically used for basemaps.</p>
-<p>The downside of a Tiled Map Layer is that it can take up a lot of space on your server as each tile has to be pre-rendered. Your tiles also only represent the state of your data when the tile was created, they don&#39;t automatically update to refect changes to your data.</p>
+<p>The downside of a Tiled Map Layer is that it can take up a lot of space on your server as each tile has to be pre-rendered. Your tiles also only represent the state of your data when the tile was created, they don&#39;t automatically update to reflect changes to your data.</p>
 <h3 id="how-to-consume-tiled-map-layers-from-arcgis-server">How to consume Tiled Map Layers from ArcGIS Server</h3>
 <p>Tiled Map Layers can be created in Esri-Leaflet from a <code>MapServer</code> service published by ArcGIS Server that contains a <code>Single Fused Map Cache</code>, you would create the cache when you publish a layer in ArcGIS Server.</p>
 <pre><code class="language-js"><span class="comment">// NOTE - When you visit the url you will see information relating to the tile cache</span>

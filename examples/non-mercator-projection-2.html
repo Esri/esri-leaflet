@@ -34,8 +34,8 @@
   
 
   
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.0/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.0.0/dist/leaflet-src.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet-src.js"></script>
     <script src="https://unpkg.com/esri-leaflet@2.0.4"></script>
   
 
@@ -190,43 +190,57 @@
 <!-- Include Proj4JS via rawgit.com
 in production you'd be better off hosting these libraries yourself -->
 <script src="https://rawgit.com/proj4js/proj4js/2.3.12/dist/proj4-src.js"></script>
-<script src="https://rawgit.com/kartena/Proj4Leaflet/1.0.0-beta.1/src/proj4leaflet.js"></script>
+<script src="https://rawgit.com/kartena/Proj4Leaflet/1.0.0-beta.2/src/proj4leaflet.js"></script>
 
 <div id="map"></div>
 
 <script>
-  /* create new Proj4Leaflet CRS:
-  1. Proj4 and WKT definitions can be found at sites like http://epsg.io, http://spatialreference.org/ or by using gdalsrsinfo http://www.gdal.org/gdalsrsinfo.html
-  2. Appropriate values to supply to the resolution and origin constructor options can be found in the ArcGIS Server RESTful tile server endpoint (ex: http://mapserv.utah.gov/arcgis/rest/services/BaseMaps/Terrain/MapServer)
-  3. The numeric code within the first parameter (ex: `26912`) will be used to project the dynamic map layer on the fly
-  */
-  var crs = new L.Proj.CRS('EPSG:54009', '+proj=moll +lon_0=0 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs', {
-    origin: [-19844104.7157449, 29766157.3486128],
+/* create new Proj4Leaflet CRS:
+1. Proj4 and WKT definitions can be found at sites like http://epsg.io, http://spatialreference.org/ or by using gdalsrsinfo http://www.gdal.org/gdalsrsinfo.html
+2. Appropriate values to supply to the resolution and origin constructor options can be found in the ArcGIS Server tile server REST endpoint (ex: https://tiles.arcgis.com/tiles/qHLhLQrcvEnxjtPr/arcgis/rest/services/OS_Open_Background_2/MapServer).
+3. The numeric code within the first parameter (ex: `27700`) will be used to project the dynamic map layer on the fly
+*/
+var crs = new L.Proj.CRS('EPSG:27700', '+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +towgs84=446.448,-125.157,542.06,0.15,0.247,0.842,-20.489 +units=m +no_defs', {
+    origin: [-5220400.0, 4470200.0],
     resolutions: [
+      132291.9312505292,
       66145.9656252646,
-      33072.9828126323,
-      16933.3672000677,
-      8466.68360003387
+      26458.386250105836,
+      19843.789687579378,
+      13229.193125052918,
+      6614.596562526459,
+      2645.8386250105837,
+      1322.9193125052918,
+      661.4596562526459,
+      264.5838625010584,
+      132.2919312505292,
+      66.1459656252646,
+      26.458386250105836,
+      19.843789687579378,
+      13.229193125052918,
+      6.614596562526459,
+      2.6458386250105836,
+      1.3229193125052918,
+      0.6614596562526459
     ]
   });
 
   var map = L.map('map', {
     crs: crs
-  }).setView([40,-100], 3);
+  }).setView([53.386, -2.319], 7);
 
   // The min/maxZoom values provided should match the actual cache thats been published. This information can be retrieved from the service endpoint directly.
   L.esri.tiledMapLayer({
-    url: 'http://maverick.arcgis.com/ArcGIS/rest/services/World_Mollweide/MapServer',
-    // to do: overlay is misaligned at world scale, needs to figure out why.
-    maxZoom: 3,
-    minZoom: 3,
-    continuousWorld: true
+    url: 'https://tiles.arcgis.com/tiles/qHLhLQrcvEnxjtPr/arcgis/rest/services/OS_Open_Background_2/MapServer',
+    maxZoom: 19,
+    minZoom: 6,
   }).addTo(map);
 
   // Dynamic map layers are projected by ArcGIS Server itself before the image is retrieved
   L.esri.dynamicMapLayer({
-    url: "http://nsdemo.esri.com/arcgis/rest/services/SampleWorldCities/MapServer",
-    layers: [1]
+    url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/WorldTimeZones/MapServer",
+    layers: [0],
+    opacity: 0.4
   }).addTo(map);
 </script>
 
@@ -238,8 +252,8 @@ in production you'd be better off hosting these libraries yourself -->
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">name</span>=<span class="value">'viewport'</span> <span class="attribute">content</span>=<span class="value">'initial-scale=1,maximum-scale=1,user-scalable=no'</span> /&gt;</span>
 
   <span class="comment">&lt;!-- Load Leaflet from CDN--&gt;</span>
-  <span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"https://unpkg.com/leaflet@1.0.0/dist/leaflet.css"</span> /&gt;</span>
-  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/leaflet@1.0.0/dist/leaflet-src.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"https://unpkg.com/leaflet@1.0.1/dist/leaflet.css"</span> /&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/leaflet@1.0.1/dist/leaflet-src.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
   <span class="comment">&lt;!-- Load Esri Leaflet from CDN --&gt;</span>
   <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/esri-leaflet@2.0.4"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
@@ -254,43 +268,57 @@ in production you'd be better off hosting these libraries yourself -->
 <span class="comment">&lt;!-- Include Proj4JS via rawgit.com
 in production you'd be better off hosting these libraries yourself --&gt;</span>
 <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://rawgit.com/proj4js/proj4js/2.3.12/dist/proj4-src.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
-<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://rawgit.com/kartena/Proj4Leaflet/1.0.0-beta.1/src/proj4leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://rawgit.com/kartena/Proj4Leaflet/1.0.0-beta.2/src/proj4leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
-  <span class="comment">/* create new Proj4Leaflet CRS:
-  1. Proj4 and WKT definitions can be found at sites like http://epsg.io, http://spatialreference.org/ or by using gdalsrsinfo http://www.gdal.org/gdalsrsinfo.html
-  2. Appropriate values to supply to the resolution and origin constructor options can be found in the ArcGIS Server RESTful tile server endpoint (ex: http://mapserv.utah.gov/arcgis/rest/services/BaseMaps/Terrain/MapServer)
-  3. The numeric code within the first parameter (ex: `26912`) will be used to project the dynamic map layer on the fly
-  */</span>
-  <span class="keyword">var</span> crs = <span class="keyword">new</span> L.Proj.CRS(<span class="string">'EPSG:54009'</span>, <span class="string">'+proj=moll +lon_0=0 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs'</span>, {
-    origin: [-<span class="number">19844104.7157449</span>, <span class="number">29766157.3486128</span>],
+<span class="comment">/* create new Proj4Leaflet CRS:
+1. Proj4 and WKT definitions can be found at sites like http://epsg.io, http://spatialreference.org/ or by using gdalsrsinfo http://www.gdal.org/gdalsrsinfo.html
+2. Appropriate values to supply to the resolution and origin constructor options can be found in the ArcGIS Server tile server REST endpoint (ex: https://tiles.arcgis.com/tiles/qHLhLQrcvEnxjtPr/arcgis/rest/services/OS_Open_Background_2/MapServer).
+3. The numeric code within the first parameter (ex: `27700`) will be used to project the dynamic map layer on the fly
+*/</span>
+<span class="keyword">var</span> crs = <span class="keyword">new</span> L.Proj.CRS(<span class="string">'EPSG:27700'</span>, <span class="string">'+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +towgs84=446.448,-125.157,542.06,0.15,0.247,0.842,-20.489 +units=m +no_defs'</span>, {
+    origin: [-<span class="number">5220400.0</span>, <span class="number">4470200.0</span>],
     resolutions: [
+      <span class="number">132291.9312505292</span>,
       <span class="number">66145.9656252646</span>,
-      <span class="number">33072.9828126323</span>,
-      <span class="number">16933.3672000677</span>,
-      <span class="number">8466.68360003387</span>
+      <span class="number">26458.386250105836</span>,
+      <span class="number">19843.789687579378</span>,
+      <span class="number">13229.193125052918</span>,
+      <span class="number">6614.596562526459</span>,
+      <span class="number">2645.8386250105837</span>,
+      <span class="number">1322.9193125052918</span>,
+      <span class="number">661.4596562526459</span>,
+      <span class="number">264.5838625010584</span>,
+      <span class="number">132.2919312505292</span>,
+      <span class="number">66.1459656252646</span>,
+      <span class="number">26.458386250105836</span>,
+      <span class="number">19.843789687579378</span>,
+      <span class="number">13.229193125052918</span>,
+      <span class="number">6.614596562526459</span>,
+      <span class="number">2.6458386250105836</span>,
+      <span class="number">1.3229193125052918</span>,
+      <span class="number">0.6614596562526459</span>
     ]
   });
 
   <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>, {
     crs: crs
-  }).setView([<span class="number">40</span>,-<span class="number">100</span>], <span class="number">3</span>);
+  }).setView([<span class="number">53.386</span>, -<span class="number">2.319</span>], <span class="number">7</span>);
 
   <span class="comment">// The min/maxZoom values provided should match the actual cache thats been published. This information can be retrieved from the service endpoint directly.</span>
   L.esri.tiledMapLayer({
-    url: <span class="string">'http://maverick.arcgis.com/ArcGIS/rest/services/World_Mollweide/MapServer'</span>,
-    <span class="comment">// to do: overlay is misaligned at world scale, needs to figure out why.</span>
-    maxZoom: <span class="number">3</span>,
-    minZoom: <span class="number">3</span>,
-    continuousWorld: <span class="literal">true</span>
+    url: <span class="string">'https://tiles.arcgis.com/tiles/qHLhLQrcvEnxjtPr/arcgis/rest/services/OS_Open_Background_2/MapServer'</span>,
+    maxZoom: <span class="number">19</span>,
+    minZoom: <span class="number">6</span>,
   }).addTo(map);
 
   <span class="comment">// Dynamic map layers are projected by ArcGIS Server itself before the image is retrieved</span>
   L.esri.dynamicMapLayer({
-    url: <span class="string">"http://nsdemo.esri.com/arcgis/rest/services/SampleWorldCities/MapServer"</span>,
-    layers: [<span class="number">1</span>]
+    url: <span class="string">"https://sampleserver6.arcgisonline.com/arcgis/rest/services/WorldTimeZones/MapServer"</span>,
+    layers: [<span class="number">0</span>],
+    opacity: <span class="number">0.4</span>
   }).addTo(map);
 </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 

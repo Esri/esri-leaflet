@@ -8,7 +8,7 @@
   <meta charset="utf-8">
 
   
-    <title>Utilities | Esri Leaflet</title>
+    <title>options | Esri Leaflet</title>
   
 
   
@@ -123,53 +123,33 @@
 
 
 <div class="main-content">
-  <h1 id="l-esri-util">L.esri.Util</h1>
-<p>Utility methods used internally by Esri Leaflet. These methods are useful for converting data between ArcGIS and Leaflet formats.</p>
+  <h1 id="l-esri-options">L.esri.options</h1>
+<p>This namespace provides a location for application configuration settings that are peculiar to Esri Leaflet.</p>
+<h4 id="properties">Properties</h4>
 <table>
-    <thead>
-        <tr>
-            <td>Method</td>
-            <td>Returns</td>
-            <td>Description</td>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td><code>extentToBounds(<nobr class="param"><span>&lt;<a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Geometry_Objects/02r3000000n1000000/">Extent</a>&gt;</span> <code>extent</code></nobr>)</code></td>
-            <td><code><a href="http://leafletjs.com/reference.html#latlngbounds">LatLngBounds</a></code></td>
-            <td>Converts ArcGIS Extent objects to Leaflet <a href="http://leafletjs.com/reference.html#latlngbounds">LatLngBounds</a> objects.</td>
-        </tr>
-        <tr>
-            <td><code>boundsToExtent(<nobr class="param"><span>&lt;<a href="http://leafletjs.com/reference.html#latlngbounds">LatLngBounds</a>&gt;</span> <code>bounds</code></nobr>)</code></td>
-            <td><code><a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Geometry_Objects/02r3000000n1000000/">Extent</a></code></td>
-            <td>Converts Leaflet <a href="http://leafletjs.com/reference.html#latlngbounds">LatLngBounds</a> objects to ArcGIS Extent objects.</td>
-        </tr>
-        <tr>
-            <td><code>arcgisToGeoJSON(<nobr class="param"><span>&lt;<a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Geometry_Objects/02r3000000n1000000/">ArcGIS Geometry</a>&gt;</span> <code>arcgis</code></nobr>)</code><br><code>arcgisToGeoJSON(<nobr class="param"><span>&lt;<a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Feature_object/02r3000000n8000000/">ArcGIS Feature</a>&gt;</span> <code>arcgis</code></nobr>)</code></td>
-            <td><code><a href="http://geojson.org/geojson-spec.html#geojson-objects">GeoJSON</a></code></td>
-            <td>Converts <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Geometry_Objects/02r3000000n1000000/">ArcGIS Geometry Objects</a> or <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Feature_object/02r3000000n8000000/">ArcGIS Feature Objects</a> to <a href="http://geojson.org/geojson-spec.html#geojson-objects">GeoJSON</a>. If you pass a GeoJSON Feature or FeatureCollection you should also pass <code>idAttribute</code> to assign a property from the feature attributes to the ID of the GeoJSON Feature, <code>&#39;OBJECTID&#39;</code> or <code>&#39;FID&#39;</code> attributes by default.</td>
-        </tr>
-        <tr>
-            <td>geojsonToArcGIS(<nobr class="param"><span>&lt;<a href="http://geojson.org/geojson-spec.html#geojson-objects">GeoJSON</a>&gt;</span> <code>geojson</code></nobr>, <nobr class="param"><span>&lt;String&gt;</span> <code>idAttribute</code></nobr>)</td>
-            <td><code>Object</code></td>
-            <td>Converts <a href="http://geojson.org/geojson-spec.html#geojson-objects">GeoJSON</a> objects to <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Geometry_Objects/02r3000000n1000000/">ArcGIS Geometry Objects</a> or <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Feature_object/02r3000000n8000000/">ArcGIS Feature Objects</a>. If you pass a GeoJSON Feature or FeatureCollection you should also pass <code>idAttribute</code> to assign a property in the output features to represent the features id, <code>&#39;OBJECTID&#39;</code> by default.</td>
-        </tr>
-        <tr>
-            <td>responseToFeatureCollection(<nobr class="param"><span>&lt;Object&gt;</span> <code>response</code></nobr>, <nobr class="param"><span>&lt;String&gt;</span> <code>idAttribute</code></nobr>)</td>
-            <td><code><a href="http://geojson.org/geojson-spec.html#feature-collection-objects">FeatureCollection</a></code></td>
-            <td>Converts an API response (returned by identify, query or find API methods) to a <a href="http://geojson.org/geojson-spec.html#feature-collection-objects">GeoJSON FeatureCollection</a>. This is used internally by <code><a href="../api-reference/tasks/query.html">L.esri.Query</a></code>, <code><a href="../api-reference/tasks/identify-features.html">L.esri.IdentifyFeatures</a></code> and <code><a href="../api-reference/tasks/find.html">L.esri.Find</a></code> to convert responses.</td>
-        </tr>
-        <tr>
-            <td>cleanUrl(<nobr class="param"><span>&lt;String&gt;</span> <code>url</code></nobr>)</td>
-            <td><code>String</code></td>
-            <td>Used internally to ensure that URLs have no leading or trailing whitespace and have a leading slash.</td>
-        </tr>
-    </tbody>
+<thead>
+<tr>
+<th>Property</th>
+<th>Value</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>attributionWidthOffset</code></td>
+<td><code>Number</code></td>
+<td><code>55</code></td>
+<td>This plugin automatically truncates text in <a href="http://leafletjs.com/reference-1.0.0.html#control-attribution">Leaflet.Control.Attribution</a> so that it doesn&#39;t overflow into multiple lines.  This value dicates how much horizontal space (in pixels) will be set aside for other controls.</td>
+</tr>
+</tbody>
 </table>
+<h4 id="example">Example</h4>
+<pre><code class="language-js"><span class="comment">// pass in a larger value to make space for a scale bar too</span>
+L.esri.options.attributionWidthOffset = <span class="number">200</span>;
+<span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">37.79</span>, -<span class="number">122.45</span>], <span class="number">13</span>);</code></pre>
 
-
-
-  <p><a href="http://github.com/Esri/esri-leaflet-doc/edit/master/src/pages/api-reference/util.md">Edit this page on GitHub</a></p>
+  <p><a href="http://github.com/Esri/esri-leaflet-doc/edit/master/src/pages/api-reference/options.md">Edit this page on GitHub</a></p>
 </div>
 
   <div style='clear:both;'></div>
