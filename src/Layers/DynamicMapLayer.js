@@ -23,6 +23,7 @@ export var DynamicMapLayer = RasterLayer.extend({
     if ((options.proxy || options.token) && options.f !== 'json') {
       options.f = 'json';
     }
+
     L.Util.setOptions(this, options);
   },
 
@@ -150,6 +151,10 @@ export var DynamicMapLayer = RasterLayer.extend({
       params.token = this.service.options.token;
     }
 
+    if (this.options.proxy) {
+      params.proxy = this.options.proxy;
+    }
+
     return params;
   },
 
@@ -159,6 +164,9 @@ export var DynamicMapLayer = RasterLayer.extend({
         if (error) { return; } // we really can't do anything here but authenticate or requesterror will fire
         if (this.options.token) {
           response.href += ('?token=' + this.options.token);
+        }
+        if (this.options.proxy) {
+          response.href = this.options.proxy + '?' + response.href;
         }
         if (response.href) {
           this._renderImage(response.href, bounds);
