@@ -132,6 +132,10 @@ export function request (url, params, callback, context) {
     }
   }
 
+  if (params.token) {
+    httpRequest.withCredentials = true;
+  }
+
   // request is less then 2000 characters and the browser supports CORS, make GET request with XMLHttpRequest
   if (requestLength <= 2000 && Support.cors) {
     httpRequest.send(null);
