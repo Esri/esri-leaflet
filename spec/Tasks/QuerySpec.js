@@ -193,6 +193,15 @@ describe('L.esri.Query', function () {
     }
   };
 
+  var sampleNaNExtentResponse = {
+    'extent': {
+      'xmin': 'NaN',
+      'ymin': 'NaN',
+      'xmax': 'NaN',
+      'ymax': 'NaN'
+    }
+  };
+
   var sampleCountResponse = {
     'count': 1
   };
@@ -617,6 +626,22 @@ describe('L.esri.Query', function () {
     expect(request).to.be.an.instanceof(XMLHttpRequest);
 
     server.respond();
+  });
+
+  it('should query nullified bounds', function (done) {
+    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D2&outSr=4326&outFields=*&returnExtentOnly=true&f=json', JSON.stringify(sampleNaNExtentResponse));
+
+    task.where('1=2');
+    var request = task.bounds(function (error, latlngbounds, raw) {
+      expect(latlngbounds).to.deep.equal(null);
+      expect(raw).to.deep.equal(sampleNaNExtentResponse);
+      done();
+    });
+
+    expect(request).to.be.an.instanceof(XMLHttpRequest);
+
+    server.respond();
+    task.where('1=1');
   });
 
   it('should query count', function (done) {
