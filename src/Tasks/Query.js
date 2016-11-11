@@ -136,12 +136,7 @@ export var Query = Task.extend({
     this._cleanParams();
     this.params.returnExtentOnly = true;
     return this.request(function (error, response) {
-      if (!response.extent || response.extent.xmin === 'NaN') {
-        // if an extent with "NaN" coordinates is returned from ArcGIS Server, just pass a null geometry
-        callback.call(context, error, null, response);
-      } else {
-        callback.call(context, error, (response && response.extent && Util.extentToBounds(response.extent)), response);
-      }
+      callback.call(context, error, (response && response.extent && Util.extentToBounds(response.extent)), response);
     }, context);
   },
 
