@@ -775,5 +775,21 @@ describe('L.esri.Query', function () {
 
     server.respond();
   });
+
+  it('should not ask for GeoJSON from utility.arcgis.com', function (done) {
+    task = L.esri.query({url: 'http://utility.arcgis.com/mock/arcgis/rest/services/MockFeatureService/FeatureServer/0/'});
+
+    server.respondWith('GET', 'http://utility.arcgis.com/mock/arcgis/rest/services/MockFeatureService/FeatureServer/0/query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&f=json', JSON.stringify(sampleMapServiceQueryResponse));
+
+    var request = task.run(function (error, featureCollection, raw) {
+      expect(featureCollection).to.deep.equal(sampleMapServiceCollection);
+      expect(raw).to.deep.equal(sampleMapServiceQueryResponse);
+      done();
+    });
+
+    expect(request).to.be.an.instanceof(XMLHttpRequest);
+
+    server.respond();
+  });
 });
 /* eslint-enable handle-callback-err*/
