@@ -134,10 +134,13 @@ export function request (url, params, callback, context) {
 
   // request is less then 2000 characters and the browser supports CORS, make GET request with XMLHttpRequest
   if (requestLength <= 2000 && Support.cors) {
+    // ensure cookies are passed through in cross-site Access-Control requests
+    httpRequest.withCredentials = true;
     httpRequest.send(null);
 
   // request is less more then 2000 characters and the browser supports CORS, make POST request with XMLHttpRequest
   } else if (requestLength > 2000 && Support.cors) {
+    httpRequest.withCredentials = true;
     httpRequest.send(paramString);
 
   // request is less more then 2000 characters and the browser does not support CORS, make a JSONP request

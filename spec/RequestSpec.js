@@ -93,6 +93,17 @@ describe('L.esri request helpers', function () {
     requests[0].respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, JSON.stringify(sampleResponse));
   });
 
+  it('should make a request with a token', function (done) {
+    L.esri.request('http://services.arcgisonline.com/ArcGIS/rest/info', { token: 'foo' }, function (error, response) {
+      expect(response).to.deep.equal(sampleResponse);
+      done();
+    });
+
+    expect(requests[0].url).to.contain('token=foo');
+    expect(requests[0].withCredentials).to.equal(true);
+    requests[0].respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, JSON.stringify(sampleResponse));
+  });
+
   it('should serialize arrays of objects as JSON', function (done) {
     L.esri.get.CORS('http://services.arcgisonline.com/ArcGIS/rest/info', {
       object: [{foo: 'bar'}]
