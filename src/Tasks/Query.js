@@ -131,12 +131,19 @@ export var Query = Task.extend({
     }, context);
   },
 
-  // only valid for Feature Services running on ArcGIS Server 10.3 or ArcGIS Online
+  // only valid for Feature Services running on ArcGIS Server 10.3+ or ArcGIS Online
   bounds: function (callback, context) {
     this._cleanParams();
     this.params.returnExtentOnly = true;
     return this.request(function (error, response) {
-      callback.call(context, error, (response && response.extent && Util.extentToBounds(response.extent)), response);
+      if (response && response.extent && Util.extentToBounds(response.extent)) {
+        callback.call(context, error, Util.extentToBounds(response.extent), response);
+      } else {
+        error = {
+          message: 'Invalid Bounds'
+        };
+        callback.call(context, error, null, response);
+      }
     }, context);
   },
 

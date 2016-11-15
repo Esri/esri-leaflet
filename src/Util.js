@@ -29,9 +29,14 @@ export function shallowClone (obj) {
 
 // convert an extent (ArcGIS) to LatLngBounds (Leaflet)
 export function extentToBounds (extent) {
-  var sw = L.latLng(extent.ymin, extent.xmin);
-  var ne = L.latLng(extent.ymax, extent.xmax);
-  return L.latLngBounds(sw, ne);
+  // "NaN" coordinates from ArcGIS Server indicate a null geometry
+  if (extent.xmin !== 'NaN' && extent.ymin !== 'NaN' && extent.xmax !== 'NaN' && extent.ymax !== 'NaN') {
+    var sw = L.latLng(extent.ymin, extent.xmin);
+    var ne = L.latLng(extent.ymax, extent.xmax);
+    return L.latLngBounds(sw, ne);
+  } else {
+    return null;
+  }
 }
 
 // convert an LatLngBounds (Leaflet) to extent (ArcGIS)

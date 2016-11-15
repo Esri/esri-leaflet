@@ -8,3 +8,6 @@ before_script:
   - npm prune
 before_install:
   - npm i -g npm@^3.0.0
+cache:
+  directories: # Cache dependencies
+    - node_modules
