@@ -193,6 +193,7 @@ describe('L.esri.Query', function () {
     }
   };
 
+  // this is how ArcGIS Server returns a null extent (for now)
   var sampleNaNExtentResponse = {
     'extent': {
       'xmin': 'NaN',
@@ -633,6 +634,7 @@ describe('L.esri.Query', function () {
 
     task.where('1=2');
     var request = task.bounds(function (error, latlngbounds, raw) {
+      expect(error.message).to.equal('Invalid Bounds');
       expect(latlngbounds).to.deep.equal(null);
       expect(raw).to.deep.equal(sampleNaNExtentResponse);
       done();
