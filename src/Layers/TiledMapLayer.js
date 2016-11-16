@@ -102,8 +102,7 @@ export var TiledMapLayer = L.TileLayer.extend({
     // include 'Powered by Esri' in map attribution
     setEsriAttribution(map);
 
-    if (map.options.crs === L.CRS.EPSG3857 && !this._lodMap) {
-      this._lodMap = {};
+    if (!this._lodMap) {
       this.metadata(function (error, metadata) {
         if (!error && metadata.spatialReference) {
           var sr = metadata.spatialReference.latestWkid || metadata.spatialReference.wkid;
@@ -111,7 +110,8 @@ export var TiledMapLayer = L.TileLayer.extend({
             this.options.attribution = metadata.copyrightText;
             map.attributionControl.addAttribution(this.getAttribution());
           }
-          if (sr === 102100 || sr === 3857) {
+          if (map.options.crs === L.CRS.EPSG3857 && sr === 102100 || sr === 3857) {
+            this._lodMap = {};
             // create the zoom level data
             var arcgisLODs = metadata.tileInfo.lods;
             var correctResolutions = TiledMapLayer.MercatorZoomLevels;
@@ -130,7 +130,9 @@ export var TiledMapLayer = L.TileLayer.extend({
 
             this.fire('lodmap');
           } else {
-            warn('L.esri.TiledMapLayer is using a non-mercator spatial reference. Support may be available through Proj4Leaflet http://esri.github.io/esri-leaflet/examples/non-mercator-projection.html');
+            if (!proj4) {
+              warn('L.esri.TiledMapLayer is using a non-mercator spatial reference. Support may be available through Proj4Leaflet http://esri.github.io/esri-leaflet/examples/non-mercator-projection.html');
+            }
           }
         }
       }, this);
