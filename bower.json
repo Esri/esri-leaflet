@@ -3,7 +3,7 @@
   "description": "Leaflet plugins for consuming ArcGIS Online and ArcGIS Server services.",
   "main": "dist/esri-leaflet.js",
   "dependencies": {
-    "leaflet": "^1.0.0-rc.2"
+    "leaflet": "^1.0.0"
   },
   "ignore": [
     "**/.*",

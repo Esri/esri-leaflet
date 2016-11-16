@@ -5,6 +5,16 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Upcoming changes][unreleased]
 
+## [2.0.5]
+
+### Fixed
+* DynamicMapLayer image overlays now utilize a proxy when appropriate [#862](https://github.com/Esri/esri-leaflet/issues/862)
+* `DynamicMapLayer.layerDefs` provided as a string are now serialized correctly [#866](https://github.com/Esri/esri-leaflet/pull/866) (thank you[@whyvez](https://github.com/whyvez)!)
+* We no longer ask for raw geojson from ArcGIS Online proxied services that can't provide it. [#876](https://github.com/Esri/esri-leaflet/issues/876)
+* Copyright text for `TiledMapLayer` is now displayed automatically when the map has a custom projection. [#877](https://github.com/Esri/esri-leaflet/issues/877)
+* When a null extent is encountered by L.esri.Query, no matter its form, an `Invalid Bounds` error is passed in the callback. [#879](https://github.com/Esri/esri-leaflet/issues/879)
+* `L.esri.request` now sets the generic `withCredentials` header when appropriate [#881](https://github.com/Esri/esri-leaflet/issues/881)
+
 ## [2.0.4]
 
 ### Changed
@@ -475,7 +485,8 @@ None
 * Add DarkGray and DarkGrayLabels to BasemapLayer. #190
 * An attributionControl on maps is now required when using BasemapLayer. #159
 
-[unreleased]: https://github.com/esri/esri-leaflet/compare/v2.0.4...HEAD
+[unreleased]: https://github.com/esri/esri-leaflet/compare/v2.0.5...HEAD
+[2.0.4]: https://github.com/esri/esri-leaflet/compare/v2.0.4...v2.0.5
 [2.0.4]: https://github.com/esri/esri-leaflet/compare/v2.0.3...v2.0.4
 [2.0.3]: https://github.com/esri/esri-leaflet/compare/v2.0.2...v2.0.3
 [2.0.2]: https://github.com/esri/esri-leaflet/compare/v2.0.1...v2.0.2
