@@ -100,7 +100,7 @@ describe('L.esri request helpers', function () {
     });
 
     expect(requests[0].url).to.contain('token=foo');
-    expect(requests[0].withCredentials).to.equal(true);
+    expect(requests[0].withCredentials).to.equal(false);
     requests[0].respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, JSON.stringify(sampleResponse));
   });
 
