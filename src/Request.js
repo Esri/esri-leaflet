@@ -118,7 +118,7 @@ export function request (url, params, callback, context) {
   var httpRequest = createRequest(callback, context);
   var requestLength = (url + '?' + paramString).length;
 
-  // get around ie10/11 bug which requires that the request be opened before a timeout is applied
+  // ie10/11 require the request be opened before a timeout is applied
   if (requestLength <= 2000 && Support.cors) {
     httpRequest.open('GET', url + '?' + paramString);
   } else if (requestLength > 2000 && Support.cors) {
@@ -132,18 +132,15 @@ export function request (url, params, callback, context) {
     }
   }
 
-  // request is less then 2000 characters and the browser supports CORS, make GET request with XMLHttpRequest
+  // request is less than 2000 characters and the browser supports CORS, make GET request with XMLHttpRequest
   if (requestLength <= 2000 && Support.cors) {
-    // ensure cookies are passed through in cross-site Access-Control requests
-    httpRequest.withCredentials = true;
     httpRequest.send(null);
 
-  // request is less more then 2000 characters and the browser supports CORS, make POST request with XMLHttpRequest
+  // request is more than 2000 characters and the browser supports CORS, make POST request with XMLHttpRequest
   } else if (requestLength > 2000 && Support.cors) {
-    httpRequest.withCredentials = true;
     httpRequest.send(paramString);
 
-  // request is less more then 2000 characters and the browser does not support CORS, make a JSONP request
+  // request is less  than 2000 characters and the browser does not support CORS, make a JSONP request
   } else if (requestLength <= 2000 && !Support.cors) {
     return jsonp(url, params, callback, context);
 
