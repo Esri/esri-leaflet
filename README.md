@@ -58,7 +58,7 @@ The easiest way to get started is to load Esri Leaflet via [CDN](https://unpkg.c
     <script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet-src.js"></script>
 
     <!-- Load Esri Leaflet locally, after cloning this repository -->
-    <script src="https://unpkg.com/esri-leaflet@2.0.5"></script>
+    <script src="https://unpkg.com/esri-leaflet@2.0.6"></script>
 
     <style>
       html, body, #map {
@@ -154,7 +154,7 @@ If you'd like to inspect and modify the source of Esri Leaflet, follow the instr
 * Esri Leaflet [1.x](https://github.com/Esri/esri-leaflet/releases/tag/v1.0.3) (available on [CDN](https://cdn.jsdelivr.net/leaflet.esri/1.0.4/esri-leaflet.js)) can be used in apps alongside:
   *  [Leaflet](http://leafletjs.com) version 0.7.x.
 
-* Esri Leaflet [2.x](https://github.com/Esri/esri-leaflet/releases/tag/v2.0.5) (available on [CDN](https://unpkg.com/esri-leaflet@2.0.5)) can be used in apps alongside:
+* Esri Leaflet [2.x](https://github.com/Esri/esri-leaflet/releases/tag/v2.0.6) (available on [CDN](https://unpkg.com/esri-leaflet@2.0.5)) can be used in apps alongside:
   *  [Leaflet](http://leafletjs.com) version 1.x.
 
 The `master` branch of this repository is only compatible with Leaflet 1.x.
