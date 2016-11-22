@@ -34,7 +34,7 @@
   
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet-src.js"></script>
-    <script src="https://unpkg.com/esri-leaflet@2.0.4"></script>
+    <script src="https://unpkg.com/esri-leaflet@2.0.6"></script>
   
 
   <!-- Google Analytics -->
@@ -115,8 +115,9 @@
 
   <h5>Misc.</h5>
   <nav>
-    <a href="../../api-reference/request.html">request</a>
     <a href="../../api-reference/util.html">Util</a>
+    <a href="../../api-reference/request.html">request</a>
+    <a href="../../api-reference/options.html">options</a>
     <a href="../../api-reference/events.html">Events</a>
   </nav>
 </aside>
@@ -432,10 +433,30 @@ L.esri.Geocoding.Controls.geosearch({
 <tr>
 <td><code>bufferRadius</code></td>
 <td><code>Integer</code></td>
-<td>If a service or layer contains points, buffer points by this radius to create bounds.</td>
+<td>1000</td>
+<td>If a service or layer contains points, buffer points by this radius (in meters) to create bounds.</td>
 </tr>
 </tbody>
 </table>
+<h5 id="featurelayerprovider-methods">featureLayerProvider Methods</h5>
+<table>
+    <thead>
+        <tr>
+            <th>Method</th>
+            <th>Returns</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>orderBy(<nobr class="param"><span>&lt;String&gt;</span> <code>fieldname</code></nobr>, <nobr class="param"><span>&lt;String&gt;</span> <code>order</code></nobr>)</code></td>
+            <td><code>this</code></td>
+            <td>Sort output features using values from an individual field. <code>&quot;ASC&quot;</code> (ascending) is the default sort order, but <code>&quot;DESC&quot;</code> can be passed as an alternative. This method can be called more than once to apply advanced sorting.
+            </td>
+        </tr>
+    </tbody>
+</table>
+
 <p>Results from the <code>featureLayerProvider</code> will have an additional <code>properties</code> key which will contain all the information for the feature and a <code>geojson</code> key that will contain a <a href="http://geojson.org/">GeoJSON</a> representation of the feature.</p>
 <h5 id="mapserviceprovider">mapServiceProvider</h5>
 <table>

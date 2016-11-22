@@ -8,11 +8,11 @@
   <meta charset="utf-8">
 
   
-    <title>Displaying Web maps | Esri Leaflet</title>
+    <title>Esri Leaflet Web maps | Esri Leaflet</title>
   
 
   
-    <meta name="description" content="With the appropriate plugin(s), its possible to render web maps created in arcgis.com.">
+    <meta name="description" content="Render arcgis.com webmaps referenced via an id.">
   
 
   <meta name="description" content="Esri Leaflet">
@@ -30,13 +30,19 @@
   <!-- stylesheet -->
   <link rel="stylesheet" href="../css/style.css">
 
-  
-  
+  <!-- Load Leaflet from CDN-->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.1/leaflet.css" />
+  <script src="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.1/leaflet-src.js"></script>
+
+  <!-- Load Esri Leaflet -->
+  <!--script src="/js/linked/dist/esri-leaflet-debug.js"></script-->
+  <script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.0/esri-leaflet-debug.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
 
   
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet-src.js"></script>
-    <script src="https://unpkg.com/esri-leaflet@2.0.6"></script>
+    <!-- 'livereload' for development -->
+    <script src="//localhost:35729/livereload.js"></script>
   
 
   <!-- Google Analytics -->
@@ -74,40 +80,34 @@
 <aside class="sidebar">
   <h5>Basemaps</h5>
   <nav>
-    <a href="../examples/showing-a-basemap.html">Showing an ArcGIS Basemap</a>
-    <a href="../examples/basemap-with-labels.html">Basemap with Labels</a>
-    <a href="../examples/switching-basemaps.html">Switching Basemaps</a>
+    <a href="../examples/showing-a-basemap.html">Showing an ArcGIS basemap</a>
+    <a href="../examples/basemap-with-labels.html">Basemap with labels</a>
+    <a href="../examples/switching-basemaps.html">Switching basemaps</a>
     <a href="../examples/retina-basemap.html">Retina Basemap</a>
-    <a href="../examples/vector-basemap.html">Vector Basemaps</a>
   </nav>
 
   <h5>Feature Layers</h5>
   <nav>
     <a href="../examples/simple-feature-layer.html">Simple FeatureLayer</a>
-    <a href="../examples/styling-feature-layer-points.html">Styling Points</a>
-    <a href="../examples/styling-feature-layer-polylines.html">Styling Lines</a>
-    <a href="../examples/styling-feature-layer-polygons.html">Styling Polygons</a>
-    <a href="../examples/feature-layer-popups.html">Custom Popups</a>
-    <a href="../examples/querying-feature-layers-1.html">Querying Features #1</a>
-    <a href="../examples/querying-feature-layers-2.html">Querying Features #2</a>
+    <a href="../examples/styling-feature-layer-points.html">Styling points</a>
+    <a href="../examples/styling-feature-layer-polylines.html">Styling lines</a>
+    <a href="../examples/styling-feature-layer-polygons.html">Styling polygons</a>
+    <a href="../examples/feature-layer-popups.html">Custom popups</a>
+    <a href="../examples/querying-feature-layers-1.html">Querying features #1</a>
+    <a href="../examples/querying-feature-layers-2.html">Querying features #2</a>
     <a href="../examples/spatial-queries.html">Spatial Queries</a>
-    <a href="../examples/simplifying-complex-features.html">Simplifying Complex Features</a>
-    <a href="../examples/zooming-to-all-features-1.html">Zoom to all Features #1</a>
-    <a href="../examples/zooming-to-all-features-2.html">Zoom to all Features #2</a>
+    <a href="../examples/simplifying-complex-features.html">Simplifying complex features</a>
+    <a href="../examples/zooming-to-all-features-1.html">Zoom to all features #1</a>
+    <a href="../examples/zooming-to-all-features-2.html">Zoom to all features #2</a>
     <a href="../examples/labeling-features.html">Labeling Features</a>
     <a href="../examples/layer-ordering.html">Ordering Layers</a>
 
-
-    <!--<a href="../examples/editing.html">Editing</a>-->
-  </nav>
-
-  <h5>Feature Layer Plugins</h5>
-  <nav>
-    <a href="../examples/visualize-points-as-a-heatmap.html">Points as a Heatmap</a>
+    <a href="../examples/visualize-points-as-a-heatmap.html">Points as a heatmap</a>
     <a href="../examples/styling-heatmaps.html">Styling a heatmap</a>
-    <a href="../examples/visualizing-time-with-feature-layer.html">Time Enabled Services</a>
-    <a href="../examples/clustering-feature-layers.html">Clustering Points</a>
-    <a href="../examples/styling-clusters.html">Styling Clusters</a>
+    <a href="../examples/visualizing-time-with-feature-layer.html">Time enabled services</a>
+    <a href="../examples/clustering-feature-layers.html">Clustering points</a>
+    <a href="../examples/styling-clusters.html">Styling clusters</a>
+    <!--<a href="../examples/editing.html">Editing</a>-->
   </nav>
 
   <h5>Tile Layers</h5>
@@ -120,7 +120,7 @@
   <nav>
     <a href="../examples/simple-dynamic-map-layer.html">Simple Dynamic Map Layer</a>
     <a href="../examples/identifying-features.html">Identifying Features</a>
-    <a href="../examples/customizing-popups.html">Custom Popups</a>
+    <a href="../examples/customizing-popups.html">Custom popups</a>
     <a href="../examples/visualizing-time-on-dynamic-map-layer.html">Time Ranges</a>
   </nav>
 
@@ -130,8 +130,7 @@
     <a href="../examples/image-map-layer-rendering-rule.html">Rendering Rule</a>
     <a href="../examples/identifying-imagery.html">Identify Imagery</a>
     <a href="../examples/image-map-layer-mosaic-rule.html">Mosaic Rule</a>
-    <a href="../examples/imagery-popups.html">Custom Popups</a>
-    <a href="../examples/visualizing-time-on-image-layer.html">Time Ranges</a>
+    <a href="../examples/imagery-popups.html">Custom popups</a>
   </nav>
 
   <h5>Non-Mercator Projections</h5>
@@ -142,37 +141,36 @@
 
   <h5>Query</h5>
   <nav>
-    <a href="../examples/feature-layer-snapshot.html">Layer "Snapshot"</a>
-    <a href="../examples/query-no-map.html">Query without a Map</a>
+    <a href="../examples/feature-layer-snapshot.html">Layer "snapshot"</a>
+    <a href="../examples/query-no-map.html">Query without a map</a>
   </nav>
 
   <h5>Authentication</h5>
   <nav>
     <a href="../examples/arcgis-online-auth.html">ArcGIS Online OAuth</a>
-    <a href="../examples/premium-content.html">Premium ArcGIS Online Content</a>
+    <a href="../examples/premium-content.html">Premium ArcGIS Online content</a>
     <a href="../examples/arcgis-server-auth.html">ArcGIS Server username/password</a>
   </nav>
 
   <h5>Geocoding</h5>
   <nav>
-    <a href="../examples/geocoding-control.html">Geocoding Control</a>
-    <a href="../examples/search-map-service.html">Searching Map Services</a>
-    <a href="../examples/search-feature-layer.html">Searching Feature Layers</a>
-    <a href="../examples/center-map-on-address.html">Center the Initial Map State</a>
-    <a href="../examples/reverse-geocoding.html">Reverse Geocoding</a>
+    <a href="../examples/geocoding-control.html">Geocoding control</a>
+    <a href="../examples/search-map-service.html">Searching map service</a>
+    <a href="../examples/search-feature-layer.html">Searching feature layers</a>
+    <a href="../examples/center-map-on-address.html">Center the initial map state</a>
+    <a href="../examples/reverse-geocoding.html">Reverse geocoding</a>
   </nav>
 
   <h5>Other Plugins</h5>
   <nav>
-    <a href="../examples/renderers-plugin.html">Server Side Rendering</a>
-    <a href="../examples/stream-plugin.html">Stream Layer</a>
-    <a href="../examples/webmap.html?id=22c504d229f14c789c5b49ebff38b941">Loading Webmaps</a>
     <a href="../examples/gp-plugin.html">Geoprocessing</a>
+    <a href="../examples/renderers-plugin.html">Renderers plugin</a>
+    <a href="../examples/webmap-by-id.html">Webmap plugin</a>
   </nav>
 
   <h5>Misc.</h5>
   <nav>
-    <a href="../examples/getting-service-metadata.html">Getting Service Metadata</a>
+    <a href="../examples/getting-service-metadata.html">Getting service metadata</a>
     <a href="../examples/parse-feature-collection.html">Parsing Feature Collections</a>
   </nav>
 
@@ -181,8 +179,8 @@
 
 <div class="example-content">
 <div class="wrap">
-  <h1>Displaying Web maps</h1>
-  <p>With the appropriate plugin(s), its possible to render web maps created in arcgis.com.</p>
+  <h1>Esri Leaflet Web maps</h1>
+  <p>Render arcgis.com webmaps referenced via an id.</p>
 </div>
 <div id="map-wrapper">
   
@@ -203,53 +201,49 @@
  <script src="https://muxlab.github.io/Leaflet.VectorIcon/L.VectorIcon.js"></script>
 
  <!-- Load L.esri.WebMap -->
- <script src="https://cdn.jsdelivr.net/leaflet.esri.webmap/0.3.4/esri-leaflet-webmap.js"></script>
+<script src="https://cdn.rawgit.com/ynunokawa/L.esri.WebMap/master/src/L.esri.WebMap.js"></script>
 
 <div id="map"></div>
 
 <script>
-  // to draw a different webmap, just append its id instead
-  // webmap.html?id=13750b8b548d48bfa99a9731f2a93ba0
-
   var webmapId = '22c504d229f14c789c5b49ebff38b941'; // Default WebMap ID
-  getIdfromUrl();
+  var urlParams = location.search.substring(1).split('&');
+
+  for (var i=0; urlParams[i]; i++) {
+      var param = urlParams[i].split('=');
+      if(param[0] === 'webmap') {
+          webmapId = param[1]
+      }
+  }
 
   var webmap = L.esri.webMap(webmapId, { map: L.map("map") });
 
   webmap.on('load', function() {
+      console.log('webmap loaded', webmap.layers);
       var overlayMaps = {};
       webmap.layers.map(function(l) {
+          console.log(l);
           overlayMaps[l.title] = l.layer;
       });
       L.control.layers({}, overlayMaps, {
           position: 'bottomleft'
       }).addTo(webmap._map);
   });
-
-  function getIdfromUrl() {
-    var urlParams = location.search.substring(1).split('&');
-    for (var i=0; urlParams[i]; i++) {
-        var param = urlParams[i].split('=');
-        if(param[0] === 'id') {
-            webmapId = param[1]
-        }
-    }
-  }
 </script>
 
 </div>
 <pre><code class="language-xml"><span class="tag">&lt;<span class="title">html</span>&gt;</span>
 <span class="tag">&lt;<span class="title">head</span>&gt;</span>
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">utf-8</span> /&gt;</span>
-  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Displaying Web maps<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Esri Leaflet Web maps<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">name</span>=<span class="value">'viewport'</span> <span class="attribute">content</span>=<span class="value">'initial-scale=1,maximum-scale=1,user-scalable=no'</span> /&gt;</span>
 
   <span class="comment">&lt;!-- Load Leaflet from CDN--&gt;</span>
-  <span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"https://unpkg.com/leaflet@1.0.1/dist/leaflet.css"</span> /&gt;</span>
-  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/leaflet@1.0.1/dist/leaflet-src.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"https://cdn.jsdelivr.net/leaflet/1.0.0-rc.1/leaflet.css"</span> /&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://cdn.jsdelivr.net/leaflet/1.0.0-rc.1/leaflet-src.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
   <span class="comment">&lt;!-- Load Esri Leaflet from CDN --&gt;</span>
-  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/esri-leaflet@2.0.6"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://cdn.jsdelivr.net/leaflet.esri/2.0.0/esri-leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
   <span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css">
     <span class="tag">body</span> <span class="rules">{ <span class="rule"><span class="attribute">margin</span>:<span class="value"><span class="number">0</span></span></span>; <span class="rule"><span class="attribute">padding</span>:<span class="value"><span class="number">0</span></span></span>; <span class="rule">}</span></span>
@@ -274,45 +268,41 @@
  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://muxlab.github.io/Leaflet.VectorIcon/L.VectorIcon.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
  <span class="comment">&lt;!-- Load L.esri.WebMap --&gt;</span>
- <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://cdn.jsdelivr.net/leaflet.esri.webmap/0.3.4/esri-leaflet-webmap.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://cdn.rawgit.com/ynunokawa/L.esri.WebMap/master/src/L.esri.WebMap.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
-  <span class="comment">// to draw a different webmap, just append its id instead</span>
-  <span class="comment">// webmap.html?id=13750b8b548d48bfa99a9731f2a93ba0</span>
-
   <span class="keyword">var</span> webmapId = <span class="string">'22c504d229f14c789c5b49ebff38b941'</span>; <span class="comment">// Default WebMap ID</span>
-  getIdfromUrl();
+  <span class="keyword">var</span> urlParams = location.search.substring(<span class="number">1</span>).split(<span class="string">'&amp;'</span>);
+
+  <span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>; urlParams[i]; i++) {
+      <span class="keyword">var</span> param = urlParams[i].split(<span class="string">'='</span>);
+      <span class="keyword">if</span>(param[<span class="number">0</span>] === <span class="string">'webmap'</span>) {
+          webmapId = param[<span class="number">1</span>]
+      }
+  }
 
   <span class="keyword">var</span> webmap = L.esri.webMap(webmapId, { map: L.map(<span class="string">"map"</span>) });
 
   webmap.on(<span class="string">'load'</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+      console.log(<span class="string">'webmap loaded'</span>, webmap.layers);
       <span class="keyword">var</span> overlayMaps = {};
       webmap.layers.map(<span class="function"><span class="keyword">function</span><span class="params">(l)</span> {</span>
+          console.log(l);
           overlayMaps[l.title] = l.layer;
       });
       L.control.layers({}, overlayMaps, {
           position: <span class="string">'bottomleft'</span>
       }).addTo(webmap._map);
   });
-
-  <span class="function"><span class="keyword">function</span> <span class="title">getIdfromUrl</span><span class="params">()</span> {</span>
-    <span class="keyword">var</span> urlParams = location.search.substring(<span class="number">1</span>).split(<span class="string">'&amp;'</span>);
-    <span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>; urlParams[i]; i++) {
-        <span class="keyword">var</span> param = urlParams[i].split(<span class="string">'='</span>);
-        <span class="keyword">if</span>(param[<span class="number">0</span>] === <span class="string">'id'</span>) {
-            webmapId = param[<span class="number">1</span>]
-        }
-    }
-  }
 </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 <span class="tag">&lt;/<span class="title">body</span>&gt;</span>
 <span class="tag">&lt;/<span class="title">html</span>&gt;</span></code></pre>
 
 <div class="wrap">
-  <p><a href="http://github.com/Esri/esri-leaflet-doc/edit/master/src/pages/examples/webmap.hbs">Edit this sample on GitHub</a></p>
+  <p><a href="http://github.com/Esri/esri-leaflet-doc/edit/master/src/pages/examples/webmap-by-id.hbs">Edit this sample on GitHub</a></p>
 </div>
 </div>
 
