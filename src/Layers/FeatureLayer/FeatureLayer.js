@@ -90,6 +90,7 @@ export var FeatureLayer = FeatureManager.extend({
         this.fire('addfeature', {
           feature: layer.feature
         }, true);
+        layer.feature._alreadyAdded = true;
       }
 
       // update geometry if necessary
@@ -120,10 +121,11 @@ export var FeatureLayer = FeatureManager.extend({
 
         // add the layer if the current zoom level is inside the range defined for the layer, it is within the current time bounds or our layer is not time enabled
         if (this._visibleZoom() && (!this.options.timeField || (this.options.timeField && this._featureWithinTimeRange(geojson)))) {
+          this._map.addLayer(newLayer);
           this.fire('addfeature', {
             feature: newLayer.feature
           }, true);
-          this._map.addLayer(newLayer);
+          newLayer.feature._alreadyAdded = true;
         }
       }
     }
@@ -133,10 +135,12 @@ export var FeatureLayer = FeatureManager.extend({
     for (var i = ids.length - 1; i >= 0; i--) {
       var layer = this._layers[ids[i]];
       if (layer) {
-        this.fire('addfeature', {
-          feature: layer.feature
-        }, true);
         this._map.addLayer(layer);
+        if (!layer.feature._alreadyAdded) {
+          this.fire('addfeature', {
+            feature: layer.feature
+          }, true);
+        }
       }
     }
   },
@@ -151,6 +155,7 @@ export var FeatureLayer = FeatureManager.extend({
           permanent: permanent
         }, true);
         this._map.removeLayer(layer);
+        layer.feature._alreadyAdded = false;
       }
       if (layer && permanent) {
         delete this._layers[id];
