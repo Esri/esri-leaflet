@@ -34,8 +34,8 @@
   
 
   
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet-src.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.0.2/dist/leaflet-src.js"></script>
     <script src="https://unpkg.com/esri-leaflet@2.0.6"></script>
   
 
@@ -107,21 +107,18 @@
 <p>A <a href="http://esri.github.io/esri-leaflet/api-reference/layers/feature-layer.html">Feature Layer</a> involves requesting feature attributes and geometry from ArcGIS Online or ArcGIS Server to display in your web app. Individual features are exposed to the developer as GeoJSON, whether the service fulfilling the request emits the format natively or not.</p>
 <p>Feature Layers are great because they contain all the attribute information, this makes things like creating popups really snappy because the client app already has all the information it needs. </p>
 <p>That said, Feature Layers can potentially transfer large amounts of data from the server to the client. For example you wouldn&#39;t want to use a Feature Layer if you were drawing draw tax parcels for the whole of the USA. To address this Esri Leaflet provides a few options. By default we only request features within the current map extent.  This allows you to extract a manageable number of a features from a service with lots of data on the back end.</p>
-<p>Esri Leaflet provides other mechanisms to optimize performance as well. You can control which attributes are fetched, generalizing geometry before it is downloaded and filter data using SQL clauses. However even after you&#39;ve optimized your setup there will always be a limit to the amount of features which it makes sense to try and display clientside, this limit depends on the individual service, and the browser being used.</p>
+<p>Esri Leaflet provides other mechanisms to optimize performance. You can control which attributes are fetched, generalizing geometry before it is downloaded and filter data using SQL clauses. However, there will always be a limit to the amount of features which it makes sense to try and display clientside, this limit depends on the individual service, and the browser being used. Moreover, the limit defined by the service controls the maximum number of features that can be returned by any single query. </p>
 <h3 id="how-to-consume-feature-layers-from-arcgis-server">How to consume Feature Layers from ArcGIS Server</h3>
-<p>Feature Layers can be created in Esri Leaflet from both <code>MapServer</code> or <code>FeatureServer</code> services published by ArcGIS Server. To utilise a <code>MapServer</code> service you need to specify a particular layer by appending the layer index, eg &quot;ESRI_Population_World/MapServer<em>/0</em>&quot;.</p>
-<p>So for example both of these are valid uses </p>
-<pre><code class="language-js"><span class="comment">// NOTE - The FeatureServer part of this url</span>
-L.esri.featureLayer({
+<p>Feature Layers can be created in Esri Leaflet from both <code>MapServer</code> or <code>FeatureServer</code> services published by ArcGIS Server. To utilize either service type you need to append the specific layer index, eg &quot;ESRI_Population_World/MapServer<em>/0</em>&quot;.</p>
+<p>So for example both of these are valid:</p>
+<pre><code class="language-js">L.esri.featureLayer({
     url: <span class="string">'.../ArcGIS/rest/services/BloomfieldHillsMichigan/LandusePlanning/FeatureServer/0'</span>
 })
 
-<span class="comment">// Note the MapServer part of this url </span>
-<span class="comment">// Remember to append a layer index eg '/0'</span>
 L.esri.featureLayer({
     url: <span class="string">'.../ArcGIS/rest/services/Demographics/ESRI_Population_World/MapServer/0'</span>
 })</code></pre>
-<p>If you want to edit data in the browser then you will need to be consuming a <code>FeatureServer</code> service.</p>
+<p>If you want to edit data in the browser then you will need to consume a <code>FeatureServer</code> service.</p>
 <h3 id="what-does-the-data-look-like-">What does the data look like?</h3>
 <p>When you request a feature layer from an ArcGIS Server the response will look something like </p>
 <pre><code class="language-js">{<span class="string">"type"</span>:<span class="string">"FeatureCollection"</span>,<span class="string">"crs"</span>:{<span class="string">"type"</span>:<span class="string">"name"</span>,<span class="string">"properties"</span>:{<span class="string">"name"</span>:<span class="string">"EPSG:4326"</span>}},
