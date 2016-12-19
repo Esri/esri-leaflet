@@ -29,12 +29,13 @@
   <link rel="stylesheet" href="../../css/style.css">
 
   
-  
 
   
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.0.2/dist/leaflet-src.js"></script>
-    <script src="https://unpkg.com/esri-leaflet@2.0.6"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@/dist/leaflet-src.js"></script>
+    <script src="https://unpkg.com/esri-leaflet@"></script>
+  
+
   
 
   <!-- Google Analytics -->
@@ -186,10 +187,16 @@
 <td>Position of the layer relative to other overlays.</td>
 </tr>
 <tr>
-<td><code>proxy</code></td>
-<td><code>String</code></td>
-<td><code>false</code></td>
-<td>URL of an <a href="https://developers.arcgis.com/javascript/jshelp/ags_proxy.html">ArcGIS API for JavaScript proxies</a> or <a href="https://github.com/Esri/resource-proxy">ArcGIS Resource Proxies</a> to use for proxying POST requests.</td>
+<td><code>maxZoom</code></td>
+<td><code>Number</code></td>
+<td></td>
+<td>Closest zoom level the layer will be displayed on the map.</td>
+</tr>
+<tr>
+<td><code>minZoom</code></td>
+<td><code>Number</code></td>
+<td></td>
+<td>Furthest zoom level the layer will be displayed on the map.</td>
 </tr>
 <tr>
 <td><code>bandIds</code></td>
@@ -216,12 +223,6 @@
 <td>Leave <code>pixelType</code> as unspecified, or <code>UNKNOWN</code>, in most exportImage use cases, unless such <code>pixelType</code> is desired. Possible values: <code>C128</code>, <code>C64</code>, <code>F32</code>, <code>F64</code>, <code>S16</code>, <code>S32</code>, <code>S8</code>, <code>U1</code>, <code>U16</code>, <code>U2</code>, <code>U32</code>, <code>U4</code>, <code>U8</code>, <code>UNKNOWN</code>.</td>
 </tr>
 <tr>
-<td><code>useCors</code></td>
-<td><code>Boolean</code></td>
-<td><code>true</code></td>
-<td>If this service should use CORS when making GET requests.</td>
-</tr>
-<tr>
 <td><code>renderingRule</code></td>
 <td><code>Object</code></td>
 <td><code>undefined</code></td>
@@ -238,6 +239,24 @@
 <td><code>String</code></td>
 <td><code>overlayPane</code></td>
 <td>The map pane to render on.</td>
+</tr>
+<tr>
+<td><code>token</code></td>
+<td><code>String</code></td>
+<td><code>null</code></td>
+<td>If you pass a token in your options it will be included in all requests to the service.</td>
+</tr>
+<tr>
+<td><code>proxy</code></td>
+<td><code>String</code></td>
+<td><code>false</code></td>
+<td>URL of an <a href="https://developers.arcgis.com/javascript/jshelp/ags_proxy.html">ArcGIS API for JavaScript proxies</a> or <a href="https://github.com/Esri/resource-proxy">ArcGIS Resource Proxies</a> to use for proxying POST requests.</td>
+</tr>
+<tr>
+<td><code>useCors</code></td>
+<td><code>Boolean</code></td>
+<td><code>true</code></td>
+<td>If this service should use CORS when making GET requests.</td>
 </tr>
 </tbody>
 </table>
