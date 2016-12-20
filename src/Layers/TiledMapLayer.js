@@ -61,11 +61,14 @@ export var TiledMapLayer = L.TileLayer.extend({
   },
 
   getTileUrl: function (tilePoint) {
+    var zoom = this._getZoomForUrl();
+
     return L.Util.template(this.tileUrl, L.extend({
       s: this._getSubdomain(tilePoint),
-      z: (this._lodMap && this._lodMap[this._getZoomForUrl()]) ? this._lodMap[this._getZoomForUrl()] : tilePoint.z, // try lod map first, then just default to zoom level
       x: tilePoint.x,
-      y: tilePoint.y
+      y: tilePoint.y,
+      // try lod map first, then just default to zoom level
+      z: (this._lodMap && this._lodMap[zoom]) ? this._lodMap[zoom] : zoom
     }, this.options));
   },
 
