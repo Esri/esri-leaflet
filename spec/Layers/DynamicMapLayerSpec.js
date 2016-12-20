@@ -176,6 +176,20 @@ describe('L.esri.DynamicMapLayer', function () {
     expect(requestendSpy.callCount).to.be.above(0);
   });
 
+  it('should fetch a new image when redraw is called', function (done) {
+    var spy = sinon.spy(layer, '_update');
+
+    layer.on('load', function () {
+      expect(spy.callCount).to.be.above(0);
+      done();
+    });
+
+    layer.addTo(map);
+    layer.redraw();
+
+    server.respond();
+  });
+
   it('should bring itself to the front', function (done) {
     layer.on('load', function () {
       var spy = sinon.spy(layer._currentImage, 'bringToFront');
@@ -263,7 +277,7 @@ describe('L.esri.DynamicMapLayer', function () {
     server.respond();
   });
 
-  it('should get and set a JSON layer definitions', function (done) {
+  it('should get and set a JSON layer definition', function (done) {
     server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png24&transparent=true&bboxSR=3857&imageSR=3857&layerDefs=%7B%221%22%3A%22Foo%3DBar%22%7D&f=json/), JSON.stringify({
       href: WithDefs
     }));
@@ -430,7 +444,7 @@ describe('L.esri.DynamicMapLayer', function () {
     expect(spy).to.have.been.calledWith('dblclick', layer._resetPopupState, layer);
   });
 
-  it('should render an images at the back if specified', function (done) {
+  it('should render an image at the back if specified', function (done) {
     layer.bringToBack();
     var spy = sinon.spy(layer, 'bringToBack');
     layer.on('load', function () {
