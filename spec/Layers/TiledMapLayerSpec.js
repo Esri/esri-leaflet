@@ -145,4 +145,4 @@ describe('L.esri.TiledMapLayer', function () {
     });
   });
 });
-/* eslint-enable handle-callback-err*/
+/* eslint-enable handle-callback-err */
