@@ -34,3 +34,6 @@ site/build
 
 # Built Files
 dist
+
+# so semistandard doesnt lint the folder during CI
+travis_phantomjs

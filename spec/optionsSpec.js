@@ -14,6 +14,8 @@ describe('L.esri.options', function () {
     return L.map(container).setView([37.75, -122.45], 5);
   }
 
+  var map;
+
   beforeEach(function () {
     // remove all the stylesheets that have already been added to the document
     Array.prototype.forEach.call(document.querySelectorAll('style,[rel="stylesheet"],[type="text/css"]'), function (element) {
@@ -22,13 +24,13 @@ describe('L.esri.options', function () {
         // console.log('this gets called many times');
       } catch (err) {}
     });
+
+    map = createMap();
   });
 
   afterEach(function () {
     map.remove();
   });
-
-  var map;
 
   it('should set a default attribution width constraint', function () {
     map = createMap();
@@ -50,4 +52,4 @@ describe('L.esri.options', function () {
     expect(document.styleSheets[1].rules[0].selectorText).to.equal('.esri-truncated-attribution');
   });
 });
-/* eslint-enable handle-callback-err*/
+/* eslint-enable handle-callback-err */

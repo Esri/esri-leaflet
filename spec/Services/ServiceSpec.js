@@ -1,5 +1,5 @@
 /* eslint-env mocha */
-/* eslint-disable handle-callback-err*/
+/* eslint-disable handle-callback-err */
 describe('L.esri.Service', function () {
   var serviceUrl = 'http://services.arcgis.com/mock/arcgis/rest/services/MockService';
   var service;
@@ -251,4 +251,4 @@ describe('L.esri.Service', function () {
     server.respond();
   });
 });
-/* eslint-enable handle-callback-err*/
+/* eslint-enable handle-callback-err */
