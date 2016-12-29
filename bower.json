@@ -3,7 +3,10 @@
   "description": "Leaflet plugins for consuming ArcGIS Online and ArcGIS Server services.",
   "main": "dist/esri-leaflet.js",
   "dependencies": {
-    "leaflet": "^1.0.0"
+    "arcgis-to-geojson-utils": "^1.0.1",
+    "leaflet": "^1.0.0",
+    "leaflet-virtual-grid": "^1.0.3",
+    "tiny-binary-search": "^1.0.2"
   },
   "ignore": [
     "**/.*",

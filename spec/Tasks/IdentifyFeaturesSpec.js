@@ -1,5 +1,5 @@
 /* eslint-env mocha */
-/* eslint-disable handle-callback-err*/
+/* eslint-disable handle-callback-err */
 describe('L.esri.IdentifyFeatures', function () {
   function createMap () {
     // create container
@@ -88,7 +88,7 @@ describe('L.esri.IdentifyFeatures', function () {
     expect(request.url).to.contain('tolerance=3');
     expect(request.url).to.contain('returnGeometry=true');
     expect(request.url).to.contain('imageDisplay=500%2C500%2C96');
-    expect(request.url).to.match(/mapExtent=\-122\.\d+%2C45\.\d+%2C\-122\.\d+%2C45\.\d+/g);
+    expect(request.url).to.match(/mapExtent=-122\.\d+%2C45\.\d+%2C-122\.\d+%2C45\.\d+/g);
     expect(request.url).to.contain('geometryType=esriGeometryPoint');
     expect(request.url).to.contain('geometry=-122.66%2C45.51');
 
@@ -207,7 +207,7 @@ describe('L.esri.IdentifyFeatures', function () {
     expect(request.url).to.contain('tolerance=3');
     expect(request.url).to.contain('returnGeometry=true');
     expect(request.url).to.contain('imageDisplay=500%2C500%2C96');
-    expect(request.url).to.match(/mapExtent=\-122\.\d+%2C45\.\d+%2C\-122\.\d+%2C45\.\d+/g);
+    expect(request.url).to.match(/mapExtent=-122\.\d+%2C45\.\d+%2C-122\.\d+%2C45\.\d+/g);
     expect(request.url).to.contain('geometryType=esriGeometryPoint');
     expect(request.url).to.contain('geometry=-122.66%2C45.51');
 
@@ -229,7 +229,7 @@ describe('L.esri.IdentifyFeatures', function () {
     expect(request.url).to.contain('tolerance=3');
     expect(request.url).to.contain('returnGeometry=true');
     expect(request.url).to.contain('imageDisplay=500%2C500%2C96');
-    expect(request.url).to.match(/mapExtent=\-122\.\d+%2C45\.\d+%2C\-122\.\d+%2C45\.\d+/g);
+    expect(request.url).to.match(/mapExtent=-122\.\d+%2C45\.\d+%2C-122\.\d+%2C45\.\d+/g);
     expect(request.url).to.contain('geometryType=esriGeometryPoint');
     expect(request.url).to.contain('geometry=-122.66%2C45.51');
 
@@ -248,4 +248,4 @@ describe('L.esri.IdentifyFeatures', function () {
     request.respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, JSON.stringify(sampleResponse));
   });
 });
-/* eslint-enable handle-callback-err*/
+/* eslint-enable handle-callback-err */

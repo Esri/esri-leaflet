@@ -1,5 +1,5 @@
 /* eslint-env mocha */
-/* eslint-disable handle-callback-err*/
+/* eslint-disable handle-callback-err */
 describe('L.esri.FeatureManager', function () {
   function createMap () {
     // create container
@@ -14,6 +14,7 @@ describe('L.esri.FeatureManager', function () {
     return L.map(container, {
       minZoom: 1,
       maxZoom: 19
+      // trackResize: false
     }).setView([45.51, -122.66], 14);
   }
 
@@ -22,9 +23,10 @@ describe('L.esri.FeatureManager', function () {
   var sandbox;
   var server;
   var MockLayer;
-  var map = createMap();
+  var map;
   var oldRaf;
   var requests;
+  var xhr;
 
   beforeEach(function () {
     xhr = sinon.useFakeXMLHttpRequest(); // eslint-disable-line no-native-reassign
@@ -33,13 +35,7 @@ describe('L.esri.FeatureManager', function () {
     xhr.onCreate = function (xhr) {
       requests.push(xhr);
     };
-  });
 
-  afterEach(function () {
-    requests = [];
-  });
-
-  beforeEach(function () {
     server = sinon.fakeServer.create();
     sandbox = sinon.sandbox.create();
     oldRaf = L.Util.requestAnimFrame;
@@ -58,12 +54,15 @@ describe('L.esri.FeatureManager', function () {
       maxZoom: 15
     });
 
+    map = createMap();
     L.Util.requestAnimFrame = function (cd) {
       cd();
     };
   });
 
   afterEach(function () {
+    xhr.restore();
+    requests = [];
     server.restore();
     sandbox.restore();
     L.Util.requestAnimFrame = oldRaf;
@@ -395,7 +394,7 @@ describe('L.esri.FeatureManager', function () {
     expect(layer.addLayers).to.have.been.calledWith([5, 5]);
   });
 
-  it('should load more features  with a start and end time field', function () {
+  it('should load more features with a start and end time field', function () {
     layer = new MockLayer({
       url: url,
       timeField: {
@@ -891,8 +890,8 @@ describe('L.esri.FeatureManager', function () {
     expect(layer._activeRequests).to.equal(2);
 
     server.respondWith('GET', new RegExp(/.*/),
-                [500, { 'Content-Type': 'application/json' },
-                 '']);
+      [500, { 'Content-Type': 'application/json' },
+        '']);
     layer._requestFeatures(bounds, point, function () { return; });
 
     server.respond();
@@ -903,4 +902,4 @@ describe('L.esri.FeatureManager', function () {
     expect(triggered).to.be.true;
   });
 });
-/* eslint-enable handle-callback-err*/
+/* eslint-enable handle-callback-err */

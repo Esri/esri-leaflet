@@ -22,7 +22,6 @@ module.exports = function (config) {
       'spec/Layers/ImageMapLayerSpec.js',
       'spec/Layers/DynamicMapLayerSpec.js',
       'spec/**/*Spec.js'
-
     ],
 
     // list of files to exclude
@@ -61,6 +60,16 @@ module.exports = function (config) {
       // 'Safari',
       'PhantomJS'
     ],
+
+    // See https://github.com/karma-runner/karma-phantomjs-launcher/issues/74
+    // customLaunchers: {
+    //   PhantomJS_CORS: {
+    //     base: 'PhantomJS',
+    //     flags: [
+    //       '--web-security=false'
+    //     ]
+    //   }
+    // },
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits

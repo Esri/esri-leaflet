@@ -1,5 +1,5 @@
 /* eslint-env mocha */
-/* eslint-disable handle-callback-err*/
+/* eslint-disable handle-callback-err */
 describe('L.esri.Find', function () {
   var server;
   var task;
@@ -212,4 +212,4 @@ describe('L.esri.Find', function () {
     window._EsriLeafletCallbacks[request.id](sampleResponse);
   });
 });
-/* eslint-enable handle-callback-err*/
+/* eslint-enable handle-callback-err */

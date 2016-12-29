@@ -35,14 +35,14 @@ describe('L.esri.ImageMapLayer', function () {
     'objectId': 0,
     'name': 'Pixel',
     'value': '-17.5575',
-    'location':
-    {
+    'location': {
       'x': -122.81,
       'y': 45.48,
       'spatialReference': {
         'wkid': 4326
       }
-    }, 'properties': null,
+    },
+    'properties': null,
     'catalogItems': null,
     'catalogItemVisibilities': []
   };

@@ -1,5 +1,5 @@
 /* eslint-env mocha */
-/* eslint-disable handle-callback-err*/
+/* eslint-disable handle-callback-err */
 describe('L.esri.Query', function () {
   function createMap () {
     // create container
@@ -819,4 +819,4 @@ describe('L.esri.Query', function () {
     server.respond();
   });
 });
-/* eslint-enable handle-callback-err*/
+/* eslint-enable handle-callback-err */

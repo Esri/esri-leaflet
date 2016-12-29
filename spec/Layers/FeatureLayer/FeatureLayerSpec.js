@@ -13,6 +13,7 @@ describe('L.esri.FeatureLayer', function () {
     return L.map(container, {
       minZoom: 1,
       maxZoom: 19
+      // trackResize: false
     }).setView([45.51, -122.66], 5);
   }
 
