@@ -5,7 +5,7 @@ import mapService from '../Services/MapService';
 export var TiledMapLayer = L.TileLayer.extend({
   options: {
     zoomOffsetAllowance: 0.1,
-    errorTileUrl: 'http://downloads2.esri.com/support/TechArticles/blank256.png'
+    errorTileUrl: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEABAMAAACuXLVVAAAAA1BMVEUzNDVszlHHAAAAAXRSTlMAQObYZgAAAAlwSFlzAAAAAAAAAAAB6mUWpAAAADZJREFUeJztwQEBAAAAgiD/r25IQAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA7waBAAABw08RwAAAAABJRU5ErkJggg=='
   },
 
   statics: {
