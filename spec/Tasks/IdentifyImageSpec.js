@@ -1,5 +1,5 @@
 /* eslint-env mocha */
-/* eslint-disable handle-callback-err*/
+/* eslint-disable handle-callback-err */
 describe('L.esri.IdentifyImage', function () {
   function deepClone (obj) {
     return JSON.parse(JSON.stringify(obj));
@@ -33,14 +33,14 @@ describe('L.esri.IdentifyImage', function () {
     'objectId': 0,
     'name': 'Pixel',
     'value': '-17.5575',
-    'location':
-    {
+    'location': {
       'x': -122.81,
       'y': 45.48,
       'spatialReference': {
         'wkid': 4326
       }
-    }, 'properties': null,
+    },
+    'properties': null,
     'catalogItems': null,
     'catalogItemVisibilities': []
   };
@@ -476,4 +476,4 @@ describe('L.esri.IdentifyImage', function () {
     server.respond();
   });
 });
-/* eslint-enable handle-callback-err*/
+/* eslint-enable handle-callback-err */

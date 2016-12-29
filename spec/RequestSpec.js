@@ -1,5 +1,5 @@
 /* eslint-env mocha */
-/* eslint-disable handle-callback-err*/
+/* eslint-disable handle-callback-err */
 describe('L.esri request helpers', function () {
   var xhr;
   var requests = [];
@@ -197,4 +197,4 @@ describe('L.esri request helpers', function () {
     expect(L.esri.post).to.be.a('function');
   });
 });
-/* eslint-enable handle-callback-err*/
+/* eslint-enable handle-callback-err */
