@@ -147,6 +147,10 @@ export var RasterLayer = L.Layer.extend({
     return this;
   },
 
+  redraw: function () {
+    this._update();
+  },
+
   _renderImage: function (url, bounds, contentType) {
     if (this._map) {
       // if no output directory has been specified for a service, MIME data will be returned
