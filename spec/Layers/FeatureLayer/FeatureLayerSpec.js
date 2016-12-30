@@ -153,8 +153,8 @@ describe('L.esri.FeatureLayer', function () {
       }
     }).addTo(map);
 
-    var addSpy = sinon.spy();
-    layer.on('addfeature', addSpy);
+    var createSpy = sinon.spy();
+    layer.on('createfeature', createSpy);
 
     var removeSpy = sinon.spy();
     layer.on('removefeature', removeSpy);
@@ -165,7 +165,7 @@ describe('L.esri.FeatureLayer', function () {
 
     expect(map.hasLayer(layer.getFeature(1))).to.equal(true);
     expect(map.hasLayer(layer.getFeature(2))).to.equal(false);
-    expect(addSpy.callCount).to.equal(3);
+    expect(createSpy.callCount).to.equal(2);
     expect(removeSpy.callCount).to.equal(2);
   });
 
