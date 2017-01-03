@@ -122,7 +122,9 @@ export var RasterLayer = L.Layer.extend({
 
   setOpacity: function (opacity) {
     this.options.opacity = opacity;
-    this._currentImage.setOpacity(opacity);
+    if (this._currentImage) {
+      this._currentImage.setOpacity(opacity);
+    }
     return this;
   },
 
