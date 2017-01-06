@@ -1,6 +1,7 @@
 {
   "name": "esri-leaflet",
   "description": "Leaflet plugins for consuming ArcGIS Online and ArcGIS Server services.",
+  "license": "Apache-2.0",
   "main": "dist/esri-leaflet.js",
   "dependencies": {
     "arcgis-to-geojson-utils": "^1.0.1",

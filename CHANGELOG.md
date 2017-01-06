@@ -3,12 +3,28 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Upcoming changes][unreleased]
+## [Unreleased][unreleased]
 
-## [2.0.6]
-* `withCredentials` is no longer set for CORS requests.  [#890](https://github.com/Esri/esri-leaflet/pull/890)
+## [2.0.7]
 
 ### Fixed
+
+* its now possible to call setOpacity() immediately after instantiating a `RasterLayer` [#909](https://github.com/Esri/esri-leaflet/pull/909) (thank you[@Saulzi](https://github.com/Saulzi)!)
+* `L.TileLayer` maxNativeZoom is now honored by `tiledMapLayer` [#904](https://github.com/Esri/esri-leaflet/pull/904)
+* an error is no longer thrown when a `RasterLayer` is added to the map at a zoom level outside its own custom restraint [#903](https://github.com/Esri/esri-leaflet/pull/903)
+* `addfeature` is no longer emitted twice when `FeatureLayer.setWhere()` is called [#893](https://github.com/Esri/esri-leaflet/pull/893)
+
+### Changed
+
+* `RasterLayer` now exposes a public `redraw()` method [#905](https://github.com/Esri/esri-leaflet/pull/905)
+* an inline base64 encoded transparent image is now substituted for missing tiles [#902](https://github.com/Esri/esri-leaflet/pull/902)
+* the `addfeature` event is no longer triggered when features are fetched and drawn for the very first time [#893](https://github.com/Esri/esri-leaflet/pull/893)
+
+## [2.0.6]
+
+### Fixed
+
+* `withCredentials` is no longer set for CORS requests [#890](https://github.com/Esri/esri-leaflet/pull/890)
 
 ## [2.0.5] - deprecated
 
@@ -490,7 +506,8 @@ None
 * Add DarkGray and DarkGrayLabels to BasemapLayer. #190
 * An attributionControl on maps is now required when using BasemapLayer. #159
 
-[unreleased]: https://github.com/esri/esri-leaflet/compare/v2.0.6...HEAD
+[unreleased]: https://github.com/esri/esri-leaflet/compare/v2.0.7...HEAD
+[2.0.6]: https://github.com/esri/esri-leaflet/compare/v2.0.6...v2.0.7
 [2.0.6]: https://github.com/esri/esri-leaflet/compare/v2.0.5...v2.0.6
 [2.0.5]: https://github.com/esri/esri-leaflet/compare/v2.0.4...v2.0.5
 [2.0.4]: https://github.com/esri/esri-leaflet/compare/v2.0.3...v2.0.4
