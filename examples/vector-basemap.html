@@ -35,7 +35,7 @@
   
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.0.2/dist/leaflet-src.js"></script>
-    <script src="https://unpkg.com/esri-leaflet@2.0.6"></script>
+    <script src="https://unpkg.com/esri-leaflet@2.0.7"></script>
   
 
   
@@ -186,7 +186,8 @@
 <div id="map-wrapper">
   
 
-<script src="https://unpkg.com/esri-leaflet-vector@1.0.5"></script>
+<!-- load the latest release from the cdn -->
+<script src="https://unpkg.com/esri-leaflet-vector"></script>
 
 <style>
   #basemaps-wrapper {
@@ -207,6 +208,8 @@
 <div id="basemaps-wrapper" class="leaflet-bar">
   <select name="basemaps" id="basemaps" onChange="changeBasemap(basemaps)">
     <option value="Newspaper">Newspaper</option>
+    <option value="ModernAntique">ModernAntique</option>
+    <option value="BlackAndWhite">BlackAndWhite</option>
     <option value="Spring">Spring</option>
     <option value="MidCentury">Mid-Century</option>
     <option value="Topographic">Topographic</option>
@@ -237,6 +240,7 @@
     setBasemap(basemap);
   }
 </script>
+
 </div>
 <pre><code class="language-xml"><span class="tag">&lt;<span class="title">html</span>&gt;</span>
 <span class="tag">&lt;<span class="title">head</span>&gt;</span>
@@ -249,7 +253,7 @@
   <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/leaflet@1.0.2/dist/leaflet-src.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
   <span class="comment">&lt;!-- Load Esri Leaflet from CDN --&gt;</span>
-  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/esri-leaflet@2.0.6"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/esri-leaflet@2.0.7"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
   <span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css">
     <span class="tag">body</span> <span class="rules">{ <span class="rule"><span class="attribute">margin</span>:<span class="value"><span class="number">0</span></span></span>; <span class="rule"><span class="attribute">padding</span>:<span class="value"><span class="number">0</span></span></span>; <span class="rule">}</span></span>
@@ -258,7 +262,8 @@
 <span class="tag">&lt;/<span class="title">head</span>&gt;</span>
 <span class="tag">&lt;<span class="title">body</span>&gt;</span>
 
-<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/esri-leaflet-vector@1.0.5"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+<span class="comment">&lt;!-- load the latest release from the cdn --&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/esri-leaflet-vector"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css">
   <span class="id">#basemaps-wrapper</span> <span class="rules">{
@@ -279,6 +284,8 @@
 <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"basemaps-wrapper"</span> <span class="attribute">class</span>=<span class="value">"leaflet-bar"</span>&gt;</span>
   <span class="tag">&lt;<span class="title">select</span> <span class="attribute">name</span>=<span class="value">"basemaps"</span> <span class="attribute">id</span>=<span class="value">"basemaps"</span> <span class="attribute">onChange</span>=<span class="value">"changeBasemap(basemaps)"</span>&gt;</span>
     <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"Newspaper"</span>&gt;</span>Newspaper<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"ModernAntique"</span>&gt;</span>ModernAntique<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"BlackAndWhite"</span>&gt;</span>BlackAndWhite<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
     <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"Spring"</span>&gt;</span>Spring<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
     <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"MidCentury"</span>&gt;</span>Mid-Century<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
     <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"Topographic"</span>&gt;</span>Topographic<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
