@@ -48,6 +48,7 @@
     "watch": "^0.17.1"
   },
   "homepage": "http://esri.github.io/esri-leaflet",
+  "module": "src/EsriLeaflet.js",
   "jsnext:main": "src/EsriLeaflet.js",
   "jspm": {
     "registry": "npm",
