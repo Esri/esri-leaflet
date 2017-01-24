@@ -235,7 +235,7 @@ export var RasterLayer = L.Layer.extend({
     }
 
     if (zoom > this.options.maxZoom || zoom < this.options.minZoom) {
-      if (this._currentImage) {
+      if (this._currentImage && this._currentImage._map) {
         this._currentImage._map.removeLayer(this._currentImage);
       }
       return;
