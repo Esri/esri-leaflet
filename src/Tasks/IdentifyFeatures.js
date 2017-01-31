@@ -40,7 +40,7 @@ export var IdentifyFeatures = Identify.extend({
 
   simplify: function (map, factor) {
     var mapWidth = Math.abs(map.getBounds().getWest() - map.getBounds().getEast());
-    this.params.maxAllowableOffset = (mapWidth / map.getSize().y) * (1 - factor);
+    this.params.maxAllowableOffset = (mapWidth / map.getSize().y) * factor;
     return this;
   },
 
