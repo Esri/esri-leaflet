@@ -1,8 +1,8 @@
-import L from 'leaflet';
+import { TileLayer, Util as LeafletUtil } from 'leaflet';
 import { warn, cleanUrl, setEsriAttribution } from '../Util';
 import mapService from '../Services/MapService';
 
-export var TiledMapLayer = L.TileLayer.extend({
+export var TiledMapLayer = TileLayer.extend({
   options: {
     zoomOffsetAllowance: 0.1,
     errorTileUrl: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEABAMAAACuXLVVAAAAA1BMVEUzNDVszlHHAAAAAXRSTlMAQObYZgAAAAlwSFlzAAAAAAAAAAAB6mUWpAAAADZJREFUeJztwQEBAAAAgiD/r25IQAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA7waBAAABw08RwAAAAABJRU5ErkJggg=='
@@ -39,7 +39,7 @@ export var TiledMapLayer = L.TileLayer.extend({
 
   initialize: function (options) {
     options.url = cleanUrl(options.url);
-    options = L.Util.setOptions(this, options);
+    options = LeafletUtil.setOptions(this, options);
 
     // set the urls
     this.tileUrl = options.url + 'tile/{z}/{y}/{x}';
@@ -57,13 +57,13 @@ export var TiledMapLayer = L.TileLayer.extend({
     }
 
     // init layer by calling TileLayers initialize method
-    L.TileLayer.prototype.initialize.call(this, this.tileUrl, options);
+    TileLayer.prototype.initialize.call(this, this.tileUrl, options);
   },
 
   getTileUrl: function (tilePoint) {
     var zoom = this._getZoomForUrl();
 
-    return L.Util.template(this.tileUrl, L.extend({
+    return LeafletUtil.template(this.tileUrl, LeafletUtil.extend({
       s: this._getSubdomain(tilePoint),
       x: tilePoint.x,
       y: tilePoint.y,
@@ -141,7 +141,7 @@ export var TiledMapLayer = L.TileLayer.extend({
       }, this);
     }
 
-    L.TileLayer.prototype.onAdd.call(this, map);
+    TileLayer.prototype.onAdd.call(this, map);
   },
 
   metadata: function (callback, context) {

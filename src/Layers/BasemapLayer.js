@@ -1,4 +1,4 @@
-import L from 'leaflet';
+import { TileLayer, Util as LeafletUtil } from 'leaflet';
 import { pointerEvents } from '../Support';
 import {
   setEsriAttribution,
@@ -8,7 +8,7 @@ import {
 
 var tileProtocol = (window.location.protocol !== 'https:') ? 'http:' : 'https:';
 
-export var BasemapLayer = L.TileLayer.extend({
+export var BasemapLayer = TileLayer.extend({
   statics: {
     TILES: {
       Streets: {
@@ -189,16 +189,16 @@ export var BasemapLayer = L.TileLayer.extend({
     }
 
     // merge passed options into the config options
-    var tileOptions = L.Util.extend(config.options, options);
+    var tileOptions = LeafletUtil.extend(config.options, options);
 
-    L.Util.setOptions(this, tileOptions);
+    LeafletUtil.setOptions(this, tileOptions);
 
     if (this.options.token) {
       config.urlTemplate += ('?token=' + this.options.token);
     }
 
     // call the initialize method on L.TileLayer to set everything up
-    L.TileLayer.prototype.initialize.call(this, config.urlTemplate, tileOptions);
+    TileLayer.prototype.initialize.call(this, config.urlTemplate, tileOptions);
   },
 
   onAdd: function (map) {
@@ -215,12 +215,12 @@ export var BasemapLayer = L.TileLayer.extend({
 
     map.on('moveend', _updateMapAttribution);
 
-    L.TileLayer.prototype.onAdd.call(this, map);
+    TileLayer.prototype.onAdd.call(this, map);
   },
 
   onRemove: function (map) {
     map.off('moveend', _updateMapAttribution);
-    L.TileLayer.prototype.onRemove.call(this, map);
+    TileLayer.prototype.onRemove.call(this, map);
   },
 
   _initPane: function () {
