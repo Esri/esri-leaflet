@@ -1,4 +1,4 @@
-import { TileLayer, Util as LeafletUtil } from 'leaflet';
+import { TileLayer, Util } from 'leaflet';
 import { pointerEvents } from '../Support';
 import {
   setEsriAttribution,
@@ -189,9 +189,9 @@ export var BasemapLayer = TileLayer.extend({
     }
 
     // merge passed options into the config options
-    var tileOptions = LeafletUtil.extend(config.options, options);
+    var tileOptions = Util.extend(config.options, options);
 
-    LeafletUtil.setOptions(this, tileOptions);
+    Util.setOptions(this, tileOptions);
 
     if (this.options.token) {
       config.urlTemplate += ('?token=' + this.options.token);

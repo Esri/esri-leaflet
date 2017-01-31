@@ -1,4 +1,8 @@
-import { TileLayer, Util as LeafletUtil } from 'leaflet';
+/*
+  now we'll have to import { Util as EsriUtil } from '../Util'
+  anytime we want the whole thing
+*/
+import { TileLayer, Util } from 'leaflet';
 import { warn, cleanUrl, setEsriAttribution } from '../Util';
 import mapService from '../Services/MapService';
 
@@ -39,7 +43,7 @@ export var TiledMapLayer = TileLayer.extend({
 
   initialize: function (options) {
     options.url = cleanUrl(options.url);
-    options = LeafletUtil.setOptions(this, options);
+    options = Util.setOptions(this, options);
 
     // set the urls
     this.tileUrl = options.url + 'tile/{z}/{y}/{x}';
@@ -63,7 +67,7 @@ export var TiledMapLayer = TileLayer.extend({
   getTileUrl: function (tilePoint) {
     var zoom = this._getZoomForUrl();
 
-    return LeafletUtil.template(this.tileUrl, LeafletUtil.extend({
+    return Util.template(this.tileUrl, Util.extend({
       s: this._getSubdomain(tilePoint),
       x: tilePoint.x,
       y: tilePoint.y,
