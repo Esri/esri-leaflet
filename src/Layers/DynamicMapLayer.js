@@ -89,6 +89,9 @@ export var DynamicMapLayer = RasterLayer.extend({
 
     var identifyRequest = this.identify().on(this._map).at(e.latlng);
 
+    // remove extraneous vertices from response features
+    identifyRequest.simplify(this._map, 0.5);
+
     if (this.options.layers) {
       identifyRequest.layers('visible:' + this.options.layers.join(','));
     } else {
