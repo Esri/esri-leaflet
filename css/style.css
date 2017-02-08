@@ -265,8 +265,8 @@ body {
   display: inline-block;
   margin: 0 1em;
   font-size: 1rem;
-  color: #FFFFFF;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.75);
+  color: #4C5156;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.75);
   letter-spacing: 1px;
   font-weight: 700; }
   .site-nav:hover {
@@ -301,15 +301,15 @@ body {
   .background-map .leaflet-map-pane {
     opacity: .35; }
   .background-map.leaflet-container {
-    background-color: rgba(36, 132, 210, 0.85);
+    background-color: rgba(36, 132, 210, 0.35);
     -webkit-animation-iteration-count: infinite;
-    -webkit-animation-duration: 120s;
+    -webkit-animation-duration: 30s;
     -webkit-animation-name: colorshift;
     -moz-animation-iteration-count: infinite;
-    -moz-animation-duration: 120s;
+    -moz-animation-duration: 30s;
     -moz-animation-name: colorshift;
     animation-iteration-count: infinite;
-    animation-duration: 120s;
+    animation-duration: 30s;
     animation-name: colorshift; }
 
 .not-ie .background-map img {
@@ -319,27 +319,27 @@ body {
 
 @keyframes colorshift {
   0% {
-    background-color: rgba(36, 132, 210, 0.85); }
+    background-color: rgba(36, 132, 210, 0.25); }
   33% {
-    background-color: rgba(121, 189, 143, 0.85); }
+    background-color: rgba(121, 189, 143, 0.25); }
   66% {
-    background-color: rgba(157, 120, 210, 0.85); } }
+    background-color: rgba(157, 120, 210, 0.25); } }
 
 @-webkit-keyframes colorshift {
   0% {
-    background-color: rgba(36, 132, 210, 0.85); }
+    background-color: rgba(36, 132, 210, 0.25); }
   33% {
-    background-color: rgba(121, 189, 143, 0.85); }
+    background-color: rgba(121, 189, 143, 0.25); }
   66% {
-    background-color: rgba(157, 120, 210, 0.85); } }
+    background-color: rgba(157, 120, 210, 0.25); } }
 
 @-moz-keyframes colorshift {
   0% {
-    background-color: rgba(36, 132, 210, 0.85); }
+    background-color: rgba(36, 132, 210, 0.25); }
   33% {
-    background-color: rgba(121, 189, 143, 0.85); }
+    background-color: rgba(121, 189, 143, 0.25); }
   66% {
-    background-color: rgba(157, 120, 210, 0.85); } }
+    background-color: rgba(157, 120, 210, 0.25); } }
 
 .btn {
   display: inline-block;
