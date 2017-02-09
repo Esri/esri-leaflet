@@ -153,7 +153,7 @@ export var FeatureLayer = FeatureManager.extend({
   },
 
   cellEnter: function (bounds, coords) {
-    if (!this._zooming && this._map) {
+    if (this._visibleZoom() && !this._zooming && this._map) {
       L.Util.requestAnimFrame(L.Util.bind(function () {
         var cacheKey = this._cacheKey(coords);
         var cellKey = this._cellCoordsToKey(coords);
