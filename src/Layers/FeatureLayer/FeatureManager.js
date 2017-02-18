@@ -102,7 +102,10 @@ export var FeatureManager = VirtualGrid.extend({
    */
 
   createCell: function (bounds, coords) {
-    this._requestFeatures(bounds, coords);
+    // dont fetch features outside the scale range defined for the layer
+    if (this._visibleZoom()) {
+      this._requestFeatures(bounds, coords);
+    }
   },
 
   _requestFeatures: function (bounds, coords, callback) {
