@@ -1,9 +1,9 @@
-import L from 'leaflet';
+import { Util, Evented } from 'leaflet';
 import {cors} from '../Support';
 import {cleanUrl} from '../Util';
 import Request from '../Request';
 
-export var Service = L.Evented.extend({
+export var Service = Evented.extend({
 
   options: {
     proxy: false,
@@ -15,7 +15,7 @@ export var Service = L.Evented.extend({
     options = options || {};
     this._requestQueue = [];
     this._authenticating = false;
-    L.Util.setOptions(this, options);
+    Util.setOptions(this, options);
     this.options.url = cleanUrl(this.options.url);
   },
 
@@ -78,7 +78,7 @@ export var Service = L.Evented.extend({
   },
 
   _createServiceCallback: function (method, path, params, callback, context) {
-    return L.Util.bind(function (error, response) {
+    return Util.bind(function (error, response) {
       if (error && (error.code === 499 || error.code === 498)) {
         this._authenticating = true;
 
@@ -86,11 +86,11 @@ export var Service = L.Evented.extend({
 
         // fire an event for users to handle and re-authenticate
         this.fire('authenticationrequired', {
-          authenticate: L.Util.bind(this.authenticate, this)
+          authenticate: Util.bind(this.authenticate, this)
         }, true);
 
         // if the user has access to a callback they can handle the auth error
-        error.authenticate = L.Util.bind(this.authenticate, this);
+        error.authenticate = Util.bind(this.authenticate, this);
       }
 
       callback.call(context, error, response);

@@ -1,5 +1,5 @@
 import { Task } from './Task';
-import Util from '../Util';
+import { responseToFeatureCollection } from '../Util';
 
 export var Find = Task.extend({
   setters: {
@@ -44,7 +44,7 @@ export var Find = Task.extend({
 
   run: function (callback, context) {
     return this.request(function (error, response) {
-      callback.call(context, error, (response && Util.responseToFeatureCollection(response)), response);
+      callback.call(context, error, (response && responseToFeatureCollection(response)), response);
     }, context);
   }
 });

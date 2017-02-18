@@ -1,6 +1,14 @@
-import L from 'leaflet';
+import { point, latLng, LatLngBounds, LatLng, GeoJSON } from 'leaflet';
 import { Task } from './Task';
-import Util from '../Util';
+import {
+  warn,
+  responseToFeatureCollection,
+  isArcgisOnline,
+  extentToBounds,
+  boundsToExtent,
+  geojsonToArcGIS,
+  geojsonTypeToArcGIS
+} from '../Util';
 
 export var Query = Task.extend({
   setters: {
@@ -60,7 +68,7 @@ export var Query = Task.extend({
 
   // only valid for Feature Services running on ArcGIS Server 10.3 or ArcGIS Online
   nearby: function (latlng, radius) {
-    latlng = L.latLng(latlng);
+    latlng = latLng(latlng);
     this.params.geometry = [latlng.lng, latlng.lat];
     this.params.geometryType = 'esriGeometryPoint';
     this.params.spatialRel = 'esriSpatialRelIntersects';
@@ -98,7 +106,7 @@ export var Query = Task.extend({
     this._cleanParams();
 
     // services hosted on ArcGIS Online also support requesting geojson directly
-    if (this.options.isModern || Util.isArcgisOnline(this.options.url)) {
+    if (this.options.isModern || isArcgisOnline(this.options.url)) {
       this.params.f = 'geojson';
 
       return this.request(function (error, response) {
@@ -110,7 +118,7 @@ export var Query = Task.extend({
     } else {
       return this.request(function (error, response) {
         this._trapSQLerrors(error);
-        callback.call(context, error, (response && Util.responseToFeatureCollection(response)), response);
+        callback.call(context, error, (response && responseToFeatureCollection(response)), response);
       }, this);
     }
   },
@@ -136,8 +144,8 @@ export var Query = Task.extend({
     this._cleanParams();
     this.params.returnExtentOnly = true;
     return this.request(function (error, response) {
-      if (response && response.extent && Util.extentToBounds(response.extent)) {
-        callback.call(context, error, Util.extentToBounds(response.extent), response);
+      if (response && response.extent && extentToBounds(response.extent)) {
+        callback.call(context, error, extentToBounds(response.extent), response);
       } else {
         error = {
           message: 'Invalid Bounds'
@@ -148,9 +156,9 @@ export var Query = Task.extend({
   },
 
   // only valid for image services
-  pixelSize: function (point) {
-    point = L.point(point);
-    this.params.pixelSize = [point.x, point.y];
+  pixelSize: function (rawPoint) {
+    var castPoint = point(rawPoint);
+    this.params.pixelSize = [castPoint.x, castPoint.y];
     return this;
   },
 
@@ -163,7 +171,7 @@ export var Query = Task.extend({
   _trapSQLerrors: function (error) {
     if (error) {
       if (error.code === '400') {
-        Util.warn('one common syntax error in query requests is encasing string values in double quotes instead of single quotes');
+        warn('one common syntax error in query requests is encasing string values in double quotes instead of single quotes');
       }
     }
   },
@@ -178,9 +186,9 @@ export var Query = Task.extend({
     this.params.inSr = 4326;
 
     // convert bounds to extent and finish
-    if (geometry instanceof L.LatLngBounds) {
+    if (geometry instanceof LatLngBounds) {
       // set geometry + geometryType
-      this.params.geometry = Util.boundsToExtent(geometry);
+      this.params.geometry = boundsToExtent(geometry);
       this.params.geometryType = 'esriGeometryEnvelope';
       return;
     }
@@ -191,7 +199,7 @@ export var Query = Task.extend({
     }
 
     // convert L.LatLng to a geojson point and continue;
-    if (geometry instanceof L.LatLng) {
+    if (geometry instanceof LatLng) {
       geometry = {
         type: 'Point',
         coordinates: [geometry.lng, geometry.lat]
@@ -199,11 +207,11 @@ export var Query = Task.extend({
     }
 
     // handle L.GeoJSON, pull out the first geometry
-    if (geometry instanceof L.GeoJSON) {
+    if (geometry instanceof GeoJSON) {
       // reassign geometry to the GeoJSON value  (we are assuming that only one feature is present)
       geometry = geometry.getLayers()[0].feature.geometry;
-      this.params.geometry = Util.geojsonToArcGIS(geometry);
-      this.params.geometryType = Util.geojsonTypeToArcGIS(geometry.type);
+      this.params.geometry = geojsonToArcGIS(geometry);
+      this.params.geometryType = geojsonTypeToArcGIS(geometry.type);
     }
 
     // Handle L.Polyline and L.Polygon
@@ -219,13 +227,13 @@ export var Query = Task.extend({
 
     // confirm that our GeoJSON is a point, line or polygon
     if (geometry.type === 'Point' || geometry.type === 'LineString' || geometry.type === 'Polygon' || geometry.type === 'MultiPolygon') {
-      this.params.geometry = Util.geojsonToArcGIS(geometry);
-      this.params.geometryType = Util.geojsonTypeToArcGIS(geometry.type);
+      this.params.geometry = geojsonToArcGIS(geometry);
+      this.params.geometryType = geojsonTypeToArcGIS(geometry.type);
       return;
     }
 
     // warn the user if we havn't found an appropriate object
-    Util.warn('invalid geometry passed to spatial query. Should be L.LatLng, L.LatLngBounds, L.Marker or a GeoJSON Point, Line, Polygon or MultiPolygon object');
+    warn('invalid geometry passed to spatial query. Should be L.LatLng, L.LatLngBounds, L.Marker or a GeoJSON Point, Line, Polygon or MultiPolygon object');
 
     return;
   }

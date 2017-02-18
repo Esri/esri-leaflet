@@ -1,6 +1,6 @@
-import L from 'leaflet';
+import { latLng } from 'leaflet';
 import { Identify } from './Identify';
-import Util from '../Util';
+import { boundsToExtent, responseToFeatureCollection } from '../Util';
 
 export var IdentifyFeatures = Identify.extend({
   setters: {
@@ -18,7 +18,7 @@ export var IdentifyFeatures = Identify.extend({
   },
 
   on: function (map) {
-    var extent = Util.boundsToExtent(map.getBounds());
+    var extent = boundsToExtent(map.getBounds());
     var size = map.getSize();
     this.params.imageDisplay = [size.x, size.y, 96];
     this.params.mapExtent = [extent.xmin, extent.ymin, extent.xmax, extent.ymax];
@@ -26,7 +26,7 @@ export var IdentifyFeatures = Identify.extend({
   },
 
   at: function (latlng) {
-    latlng = L.latLng(latlng);
+    latlng = latLng(latlng);
     this.params.geometry = [latlng.lng, latlng.lat];
     this.params.geometryType = 'esriGeometryPoint';
     return this;
@@ -53,7 +53,7 @@ export var IdentifyFeatures = Identify.extend({
 
       // ok no error lets just assume we have features...
       } else {
-        var featureCollection = Util.responseToFeatureCollection(response);
+        var featureCollection = responseToFeatureCollection(response);
         response.results = response.results.reverse();
         for (var i = 0; i < featureCollection.features.length; i++) {
           var feature = featureCollection.features[i];
