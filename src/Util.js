@@ -1,4 +1,4 @@
-import L from 'leaflet';
+import { latLng, latLngBounds, Util, DomUtil } from 'leaflet';
 import { jsonp } from './Request';
 import { options } from './Options';
 
@@ -31,9 +31,9 @@ export function shallowClone (obj) {
 export function extentToBounds (extent) {
   // "NaN" coordinates from ArcGIS Server indicate a null geometry
   if (extent.xmin !== 'NaN' && extent.ymin !== 'NaN' && extent.xmax !== 'NaN' && extent.ymax !== 'NaN') {
-    var sw = L.latLng(extent.ymin, extent.xmin);
-    var ne = L.latLng(extent.ymax, extent.xmax);
-    return L.latLngBounds(sw, ne);
+    var sw = latLng(extent.ymin, extent.xmin);
+    var ne = latLng(extent.ymax, extent.xmax);
+    return latLngBounds(sw, ne);
   } else {
     return null;
   }
@@ -41,7 +41,7 @@ export function extentToBounds (extent) {
 
 // convert an LatLngBounds (Leaflet) to extent (ArcGIS)
 export function boundsToExtent (bounds) {
-  bounds = L.latLngBounds(bounds);
+  bounds = latLngBounds(bounds);
   return {
     'xmin': bounds.getSouthWest().lng,
     'ymin': bounds.getSouthWest().lat,
@@ -98,7 +98,7 @@ export function responseToFeatureCollection (response, idAttribute) {
   // trim url whitespace and add a trailing slash if needed
 export function cleanUrl (url) {
   // trim leading and trailing spaces, but not spaces inside the url
-  url = L.Util.trim(url);
+  url = Util.trim(url);
 
   // add a trailing slash to the url if the user omitted it
   if (url[url.length - 1] !== '/') {
@@ -162,7 +162,7 @@ export function setEsriAttribution (map) {
     '}';
 
     document.getElementsByTagName('head')[0].appendChild(hoverAttributionStyle);
-    L.DomUtil.addClass(map.attributionControl._container, 'esri-truncated-attribution:hover');
+    DomUtil.addClass(map.attributionControl._container, 'esri-truncated-attribution:hover');
 
     // define a new css class in JS to trim attribution into a single line
     var attributionStyle = document.createElement('style');
@@ -179,7 +179,7 @@ export function setEsriAttribution (map) {
     '}';
 
     document.getElementsByTagName('head')[0].appendChild(attributionStyle);
-    L.DomUtil.addClass(map.attributionControl._container, 'esri-truncated-attribution');
+    DomUtil.addClass(map.attributionControl._container, 'esri-truncated-attribution');
 
     // update the width used to truncate when the map itself is resized
     map.on('resize', function (e) {
@@ -191,7 +191,7 @@ export function setEsriAttribution (map) {
 }
 
 export function _getAttributionData (url, map) {
-  jsonp(url, {}, L.Util.bind(function (error, attributions) {
+  jsonp(url, {}, Util.bind(function (error, attributions) {
     if (error) { return; }
     map._esriAttributions = [];
     for (var c = 0; c < attributions.contributors.length; c++) {
@@ -199,12 +199,12 @@ export function _getAttributionData (url, map) {
 
       for (var i = 0; i < contributor.coverageAreas.length; i++) {
         var coverageArea = contributor.coverageAreas[i];
-        var southWest = L.latLng(coverageArea.bbox[0], coverageArea.bbox[1]);
-        var northEast = L.latLng(coverageArea.bbox[2], coverageArea.bbox[3]);
+        var southWest = latLng(coverageArea.bbox[0], coverageArea.bbox[1]);
+        var northEast = latLng(coverageArea.bbox[2], coverageArea.bbox[3]);
         map._esriAttributions.push({
           attribution: contributor.attribution,
           score: coverageArea.score,
-          bounds: L.latLngBounds(southWest, northEast),
+          bounds: latLngBounds(southWest, northEast),
           minZoom: coverageArea.zoomMin,
           maxZoom: coverageArea.zoomMax
         });
@@ -228,7 +228,7 @@ export function _updateMapAttribution (evt) {
   if (map && map.attributionControl && oldAttributions) {
     var newAttributions = '';
     var bounds = map.getBounds();
-    var wrappedBounds = L.latLngBounds(
+    var wrappedBounds = latLngBounds(
       bounds.getSouthWest().wrap(),
       bounds.getNorthEast().wrap()
     );
@@ -255,7 +255,7 @@ export function _updateMapAttribution (evt) {
   }
 }
 
-export var Util = {
+export var EsriUtil = {
   shallowClone: shallowClone,
   warn: warn,
   cleanUrl: cleanUrl,
@@ -272,4 +272,4 @@ export var Util = {
   _updateMapAttribution: _updateMapAttribution
 };
 
-export default Util;
+export default EsriUtil;
