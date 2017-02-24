@@ -197,8 +197,8 @@
     url: 'https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Heritage_Trees_Portland/FeatureServer/0'
   }).addTo(map);
 
-  trees.bindPopup(function (evt) {
-    return L.Util.template('<p>{COMMON_NAM}<br>{SCIENTIFIC}<br>{NOTES}</p>', evt.feature.properties);
+  trees.bindPopup(function (layer) {
+    return L.Util.template('<p>{COMMON_NAM}<br>{SCIENTIFIC}<br>{NOTES}</p>', layer.feature.properties);
   });
 </script>
 
@@ -234,8 +234,8 @@
     url: <span class="string">'https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Heritage_Trees_Portland/FeatureServer/0'</span>
   }).addTo(map);
 
-  trees.bindPopup(<span class="function"><span class="keyword">function</span> <span class="params">(evt)</span> {</span>
-    <span class="keyword">return</span> L.Util.template(<span class="string">'&lt;p&gt;{COMMON_NAM}&lt;br&gt;{SCIENTIFIC}&lt;br&gt;{NOTES}&lt;/p&gt;'</span>, evt.feature.properties);
+  trees.bindPopup(<span class="function"><span class="keyword">function</span> <span class="params">(layer)</span> {</span>
+    <span class="keyword">return</span> L.Util.template(<span class="string">'&lt;p&gt;{COMMON_NAM}&lt;br&gt;{SCIENTIFIC}&lt;br&gt;{NOTES}&lt;/p&gt;'</span>, layer.feature.properties);
   });
 </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
