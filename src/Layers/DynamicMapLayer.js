@@ -1,4 +1,4 @@
-import L from 'leaflet';
+import { Util } from 'leaflet';
 import { RasterLayer } from './RasterLayer';
 import { cleanUrl } from '../Util';
 import mapService from '../Services/MapService';
@@ -24,7 +24,7 @@ export var DynamicMapLayer = RasterLayer.extend({
       options.f = 'json';
     }
 
-    L.Util.setOptions(this, options);
+    Util.setOptions(this, options);
   },
 
   getDynamicLayers: function () {
@@ -80,9 +80,9 @@ export var DynamicMapLayer = RasterLayer.extend({
   },
 
   _getPopupData: function (e) {
-    var callback = L.Util.bind(function (error, featureCollection, response) {
+    var callback = Util.bind(function (error, featureCollection, response) {
       if (error) { return; } // we really can't do anything here but authenticate or requesterror will fire
-      setTimeout(L.Util.bind(function () {
+      setTimeout(Util.bind(function () {
         this._renderPopup(e.latlng, error, featureCollection, response);
       }, this), 300);
     }, this);
@@ -180,7 +180,7 @@ export var DynamicMapLayer = RasterLayer.extend({
       }, this);
     } else {
       params.f = 'image';
-      this._renderImage(this.options.url + 'export' + L.Util.getParamString(params), bounds);
+      this._renderImage(this.options.url + 'export' + Util.getParamString(params), bounds);
     }
   }
 });

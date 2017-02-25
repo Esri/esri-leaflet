@@ -1,22 +1,22 @@
-import L from 'leaflet';
+import { ImageOverlay, CRS, DomUtil, Util, Layer, popup, latLng } from 'leaflet';
 import { cors } from '../Support';
 import { setEsriAttribution } from '../Util';
 
-var Overlay = L.ImageOverlay.extend({
+var Overlay = ImageOverlay.extend({
   onAdd: function (map) {
     this._topLeft = map.getPixelBounds().min;
-    L.ImageOverlay.prototype.onAdd.call(this, map);
+    ImageOverlay.prototype.onAdd.call(this, map);
   },
   _reset: function () {
-    if (this._map.options.crs === L.CRS.EPSG3857) {
-      L.ImageOverlay.prototype._reset.call(this);
+    if (this._map.options.crs === CRS.EPSG3857) {
+      ImageOverlay.prototype._reset.call(this);
     } else {
-      L.DomUtil.setPosition(this._image, this._topLeft.subtract(this._map.getPixelOrigin()));
+      DomUtil.setPosition(this._image, this._topLeft.subtract(this._map.getPixelOrigin()));
     }
   }
 });
 
-export var RasterLayer = L.Layer.extend({
+export var RasterLayer = Layer.extend({
 
   options: {
     opacity: 1,
@@ -32,7 +32,7 @@ export var RasterLayer = L.Layer.extend({
     // include 'Powered by Esri' in map attribution
     setEsriAttribution(map);
 
-    this._update = L.Util.throttle(this._update, this.options.updateInterval, this);
+    this._update = Util.throttle(this._update, this.options.updateInterval, this);
 
     map.on('moveend', this._update, this);
 
@@ -77,7 +77,7 @@ export var RasterLayer = L.Layer.extend({
   bindPopup: function (fn, popupOptions) {
     this._shouldRenderPopup = false;
     this._lastClick = false;
-    this._popup = L.popup(popupOptions);
+    this._popup = popup(popupOptions);
     this._popupFunction = fn;
     if (this._map) {
       this._map.on('click', this._getPopupData, this);
@@ -248,7 +248,7 @@ export var RasterLayer = L.Layer.extend({
   },
 
   _renderPopup: function (latlng, error, results, response) {
-    latlng = L.latLng(latlng);
+    latlng = latLng(latlng);
     if (this._shouldRenderPopup && this._lastClick.equals(latlng)) {
       // add the popup to the map where the mouse was clicked at
       var content = this._popupFunction(error, results, response);

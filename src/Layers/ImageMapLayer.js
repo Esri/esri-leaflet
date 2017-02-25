@@ -1,4 +1,4 @@
-import L from 'leaflet';
+import { Util } from 'leaflet';
 import { RasterLayer } from './RasterLayer';
 import { cleanUrl } from '../Util';
 import imageService from '../Services/ImageService';
@@ -25,7 +25,7 @@ export var ImageMapLayer = RasterLayer.extend({
     this.service = imageService(options);
     this.service.addEventParent(this);
 
-    L.Util.setOptions(this, options);
+    Util.setOptions(this, options);
   },
 
   setPixelType: function (pixelType) {
@@ -39,7 +39,7 @@ export var ImageMapLayer = RasterLayer.extend({
   },
 
   setBandIds: function (bandIds) {
-    if (L.Util.isArray(bandIds)) {
+    if (Util.isArray(bandIds)) {
       this.options.bandIds = bandIds.join(',');
     } else {
       this.options.bandIds = bandIds.toString();
@@ -53,7 +53,7 @@ export var ImageMapLayer = RasterLayer.extend({
   },
 
   setNoData: function (noData, noDataInterpretation) {
-    if (L.Util.isArray(noData)) {
+    if (Util.isArray(noData)) {
       this.options.noData = noData.join(',');
     } else {
       this.options.noData = noData.toString();
@@ -92,9 +92,9 @@ export var ImageMapLayer = RasterLayer.extend({
   },
 
   _getPopupData: function (e) {
-    var callback = L.Util.bind(function (error, results, response) {
+    var callback = Util.bind(function (error, results, response) {
       if (error) { return; } // we really can't do anything here but authenticate or requesterror will fire
-      setTimeout(L.Util.bind(function () {
+      setTimeout(Util.bind(function () {
         this._renderPopup(e.latlng, error, results, response);
       }, this), 300);
     }, this);
@@ -199,7 +199,7 @@ export var ImageMapLayer = RasterLayer.extend({
       }, this);
     } else {
       params.f = 'image';
-      this._renderImage(this.options.url + 'exportImage' + L.Util.getParamString(params), bounds);
+      this._renderImage(this.options.url + 'exportImage' + Util.getParamString(params), bounds);
     }
   }
 });

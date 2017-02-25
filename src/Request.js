@@ -1,4 +1,4 @@
-import L from 'leaflet';
+import { Util, DomUtil } from 'leaflet';
 import Support from './Support';
 import { warn } from './Util';
 
@@ -40,7 +40,7 @@ function createRequest (callback, context) {
   var httpRequest = new window.XMLHttpRequest();
 
   httpRequest.onerror = function (e) {
-    httpRequest.onreadystatechange = L.Util.falseFn;
+    httpRequest.onreadystatechange = Util.falseFn;
 
     callback.call(context, {
       error: {
@@ -70,7 +70,7 @@ function createRequest (callback, context) {
         response = null;
       }
 
-      httpRequest.onerror = L.Util.falseFn;
+      httpRequest.onerror = Util.falseFn;
 
       callback.call(context, error, response);
     }
@@ -183,7 +183,7 @@ export function jsonp (url, params, callback, context) {
     }
   };
 
-  var script = L.DomUtil.create('script', null, document.body);
+  var script = DomUtil.create('script', null, document.body);
   script.type = 'text/javascript';
   script.src = url + '?' + serialize(params);
   script.id = callbackId;

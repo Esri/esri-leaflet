@@ -1,6 +1,6 @@
-import L from 'leaflet';
+import { latLng } from 'leaflet';
 import { Identify } from './Identify';
-import Util from '../Util';
+import { responseToFeatureCollection } from '../Util';
 
 export var IdentifyImage = Identify.extend({
   setters: {
@@ -16,7 +16,7 @@ export var IdentifyImage = Identify.extend({
   },
 
   at: function (latlng) {
-    latlng = L.latLng(latlng);
+    latlng = latLng(latlng);
     this.params.geometry = JSON.stringify({
       x: latlng.lng,
       y: latlng.lat,
@@ -80,7 +80,7 @@ export var IdentifyImage = Identify.extend({
     }
 
     if (catalogItems && catalogItems.features) {
-      geoJSON.catalogItems = Util.responseToFeatureCollection(catalogItems);
+      geoJSON.catalogItems = responseToFeatureCollection(catalogItems);
       if (catalogItemVisibilities && catalogItemVisibilities.length === geoJSON.catalogItems.features.length) {
         for (var i = catalogItemVisibilities.length - 1; i >= 0; i--) {
           geoJSON.catalogItems.features[i].properties.catalogItemVisibility = catalogItemVisibilities[i];

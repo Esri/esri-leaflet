@@ -1,4 +1,4 @@
-import L from 'leaflet';
+import { Util, GeoJSON, latLng } from 'leaflet';
 import { FeatureManager } from './FeatureManager';
 
 export var FeatureLayer = FeatureManager.extend({
@@ -34,7 +34,7 @@ export var FeatureLayer = FeatureManager.extend({
   },
 
   createNewLayer: function (geojson) {
-    var layer = L.GeoJSON.geometryToLayer(geojson, this.options);
+    var layer = GeoJSON.geometryToLayer(geojson, this.options);
     layer.defaultOptions = layer.options;
     return layer;
   },
@@ -43,7 +43,7 @@ export var FeatureLayer = FeatureManager.extend({
     // convert the geojson coordinates into a Leaflet LatLng array/nested arrays
     // pass it to setLatLngs to update layer geometries
     var latlngs = [];
-    var coordsToLatLng = this.options.coordsToLatLng || L.GeoJSON.coordsToLatLng;
+    var coordsToLatLng = this.options.coordsToLatLng || GeoJSON.coordsToLatLng;
 
     // copy new attributes, if present
     if (geojson.properties) {
@@ -52,23 +52,23 @@ export var FeatureLayer = FeatureManager.extend({
 
     switch (geojson.geometry.type) {
       case 'Point':
-        latlngs = L.GeoJSON.coordsToLatLng(geojson.geometry.coordinates);
+        latlngs = GeoJSON.coordsToLatLng(geojson.geometry.coordinates);
         layer.setLatLng(latlngs);
         break;
       case 'LineString':
-        latlngs = L.GeoJSON.coordsToLatLngs(geojson.geometry.coordinates, 0, coordsToLatLng);
+        latlngs = GeoJSON.coordsToLatLngs(geojson.geometry.coordinates, 0, coordsToLatLng);
         layer.setLatLngs(latlngs);
         break;
       case 'MultiLineString':
-        latlngs = L.GeoJSON.coordsToLatLngs(geojson.geometry.coordinates, 1, coordsToLatLng);
+        latlngs = GeoJSON.coordsToLatLngs(geojson.geometry.coordinates, 1, coordsToLatLng);
         layer.setLatLngs(latlngs);
         break;
       case 'Polygon':
-        latlngs = L.GeoJSON.coordsToLatLngs(geojson.geometry.coordinates, 1, coordsToLatLng);
+        latlngs = GeoJSON.coordsToLatLngs(geojson.geometry.coordinates, 1, coordsToLatLng);
         layer.setLatLngs(latlngs);
         break;
       case 'MultiPolygon':
-        latlngs = L.GeoJSON.coordsToLatLngs(geojson.geometry.coordinates, 2, coordsToLatLng);
+        latlngs = GeoJSON.coordsToLatLngs(geojson.geometry.coordinates, 2, coordsToLatLng);
         layer.setLatLngs(latlngs);
         break;
     }
@@ -154,7 +154,7 @@ export var FeatureLayer = FeatureManager.extend({
 
   cellEnter: function (bounds, coords) {
     if (this._visibleZoom() && !this._zooming && this._map) {
-      L.Util.requestAnimFrame(L.Util.bind(function () {
+      Util.requestAnimFrame(Util.bind(function () {
         var cacheKey = this._cacheKey(coords);
         var cellKey = this._cellCoordsToKey(coords);
         var layers = this._cache[cacheKey];
@@ -167,7 +167,7 @@ export var FeatureLayer = FeatureManager.extend({
 
   cellLeave: function (bounds, coords) {
     if (!this._zooming) {
-      L.Util.requestAnimFrame(L.Util.bind(function () {
+      Util.requestAnimFrame(Util.bind(function () {
         if (this._map) {
           var cacheKey = this._cacheKey(coords);
           var cellKey = this._cellCoordsToKey(coords);
@@ -222,7 +222,7 @@ export var FeatureLayer = FeatureManager.extend({
     var layer = this._layers[id];
     var style = this._originalStyle || L.Path.prototype.options;
     if (layer) {
-      L.Util.extend(layer.options, layer.defaultOptions);
+      Util.extend(layer.options, layer.defaultOptions);
       this.setFeatureStyle(id, style);
     }
     return this;
@@ -285,7 +285,7 @@ export var FeatureLayer = FeatureManager.extend({
     if (layer && layer.setIcon && this.options.pointToLayer) {
       // update custom symbology, if necessary
       if (this.options.pointToLayer) {
-        var getIcon = this.options.pointToLayer(geojson, L.latLng(geojson.geometry.coordinates[1], geojson.geometry.coordinates[0]));
+        var getIcon = this.options.pointToLayer(geojson, latLng(geojson.geometry.coordinates[1], geojson.geometry.coordinates[0]));
         var updatedIcon = getIcon.options.icon;
         layer.setIcon(updatedIcon);
       }
@@ -293,7 +293,7 @@ export var FeatureLayer = FeatureManager.extend({
 
     // looks like a vector marker (circleMarker)
     if (layer && layer.setStyle && this.options.pointToLayer) {
-      var getStyle = this.options.pointToLayer(geojson, L.latLng(geojson.geometry.coordinates[1], geojson.geometry.coordinates[0]));
+      var getStyle = this.options.pointToLayer(geojson, latLng(geojson.geometry.coordinates[1], geojson.geometry.coordinates[0]));
       var updatedStyle = getStyle.options;
       this.setFeatureStyle(geojson.id, updatedStyle);
     }
