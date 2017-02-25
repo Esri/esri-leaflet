@@ -1,4 +1,4 @@
-import L from 'leaflet';
+import { Util, setOptions } from 'leaflet';
 import featureLayerService from '../../Services/FeatureLayerService';
 import { cleanUrl, warn, setEsriAttribution } from '../../Util';
 import VirtualGrid from 'leaflet-virtual-grid';
@@ -29,7 +29,7 @@ export var FeatureManager = VirtualGrid.extend({
     VirtualGrid.prototype.initialize.call(this, options);
 
     options.url = cleanUrl(options.url);
-    options = L.setOptions(this, options);
+    options = setOptions(this, options);
 
     this.service = featureLayerService(options);
     this.service.addEventParent(this);
@@ -126,7 +126,7 @@ export var FeatureManager = VirtualGrid.extend({
       // no error, features
       if (!error && featureCollection && featureCollection.features.length) {
         // schedule adding features until the next animation frame
-        L.Util.requestAnimFrame(L.Util.bind(function () {
+        Util.requestAnimFrame(Util.bind(function () {
           this._addFeatures(featureCollection.features, coords);
           this._postProcessFeatures(bounds);
         }, this));
@@ -212,7 +212,7 @@ export var FeatureManager = VirtualGrid.extend({
     var newSnapshot = [];
     var pendingRequests = 0;
     var requestError = null;
-    var requestCallback = L.Util.bind(function (error, featureCollection) {
+    var requestCallback = Util.bind(function (error, featureCollection) {
       if (error) {
         requestError = error;
       }
@@ -228,7 +228,7 @@ export var FeatureManager = VirtualGrid.extend({
       if (pendingRequests <= 0) {
         this._currentSnapshot = newSnapshot;
         // schedule adding features for the next animation frame
-        L.Util.requestAnimFrame(L.Util.bind(function () {
+        Util.requestAnimFrame(Util.bind(function () {
           this.removeLayers(oldSnapshot);
           this.addLayers(newSnapshot);
           if (callback) {
@@ -269,7 +269,7 @@ export var FeatureManager = VirtualGrid.extend({
     var oldTo = this.options.to;
     var pendingRequests = 0;
     var requestError = null;
-    var requestCallback = L.Util.bind(function (error) {
+    var requestCallback = Util.bind(function (error) {
       if (error) {
         requestError = error;
       }
@@ -329,7 +329,7 @@ export var FeatureManager = VirtualGrid.extend({
     }
 
     // schedule adding features until the next animation frame
-    L.Util.requestAnimFrame(L.Util.bind(function () {
+    Util.requestAnimFrame(Util.bind(function () {
       this.removeLayers(layersToRemove);
       this.addLayers(layersToAdd);
     }, this));
@@ -462,7 +462,7 @@ export var FeatureManager = VirtualGrid.extend({
       var error;
       callback(error, this._metadata);
     } else {
-      this.metadata(L.Util.bind(function (error, response) {
+      this.metadata(Util.bind(function (error, response) {
         this._metadata = response;
         callback(error, this._metadata);
       }, this));
@@ -470,13 +470,13 @@ export var FeatureManager = VirtualGrid.extend({
   },
 
   addFeature: function (feature, callback, context) {
-    this._getMetadata(L.Util.bind(function (error, metadata) {
+    this._getMetadata(Util.bind(function (error, metadata) {
       if (error) {
         if (callback) { callback.call(this, error, null); }
         return;
       }
 
-      this.service.addFeature(feature, L.Util.bind(function (error, response) {
+      this.service.addFeature(feature, Util.bind(function (error, response) {
         if (!error) {
           // assign ID from result to appropriate objectid field from service metadata
           feature.properties[metadata.objectIdField] = response.objectId;

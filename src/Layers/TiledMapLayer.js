@@ -1,7 +1,3 @@
-/*
-  now we'll have to import { Util as EsriUtil } from '../Util'
-  anytime we want the whole thing
-*/
 import { TileLayer, Util } from 'leaflet';
 import { warn, cleanUrl, setEsriAttribution } from '../Util';
 import mapService from '../Services/MapService';

@@ -4,7 +4,7 @@ export {version as VERSION} from '../package.json';
 // import base
 export { Support } from './Support';
 export { options } from './Options';
-export { Util } from './Util';
+export { Util as EsriUtil } from './Util';
 export { get, post, request } from './Request';
 
 // export tasks
