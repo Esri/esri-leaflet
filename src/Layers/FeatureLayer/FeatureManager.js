@@ -72,8 +72,10 @@ export var FeatureManager = VirtualGrid.extend({
       if (!err) {
         var supportedFormats = metadata.supportedQueryFormats;
         // Unless we've been told otherwise, check to see whether service can emit GeoJSON natively
-        if (this.service.options.isModern && supportedFormats && supportedFormats.indexOf('geoJSON') !== -1) {
-          this.service.options.isModern = true;
+        if (supportedFormats && supportedFormats.indexOf('geoJSON') !== -1) {
+          this.service.options.isModern = true && this.service.options.isModern;
+        } else {
+          this.service.options.isModern = false;
         }
         // add copyright text listed in service metadata
         if (!this.options.attribution && map.attributionControl && metadata.copyrightText) {
