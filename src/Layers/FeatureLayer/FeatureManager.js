@@ -148,7 +148,7 @@ export var FeatureManager = VirtualGrid.extend({
   },
 
   _postProcessFeatures: function (bounds) {
-    // deincriment the request counter now that we have processed features
+    // deincrement the request counter now that we have processed features
     this._activeRequests--;
 
     // if there are no more active requests fire a load event for this view
@@ -169,16 +169,15 @@ export var FeatureManager = VirtualGrid.extend({
 
     for (var i = features.length - 1; i >= 0; i--) {
       var id = features[i].id;
-      this._currentSnapshot.push(id);
+      if (!this._currentSnapshot[id]) {
+        this._currentSnapshot.push(id);
+      }
       this._cache[key].push(id);
     }
 
     if (this.options.timeField) {
       this._buildTimeIndexes(features);
     }
-
-    // need to PR removal of the logic below too...
-    // https://github.com/patrickarlt/leaflet-virtual-grid/blob/master/src/virtual-grid.js#L100-L102
 
     this.createLayers(features);
   },
