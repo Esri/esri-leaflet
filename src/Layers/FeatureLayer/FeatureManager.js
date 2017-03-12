@@ -73,7 +73,7 @@ export var FeatureManager = VirtualGrid.extend({
 
         // Check if someone has requested that we don't use geoJSON, even if it's available
         var forceJsonFormat = false;
-        if (typeof this.service.options.isModern !== 'undefined' && this.service.options.isModern === false) {
+        if (this.service.options.isModern === false) {
           forceJsonFormat = true;
         }
 
