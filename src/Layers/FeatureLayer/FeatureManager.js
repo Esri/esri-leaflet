@@ -169,10 +169,13 @@ export var FeatureManager = VirtualGrid.extend({
 
     for (var i = features.length - 1; i >= 0; i--) {
       var id = features[i].id;
-      if (!this._currentSnapshot[id]) {
+
+      if (this._currentSnapshot.indexOf(id) === -1) {
         this._currentSnapshot.push(id);
       }
-      this._cache[key].push(id);
+      if (this._cache[key].indexOf(id) === -1) {
+        this._cache[key].push(id);
+      }
     }
 
     if (this.options.timeField) {

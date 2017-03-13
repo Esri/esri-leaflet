@@ -244,11 +244,11 @@ export var FeatureLayer = FeatureManager.extend({
    */
 
   eachActiveFeature: function (fn, context) {
-    // figure out roughly which layers are in view
+    // figure out (roughly) which layers are in view
     if (this._map) {
       var activeBounds = this._map.getBounds();
       for (var i in this._layers) {
-        if (activeBounds.intersects(this._layers[i].getBounds())) {
+        if (activeBounds.intersects(this._layers[i].getBounds()) && this._currentSnapshot.indexOf(this._layers[i].feature.id) !== -1) {
           fn.call(context, this._layers[i]);
         }
       }
