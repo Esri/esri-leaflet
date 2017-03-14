@@ -10,6 +10,9 @@ Icon
 *.sublime-project
 .idea/*
 
+# Code
+.vscode/
+
 # SASS
 .sass-cache
 

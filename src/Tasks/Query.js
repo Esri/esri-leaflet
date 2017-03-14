@@ -30,43 +30,63 @@ export var Query = Task.extend({
     outFields: '*'
   },
 
+  // Returns a feature if its shape is wholly contained within the search geometry. Valid for all shape type combinations.
   within: function (geometry) {
     this._setGeometry(geometry);
-    this.params.spatialRel = 'esriSpatialRelContains'; // will make code read layer within geometry, to the api this will reads geometry contains layer
+    this.params.spatialRel = 'esriSpatialRelContains'; // to the REST api this reads geometry **contains** layer
     return this;
   },
 
+  // Returns a feature if any spatial relationship is found. Applies to all shape type combinations.
   intersects: function (geometry) {
     this._setGeometry(geometry);
     this.params.spatialRel = 'esriSpatialRelIntersects';
     return this;
   },
 
+  // Returns a feature if its shape wholly contains the search geometry. Valid for all shape type combinations.
   contains: function (geometry) {
     this._setGeometry(geometry);
-    this.params.spatialRel = 'esriSpatialRelWithin'; // will make code read layer contains geometry, to the api this will reads geometry within layer
+    this.params.spatialRel = 'esriSpatialRelWithin'; // to the REST api this reads geometry **within** layer
     return this;
   },
 
+  // Returns a feature if the intersection of the interiors of the two shapes is not empty and has a lower dimension than the maximum dimension of the two shapes. Two lines that share an endpoint in common do not cross. Valid for Line/Line, Line/Area, Multi-point/Area, and Multi-point/Line shape type combinations.
   crosses: function (geometry) {
     this._setGeometry(geometry);
     this.params.spatialRel = 'esriSpatialRelCrosses';
     return this;
   },
 
+  // Returns a feature if the two shapes share a common boundary. However, the intersection of the interiors of the two shapes must be empty. In the Point/Line case, the point may touch an endpoint only of the line. Applies to all combinations except Point/Point.
   touches: function (geometry) {
     this._setGeometry(geometry);
     this.params.spatialRel = 'esriSpatialRelTouches';
     return this;
   },
 
+  // Returns a feature if the intersection of the two shapes results in an object of the same dimension, but different from both of the shapes. Applies to Area/Area, Line/Line, and Multi-point/Multi-point shape type combinations.
   overlaps: function (geometry) {
     this._setGeometry(geometry);
     this.params.spatialRel = 'esriSpatialRelOverlaps';
     return this;
   },
 
-  // only valid for Feature Services running on ArcGIS Server 10.3 or ArcGIS Online
+  // Returns a feature if the envelope of the two shapes intersects.
+  bboxIntersects: function (geometry) {
+    this._setGeometry(geometry);
+    this.params.spatialRel = 'esriSpatialRelEnvelopeIntersects';
+    return this;
+  },
+
+  // if someone can help decipher the ArcObjects explanation and translate to plain speak, we should mention this method in the doc
+  indexIntersects: function (geometry) {
+    this._setGeometry(geometry);
+    this.params.spatialRel = 'esriSpatialRelIndexIntersects'; // Returns a feature if the envelope of the query geometry intersects the index entry for the target geometry
+    return this;
+  },
+
+  // only valid for Feature Services running on ArcGIS Server 10.3+ or ArcGIS Online
   nearby: function (latlng, radius) {
     latlng = latLng(latlng);
     this.params.geometry = [latlng.lng, latlng.lat];
@@ -105,7 +125,7 @@ export var Query = Task.extend({
   run: function (callback, context) {
     this._cleanParams();
 
-    // services hosted on ArcGIS Online also support requesting geojson directly
+    // services hosted on ArcGIS Online and ArcGIS Server 10.3.1+ support requesting geojson directly
     if (this.options.isModern || isArcgisOnline(this.options.url)) {
       this.params.f = 'geojson';
 
