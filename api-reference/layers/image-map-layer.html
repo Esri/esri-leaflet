@@ -33,7 +33,7 @@
   
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet-src.js"></script>
-    <script src="https://unpkg.com/esri-leaflet@2.0.7"></script>
+    <script src="https://unpkg.com/esri-leaflet@2.0.8"></script>
   
 
   
@@ -126,6 +126,7 @@
 
 <div class="main-content">
   <h1 id="l-esri-imagemaplayer">L.esri.ImageMapLayer</h1>
+<p>Inherits from <a href="../../api-reference/layers/raster-layer.html"><code>L.esri.RasterLayer</code></a></p>
 <p>Render and visualize Image Services from ArcGIS Online and ArcGIS Server.</p>
 <p>Image Services provide access to raster data through a web service.</p>
 <h3 id="constructor">Constructor</h3>
@@ -201,37 +202,37 @@
 <tr>
 <td><code>bandIds</code></td>
 <td><code>String</code></td>
-<td><code>undefined</code></td>
+<td></td>
 <td>If there are multiple bands, you can specify which bands to export.</td>
 </tr>
 <tr>
 <td><code>noData</code></td>
 <td><code>Number</code></td>
-<td><code>undefined</code></td>
+<td></td>
 <td>The pixel value representing no information.</td>
 </tr>
 <tr>
 <td><code>noDataInterpretation</code></td>
 <td><code>String</code></td>
-<td><code>undefined</code></td>
+<td></td>
 <td>Interpretation of the <code>noData</code> setting.</td>
 </tr>
 <tr>
 <td><code>pixelType</code></td>
 <td><code>String</code></td>
-<td><code>undefined</code></td>
+<td></td>
 <td>Leave <code>pixelType</code> as unspecified, or <code>UNKNOWN</code>, in most exportImage use cases, unless such <code>pixelType</code> is desired. Possible values: <code>C128</code>, <code>C64</code>, <code>F32</code>, <code>F64</code>, <code>S16</code>, <code>S32</code>, <code>S8</code>, <code>U1</code>, <code>U16</code>, <code>U2</code>, <code>U32</code>, <code>U4</code>, <code>U8</code>, <code>UNKNOWN</code>.</td>
 </tr>
 <tr>
 <td><code>renderingRule</code></td>
 <td><code>Object</code></td>
-<td><code>undefined</code></td>
+<td></td>
 <td>A JSON representation of a <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Raster_function_objects/02r3000000rv000000/">raster function</a></td>
 </tr>
 <tr>
 <td><code>mosaicRule</code></td>
 <td><code>Object</code></td>
-<td><code>undefined</code></td>
+<td></td>
 <td>A JSON representation of a <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Mosaic_rule_objects/02r3000000s4000000/">mosaic rule</a></td>
 </tr>
 <tr>
@@ -243,7 +244,7 @@
 <tr>
 <td><code>token</code></td>
 <td><code>String</code></td>
-<td><code>null</code></td>
+<td></td>
 <td>If you pass a token in your options it will be included in all requests to the service.</td>
 </tr>
 <tr>

@@ -33,7 +33,7 @@
   
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet-src.js"></script>
-    <script src="https://unpkg.com/esri-leaflet@2.0.7"></script>
+    <script src="https://unpkg.com/esri-leaflet@2.0.8"></script>
   
 
   
@@ -262,9 +262,14 @@
             <td>A custom map pane to render lines and polygons on. For point geometries, custom panes should be passed through <code>pointToLayer()</code>.</td>
         </tr>
         <tr>
+            <td><code>isModern</code></td>
+            <td><code>Boolean</code></td>
+            <td>Set this to <code>false</code> if your own service supports GeoJSON as an output format but you&#39;d like to ask for <a href="http://geoservices.github.io/">Geoservices JSON</a> instead.</td>
+        </tr>
+        <tr>
             <td><code>ignoreRenderer</code></td>
             <td><code>Boolean</code></td>
-            <td>When utilizing esri-leaflet-renderers <a href="https://github.com/Esri/esri-leaflet-renderers/releases/tag/v2.0.1">&#39;2.0.2&#39;</a> or above, this option makes it possible to override the symbology defined by the service itself .</td>
+            <td>When utilizing esri-leaflet-renderers <a href="https://github.com/Esri/esri-leaflet-renderers/releases/tag/v2.0.1">&#39;2.0.2&#39;</a> or above, this option makes it possible to override the symbology defined by the service itself.</td>
         </tr>
     </tbody>
 </table>
@@ -351,6 +356,13 @@
   console.log(
     layer.feature.properties.NAME);
 });</code></pre>
+            </td>
+        </tr>
+        <tr>
+            <td><code>eachActiveFeature(<nobr class="param"><span>&lt;Function&gt;</span> <code>fn</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>context</code></nobr>)</code></td>
+            <td><code>this</code></td>
+            <td>
+                Calls the passed function against every feature that is currently being displayed.
             </td>
         </tr>
         <tr>

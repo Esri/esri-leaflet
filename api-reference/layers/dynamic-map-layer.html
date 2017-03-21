@@ -33,7 +33,7 @@
   
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet-src.js"></script>
-    <script src="https://unpkg.com/esri-leaflet@2.0.7"></script>
+    <script src="https://unpkg.com/esri-leaflet@2.0.8"></script>
   
 
   
@@ -126,10 +126,9 @@
 
 <div class="main-content">
   <h1 id="l-esri-dynamicmaplayer">L.esri.DynamicMapLayer</h1>
-<!-- Inherits from [`L.esri.RasterLayer`](../../api-reference/layers/raster-layer.html) -->
-
+<p>Inherits from <a href="../../api-reference/layers/raster-layer.html"><code>L.esri.RasterLayer</code></a></p>
 <p>Render and visualize Map Services from ArcGIS Online and ArcGIS Server. L.esri.DynamicMapLayer also supports custom popups and identification of features.</p>
-<p>Map Services are a way to expose the contents of a map as a web service and expose capabilities for exporting tile images, querying and identifying features and more.</p>
+<p>Map Services are used when its preferable to ask the server to draw layers at a particular location and scale and pass back the image which was generated on the fly.  They also expose capabilities for querying and identifying individual features.</p>
 <h3 id="constructor">Constructor</h3>
 <table>
     <thead>
@@ -141,7 +140,7 @@
     <tbody>
         <tr>
             <td>L.esri.dynamicMapLayer(<nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code></td>
-            <td>The <code>options</code> parameter can accept the same options as <a href="http://leafletjs.com/reference.html#imageoverlay"><code>L.ImageOverlay</code></a>. You also must pass a <code>url</code> key in your <code>options</code>.</td>
+            <td>The <code>options</code> parameter can accept the same options as <a href="http://leafletjs.com/reference.html#imageoverlay"><code>L.ImageOverlay</code></a>.<br>Passing a <code>url</code> is mandatory.</td>
         </tr>
     </tbody>
 </table>
@@ -184,20 +183,20 @@
 <tr>
 <td><code>attribution</code></td>
 <td><code>String</code></td>
-<td><code>&#39;&#39;</code></td>
+<td></td>
 <td>Attribution from service metadata <a href="https://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer">copyright text</a> is automatically displayed in Leaflet&#39;s default control.  This property can be used for customization.</td>
 </tr>
 <tr>
 <td><code>layers</code></td>
 <td><code>Array</code></td>
-<td><code>&#39;&#39;</code></td>
+<td></td>
 <td>An array of Layer IDs like <code>[3,4,5]</code> to show from the service.</td>
 </tr>
 <tr>
 <td><code>layerDefs</code></td>
-<td><code>String</code> <code>Object</code></td>
-<td><code>&#39;&#39;</code></td>
-<td>A string representing a query to run against the service before the image is rendered. This can be a string like <code>&quot;3:STATE_NAME=&#39;Kansas&#39;&quot;</code> or an object mapping different queries to specific layers <code>{3:&quot;STATE_NAME=&#39;Kansas&#39;&quot;, 2:&quot;POP2007&gt;25000&quot;}</code>.</td>
+<td><code>Object</code></td>
+<td></td>
+<td>SQL filters to define what features will be included in the image rendered by the service. An object is used with keys that map each query to its respective layer. <br> <code>{ 3: &quot;STATE_NAME=&#39;Kansas&#39;&quot;, 9: &quot;POP2007&gt;25000&quot; }</code></td>
 </tr>
 <tr>
 <td><code>opacity</code></td>
@@ -226,13 +225,13 @@
 <tr>
 <td><code>dynamicLayers</code></td>
 <td><code>Object</code></td>
-<td><code>null</code></td>
+<td></td>
 <td>JSON object literal used to manipulate the layer symbology defined in the service itself.  Requires a 10.1 (or above) map service which supports <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/index.html#/Export_Map/02r3000000v7000000/">dynamicLayers</a> requests.</td>
 </tr>
 <tr>
 <td><code>token</code></td>
 <td><code>String</code></td>
-<td><code>null</code></td>
+<td></td>
 <td>If you pass a token in your options it will be included in all requests to the service.</td>
 </tr>
 <tr>

@@ -33,7 +33,7 @@
   
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet-src.js"></script>
-    <script src="https://unpkg.com/esri-leaflet@2.0.7"></script>
+    <script src="https://unpkg.com/esri-leaflet@2.0.8"></script>
   
 
   
@@ -204,6 +204,11 @@
             <td><code>intersects(<nobr class="param"><span>&lt;Geometry&gt;</span> <code>geometry</code></nobr>)</code></td>
             <td><code>this</code></td>
             <td>Queries features from the service that intersect (touch anywhere) the passed geometry object. <code>geometry</code> can be an instance of <a href="http://leafletjs.com/reference.html#marker"><code>L.Marker</code></a>, <a href="http://leafletjs.com/reference.html#polygon"><code>L.Polygon</code></a>, <a href="http://leafletjs.com/reference.html#polyline"><code>L.Polyline</code></a>, <a href="http://leafletjs.com/reference.html#latlng"><code>L.LatLng</code></a>, <a href="http://leafletjs.com/reference.html#latlngbounds"><code>L.LatLngBounds</code></a> and <a href="http://leafletjs.com/reference.html#geojson"><code>L.GeoJSON</code></a>. It can also accept valid GeoJSON <a href="http://geojson.org/geojson-spec.html#point">Point</a>, <a href="http://geojson.org/geojson-spec.html#polyline">Polyline</a>, <a href="http://geojson.org/geojson-spec.html#polygon">Polygon</a> objects and GeoJSON <a href="http://geojson.org/geojson-spec.html#feature-objects">Feature objects</a> containing Point, Polyline, Polygon.</td>
+        </tr>
+        <tr>
+            <td><code>bboxIntersects(<nobr class="param"><span>&lt;Geometry&gt;</span> <code>geometry</code></nobr>)</code></td>
+            <td><code>this</code></td>
+            <td>Queries features from the service that have a bounding box that intersects the bounding box of the passed geometry object. <code>geometry</code> can be an instance of <a href="http://leafletjs.com/reference.html#marker"><code>L.Marker</code></a>, <a href="http://leafletjs.com/reference.html#polygon"><code>L.Polygon</code></a>, <a href="http://leafletjs.com/reference.html#polyline"><code>L.Polyline</code></a>, <a href="http://leafletjs.com/reference.html#latlng"><code>L.LatLng</code></a>, <a href="http://leafletjs.com/reference.html#latlngbounds"><code>L.LatLngBounds</code></a> and <a href="http://leafletjs.com/reference.html#geojson"><code>L.GeoJSON</code></a>. It can also accept valid GeoJSON <a href="http://geojson.org/geojson-spec.html#point">Point</a>, <a href="http://geojson.org/geojson-spec.html#polyline">Polyline</a>, <a href="http://geojson.org/geojson-spec.html#polygon">Polygon</a> objects and GeoJSON <a href="http://geojson.org/geojson-spec.html#feature-objects">Feature objects</a> containing Point, Polyline, Polygon.</td>
         </tr>
         <tr>
             <td><code>overlap(<nobr class="param"><span>&lt;Geometry&gt;</span> <code>geometry</code></nobr>)</code></td>
