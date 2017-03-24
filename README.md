@@ -151,10 +151,10 @@ If you'd like to inspect and modify the source of Esri Leaflet, follow the instr
 
 ### Dependencies
 
-* Esri Leaflet [1.x](https://github.com/Esri/esri-leaflet/releases/tag/v1.0.3) (available on [CDN](https://cdn.jsdelivr.net/leaflet.esri/1.0.4/esri-leaflet.js)) can be used in apps alongside:
+* Esri Leaflet [1.x](https://github.com/Esri/esri-leaflet/releases/tag/v1.0.4) (available on [CDN](https://unpkg.com/esri-leaflet@1.0.4)) can be used in apps alongside:
   *  [Leaflet](http://leafletjs.com) version 0.7.x.
 
-* Esri Leaflet [2.x](https://github.com/Esri/esri-leaflet/releases/tag/v2.0.7) (available on [CDN](https://unpkg.com/esri-leaflet@2.0.7)) can be used in apps alongside:
+* Esri Leaflet [2.x](https://github.com/Esri/esri-leaflet/releases/tag/v2.0.8) (available on [CDN](https://unpkg.com/esri-leaflet@2.0.8)) can be used in apps alongside:
   *  [Leaflet](http://leafletjs.com) version 1.x.
 
 The `master` branch of this repository is *only* compatible with Leaflet 1.x.
