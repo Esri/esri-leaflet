@@ -170,8 +170,14 @@ export var RasterLayer = Layer.extend({
         interactive: this.options.interactive
       }).addTo(this._map);
 
-      // once the image loads
-      image.once('load', function (e) {
+      var onOverlayError = function () {
+        this._map.removeLayer(image);
+        this.fire('error');
+        image.off('load', onOverlayLoad, this);
+      };
+
+      var onOverlayLoad = function (e) {
+        image.off('error', onOverlayLoad, this);
         if (this._map) {
           var newImage = e.target;
           var oldImage = this._currentImage;
@@ -210,7 +216,13 @@ export var RasterLayer = Layer.extend({
         this.fire('load', {
           bounds: bounds
         });
-      }, this);
+      };
+
+      // If loading the image fails
+      image.once('error', onOverlayError, this);
+
+      // once the image loads
+      image.once('load', onOverlayLoad, this);
 
       this.fire('loading', {
         bounds: bounds
