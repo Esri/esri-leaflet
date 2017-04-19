@@ -88,6 +88,9 @@ export var FeatureManager = VirtualGrid.extend({
           map.attributionControl.addAttribution(this.getAttribution());
         }
       }
+      if (error) {
+        console.log(error);
+      }
     }, this);
 
     map.on('zoomend', this._handleZoomChange, this);
