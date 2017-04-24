@@ -165,7 +165,8 @@ export var ImageMapLayer = RasterLayer.extend({
       params.bandIds = this.options.bandIds;
     }
 
-    if (this.options.noData) {
+    // 0 is falsy *and* a valid input parameter
+    if (this.options.noData === 0 || this.options.noData) {
       params.noData = this.options.noData;
     }
 
