@@ -1,5 +1,5 @@
-/*! esri-leaflet - v1.0.3 - 2016-07-03
-*   Copyright (c) 2016 Environmental Systems Research Institute, Inc.
+/*! esri-leaflet - v1.0.4 - 2017-04-26
+*   Copyright (c) 2017 Environmental Systems Research Institute, Inc.
 *   Apache License*/
 (function (factory) {
   //define an AMD module that relies on 'leaflet'
@@ -17,7 +17,7 @@
   }
 }(function (L) {
 var EsriLeaflet = { //jshint ignore:line
-  VERSION: '1.0.3',
+  VERSION: '1.0.4',
   Layers: {},
   Services: {},
   Controls: {},
