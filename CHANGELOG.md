@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.5
+
+### Fixed
+
+* ensure we dont try to set opacity on non-existent images #909
+
 ## 1.0.4
 
 ### Fixed
