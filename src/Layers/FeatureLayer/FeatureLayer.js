@@ -248,8 +248,14 @@ export var FeatureLayer = FeatureManager.extend({
     if (this._map) {
       var activeBounds = this._map.getBounds();
       for (var i in this._layers) {
-        if (activeBounds.intersects(this._layers[i].getBounds()) && this._currentSnapshot.indexOf(this._layers[i].feature.id) !== -1) {
-          fn.call(context, this._layers[i]);
+        if (this._currentSnapshot.indexOf(this._layers[i].feature.id) !== -1) {
+          // a simple point in poly test for point geometries
+          if (typeof this._layers[i].getLatLng === 'function' && activeBounds.contains(this._layers[i].getLatLng())) {
+            fn.call(context, this._layers[i]);
+          } else if (typeof this._layers[i].getBounds === 'function' && activeBounds.intersects(this._layers[i].getBounds())) {
+            // intersecting bounds check for polyline and polygon geometries
+            fn.call(context, this._layers[i]);
+          }
         }
       }
     }
