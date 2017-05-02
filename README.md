@@ -107,7 +107,7 @@ http://leafletjs.com/plugins.html
 
 You can also pick and choose additional Esri Leaflet plugins.
 
-http://esri.github.io/esri-leaflet/plugins/)
+http://esri.github.io/esri-leaflet/plugins/
 
 ## Frequently Asked Questions
 
@@ -211,6 +211,3 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 A copy of the license is available in the repository's [LICENSE](./LICENSE) file.
-
-[](Esri Tags: ArcGIS Web Mapping Leaflet)
-[](Esri Language: JavaScript)
