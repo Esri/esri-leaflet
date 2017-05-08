@@ -8,11 +8,11 @@
   <meta charset="utf-8">
 
   
-    <title>Vector Basemaps | Esri Leaflet</title>
+    <title>Use Turf and Esri Leaflet together | Esri Leaflet</title>
   
 
   
-    <meta name="description" content="Display ArcGIS Online vector basemaps. Notice that the map attribution updates automatically as users pan and zoom in accordance with Esri&#x27;s &lt;a href=&#x27;https://github.com/esri/esri-leaflet#terms&#x27;&gt;Terms of Use&lt;/a&gt;.">
+    <meta name="description" content="Esri Leaflet pairs nicely with clientside libraries that can perform spatial analysis in the browser like &lt;a href=&quot;http://turfjs.org/getting-started/&quot;&gt;Turf.js&lt;/a&gt;. This demo shows how the output from a spatial query can be augmented to isolate features that have a spatial relationship with another arbitrary geometry.">
   
 
   <meta name="description" content="Esri Leaflet">
@@ -180,72 +180,127 @@
 
 <div class="example-content">
 <div class="wrap">
-  <h1>Vector Basemaps</h1>
-  <p>Display ArcGIS Online vector basemaps. Notice that the map attribution updates automatically as users pan and zoom in accordance with Esri's <a href='https://github.com/esri/esri-leaflet#terms'>Terms of Use</a>.</p>
+  <h1>Use Turf and Esri Leaflet together</h1>
+  <p>Esri Leaflet pairs nicely with clientside libraries that can perform spatial analysis in the browser like <a href="http://turfjs.org/getting-started/">Turf.js</a>. This demo shows how the output from a spatial query can be augmented to isolate features that have a spatial relationship with another arbitrary geometry.</p>
 </div>
 <div id="map-wrapper">
   
 
-<!-- load the latest release from the cdn automatically -->
-<script src="https://unpkg.com/esri-leaflet-vector"></script>
+<script src="https://unpkg.com/@turf/turf@3.5.1/turf.min.js"></script>
 
 <style>
-  #basemaps-wrapper {
+  #info-pane {
     position: absolute;
     top: 10px;
     right: 10px;
-    z-index: 400;
+    z-index: 1000;
+    padding: 1em;
     background: white;
-    padding: 10px;
-  }
-  #basemaps {
-    margin-bottom: 5px;
+    max-width: 150px;
   }
 </style>
 
 <div id="map"></div>
-
-<div id="basemaps-wrapper" class="leaflet-bar">
-  <select name="basemaps" id="basemaps" onChange="changeBasemap(basemaps)">
-    <option value="Newspaper">Newspaper</option>
-    <option value="ModernAntique">ModernAntique</option>
-    <option value="BlackAndWhite">BlackAndWhite</option>
-    <option value="Spring">Spring</option>
-    <option value="MidCentury">Mid-Century</option>
-    <option value="Topographic">Topographic</option>
-    <option value="Gray">Gray</option>
-    <option value="DarkGray">Dark Gray</option>
-    <option value="Navigation">Navigation</option>
-    <option value="Streets">Streets</option>
-    <option value="StreetsNight">Streets Night</option>
-    <option value="StreetsRelief">Streets Relief</option>
-  </select>
+<div id="info-pane" class="leaflet-bar">
+  <label>
+  Census block points that intersect both bounding boxes and are shown in red.
+  </label>
 </div>
 
-<script>
-  var map = L.map('map').setView([40, -4], 6);
-  var layer = L.esri.Vector.basemap('Newspaper').addTo(map);
-
-  function setBasemap(basemap) {
-    if (layer) {
-      map.removeLayer(layer);
+<script type='text/javascript'>
+  // two GeoJSON bounding boxes.  the first smaller than the second.
+    var boundingBoxes = {
+      "type": "FeatureCollection",
+      "features": [
+        {
+          "type": "Feature",
+          "properties": {
+            "color": "orange"
+          },
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+              [
+                [ -84.39010620117188, 33.747965492070236 ],
+                [ -84.39010620117188, 33.75431694675655 ],
+                [ -84.37311172485352, 33.75431694675655 ],
+                [ -84.37311172485352, 33.747965492070236 ],
+                [ -84.39010620117188, 33.747965492070236 ]
+              ]
+            ]
+          }
+        },
+        {
+          "type": "Feature",
+          "properties": {
+            "color": "#0ceb70"
+          },
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+              [
+                [ -84.39963340759277, 33.744254312044156 ],
+                [ -84.39963340759277,  33.75817040902938 ],
+                [ -84.38444137573242, 33.75817040902938 ],
+                [ -84.38444137573242, 33.744254312044156 ],
+                [ -84.39963340759277, 33.744254312044156 ]
+              ]
+            ]
+          }
+        }
+      ]
     }
 
-    layer = L.esri.Vector.basemap(basemap);
-    map.addLayer(layer);
-  }
+    // draw a map of atlanta
+    var map = L.map('map').setView([33.752, -84.385], 14.5);
+    L.esri.basemapLayer('Topographic').addTo(map);
 
-  function changeBasemap(basemaps){
-    var basemap = basemaps.value;
-    setBasemap(basemap);
-  }
+    // display the bounding boxes on the map
+    L.geoJSON(boundingBoxes, {
+      style: function (feature) {
+        return {color: feature.properties.color};
+      }
+    }).addTo(map);
+
+    // query for census block points that intersect the smaller box
+    var query = L.esri.query({
+      url: 'http://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer/0'
+    })
+    query.intersects(boundingBoxes.features[0])
+    query.run(function (err, censusCollection, raw) {
+      var features = censusCollection.features;
+      // loop through the collection of census block points
+      for (i=0; i<features.length; i++) {
+        // if the point is inside (or contained by, the bigger box) draw it in red
+        if (turf.inside(features[i], boundingBoxes.features[1])) {
+          L.geoJSON(features[i], {
+            pointToLayer: function(geoJsonPoint, latlng) {
+              return L.circleMarker(latlng, {
+                color: '#ff0066'
+              });
+            }
+          }).addTo(map);
+        } else {
+          // if its outside (or not contained) by the bigger box, make it less opaque.
+          L.geoJSON(features[i], {
+            pointToLayer: function(geoJsonPoint, latlng) {
+              return L.circleMarker(latlng, {
+                radius: 10,
+                color: 'gray',
+                opacity: 0.2
+              });
+            }
+          }).addTo(map);
+        }
+      }
+    });
 </script>
 
 </div>
 <pre><code class="language-xml"><span class="tag">&lt;<span class="title">html</span>&gt;</span>
 <span class="tag">&lt;<span class="title">head</span>&gt;</span>
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">utf-8</span> /&gt;</span>
-  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Vector Basemaps<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Use Turf and Esri Leaflet together<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">name</span>=<span class="value">'viewport'</span> <span class="attribute">content</span>=<span class="value">'initial-scale=1,maximum-scale=1,user-scalable=no'</span> /&gt;</span>
 
   <span class="comment">&lt;!-- Load Leaflet from CDN--&gt;</span>
@@ -262,66 +317,121 @@
 <span class="tag">&lt;/<span class="title">head</span>&gt;</span>
 <span class="tag">&lt;<span class="title">body</span>&gt;</span>
 
-<span class="comment">&lt;!-- load the latest release from the cdn automatically --&gt;</span>
-<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/esri-leaflet-vector"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/@turf/turf@3.5.1/turf.min.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css">
-  <span class="id">#basemaps-wrapper</span> <span class="rules">{
+  <span class="id">#info-pane</span> <span class="rules">{
     <span class="rule"><span class="attribute">position</span>:<span class="value"> absolute</span></span>;
     <span class="rule"><span class="attribute">top</span>:<span class="value"> <span class="number">10</span>px</span></span>;
     <span class="rule"><span class="attribute">right</span>:<span class="value"> <span class="number">10</span>px</span></span>;
-    <span class="rule"><span class="attribute">z-index</span>:<span class="value"> <span class="number">400</span></span></span>;
+    <span class="rule"><span class="attribute">z-index</span>:<span class="value"> <span class="number">1000</span></span></span>;
+    <span class="rule"><span class="attribute">padding</span>:<span class="value"> <span class="number">1</span>em</span></span>;
     <span class="rule"><span class="attribute">background</span>:<span class="value"> white</span></span>;
-    <span class="rule"><span class="attribute">padding</span>:<span class="value"> <span class="number">10</span>px</span></span>;
-  <span class="rule">}</span></span>
-  <span class="id">#basemaps</span> <span class="rules">{
-    <span class="rule"><span class="attribute">margin-bottom</span>:<span class="value"> <span class="number">5</span>px</span></span>;
+    <span class="rule"><span class="attribute">max-width</span>:<span class="value"> <span class="number">150</span>px</span></span>;
   <span class="rule">}</span></span>
 </span><span class="tag">&lt;/<span class="title">style</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
-
-<span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"basemaps-wrapper"</span> <span class="attribute">class</span>=<span class="value">"leaflet-bar"</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">select</span> <span class="attribute">name</span>=<span class="value">"basemaps"</span> <span class="attribute">id</span>=<span class="value">"basemaps"</span> <span class="attribute">onChange</span>=<span class="value">"changeBasemap(basemaps)"</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"Newspaper"</span>&gt;</span>Newspaper<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"ModernAntique"</span>&gt;</span>ModernAntique<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"BlackAndWhite"</span>&gt;</span>BlackAndWhite<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"Spring"</span>&gt;</span>Spring<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"MidCentury"</span>&gt;</span>Mid-Century<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"Topographic"</span>&gt;</span>Topographic<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"Gray"</span>&gt;</span>Gray<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"DarkGray"</span>&gt;</span>Dark Gray<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"Navigation"</span>&gt;</span>Navigation<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"Streets"</span>&gt;</span>Streets<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"StreetsNight"</span>&gt;</span>Streets Night<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"StreetsRelief"</span>&gt;</span>Streets Relief<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
-  <span class="tag">&lt;/<span class="title">select</span>&gt;</span>
+<span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"info-pane"</span> <span class="attribute">class</span>=<span class="value">"leaflet-bar"</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">label</span>&gt;</span>
+  Census block points that intersect both bounding boxes and are shown in red.
+  <span class="tag">&lt;/<span class="title">label</span>&gt;</span>
 <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 
-<span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
-  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">40</span>, -<span class="number">4</span>], <span class="number">6</span>);
-  <span class="keyword">var</span> layer = L.esri.Vector.basemap(<span class="string">'Newspaper'</span>).addTo(map);
-
-  <span class="function"><span class="keyword">function</span> <span class="title">setBasemap</span><span class="params">(basemap)</span> {</span>
-    <span class="keyword">if</span> (layer) {
-      map.removeLayer(layer);
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">'text/javascript'</span>&gt;</span><span class="javascript">
+  <span class="comment">// two GeoJSON bounding boxes.  the first smaller than the second.</span>
+    <span class="keyword">var</span> boundingBoxes = {
+      <span class="string">"type"</span>: <span class="string">"FeatureCollection"</span>,
+      <span class="string">"features"</span>: [
+        {
+          <span class="string">"type"</span>: <span class="string">"Feature"</span>,
+          <span class="string">"properties"</span>: {
+            <span class="string">"color"</span>: <span class="string">"orange"</span>
+          },
+          <span class="string">"geometry"</span>: {
+            <span class="string">"type"</span>: <span class="string">"Polygon"</span>,
+            <span class="string">"coordinates"</span>: [
+              [
+                [ -<span class="number">84.39010620117188</span>, <span class="number">33.747965492070236</span> ],
+                [ -<span class="number">84.39010620117188</span>, <span class="number">33.75431694675655</span> ],
+                [ -<span class="number">84.37311172485352</span>, <span class="number">33.75431694675655</span> ],
+                [ -<span class="number">84.37311172485352</span>, <span class="number">33.747965492070236</span> ],
+                [ -<span class="number">84.39010620117188</span>, <span class="number">33.747965492070236</span> ]
+              ]
+            ]
+          }
+        },
+        {
+          <span class="string">"type"</span>: <span class="string">"Feature"</span>,
+          <span class="string">"properties"</span>: {
+            <span class="string">"color"</span>: <span class="string">"#0ceb70"</span>
+          },
+          <span class="string">"geometry"</span>: {
+            <span class="string">"type"</span>: <span class="string">"Polygon"</span>,
+            <span class="string">"coordinates"</span>: [
+              [
+                [ -<span class="number">84.39963340759277</span>, <span class="number">33.744254312044156</span> ],
+                [ -<span class="number">84.39963340759277</span>,  <span class="number">33.75817040902938</span> ],
+                [ -<span class="number">84.38444137573242</span>, <span class="number">33.75817040902938</span> ],
+                [ -<span class="number">84.38444137573242</span>, <span class="number">33.744254312044156</span> ],
+                [ -<span class="number">84.39963340759277</span>, <span class="number">33.744254312044156</span> ]
+              ]
+            ]
+          }
+        }
+      ]
     }
 
-    layer = L.esri.Vector.basemap(basemap);
-    map.addLayer(layer);
-  }
+    <span class="comment">// draw a map of atlanta</span>
+    <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">33.752</span>, -<span class="number">84.385</span>], <span class="number">14.5</span>);
+    L.esri.basemapLayer(<span class="string">'Topographic'</span>).addTo(map);
 
-  <span class="function"><span class="keyword">function</span> <span class="title">changeBasemap</span><span class="params">(basemaps)</span>{</span>
-    <span class="keyword">var</span> basemap = basemaps.value;
-    setBasemap(basemap);
-  }
+    <span class="comment">// display the bounding boxes on the map</span>
+    L.geoJSON(boundingBoxes, {
+      style: <span class="function"><span class="keyword">function</span> <span class="params">(feature)</span> {</span>
+        <span class="keyword">return</span> {color: feature.properties.color};
+      }
+    }).addTo(map);
+
+    <span class="comment">// query for census block points that intersect the smaller box</span>
+    <span class="keyword">var</span> query = L.esri.query({
+      url: <span class="string">'http://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer/0'</span>
+    })
+    query.intersects(boundingBoxes.features[<span class="number">0</span>])
+    query.run(<span class="function"><span class="keyword">function</span> <span class="params">(err, censusCollection, raw)</span> {</span>
+      <span class="keyword">var</span> features = censusCollection.features;
+      <span class="comment">// loop through the collection of census block points</span>
+      <span class="keyword">for</span> (i=<span class="number">0</span>; i&lt;features.length; i++) {
+        <span class="comment">// if the point is inside (or contained by, the bigger box) draw it in red</span>
+        <span class="keyword">if</span> (turf.inside(features[i], boundingBoxes.features[<span class="number">1</span>])) {
+          L.geoJSON(features[i], {
+            pointToLayer: <span class="function"><span class="keyword">function</span><span class="params">(geoJsonPoint, latlng)</span> {</span>
+              <span class="keyword">return</span> L.circleMarker(latlng, {
+                color: <span class="string">'#ff0066'</span>
+              });
+            }
+          }).addTo(map);
+        } <span class="keyword">else</span> {
+          <span class="comment">// if its outside (or not contained) by the bigger box, make it less opaque.</span>
+          L.geoJSON(features[i], {
+            pointToLayer: <span class="function"><span class="keyword">function</span><span class="params">(geoJsonPoint, latlng)</span> {</span>
+              <span class="keyword">return</span> L.circleMarker(latlng, {
+                radius: <span class="number">10</span>,
+                color: <span class="string">'gray'</span>,
+                opacity: <span class="number">0.2</span>
+              });
+            }
+          }).addTo(map);
+        }
+      }
+    });
 </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 <span class="tag">&lt;/<span class="title">body</span>&gt;</span>
 <span class="tag">&lt;/<span class="title">html</span>&gt;</span></code></pre>
 
 <div class="wrap">
-  <p><a href="http://github.com/Esri/esri-leaflet-doc/edit/master/src/pages/examples/vector-basemap.hbs">Edit this sample on GitHub</a></p>
+  <p><a href="http://github.com/Esri/esri-leaflet-doc/edit/master/src/pages/examples/turf.hbs">Edit this sample on GitHub</a></p>
 </div>
 </div>
 

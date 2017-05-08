@@ -10,8 +10,6 @@ var bgmap = L.map('background-map', {
     layers: [L.esri.basemapLayer('Topographic')]
 });
 
-bgmap.setView([68.41, -179], 10, {animate: true, pan: {duration: 100000}})
-
 if (map) {
   map.scrollWheelZoom.disable();
   map.once("click", accidentalScroll, map);
