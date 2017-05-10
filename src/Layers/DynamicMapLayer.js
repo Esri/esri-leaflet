@@ -158,6 +158,11 @@ export var DynamicMapLayer = RasterLayer.extend({
       params.proxy = this.options.proxy;
     }
 
+    // use a timestamp to bust server cache
+    if (this.options.disableCache) {
+      params._ts = Date.now();
+    }
+
     return params;
   },
 
