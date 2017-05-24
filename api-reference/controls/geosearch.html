@@ -319,22 +319,28 @@ L.esri.Geocoding.Controls.geosearch({
 </thead>
 <tbody>
 <tr>
-<td>label</td>
+<td><code>label</code></td>
 <td><code>String</code></td>
 <td><code>&#39;Provider Type&#39;</code></td>
 <td>Text that will be used to group suggestions (when more than one provider is used).</td>
 </tr>
 <tr>
-<td>maxResults</td>
+<td><code>maxResults</code></td>
 <td><code>Integer</code></td>
 <td><code>5</code></td>
 <td>Maximum number of results to show for the provider.  Hard limit for suggestions from the <a href="https://developers.arcgis.com/rest/geocode/api-reference/overview-world-geocoding-service.htm">ArcGIS World Geocoding Service</a> is 15.</td>
 </tr>
 <tr>
-<td>attribution</td>
+<td><code>attribution</code></td>
 <td><code>string</code></td>
 <td><code>Varies by provider</code></td>
 <td>Adds attribution to the map to credit the source.</td>
+</tr>
+<tr>
+<td><code>token</code></td>
+<td><code>String</code></td>
+<td><code>null</code></td>
+<td>Will use this token to authenticate all calls to the service.</td>
 </tr>
 </tbody>
 </table>
@@ -366,12 +372,6 @@ L.esri.Geocoding.Controls.geosearch({
 <td><code>Boolean</code></td>
 <td>false</td>
 <td>Indicates whether results will be stored permanently.  More information can be found <a href="https://developers.arcgis.com/rest/geocode/api-reference/geocoding-free-vs-paid.htm">here</a>.</td>
-</tr>
-<tr>
-<td><code>token</code></td>
-<td><code>String</code></td>
-<td><code>null</code></td>
-<td>Will use this token to authenticate all calls to the service.</td>
 </tr>
 </tbody>
 </table>
@@ -486,7 +486,7 @@ L.esri.Geocoding.Controls.geosearch({
 <td><code>layers</code></td>
 <td><code>Integer</code> <code>Array[Integers]</code></td>
 <td><code>[0]</code></td>
-<td>An array of layer identifiers to find text matches on. </td>
+<td>An array of layer identifiers to find text matches on.</td>
 </tr>
 <tr>
 <td><code>formatSuggestion</code></td>

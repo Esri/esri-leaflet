@@ -8,11 +8,11 @@
   <meta charset="utf-8">
 
   
-    <title>Labeling Features | Esri Leaflet</title>
+    <title>Leaflet Control.Layers | Esri Leaflet</title>
   
 
   
-    <meta name="description" content="This demo shows how to add static text labels to the center of features. &lt;strong&gt;This is not the same as fitting labels dynamically&lt;/strong&gt;, so labels will start to collide as you zoom out.">
+    <meta name="description" content="This sample demonstrates how to pass ArcGIS Services to Leaflet&#x27;s native &lt;a href=&quot;http://leafletjs.com/reference-1.0.3.html#control-layers&quot;&gt;Control.Layers&lt;/a&gt; which allows users to switch between different base layers and switch overlays on/off">
   
 
   <meta name="description" content="Esri Leaflet">
@@ -181,80 +181,51 @@
 
 <div class="example-content">
 <div class="wrap">
-  <h1>Labeling Features</h1>
-  <p>This demo shows how to add static text labels to the center of features. <strong>This is not the same as fitting labels dynamically</strong>, so labels will start to collide as you zoom out.</p>
+  <h1>Leaflet Control.Layers</h1>
+  <p>This sample demonstrates how to pass ArcGIS Services to Leaflet's native <a href="http://leafletjs.com/reference-1.0.3.html#control-layers">Control.Layers</a> which allows users to switch between different base layers and switch overlays on/off</p>
 </div>
 <div id="map-wrapper">
   
 
-<style>
-  .label {
-    font-weight: 700;
-    text-transform: uppercase;
-    text-align: center;
-    margin-top: -1em;
-  }
-
-  .label div {
-    position: relative;
-    left: -50%;
-    text-shadow: 0px 2px 1px rgba(255,255,255,0.85);
-  }
-</style>
-
 <div id="map"></div>
 
 <script>
-  var map = L.map('map').setView([45.526, -122.667], 15);
+  var gray = L.layerGroup();
 
-  L.esri.basemapLayer('Gray').addTo(map);
+  // more than one service can be grouped together and passed to the control together
+  L.esri.basemapLayer("DarkGray").addTo(gray);
+  L.esri.basemapLayer("GrayLabels").addTo(gray);
 
-  var neighborhoods = L.esri.featureLayer({
-    url: 'https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Neighborhoods_pdx/FeatureServer/0',
-    style: function() {
-      return {
-        color: '#5B7CBA',
-        weight: 2
-      };
-    }
-  }).addTo(map);
-
-  var labels = {};
-
-  neighborhoods.on('createfeature', function(e){
-    var id = e.feature.id;
-    var feature = neighborhoods.getFeature(id);
-    var center = feature.getBounds().getCenter();
-    var label = L.marker(center, {
-      icon: L.divIcon({
-        iconSize: null,
-        className: 'label',
-        html: '<div>' + e.feature.properties.NAME + '</div>'
-      })
-    }).addTo(map);
-    labels[id] = label;
+  var states = L.esri.featureLayer({
+      url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer/3",
+      style: function (feature) {
+          return {color: '#bada55', weight: 2 };
+      }
   });
 
-  neighborhoods.on('addfeature', function(e){
-    var label = labels[e.feature.id];
-    if(label){
-      label.addTo(map);
-    }
+  var map = L.map('map', {
+      center: [39, -97.5],
+      zoom: 4,
+      layers: [gray, states]
   });
 
-  neighborhoods.on('removefeature', function(e){
-    var label = labels[e.feature.id];
-    if(label){
-      map.removeLayer(label);
-    }
-  });
+  var baseLayers = {
+      "Grayscale": gray,
+      "Streetmap": L.esri.basemapLayer("Streets")
+  };
+
+  var overlays = {
+      "U.S. States": states
+  };
+
+  // http://leafletjs.com/reference-1.0.3.html#control-layers
+  L.control.layers(baseLayers, overlays).addTo(map);
 </script>
-
 </div>
 <pre><code class="language-xml"><span class="tag">&lt;<span class="title">html</span>&gt;</span>
 <span class="tag">&lt;<span class="title">head</span>&gt;</span>
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">utf-8</span> /&gt;</span>
-  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Labeling Features<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Leaflet Control.Layers<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">name</span>=<span class="value">'viewport'</span> <span class="attribute">content</span>=<span class="value">'initial-scale=1,maximum-scale=1,user-scalable=no'</span> /&gt;</span>
 
   <span class="comment">&lt;!-- Load Leaflet from CDN--&gt;</span>
@@ -271,74 +242,46 @@
 <span class="tag">&lt;/<span class="title">head</span>&gt;</span>
 <span class="tag">&lt;<span class="title">body</span>&gt;</span>
 
-<span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css">
-  <span class="class">.label</span> <span class="rules">{
-    <span class="rule"><span class="attribute">font-weight</span>:<span class="value"> <span class="number">700</span></span></span>;
-    <span class="rule"><span class="attribute">text-transform</span>:<span class="value"> uppercase</span></span>;
-    <span class="rule"><span class="attribute">text-align</span>:<span class="value"> center</span></span>;
-    <span class="rule"><span class="attribute">margin-top</span>:<span class="value"> -<span class="number">1</span>em</span></span>;
-  <span class="rule">}</span></span>
-
-  <span class="class">.label</span> <span class="tag">div</span> <span class="rules">{
-    <span class="rule"><span class="attribute">position</span>:<span class="value"> relative</span></span>;
-    <span class="rule"><span class="attribute">left</span>:<span class="value"> -<span class="number">50</span>%</span></span>;
-    <span class="rule"><span class="attribute">text-shadow</span>:<span class="value"> <span class="number">0</span>px <span class="number">2</span>px <span class="number">1</span>px <span class="function">rgba(<span class="number">255</span>,<span class="number">255</span>,<span class="number">255</span>,<span class="number">0.85</span>)</span></span></span>;
-  <span class="rule">}</span></span>
-</span><span class="tag">&lt;/<span class="title">style</span>&gt;</span>
-
 <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
-  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">45.526</span>, -<span class="number">122.667</span>], <span class="number">15</span>);
+  <span class="keyword">var</span> gray = L.layerGroup();
 
-  L.esri.basemapLayer(<span class="string">'Gray'</span>).addTo(map);
+  <span class="comment">// more than one service can be grouped together and passed to the control together</span>
+  L.esri.basemapLayer(<span class="string">"DarkGray"</span>).addTo(gray);
+  L.esri.basemapLayer(<span class="string">"GrayLabels"</span>).addTo(gray);
 
-  <span class="keyword">var</span> neighborhoods = L.esri.featureLayer({
-    url: <span class="string">'https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Neighborhoods_pdx/FeatureServer/0'</span>,
-    style: <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
-      <span class="keyword">return</span> {
-        color: <span class="string">'#5B7CBA'</span>,
-        weight: <span class="number">2</span>
-      };
-    }
-  }).addTo(map);
-
-  <span class="keyword">var</span> labels = {};
-
-  neighborhoods.on(<span class="string">'createfeature'</span>, <span class="function"><span class="keyword">function</span><span class="params">(e)</span>{</span>
-    <span class="keyword">var</span> id = e.feature.id;
-    <span class="keyword">var</span> feature = neighborhoods.getFeature(id);
-    <span class="keyword">var</span> center = feature.getBounds().getCenter();
-    <span class="keyword">var</span> label = L.marker(center, {
-      icon: L.divIcon({
-        iconSize: <span class="literal">null</span>,
-        className: <span class="string">'label'</span>,
-        html: <span class="string">'&lt;div&gt;'</span> + e.feature.properties.NAME + <span class="string">'&lt;/div&gt;'</span>
-      })
-    }).addTo(map);
-    labels[id] = label;
+  <span class="keyword">var</span> states = L.esri.featureLayer({
+      url: <span class="string">"https://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer/3"</span>,
+      style: <span class="function"><span class="keyword">function</span> <span class="params">(feature)</span> {</span>
+          <span class="keyword">return</span> {color: <span class="string">'#bada55'</span>, weight: <span class="number">2</span> };
+      }
   });
 
-  neighborhoods.on(<span class="string">'addfeature'</span>, <span class="function"><span class="keyword">function</span><span class="params">(e)</span>{</span>
-    <span class="keyword">var</span> label = labels[e.feature.id];
-    <span class="keyword">if</span>(label){
-      label.addTo(map);
-    }
+  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>, {
+      center: [<span class="number">39</span>, -<span class="number">97.5</span>],
+      zoom: <span class="number">4</span>,
+      layers: [gray, states]
   });
 
-  neighborhoods.on(<span class="string">'removefeature'</span>, <span class="function"><span class="keyword">function</span><span class="params">(e)</span>{</span>
-    <span class="keyword">var</span> label = labels[e.feature.id];
-    <span class="keyword">if</span>(label){
-      map.removeLayer(label);
-    }
-  });
+  <span class="keyword">var</span> baseLayers = {
+      <span class="string">"Grayscale"</span>: gray,
+      <span class="string">"Streetmap"</span>: L.esri.basemapLayer(<span class="string">"Streets"</span>)
+  };
+
+  <span class="keyword">var</span> overlays = {
+      <span class="string">"U.S. States"</span>: states
+  };
+
+  <span class="comment">// http://leafletjs.com/reference-1.0.3.html#control-layers</span>
+  L.control.layers(baseLayers, overlays).addTo(map);
 </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 <span class="tag">&lt;/<span class="title">body</span>&gt;</span>
 <span class="tag">&lt;/<span class="title">html</span>&gt;</span></code></pre>
 
 <div class="wrap">
-  <p><a href="http://github.com/Esri/esri-leaflet-doc/edit/master/src/pages/examples/labeling-features.hbs">Edit this sample on GitHub</a></p>
+  <p><a href="http://github.com/Esri/esri-leaflet-doc/edit/master/src/pages/examples/layers-control.hbs">Edit this sample on GitHub</a></p>
 </div>
 </div>
 
