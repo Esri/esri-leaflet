@@ -15,6 +15,9 @@ export { Identify, identify } from './Tasks/Identify';
 export { IdentifyFeatures, identifyFeatures } from './Tasks/IdentifyFeatures';
 export { IdentifyImage, identifyImage } from './Tasks/IdentifyImage';
 
+// export portal
+export { Portal, portal } from './Portal/Portal';
+
 // export services
 export { Service, service } from './Services/Service';
 export { MapService, mapService } from './Services/MapService';
