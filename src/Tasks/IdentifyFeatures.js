@@ -1,6 +1,13 @@
-import { point, latLng, LatLngBounds, LatLng, GeoJSON } from 'leaflet';
+import { LatLngBounds, LatLng, GeoJSON } from 'leaflet';
 import { Identify } from './Identify';
-import { boundsToExtent, responseToFeatureCollection } from '../Util';
+import { warn,
+  responseToFeatureCollection,
+  isArcgisOnline,
+  extentToBounds,
+  boundsToExtent,
+  geojsonToArcGIS,
+  geojsonTypeToArcGIS 
+} from '../Util';
 
 export var IdentifyFeatures = Identify.extend({
   setters: {
@@ -61,7 +68,6 @@ export var IdentifyFeatures = Identify.extend({
       }
     });
   },
-  
   _setGeometry: function (geometry) {
     this.params.inSr = 4326;
 
