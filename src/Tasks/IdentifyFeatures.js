@@ -1,6 +1,11 @@
-import { latLng } from 'leaflet';
+import { LatLngBounds, LatLng, GeoJSON } from 'leaflet';
 import { Identify } from './Identify';
-import { boundsToExtent, responseToFeatureCollection } from '../Util';
+import { warn,
+  responseToFeatureCollection,
+  boundsToExtent,
+  geojsonToArcGIS,
+  geojsonTypeToArcGIS 
+} from '../Util';
 
 export var IdentifyFeatures = Identify.extend({
   setters: {
@@ -25,10 +30,8 @@ export var IdentifyFeatures = Identify.extend({
     return this;
   },
 
-  at: function (latlng) {
-    latlng = latLng(latlng);
-    this.params.geometry = [latlng.lng, latlng.lat];
-    this.params.geometryType = 'esriGeometryPoint';
+  at: function (geometry) {
+    this._setGeometry(geometry);
     return this;
   },
 
@@ -62,6 +65,61 @@ export var IdentifyFeatures = Identify.extend({
         callback.call(context, undefined, featureCollection, response);
       }
     });
+  },
+  _setGeometry: function (geometry) {
+    this.params.inSr = 4326;
+
+    // convert bounds to extent and finish
+    if (geometry instanceof LatLngBounds) {
+      // set geometry + geometryType
+      this.params.geometry = boundsToExtent(geometry);
+      this.params.geometryType = 'esriGeometryEnvelope';
+      return;
+    }
+
+    // convert L.Marker > L.LatLng
+    if (geometry.getLatLng) {
+      geometry = geometry.getLatLng();
+    }
+
+    // convert L.LatLng to a geojson point and continue;
+    if (geometry instanceof LatLng) {
+      geometry = {
+        type: 'Point',
+        coordinates: [geometry.lng, geometry.lat]
+      };
+    }
+
+    // handle L.GeoJSON, pull out the first geometry
+    if (geometry instanceof GeoJSON) {
+      // reassign geometry to the GeoJSON value  (we are assuming that only one feature is present)
+      geometry = geometry.getLayers()[0].feature.geometry;
+      this.params.geometry = geojsonToArcGIS(geometry);
+      this.params.geometryType = geojsonTypeToArcGIS(geometry.type);
+    }
+
+    // Handle L.Polyline and L.Polygon
+    if (geometry.toGeoJSON) {
+      geometry = geometry.toGeoJSON();
+    }
+
+    // handle GeoJSON feature by pulling out the geometry
+    if (geometry.type === 'Feature') {
+      // get the geometry of the geojson feature
+      geometry = geometry.geometry;
+    }
+
+    // confirm that our GeoJSON is a point, line or polygon
+    if (geometry.type === 'Point' || geometry.type === 'LineString' || geometry.type === 'Polygon' || geometry.type === 'MultiPolygon') {
+      this.params.geometry = geojsonToArcGIS(geometry);
+      this.params.geometryType = geojsonTypeToArcGIS(geometry.type);
+      return;
+    }
+
+    // warn the user if we havn't found an appropriate object
+    warn('invalid geometry passed to spatial query. Should be L.LatLng, L.LatLngBounds, L.Marker or a GeoJSON Point, Line, Polygon or MultiPolygon object');
+
+    return;
   }
 });
 
