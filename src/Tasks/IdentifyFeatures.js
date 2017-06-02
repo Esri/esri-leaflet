@@ -2,8 +2,6 @@ import { LatLngBounds, LatLng, GeoJSON } from 'leaflet';
 import { Identify } from './Identify';
 import { warn,
   responseToFeatureCollection,
-  isArcgisOnline,
-  extentToBounds,
   boundsToExtent,
   geojsonToArcGIS,
   geojsonTypeToArcGIS 
