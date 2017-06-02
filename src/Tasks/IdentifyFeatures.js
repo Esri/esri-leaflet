@@ -1,10 +1,8 @@
-import { LatLngBounds, LatLng, GeoJSON, Utils } from 'leaflet';
+import { Utils } from 'leaflet';
 import { Identify } from './Identify';
-import { warn,
-  responseToFeatureCollection,
+import { responseToFeatureCollection,
   boundsToExtent,
-  geojsonToArcGIS,
-  geojsonTypeToArcGIS
+  setGeometry
 } from '../Util';
 
 export var IdentifyFeatures = Identify.extend({
@@ -31,7 +29,7 @@ export var IdentifyFeatures = Identify.extend({
   },
 
   at: function (geometry) {
-    Utils.setGeometry(geometry);
+    setGeometry(geometry);
     return this;
   },
 
