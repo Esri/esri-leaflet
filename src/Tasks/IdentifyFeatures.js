@@ -4,7 +4,7 @@ import { warn,
   responseToFeatureCollection,
   boundsToExtent,
   geojsonToArcGIS,
-  geojsonTypeToArcGIS 
+  geojsonTypeToArcGIS
 } from '../Util';
 
 export var IdentifyFeatures = Identify.extend({
