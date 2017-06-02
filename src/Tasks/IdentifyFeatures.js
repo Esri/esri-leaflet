@@ -1,6 +1,9 @@
-import { latLng } from 'leaflet';
+import { Utils } from 'leaflet';
 import { Identify } from './Identify';
-import { boundsToExtent, responseToFeatureCollection } from '../Util';
+import { responseToFeatureCollection,
+  boundsToExtent,
+  setGeometry
+} from '../Util';
 
 export var IdentifyFeatures = Identify.extend({
   setters: {
@@ -25,10 +28,8 @@ export var IdentifyFeatures = Identify.extend({
     return this;
   },
 
-  at: function (latlng) {
-    latlng = latLng(latlng);
-    this.params.geometry = [latlng.lng, latlng.lat];
-    this.params.geometryType = 'esriGeometryPoint';
+  at: function (geometry) {
+    setGeometry(geometry);
     return this;
   },
 
