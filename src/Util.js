@@ -1,4 +1,4 @@
-import { latLng, latLngBounds, Util, DomUtil, LatLngBounds, LatLng, GeoJSON } from 'leaflet';
+import { latLng, latLngBounds, LatLng, LatLngBounds, Util, DomUtil, GeoJSON } from 'leaflet';
 import { jsonp } from './Request';
 import { options } from './Options';
 
@@ -190,15 +190,18 @@ export function setEsriAttribution (map) {
   }
 }
 
-export function setGeometry (geometry) {
-  this.params.inSr = 4326;
+export function _setGeometry (geometry) {
+  var params = {
+    geometry: null,
+    geometryType: null
+  };
 
   // convert bounds to extent and finish
   if (geometry instanceof LatLngBounds) {
     // set geometry + geometryType
-    this.params.geometry = boundsToExtent(geometry);
-    this.params.geometryType = 'esriGeometryEnvelope';
-    return;
+    params.geometry = boundsToExtent(geometry);
+    params.geometryType = 'esriGeometryEnvelope';
+    return params;
   }
 
   // convert L.Marker > L.LatLng
@@ -218,8 +221,8 @@ export function setGeometry (geometry) {
   if (geometry instanceof GeoJSON) {
     // reassign geometry to the GeoJSON value  (we are assuming that only one feature is present)
     geometry = geometry.getLayers()[0].feature.geometry;
-    this.params.geometry = geojsonToArcGIS(geometry);
-    this.params.geometryType = geojsonTypeToArcGIS(geometry.type);
+    params.geometry = geojsonToArcGIS(geometry);
+    params.geometryType = geojsonTypeToArcGIS(geometry.type);
   }
 
   // Handle L.Polyline and L.Polygon
@@ -235,9 +238,9 @@ export function setGeometry (geometry) {
 
   // confirm that our GeoJSON is a point, line or polygon
   if (geometry.type === 'Point' || geometry.type === 'LineString' || geometry.type === 'Polygon' || geometry.type === 'MultiPolygon') {
-    this.params.geometry = geojsonToArcGIS(geometry);
-    this.params.geometryType = geojsonTypeToArcGIS(geometry.type);
-    return;
+    params.geometry = geojsonToArcGIS(geometry);
+    params.geometryType = geojsonTypeToArcGIS(geometry.type);
+    return params;
   }
 
   // warn the user if we havn't found an appropriate object
@@ -324,7 +327,7 @@ export var EsriUtil = {
   extentToBounds: extentToBounds,
   calcAttributionWidth: calcAttributionWidth,
   setEsriAttribution: setEsriAttribution,
-  setGeometry: setGeometry,
+  _setGeometry: _setGeometry,
   _getAttributionData: _getAttributionData,
   _updateMapAttribution: _updateMapAttribution
 };

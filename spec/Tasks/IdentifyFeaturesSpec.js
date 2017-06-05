@@ -90,7 +90,7 @@ describe('L.esri.IdentifyFeatures', function () {
     expect(request.url).to.contain('imageDisplay=500%2C500%2C96');
     expect(request.url).to.match(/mapExtent=-122\.\d+%2C45\.\d+%2C-122\.\d+%2C45\.\d+/g);
     expect(request.url).to.contain('geometryType=esriGeometryPoint');
-    expect(request.url).to.contain('geometry=-122.66%2C45.51');
+    expect(request.url).to.contain('geometry=%7B%22x%22%3A-122.66%2C%22y%22%3A45.51%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D');
 
     request.respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, JSON.stringify(sampleResponse));
   });
@@ -209,7 +209,7 @@ describe('L.esri.IdentifyFeatures', function () {
     expect(request.url).to.contain('imageDisplay=500%2C500%2C96');
     expect(request.url).to.match(/mapExtent=-122\.\d+%2C45\.\d+%2C-122\.\d+%2C45\.\d+/g);
     expect(request.url).to.contain('geometryType=esriGeometryPoint');
-    expect(request.url).to.contain('geometry=-122.66%2C45.51');
+    expect(request.url).to.contain('geometry=%7B%22x%22%3A-122.66%2C%22y%22%3A45.51%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D');
 
     request.respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, JSON.stringify(sampleResponse));
   });
@@ -231,7 +231,7 @@ describe('L.esri.IdentifyFeatures', function () {
     expect(request.url).to.contain('imageDisplay=500%2C500%2C96');
     expect(request.url).to.match(/mapExtent=-122\.\d+%2C45\.\d+%2C-122\.\d+%2C45\.\d+/g);
     expect(request.url).to.contain('geometryType=esriGeometryPoint');
-    expect(request.url).to.contain('geometry=-122.66%2C45.51');
+    expect(request.url).to.contain('geometry=%7B%22x%22%3A-122.66%2C%22y%22%3A45.51%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D');
 
     request.respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, JSON.stringify(sampleResponse));
   });
