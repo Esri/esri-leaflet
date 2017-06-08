@@ -240,6 +240,7 @@ export var FeatureManager = VirtualGrid.extend({
         // schedule adding features for the next animation frame
         Util.requestAnimFrame(Util.bind(function () {
           this.removeLayers(oldSnapshot);
+		      var zoom = this._map.getZoom();
           if (zoom < this.options.maxZoom && zoom > this.options.minZoom) {
             this.addLayers(newSnapshot);
           }
