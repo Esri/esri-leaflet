@@ -1,4 +1,4 @@
-import { latLng, latLngBounds, Util, DomUtil } from 'leaflet';
+import { latLng, latLngBounds, LatLng, LatLngBounds, Util, DomUtil, GeoJSON } from 'leaflet';
 import { jsonp } from './Request';
 import { options } from './Options';
 
@@ -190,6 +190,65 @@ export function setEsriAttribution (map) {
   }
 }
 
+export function _setGeometry (geometry) {
+  var params = {
+    geometry: null,
+    geometryType: null
+  };
+
+  // convert bounds to extent and finish
+  if (geometry instanceof LatLngBounds) {
+    // set geometry + geometryType
+    params.geometry = boundsToExtent(geometry);
+    params.geometryType = 'esriGeometryEnvelope';
+    return params;
+  }
+
+  // convert L.Marker > L.LatLng
+  if (geometry.getLatLng) {
+    geometry = geometry.getLatLng();
+  }
+
+  // convert L.LatLng to a geojson point and continue;
+  if (geometry instanceof LatLng) {
+    geometry = {
+      type: 'Point',
+      coordinates: [geometry.lng, geometry.lat]
+    };
+  }
+
+  // handle L.GeoJSON, pull out the first geometry
+  if (geometry instanceof GeoJSON) {
+    // reassign geometry to the GeoJSON value  (we are assuming that only one feature is present)
+    geometry = geometry.getLayers()[0].feature.geometry;
+    params.geometry = geojsonToArcGIS(geometry);
+    params.geometryType = geojsonTypeToArcGIS(geometry.type);
+  }
+
+  // Handle L.Polyline and L.Polygon
+  if (geometry.toGeoJSON) {
+    geometry = geometry.toGeoJSON();
+  }
+
+  // handle GeoJSON feature by pulling out the geometry
+  if (geometry.type === 'Feature') {
+    // get the geometry of the geojson feature
+    geometry = geometry.geometry;
+  }
+
+  // confirm that our GeoJSON is a point, line or polygon
+  if (geometry.type === 'Point' || geometry.type === 'LineString' || geometry.type === 'Polygon' || geometry.type === 'MultiPolygon') {
+    params.geometry = geojsonToArcGIS(geometry);
+    params.geometryType = geojsonTypeToArcGIS(geometry.type);
+    return params;
+  }
+
+  // warn the user if we havn't found an appropriate object
+  warn('invalid geometry passed to spatial query. Should be L.LatLng, L.LatLngBounds, L.Marker or a GeoJSON Point, Line, Polygon or MultiPolygon object');
+
+  return;
+}
+
 export function _getAttributionData (url, map) {
   jsonp(url, {}, Util.bind(function (error, attributions) {
     if (error) { return; }
@@ -268,6 +327,7 @@ export var EsriUtil = {
   extentToBounds: extentToBounds,
   calcAttributionWidth: calcAttributionWidth,
   setEsriAttribution: setEsriAttribution,
+  _setGeometry: _setGeometry,
   _getAttributionData: _getAttributionData,
   _updateMapAttribution: _updateMapAttribution
 };
