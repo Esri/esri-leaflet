@@ -8,7 +8,7 @@
   <meta charset="utf-8">
 
   
-    <title>L.esri.Task | Esri Leaflet</title>
+    <title>L.esri.GP.Task | Esri Leaflet</title>
   
 
   
@@ -125,57 +125,26 @@
 
 
 <div class="main-content">
-  <h1 id="l-esri-task">L.esri.Task</h1>
-<p>Extends <a href="http://leafletjs.com/reference-1.0.3.html#class"><code>L.Class</code></a></p>
-<p><code>L.esri.Task</code> is a generic class that provides the foundation for calling operations on ArcGIS Online and ArcGIS Server Services like query, find and identify.</p>
+  <h1 id="l-esri-gp-task">L.esri.GP.Task</h1>
+<p>Extends <a href="../../api-reference/tasks/task.html"><code>L.esri.Task</code></a></p>
+<p>An abstraction to simplify making calls to ArcGIS Online and ArcGIS Server Geoprocessing services.  You can find more information and the source code for this plugin <a href="https://github.com/jgravois/esri-leaflet-gp">here</a>.</p>
 <h3 id="constructor">Constructor</h3>
-<table>
-    <thead>
-        <tr>
-            <th>Constructor</th>
-            <th>Description</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td><code>L.esri.task(<nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br>
-            <code>L.esri.task(<nobr class="param"><span>&lt;<a href="../../api-reference/services/service.html">Service</a>&gt;</span> <code>endpoint</code></nobr>)</code></td>
-            <td>Options includes a <code>url</code> parameter which refers to the ArcGIS Server or ArcGIS Online service you would like to consume.</td>
-        </tr>
-   </tbody>
-</table>
+<p>This object is typically instantiated by calling L.esri.<a href=".././services/gp-service.html#methods">GP.Service.createTask()</a></p>
+<h3 id="events">Events</h3>
+<p>By default, the plugin assumes services are synchronous and that &#39;execute&#39; is the appropriate path.</p>
+<p>If you are working with an asynchronous service or one with a custom operation name and don&#39;t indicate corresponding information in the constructor, you&#39;ll have to leave the plugin enough time to make a roundtrip to the server to inquire before calling <code>run()</code>.</p>
+<p>The GP.task &#39;initialized&#39; event is intended to help with this timing.</p>
+<pre><code class="language-js"><span class="keyword">var</span> myService = L.esri.GP.service({
+    url: <span class="string">"https://elevation.arcgis.com/arcgis/rest/services/Tools/ElevationSync/GPServer/Profile"</span>
+  });
+<span class="keyword">var</span> myTask = myService.createTask();
 
-<h3 id="options">Options</h3>
-<table>
-<thead>
-<tr>
-<th>Option</th>
-<th>Type</th>
-<th>Default</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>url</code></td>
-<td><code>String</code></td>
-<td><code>&#39;&#39;</code></td>
-<td>URL of the ArcGIS Server or ArcGIS Online service you would like to consume.</td>
-</tr>
-<tr>
-<td><code>proxy</code></td>
-<td><code>String</code></td>
-<td><code>false</code></td>
-<td>URL of an <a href="https://developers.arcgis.com/javascript/jshelp/ags_proxy.html">ArcGIS API for JavaScript proxy</a> or <a href="https://github.com/Esri/resource-proxy">ArcGIS Resource Proxy</a> to use for proxying POST requests.</td>
-</tr>
-<tr>
-<td><code>useCors</code></td>
-<td><code>Boolean</code></td>
-<td><code>true</code></td>
-<td>If this task should use CORS when making GET requests.</td>
-</tr>
-</tbody>
-</table>
+myTask.on(<span class="string">'initialized'</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span>{</span>
+  myTask.setParam(<span class="string">"inputFeature"</span>, polyline.toGeoJSON());
+  myTask.run(<span class="function"><span class="keyword">function</span><span class="params">(error, geojson, response)</span>{</span>
+    ...
+  });
+});</code></pre>
 <h3 id="methods">Methods</h3>
 <table>
     <thead>
@@ -187,20 +156,67 @@
     </thead>
     <tbody>
         <tr>
-            <td><code>request(<nobr class="param"><span>&lt;String&gt;</span> <code>url</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>params</code></nobr>, <nobr class="param"><span>&lt;Function&gt;</span> <code>callback</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>context</code></nobr>)</code></td>
-            <td><code>this</code></td>
-            <td>Makes a request to the associated service. The service&#39;s URL will be combined with the <code>path</code> option and parameters will be serialized. Accepts an optional function context for the callback.</td>
+            <td><code>setParam(<nobr class="param"><span>&lt;String&gt;</span> <code>inputParamName</code></nobr>, <nobr class="param"><span>&lt;String||Boolean||Geometry&gt;</span> <code>value</code></nobr>)</code></td>
+            <td><code><code>this</code></code></td>
+            <td>Sets an input parameter named by the service itself. <a href="http://leafletjs.com/reference.html#latlng">L.LatLng</a>, <a href="http://leafletjs.com/reference.html#marker">L.Marker</a>, <a href="http://leafletjs.com/reference.html#latlngbounds">L.LatLngBounds</a>, and <a href="http://leafletjs.com/reference.html#geojson">L.GeoJSON</a> (both Features and Geometries) will be converted to GeoServices JSON to be passed in the request automatically.</td>
         </tr>
         <tr>
-            <td><code>token(<nobr class="param"><span>&lt;String&gt;</span> <code>token</code></nobr>)</code></td>
-            <td><code>this</code></td>
-            <td>Adds a token to this request if the service requires authentication. Will be added automatically if used with a service.</td>
+            <td><code>run(<nobr class="param"><span>&lt;Function&gt;</span> <code>callback</code></nobr>)</code></td>
+            <td><code><code>this</code></code></td>
+            <td>Calls the corresponding Geoprocessing service, passing the previously supplied input parameters. For synchronous services, <strong>all</strong> result parameters are parsed and returned.</td>
+        </tr>
+        <tr>
+            <td><code>setOutputParam(<nobr class="param"><span>&lt;String&gt;</span> <code>outputParamName</code></nobr>)</code></td>
+            <td><code><code>this</code></code></td>
+            <td>(Optional) Only applicable for asynchronous services. Notifies the plugin of the parameter name to retrieve output for.</td>
+        </tr>
+        <tr>
+            <td><code>gpAsyncResultParam(<nobr class="param"><span>&lt;String&gt;</span> <code>resultParamName</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>value</code></nobr>)</code></td>
+            <td><code><code>this</code></code></td>
+            <td>(Optional) Sets a result parameter for Asynchronous geoprocessing services that require it.</td>
         </tr>
     </tbody>
 </table>
 
+<h3 id="results">Results</h3>
+<p>The response from synchronous services will be a JSON object composed of name value pairs of output parameter names and their associated values. GPFeatureRecordSet layer output will converted to GeoJSON.</p>
+<p>A single result from the geoprocessing service. Do not rely on all these properties being present in every result object.</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>jobId</code></td>
+<td><code>&lt;String&gt;</code></td>
+<td>ID of processed job (only applicable for asynchronous services).</td>
+</tr>
+<tr>
+<td><code>outputMapService</code></td>
+<td><code>&lt;String&gt;</code></td>
+<td>Url of temporary map service created by geoprocessing service, if its been designed to create one.</td>
+</tr>
+</tbody>
+</table>
+<p>GP results conform to the following format</p>
+<pre><code class="language-js">[
+  {
+    <span class="comment">// actual parameter name and data type are dependent on the service itself</span>
+    outputParamName: <span class="xml"><span class="tag">&lt;<span class="title">L.GeoJSON</span>&gt;</span> || <span class="tag">&lt;<span class="title">string</span>&gt;</span> || <span class="tag">&lt;<span class="title">boolean</span>&gt;</span>,
+    outputGPFileParamName: {
+        url: "https://server/arcgis/rest/directories/arcgisoutput/./_ags_856aed6eb_.png"
+      }
+    },
+    jobId: "j7123be34ccfe45b4b47a51e867e0084b",
+    mapService: "https://server/arcgis/rest/services/GPServiceName/MapServer/jobs/j7123be34ccfe45b4b47a51e867e0084b/"
+  }
+]</span></code></pre>
 
-  <p><a href="http://github.com/Esri/esri-leaflet-doc/edit/master/src/pages/api-reference/tasks/task.md">Edit this page on GitHub</a></p>
+  <p><a href="http://github.com/Esri/esri-leaflet-doc/edit/master/src/pages/api-reference/tasks/gp.md">Edit this page on GitHub</a></p>
 </div>
 
   <div style='clear:both;'></div>

@@ -80,7 +80,7 @@
     <a href="../../api-reference/layers/image-map-layer.html">Image Map Layer</a>
     <a class="plugin" href="../../api-reference/layers/vector-basemap.html">Vector Basemap</a>
     <a class="plugin" href="../../api-reference/layers/heatmap-feature-layer.html">Heatmap Feature Layer</a>
-    <a class="plugin" href="../../api-reference/layers/clustered-feature-layer.html">Clustered Feature Layer</a>
+    <a class="plugin" href="../../api-reference/layers/cluster-feature-layer.html">Cluster Feature Layer</a>
     <a class="plugin" href="../../api-reference/layers/vector-layer.html">Vector Layer</a>
   </nav>
 
@@ -126,8 +126,8 @@
 
 <div class="main-content">
   <h1 id="l-esri-featurelayer">L.esri.FeatureLayer</h1>
+<p>Extends <a href="http://leafletjs.com/reference-1.0.3.html#layer">L.Layer</a></p>
 <p><code>L.esri.FeatureLayer</code> is used to visualize, style, query and edit vector geographic data hosted in both ArcGIS Online and published using ArcGIS Server.  Copyright text from the service is added to map attribution automatically.</p>
-<p>Inherits from <a href="http://leafletjs.com/reference-1.0.0.html#layer">L.Layer</a></p>
 <p>Feature Layers reference an individual data source in either a parent <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/index.html#/Map_Service/02r3000000w2000000/">Map Service</a> or <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/index.html#/Feature_Service/02r3000000z2000000/">Feature Service</a> that can contain multiple layers.  You can see a sample Map Service URL below:</p>
 <pre><code>http://sampleserver6.arcgisonline.com/arcgis/rest/services/Hurricanes/MapServer</code></pre>
 <p>This particular service includes two different data sources.  The URL for the &#39;Hurricane Tracks&#39; feature layer will end in a number (representing its position among the other layers).</p>
@@ -174,7 +174,7 @@
         <tr>
             <td><code>style(<nobr class="param"><span>&lt;<a href="http://geojson.org/geojson-spec.html#feature-objects">GeoJSON Feature</a>&gt;</span> <code>feature</code></nobr>, <nobr class="param"><span>&lt;<a href="http://leafletjs.com/reference.html#ilayer">ILayer</a>&gt;</span> <code>layer</code></nobr>)</code></td>
             <td><code>Function</code></td>
-            <td>Function that will be used to get style options for vector layers created for GeoJSON features.</td>
+            <td>Function that will be used to get <a href="http://leafletjs.com/reference-1.0.3.html#path-option">style options</a> for vector layers created for GeoJSON features.</td>
         </tr>
         <tr>
             <td><code>onEachFeature(<nobr class="param"><span>&lt;<a href="http://geojson.org/geojson-spec.html#feature-objects">GeoJSON Feature</a>&gt;</span> <code>feature</code></nobr>, <nobr class="param"><span>&lt;<a href="http://leafletjs.com/reference.html#ilayer">ILayer</a>&gt;</span> <code>layer</code></nobr>)</code></td>
@@ -255,11 +255,6 @@
             <td><code>renderer</code></td>
             <td><code>L.svg()</code> or <code>L.canvas()</code></td>
             <td>The vector renderer to use to draw the service. Usually <code>L.svg()</code> is preferable but setting to <code>L.canvas()</code> can have performance benefits for large polygon layers.</td>
-        </tr>
-        <tr>
-            <td><code>pane</code></td>
-            <td><code>String</code></td>
-            <td>A custom map pane to render lines and polygons on. For point geometries, custom panes should be passed through <code>pointToLayer()</code>.</td>
         </tr>
         <tr>
             <td><code>isModern</code></td>
