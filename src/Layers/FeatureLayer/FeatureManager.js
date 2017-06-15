@@ -235,7 +235,7 @@ export var FeatureManager = VirtualGrid.extend({
 
       pendingRequests--;
 
-      if (pendingRequests <= 0) {
+      if (pendingRequests <= 0 && this._visibleZoom()) {
         this._currentSnapshot = newSnapshot;
         // schedule adding features for the next animation frame
         Util.requestAnimFrame(Util.bind(function () {
