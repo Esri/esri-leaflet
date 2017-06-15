@@ -374,8 +374,11 @@ describe('L.esri.DynamicMapLayer', function () {
   });
 
   it('should bind a popup to the layer', function () {
-    // to do: come up with a regexified geometry wildcard
-    server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/identify\?sr=4326&layers=visible&tolerance=3&returnGeometry=true&imageDisplay=500%2C500%2C96&mapExtent=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&geometry=.+&geometryType=esriGeometryPoint&maxAllowableOffset=0.000171661376953125&f=json/), JSON.stringify(sampleResponse));
+    /* sample unencoded/encoded geometry parameters
+    {"x":-102.919921875,"y":36.66841891894786,"spatialReference":{"wkid":4326}}
+    %7B%22x%22%3A-102.919921875%2C%22y%22%3A36.66841891894786%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D
+    */
+    server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/identify\?sr=4326&layers=visible&tolerance=3&returnGeometry=true&imageDisplay=500%2C500%2C96&mapExtent=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&geometry=%7B%22x%22%3A-?\d+\.\d+%2C%22y%22%3A-?\d+\.\d+%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D+&geometryType=esriGeometryPoint&maxAllowableOffset=0.000171661376953125&f=json/), JSON.stringify(sampleResponse));
 
     layer.bindPopup(function (error, featureCollection) {
       return featureCollection.features.length + ' Feature(s)';
