@@ -127,19 +127,19 @@ export var DynamicMapLayer = RasterLayer.extend({
 
 // switch ne/sw if in part of polar map where north/top bottom/south is inverted
     if (swProj.y > neProj.y) {
-       var temp = neProj;
-       neProj = swProj;
-       swProj = temp;
+      var temp = neProj;
+      neProj = swProj;
+      swProj = temp;
     }
 
     var params = {
-       bbox: [swProj.x, swProj.y, neProj.x, neProj.y].join(','),
-       size: size.x + ',' + size.y,
-       dpi: 96,
-       format: this.options.format,
-       transparent: this.options.transparent,
-       bboxSR: sr,
-       imageSR: sr
+      bbox: [swProj.x, swProj.y, neProj.x, neProj.y].join(','),
+      size: size.x + ',' + size.y,
+      dpi: 96,
+      format: this.options.format,
+      transparent: this.options.transparent,
+      bboxSR: sr,
+      imageSR: sr
     };
 
     if (this.options.dynamicLayers) {
