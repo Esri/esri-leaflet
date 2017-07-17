@@ -1,4 +1,4 @@
-import { Util, setOptions } from 'leaflet';
+import { Util } from 'leaflet';
 import featureLayerService from '../../Services/FeatureLayerService';
 import { cleanUrl, warn, setEsriAttribution } from '../../Util';
 import VirtualGrid from 'leaflet-virtual-grid';
@@ -29,7 +29,7 @@ export var FeatureManager = VirtualGrid.extend({
     VirtualGrid.prototype.initialize.call(this, options);
 
     options.url = cleanUrl(options.url);
-    options = setOptions(this, options);
+    options = Util.setOptions(this, options);
 
     this.service = featureLayerService(options);
     this.service.addEventParent(this);
