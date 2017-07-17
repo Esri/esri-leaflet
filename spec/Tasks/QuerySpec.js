@@ -716,6 +716,34 @@ describe('L.esri.Query', function () {
     server.respond();
   });
 
+  it('should pass through a simple datum transformation when making a query', function (done) {
+    server.respondWith('GET', mapServiceUrl + '0/query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&datumTransformation=1234&f=json', JSON.stringify(sampleMapServiceQueryResponse));
+
+    var service = new L.esri.MapService({url: mapServiceUrl});
+
+    service.query().layer(0).transform(1234).run(function (error, featureCollection, raw) {
+      expect(featureCollection).to.deep.equal(sampleMapServiceCollection);
+      expect(raw).to.deep.equal(sampleMapServiceQueryResponse);
+      done();
+    });
+
+    server.respond();
+  });
+
+  it('should pass through a JSON datum transformation when making a query', function (done) {
+    server.respondWith('GET', mapServiceUrl + '0/query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&datumTransformation=%7B%22wkid%22%3A1234%7D&f=json', JSON.stringify(sampleMapServiceQueryResponse));
+
+    var service = new L.esri.MapService({url: mapServiceUrl});
+
+    service.query().layer(0).transform({'wkid': 1234}).run(function (error, featureCollection, raw) {
+      expect(featureCollection).to.deep.equal(sampleMapServiceCollection);
+      expect(raw).to.deep.equal(sampleMapServiceQueryResponse);
+      done();
+    });
+
+    server.respond();
+  });
+
   it('should use a image service to query features', function (done) {
     server.respondWith('GET', imageServiceUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&pixelSize=1%2C1&f=json', JSON.stringify(sampleImageServiceQueryResponse));
 
