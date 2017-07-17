@@ -106,22 +106,34 @@ export var DynamicMapLayer = RasterLayer.extend({
   },
 
   _buildExportParams: function () {
-    var bounds = this._map.getBounds();
-    var size = this._map.getSize();
-    var ne = this._map.options.crs.project(bounds.getNorthEast());
-    var sw = this._map.options.crs.project(bounds.getSouthWest());
-    var sr = parseInt(this._map.options.crs.code.split(':')[1], 10);
+    var bounds = this._map.getPixelBounds();
 
-    // ensure that we don't ask ArcGIS Server for a taller image than we have actual map displaying
-    var top = this._map.latLngToLayerPoint(bounds._northEast);
-    var bottom = this._map.latLngToLayerPoint(bounds._southWest);
+    var sw = this._map.unproject(bounds.getBottomLeft());
+    var ne = this._map.unproject(bounds.getTopRight());
+
+    var size = this._map.getSize();
+    var neProj = this._map.options.crs.project(ne);
+    var swProj = this._map.options.crs.project(sw);
+
+// ensure that we don't ask ArcGIS Server for a taller image than we have actual map displaying
+    var top = this._map.latLngToLayerPoint(ne);
+    var bottom = this._map.latLngToLayerPoint(sw);
 
     if (top.y > 0 || bottom.y < size.y) {
       size.y = bottom.y - top.y;
     }
 
+    var sr = parseInt(this._map.options.crs.code.split(':')[1], 10);
+
+// switch ne/sw if in part of polar map where north/top bottom/south is inverted
+    if (swProj.y > neProj.y) {
+      var temp = neProj;
+      neProj = swProj;
+      swProj = temp;
+    }
+
     var params = {
-      bbox: [sw.x, sw.y, ne.x, ne.y].join(','),
+      bbox: [swProj.x, swProj.y, neProj.x, neProj.y].join(','),
       size: size.x + ',' + size.y,
       dpi: 96,
       format: this.options.format,
