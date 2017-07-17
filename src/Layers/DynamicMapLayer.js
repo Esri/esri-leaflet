@@ -106,23 +106,11 @@ export var DynamicMapLayer = RasterLayer.extend({
   },
 
   _buildExportParams: function () {
-    var bounds = this._map.getBounds();
-    var size = this._map.getSize();
-    var ne = this._map.options.crs.project(bounds.getNorthEast());
-    var sw = this._map.options.crs.project(bounds.getSouthWest());
     var sr = parseInt(this._map.options.crs.code.split(':')[1], 10);
 
-    // ensure that we don't ask ArcGIS Server for a taller image than we have actual map displaying
-    var top = this._map.latLngToLayerPoint(bounds._northEast);
-    var bottom = this._map.latLngToLayerPoint(bounds._southWest);
-
-    if (top.y > 0 || bottom.y < size.y) {
-      size.y = bottom.y - top.y;
-    }
-
     var params = {
-      bbox: [sw.x, sw.y, ne.x, ne.y].join(','),
-      size: size.x + ',' + size.y,
+      bbox: this._calculateBbox(),
+      size: this._calculateImageSize(),
       dpi: 96,
       format: this.options.format,
       transparent: this.options.transparent,
