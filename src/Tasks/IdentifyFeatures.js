@@ -10,6 +10,8 @@ export var IdentifyFeatures = Identify.extend({
     'layers': 'layers',
     'precision': 'geometryPrecision',
     'tolerance': 'tolerance',
+    // skipped implementing this (for now) because the REST service implementation isnt consistent between operations.
+    // 'transform': 'datumTransformations'
     'returnGeometry': 'returnGeometry'
   },
 
