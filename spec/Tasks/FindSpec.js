@@ -145,6 +145,18 @@ describe('L.esri.Find', function () {
     server.respond();
   });
 
+  it('should fetch unformatted results from 10.5+', function (done) {
+    server.respondWith('GET', mapServiceUrl + 'find?sr=4326&contains=true&returnGeometry=true&returnZ=true&returnM=false&layers=0&searchText=Site&returnUnformattedValues=true&f=json', JSON.stringify(sampleResponse));
+
+    task.layers('0').text('Site').format(false).run(function (error, featureCollection, raw) {
+      expect(featureCollection).to.deep.equal(sampleFeatureCollection);
+      expect(raw).to.deep.equal(sampleResponse);
+      done();
+    });
+
+    server.respond();
+  });
+
   it('should find features and limit geometries to a given precision', function (done) {
     server.respondWith('GET', mapServiceUrl + 'find?sr=4326&contains=true&returnGeometry=true&returnZ=true&returnM=false&layers=0&searchText=Site&geometryPrecision=4&f=json', JSON.stringify(sampleResponse));
 

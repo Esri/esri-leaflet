@@ -203,6 +203,18 @@ describe('L.esri.IdentifyFeatures', function () {
     request.respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, JSON.stringify(sampleResponse));
   });
 
+  it('should fetch unformatted results from 10.5+', function (done) {
+    var request = task.format(false).run(function (error, featureCollection, raw) {
+      expect(featureCollection).to.deep.equal(sampleFeatureCollection);
+      expect(raw).to.deep.equal(sampleResponse);
+      done();
+    });
+
+    expect(request.url).to.contain('returnUnformattedValues=true');
+
+    request.respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, JSON.stringify(sampleResponse));
+  });
+
   it('should use a service to execute the request', function (done) {
     var service = L.esri.mapService({url: mapServiceUrl});
 
