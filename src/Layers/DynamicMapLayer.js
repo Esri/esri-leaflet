@@ -98,6 +98,15 @@ export var DynamicMapLayer = RasterLayer.extend({
       identifyRequest.layers('visible');
     }
 
+    // if present, pass layer ids and sql filters through to the identify task
+    if (this.options.layerDefs && typeof this.options.layerDefs !== 'string') {
+      for (var id in this.options.layerDefs) {
+        if (this.options.layerDefs.hasOwnProperty(id)) {
+          identifyRequest.layerDef(id, this.options.layerDefs[id]);
+        }
+      }
+    }
+
     identifyRequest.run(callback);
 
     // set the flags to show the popup
