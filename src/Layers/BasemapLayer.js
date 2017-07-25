@@ -63,7 +63,7 @@ export var BasemapLayer = TileLayer.extend({
         urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}',
         options: {
           minZoom: 1,
-          maxZoom: 16,
+          maxZoom: 23,
           subdomains: ['server', 'services'],
           attribution: 'HERE, DeLorme, MapmyIndia, &copy; OpenStreetMap contributors'
         }
@@ -72,7 +72,7 @@ export var BasemapLayer = TileLayer.extend({
         urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}',
         options: {
           minZoom: 1,
-          maxZoom: 16,
+          maxZoom: 23,
           subdomains: ['server', 'services'],
           pane: (pointerEvents) ? 'esri-labels' : 'tilePane',
           attribution: ''
@@ -83,7 +83,7 @@ export var BasemapLayer = TileLayer.extend({
         urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}',
         options: {
           minZoom: 1,
-          maxZoom: 16,
+          maxZoom: 23,
           subdomains: ['server', 'services'],
           attribution: 'HERE, DeLorme, MapmyIndia, &copy; OpenStreetMap contributors'
         }
@@ -92,7 +92,7 @@ export var BasemapLayer = TileLayer.extend({
         urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}',
         options: {
           minZoom: 1,
-          maxZoom: 16,
+          maxZoom: 23,
           subdomains: ['server', 'services'],
           pane: (pointerEvents) ? 'esri-labels' : 'tilePane',
           attribution: ''
