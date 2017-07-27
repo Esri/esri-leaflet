@@ -5,6 +5,24 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+## [2.1.0] - 2017-07-27
+
+### Added
+
+* error handling has been added to classes that extend L.ImageOverlay [#941](https://github.com/Esri/esri-leaflet/pull/941) thank you[@Saulzi](https://github.com/Saulzi)!
+* dynamicMapLayer now supports an option to bust server side caches [#942](https://github.com/Esri/esri-leaflet/issues/942)
+* identifyFeatures and find now support requesting unformatted responses from ArcGIS Server 10.5+ map services [#961](https://github.com/Esri/esri-leaflet/issues/961)
+* identifyFeatures now supports passing through input geometries other than points [#962](https://github.com/Esri/esri-leaflet/pull/962) thank you[@bbehling](https://github.com/bbehling)!
+* dynamicMapLayer and imageMapLayer now support polar projections [#975](https://github.com/Esri/esri-leaflet/pull/975) thank you[@scaddenp](https://github.com/scaddenp)!
+* query now supports datum transformations [#976](https://github.com/Esri/esri-leaflet/pull/976)
+
+### Fixed
+
+* in imageMapLayer, noData values of `0` are now handled correctly [#946](https://github.com/Esri/esri-leaflet/issues/946)
+* ensure that eachActiveFeature correctly handles all geometry types [#948](https://github.com/Esri/esri-leaflet/issues/948)
+* layer definitions are now passed through when binding a popup to dynamicMapLayer [#957](https://github.com/Esri/esri-leaflet/issues/957)
+* ensure definition queries are applied to invisible layers [#964](https://github.com/Esri/esri-leaflet/pull/964) thank you[@jordanparfitt](https://github.com/jordanparfitt)!
+
 ## [2.0.8] - 2017-02-28
 
 ### Changed
@@ -525,7 +543,8 @@ None
 * Add DarkGray and DarkGrayLabels to BasemapLayer. #190
 * An attributionControl on maps is now required when using BasemapLayer. #159
 
-[unreleased]: https://github.com/esri/esri-leaflet/compare/v2.0.8...HEAD
+[unreleased]: https://github.com/esri/esri-leaflet/compare/v2.1.0...HEAD
+[2.1.0]: https://github.com/esri/esri-leaflet/compare/v2.0.8...v2.1.0
 [2.0.8]: https://github.com/esri/esri-leaflet/compare/v2.0.7...v2.0.8
 [2.0.7]: https://github.com/esri/esri-leaflet/compare/v2.0.6...v2.0.7
 [2.0.6]: https://github.com/esri/esri-leaflet/compare/v2.0.5...v2.0.6

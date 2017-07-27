@@ -54,11 +54,15 @@ The easiest way to get started is to load Esri Leaflet via [CDN](https://unpkg.c
 <html>
   <head>
     <!-- Load Leaflet from CDN-->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet-src.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.1.0/dist/leaflet.css"
+      integrity="sha512-wcw6ts8Anuw10Mzh9Ytw4pylW8+NAD4ch3lqm9lzAsTxg0GFeJgoAtxuCLREZSC5lUXdVyo/7yfsqFjQ4S+aKw=="
+      crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.1.0/dist/leaflet-src.js"
+      integrity="sha384-TWB9xRHTlLQmqAngHwD7usGcf4akGf0JP6aHwlgilpmOu2UuBq5aWLsDAh39iSn1"
+      crossorigin=""></script>
 
     <!-- Load Esri Leaflet locally, after cloning this repository -->
-    <script src="https://unpkg.com/esri-leaflet@2.0.8"></script>
+    <script src="https://unpkg.com/esri-leaflet@2.1.0"></script>
 
     <style>
       html, body, #map {
