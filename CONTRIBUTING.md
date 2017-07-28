@@ -51,7 +51,7 @@ If you'd like to build the Esri Leaflet website locally, make sure you have the 
 
 ### Linting
 
-Please make sure your changes pass JS Hint. This will help make sure code is consistent throughout Esri Leaflet. After installing the node dependencies for this project you can run `npm run lin` so that `semistandard` can make sure all is well.
+Please make sure your changes pass JS Hint. This will help make sure code is consistent throughout Esri Leaflet. After installing the node dependencies for this project you can run `npm run lint` so that `semistandard` can make sure all is well.
 
 ### Testing
 
