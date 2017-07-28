@@ -32,10 +32,16 @@
 
   
     
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.1.0/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.1.0/dist/leaflet-src.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@/dist/leaflet.css"
+    integrity=""
+    crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@/dist/leaflet.js"
+    integrity=""
+    crossorigin=""></script>
     
-    <script src="https://unpkg.com/esri-leaflet@2.0.8"></script>
+    <script src="https://unpkg.com/esri-leaflet@/dist/esri-leaflet.js"
+    integrity=""
+    crossorigin=""></script>
   
 
   
@@ -128,7 +134,7 @@
 
 <div class="main-content">
   <h1 id="l-esri-rasterlayer">L.esri.RasterLayer</h1>
-<p>Extends <a href="http://leafletjs.com/reference-1.1.0/.html#imageoverlay">L.ImageOverlay</a></p>
+<p>Extends <a href="http://leafletjs.com/reference-/.html#imageoverlay">L.ImageOverlay</a></p>
 <p>A generic class representing an image layer. This class can be extended to provide support for making export requests from ArcGIS REST services.</p>
 <h3 id="options">Options</h3>
 <table>
@@ -255,6 +261,11 @@
 <td><code>load</code></td>
 <td><a href="../../api-reference/events.html#load-event">&lt;<code>LoadEvent</code>&gt;</a></td>
 <td>Fires when all features in the current bounds of the map have loaded.</td>
+</tr>
+<tr>
+<td><code>error</code></td>
+<td>&lt;<code>Event</code>&gt;</td>
+<td>Fires when an image fails to load and ensures that the offending ImageOverlay is removed by the API.</td>
 </tr>
 </tbody>
 </table>

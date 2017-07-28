@@ -32,10 +32,16 @@
 
   
     
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.1.0/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.1.0/dist/leaflet-src.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@/dist/leaflet.css"
+    integrity=""
+    crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@/dist/leaflet.js"
+    integrity=""
+    crossorigin=""></script>
     
-    <script src="https://unpkg.com/esri-leaflet@2.0.8"></script>
+    <script src="https://unpkg.com/esri-leaflet@/dist/esri-leaflet.js"
+    integrity=""
+    crossorigin=""></script>
   
 
   
@@ -221,7 +227,7 @@
         <tr>
             <td><code>nearby(<nobr class="param"><span>&lt;<a href="http://leafletjs.com/reference.html#latlng">LatLng</a>&gt;</span> <code>latlng</code></nobr>, <nobr class="param"><span>&lt;Integer&gt;</span> <code>distance</code></nobr>)</code></td>
             <td><code>this</code></td>
-            <td>Queries features a given distance in meters around a <a href="http://leafletjs.com/reference.html#latlng">LatLng</a>. <br><small>Only available for Feature Layers hosted on ArcGIS Online or ArcGIS Server 10.3 that include the capability <code>supportQueryWithDistance</code>.</small></td>
+            <td>Queries features a given distance in meters around a <a href="http://leafletjs.com/reference.html#latlng">LatLng</a>. <br><small>Only available for Feature Layers hosted on ArcGIS Online or ArcGIS Server 10.3+ that include the capability <code>supportQueryWithDistance</code>.</small></td>
         </tr>
         <tr>
             <td><code>where(<nobr class="param"><span>&lt;String&gt;</span> <code>where</code></nobr>)</code></td>
@@ -231,7 +237,7 @@
         <tr>
             <td><code>offset(<nobr class="param"><span>&lt;Integer&gt;</span> <code>offset</code></nobr>)</code></td>
             <td><code>this</code></td>
-            <td>Define the offset of the results, when combined with <code>limit</code> can be used for paging. <br><small>Only available for Feature Layers hosted on ArcGIS Online or ArcGIS Server 10.3.</small></td>
+            <td>Define the offset of the results, when combined with <code>limit</code> can be used for paging. <br><small>Only available for Feature Layers hosted on ArcGIS Online or ArcGIS Server 10.3+.</small></td>
         </tr>
         <tr>
             <td><code>limit(<nobr class="param"><span>&lt;Integer&gt;</span> <code>limit</code></nobr>)</code></td>
@@ -289,19 +295,24 @@
             <td>Override the default pixelSize when querying an Image Service. <br><small>Only available for Image Services.</small></td>
         </tr>
         <tr>
+            <td><code>transform(<nobr class="param"><span>&lt;Number&gt;</span> <code>Number</code></nobr>)</code></td>
+            <td><code>this</code></td>
+            <td>The WKID of a <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/index.html#/Datum_transformations/02r3000000r8000000/">datum transformation</a> for the server to apply when reprojecting output features.<br><small>Only available for ArcGIS Server 10.5+.</small></td>
+        </tr>
+        <tr>
             <td><code>run(<nobr class="param"><span>&lt;Function&gt;</span> <code>callback</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>context</code></nobr>)</code></td>
             <td><code>this</code></td>
-            <td>Exectues the query request with the current parameters, features will be passed to <code>callback</code> as a <a href="http://geojson.org/geojson-spec.html#feature-collection-objects">GeoJSON FeatureCollection</a>. Accepts an optional function context.</td>
+            <td>Executes the query request with the current parameters, features will be passed to <code>callback</code> as a <a href="http://geojson.org/geojson-spec.html#feature-collection-objects">GeoJSON FeatureCollection</a>. Accepts an optional function context.</td>
         </tr>
         <tr>
             <td><code>count(<nobr class="param"><span>&lt;Function&gt;</span> <code>callback</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>context</code></nobr>)</code></td>
             <td><code>this</code></td>
-            <td>Exectues the query request with the current parameters, passing only the number of features matching the query to callback as an <code>Integer</code>. Accepts an optional function context.</td>
+            <td>Executes the query request with the current parameters, passing only the number of features matching the query to callback as an <code>Integer</code>. Accepts an optional function context.</td>
         </tr>
         <tr>
             <td><code>ids(<nobr class="param"><span>&lt;Function&gt;</span> <code>callback</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>context</code></nobr>)</code></td>
             <td><code>this</code></td>
-            <td>Exectues the query request with the current parameters, passing only an array of the feature ids matching the query to callback<code>callback</code>. Accepts an optional function context.</td>
+            <td>Executes the query request with the current parameters, passing only an array of the feature ids matching the query to callback<code>callback</code>. Accepts an optional function context.</td>
         </tr>
         <tr>
             <td><code>bounds(<nobr class="param"><span>&lt;Function&gt;</span> <code>callback</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>context</code></nobr>)</code></td>

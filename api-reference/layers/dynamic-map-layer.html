@@ -32,10 +32,16 @@
 
   
     
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.1.0/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.1.0/dist/leaflet-src.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@/dist/leaflet.css"
+    integrity=""
+    crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@/dist/leaflet.js"
+    integrity=""
+    crossorigin=""></script>
     
-    <script src="https://unpkg.com/esri-leaflet@2.0.8"></script>
+    <script src="https://unpkg.com/esri-leaflet@/dist/esri-leaflet.js"
+    integrity=""
+    crossorigin=""></script>
   
 
   
@@ -229,6 +235,12 @@
 <td><code>Object</code></td>
 <td></td>
 <td>JSON object literal used to manipulate the layer symbology defined in the service itself.  Requires a 10.1 (or above) map service which supports <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/index.html#/Export_Map/02r3000000v7000000/">dynamicLayers</a> requests.</td>
+</tr>
+<tr>
+<td><code>disableCache</code></td>
+<td><code>Boolean</code></td>
+<td></td>
+<td>If enabled, appends a timestamp to each request to ensure a fresh image is created server-side.</td>
 </tr>
 <tr>
 <td><code>token</code></td>

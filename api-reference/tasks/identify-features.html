@@ -32,10 +32,16 @@
 
   
     
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.1.0/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.1.0/dist/leaflet-src.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@/dist/leaflet.css"
+    integrity=""
+    crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@/dist/leaflet.js"
+    integrity=""
+    crossorigin=""></script>
     
-    <script src="https://unpkg.com/esri-leaflet@2.0.8"></script>
+    <script src="https://unpkg.com/esri-leaflet@/dist/esri-leaflet.js"
+    integrity=""
+    crossorigin=""></script>
   
 
   
@@ -195,9 +201,9 @@
             <td>The map to identify features on.</td>
         </tr>
         <tr>
-            <td><code>at(<nobr class="param"><span>&lt;<a href="http://leafletjs.com/reference.html#latlng">LatLng</a>&gt;</span> <code>latlng</code></nobr>)</code></td>
+            <td><code>at(<nobr class="param"><span>&lt;Geometry&gt;</span> <code>geometry</code></nobr>)</code></td>
             <td><code>this</code></td>
-            <td>Identifies feautres at a given <a href="http://leafletjs.com/reference.html#latlng">LatLng</a></td>
+            <td>Identifies features at a given <a href="http://leafletjs.com/reference.html#latlng">LatLng</a>. <code>geometry</code> can also be an instance of <a href="http://leafletjs.com/reference.html#marker"><code>L.Marker</code></a>, <a href="http://leafletjs.com/reference.html#polygon"><code>L.Polygon</code></a>, <a href="http://leafletjs.com/reference.html#polyline"><code>L.Polyline</code></a>, <a href="http://leafletjs.com/reference.html#latlngbounds"><code>L.LatLngBounds</code></a>, <a href="http://leafletjs.com/reference.html#geojson"><code>L.GeoJSON</code></a> or a valid <a href="http://geojson.org/geojson-spec.html">GeoJSON</a> object literal.</td>
         </tr>
         <tr>
             <td><code>layerDef(<nobr class="param"><span>&lt;Integer&gt;</span> <code>id</code></nobr>, <nobr class="param"><span>&lt;String&gt;</span> <code>where</code></nobr>)</code></td>
@@ -220,7 +226,7 @@
         <tr>
             <td><code>precision(<nobr class="param"><span>&lt;Integer&gt;</span> <code>precision</code></nobr>)</code></td>
             <td><code>this</code></td>
-            <td>Return only this many decimal points of precision in the output geometries.</td>
+            <td>Used to cap the number of decimal points included in output geometries.</td>
         </tr>
         <tr>
             <td><code>tolerance(<nobr class="param"><span>&lt;Integer&gt;</span> <code>precision</code></nobr>)</code></td>
@@ -236,6 +242,11 @@
             <td><code>simplify(<nobr class="param"><span>&lt;<a href="http://leafletjs.com/reference.html#map">Map</a>&gt;</span> <code>map</code></nobr>,  <nobr class="param"><span>&lt;Number&gt;</span> <code>factor</code></nobr>)</code></td>
             <td><code>this</code></td>
             <td>Simplify the geometries of the output features for the current map view. the <code>factor</code> parameter controls the amount of simplification between 0 (no simplification) and 1 (the most basic shape possible).</td>
+        </tr>
+        <tr>
+            <td><code>format(<nobr class="param"><span>&lt;Boolean&gt;</span> <code>formatResponse</code></nobr>)</code></td>
+            <td><code>this</code></td>
+            <td>Use <code>false</code> to ensure that the server returns unformatted feature attributes.<br><small>Only available for ArcGIS Server 10.5+.</small></td>
         </tr>
         <tr>
             <td><code>token(<nobr class="param"><span>&lt;String&gt;</span> <code>token</code></nobr>)</code></td>
