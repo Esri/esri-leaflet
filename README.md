@@ -133,6 +133,8 @@ http://esri.github.io/esri-leaflet/plugins/
 * [What browsers does Esri Leaflet support?](https://github.com//Esri/esri-leaflet/wiki/FAQ#what-browsers-does-esri-leaflet-support)
 * [What versions of ArcGIS Server does Esri Leaflet support?](https://github.com//Esri/esri-leaflet/wiki/FAQ#what-versions-of-arcgis-server-does-esri-leaflet-support)
 * [Upgrading the version of Esri Leaflet used in my app broke everything!](https://github.com//Esri/esri-leaflet/wiki/FAQ#upgrading-the-version-of-esri-leaflet-used-in-my-app-broke-everything)
+* [Does Esri Leaflet support IE 'compatibility mode'?](https://github.com//Esri/esri-leaflet/wiki/FAQ#compatibility-mode)
+* [I'm into TypeScript, but Esri Leaflet seems to be a vanilla JS thing. Can I find typings somewhere?](https://github.com//Esri/esri-leaflet/wiki/FAQ#typescript-typings)
 
 ## Issues
 
