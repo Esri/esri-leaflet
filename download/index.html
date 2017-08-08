@@ -29,14 +29,17 @@
   <link rel="stylesheet" href="../css/style.css">
 
   
+    <!-- 'livereload' for development -->
+    <script src="//localhost:35729/livereload.js"></script>
+  
 
   
     
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.1.0/dist/leaflet.css"
-    integrity="sha512-wcw6ts8Anuw10Mzh9Ytw4pylW8+NAD4ch3lqm9lzAsTxg0GFeJgoAtxuCLREZSC5lUXdVyo/7yfsqFjQ4S+aKw=="
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"
+    integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ=="
     crossorigin=""/>
-  <script src="https://unpkg.com/leaflet@1.1.0/dist/leaflet.js"
-    integrity="sha512-mNqn2Wg7tSToJhvHcqfzLMU6J4mkOImSPTxVZAdo+lcPlk+GhZmYgACEe0x35K7YzW1zJ7XyJV/TT1MrdXvMcA=="
+  <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"
+    integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log=="
     crossorigin=""></script>
     
     <script src="https://unpkg.com/esri-leaflet@2.1.0/dist/esri-leaflet.js"
@@ -78,15 +81,23 @@
 <div class="container white single">
   <h1 id="download">Download</h1>
 <p>All builds of Esri Leaflet are available for download on <a href="https://github.com/Esri/esri-leaflet/releases/">GitHub</a>.</p>
-<p><a href="https://github.com/Esri/esri-leaflet/releases/tag/v1.0.0" class="btn">Current Release</a>
+<p><a href="https://github.com/Esri/esri-leaflet/releases/tag/v2.1.0" class="btn">Current Release</a>
 <a href="https://github.com/Esri/esri-leaflet/releases/" class="btn">Past Releases</a></p>
 <h1 id="cdn">CDN</h1>
 <h4 id="esri-leaflet">Esri Leaflet</h4>
-<pre><code class="language-html">&lt;script src=&quot;https://unpkg.com/esri-leaflet@2.1.0/dist/esri-leaflet.js&quot;
-    integrity=&quot;sha512-Tojl3UMd387f6DdAJlo+fKfJZiP55fYT+6Y58yKbHydnueOdSFOxrgLPuUxm7VW1szEt3hZVwv3V2sSUCuT35w==&quot;
-    crossorigin=&quot;&quot;&gt;&lt;/script&gt;</code></pre>
+<pre><code class="language-xml"><span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/esri-leaflet@2.1.0/dist/esri-leaflet.js"</span>
+    <span class="attribute">integrity</span>=<span class="value">"sha512-Tojl3UMd387f6DdAJlo+fKfJZiP55fYT+6Y58yKbHydnueOdSFOxrgLPuUxm7VW1szEt3hZVwv3V2sSUCuT35w=="</span>
+    <span class="attribute">crossorigin</span>=<span class="value">""</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></code></pre>
 <h4 id="other-plugins">Other Plugins</h4>
-<pre><code class="language-xml"><span class="comment">&lt;!-- Vector Tiles --&gt;</span>
+<pre><code class="language-xml"><span class="comment">&lt;!-- Geocoding Control --&gt;</span>
+<span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"https://unpkg.com/esri-leaflet-geocoder@2.2.6/dist/esri-leaflet-geocoder.css"</span>
+    <span class="attribute">integrity</span>=<span class="value">"sha512-v5YmWLm8KqAAmg5808pETiccEohtt8rPVMGQ1jA6jqkWVydV5Cuz3nJ9fQ7ittSxvuqsvI9RSGfVoKPaAJZ/AQ=="</span>
+    <span class="attribute">crossorigin</span>=<span class="value">""</span>&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/esri-leaflet-geocoder@2.2.6/dist/esri-leaflet-geocoder.js"</span>
+    <span class="attribute">integrity</span>=<span class="value">"sha512-NE6FicJEhXDHZNxWrGwC4gdaxb7iOMsp7+bQSintY+stx4GpoUpNAH+yuiE1uduT5inQCPPmH0lf0cdjJFfwcA=="</span>
+    <span class="attribute">crossorigin</span>=<span class="value">""</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+
+<span class="comment">&lt;!-- Vector Tiles --&gt;</span>
 <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/esri-leaflet-vector@1.0.7/dist/esri-leaflet-vector.js"</span>
     <span class="attribute">integrity</span>=<span class="value">"sha512-MuVFyUJQ3i344M0OyFJBIk9ZqfFYV161uotCdsNlyeB2i3lSl/C3kgOYpQf2T7DN/omg1mA7pQE8sIuVKqSqnA=="</span>
     <span class="attribute">crossorigin</span>=<span class="value">""</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
@@ -101,14 +112,6 @@
     <span class="attribute">integrity</span>=<span class="value">"sha512-mhpdD3igvv7A/84hueuHzV0NIKFHmp2IvWnY5tIdtAHkHF36yySdstEVI11JZCmSY4TCvOkgEoW+zcV/rUfo0A=="</span>
     <span class="attribute">crossorigin</span>=<span class="value">""</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
-<span class="comment">&lt;!-- Geocoding Control --&gt;</span>
-<span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"https://unpkg.com/esri-leaflet-geocoder@2.2.6/dist/esri-leaflet-geocoder.css"</span>
-    <span class="attribute">integrity</span>=<span class="value">"sha512-v5YmWLm8KqAAmg5808pETiccEohtt8rPVMGQ1jA6jqkWVydV5Cuz3nJ9fQ7ittSxvuqsvI9RSGfVoKPaAJZ/AQ=="</span>
-    <span class="attribute">crossorigin</span>=<span class="value">""</span>&gt;</span>
-<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/esri-leaflet-geocoder@2.2.6/dist/esri-leaflet-geocoder.js"</span>
-    <span class="attribute">integrity</span>=<span class="value">"sha512-NE6FicJEhXDHZNxWrGwC4gdaxb7iOMsp7+bQSintY+stx4GpoUpNAH+yuiE1uduT5inQCPPmH0lf0cdjJFfwcA=="</span>
-    <span class="attribute">crossorigin</span>=<span class="value">""</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
-
 <span class="comment">&lt;!-- Renderers Plugin --&gt;</span>
 <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/esri-leaflet-renderers@2.0.6/dist/esri-leaflet-renderers.js"</span>
     <span class="attribute">integrity</span>=<span class="value">"sha512-mhpdD3igvv7A/84hueuHzV0NIKFHmp2IvWnY5tIdtAHkHF36yySdstEVI11JZCmSY4TCvOkgEoW+zcV/rUfo0A=="</span>
@@ -119,14 +122,14 @@
     <span class="attribute">integrity</span>=<span class="value">"sha512-xRjoofo1zPZLTvPZgF0y3SakPcQz+26rNYYzIwtM8q83JC3ro/6+3GTAM+qHZSlfJ3gXQFYcJ4CsU1X47o8dgQ=="</span>
     <span class="attribute">crossorigin</span>=<span class="value">""</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></code></pre>
 <h1 id="npm">npm</h1>
-<p>Esri Leaflet is also <a href="https://www.npmjs.org/package/esri-leaflet">available on npm</a> and can be installed with the following command.</p>
+<p>Esri Leaflet is available on <a href="https://www.npmjs.org/package/esri-leaflet">npm</a> and can be installed with the following command.</p>
 <pre><code class="language-bash">npm install esri-leaflet --save</code></pre>
 <h1 id="bower">Bower</h1>
-<p>Esri Leaflet is <a href="http://bower.io/search/?q=esri-leaflet">available on Bower</a> as well.</p>
+<p>Esri Leaflet is available from <a href="http://bower.io/search/?q=esri-leaflet">Bower</a> as well.</p>
 <pre><code class="language-bash">bower install esri-leaflet</code></pre>
-<h3 id="still-using-leaflet-0-7-x-">Still using Leaflet <code>0.7.x</code>?</h3>
+<h3 id="still-using-leaflet-0-7-">Still using Leaflet <code>0.7</code>?</h3>
 <p>Version <code>1.0.5</code> of esri-leaflet is the one for you.</p>
-<pre><code class="language-xml"><span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://cdn.jsdelivr.net/leaflet.esri/1.0.5/esri-leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></code></pre>
+<pre><code class="language-xml"><span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/esri-leaflet@1.0.5"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></code></pre>
 <h3 id="older-hosted-versions">Older Hosted Versions</h3>
 <p>Legacy versions of the API prior to <code>1.0.0-rc.6</code> can be found on the Amazon Web Server below.</p>
 <pre><code class="language-xml"><span class="comment">&lt;!-- 1.0.0-rc.6 and prior --&gt;</span>

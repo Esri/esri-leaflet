@@ -29,14 +29,17 @@
   <link rel="stylesheet" href="../../css/style.css">
 
   
+    <!-- 'livereload' for development -->
+    <script src="//localhost:35729/livereload.js"></script>
+  
 
   
     
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.1.0/dist/leaflet.css"
-    integrity="sha512-wcw6ts8Anuw10Mzh9Ytw4pylW8+NAD4ch3lqm9lzAsTxg0GFeJgoAtxuCLREZSC5lUXdVyo/7yfsqFjQ4S+aKw=="
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"
+    integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ=="
     crossorigin=""/>
-  <script src="https://unpkg.com/leaflet@1.1.0/dist/leaflet.js"
-    integrity="sha512-mNqn2Wg7tSToJhvHcqfzLMU6J4mkOImSPTxVZAdo+lcPlk+GhZmYgACEe0x35K7YzW1zJ7XyJV/TT1MrdXvMcA=="
+  <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"
+    integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log=="
     crossorigin=""></script>
     
     <script src="https://unpkg.com/esri-leaflet@2.1.0/dist/esri-leaflet.js"
@@ -134,7 +137,7 @@
 
 <div class="main-content">
   <h1 id="l-esri-featurelayer">L.esri.FeatureLayer</h1>
-<p>Extends <a href="http://leafletjs.com/reference-1.1.0.html#layer">L.Layer</a></p>
+<p>Extends <a href="http://leafletjs.com/reference-1.2.0.html#layer">L.Layer</a></p>
 <p><code>L.esri.FeatureLayer</code> is used to visualize, style, query and edit vector geographic data hosted in both ArcGIS Online and published using ArcGIS Server.  Copyright text from the service is added to map attribution automatically.</p>
 <p>Feature Layers reference an individual data source in either a parent <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/index.html#/Map_Service/02r3000000w2000000/">Map Service</a> or <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/index.html#/Feature_Service/02r3000000z2000000/">Feature Service</a> that can contain multiple layers.  You can see a sample Map Service URL below:</p>
 <pre><code>http://sampleserver6.arcgisonline.com/arcgis/rest/services/Hurricanes/MapServer</code></pre>
@@ -182,7 +185,7 @@
         <tr>
             <td><code>style(<nobr class="param"><span>&lt;<a href="http://geojson.org/geojson-spec.html#feature-objects">GeoJSON Feature</a>&gt;</span> <code>feature</code></nobr>, <nobr class="param"><span>&lt;<a href="http://leafletjs.com/reference.html#ilayer">ILayer</a>&gt;</span> <code>layer</code></nobr>)</code></td>
             <td><code>Function</code></td>
-            <td>Function that will be used to get <a href="http://leafletjs.com/reference-1.1.0.html#path-option">style options</a> for vector layers created for GeoJSON features.</td>
+            <td>Function that will be used to get <a href="http://leafletjs.com/reference-1.2.0.html#path-option">style options</a> for vector layers created for GeoJSON features.</td>
         </tr>
         <tr>
             <td><code>onEachFeature(<nobr class="param"><span>&lt;<a href="http://geojson.org/geojson-spec.html#feature-objects">GeoJSON Feature</a>&gt;</span> <code>feature</code></nobr>, <nobr class="param"><span>&lt;<a href="http://leafletjs.com/reference.html#ilayer">ILayer</a>&gt;</span> <code>layer</code></nobr>)</code></td>
