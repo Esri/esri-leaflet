@@ -5,6 +5,17 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+## [2.1.1] - 2017-08-11
+
+### Fixed
+
+* made Leaflet a peerDependency so that folks using WebPack can install v1.1.x without problems or duplication in their bundles
+* added `UTF 8` to L.esri.request headers
+
+### Changed
+
+* now using `npm-run-all` for concurrent, cross platform script running
+
 ## [2.1.0] - 2017-07-27
 
 ### Added
@@ -543,7 +554,8 @@ None
 * Add DarkGray and DarkGrayLabels to BasemapLayer. #190
 * An attributionControl on maps is now required when using BasemapLayer. #159
 
-[unreleased]: https://github.com/esri/esri-leaflet/compare/v2.1.0...HEAD
+[unreleased]: https://github.com/esri/esri-leaflet/compare/v2.1.1...HEAD
+[2.1.1]: https://github.com/esri/esri-leaflet/compare/v2.1.0...v2.1.1
 [2.1.0]: https://github.com/esri/esri-leaflet/compare/v2.0.8...v2.1.0
 [2.0.8]: https://github.com/esri/esri-leaflet/compare/v2.0.7...v2.0.8
 [2.0.7]: https://github.com/esri/esri-leaflet/compare/v2.0.6...v2.0.7
