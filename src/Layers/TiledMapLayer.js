@@ -38,6 +38,11 @@ export var TiledMapLayer = TileLayer.extend({
   },
 
   initialize: function (options) {
+    // Remove subdomain in url
+    // https://github.com/Esri/esri-leaflet/issues/991
+    if (options.url.indexOf('{s}') !== -1 && options.subdomains) {
+      options.url = options.url.replace('{s}', options.subdomains[0]);
+    }
     options.url = cleanUrl(options.url);
     options = Util.setOptions(this, options);
 
