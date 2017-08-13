@@ -43,6 +43,11 @@ export var TiledMapLayer = TileLayer.extend({
 
     // set the urls
     this.tileUrl = options.url + 'tile/{z}/{y}/{x}';
+    // Remove subdomain in url
+    // https://github.com/Esri/esri-leaflet/issues/991
+    if (options.url.indexOf('{s}') !== -1 && options.subdomains) {
+      options.url = options.url.replace('{s}', options.subdomains[0]);
+    }
     this.service = mapService(options);
     this.service.addEventParent(this);
 
