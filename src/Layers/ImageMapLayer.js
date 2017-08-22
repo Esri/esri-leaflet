@@ -9,7 +9,7 @@ export var ImageMapLayer = RasterLayer.extend({
     updateInterval: 150,
     format: 'jpgpng',
     transparent: true,
-    f: 'json'
+    f: 'image'
   },
 
   query: function () {
