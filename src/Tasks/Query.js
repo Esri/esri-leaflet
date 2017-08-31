@@ -16,6 +16,7 @@ export var Query = Task.extend({
     'precision': 'geometryPrecision',
     'featureIds': 'objectIds',
     'returnGeometry': 'returnGeometry',
+    'returnM': 'returnM',
     'transform': 'datumTransformation',
     'token': 'token'
   },
