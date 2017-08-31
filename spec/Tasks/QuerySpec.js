@@ -251,6 +251,21 @@ describe('L.esri.Query', function () {
     server.respond();
   });
 
+  it('should send requests for M values in response geometry', function (done) {
+    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&returnM=false&f=json', JSON.stringify(sampleQueryResponse));
+
+    task.returnM(false);
+    var request = task.run(function (error, featureCollection, raw) {
+      expect(featureCollection).to.deep.equal(sampleFeatureCollection);
+      expect(raw).to.deep.equal(sampleQueryResponse);
+      done();
+    });
+
+    expect(request).to.be.an.instanceof(XMLHttpRequest);
+
+    server.respond();
+  });
+
   it('should query features within bounds', function (done) {
     server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.66%2C%22ymin%22%3A45.5%2C%22xmax%22%3A-122.65%2C%22ymax%22%3A45.51%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelContains&f=json', JSON.stringify(sampleQueryResponse));
 
