@@ -17,6 +17,8 @@ describe('L.esri.Util', function () {
   var otherServiceUrl = 'http://demographics4.arcgis.com/arcgis/rest/services/USA_Demographics_and_Boundaries_2014/MapServer/9';
   var normalFeatureServiceUrl = 'http://oneofoursampleservers.arcgisonline.com/arcgis/rest/services/WorldTimeZones/MapServer/2';
 
+  var knownIdFieldTestCases = ['OBJECTID', 'FID', 'OID', 'ID', 'objectid', 'fid', 'oid', 'id'];
+
   it('should return a L.LatLngBounds object from extentToBounds', function () {
     var bounds = L.esri.Util.extentToBounds(sampleExtent);
     expect(bounds).to.be.an.instanceof(L.LatLngBounds);
@@ -54,5 +56,72 @@ describe('L.esri.Util', function () {
     expect(L.esri.Util.isArcgisOnline(hostedFeatureServiceUrl)).to.be.true;
     expect(L.esri.Util.isArcgisOnline(otherServiceUrl)).to.be.false;
     expect(L.esri.Util.isArcgisOnline(normalFeatureServiceUrl)).to.be.false;
+  });
+
+  describe('_findIdAttributeFromFeature', function () {
+    for (var caseId = 0; caseId < knownIdFieldTestCases.length; caseId++) {
+      var testCase = knownIdFieldTestCases[caseId];
+
+      it('should return the correct key when a item has ' + testCase + ' attribute', function () {
+        var feature = {
+          attributes: {
+            'someAttribute': 123,
+            'aTestAttribute': 345,
+            'aTestAttributeId': 412,
+            'ourAttributeGetsAdded': 'hello'
+          }
+        };
+        feature.attributes[testCase] = 'set up our id field amongst others here';
+
+        var result = L.esri.Util._findIdAttributeFromFeature(feature);
+
+        expect(result).to.equal(testCase);
+      });
+    }
+  });
+
+  describe('_findIdAttributeFromResponse', function () {
+    it('should return the value of objectIdFieldName if response contains objectIdFieldName', function () {
+      var response = {
+        objectIdFieldName: 'ilikeunittests'
+      };
+
+      var result = L.esri.Util._findIdAttributeFromResponse(response);
+
+      expect(result).to.equal('ilikeunittests');
+    });
+
+    it('should return the name from the field which has the type of esriFieldTypeOID', function () {
+      var response = {
+        fields: [
+          {name: 'a field', type: 'something'},
+          {name: 'another field', type: 'something else'},
+          {name: 'theIdField', type: 'esriFieldTypeOID'}
+        ]
+      };
+
+      var result = L.esri.Util._findIdAttributeFromResponse(response);
+
+      expect(result).to.equal('theIdField');
+    });
+
+    for (var caseId = 0; caseId < knownIdFieldTestCases.length; caseId++) {
+      var testCase = knownIdFieldTestCases[caseId];
+
+      it('should return ' + testCase + ' if found in fields', function () {
+        var response = {
+          fields: [
+            {name: 'a field', type: 'something'},
+            {name: 'another field', type: 'something else'},
+            {name: 'yetanotherfield', type: 'yetanotherfield'}
+          ]
+        };
+        response.fields.push({name: testCase, type: 'somethingunimportant'});
+
+        var result = L.esri.Util._findIdAttributeFromResponse(response);
+
+        expect(result).to.equal(testCase);
+      });
+    }
   });
 });

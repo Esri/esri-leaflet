@@ -53,6 +53,45 @@ export function boundsToExtent (bounds) {
   };
 }
 
+var knownFieldNames = /^(OBJECTID|FID|OID|ID)$/i;
+
+// Attempts to find the ID Field from response
+export function _findIdAttributeFromResponse (response) {
+  var result;
+
+  if (response.objectIdFieldName) {
+    // Find Id Field directly
+    result = response.objectIdFieldName;
+  } else if (response.fields) {
+    // Find ID Field based on field type
+    for (var j = 0; j <= response.fields.length - 1; j++) {
+      if (response.fields[j].type === 'esriFieldTypeOID') {
+        result = response.fields[j].name;
+        break;
+      }
+    }
+    if (!result) {
+      // If no field was marked as being the esriFieldTypeOID try well known field names
+      for (j = 0; j <= response.fields.length - 1; j++) {
+        if (response.fields[j].name.match(knownFieldNames)) {
+          result = response.fields[j].name;
+          break;
+        }
+      }
+    }
+  }
+  return result;
+}
+
+// This is the 'last' resort, find the Id field from the specified feature
+export function _findIdAttributeFromFeature (feature) {
+  for (var key in feature.attributes) {
+    if (key.match(knownFieldNames)) {
+      return key;
+    }
+  }
+}
+
 export function responseToFeatureCollection (response, idAttribute) {
   var objectIdField;
   var features = response.features || response.results;
@@ -60,24 +99,8 @@ export function responseToFeatureCollection (response, idAttribute) {
 
   if (idAttribute) {
     objectIdField = idAttribute;
-  } else if (response.objectIdFieldName) {
-    objectIdField = response.objectIdFieldName;
-  } else if (response.fields) {
-    for (var j = 0; j <= response.fields.length - 1; j++) {
-      if (response.fields[j].type === 'esriFieldTypeOID') {
-        objectIdField = response.fields[j].name;
-        break;
-      }
-    }
-  } else if (count) {
-    /* as a last resort, check for common ID fieldnames in the first feature returned
-    not foolproof. identifyFeatures can returned a mixed array of features. */
-    for (var key in features[0].attributes) {
-      if (key.match(/^(OBJECTID|FID|OID|ID)$/i)) {
-        objectIdField = key;
-        break;
-      }
-    }
+  } else {
+    objectIdField = _findIdAttributeFromResponse(response);
   }
 
   var featureCollection = {
@@ -87,7 +110,7 @@ export function responseToFeatureCollection (response, idAttribute) {
 
   if (count) {
     for (var i = features.length - 1; i >= 0; i--) {
-      var feature = arcgisToGeoJSON(features[i], objectIdField);
+      var feature = arcgisToGeoJSON(features[i], objectIdField || _findIdAttributeFromFeature(features[i]));
       featureCollection.features.push(feature);
     }
   }
@@ -329,7 +352,9 @@ export var EsriUtil = {
   setEsriAttribution: setEsriAttribution,
   _setGeometry: _setGeometry,
   _getAttributionData: _getAttributionData,
-  _updateMapAttribution: _updateMapAttribution
+  _updateMapAttribution: _updateMapAttribution,
+  _findIdAttributeFromFeature: _findIdAttributeFromFeature,
+  _findIdAttributeFromResponse: _findIdAttributeFromResponse
 };
 
 export default EsriUtil;
