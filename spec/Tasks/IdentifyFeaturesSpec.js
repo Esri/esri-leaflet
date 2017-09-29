@@ -62,19 +62,21 @@ describe('L.esri.IdentifyFeatures', function () {
   // use 'objectid' instead of 'OBJECTID' to trap irregular casing
   var sampleFeatureCollection = {
     'type': 'FeatureCollection',
-    'features': [{
-      'type': 'Feature',
-      'geometry': {
-        'type': 'Point',
-        'coordinates': [-122.81, 45.48]
-      },
-      'properties': {
-        'objectid': 1,
-        'Name': 'Site'
-      },
-      'id': 1,
-      'layerId': 0
-    }]
+    'features': [
+      {
+        'type': 'Feature',
+        'geometry': {
+          'type': 'Point',
+          'coordinates': [-122.81, 45.48]
+        },
+        'properties': {
+          'objectid': 1,
+          'Name': 'Site'
+        },
+        'id': 1,
+        'layerId': 0
+      }
+    ]
   };
 
   beforeEach(function () {
