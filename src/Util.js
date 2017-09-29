@@ -5,7 +5,7 @@ import { options } from './Options';
 import {
   geojsonToArcGIS as g2a,
   arcgisToGeoJSON as a2g
-} from 'arcgis-to-geojson-utils';
+} from '@esri/arcgis-to-geojson-utils';
 
 export function geojsonToArcGIS (geojson, idAttr) {
   return g2a(geojson, idAttr);
