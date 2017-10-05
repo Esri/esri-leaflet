@@ -5,7 +5,7 @@ import { options } from './Options';
 import {
   geojsonToArcGIS as g2a,
   arcgisToGeoJSON as a2g
-} from 'arcgis-to-geojson-utils';
+} from '@esri/arcgis-to-geojson-utils';
 
 export function geojsonToArcGIS (geojson, idAttr) {
   return g2a(geojson, idAttr);
@@ -13,18 +13,6 @@ export function geojsonToArcGIS (geojson, idAttr) {
 
 export function arcgisToGeoJSON (arcgis, idAttr) {
   return a2g(arcgis, idAttr);
-}
-
-// shallow object clone for feature properties and attributes
-// from http://jsperf.com/cloning-an-object/2
-export function shallowClone (obj) {
-  var target = {};
-  for (var i in obj) {
-    if (obj.hasOwnProperty(i)) {
-      target[i] = obj[i];
-    }
-  }
-  return target;
 }
 
 // convert an extent (ArcGIS) to LatLngBounds (Leaflet)
@@ -338,7 +326,6 @@ export function _updateMapAttribution (evt) {
 }
 
 export var EsriUtil = {
-  shallowClone: shallowClone,
   warn: warn,
   cleanUrl: cleanUrl,
   isArcgisOnline: isArcgisOnline,
