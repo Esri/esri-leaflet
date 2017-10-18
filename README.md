@@ -177,12 +177,9 @@ Esri welcomes contributions from anyone and everyone. Please see our [guidelines
 
 ### Terms
 
-If you display an ArcGIS Online service in **any** Leaflet application, we require that you:
+If your app is for public, non-revenue generating, non-government, non-commercial use, the free [Essentials Developer Plan](https://developers.arcgis.com/pricing/) is sufficient. If you're going to generate revenue or are using the app for government or business purposes, you'll have to purchase a paid [ArcGIS Online Deployment Plan](https://developers.arcgis.com/pricing/credits/) when you're ready to deploy your app to production.
 
-1. Sign up for a [free developer account](https://developers.arcgis.com/).
-2. Display Esri attribution and recognize data providers.
-
-Using this plugin, it couldn't be easier to follow the terms.  Just select your basemap and the appropriate credits will always be displayed in Leaflet's own [Attribution control](http://leafletjs.com/reference.html#control-attribution) as users pan/zoom automatically.
+If you display an ArcGIS Online service in **any** Leaflet application, we require that you display Esri attribution and recognize data providers. Using this plugin, it couldn't be easier to follow the terms.  Just select your basemap and the appropriate credits will be displayed in Leaflet's own [Attribution control](http://leafletjs.com/reference.html#control-attribution) as users pan/zoom automatically.
 
 ```js
 L.esri.basemapLayer('Topographic').addTo(map);
