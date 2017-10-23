@@ -279,11 +279,10 @@ body {
 .copyright {
   display: inline-block;
   font-size: 1rem;
-  color: #FFFFFF;
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+  color: black;
   margin: 0; }
   .copyright a {
-    color: #FFFFFF; }
+    color: black; }
     .copyright a:hover {
       border-color: #FFFFFF; }
     .copyright a:first-of-type {
