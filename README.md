@@ -193,6 +193,7 @@ If you need more than 1 million [map transactions](http://doc.arcgis.com/en/arcg
 
 * [Esri Attribution Requirements](https://developers.arcgis.com/terms/attribution/)
 * [ArcGIS Online Terms of Use](https://developers.arcgis.com/terms/)
+* [Licensing & Attribution](https://developers.arcgis.com/javascript/latest/guide/licensing/index.html)
 
 ### Credit
 
