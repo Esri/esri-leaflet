@@ -14,7 +14,7 @@
   
 
   <meta name="description" content="Esri Leaflet">
-  <meta name="viewport" content="width=device-width">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!--[if lt IE 9]>
     <script src="//cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv-printshiv.js"></script>
@@ -65,8 +65,9 @@
 <body>
   <div class="page-content ">
     <div class="container">
+      <span id="mobileMenuButton" class="mobileMenuButton">&#9776;</span>
       <a class="site-nav" href="../" class="left logo">Esri Leaflet</a>
-      <nav class="right">
+      <nav id="site-nav-wrapper" class="site-nav-wrapper">
         <a class="site-nav" href="../tutorials/">Tutorials</a>
         <a class="site-nav" href="../plugins/">Plugins</a>
         <a class="site-nav" href="../examples/">Examples</a>
@@ -183,6 +184,62 @@
 </ul>
 
   <p><a href="http://github.com/Esri/esri-leaflet-doc/edit/master/src/pages/api-reference/index.hbs">Edit this page on GitHub</a></p>
+
+  <div class="mobile-menu">
+    <aside class="sidebar">
+  <h5>Layers</h5>
+  <nav>
+    <a href="../api-reference/layers/basemap-layer.html">Basemap Layer</a>
+    <a href="../api-reference/layers/feature-layer.html">Feature Layer</a>
+    <a href="../api-reference/layers/tiled-map-layer.html">Tiled Map Layer</a>
+    <a href="../api-reference/layers/dynamic-map-layer.html">Dynamic Map Layer</a>
+    <a href="../api-reference/layers/image-map-layer.html">Image Map Layer</a>
+    <a class="plugin" href="../api-reference/layers/vector-basemap.html">Vector Basemap</a>
+    <a class="plugin" href="../api-reference/layers/heatmap-feature-layer.html">Heatmap Feature Layer</a>
+    <a class="plugin" href="../api-reference/layers/cluster-feature-layer.html">Cluster Feature Layer</a>
+    <a class="plugin" href="../api-reference/layers/vector-layer.html">Vector Layer</a>
+  </nav>
+
+  <h5>Controls</h5>
+  <nav>
+    <a class="plugin" href="../api-reference/controls/geosearch.html" class="plugin">Geosearch</a>
+  </nav>
+
+  <h5>Tasks</h5>
+  <nav>
+    <a href="../api-reference/tasks/query.html">Query</a>
+    <a href="../api-reference/tasks/find.html">Find</a>
+    <a href="../api-reference/tasks/identify-features.html">Identify Features</a>
+    <a href="../api-reference/tasks/identify-image.html">Identify Image</a>
+    <a class="plugin" href="../api-reference/tasks/geocode.html">Geocode</a>
+    <a class="plugin" href="../api-reference/tasks/reverse-geocode.html">Reverse Geocode</a>
+    <a class="plugin" href="../api-reference/tasks/suggest.html">Suggest</a>
+    <a class="plugin" href="../api-reference/tasks/gp-task.html">Geoprocessing Task</a>
+    <a class="plugin" href="../api-reference/tasks/query-related.html">Query Related</a>
+  </nav>
+
+  <h5>Base Classes</h5>
+  <nav>
+    <a href="../api-reference/services/image-service.html">ImageService</a>
+    <a href="../api-reference/services/feature-layer-service.html">FeatureLayerService</a>
+    <a href="../api-reference/services/map-service.html">MapService</a>
+    <a class="plugin" href="../api-reference/services/geocode-service.html">Geocode Service</a>
+    <a class="plugin" href="../api-reference/services/gp-service.html">Geoprocessing Service</a>
+    <a href="../api-reference/tasks/task.html">Task</a>
+    <a href="../api-reference/services/service.html">Service</a>
+    <a href="../api-reference/layers/raster-layer.html">Raster Layer</a>
+  </nav>
+
+  <h5>Misc.</h5>
+  <nav>
+    <a href="../api-reference/util.html">Util</a>
+    <a href="../api-reference/request.html">request</a>
+    <a href="../api-reference/options.html">options</a>
+    <a href="../api-reference/events.html">Events</a>
+  </nav>
+</aside>
+
+  </div>
 </div>
 
   <div style='clear:both;'></div>

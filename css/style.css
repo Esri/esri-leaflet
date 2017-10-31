@@ -234,9 +234,6 @@ table {
       table tr:nth-child(even) td {
         background-color: #FAFBFE; }
 
-body {
-  min-width: 768px; }
-
 .page-content {
   margin: 0 .75em; }
 
@@ -261,6 +258,26 @@ body {
   .container.single {
     padding: 1px 1em; }
 
+.mobileMenuButton {
+  display: none;
+  float: right;
+  font-size: 30px; }
+  @media screen and (max-width: 960px) {
+    .mobileMenuButton {
+      display: inline-block; } }
+
+.site-nav-wrapper {
+  float: right; }
+  @media screen and (max-width: 960px) {
+    .site-nav-wrapper {
+      float: none;
+      display: none; }
+      .site-nav-wrapper .site-nav {
+        text-align: center;
+        margin: 0; }
+      .site-nav-wrapper.show {
+        display: block; } }
+
 .site-nav {
   display: inline-block;
   margin: 0 1em;
@@ -275,6 +292,9 @@ body {
     margin-left: 0; }
   .site-nav:last-of-type {
     margin-right: 0; }
+  @media screen and (max-width: 960px) {
+    .site-nav {
+      display: block; } }
 
 .copyright {
   display: inline-block;
@@ -449,7 +469,7 @@ body {
   z-index: 100;
   background: #FAFBFE;
   padding: 2rem;
-  width: 30rem;
+  max-width: 30rem;
   opacity: 1; }
   .modal.vertically-centered {
     margin: 0 0 0 -190px;
@@ -498,16 +518,18 @@ body {
     float: left;
     clear: both;
     margin: 1rem 0 0.5rem; }
+  @media screen and (max-width: 960px) {
+    .sidebar {
+      display: none; } }
 
-.card {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  padding: 1.5rem 1rem;
-  float: left;
-  position: relative;
-  background-color: white;
-  z-index: 3; }
+.mobile-menu {
+  border-top: 1px solid #e5eaee; }
+  .mobile-menu .sidebar {
+    width: 100%;
+    display: none; }
+    @media screen and (max-width: 960px) {
+      .mobile-menu .sidebar {
+        display: block; } }
 
 /* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
 .tomorrow-comment, pre .comment, pre .title {
@@ -552,6 +574,9 @@ pre .xml .cdata {
 .homepage .modal {
   margin-top: 6rem;
   text-align: center; }
+  @media screen and (max-width: 960px) {
+    .homepage .modal {
+      margin-top: 0; } }
 
 .homepage #homepage-map {
   min-height: 100vh; }
@@ -572,6 +597,10 @@ pre .xml .cdata {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   width: 32%; }
+  @media screen and (max-width: 960px) {
+    .homepage .btn {
+      width: 100%;
+      margin-bottom: 5px; } }
 
 .main-content {
   width: 74.75%;
@@ -592,6 +621,13 @@ pre .xml .cdata {
     margin-top: 1.5rem; }
   .main-content h5 {
     margin-top: 3rem; }
+  @media screen and (max-width: 960px) {
+    .main-content {
+      width: 100%; } }
+  .main-content table {
+    table-layout: fixed; }
+    .main-content table td {
+      word-wrap: break-word; }
 
 .no-sidebar .container.white {
   background: white;
@@ -608,7 +644,6 @@ pre .xml .cdata {
   position: absolute;
   background: #FFFFFF;
   height: 100%;
-  width: 24.75%;
   z-index: 2; }
 
 .container.white:after {
@@ -642,6 +677,9 @@ pre .xml .cdata {
   .example-content .wrap {
     margin: 1rem 0 0 0;
     padding: 0 1rem; }
+  @media screen and (max-width: 960px) {
+    .example-content {
+      width: 100%; } }
 
 .doc-section {
   margin-top: 5rem; }
@@ -687,8 +725,20 @@ td pre {
 .plugins .panel {
   width: 33.3%;
   float: left; }
+  @media screen and (max-width: 960px) {
+    .plugins .panel {
+      width: 100%;
+      float: none; } }
 
 .plugins .card {
-  margin: 1rem 1rem; }
+  margin: 1rem 1rem;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 1.5rem 1rem;
+  float: left;
+  position: relative;
+  background-color: white;
+  z-index: 3; }
   .plugins .card h3 {
     margin: 0; }

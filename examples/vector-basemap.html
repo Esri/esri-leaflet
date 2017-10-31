@@ -16,7 +16,7 @@
   
 
   <meta name="description" content="Esri Leaflet">
-  <meta name="viewport" content="width=device-width">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!--[if lt IE 9]>
     <script src="//cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv-printshiv.js"></script>
@@ -67,8 +67,9 @@
 <body>
   <div class="page-content ">
     <div class="container">
+      <span id="mobileMenuButton" class="mobileMenuButton">&#9776;</span>
       <a class="site-nav" href="../" class="left logo">Esri Leaflet</a>
-      <nav class="right">
+      <nav id="site-nav-wrapper" class="site-nav-wrapper">
         <a class="site-nav" href="../tutorials/">Tutorials</a>
         <a class="site-nav" href="../plugins/">Plugins</a>
         <a class="site-nav" href="../examples/">Examples</a>
@@ -346,6 +347,118 @@
 <div class="wrap">
   <p><a href="http://github.com/Esri/esri-leaflet-doc/edit/master/src/pages/examples/vector-basemap.hbs">Edit this sample on GitHub</a></p>
 </div>
+
+<div class="mobile-menu">
+  <aside class="sidebar">
+  <h5>Basemaps</h5>
+  <nav>
+    <a href="../examples/showing-a-basemap.html">Showing an ArcGIS Basemap</a>
+    <a href="../examples/basemap-with-labels.html">Basemap with Labels</a>
+    <a href="../examples/switching-basemaps.html">Switching Basemaps</a>
+    <a href="../examples/retina-basemap.html">Retina Basemap</a>
+    <a href="../examples/vector-basemap.html">Vector Basemaps</a>
+  </nav>
+
+  <h5>Feature Layers</h5>
+  <nav>
+    <a href="../examples/simple-feature-layer.html">Simple FeatureLayer</a>
+    <a href="../examples/styling-feature-layer-points.html">Styling Points</a>
+    <a href="../examples/styling-feature-layer-polylines.html">Styling Lines</a>
+    <a href="../examples/styling-feature-layer-polygons.html">Styling Polygons</a>
+    <a href="../examples/feature-layer-popups.html">Custom Popups</a>
+    <a href="../examples/querying-feature-layers-1.html">Querying Features #1</a>
+    <a href="../examples/querying-feature-layers-2.html">Querying Features #2</a>
+    <a href="../examples/spatial-queries.html">Spatial Queries</a>
+    <a href="../examples/simplifying-complex-features.html">Simplifying Complex Features</a>
+    <a href="../examples/zooming-to-all-features-1.html">Zoom to all Features #1</a>
+    <a href="../examples/zooming-to-all-features-2.html">Zoom to all Features #2</a>
+    <a href="../examples/labeling-features.html">Labeling Features</a>
+    <a href="../examples/layer-ordering.html">Ordering Layers</a>
+    <a href="../examples/editable.html">Editing</a>
+  </nav>
+
+  <h5>Feature Layer Plugins</h5>
+  <nav>
+    <a href="../examples/visualize-points-as-a-heatmap.html">Points as a Heatmap</a>
+    <a href="../examples/styling-heatmaps.html">Styling a heatmap</a>
+    <a href="../examples/visualizing-time-with-feature-layer.html">Time Enabled Services</a>
+    <a href="../examples/clustering-feature-layers.html">Clustering Points</a>
+    <a href="../examples/styling-clusters.html">Styling Clusters</a>
+  </nav>
+
+  <h5>Tile Layers</h5>
+  <nav>
+    <a href="../examples/tile-layer-1.html">Tiles from a Map Service #1</a>
+    <a href="../examples/tile-layer-2.html">Tiles from a Map Service #2</a>
+  </nav>
+
+  <h5>Dynamic Map Layer</h5>
+  <nav>
+    <a href="../examples/simple-dynamic-map-layer.html">Simple Dynamic Map Layer</a>
+    <a href="../examples/identifying-features.html">Identifying Features</a>
+    <a href="../examples/customizing-popups.html">Custom Popups</a>
+    <a href="../examples/visualizing-time-on-dynamic-map-layer.html">Time Ranges</a>
+  </nav>
+
+  <h5>Image Map Layer</h5>
+  <nav>
+    <a href="../examples/simple-image-map-layer.html">Simple Image Map Layer</a>
+    <a href="../examples/image-map-layer-rendering-rule.html">Rendering Rule</a>
+    <a href="../examples/identifying-imagery.html">Identify Imagery</a>
+    <a href="../examples/image-map-layer-mosaic-rule.html">Mosaic Rule</a>
+    <a href="../examples/imagery-popups.html">Custom Popups</a>
+    <a href="../examples/visualizing-time-on-image-layer.html">Time Ranges</a>
+  </nav>
+
+  <h5>Non-Mercator Projections</h5>
+  <nav>
+    <a href="../examples/non-mercator-projection.html">Tiles + Feature Layer</a>
+    <a href="../examples/non-mercator-projection-2.html">Tiles + Dynamic Map Layer</a>
+  </nav>
+
+  <h5>Query</h5>
+  <nav>
+    <a href="../examples/feature-layer-snapshot.html">Layer "Snapshot"</a>
+    <a href="../examples/query-no-map.html">Query without a Map</a>
+  </nav>
+
+  <h5>Authentication</h5>
+  <nav>
+    <a href="../examples/arcgis-online-auth.html">ArcGIS Online OAuth</a>
+    <a href="../examples/premium-content.html">Premium ArcGIS Online Content</a>
+    <a href="../examples/arcgis-server-auth.html">ArcGIS Server username/password</a>
+  </nav>
+
+  <h5>Geocoding</h5>
+  <nav>
+    <a href="../examples/geocoding-control.html">Geocoding Control</a>
+    <a href="../examples/search-map-service.html">Searching Map Services</a>
+    <a href="../examples/search-feature-layer.html">Searching Feature Layers</a>
+    <a href="../examples/center-map-on-address.html">Center the Initial Map State</a>
+    <a href="../examples/reverse-geocoding.html">Reverse Geocoding</a>
+  </nav>
+
+  <h5>Other Plugins</h5>
+  <nav>
+    <a href="../examples/renderers-plugin.html">Server Side Rendering</a>
+    <a href="../examples/stream-plugin.html">Stream Layer</a>
+    <a href="../examples/webmap.html?id=22c504d229f14c789c5b49ebff38b941">Loading Webmaps</a>
+    <a href="../examples/gp-plugin.html">Geoprocessing</a>
+  </nav>
+
+  <h5>Misc.</h5>
+  <nav>
+    <a href="../examples/layers-control.html">Control.Layers</a>
+    <a href="../examples/turf.html">Turf.js Mashup</a>
+    <a href="../examples/getting-service-metadata.html">Getting Service Metadata</a>
+    <a href="../examples/parse-feature-collection.html">Parsing Feature Collections</a>
+    <a href="../examples/indoors.html">Indoor Mapping</a>
+
+  </nav>
+</aside>
+
+</div>
+
 </div>
 
   <div style='clear:both;'></div>

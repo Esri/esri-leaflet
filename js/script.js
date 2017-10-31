@@ -26,3 +26,15 @@ for (i = 0; i < pageHeadings.length; ++i) {
     window.location.hash = this.id;
   });
 }
+
+// First we check if you support touch, otherwise it's click:
+var touchEvent = 'ontouchstart' in window ? 'touchstart' : 'click';
+
+// Mobile nav logic
+document.addEventListener(touchEvent, function(e) {
+  if(e.target.className !== 'mobileMenuButton') return;
+  e.preventDefault();
+
+  var menu = document.querySelector('#site-nav-wrapper') // Using a class instead, see note below.
+  menu.classList.toggle('show');
+}, false);

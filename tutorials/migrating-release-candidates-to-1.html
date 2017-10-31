@@ -16,7 +16,7 @@
   
 
   <meta name="description" content="Esri Leaflet">
-  <meta name="viewport" content="width=device-width">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!--[if lt IE 9]>
     <script src="//cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv-printshiv.js"></script>
@@ -67,8 +67,9 @@
 <body>
   <div class="page-content ">
     <div class="container">
+      <span id="mobileMenuButton" class="mobileMenuButton">&#9776;</span>
       <a class="site-nav" href="../" class="left logo">Esri Leaflet</a>
-      <nav class="right">
+      <nav id="site-nav-wrapper" class="site-nav-wrapper">
         <a class="site-nav" href="../tutorials/">Tutorials</a>
         <a class="site-nav" href="../plugins/">Plugins</a>
         <a class="site-nav" href="../examples/">Examples</a>
@@ -116,6 +117,34 @@
 <p>Coming Soon.</p>
 
   <p><a href="http://github.com/esri/esri-leaflet-doc/edit/master/src/pages/tutorials/migrating-release-candidates-to-1.md">Edit this page on GitHub</a></p>
+
+  <div class="mobile-menu">
+    <aside class="sidebar">
+  <h5>General</h5>
+  <nav>
+    <a href="create-your-first-app.html">Create your First App</a>
+    <a href="introduction-to-layer-types.html">Introduction to Layer Types</a>
+    <a href="working-with-feature-layers.html">Working with Feature Layers</a>
+    <a href="working-with-authenticated-services.html">Working with Authenticated Services</a>
+    <a href="discovering-content.html">Discovering Content</a>
+  </nav>
+
+  <h5>Migration Guides</h5>
+  <nav>
+    <a href="migrating-1-to-2.html">1.0.0 to 2.0.0</a>
+    <a href="migrating-release-candidates-to-1.html">Release Candidates to 1.0.0</a>
+  </nav>
+
+  <h5>Module Systems</h5>
+  <nav>
+    <a href="using-with-browserify.html">Browserify</a>
+    <a href="using-with-webpack.html">WebPack</a>
+    <a href="using-with-jspm.html">JSPM</a>
+    <a href="using-with-requirejs.html">RequireJS</a>
+  </nav>
+</aside>
+
+  </div>
 </div>
 
   <div style='clear:both;'></div>
