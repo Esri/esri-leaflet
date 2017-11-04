@@ -42,6 +42,12 @@ export var DynamicMapLayer = RasterLayer.extend({
   },
 
   setLayers: function (layers) {
+    if (!layers) { layers = []; }
+    if (layers.length === 0 && this.options.layers.length) {
+      this.onRemove(this._map);
+    } else if (layers.length && this.options.layers.length === 0) {
+      this.onAdd(this._map);
+    }
     this.options.layers = layers;
     this._update();
     return this;
@@ -164,6 +170,9 @@ export var DynamicMapLayer = RasterLayer.extend({
   },
 
   _requestExport: function (params, bounds) {
+    if (this.options.layers && this.options.layers.length === 0) {
+      return;
+    }
     if (this.options.f === 'json') {
       this.service.request('export', params, function (error, response) {
         if (error) { return; } // we really can't do anything here but authenticate or requesterror will fire
