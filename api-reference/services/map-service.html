@@ -237,7 +237,7 @@ service.identify()
 
 service.find()
     .layers(<span class="string">'18'</span>)
-    .searchText(<span class="string">'Colorado'</span>)
+    .text(<span class="string">'Colorado'</span>)
     .searchFields(<span class="string">'GNIS_NAME'</span>)
     .run(<span class="function"><span class="keyword">function</span><span class="params">(error, featureCollection, response)</span>{</span>
         console.log(<span class="string">'Found GNIS ID: '</span> + featureCollection.features[<span class="number">0</span>].properties.GNIS_ID + <span class="string">' for the state of '</span> + featureCollection.features[<span class="number">0</span>].properties.STATE_NAME);
