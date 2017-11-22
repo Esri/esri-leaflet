@@ -176,7 +176,7 @@ describe('L.esri.IdentifyFeatures', function () {
       done();
     });
 
-    expect(request.url).to.contain('maxAllowableOffset=0.000010728836059570313');
+    expect(request.url).to.contain('maxAllowableOffset=0.000010728836059570312');
 
     request.respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, JSON.stringify(sampleResponse));
   });
