@@ -255,7 +255,12 @@ export var RasterLayer = Layer.extend({
 
     var params = this._buildExportParams();
 
-    this._requestExport(params, bounds);
+    if (params) {
+      this._requestExport(params, bounds);
+    } else if (this._currentImage) {
+      this._currentImage._map.removeLayer(this._currentImage);
+      this._currentImage = null;
+    }
   },
 
   _renderPopup: function (latlng, error, results, response) {

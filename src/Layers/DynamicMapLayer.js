@@ -132,7 +132,11 @@ export var DynamicMapLayer = RasterLayer.extend({
     }
 
     if (this.options.layers) {
-      params.layers = 'show:' + this.options.layers.join(',');
+      if (this.options.layers.length === 0) {
+        return;
+      } else {
+        params.layers = 'show:' + this.options.layers.join(',');
+      }
     }
 
     if (this.options.layerDefs) {
