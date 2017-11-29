@@ -175,14 +175,11 @@ export var Query = Task.extend({
     }, context);
   },
 
-  // geometry must be omitted for queries requesting distinct values
-  distinct: function (callback, context) {
-    this._cleanParams();
+  distinct: function () {
+    // geometry must be omitted for queries requesting distinct values
     this.params.returnGeometry = false;
     this.params.returnDistinctValues = true;
-    return this.request(function (error, response) {
-      callback.call(this, error, (response), response);
-    }, context);
+    return this;
   },
 
   // only valid for image services

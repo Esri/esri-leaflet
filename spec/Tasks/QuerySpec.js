@@ -744,9 +744,9 @@ describe('L.esri.Query', function () {
   });
 
   it('should query distinct', function (done) {
-    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=false&returnDistinctValues=true&where=1%3D1&outSr=4326&outFields=*&f=json', JSON.stringify(sampleDistinctFeatureCollection));
+    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=false&where=1%3D1&outSr=4326&outFields=*&returnDistinctValues=true&f=json', JSON.stringify(sampleDistinctQueryResponse));
 
-    var request = task.distinct(function (error, featureCollection, raw) {
+    var request = task.distinct(true).run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleDistinctFeatureCollection);
       expect(raw).to.deep.equal(sampleDistinctQueryResponse);
       done();
