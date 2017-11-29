@@ -223,9 +223,51 @@ describe('L.esri.Query', function () {
     }]
   };
 
+  var sampleDistinctFeatureCollection = {
+    'type': 'FeatureCollection',
+    'features': [{
+      'type': 'Feature',
+      'geometry': null,
+      'properties': {
+        'FID': 1,
+        'Name': 'Site'
+      },
+      'id': 1
+    }]
+  };
+
   var sampleIdsResponse = {
     'objectIdFieldName': 'FID',
     'objectIds': [1, 2]
+  };
+
+  var sampleDistinctQueryResponse = {
+    'objectIdFieldName': 'FID',
+    'fields': [{
+      'name': 'stop_desc',
+      'type': 'esriFieldTypeString',
+      'alias': 'stop_desc',
+      'sqlType': 'sqlTypeNVarchar',
+      'length': 256,
+      'domain': null,
+      'defaultValue': null
+    }, {
+      'name': 'FID',
+      'type': 'esriFieldTypeInteger',
+      'alias': 'FID',
+      'sqlType': 'sqlTypeInteger',
+      'domain': null,
+      'defaultValue': null
+    }],
+    'features': [
+      {
+        'attributes': {
+          'FID': 1,
+          'Name': 'Site'
+        },
+        'geometry': null
+      }
+    ]
   };
 
   beforeEach(function () {
@@ -693,6 +735,20 @@ describe('L.esri.Query', function () {
     var request = task.ids(function (error, ids, raw) {
       expect(ids).to.deep.equal([1, 2]);
       expect(raw).to.deep.equal(sampleIdsResponse);
+      done();
+    });
+
+    expect(request).to.be.an.instanceof(XMLHttpRequest);
+
+    server.respond();
+  });
+
+  it('should query distinct', function (done) {
+    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=false&returnDistinctValues=true&where=1%3D1&outSr=4326&outFields=*&f=json', JSON.stringify(sampleDistinctFeatureCollection));
+
+    var request = task.distinct(function (error, featureCollection, raw) {
+      expect(featureCollection).to.deep.equal(sampleDistinctFeatureCollection);
+      expect(raw).to.deep.equal(sampleDistinctQueryResponse);
       done();
     });
 
