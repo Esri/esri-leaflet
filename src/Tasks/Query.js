@@ -175,6 +175,13 @@ export var Query = Task.extend({
     }, context);
   },
 
+  distinct: function () {
+    // geometry must be omitted for queries requesting distinct values
+    this.params.returnGeometry = false;
+    this.params.returnDistinctValues = true;
+    return this;
+  },
+
   // only valid for image services
   pixelSize: function (rawPoint) {
     var castPoint = point(rawPoint);
