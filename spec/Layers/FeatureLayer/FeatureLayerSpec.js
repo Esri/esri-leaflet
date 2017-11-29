@@ -135,7 +135,7 @@ describe('L.esri.FeatureLayer', function () {
     layer.createLayers(features);
 
     layer.on('removefeature', function (e) {
-      expect(e.feature.id).to.equal(2);
+      expect(e.feature.id).to.equal(1);
       done();
     });
 

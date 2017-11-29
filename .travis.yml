@@ -7,8 +7,13 @@ node_js:
 cache:
   directories: # Cache dependencies
     - node_modules
-    - travis_phantomjs
 before_script:
   - npm prune
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+  - sleep 3 # give xvfb some time to start
 before_install:
   - npm i -g npm@latest
+  - google-chrome-stable --headless --disable-gpu
+addons:
+  chrome: stable
