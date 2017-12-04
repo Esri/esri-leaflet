@@ -187,6 +187,7 @@ export function jsonp (url, params, callback, context) {
   script.type = 'text/javascript';
   script.src = url + '?' + serialize(params);
   script.id = callbackId;
+  DomUtil.addClass(script, 'esri-leaflet-jsonp-script');
 
   callbacks++;
 
