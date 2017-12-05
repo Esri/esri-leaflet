@@ -197,6 +197,16 @@ export function setEsriAttribution (map) {
       map.attributionControl._container.style.maxWidth = calcAttributionWidth(e.target);
     });
 
+    // remove injected scripts and style tags
+    map.on('unload', function () {
+      hoverAttributionStyle.parentNode.removeChild(hoverAttributionStyle);
+      attributionStyle.parentNode.removeChild(attributionStyle);
+      var nodeList = document.querySelectorAll('.esri-leaflet-jsonp');
+      for (var i = 0; i < nodeList.length; i++) {
+        nodeList.item(i).parentNode.removeChild(nodeList.item(i));
+      }
+    });
+
     map.attributionControl._esriAttributionAdded = true;
   }
 }
