@@ -201,7 +201,7 @@ export function setEsriAttribution (map) {
     map.on('unload', function () {
       hoverAttributionStyle.parentNode.removeChild(hoverAttributionStyle);
       attributionStyle.parentNode.removeChild(attributionStyle);
-      var nodeList = document.querySelectorAll('.esri-leaflet-jsonp-script');
+      var nodeList = document.querySelectorAll('.esri-leaflet-jsonp');
       for (var i = 0; i < nodeList.length; i++) {
         nodeList.item(i).parentNode.removeChild(nodeList.item(i));
       }
