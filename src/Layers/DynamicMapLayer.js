@@ -87,19 +87,26 @@ export var DynamicMapLayer = RasterLayer.extend({
       }, this), 300);
     }, this);
 
-    var identifyRequest = this.identify().on(this._map).at(e.latlng);
-
-    // remove extraneous vertices from response features
-    identifyRequest.simplify(this._map, 0.5);
-
-    if (this.options.layers) {
-      identifyRequest.layers('visible:' + this.options.layers.join(','));
+    var identifyRequest;
+    if (this.options.popup) {
+      identifyRequest = this.options.popup.at(e.latlng);
     } else {
-      identifyRequest.layers('visible');
+      identifyRequest = this.identify().on(this._map).at(e.latlng);
+    }
+
+    // remove extraneous vertices from response features if it has not already been done
+    identifyRequest.params.maxAllowableOffset ? true : identifyRequest.simplify(this._map, 0.5);
+
+    if (!(this.options.popup && this.options.popup.params && this.options.popup.params.layers)) {
+      if (this.options.layers) {
+        identifyRequest.layers('visible:' + this.options.layers.join(','));
+      } else {
+        identifyRequest.layers('visible');
+      }
     }
 
     // if present, pass layer ids and sql filters through to the identify task
-    if (this.options.layerDefs && typeof this.options.layerDefs !== 'string') {
+    if (this.options.layerDefs && typeof this.options.layerDefs !== 'string' && !identifyRequest.params.layerDefs) {
       for (var id in this.options.layerDefs) {
         if (this.options.layerDefs.hasOwnProperty(id)) {
           identifyRequest.layerDef(id, this.options.layerDefs[id]);
