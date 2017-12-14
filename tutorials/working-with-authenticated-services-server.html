@@ -167,7 +167,7 @@
 <p>For most instances of ArcGIS Server, the generate token URL will be <strong>[server domain]/arcgis/tokens/GenerateToken</strong>.  However, depending upon the installation of ArcGIS Server, the URL may be different.</p>
 </blockquote>
 <p>We&#39;ll need to define a few rules to control the style of the elements we have created.  Using a .css framework may make this process easier. <a href="https://github.com/Esri/calcite-maps">Esri Calcite Maps</a> uses Bootstrap and contains samples for Esri Leaflet.  Below is how the form looks on the map.</p>
-<p><img src="../../img/tutorials/ags-secured-services/secured-service-form-screenshot.png" alt="screen shot of form to add secured service to map" title="Form to add secured services to map"></p>
+<p><img src="/esri-leaflet/img/tutorials/ags-secured-services/secured-service-form-screenshot.png" alt="screen shot of form to add secured service to map" title="Form to add secured services to map"></p>
 <pre><code class="language-xml"><span class="doctype">&lt;!DOCTYPE html&gt;</span>
 <span class="tag">&lt;<span class="title">html</span> <span class="attribute">lang</span>=<span class="value">"en"</span>&gt;</span>
 <span class="tag">&lt;<span class="title">head</span>&gt;</span>
@@ -257,7 +257,7 @@ submitBtn.addEventListener(<span class="string">'click'</span>, addServicesFromS
 
     <span class="comment">// get values from form</span>
     <span class="keyword">var</span> username = document.getElementById(<span class="string">'username'</span>).value;
-    <span class="keyword">var</span> password = document.getElementById(<span class="string">'password'</span>).value;    
+    <span class="keyword">var</span> password = document.getElementById(<span class="string">'password'</span>).value;
 
     <span class="comment">// call function to handle server request</span>
 }</code></pre>
@@ -321,7 +321,7 @@ submitBtn.addEventListener(<span class="string">'click'</span>, addServicesFromS
      }); <span class="comment">// end serverAuth call</span>
 } <span class="comment">// end addServicesFromServer call</span></code></pre>
 <p>Our response from the token generation page includes our access token for the service.  We pass this into the token option for the map service.  The username and password for this service are <strong>user1</strong>.</p>
-<p><img src="../../img/tutorials/ags-secured-services/secured-services-on-map.png" alt="screen shot of map with secured services" title="Map with secured services displayed"></p>
+<p><img src="/esri-leaflet/img/tutorials/ags-secured-services/secured-services-on-map.png" alt="screen shot of map with secured services" title="Map with secured services displayed"></p>
 <p>We have now built a basic Esri Leaflet web map that retrieves an authenticated service from ArcGIS Server.</p>
 <pre><code class="language-xml"><span class="doctype">&lt;!DOCTYPE html&gt;</span>
 <span class="tag">&lt;<span class="title">html</span> <span class="attribute">lang</span>=<span class="value">"en"</span>&gt;</span>
