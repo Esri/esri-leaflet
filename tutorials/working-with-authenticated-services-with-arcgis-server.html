@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]> <html class="ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html class="ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html class="ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html class="ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="not-ie"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+
+  
+    <title>Working with Authenticated Services in ArcGIS Server | Esri Leaflet</title>
+  
+
+  
+    <meta name="description" content="How to access secure ArcGIS Enterprise services in Esri Leaflet.">
+  
+
+  <meta name="description" content="Esri Leaflet">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!--[if lt IE 9]>
+    <script src="//cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv-printshiv.js"></script>
+  <![endif]-->
+
+  <!-- google fonts -->
+  <link href='//fonts.googleapis.com/css?family=Vollkorn:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="//brick.a.ssl.fastly.net/Source+Code+Pro:300">
+  <link href='//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+
+  <!-- stylesheet -->
+  <link rel="stylesheet" href="../css/style.css">
+
+  
+    <!-- 'livereload' for development -->
+    <script src="//localhost:35729/livereload.js"></script>
+  
+
+  
+    
+      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"
+      integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ=="
+      crossorigin=""/>
+      <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"
+      integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log=="
+      crossorigin=""></script>
+    
+
+    
+      <script src="https://unpkg.com/esri-leaflet@2.1.1/dist/esri-leaflet.js"
+      integrity="sha512-ECQqaYZke9cSdqlFG08zSkudgrdF6I1d8ViSa7I3VIszJyVqw4ng1G8sehEXlumdMnFYfzY0tMgdQa4WCs9IUw=="
+      crossorigin=""></script>
+    
+
+  
+
+  
+
+  <!-- Google Analytics -->
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-44963317-3', 'auto');
+    ga('send', 'pageview');
+  </script>
+  <!-- End Google Analytics -->
+</head>
+<body>
+  <div class="page-content ">
+    <div class="container">
+      <span id="mobileMenuButton" class="mobileMenuButton">&#9776;</span>
+      <a class="site-nav" href="../" class="left logo">Esri Leaflet</a>
+      <nav id="site-nav-wrapper" class="site-nav-wrapper">
+        <a class="site-nav" href="../tutorials/">Tutorials</a>
+        <a class="site-nav" href="../plugins/">Plugins</a>
+        <a class="site-nav" href="../examples/">Examples</a>
+        <a class="site-nav" href="../api-reference/">API Reference</a>
+        <a class="site-nav" href="../download/">Download</a>
+        <a class="site-nav" href="https://github.com/Esri/esri-leaflet">View on GitHub</a>
+      </nav>
+    </div>
+    <div id="background-map" class="background-map"></div>
+
+  
+
+<div class="container white">
+  
+
+<aside class="sidebar">
+  <h5>General</h5>
+  <nav>
+    <a href="create-your-first-app.html">Create your First App</a>
+    <a href="introduction-to-layer-types.html">Introduction to Layer Types</a>
+    <a href="working-with-feature-layers.html">Working with Feature Layers</a>
+    <a href="working-with-authenticated-services.html">Working with Authenticated Services</a>
+    <a href="discovering-content.html">Discovering Content</a>
+  </nav>
+
+  <h5>Migration Guides</h5>
+  <nav>
+    <a href="migrating-1-to-2.html">1.0.0 to 2.0.0</a>
+    <a href="migrating-release-candidates-to-1.html">Release Candidates to 1.0.0</a>
+  </nav>
+
+  <h5>Module Systems</h5>
+  <nav>
+    <a href="using-with-browserify.html">Browserify</a>
+    <a href="using-with-webpack.html">WebPack</a>
+    <a href="using-with-jspm.html">JSPM</a>
+    <a href="using-with-requirejs.html">RequireJS</a>
+  </nav>
+</aside>
+
+
+<div class="main-content">
+  <h1 id="working-with-authenticated-services-in-arcgis-server">Working with Authenticated Services in ArcGIS Server</h1>
+<p>How to access secure ArcGIS Enterprise services in Esri Leaflet.</p>
+<h4 id="introduction">Introduction</h4>
+<p>In this tutorial, you will learn how to use authenticated services from ArcGIS Server with the Leaflet.js web mapping library.</p>
+<p>Authenticated services published on ArcGIS Server require a username and password to access the service.  As part of the authentication process, a token is generated.  To add an authenticated service to a Leaflet.js web map, you&#39;ll need to use the <strong>L.esri.post</strong> method to submit the username and password to the server to generate the token.  To see a token generation page in a web browser, please visit this <a href="https://sampleserver6.arcgisonline.com/arcgis/tokens/GenerateToken">page</a>.  You can learn more about making requests with Esri Leaflet by visiting the <a href="https://esri.github.io/esri-leaflet/api-reference/request.html">documentation site</a>.</p>
+<p>Here is an outline for the steps in this tutorial:</p>
+<ol>
+<li>Create an empty <strong><code>html</code></strong> file and add the Leaflet and Esri Leaflet libraries via CDN</li>
+<li>Create elements for the map. This includes the container for the map, as well as the form that will execute a function request the authenticated service.  Add basic style rules for these elements.</li>
+<li>Create a <strong><code>&lt;script&gt;</code></strong> element, create the map, and add a basemap.</li>
+<li>Create a function that will make the request to the ArcGIS Server using inputs from the form.</li>
+<li>Create a function that will be tied to the click event of the submit button of the form. This will call the function created in step #4.</li>
+<li>Add some logic to handle errors for the request, as well as for the service not loading.</li>
+</ol>
+<h4 id="create-html-file-and-add-leaflet-and-esri-leaflet-via-cdn">Create HTML File and Add Leaflet and Esri Leaflet Via CDN</h4>
+<p>To start, we&#39;ll create a <strong><code>html</code></strong> file and add Leaflet and Esri Leaflet via CDN.</p>
+<pre><code class="language-xml"><span class="doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="tag">&lt;<span class="title">html</span> <span class="attribute">lang</span>=<span class="value">"en"</span>&gt;</span>
+<span class="tag">&lt;<span class="title">head</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">"utf-8"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">title</span>&gt;</span>Esri Leaflet Authenticated Services<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">name</span>=<span class="value">"viewport"</span> <span class="attribute">content</span>=<span class="value">"width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"</span>&gt;</span>
+    <span class="comment">&lt;!-- Load Leaflet stylesheet from CDN --&gt;</span>
+    <span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"</span>
+    <span class="attribute">integrity</span>=<span class="value">"sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ=="</span>
+    <span class="attribute">crossorigin</span>=<span class="value">""</span>/&gt;</span>
+<span class="tag">&lt;/<span class="title">head</span>&gt;</span>
+<span class="tag">&lt;<span class="title">body</span>&gt;</span>
+    <span class="comment">&lt;!-- Load Leaflet script from CDN --&gt;</span>
+    <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"</span>
+    <span class="attribute">integrity</span>=<span class="value">"sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log=="</span>
+    <span class="attribute">crossorigin</span>=<span class="value">""</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+    <span class="comment">&lt;!-- Load Esri Leaflet script from CDN --&gt;</span>
+    <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/esri-leaflet@2.1.1/dist/esri-leaflet.js"</span>
+    <span class="attribute">integrity</span>=<span class="value">"sha512-ECQqaYZke9cSdqlFG08zSkudgrdF6I1d8ViSa7I3VIszJyVqw4ng1G8sehEXlumdMnFYfzY0tMgdQa4WCs9IUw=="</span>
+    <span class="attribute">crossorigin</span>=<span class="value">""</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">body</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">html</span>&gt;</span></code></pre>
+<h4 id="add-elements-for-the-map-container-and-form">Add Elements for the Map Container and Form</h4>
+<p>Within the <strong><code>&lt;body&gt;</code></strong> element, we&#39;ll create a <strong><code>&lt;section&gt;</code></strong> element and provide it with an id of <strong>&quot;map&quot;</strong>.  The web map will be placed within this element after we construct the <strong>L.map</strong> object in our script.</p>
+<p>Within the <strong><code>&lt;section id=&quot;map&quot;&gt;</code></strong>, we&#39;ll add a <strong><code>&lt;div class=&quot;form-container&quot;&gt;</code></strong> element to hold our form.  Next, we&#39;ll add a <strong><code>&lt;form id=&quot;securedServicesForm&quot;&gt;</code></strong> element as a child of <strong><code>&lt;div class=&quot;form-container&quot;&gt;</code></strong>.</p>
+<p>Within the <strong>form</strong> element, we&#39;ll add the text inputs and associated labels to capture the username, password, and token generation URL for the service.  We&#39;ll also create a submit button that will be tied to the function to submit the service credentials, and then add it to the map.  Our form will appear the following way:</p>
+<pre><code class="language-xml"><span class="tag">&lt;<span class="title">form</span> <span class="attribute">id</span>=<span class="value">"securedServicesForm"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"form-component"</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">label</span> <span class="attribute">for</span>=<span class="value">"username"</span>&gt;</span>User Name<span class="tag">&lt;/<span class="title">label</span>&gt;</span>
+        <span class="comment">&lt;!-- this will be the username for the service --&gt;</span>
+        <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"text"</span> <span class="attribute">id</span>=<span class="value">"username"</span> /&gt;</span>
+    <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"form-component"</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">label</span> <span class="attribute">for</span>=<span class="value">"password"</span>&gt;</span>Password<span class="tag">&lt;/<span class="title">label</span>&gt;</span>
+        <span class="comment">&lt;!-- this will be the password for the service --&gt;</span>
+        <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"password"</span> <span class="attribute">id</span>=<span class="value">"password"</span>&gt;</span>
+    <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"form-component"</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">label</span> <span class="attribute">for</span>=<span class="value">"tokenUrl"</span>&gt;</span>ArcGIS Server Generate Token URL<span class="tag">&lt;/<span class="title">label</span>&gt;</span>
+        <span class="comment">&lt;!-- this will be the url for token generation for the service --&gt;</span>
+        <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"text"</span> <span class="attribute">id</span>=<span class="value">"tokenUrl"</span> /&gt;</span>
+    <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+    <span class="comment">&lt;!-- a click event handler will be placed on this element to run our function --&gt;</span>
+    <span class="tag">&lt;<span class="title">button</span> <span class="attribute">id</span>=<span class="value">"formSubmit"</span> <span class="attribute">type</span>=<span class="value">"submit"</span>&gt;</span>Add Services<span class="tag">&lt;/<span class="title">button</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">form</span>&gt;</span></code></pre>
+<blockquote>
+<p>For most instances of ArcGIS Server, the generate token URL will be <strong>[server domain]/arcgis/tokens/GenerateToken</strong>.  However, depending upon the installation of ArcGIS Server, the URL may be different.</p>
+</blockquote>
+<p>We&#39;ll need to update the stylesheet rules for the elements we have created.  Using a CSS framework may make this process easier. The <a href="https://github.com/Esri/calcite-maps">Esri Calcite Maps</a> project uses Bootstrap and contains samples for Esri Leaflet.  The rules provided in this tutorial are only a starting point.</p>
+<p>Now our <strong><code>html</code></strong> file will appear the following way:</p>
+<pre><code class="language-xml"><span class="doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="tag">&lt;<span class="title">html</span> <span class="attribute">lang</span>=<span class="value">"en"</span>&gt;</span>
+<span class="tag">&lt;<span class="title">head</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">"utf-8"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">title</span>&gt;</span>Esri Leaflet Authenticated Services<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">name</span>=<span class="value">"viewport"</span> <span class="attribute">content</span>=<span class="value">"width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"</span>&gt;</span>
+    <span class="comment">&lt;!-- Load Leaflet stylesheet from CDN --&gt;</span>
+    <span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"</span>
+    <span class="attribute">integrity</span>=<span class="value">"sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ=="</span>
+    <span class="attribute">crossorigin</span>=<span class="value">""</span>/&gt;</span>
+
+    <span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css">
+        <span class="tag">html</span>,
+        <span class="tag">body</span>,
+        <span class="id">#map</span> <span class="rules">{
+            <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">100</span>%</span></span>;
+            <span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">100</span>%</span></span>;
+            <span class="rule"><span class="attribute">margin</span>:<span class="value"> <span class="number">0</span></span></span>;
+            <span class="rule"><span class="attribute">padding</span>:<span class="value"> <span class="number">0</span></span></span>;
+        <span class="rule">}</span></span>
+
+        <span class="class">.form-container</span> <span class="rules">{
+            <span class="rule"><span class="attribute">position</span>:<span class="value"> absolute</span></span>;
+            <span class="rule"><span class="attribute">top</span>:<span class="value"> <span class="number">15</span>px</span></span>;
+            <span class="rule"><span class="attribute">right</span>:<span class="value"> <span class="number">15</span>px</span></span>;
+            <span class="rule"><span class="attribute">padding</span>:<span class="value"> <span class="number">25</span>px</span></span>;
+            <span class="rule"><span class="attribute">border</span>:<span class="value"> <span class="number">2</span>px solid <span class="hexcolor">#333</span></span></span>;
+            <span class="rule"><span class="attribute">background</span>:<span class="value"> <span class="hexcolor">#fff</span></span></span>;
+            <span class="rule"><span class="attribute">font-size</span>:<span class="value"> <span class="number">1.15</span>em</span></span>;
+            <span class="rule"><span class="attribute">z-index</span>:<span class="value"> <span class="number">1000</span></span></span>;
+        <span class="rule">}</span></span>
+
+        <span class="class">.form-component</span> <span class="rules">{
+            <span class="rule"><span class="attribute">margin-bottom</span>:<span class="value"> <span class="number">15</span>px</span></span>;
+        <span class="rule">}</span></span>
+    </span><span class="tag">&lt;/<span class="title">style</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">head</span>&gt;</span>
+<span class="tag">&lt;<span class="title">body</span>&gt;</span>
+    <span class="comment">&lt;!-- container for map --&gt;</span>
+    <span class="tag">&lt;<span class="title">section</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span>
+        <span class="comment">&lt;!-- form to add in secured service --&gt;</span>
+        <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"form-container"</span>&gt;</span>
+            <span class="tag">&lt;<span class="title">form</span> <span class="attribute">id</span>=<span class="value">"securedServicesForm"</span>&gt;</span>
+                <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"form-component"</span>&gt;</span>
+                    <span class="tag">&lt;<span class="title">label</span> <span class="attribute">for</span>=<span class="value">"username"</span>&gt;</span>User Name<span class="tag">&lt;/<span class="title">label</span>&gt;</span>
+                    <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"text"</span> <span class="attribute">id</span>=<span class="value">"username"</span> /&gt;</span>
+                <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+                <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"form-component"</span>&gt;</span>
+                    <span class="tag">&lt;<span class="title">label</span> <span class="attribute">for</span>=<span class="value">"password"</span>&gt;</span>Password<span class="tag">&lt;/<span class="title">label</span>&gt;</span>
+                    <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"password"</span> <span class="attribute">id</span>=<span class="value">"password"</span>&gt;</span>
+                <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+                <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"form-component"</span>&gt;</span>
+                    <span class="tag">&lt;<span class="title">label</span> <span class="attribute">for</span>=<span class="value">"tokenUrl"</span>&gt;</span>ArcGIS Server Generate Token URL<span class="tag">&lt;/<span class="title">label</span>&gt;</span>
+                    <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"text"</span> <span class="attribute">id</span>=<span class="value">"tokenUrl"</span> /&gt;</span>
+                <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+                <span class="tag">&lt;<span class="title">button</span> <span class="attribute">id</span>=<span class="value">"formSubmit"</span> <span class="attribute">type</span>=<span class="value">"submit"</span>&gt;</span>Add Services<span class="tag">&lt;/<span class="title">button</span>&gt;</span>
+            <span class="tag">&lt;/<span class="title">form</span>&gt;</span>
+        <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+    <span class="tag">&lt;/<span class="title">section</span>&gt;</span>
+
+    <span class="comment">&lt;!-- Load Leaflet script from CDN --&gt;</span>
+    <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"</span>
+    <span class="attribute">integrity</span>=<span class="value">"sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log=="</span>
+    <span class="attribute">crossorigin</span>=<span class="value">""</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+    <span class="comment">&lt;!-- Load Esri Leaflet script from CDN --&gt;</span>
+    <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/esri-leaflet@2.1.1/dist/esri-leaflet.js"</span>
+    <span class="attribute">integrity</span>=<span class="value">"sha512-ECQqaYZke9cSdqlFG08zSkudgrdF6I1d8ViSa7I3VIszJyVqw4ng1G8sehEXlumdMnFYfzY0tMgdQa4WCs9IUw=="</span>
+    <span class="attribute">crossorigin</span>=<span class="value">""</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">body</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">html</span>&gt;</span></code></pre>
+<h4 id="write-javascript-for-map-object-and-function-to-add-service-to-map">Write JavaScript for Map Object and Function to Add Service to Map</h4>
+<p>Now that our <strong><code>html</code></strong> file is set-up, we are ready to start writing JavaScript.  At the end of the <strong><code>html</code></strong> file, before the closing <strong><code>&lt;/body&gt;</code></strong> tag, create a <strong><code>&lt;script&gt;</code></strong> tag.  Our JavaScript will be placed here.</p>
+<blockquote>
+<p>You can optionally write your JavaScript in a seperate file and add it to the <strong><code>html</code></strong> file.</p>
+</blockquote>
+<p>We&#39;ll start by creating the map object and setting a basemap:</p>
+<pre><code class="language-javascript"><span class="comment">// create map and set zoom level and center coordinates</span>
+<span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">34.089</span>, -<span class="number">116.865</span>], <span class="number">9</span>);
+
+<span class="comment">// set basemap to Esri Streets</span>
+<span class="keyword">var</span> esriStreets = L.esri.basemapLayer(<span class="string">'Streets'</span>).addTo(map);</code></pre>
+<p>We will want to create a function that executes when the <strong>submit</strong> button of the form is clicked.  We&#39;ll also need to add an event listener to this element.</p>
+<pre><code class="language-javascript"><span class="comment">// function to run when form is submitted</span>
+<span class="function"><span class="keyword">function</span> <span class="title">addServicesFromServer</span><span class="params">()</span> {</span>}
+
+<span class="comment">// submit element of form</span>
+<span class="keyword">var</span> submitBtn = document.getElementById(<span class="string">'formSubmit'</span>);
+
+<span class="comment">// add event listener to form</span>
+submitBtn.addEventListener(<span class="string">'click'</span>, addServicesFromServer);</code></pre>
+<p>Our function <strong>addServicesFromServer</strong> will need to get the values from the text inputs, make a POST request to the ArcGIS Server to generate the token, and then add the map/feature service (layer) to the map.  We will create a function to handle the server request.</p>
+<pre><code class="language-javascript"><span class="comment">// function to run when form submitted</span>
+<span class="function"><span class="keyword">function</span> <span class="title">addServicesFromServer</span><span class="params">(e)</span> {</span>
+    <span class="comment">// prevent page from refreshing when form is submitted</span>
+    e.preventDefault();
+
+    <span class="comment">// get values from form</span>
+    <span class="keyword">var</span> username = document.getElementById(<span class="string">'username'</span>).value;
+    <span class="keyword">var</span> password = document.getElementById(<span class="string">'password'</span>).value;
+    <span class="keyword">var</span> tokenUrl = document.getElementById(<span class="string">'tokenUrl'</span>).value;
+
+    <span class="comment">// call function to handle server request</span>
+}</code></pre>
+<p>Let&#39;s now create our function to make the request to the server.  There are a few methods in Esri Leaflet to make requests.  Please see the <a href="https://esri.github.io/esri-leaflet/api-reference/request.html">documentation</a> for more information.  We will be making a POST request to ArcGIS Server.  The <strong>L.esri.post</strong> requires the request URL, an object containing the parameters to send as the query string, a callback function that runs when the request completes, and an optional function context for the callback function.</p>
+<p>We will be making the POST request to the token generation page.  You can see this page in a web browser <a href="https://sampleserver6.arcgisonline.com/arcgis/tokens/GenerateToken">here</a>.  Below is the function we&#39;ll use to make the request, along with some code to help with one of thee query parameters for older versions of Internet Explorer.</p>
+<pre><code class="language-javascript"><span class="comment">// workaround for old ie</span>
+<span class="keyword">if</span> (!window.location.origin) {
+    window.location.origin = window.location.protocol + <span class="string">"//"</span> + window.location.hostname + (window.location.port ? <span class="string">':'</span> + window.location.port: <span class="string">''</span>);
+ }
+
+<span class="comment">// function to make request to server</span>
+<span class="function"><span class="keyword">function</span> <span class="title">serverAuth</span><span class="params">(server, username, password, callback)</span> {</span>
+    L.esri.post(server, {
+        username: username,
+        password: password,
+        f: <span class="string">'json'</span>,
+        expiration: <span class="number">86400</span>,
+        client: <span class="string">'referer'</span>,
+        referer: window.location.origin
+    }, callback);
+}</code></pre>
+<p>We will call <strong>serverAuth</strong> within <strong>addServicesFromServer</strong>.  Here is what our <strong><code>&lt;script&gt;</code></strong> now looks like.</p>
+<pre><code class="language-javascript"><span class="string">'use strict'</span>;
+
+<span class="comment">// submit element of form</span>
+<span class="keyword">var</span> submitBtn = document.getElementById(<span class="string">'formSubmit'</span>);
+
+<span class="comment">// add event listener to form</span>
+submitBtn.addEventListener(<span class="string">'click'</span>, addServicesFromServer);
+
+<span class="comment">// create map and set zoom level and center coordinates</span>
+<span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">34.089</span>, -<span class="number">116.865</span>], <span class="number">9</span>);
+
+<span class="comment">// set basemap to Esri Streets</span>
+<span class="keyword">var</span> esriStreets = L.esri.basemapLayer(<span class="string">'Streets'</span>).addTo(map);
+
+<span class="comment">// workaround for old ie</span>
+<span class="keyword">if</span> (!window.location.origin) {
+    window.location.origin = window.location.protocol + <span class="string">"//"</span> + window.location.hostname + (window.location.port ? <span class="string">':'</span> + window.location.port: <span class="string">''</span>);
+}
+
+<span class="comment">// function to make request to server</span>
+<span class="function"><span class="keyword">function</span> <span class="title">serverAuth</span><span class="params">(server, username, password, callback)</span> {</span>
+    L.esri.post(server, {
+        username: username,
+        password: password,
+        f: <span class="string">'json'</span>,
+        expiration: <span class="number">86400</span>,
+        client: <span class="string">'referer'</span>,
+        referer: window.location.origin
+    }, callback);
+}
+
+<span class="comment">// function to run when form submitted</span>
+<span class="function"><span class="keyword">function</span> <span class="title">addServicesFromServer</span><span class="params">(e)</span> {</span>
+    <span class="comment">// prevent page from refreshing</span>
+    e.preventDefault();
+
+    <span class="comment">// get values from form</span>
+    <span class="keyword">var</span> username = document.getElementById(<span class="string">'username'</span>).value;
+    <span class="keyword">var</span> password = document.getElementById(<span class="string">'password'</span>).value;
+    <span class="keyword">var</span> tokenUrl = document.getElementById(<span class="string">'tokenUrl'</span>).value;
+
+    <span class="comment">// generate token from server and add service from callback function</span>
+    serverAuth(tokenUrl,username,password,<span class="function"><span class="keyword">function</span><span class="params">(error, response)</span> {</span>
+        <span class="comment">// add layer to map</span>
+        <span class="keyword">var</span> dl = L.esri.dynamicMapLayer({
+            url: <span class="string">'https://sampleserver6.arcgisonline.com/arcgis/rest/services/Wildfire_secure_ac/MapServer'</span>,
+            opacity: <span class="number">1</span>,
+            token:  response.token
+        }).addTo(map);
+     }); <span class="comment">// end serverAuth call</span>
+} <span class="comment">// end addServicesFromServer call</span></code></pre>
+<p>Our response from the token generation page includes our access token for the service.  We pass this into the token option for the map service.  The username and password for this service are <strong>user1</strong>, and the token generation URL is <a href="https://sampleserver6.arcgisonline.com/arcgis/tokens/generateToken">https://sampleserver6.arcgisonline.com/arcgis/tokens/generateToken</a>.  If you test this in your browser, you should see layers added to the map.</p>
+<h4 id="handling-errors-with-requests">Handling Errors With Requests</h4>
+<p>But we are not finished yet.  When making requests, it is important to handle errors.  Maybe the URL for the service has changed, or the service is down, or the username or password were entered incorrectly.  It is up to you how to handle these errors, but let&#39;s look at some sample code.</p>
+<p>In the <strong>L.esri.post</strong> method, there is an error object that can be returned.  We can use a conditional statement to trap the error and log the message to the console.  If there is no error with the request, we can execute the code to add the service to the map.</p>
+<pre><code class="language-javascript">serverAuth(tokenUrl,username,password,<span class="function"><span class="keyword">function</span><span class="params">(error, response)</span> {</span>
+    <span class="comment">// if an error occured while sending POST request, log the error</span>
+    <span class="keyword">if</span> (error) {
+        console.log(error);
+    } <span class="keyword">else</span> { <span class="comment">// if no error occured</span>
+        <span class="comment">// exectue code to add layer to map</span>
+    }
+}</code></pre>
+<p>There are also some ways to handle errors from the <strong><code>L.esri.Service</code></strong> class.  You can read the <a href="https://esri.github.io/esri-leaflet/api-reference/services/service.html">documentation</a> for more information.  We can utilize the <strong>authenticationrequired</strong> event, which is fired when a request to the service fails and requires authentication.  Within this event, we can call the <strong>authenticate</strong> method, which authenticates the service with a new token and runs any pending requests that required a token.</p>
+<p>There is also the <strong>requesterror</strong> event, which is fired when a request to the service responsed with an error.  This will probably be due to the service being down, or the URL for the service being invalid.  We can access the error object and add a message to the map or the console.  Using <strong>dl</strong> as the variable for the service we are requesting, the following code can be used to handle these events.</p>
+<pre><code class="language-javascript"><span class="comment">// this event fires when a request to the service fails and requires authentication</span>
+dl.on(<span class="string">'authenticationrequired'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(e)</span> {</span>
+    serverAuth(<span class="function"><span class="keyword">function</span><span class="params">(error, response)</span> {</span>
+        e.authenticate(response.token);
+    });
+});
+
+<span class="comment">// This event fires when a request to the service responds with an error</span>
+dl.on(<span class="string">'requesterror'</span>, <span class="function"><span class="keyword">function</span><span class="params">(e)</span> {</span>
+    console.log(<span class="string">'There was an error adding '</span> + e.url + <span class="string">'to the map'</span>);
+    console.log(<span class="string">'Error code:'</span> + e.code + <span class="string">'; Message: '</span> + e.message);
+});</code></pre>
+<p>We have now built a basic Esri Leaflet web map that retrieves an authenticated service from ArcGIS Server, and handles errors with both the POST request to generate the token, as well as accessing the service.  Below is the completed code.  Try experimenting with the wrong username/password and service URL to test the error trapping logic.</p>
+<pre><code class="language-xml"><span class="doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="tag">&lt;<span class="title">html</span> <span class="attribute">lang</span>=<span class="value">"en"</span>&gt;</span>
+<span class="tag">&lt;<span class="title">head</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">"utf-8"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">title</span>&gt;</span>Esri Leaflet Authenticated Services<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">name</span>=<span class="value">"viewport"</span> <span class="attribute">content</span>=<span class="value">"width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"</span>&gt;</span>
+    <span class="comment">&lt;!-- Load Leaflet stylesheet from CDN --&gt;</span>
+    <span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"</span>
+    <span class="attribute">integrity</span>=<span class="value">"sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ=="</span>
+    <span class="attribute">crossorigin</span>=<span class="value">""</span>/&gt;</span>
+
+    <span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css">
+        <span class="tag">html</span>,
+        <span class="tag">body</span>,
+        <span class="id">#map</span> <span class="rules">{
+            <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">100</span>%</span></span>;
+            <span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">100</span>%</span></span>;
+            <span class="rule"><span class="attribute">margin</span>:<span class="value"> <span class="number">0</span></span></span>;
+            <span class="rule"><span class="attribute">padding</span>:<span class="value"> <span class="number">0</span></span></span>;
+        <span class="rule">}</span></span>
+
+        <span class="class">.form-container</span> <span class="rules">{
+            <span class="rule"><span class="attribute">position</span>:<span class="value"> absolute</span></span>;
+            <span class="rule"><span class="attribute">top</span>:<span class="value"> <span class="number">15</span>px</span></span>;
+            <span class="rule"><span class="attribute">right</span>:<span class="value"> <span class="number">15</span>px</span></span>;
+            <span class="rule"><span class="attribute">padding</span>:<span class="value"> <span class="number">25</span>px</span></span>;
+            <span class="rule"><span class="attribute">border</span>:<span class="value"> <span class="number">2</span>px solid <span class="hexcolor">#333</span></span></span>;
+            <span class="rule"><span class="attribute">background</span>:<span class="value"> <span class="hexcolor">#fff</span></span></span>;
+            <span class="rule"><span class="attribute">font-size</span>:<span class="value"> <span class="number">1.15</span>em</span></span>;
+            <span class="rule"><span class="attribute">z-index</span>:<span class="value"> <span class="number">1000</span></span></span>;
+        <span class="rule">}</span></span>
+
+        <span class="class">.form-component</span> <span class="rules">{
+            <span class="rule"><span class="attribute">margin-bottom</span>:<span class="value"> <span class="number">15</span>px</span></span>;
+        <span class="rule">}</span></span>
+    </span><span class="tag">&lt;/<span class="title">style</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">head</span>&gt;</span>
+<span class="tag">&lt;<span class="title">body</span>&gt;</span>
+    <span class="comment">&lt;!-- container for map --&gt;</span>
+    <span class="tag">&lt;<span class="title">section</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span>
+        <span class="comment">&lt;!-- form to add in secured service --&gt;</span>
+        <span class="tag">&lt;<span class="title">section</span> <span class="attribute">class</span>=<span class="value">"form-container"</span>&gt;</span>
+            <span class="tag">&lt;<span class="title">form</span> <span class="attribute">id</span>=<span class="value">"securedServicesForm"</span>&gt;</span>
+                <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"form-component"</span>&gt;</span>
+                    <span class="tag">&lt;<span class="title">label</span> <span class="attribute">for</span>=<span class="value">"username"</span>&gt;</span>User Name<span class="tag">&lt;/<span class="title">label</span>&gt;</span>
+                    <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"text"</span> <span class="attribute">id</span>=<span class="value">"username"</span> /&gt;</span>
+                <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+                <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"form-component"</span>&gt;</span>
+                    <span class="tag">&lt;<span class="title">label</span> <span class="attribute">for</span>=<span class="value">"password"</span>&gt;</span>Password<span class="tag">&lt;/<span class="title">label</span>&gt;</span>
+                    <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"password"</span> <span class="attribute">id</span>=<span class="value">"password"</span>&gt;</span>
+                <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+                <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"form-component"</span>&gt;</span>
+                    <span class="tag">&lt;<span class="title">label</span> <span class="attribute">for</span>=<span class="value">"tokenUrl"</span>&gt;</span>ArcGIS Server Generate Token URL<span class="tag">&lt;/<span class="title">label</span>&gt;</span>
+                    <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"text"</span> <span class="attribute">id</span>=<span class="value">"tokenUrl"</span> /&gt;</span>
+                <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+                <span class="tag">&lt;<span class="title">button</span> <span class="attribute">id</span>=<span class="value">"formSubmit"</span> <span class="attribute">type</span>=<span class="value">"submit"</span>&gt;</span>Add Services<span class="tag">&lt;/<span class="title">button</span>&gt;</span>
+            <span class="tag">&lt;/<span class="title">form</span>&gt;</span>
+        <span class="tag">&lt;/<span class="title">section</span>&gt;</span>
+    <span class="tag">&lt;/<span class="title">section</span>&gt;</span>
+
+    <span class="comment">&lt;!-- Load Leaflet script from CDN --&gt;</span>
+    <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"</span>
+    <span class="attribute">integrity</span>=<span class="value">"sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log=="</span>
+    <span class="attribute">crossorigin</span>=<span class="value">""</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+    <span class="comment">&lt;!-- Load Esri Leaflet script from CDN --&gt;</span>
+    <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/esri-leaflet@2.1.1/dist/esri-leaflet.js"</span>
+    <span class="attribute">integrity</span>=<span class="value">"sha512-ECQqaYZke9cSdqlFG08zSkudgrdF6I1d8ViSa7I3VIszJyVqw4ng1G8sehEXlumdMnFYfzY0tMgdQa4WCs9IUw=="</span>
+    <span class="attribute">crossorigin</span>=<span class="value">""</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+
+    <span class="comment">&lt;!-- script to create map and load secured services --&gt;</span>
+    <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
+        <span class="string">'use strict'</span>;
+
+        <span class="comment">// submit element of form</span>
+        <span class="keyword">var</span> submitBtn = document.getElementById(<span class="string">'formSubmit'</span>);
+        <span class="comment">// add event listener to form</span>
+        submitBtn.addEventListener(<span class="string">'click'</span>, addServicesFromServer);
+
+        <span class="comment">// create map and set zoom level and center coordinates</span>
+        <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">34.089</span>, -<span class="number">116.865</span>], <span class="number">9</span>);
+        <span class="comment">// set basemap to Esri Streets</span>
+        <span class="keyword">var</span> esriStreets = L.esri.basemapLayer(<span class="string">'Streets'</span>).addTo(map);
+
+        <span class="comment">// workaround for old ie</span>
+        <span class="keyword">if</span> (!window.location.origin) {
+              window.location.origin = window.location.protocol + <span class="string">"//"</span> + window.location.hostname + (window.location.port ? <span class="string">':'</span> + window.location.port: <span class="string">''</span>);
+        }
+
+        <span class="comment">// function to make request to server</span>
+        <span class="function"><span class="keyword">function</span> <span class="title">serverAuth</span><span class="params">(server, username, password, callback)</span> {</span>
+            L.esri.post(server, {
+              username: username,
+              password: password,
+              f: <span class="string">'json'</span>,
+              expiration: <span class="number">86400</span>,
+              client: <span class="string">'referer'</span>,
+              referer: window.location.origin
+            }, callback);
+        }
+
+        <span class="comment">// function to run when form submitted</span>
+        <span class="function"><span class="keyword">function</span> <span class="title">addServicesFromServer</span><span class="params">(e)</span> {</span>
+            <span class="comment">// prevent page from refreshing</span>
+            e.preventDefault();
+
+            <span class="comment">// get values from form</span>
+            <span class="keyword">var</span> username = document.getElementById(<span class="string">'username'</span>).value;
+            <span class="keyword">var</span> password = document.getElementById(<span class="string">'password'</span>).value;
+            <span class="keyword">var</span> tokenUrl = document.getElementById(<span class="string">'tokenUrl'</span>).value;
+
+            <span class="comment">// generate token from server and add service from callback function</span>
+            serverAuth(tokenUrl,username,password,<span class="function"><span class="keyword">function</span><span class="params">(error, response)</span> {</span>
+                <span class="comment">// if an error occured while sending POST request, log the error</span>
+                <span class="keyword">if</span> (error) {
+                    console.log(error);
+                } <span class="keyword">else</span> { <span class="comment">// if no error occured, add the layer to the map</span>
+                    <span class="comment">// add layer to map</span>
+                    <span class="keyword">var</span> dl = L.esri.dynamicMapLayer({
+                        url: <span class="string">'https://sampleserver6.arcgisonline.com/arcgis/rest/services/Wildfire_secure_ac/MapServer'</span>,
+                        opacity: <span class="number">1</span>,
+                        token:  response.token
+                    }).addTo(map);
+
+                    <span class="comment">// this event fires when a request to the service fails and requires authentication</span>
+                    dl.on(<span class="string">'authenticationrequired'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(e)</span> {</span>
+                        serverAuth(<span class="function"><span class="keyword">function</span><span class="params">(error, response)</span> {</span>
+                            e.authenticate(response.token);
+                        });
+                    });
+
+                    <span class="comment">// This event fires when a request to the service responds with an error</span>
+                    dl.on(<span class="string">'requesterror'</span>, <span class="function"><span class="keyword">function</span><span class="params">(e)</span> {</span>
+                        console.log(<span class="string">'There was an error adding '</span> + e.url + <span class="string">'to the map'</span>);
+                        console.log(<span class="string">'Error code:'</span> + e.code + <span class="string">'; Message: '</span> + e.message);
+                    });
+                } <span class="comment">// end if/else</span>
+            }); <span class="comment">// end serverAuth call</span>
+        } <span class="comment">// end addServicesFromServer call</span>
+    </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">body</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">html</span>&gt;</span></code></pre>
+
+  <p><a href="http://github.com/esri/esri-leaflet-doc/edit/master/src/pages/tutorials/working-with-authenticated-services-with-arcgis-server.md">Edit this page on GitHub</a></p>
+
+  <div class="mobile-menu">
+    <aside class="sidebar">
+  <h5>General</h5>
+  <nav>
+    <a href="create-your-first-app.html">Create your First App</a>
+    <a href="introduction-to-layer-types.html">Introduction to Layer Types</a>
+    <a href="working-with-feature-layers.html">Working with Feature Layers</a>
+    <a href="working-with-authenticated-services.html">Working with Authenticated Services</a>
+    <a href="discovering-content.html">Discovering Content</a>
+  </nav>
+
+  <h5>Migration Guides</h5>
+  <nav>
+    <a href="migrating-1-to-2.html">1.0.0 to 2.0.0</a>
+    <a href="migrating-release-candidates-to-1.html">Release Candidates to 1.0.0</a>
+  </nav>
+
+  <h5>Module Systems</h5>
+  <nav>
+    <a href="using-with-browserify.html">Browserify</a>
+    <a href="using-with-webpack.html">WebPack</a>
+    <a href="using-with-jspm.html">JSPM</a>
+    <a href="using-with-requirejs.html">RequireJS</a>
+  </nav>
+</aside>
+
+  </div>
+</div>
+
+  <div style='clear:both;'></div>
+</div>
+<div class="container center-text">
+  <p class="copyright">Esri Leaflet is a project from the <a href="http://pdx.esri.com">Esri PDX R&amp;D Center</a> and the <a href="https://github.com/Esri/esri-leaflet/graphs/contributors">Esri Community</a></p>
+</div>
+
+  <div class="container center-text">
+    <p class="copyright"><a href="https://github.com/esri/esri-leaflet#terms">Terms</a></p>
+  </div>
+  <script src="../js/script.js"></script>
+  </body>
+</html>
