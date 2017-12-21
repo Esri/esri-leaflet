@@ -13,7 +13,6 @@ module.exports = function (config) {
 
     // list of files / patterns to load in the browser
     // not sure why tests are failing when files are loaded in bulk
-
     files: [
       'node_modules/leaflet/dist/leaflet.css',
       'node_modules/leaflet/dist/leaflet-src.js',
@@ -21,7 +20,13 @@ module.exports = function (config) {
       // these two are the tempermental ones
       'spec/Layers/ImageMapLayerSpec.js',
       'spec/Layers/DynamicMapLayerSpec.js',
-      'spec/**/*Spec.js'
+      'spec/Layers/BasemapLayerSpec.js',
+      'spec/Layers/TiledMapLayerSpec.js',
+      'spec/Layers/RasterLayerSpec.js',
+      // 'spec/Layers/*Spec.js',
+      'spec/Tasks/*Spec.js',
+      'spec/Services/*Spec.js',
+      'spec/*Spec.js'
     ],
 
     // list of files to exclude
