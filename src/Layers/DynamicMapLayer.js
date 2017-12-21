@@ -89,7 +89,7 @@ export var DynamicMapLayer = RasterLayer.extend({
 
     var identifyRequest;
     if (this.options.popup) {
-      identifyRequest = this.options.popup.at(e.latlng);
+      identifyRequest = this.options.popup.on(this._map).at(e.latlng);
     } else {
       identifyRequest = this.identify().on(this._map).at(e.latlng);
     }
