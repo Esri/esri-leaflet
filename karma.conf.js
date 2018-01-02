@@ -23,6 +23,7 @@ module.exports = function (config) {
       'spec/Layers/BasemapLayerSpec.js',
       'spec/Layers/TiledMapLayerSpec.js',
       'spec/Layers/RasterLayerSpec.js',
+      'spec/Layers/FeatureLayer/*Spec.js',
       // 'spec/Layers/*Spec.js',
       'spec/Tasks/*Spec.js',
       'spec/Services/*Spec.js',
