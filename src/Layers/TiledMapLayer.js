@@ -1,5 +1,5 @@
 import { TileLayer, Util } from 'leaflet';
-import { warn, cleanUrl, setEsriAttribution } from '../Util';
+import { warn, getUrlParams, setEsriAttribution } from '../Util';
 import mapService from '../Services/MapService';
 
 export var TiledMapLayer = TileLayer.extend({
@@ -38,11 +38,11 @@ export var TiledMapLayer = TileLayer.extend({
   },
 
   initialize: function (options) {
-    options.url = cleanUrl(options.url);
     options = Util.setOptions(this, options);
 
     // set the urls
-    this.tileUrl = options.url + 'tile/{z}/{y}/{x}';
+    options = getUrlParams(options);
+    this.tileUrl = options.url + 'tile/{z}/{y}/{x}' + (options.requestParams && Object.keys(options.requestParams).length > 0 ? Util.getParamString(options.requestParams) : '');
     // Remove subdomain in url
     // https://github.com/Esri/esri-leaflet/issues/991
     if (options.url.indexOf('{s}') !== -1 && options.subdomains) {

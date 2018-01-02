@@ -1,6 +1,6 @@
 import { Util } from 'leaflet';
 import { RasterLayer } from './RasterLayer';
-import { cleanUrl } from '../Util';
+import { getUrlParams } from '../Util';
 import imageService from '../Services/ImageService';
 
 export var ImageMapLayer = RasterLayer.extend({
@@ -21,7 +21,7 @@ export var ImageMapLayer = RasterLayer.extend({
   },
 
   initialize: function (options) {
-    options.url = cleanUrl(options.url);
+    options = getUrlParams(options);
     this.service = imageService(options);
     this.service.addEventParent(this);
 

@@ -119,6 +119,19 @@ export function cleanUrl (url) {
   return url;
 }
 
+/* Extract url params if any and store them in requestParams attribute.
+   Return the options params updated */
+export function getUrlParams (options) {
+  if (options.url.indexOf('?') !== -1) {
+    options.requestParams = options.requestParams || {};
+    var queryString = options.url.substring(options.url.indexOf('?') + 1);
+    options.url = options.url.split('?')[0];
+    options.requestParams = JSON.parse('{"' + decodeURI(queryString).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}');
+  }
+  options.url = cleanUrl(options.url.split('?')[0]);
+  return options;
+}
+
 export function isArcgisOnline (url) {
   /* hosted feature services support geojson as an output format
   utility.arcgis.com services are proxied from a variety of ArcGIS Server vintages, and may not */
@@ -338,6 +351,7 @@ export function _updateMapAttribution (evt) {
 export var EsriUtil = {
   warn: warn,
   cleanUrl: cleanUrl,
+  getUrlParams: getUrlParams,
   isArcgisOnline: isArcgisOnline,
   geojsonTypeToArcGIS: geojsonTypeToArcGIS,
   responseToFeatureCollection: responseToFeatureCollection,
