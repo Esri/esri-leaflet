@@ -448,6 +448,34 @@ describe('L.esri.DynamicMapLayer', function () {
     expect(spy).to.have.been.calledWith('dblclick', layer._resetPopupState, layer);
   });
 
+  it('should use custom identify behavior if specified in popup options', function () {
+    server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/identify\?sr=4326&layers=all%3A0&tolerance=5&returnGeometry=false&layerDefs=0%3Afoo%3D%22bar%22&imageDisplay=500%2C500%2C96&mapExtent=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&geometry=%7B%22x%22%3A-?\d+\.\d+%2C%22y%22%3A-?\d+\.\d+%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D+&geometryType=esriGeometryPoint&maxAllowableOffset=0.000171661376953125&f=json/), JSON.stringify(sampleResponse));
+
+    layer.bindPopup(function (error, featureCollection) {
+      return featureCollection.features.length + ' Feature(s)';
+    });
+
+    var customIdentify = L.esri.identifyFeatures({ url: url })
+                          .layers('all:0')
+                          .layerDef(0, 'foo="bar"')
+                          .tolerance(5)
+                          .returnGeometry(false);
+
+    layer.options.popup = customIdentify;
+    layer.addTo(map);
+
+    map.fire('click', {
+      latlng: map.getCenter()
+    });
+
+    server.respond();
+
+    clock.tick(301);
+
+    expect(layer._popup.getContent()).to.equal('1 Feature(s)');
+    expect(layer._popup.getLatLng()).to.equal(map.getCenter());
+  });
+
   it('should render an image at the back if specified', function (done) {
     layer.bringToBack();
     var spy = sinon.spy(layer, 'bringToBack');
