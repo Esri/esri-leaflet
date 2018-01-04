@@ -5,6 +5,27 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+## [2.1.2] - 2018-01-04
+
+### Fixed
+
+* improved support for custom `wkid:3857` tiled basemaps with custom properties [#1039](https://github.com/Esri/esri-leaflet/pull/1039))
+* `image` is now the default format for ImageMapLayer (🙏nickpeihl🙏 [#998](https://github.com/Esri/esri-leaflet/pull/998))
+* improved response parsing when no objectIdFieldName or esriFieldTypeOID are returned (🙏Saulzi🙏 [#1009](https://github.com/Esri/esri-leaflet/pull/1009))
+* improved cleanup when map instances are destroyed (🙏jfolds🙏 [#1029](https://github.com/Esri/esri-leaflet/pull/1029))
+
+### Added
+
+* It is now possible for layers to pass through arbitrary custom request parameters (🙏Biboba🙏 [#1036](https://github.com/Esri/esri-leaflet/pull/1036))
+* `QueryTask.returnM(bool)` (🙏jmfolds🙏 [#1002](https://github.com/Esri/esri-leaflet/pull/1002))
+* `QueryTask.distinct()` (🙏joelondon🙏 [#1027](https://github.com/Esri/esri-leaflet/pull/1027))
+* `DynamicMapLayer` has a new `popup` constructor option so that custom IdentifyFeatures parameters can be passed through (🙏Biboba🙏 [#1031](https://github.com/Esri/esri-leaflet/pull/1031))
+* more tests for existing features! (🙏Biboba🙏 #1037, #1035)
+
+### Removed
+
+* unused `shallowClone` utility method
+
 ## [2.1.1] - 2017-08-11
 
 ### Fixed
@@ -554,7 +575,8 @@ None
 * Add DarkGray and DarkGrayLabels to BasemapLayer. #190
 * An attributionControl on maps is now required when using BasemapLayer. #159
 
-[unreleased]: https://github.com/esri/esri-leaflet/compare/v2.1.1...HEAD
+[unreleased]: https://github.com/esri/esri-leaflet/compare/v2.1.2...HEAD
+[2.1.2]: https://github.com/esri/esri-leaflet/compare/v2.1.1...v2.1.2
 [2.1.1]: https://github.com/esri/esri-leaflet/compare/v2.1.0...v2.1.1
 [2.1.0]: https://github.com/esri/esri-leaflet/compare/v2.0.8...v2.1.0
 [2.0.8]: https://github.com/esri/esri-leaflet/compare/v2.0.7...v2.0.8
