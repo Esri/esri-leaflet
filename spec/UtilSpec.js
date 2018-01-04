@@ -42,7 +42,7 @@ describe('L.esri.Util', function () {
     expect(url).to.equal('http://arcgis.com/');
   });
 
-  it('should store in requestParams option, additionnal parameters passed in url', function () {
+  it('should store in requestParams option, additional parameters passed in url', function () {
     var options = {
       url: 'http://services.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer?foo=bar',
       maxZoom: 15

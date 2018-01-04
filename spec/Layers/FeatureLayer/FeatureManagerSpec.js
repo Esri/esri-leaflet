@@ -219,7 +219,7 @@ describe('L.esri.FeatureManager', function () {
     expect(map.attributionControl._container.innerHTML).to.contain('Esri');
   });
 
-  it('should store additionnal params passed in url', function () {
+  it('should store additional params passed in url', function () {
     layer = new MockLayer({
       url: urlWithParams
     }).addTo(map);
@@ -228,7 +228,7 @@ describe('L.esri.FeatureManager', function () {
     expect(layer.options.url).to.deep.equal(url + '/');
   });
 
-  it('should use additionnal params passed in options', function () {
+  it('should use additional params passed in options', function () {
     server.respondWith('GET', 'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.6953125%2C%22ymin%22%3A45.521743896993634%2C%22xmax%22%3A-122.6513671875%2C%22ymax%22%3A45.55252525134013%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&foo=bar&f=json', JSON.stringify({
       fields: fields,
       features: [feature2],

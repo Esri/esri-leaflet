@@ -16,6 +16,8 @@ describe('L.esri.TiledMapLayer', function () {
 
   var url = 'http://services.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer';
   var urlWithParams = 'http://services.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer?foo=bar';
+  var subdomainsUrl = 'http://{s}.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer';
+  var subdomainsArray = ['server', 'services'];
   var layer;
   var server;
   var map;
@@ -50,6 +52,15 @@ describe('L.esri.TiledMapLayer', function () {
     });
     expect(layer.tileUrl).to.equal('http://tiles{s}.arcgis.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer/tile/{z}/{y}/{x}');
     expect(layer.options.subdomains).to.deep.equal(['1', '2', '3', '4']);
+  });
+
+  it('will modify url for service with subdomains', function () {
+    var layer = L.esri.tiledMapLayer({
+      url: subdomainsUrl,
+      subdomains: subdomainsArray
+    });
+
+    expect(layer.options.url).to.equal('http://server.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer/');
   });
 
   it('should expose the authenticate method on the underlying service', function () {
@@ -100,7 +111,7 @@ describe('L.esri.TiledMapLayer', function () {
     expect(layer.tileUrl).to.equal('http://services.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer/tile/{z}/{y}/{x}?token=foo');
   });
 
-  it('should store additionnal params passed in url', function () {
+  it('should store additional params passed in url', function () {
     layer = L.esri.tiledMapLayer({
       url: urlWithParams
     });
@@ -109,7 +120,7 @@ describe('L.esri.TiledMapLayer', function () {
     expect(layer.tileUrl).to.equal('http://services.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer/tile/{z}/{y}/{x}?foo=bar');
   });
 
-  it('should use additionnal params passed in options', function () {
+  it('should use additional params passed in options', function () {
     layer = L.esri.tiledMapLayer({
       url: url,
       requestParams: {
@@ -151,19 +162,20 @@ describe('L.esri.TiledMapLayer', function () {
   });
 
   it('should display a metadata attribution if one is present and no attribution option was passed', function () {
-    var copyrightText;
+    server.respondWith('GET', 'http://services.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer/?f=json', JSON.stringify({
+      copyrightText: 'foo',
+      spatialReference: {
+        wkid: 102100,
+        latestWkid: 3857
+      }
+    }));
+
     layer = L.esri.tiledMapLayer({
       url: url
     }).addTo(map);
 
-    layer.on('load', function () {
-      layer.metadata(function (err, meta) {
-        if (meta && meta.hasOwnProperty(copyrightText)) {
-          copyrightText = meta.copyrightText;
-          expect(map.attributionControl._container.innerHTML).to.contain(copyrightText);
-        }
-      });
-    });
+    server.respond();
+    expect(map.attributionControl._container.innerHTML).to.contain('foo');
   });
 });
 /* eslint-enable handle-callback-err */

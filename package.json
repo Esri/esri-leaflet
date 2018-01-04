@@ -12,7 +12,7 @@
     "John Gravois <jgravois@esri.com> (http://johngravois.com)"
   ],
   "dependencies": {
-    "@esri/arcgis-to-geojson-utils": "^1.0.4",
+    "@esri/arcgis-to-geojson-utils": "^1.0.5",
     "leaflet-virtual-grid": "^1.0.3",
     "tiny-binary-search": "^1.0.2"
   },

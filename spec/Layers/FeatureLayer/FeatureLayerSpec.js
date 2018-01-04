@@ -105,7 +105,7 @@ describe('L.esri.FeatureLayer', function () {
     expect(layer).to.be.an.instanceof(L.esri.FeatureLayer);
   });
 
-  it('should store additionnal params passed in url', function () {
+  it('should store additional params passed in url', function () {
     layer = L.esri.featureLayer({
       url: 'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0?foo=bar'
     }).addTo(map);

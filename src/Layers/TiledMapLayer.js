@@ -118,7 +118,7 @@ export var TiledMapLayer = TileLayer.extend({
             this.options.attribution = metadata.copyrightText;
             map.attributionControl.addAttribution(this.getAttribution());
           }
-          if (map.options.crs === L.CRS.EPSG3857 && sr === 102100 || sr === 3857) {
+          if (map.options.crs === L.CRS.EPSG3857 && (sr === 102100 || sr === 3857)) {
             this._lodMap = {};
             // create the zoom level data
             var arcgisLODs = metadata.tileInfo.lods;
