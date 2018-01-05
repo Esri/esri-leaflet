@@ -15,6 +15,7 @@ describe('L.esri.TiledMapLayer', function () {
   }
 
   var url = 'http://services.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer';
+  var urlWithParams = 'http://services.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer?foo=bar';
   var subdomainsUrl = 'http://{s}.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer';
   var subdomainsArray = ['server', 'services'];
   var layer;
@@ -108,6 +109,26 @@ describe('L.esri.TiledMapLayer', function () {
     });
 
     expect(layer.tileUrl).to.equal('http://services.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer/tile/{z}/{y}/{x}?token=foo');
+  });
+
+  it('should store additional params passed in url', function () {
+    layer = L.esri.tiledMapLayer({
+      url: urlWithParams
+    });
+
+    expect(layer.options.requestParams).to.deep.equal({ foo: 'bar' });
+    expect(layer.tileUrl).to.equal('http://services.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer/tile/{z}/{y}/{x}?foo=bar');
+  });
+
+  it('should use additional params passed in options', function () {
+    layer = L.esri.tiledMapLayer({
+      url: url,
+      requestParams: {
+        foo: 'bar'
+      }
+    });
+
+    expect(layer.tileUrl).to.equal('http://services.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer/tile/{z}/{y}/{x}?foo=bar');
   });
 
   it('should use a token passed with authenticate()', function () {

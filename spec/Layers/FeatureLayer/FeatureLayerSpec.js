@@ -105,6 +105,15 @@ describe('L.esri.FeatureLayer', function () {
     expect(layer).to.be.an.instanceof(L.esri.FeatureLayer);
   });
 
+  it('should store additional params passed in url', function () {
+    layer = L.esri.featureLayer({
+      url: 'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0?foo=bar'
+    }).addTo(map);
+
+    expect(layer.options.requestParams).to.deep.equal({ foo: 'bar' });
+    expect(layer.options.url).to.deep.equal('http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/');
+  });
+
   it('should create features on a map', function () {
     expect(map.hasLayer(layer.getFeature(1))).to.equal(true);
     expect(map.hasLayer(layer.getFeature(2))).to.equal(true);

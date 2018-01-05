@@ -1,6 +1,6 @@
 import { Util } from 'leaflet';
 import { RasterLayer } from './RasterLayer';
-import { cleanUrl } from '../Util';
+import { getUrlParams } from '../Util';
 import mapService from '../Services/MapService';
 
 export var DynamicMapLayer = RasterLayer.extend({
@@ -16,7 +16,7 @@ export var DynamicMapLayer = RasterLayer.extend({
   },
 
   initialize: function (options) {
-    options.url = cleanUrl(options.url);
+    options = getUrlParams(options);
     this.service = mapService(options);
     this.service.addEventParent(this);
 

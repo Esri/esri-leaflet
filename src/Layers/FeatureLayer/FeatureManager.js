@@ -1,6 +1,6 @@
 import { Util } from 'leaflet';
 import featureLayerService from '../../Services/FeatureLayerService';
-import { cleanUrl, warn, setEsriAttribution } from '../../Util';
+import { getUrlParams, warn, setEsriAttribution } from '../../Util';
 import VirtualGrid from 'leaflet-virtual-grid';
 import BinarySearchIndex from 'tiny-binary-search';
 
@@ -28,7 +28,7 @@ export var FeatureManager = VirtualGrid.extend({
   initialize: function (options) {
     VirtualGrid.prototype.initialize.call(this, options);
 
-    options.url = cleanUrl(options.url);
+    options = getUrlParams(options);
     options = Util.setOptions(this, options);
 
     this.service = featureLayerService(options);
@@ -199,6 +199,10 @@ export var FeatureManager = VirtualGrid.extend({
       .where(this.options.where)
       .fields(this.options.fields)
       .precision(this.options.precision);
+
+    if (this.options.requestParams) {
+      L.extend(query.params, this.options.requestParams);
+    }
 
     if (this.options.simplifyFactor) {
       query.simplify(this._map, this.options.simplifyFactor);

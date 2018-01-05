@@ -42,6 +42,17 @@ describe('L.esri.Util', function () {
     expect(url).to.equal('http://arcgis.com/');
   });
 
+  it('should store in requestParams option, additional parameters passed in url', function () {
+    var options = {
+      url: 'http://services.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer?foo=bar',
+      maxZoom: 15
+    };
+    options = L.esri.Util.getUrlParams(options);
+
+    expect(options.url).to.equal('http://services.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer/');
+    expect(options.requestParams).to.deep.equal({ foo: 'bar' });
+  });
+
   it('should add a trailing slash to the url with cleanUrl', function () {
     var url = L.esri.Util.cleanUrl('http://arcgis.com');
     expect(url).to.equal('http://arcgis.com/');

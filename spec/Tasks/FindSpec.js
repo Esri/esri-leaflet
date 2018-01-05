@@ -223,5 +223,28 @@ describe('L.esri.Find', function () {
 
     window._EsriLeafletCallbacks[request.id](sampleResponse);
   });
+
+  it('should pass through arbitrary request parameters', function (done) {
+    var myTask = L.esri.find({
+      url: mapServiceUrl,
+      requestParams: {
+        foo: 'bar'
+      }
+    });
+
+    server.respondWith('GET', mapServiceUrl + 'find?sr=4326&contains=true&returnGeometry=true&returnZ=true&returnM=false&layers=0&searchText=Site&foo=bar&f=json', JSON.stringify(sampleResponse));
+
+    var request = myTask.layers('0').text('Site').run(function (error, featureCollection, raw) {
+      expect(featureCollection).to.deep.equal(sampleFeatureCollection);
+      expect(raw).to.deep.equal(sampleResponse);
+      done();
+    });
+
+    console.log(request.url);
+
+    expect(request).to.be.an.instanceof(XMLHttpRequest);
+
+    server.respond();
+  });
 });
 /* eslint-enable handle-callback-err */

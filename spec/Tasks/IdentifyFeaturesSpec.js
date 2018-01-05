@@ -320,5 +320,27 @@ describe('L.esri.IdentifyFeatures', function () {
 
     request.respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, JSON.stringify(sampleResponse));
   });
+
+  it('should identify features passing through arbitrary request parameters', function (done) {
+    var polygonTask = L.esri.identifyFeatures({
+      url: mapServiceUrl,
+      requestParams: {
+        foo: 'bar'
+      }
+    }).on(map).at(geoJsonPolygon);
+
+    var request = polygonTask.run(function (error, featureCollection, raw) {
+      expect(featureCollection).to.deep.equal(sampleFeatureCollection);
+      expect(raw).to.deep.equal(sampleResponse);
+      done();
+    });
+
+    expect(request.url).to.contain('geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D');
+    expect(request.url).to.contain('geometryType=esriGeometryPolygon');
+    expect(request.url).to.contain('sr=4326');
+    expect(request.url).to.contain('foo=bar');
+
+    request.respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, JSON.stringify(sampleResponse));
+  });
 });
 /* eslint-enable handle-callback-err */
