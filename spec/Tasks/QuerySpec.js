@@ -270,6 +270,33 @@ describe('L.esri.Query', function () {
     ]
   };
 
+  var dumbLongQuery = 'this is a dumb way to make sure the request is more than 2000 characters' +
+      'this is a dumb way to make sure the request is more than 2000 characters' +
+      'this is a dumb way to make sure the request is more than 2000 characters' +
+      'this is a dumb way to make sure the request is more than 2000 characters' +
+      'this is a dumb way to make sure the request is more than 2000 characters' +
+      'this is a dumb way to make sure the request is more than 2000 characters' +
+      'this is a dumb way to make sure the request is more than 2000 characters' +
+      'this is a dumb way to make sure the request is more than 2000 characters' +
+      'this is a dumb way to make sure the request is more than 2000 characters' +
+      'this is a dumb way to make sure the request is more than 2000 characters' +
+      'this is a dumb way to make sure the request is more than 2000 characters' +
+      'this is a dumb way to make sure the request is more than 2000 characters' +
+      'this is a dumb way to make sure the request is more than 2000 characters' +
+      'this is a dumb way to make sure the request is more than 2000 characters' +
+      'this is a dumb way to make sure the request is more than 2000 characters' +
+      'this is a dumb way to make sure the request is more than 2000 characters' +
+      'this is a dumb way to make sure the request is more than 2000 characters' +
+      'this is a dumb way to make sure the request is more than 2000 characters' +
+      'this is a dumb way to make sure the request is more than 2000 characters' +
+      'this is a dumb way to make sure the request is more than 2000 characters' +
+      'this is a dumb way to make sure the request is more than 2000 characters' +
+      'this is a dumb way to make sure the request is more than 2000 characters' +
+      'this is a dumb way to make sure the request is more than 2000 characters' +
+      'this is a dumb way to make sure the request is more than 2000 characters' +
+      'this is a dumb way to make sure the request is more than 2000 characters' +
+      'this is a dumb way to make sure the request is more than 2000 characters';
+
   beforeEach(function () {
     server = sinon.fakeServer.create();
     task = L.esri.query({url: featureLayerUrl});
@@ -859,42 +886,35 @@ describe('L.esri.Query', function () {
   });
 
   it('query tasks without services should make POST requests', function (done) {
-    // var longString
-
     server.respondWith('POST', mapServiceUrl + '0/query', JSON.stringify(sampleMapServiceQueryResponse));
     var queryTask = new L.esri.Query({url: mapServiceUrl + '0'});
-    queryTask.where(
-      'this is a dumb way to make sure the request is more than 2000 characters' +
-      'this is a dumb way to make sure the request is more than 2000 characters' +
-      'this is a dumb way to make sure the request is more than 2000 characters' +
-      'this is a dumb way to make sure the request is more than 2000 characters' +
-      'this is a dumb way to make sure the request is more than 2000 characters' +
-      'this is a dumb way to make sure the request is more than 2000 characters' +
-      'this is a dumb way to make sure the request is more than 2000 characters' +
-      'this is a dumb way to make sure the request is more than 2000 characters' +
-      'this is a dumb way to make sure the request is more than 2000 characters' +
-      'this is a dumb way to make sure the request is more than 2000 characters' +
-      'this is a dumb way to make sure the request is more than 2000 characters' +
-      'this is a dumb way to make sure the request is more than 2000 characters' +
-      'this is a dumb way to make sure the request is more than 2000 characters' +
-      'this is a dumb way to make sure the request is more than 2000 characters' +
-      'this is a dumb way to make sure the request is more than 2000 characters' +
-      'this is a dumb way to make sure the request is more than 2000 characters' +
-      'this is a dumb way to make sure the request is more than 2000 characters' +
-      'this is a dumb way to make sure the request is more than 2000 characters' +
-      'this is a dumb way to make sure the request is more than 2000 characters' +
-      'this is a dumb way to make sure the request is more than 2000 characters' +
-      'this is a dumb way to make sure the request is more than 2000 characters' +
-      'this is a dumb way to make sure the request is more than 2000 characters' +
-      'this is a dumb way to make sure the request is more than 2000 characters' +
-      'this is a dumb way to make sure the request is more than 2000 characters' +
-      'this is a dumb way to make sure the request is more than 2000 characters' +
-      'this is a dumb way to make sure the request is more than 2000 characters').run(function (error, featureCollection, raw) {
-        expect(featureCollection).to.deep.equal(sampleMapServiceCollection);
-        expect(raw).to.deep.equal(sampleMapServiceQueryResponse);
-        done();
-      });
+    queryTask.where(dumbLongQuery).run(function (error, featureCollection, raw) {
+      expect(featureCollection).to.deep.equal(sampleMapServiceCollection);
+      expect(raw).to.deep.equal(sampleMapServiceQueryResponse);
+      done();
+    });
 
+    server.respond();
+  });
+
+  it('query tasks should pass through arbitrary parameters when POSTing too', function (done) {
+    server.respondWith('POST', mapServiceUrl + '0/query', JSON.stringify(sampleMapServiceQueryResponse));
+    var queryTask = new L.esri.Query({
+      url: mapServiceUrl + '0',
+      requestParams: {
+        foo: 'bar'
+      }
+    });
+    queryTask.where(dumbLongQuery);
+
+    var request = queryTask.run(function (error, featureCollection, raw) {
+      expect(featureCollection).to.deep.equal(sampleMapServiceCollection);
+      expect(raw).to.deep.equal(sampleMapServiceQueryResponse);
+      done();
+    });
+
+    console.log(request);
+    expect(request.requestBody).to.contain('foo=bar');
     server.respond();
   });
 
@@ -922,6 +942,27 @@ describe('L.esri.Query', function () {
     var request = task.run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleMapServiceCollection);
       expect(raw).to.deep.equal(sampleMapServiceQueryResponse);
+      done();
+    });
+
+    expect(request).to.be.an.instanceof(XMLHttpRequest);
+
+    server.respond();
+  });
+
+  it('should pass through arbitrary request parameters', function (done) {
+    task = L.esri.query({
+      url: 'http://services.arcgis.com/mock/arcgis/rest/services/MockFeatureService/FeatureServer/0',
+      requestParams: {
+        foo: 'bar'
+      }
+    });
+
+    server.respondWith('GET', 'http://services.arcgis.com/mock/arcgis/rest/services/MockFeatureService/FeatureServer/0/query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&f=geojson&foo=bar', JSON.stringify(sampleFeatureCollection));
+
+    var request = task.run(function (error, featureCollection, raw) {
+      expect(featureCollection).to.deep.equal(sampleFeatureCollection);
+      expect(raw).to.deep.equal(sampleFeatureCollection);
       done();
     });
 

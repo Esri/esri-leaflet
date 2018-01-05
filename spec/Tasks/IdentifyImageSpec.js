@@ -459,17 +459,36 @@ describe('L.esri.IdentifyImage', function () {
 
   it('should return catalog items w/o geometry', function (done) {
     var sampleResponseWithCatalogItemsNoGeometry = deepClone(sampleResponseWithCatalogItems);
-    var sampleResutlsWithCatalogItemsNoGeomerty = deepClone(sampleResultsWithCatlaogItems);
+    var sampleResultsWithCatalogItemsNoGeomerty = deepClone(sampleResultsWithCatlaogItems);
     for (var i = sampleResponseWithCatalogItemsNoGeometry.catalogItems.features.length - 1; i >= 0; i--) {
       delete (sampleResponseWithCatalogItemsNoGeometry.catalogItems.features[i].geometry);
-      sampleResutlsWithCatalogItemsNoGeomerty.catalogItems.features[i].geometry = null;
+      sampleResultsWithCatalogItemsNoGeomerty.catalogItems.features[i].geometry = null;
     }
     server.respondWith('GET', imageServiceUrl + 'identify?returnGeometry=false&geometry=%7B%22x%22%3A-122.66%2C%22y%22%3A45.51%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPoint&returnCatalogItems=true&f=json', JSON.stringify(sampleResponseWithCatalogItemsNoGeometry));
 
     task.returnCatalogItems(true);
     task.run(function (error, results, raw) {
-      expect(results).to.deep.equal(sampleResutlsWithCatalogItemsNoGeomerty);
+      expect(results).to.deep.equal(sampleResultsWithCatalogItemsNoGeomerty);
       expect(raw).to.deep.equal(sampleResponseWithCatalogItemsNoGeometry);
+      done();
+    });
+
+    server.respond();
+  });
+
+  it('should pass through arbitrary parameters', function (done) {
+    var customTask = L.esri.identifyImage({
+      url: imageServiceUrl,
+      requestParams: {
+        foo: 'bar'
+      }
+    }).at(latlng);
+
+    server.respondWith('GET', imageServiceUrl + 'identify?returnGeometry=false&geometry=%7B%22x%22%3A-122.66%2C%22y%22%3A45.51%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPoint&foo=bar&f=json', JSON.stringify(sampleResponse));
+
+    customTask.run(function (error, results, raw) {
+      expect(results).to.deep.equal(sampleResults);
+      expect(raw).to.deep.equal(sampleResponse);
       done();
     });
 
