@@ -41,8 +41,8 @@
     
 
     
-      <script src="https://unpkg.com/esri-leaflet@2.1.1/dist/esri-leaflet.js"
-      integrity="sha512-ECQqaYZke9cSdqlFG08zSkudgrdF6I1d8ViSa7I3VIszJyVqw4ng1G8sehEXlumdMnFYfzY0tMgdQa4WCs9IUw=="
+      <script src="https://unpkg.com/esri-leaflet@2.1.2/dist/esri-leaflet.js"
+      integrity="sha512-ouokQ1RIIoqPTZKwlapdxHO5VWFoAi8wE+SwhSX89Ifac0w3p+H2da4oqHvRsBTIpNLewzAZU7gRVDFXyXcfjA=="
       crossorigin=""></script>
     
 
@@ -303,6 +303,16 @@
             <td><code>transform(<nobr class="param"><span>&lt;Number&gt;</span> <code>Number</code></nobr>)</code></td>
             <td><code>this</code></td>
             <td>The WKID of a <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/index.html#/Datum_transformations/02r3000000r8000000/">datum transformation</a> for the server to apply when reprojecting output features.<br><small>Only available for ArcGIS Server 10.5+.</small></td>
+        </tr>
+        <tr>
+            <td><code>distinct()</code></td>
+            <td><code>this</code></td>
+            <td>Ensures that no geometry or duplicate field values will be returned in the subsequent request.</td>
+        </tr>
+        <tr>
+            <td><code>returnM(<nobr class="param"><span>&lt;Boolean&gt;</span> <code>returnM</code></nobr>)</code></td>
+            <td><code>this</code></td>
+            <td>Return geometry with four dimensional measure values in results.</td>
         </tr>
         <tr>
             <td><code>run(<nobr class="param"><span>&lt;Function&gt;</span> <code>callback</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>context</code></nobr>)</code></td>
