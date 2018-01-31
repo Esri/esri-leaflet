@@ -1,4 +1,4 @@
-import { TileLayer, Util } from 'leaflet';
+import { TileLayer, Util, Browser } from 'leaflet';
 import { pointerEvents } from '../Support';
 import {
   setEsriAttribution,
@@ -236,7 +236,31 @@ export var BasemapLayer = TileLayer.extend({
       var attribution = '<span class="esri-dynamic-attribution">' + this.options.attribution + '</span>';
     }
     return attribution;
-  }
+  },
+
+  getTileUrl: function (coords) {
+		var data = {
+			r: Browser.retina ? '@2x' : '',
+			s: this._getSubdomain(coords),
+			x: coords.x,
+			y: coords.y,
+			z: this._getZoomForUrl()
+		};
+		if (this._map && !this._map.options.crs.infinite) {
+			var invertedY = this._globalTileRange.max.y - coords.y;
+			if (this.options.tms) {
+				data['y'] = invertedY;
+			}
+			data['-y'] = invertedY;
+		}
+    if (data.z === 1 && (data.x > 1 || data.x < 0)) {
+      return 'http://downloads2.esri.com/support/TechArticles/blank256.png'
+    }
+    else {
+      return Util.template(this._url, Util.extend(data, this.options));
+    }
+
+	}
 });
 
 export function basemapLayer (key, options) {
