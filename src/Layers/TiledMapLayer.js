@@ -118,7 +118,10 @@ export var TiledMapLayer = TileLayer.extend({
             this.options.attribution = metadata.copyrightText;
             map.attributionControl.addAttribution(this.getAttribution());
           }
-          if (map.options.crs === L.CRS.EPSG3857 && (sr === 102100 || sr === 3857)) {
+
+          var needProj4 = this._checkSRSupport(map, sr);
+
+          if (needProj4) {
             this._lodMap = {};
             // create the zoom level data
             var arcgisLODs = metadata.tileInfo.lods;
@@ -138,15 +141,29 @@ export var TiledMapLayer = TileLayer.extend({
 
             this.fire('lodmap');
           } else {
-            if (!proj4) {
-              warn('L.esri.TiledMapLayer is using a non-mercator spatial reference. Support may be available through Proj4Leaflet http://esri.github.io/esri-leaflet/examples/non-mercator-projection.html');
-            }
+            warn('L.esri.TiledMapLayer is using a non-mercator spatial reference. Support may be available through Proj4Leaflet http://esri.github.io/esri-leaflet/examples/non-mercator-projection.html');
           }
         }
       }, this);
     }
 
     TileLayer.prototype.onAdd.call(this, map);
+  },
+
+  _checkSRSupport: function (map, spatialReference) {
+    if (map.options.crs === L.CRS.EPSG3857 && (spatialReference === 102100 || spatialReference === 3857)) {
+      // web mercator tile services are supported by leaflet
+      return true;
+    } else if (map.options.crs === L.CRS.EPSG4326 && (spatialReference === 4326)) {
+      // wgs84 tile services are supported by leaflet
+      return true;
+    } else if (map.options.crs && map.options.crs.code && (map.options.crs.code.indexOf(spatialReference) > -1)) {
+      // using proj4 and defining a custom crs enables support for tile services published in other projections
+      return true;
+    } else {
+      // otherwise assume the tile service isn't going to load properly
+      return false;
+    }
   },
 
   metadata: function (callback, context) {

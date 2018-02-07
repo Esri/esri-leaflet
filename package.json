@@ -83,7 +83,8 @@
     "start-watch": "watch \"npm run build\" src",
     "start": "run-p start-watch serve",
     "serve": "http-server -p 5000 -c-1 -o",
-    "test": "npm run lint && karma start"
+    "test": "npm run lint && karma start",
+    "test:ci": "npm run lint && karma start --browsers Chrome_travis_ci"
   },
   "semistandard": {
     "globals": [
