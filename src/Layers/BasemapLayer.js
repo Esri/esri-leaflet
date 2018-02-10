@@ -172,6 +172,14 @@ export var BasemapLayer = TileLayer.extend({
           subdomains: ['server', 'services'],
           attribution: 'USGS, National Geographic Society, i-cubed'
         }
+      },
+      Clarity: {
+        urlTemplate: tileProtocol + '//clarity.maptiles.arcgis.com/arcgis/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+        options: {
+          minZoom: 1,
+          maxZoom: 19,
+          attribution: 'Esri, DigitalGlobe, GeoEye, Earthstar Geographics, CNES/Airbus DS, USDA, USGS, AeroGRID, IGN, and the GIS User Community'
+        }
       }
     }
   },
