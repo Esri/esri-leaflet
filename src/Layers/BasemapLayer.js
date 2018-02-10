@@ -173,7 +173,7 @@ export var BasemapLayer = TileLayer.extend({
           attribution: 'USGS, National Geographic Society, i-cubed'
         }
       },
-      Clarity: {
+      ImageryClarity: {
         urlTemplate: tileProtocol + '//clarity.maptiles.arcgis.com/arcgis/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
         options: {
           minZoom: 1,
@@ -193,7 +193,7 @@ export var BasemapLayer = TileLayer.extend({
     } else if (typeof key === 'string' && BasemapLayer.TILES[key]) {
       config = BasemapLayer.TILES[key];
     } else {
-      throw new Error('L.esri.BasemapLayer: Invalid parameter. Use one of "Streets", "Topographic", "Oceans", "OceansLabels", "NationalGeographic", "Gray", "GrayLabels", "DarkGray", "DarkGrayLabels", "Imagery", "ImageryLabels", "ImageryTransportation", "ShadedRelief", "ShadedReliefLabels", "Terrain", "TerrainLabels" or "USATopo"');
+      throw new Error('L.esri.BasemapLayer: Invalid parameter. Use one of "Streets", "Topographic", "Oceans", "OceansLabels", "NationalGeographic", "Gray", "GrayLabels", "DarkGray", "DarkGrayLabels", "Imagery", "ImageryLabels", "ImageryTransportation", "ImageryClarity", "ShadedRelief", "ShadedReliefLabels", "Terrain", "TerrainLabels" or "USATopo"');
     }
 
     // merge passed options into the config options
