@@ -104,7 +104,8 @@ export var BasemapLayer = TileLayer.extend({
           minZoom: 1,
           maxZoom: 19,
           subdomains: ['server', 'services'],
-          attribution: 'DigitalGlobe, GeoEye, i-cubed, USDA, USGS, AEX, Getmapping, Aerogrid, IGN, IGP, swisstopo, and the GIS User Community'
+          attribution: 'DigitalGlobe, GeoEye, i-cubed, USDA, USGS, AEX, Getmapping, Aerogrid, IGN, IGP, swisstopo, and the GIS User Community',
+          attributionUrl: 'https://static.arcgis.com/attribution/World_Imagery'
         }
       },
       ImageryLabels: {
