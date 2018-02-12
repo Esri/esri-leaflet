@@ -257,7 +257,7 @@ describe('L.esri.FeatureManager', function () {
           'OBJECTID': 2,
           'Name': 'Site 2',
           'Type': 'Inactive',
-          'Time': new Date('January 15 2014 GMT-0800').valueOf()
+          'Time': new Date('January 15 2014 GMT-0800')
         },
         'id': 2
       }
@@ -293,7 +293,7 @@ describe('L.esri.FeatureManager', function () {
           'OBJECTID': 2,
           'Name': 'Site 2',
           'Type': 'Inactive',
-          'Time': new Date('January 15 2014 GMT-0800').valueOf()
+          'Time': new Date('January 15 2014 GMT-0800')
         },
         'id': 2
       },
@@ -307,7 +307,7 @@ describe('L.esri.FeatureManager', function () {
           'OBJECTID': 1,
           'Name': 'Site 1',
           'Type': 'Active',
-          'Time': new Date('January 1 2014 GMT-0800').valueOf()
+          'Time': new Date('January 1 2014 GMT-0800')
         },
         'id': 1
       }
@@ -377,7 +377,7 @@ describe('L.esri.FeatureManager', function () {
         'OBJECTID': 1,
         'Name': 'Site 1',
         'Type': 'Active',
-        'Time': new Date('January 1 2014 GMT-0800').valueOf()
+        'Time': new Date('January 1 2014 GMT-0800')
       },
       'id': 1
     }]);
@@ -404,7 +404,7 @@ describe('L.esri.FeatureManager', function () {
         'OBJECTID': 2,
         'Name': 'Site 2',
         'Type': 'Inactive',
-        'Time': new Date('January 15 2014 GMT-0800').valueOf()
+        'Time': new Date('January 15 2014 GMT-0800')
       },
       'id': 2
     }]);
@@ -535,7 +535,7 @@ describe('L.esri.FeatureManager', function () {
         'OBJECTID': 1,
         'Name': 'Site 1',
         'Type': 'Active',
-        'Time': new Date('January 1 2014 GMT-0800').valueOf()
+        'Time': new Date('January 1 2014 GMT-0800')
       },
       'id': 1
     }]);
@@ -558,7 +558,7 @@ describe('L.esri.FeatureManager', function () {
         'OBJECTID': 2,
         'Name': 'Site 2',
         'Type': 'Inactive',
-        'Time': new Date('January 15 2014 GMT-0800').valueOf()
+        'Time': new Date('January 15 2014 GMT-0800')
       },
       'id': 2
     }]);

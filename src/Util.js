@@ -99,11 +99,44 @@ export function responseToFeatureCollection (response, idAttribute) {
   if (count) {
     for (var i = features.length - 1; i >= 0; i--) {
       var feature = arcgisToGeoJSON(features[i], objectIdField || _findIdAttributeFromFeature(features[i]));
+      convertTimeFields(response, feature);
       featureCollection.features.push(feature);
     }
   }
 
   return featureCollection;
+}
+
+// Converts time based fields into Date objects, this could be done in the arcgisToGeoJson function
+function convertTimeFields (response, feature) {
+  if (response.fields) {
+    for (var property in feature.properties) {
+      var fieldType = getFieldType(property, response.fields);
+      if (fieldType === 'esriFieldTypeDate') {
+        var value = feature.properties[property];
+        if (value !== undefined) {
+          feature.properties[property] = new Date(value);
+        }
+      }
+    }
+  }
+}
+
+// extract field type for a geoJSON property
+function getFieldType (fieldName, fields) {
+  fields = fields || {};
+  var result;
+
+  for (var i = 0; i < fields.length; i++) {
+    var property = fields[i].name;
+
+    if (fieldName === property) {
+      result = fields[i].type;
+      break;
+    }
+  }
+
+  return result;
 }
 
   // trim url whitespace and add a trailing slash if needed
