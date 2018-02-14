@@ -254,7 +254,7 @@ export var RasterLayer = Layer.extend({
     }
 
     var params = this._buildExportParams();
-    L.extend(params, this.options.requestParams);
+    Util.extend(params, this.options.requestParams);
 
     if (params) {
       this._requestExport(params, bounds);

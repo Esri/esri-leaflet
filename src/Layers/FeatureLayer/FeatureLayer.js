@@ -1,4 +1,4 @@
-import { Util, GeoJSON, latLng } from 'leaflet';
+import { Path, Util, GeoJSON, latLng } from 'leaflet';
 import { FeatureManager } from './FeatureManager';
 
 export var FeatureLayer = FeatureManager.extend({
@@ -220,7 +220,7 @@ export var FeatureLayer = FeatureManager.extend({
 
   resetFeatureStyle: function (id) {
     var layer = this._layers[id];
-    var style = this._originalStyle || L.Path.prototype.options;
+    var style = this._originalStyle || Path.prototype.options;
     if (layer) {
       Util.extend(layer.options, layer.defaultOptions);
       this.setFeatureStyle(id, style);

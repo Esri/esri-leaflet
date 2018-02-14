@@ -1,4 +1,4 @@
-import { TileLayer, Util } from 'leaflet';
+import { CRS, DomEvent, TileLayer, Util } from 'leaflet';
 import { warn, getUrlParams, setEsriAttribution } from '../Util';
 import mapService from '../Services/MapService';
 
@@ -80,8 +80,8 @@ export var TiledMapLayer = TileLayer.extend({
   createTile: function (coords, done) {
     var tile = document.createElement('img');
 
-    L.DomEvent.on(tile, 'load', L.bind(this._tileOnLoad, this, done, tile));
-    L.DomEvent.on(tile, 'error', L.bind(this._tileOnError, this, done, tile));
+    DomEvent.on(tile, 'load', Util.bind(this._tileOnLoad, this, done, tile));
+    DomEvent.on(tile, 'error', Util.bind(this._tileOnError, this, done, tile));
 
     if (this.options.crossOrigin) {
       tile.crossOrigin = '';
@@ -151,10 +151,10 @@ export var TiledMapLayer = TileLayer.extend({
   },
 
   _checkSRSupport: function (map, spatialReference) {
-    if (map.options.crs === L.CRS.EPSG3857 && (spatialReference === 102100 || spatialReference === 3857)) {
+    if (map.options.crs === CRS.EPSG3857 && (spatialReference === 102100 || spatialReference === 3857)) {
       // web mercator tile services are supported by leaflet
       return true;
-    } else if (map.options.crs === L.CRS.EPSG4326 && (spatialReference === 4326)) {
+    } else if (map.options.crs === CRS.EPSG4326 && (spatialReference === 4326)) {
       // wgs84 tile services are supported by leaflet
       return true;
     } else if (map.options.crs && map.options.crs.code && (map.options.crs.code.indexOf(spatialReference) > -1)) {

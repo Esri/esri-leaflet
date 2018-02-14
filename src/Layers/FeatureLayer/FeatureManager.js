@@ -201,7 +201,7 @@ export var FeatureManager = VirtualGrid.extend({
       .precision(this.options.precision);
 
     if (this.options.requestParams) {
-      L.extend(query.params, this.options.requestParams);
+      Util.extend(query.params, this.options.requestParams);
     }
 
     if (this.options.simplifyFactor) {

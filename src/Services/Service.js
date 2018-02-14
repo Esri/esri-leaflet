@@ -63,7 +63,7 @@ export var Service = Evented.extend({
       params.token = this.options.token;
     }
     if (this.options.requestParams) {
-      L.extend(params, this.options.requestParams);
+      Util.extend(params, this.options.requestParams);
     }
     if (this._authenticating) {
       this._requestQueue.push([method, path, params, callback, context]);
