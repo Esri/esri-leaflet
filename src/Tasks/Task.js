@@ -58,7 +58,7 @@ export var Task = Class.extend({
 
   request: function (callback, context) {
     if (this.options.requestParams) {
-      L.extend(this.params, this.options.requestParams);
+      Util.extend(this.params, this.options.requestParams);
     }
     if (this._service) {
       return this._service.request(this.path, this.params, callback, context);
