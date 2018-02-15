@@ -8,15 +8,15 @@
   <meta charset="utf-8">
 
   
-    <title>Navigation Charts | Esri Leaflet</title>
+    <title>Indoor Mapping | Esri Leaflet</title>
   
 
   
-    <meta name="description" content="Displaying custom tilesets hosted on ArcGIS Online.">
+    <meta name="description" content="Display a layer using the &lt;a href=&quot;https://github.com/cbaines/leaflet-indoor&quot;&gt;Leaflet Indoors plugin&lt;/a&gt;.">
   
 
   <meta name="description" content="Esri Leaflet">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width">
 
   <!--[if lt IE 9]>
     <script src="//cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv-printshiv.js"></script>
@@ -31,23 +31,20 @@
   <link rel="stylesheet" href="../css/style.css">
 
   
+    <!-- 'livereload' for development -->
+    <script src="//localhost:35729/livereload.js"></script>
+  
 
   
     
-      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css"
-      integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
-      crossorigin=""/>
-      <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"
-      integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw=="
-      crossorigin=""></script>
+      <link rel="stylesheet" href="https://unpkg.com/leaflet@0.7.7/dist/leaflet.css" />
+      <script src="https://unpkg.com/leaflet@0.7.7/dist/leaflet-src.js"></script>
     
 
     
-      <script src="https://unpkg.com/esri-leaflet@2.1.3/dist/esri-leaflet.js"
-      integrity="sha512-pijLQd2FbV/7+Jwa86Mk3ACxnasfIMzJRrIlVQsuPKPCfUBCDMDUoLiBQRg7dAQY6D1rkmCcR8286hVTn/wlIg=="
-      crossorigin=""></script>
+      <script src="https://unpkg.com/esri-leaflet@1.0.4/dist/esri-leaflet.js"></script>
     
-
+    
   
 
   
@@ -67,9 +64,8 @@
 <body>
   <div class="page-content ">
     <div class="container">
-      <span id="mobileMenuButton" class="mobileMenuButton">&#9776;</span>
       <a class="site-nav" href="../" class="left logo">Esri Leaflet</a>
-      <nav id="site-nav-wrapper" class="site-nav-wrapper">
+      <nav class="right">
         <a class="site-nav" href="../tutorials/">Tutorials</a>
         <a class="site-nav" href="../plugins/">Plugins</a>
         <a class="site-nav" href="../examples/">Examples</a>
@@ -178,7 +174,7 @@
   <nav>
     <a href="../examples/renderers-plugin.html">Server Side Rendering</a>
     <a href="../examples/stream-plugin.html">Stream Layer</a>
-    <a href="../examples/webmap.html?id=13750b8b548d48bfa99a9731f2a93ba0">Loading Webmaps</a>
+    <a href="../examples/webmap.html?id=22c504d229f14c789c5b49ebff38b941">Loading Webmaps</a>
     <a href="../examples/gp-plugin.html">Geoprocessing</a>
   </nav>
 
@@ -188,7 +184,7 @@
     <a href="../examples/turf.html">Turf.js Mashup</a>
     <a href="../examples/getting-service-metadata.html">Getting Service Metadata</a>
     <a href="../examples/parse-feature-collection.html">Parsing Feature Collections</a>
-    <a href="../examples/indoors.html">Indoor Mapping</a>
+    <a href="../examples/simple-indoors.html">Indoor Mapping</a>
 
   </nav>
 </aside>
@@ -196,45 +192,65 @@
 
 <div class="example-content">
 <div class="wrap">
-  <h1>Navigation Charts</h1>
-  <p>Displaying custom tilesets hosted on ArcGIS Online.</p>
+  <h1>Indoor Mapping</h1>
+  <p>Display a layer using the <a href="https://github.com/cbaines/leaflet-indoor">Leaflet Indoors plugin</a>.</p>
 </div>
 <div id="map-wrapper">
   
 
+<!-- Include Leaflet Indoor package (https://github.com/cbaines/leaflet-indoor) -->
+<script src="https://rawgit.com/cbaines/leaflet-indoor/master/leaflet-indoor.js"></script>
+
 <div id="map"></div>
 
 <script>
-  var map = L.map('map').setView([19.31, -155.04], 9);
+  var map = L.map('map').setView([28.470, -82.444], 18);
 
-  L.esri.tiledMapLayer({
-    url: "https://services.arcgisonline.com/ArcGIS/rest/services/Specialty/World_Navigation_Charts/MapServer",
-    detectRetina: false,
-    minZoom: 3,
-    maxZoom: 10
-  }).addTo(map);
+  L.esri.basemapLayer('Streets').addTo(map);
+  var featureLayer = L.esri.featureLayer({
+    url: 'https://www25.swfwmd.state.fl.us/arcgis/rest/services/Internal/FacilitiesSearch/MapServer/0'
+  });
+  
+  // Run a query against our Feature Layer (that we have not added to the map) 
+  // to get a FeatureCollection (https://tools.ietf.org/html/rfc7946#section-3.3)
+  featureLayer.query().run(function(error, featureCollection) {
+    indoorLayer = new L.Indoor(featureCollection, {
+      getLevel: function(feature) {
+        return feature.properties.FLOOR;
+      }
+    });
+    // set the initial level to show
+    indoorLayer.setLevel("1");
+    indoorLayer.addTo(map);
+
+    // Add Level Control (code from https://github.com/cbaines/leaflet-indoor)
+    var levelControl = new L.Control.Level({
+        level: "1",
+        levels: indoorLayer.getLevels()
+    });
+
+    // Connect the level control to the indoor layer
+    levelControl.addEventListener("levelchange", indoorLayer.setLevel, indoorLayer);
+
+    levelControl.addTo(map);
+  });
+
 </script>
 
 </div>
 <pre><code class="language-xml"><span class="tag">&lt;<span class="title">html</span>&gt;</span>
 <span class="tag">&lt;<span class="title">head</span>&gt;</span>
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">utf-8</span> /&gt;</span>
-  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Navigation Charts<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Indoor Mapping<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">name</span>=<span class="value">'viewport'</span> <span class="attribute">content</span>=<span class="value">'initial-scale=1,maximum-scale=1,user-scalable=no'</span> /&gt;</span>
 
-    <span class="comment">&lt;!-- Load Leaflet from CDN --&gt;</span>
-    <span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"https://unpkg.com/leaflet@1.3.1/dist/leaflet.css"</span>
-    <span class="attribute">integrity</span>=<span class="value">"sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="</span>
-    <span class="attribute">crossorigin</span>=<span class="value">""</span>/&gt;</span>
-    <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"</span>
-    <span class="attribute">integrity</span>=<span class="value">"sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw=="</span>
-    <span class="attribute">crossorigin</span>=<span class="value">""</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+    <span class="comment">&lt;!-- Load Leaflet (not latest version due to dependencies) --&gt;</span>
+    <span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"https://unpkg.com/leaflet@0.7.7/dist/leaflet.css"</span> /&gt;</span>
+    <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/leaflet@0.7.7/dist/leaflet-src.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 
-    <span class="comment">&lt;!-- Load Esri Leaflet from CDN --&gt;</span>
-    <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/esri-leaflet@2.1.3/dist/esri-leaflet.js"</span>
-    <span class="attribute">integrity</span>=<span class="value">"sha512-pijLQd2FbV/7+Jwa86Mk3ACxnasfIMzJRrIlVQsuPKPCfUBCDMDUoLiBQRg7dAQY6D1rkmCcR8286hVTn/wlIg=="</span>
-    <span class="attribute">crossorigin</span>=<span class="value">""</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+    <span class="comment">&lt;!-- Load Esri Leaflet (not latest version due to dependencies) --&gt;</span>
+    <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/esri-leaflet@1.0.4/dist/esri-leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 
   <span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css">
@@ -244,147 +260,59 @@
 <span class="tag">&lt;/<span class="title">head</span>&gt;</span>
 <span class="tag">&lt;<span class="title">body</span>&gt;</span>
 
+<span class="comment">&lt;!-- Include Leaflet Indoor package (https://github.com/cbaines/leaflet-indoor) --&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://rawgit.com/cbaines/leaflet-indoor/master/leaflet-indoor.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+
 <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
-  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">19.31</span>, -<span class="number">155.04</span>], <span class="number">9</span>);
+  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">28.470</span>, -<span class="number">82.444</span>], <span class="number">18</span>);
 
-  L.esri.tiledMapLayer({
-    url: <span class="string">"https://services.arcgisonline.com/ArcGIS/rest/services/Specialty/World_Navigation_Charts/MapServer"</span>,
-    detectRetina: <span class="literal">false</span>,
-    minZoom: <span class="number">3</span>,
-    maxZoom: <span class="number">10</span>
-  }).addTo(map);
+  L.esri.basemapLayer(<span class="string">'Streets'</span>).addTo(map);
+  <span class="keyword">var</span> featureLayer = L.esri.featureLayer({
+    url: <span class="string">'https://www25.swfwmd.state.fl.us/arcgis/rest/services/Internal/FacilitiesSearch/MapServer/0'</span>
+  });
+
+  <span class="comment">// Run a query against our Feature Layer (that we have not added to the map) </span>
+  <span class="comment">// to get a FeatureCollection (https://tools.ietf.org/html/rfc7946#section-3.3)</span>
+  featureLayer.query().run(<span class="function"><span class="keyword">function</span><span class="params">(error, featureCollection)</span> {</span>
+    indoorLayer = <span class="keyword">new</span> L.Indoor(featureCollection, {
+      getLevel: <span class="function"><span class="keyword">function</span><span class="params">(feature)</span> {</span>
+        <span class="keyword">return</span> feature.properties.FLOOR;
+      }
+    });
+    <span class="comment">// set the initial level to show</span>
+    indoorLayer.setLevel(<span class="string">"1"</span>);
+    indoorLayer.addTo(map);
+
+    <span class="comment">// Add Level Control (code from https://github.com/cbaines/leaflet-indoor)</span>
+    <span class="keyword">var</span> levelControl = <span class="keyword">new</span> L.Control.Level({
+        level: <span class="string">"1"</span>,
+        levels: indoorLayer.getLevels()
+    });
+
+    <span class="comment">// Connect the level control to the indoor layer</span>
+    levelControl.addEventListener(<span class="string">"levelchange"</span>, indoorLayer.setLevel, indoorLayer);
+
+    levelControl.addTo(map);
+  });
+
 </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 <span class="tag">&lt;/<span class="title">body</span>&gt;</span>
 <span class="tag">&lt;/<span class="title">html</span>&gt;</span></code></pre>
 
 <div class="wrap">
-  <p><a href="http://github.com/Esri/esri-leaflet-doc/edit/master/src/pages/examples/tile-layer-2.hbs">Edit this sample on GitHub</a></p>
+  <p><a href="http://github.com/Esri/esri-leaflet-doc/edit/master/src/pages/examples/simple-indoors.hbs">Edit this sample on GitHub</a></p>
 </div>
-
-<div class="mobile-menu">
-  <aside class="sidebar">
-  <h5>Basemaps</h5>
-  <nav>
-    <a href="../examples/showing-a-basemap.html">Showing an ArcGIS Basemap</a>
-    <a href="../examples/basemap-with-labels.html">Basemap with Labels</a>
-    <a href="../examples/switching-basemaps.html">Switching Basemaps</a>
-    <a href="../examples/retina-basemap.html">Retina Basemap</a>
-    <a href="../examples/vector-basemap.html">Vector Basemaps</a>
-  </nav>
-
-  <h5>Feature Layers</h5>
-  <nav>
-    <a href="../examples/simple-feature-layer.html">Simple FeatureLayer</a>
-    <a href="../examples/styling-feature-layer-points.html">Styling Points</a>
-    <a href="../examples/styling-feature-layer-polylines.html">Styling Lines</a>
-    <a href="../examples/styling-feature-layer-polygons.html">Styling Polygons</a>
-    <a href="../examples/feature-layer-popups.html">Custom Popups</a>
-    <a href="../examples/querying-feature-layers-1.html">Querying Features #1</a>
-    <a href="../examples/querying-feature-layers-2.html">Querying Features #2</a>
-    <a href="../examples/spatial-queries.html">Spatial Queries</a>
-    <a href="../examples/simplifying-complex-features.html">Simplifying Complex Features</a>
-    <a href="../examples/zooming-to-all-features-1.html">Zoom to all Features #1</a>
-    <a href="../examples/zooming-to-all-features-2.html">Zoom to all Features #2</a>
-    <a href="../examples/labeling-features.html">Labeling Features</a>
-    <a href="../examples/layer-ordering.html">Ordering Layers</a>
-    <a href="../examples/editable.html">Editing</a>
-  </nav>
-
-  <h5>Feature Layer Plugins</h5>
-  <nav>
-    <a href="../examples/visualize-points-as-a-heatmap.html">Points as a Heatmap</a>
-    <a href="../examples/styling-heatmaps.html">Styling a heatmap</a>
-    <a href="../examples/visualizing-time-with-feature-layer.html">Time Enabled Services</a>
-    <a href="../examples/clustering-feature-layers.html">Clustering Points</a>
-    <a href="../examples/styling-clusters.html">Styling Clusters</a>
-  </nav>
-
-  <h5>Tile Layers</h5>
-  <nav>
-    <a href="../examples/tile-layer-1.html">Tiles from a Map Service #1</a>
-    <a href="../examples/tile-layer-2.html">Tiles from a Map Service #2</a>
-  </nav>
-
-  <h5>Dynamic Map Layer</h5>
-  <nav>
-    <a href="../examples/simple-dynamic-map-layer.html">Simple Dynamic Map Layer</a>
-    <a href="../examples/identifying-features.html">Identifying Features</a>
-    <a href="../examples/customizing-popups.html">Custom Popups</a>
-    <a href="../examples/visualizing-time-on-dynamic-map-layer.html">Time Ranges</a>
-  </nav>
-
-  <h5>Image Map Layer</h5>
-  <nav>
-    <a href="../examples/simple-image-map-layer.html">Simple Image Map Layer</a>
-    <a href="../examples/image-map-layer-rendering-rule.html">Rendering Rule</a>
-    <a href="../examples/identifying-imagery.html">Identify Imagery</a>
-    <a href="../examples/image-map-layer-mosaic-rule.html">Mosaic Rule</a>
-    <a href="../examples/imagery-popups.html">Custom Popups</a>
-    <a href="../examples/visualizing-time-on-image-layer.html">Time Ranges</a>
-  </nav>
-
-  <h5>Non-Mercator Projections</h5>
-  <nav>
-    <a href="../examples/non-mercator-projection.html">Tiles + Feature Layer</a>
-    <a href="../examples/non-mercator-projection-2.html">Tiles + Dynamic Map Layer</a>
-  </nav>
-
-  <h5>Query</h5>
-  <nav>
-    <a href="../examples/feature-layer-snapshot.html">Layer "Snapshot"</a>
-    <a href="../examples/query-no-map.html">Query without a Map</a>
-  </nav>
-
-  <h5>Authentication</h5>
-  <nav>
-    <a href="../examples/arcgis-online-auth.html">ArcGIS Online OAuth</a>
-    <a href="../examples/premium-content.html">Premium ArcGIS Online Content</a>
-    <a href="../examples/arcgis-server-auth.html">ArcGIS Server username/password</a>
-  </nav>
-
-  <h5>Geocoding</h5>
-  <nav>
-    <a href="../examples/geocoding-control.html">Geocoding Control</a>
-    <a href="../examples/search-map-service.html">Searching Map Services</a>
-    <a href="../examples/search-feature-layer.html">Searching Feature Layers</a>
-    <a href="../examples/center-map-on-address.html">Center the Initial Map State</a>
-    <a href="../examples/reverse-geocoding.html">Reverse Geocoding</a>
-  </nav>
-
-  <h5>Other Plugins</h5>
-  <nav>
-    <a href="../examples/renderers-plugin.html">Server Side Rendering</a>
-    <a href="../examples/stream-plugin.html">Stream Layer</a>
-    <a href="../examples/webmap.html?id=13750b8b548d48bfa99a9731f2a93ba0">Loading Webmaps</a>
-    <a href="../examples/gp-plugin.html">Geoprocessing</a>
-  </nav>
-
-  <h5>Misc.</h5>
-  <nav>
-    <a href="../examples/layers-control.html">Control.Layers</a>
-    <a href="../examples/turf.html">Turf.js Mashup</a>
-    <a href="../examples/getting-service-metadata.html">Getting Service Metadata</a>
-    <a href="../examples/parse-feature-collection.html">Parsing Feature Collections</a>
-    <a href="../examples/indoors.html">Indoor Mapping</a>
-
-  </nav>
-</aside>
-
-</div>
-
 </div>
 
   <div style='clear:both;'></div>
 </div>
-<div class="container center-text">
+<div class="container centered-text">
   <p class="copyright">Esri Leaflet is a project from the <a href="http://pdx.esri.com">Esri PDX R&amp;D Center</a> and the <a href="https://github.com/Esri/esri-leaflet/graphs/contributors">Esri Community</a></p>
 </div>
 
-  <div class="container center-text">
-    <p class="copyright"><a href="https://github.com/esri/esri-leaflet#terms">Terms</a></p>
   </div>
   <script src="../js/script.js"></script>
   </body>
