@@ -1,159 +1,68 @@
-import { Util, DomUtil } from 'leaflet';
+import { DomUtil } from 'leaflet';
 import Support from './Support';
 import { warn } from './Util';
+import { request as esriRequest, encodeQueryString } from '@esri/arcgis-rest-request';
 
 var callbacks = 0;
 
-function serialize (params) {
-  var data = '';
-
-  params.f = params.f || 'json';
-
-  for (var key in params) {
-    if (params.hasOwnProperty(key)) {
-      var param = params[key];
-      var type = Object.prototype.toString.call(param);
-      var value;
-
-      if (data.length) {
-        data += '&';
-      }
-
-      if (type === '[object Array]') {
-        value = (Object.prototype.toString.call(param[0]) === '[object Object]') ? JSON.stringify(param) : param.join(',');
-      } else if (type === '[object Object]') {
-        value = JSON.stringify(param);
-      } else if (type === '[object Date]') {
-        value = param.valueOf();
-      } else {
-        value = param;
-      }
-
-      data += encodeURIComponent(key) + '=' + encodeURIComponent(value);
-    }
-  }
-
-  return data;
-}
-
-function createRequest (callback, context) {
-  var httpRequest = new window.XMLHttpRequest();
-
-  httpRequest.onerror = function (e) {
-    httpRequest.onreadystatechange = Util.falseFn;
-
-    callback.call(context, {
-      error: {
-        code: 500,
-        message: 'XMLHttpRequest error'
-      }
-    }, null);
-  };
-
-  httpRequest.onreadystatechange = function () {
-    var response;
-    var error;
-
-    if (httpRequest.readyState === 4) {
-      try {
-        response = JSON.parse(httpRequest.responseText);
-      } catch (e) {
-        response = null;
-        error = {
-          code: 500,
-          message: 'Could not parse response as JSON. This could also be caused by a CORS or XMLHttpRequest error.'
-        };
-      }
-
-      if (!error && response.error) {
-        error = response.error;
-        response = null;
-      }
-
-      httpRequest.onerror = Util.falseFn;
-
-      callback.call(context, error, response);
-    }
-  };
-
-  httpRequest.ontimeout = function () {
-    this.onerror();
-  };
-
-  return httpRequest;
-}
-
+// not sure how to handle errors yet
 function xmlHttpPost (url, params, callback, context) {
-  var httpRequest = createRequest(callback, context);
-  httpRequest.open('POST', url);
+  var request = esriRequest(url, {
+    params: params,
+    httpMethod: 'POST'
+  });
 
-  if (typeof context !== 'undefined' && context !== null) {
-    if (typeof context.options !== 'undefined') {
-      httpRequest.timeout = context.options.timeout;
-    }
-  }
-  httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-  httpRequest.send(serialize(params));
-
-  return httpRequest;
+  L.Util.bind(request.then(response => {
+    callback.call(context, null, response);
+  }), this);
 }
 
+// not sure how to handle errors yet
 function xmlHttpGet (url, params, callback, context) {
-  var httpRequest = createRequest(callback, context);
-  httpRequest.open('GET', url + '?' + serialize(params), true);
+  var request = esriRequest(url, {
+    params: params,
+    httpMethod: 'GET'
+  });
 
-  if (typeof context !== 'undefined' && context !== null) {
-    if (typeof context.options !== 'undefined') {
-      httpRequest.timeout = context.options.timeout;
-    }
-  }
-  httpRequest.send(null);
-
-  return httpRequest;
+  L.Util.bind(request.then(response => {
+    callback.call(context, null, response);
+  }), this);
 }
 
 // AJAX handlers for CORS (modern browsers) or JSONP (older browsers)
 export function request (url, params, callback, context) {
-  var paramString = serialize(params);
-  var httpRequest = createRequest(callback, context);
+  var paramString = encodeQueryString(params);
   var requestLength = (url + '?' + paramString).length;
 
-  // ie10/11 require the request be opened before a timeout is applied
+  // not sure how to pass a timeout through to esriRequest yet
+  // if (typeof context !== 'undefined' && context !== null) {
+  //   if (typeof context.options !== 'undefined') {
+  //     httpRequest.timeout = context.options.timeout;
+  //   }
+  // }
+
   if (requestLength <= 2000 && Support.cors) {
-    httpRequest.open('GET', url + '?' + paramString);
+    this.get(url, params, callback, context);
+    return;
   } else if (requestLength > 2000 && Support.cors) {
-    httpRequest.open('POST', url);
-    httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+    this.post(url, params, callback, context);
+    return;
   }
 
-  if (typeof context !== 'undefined' && context !== null) {
-    if (typeof context.options !== 'undefined') {
-      httpRequest.timeout = context.options.timeout;
-    }
-  }
-
-  // request is less than 2000 characters and the browser supports CORS, make GET request with XMLHttpRequest
-  if (requestLength <= 2000 && Support.cors) {
-    httpRequest.send(null);
-
-  // request is more than 2000 characters and the browser supports CORS, make POST request with XMLHttpRequest
-  } else if (requestLength > 2000 && Support.cors) {
-    httpRequest.send(paramString);
-
-  // request is less  than 2000 characters and the browser does not support CORS, make a JSONP request
-  } else if (requestLength <= 2000 && !Support.cors) {
+  // request is less than 2000 characters and the browser does not support CORS, make a JSONP request
+  if (requestLength <= 2000 && !Support.cors) {
     return jsonp(url, params, callback, context);
 
-  // request is longer then 2000 characters and the browser does not support CORS, log a warning
+  // request has more than 2000 characters and the browser does not support CORS, log a warning
   } else {
     warn('a request to ' + url + ' was longer then 2000 characters and this browser cannot make a cross-domain post request. Please use a proxy http://esri.github.io/esri-leaflet/api-reference/request.html');
     return;
   }
-
-  return httpRequest;
 }
 
 export function jsonp (url, params, callback, context) {
+  params.f = params.f || 'json';
+
   window._EsriLeafletCallbacks = window._EsriLeafletCallbacks || {};
   var callbackId = 'c' + callbacks;
   params.callback = 'window._EsriLeafletCallbacks.' + callbackId;
@@ -185,7 +94,7 @@ export function jsonp (url, params, callback, context) {
 
   var script = DomUtil.create('script', null, document.body);
   script.type = 'text/javascript';
-  script.src = url + '?' + serialize(params);
+  script.src = url + '?' + encodeQueryString(params);
   script.id = callbackId;
   DomUtil.addClass(script, 'esri-leaflet-jsonp');
 
