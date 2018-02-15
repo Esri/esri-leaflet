@@ -114,14 +114,14 @@ export var TiledMapLayer = TileLayer.extend({
       this.metadata(function (error, metadata) {
         if (!error && metadata.spatialReference) {
           var sr = metadata.spatialReference.latestWkid || metadata.spatialReference.wkid;
+          // display the copyright text from the service using leaflet's attribution control
           if (!this.options.attribution && map.attributionControl && metadata.copyrightText) {
             this.options.attribution = metadata.copyrightText;
             map.attributionControl.addAttribution(this.getAttribution());
           }
 
-          var needProj4 = this._checkSRSupport(map, sr);
-
-          if (needProj4) {
+          // if the service tiles were published in web mercator using conventional LODs but missing levels, we can try and remap them
+          if (map.options.crs === CRS.EPSG3857 && (sr === 102100 || sr === 3857)) {
             this._lodMap = {};
             // create the zoom level data
             var arcgisLODs = metadata.tileInfo.lods;
@@ -140,7 +140,10 @@ export var TiledMapLayer = TileLayer.extend({
             }
 
             this.fire('lodmap');
+          } else if (map.options.crs && map.options.crs.code && (map.options.crs.code.indexOf(sr) > -1) || (map.options.crs === CRS.EPSG4326 && (sr === 4326))) {
+            // if the projection is WGS84, or the developer is using Proj4 to define a custom CRS, no action is required
           } else {
+            // if the service was cached in a custom projection and an appropriate LOD hasn't been defined in the map, guide the developer to our Proj4 sample
             warn('L.esri.TiledMapLayer is using a non-mercator spatial reference. Support may be available through Proj4Leaflet http://esri.github.io/esri-leaflet/examples/non-mercator-projection.html');
           }
         }
@@ -148,22 +151,6 @@ export var TiledMapLayer = TileLayer.extend({
     }
 
     TileLayer.prototype.onAdd.call(this, map);
-  },
-
-  _checkSRSupport: function (map, spatialReference) {
-    if (map.options.crs === CRS.EPSG3857 && (spatialReference === 102100 || spatialReference === 3857)) {
-      // web mercator tile services are supported by leaflet
-      return true;
-    } else if (map.options.crs === CRS.EPSG4326 && (spatialReference === 4326)) {
-      // wgs84 tile services are supported by leaflet
-      return true;
-    } else if (map.options.crs && map.options.crs.code && (map.options.crs.code.indexOf(spatialReference) > -1)) {
-      // using proj4 and defining a custom crs enables support for tile services published in other projections
-      return true;
-    } else {
-      // otherwise assume the tile service isn't going to load properly
-      return false;
-    }
   },
 
   metadata: function (callback, context) {
