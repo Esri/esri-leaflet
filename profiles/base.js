@@ -7,9 +7,8 @@ var copyright = '/* ' + pkg.name + ' - v' + pkg.version + ' - ' + new Date().toS
                 ' * ' + pkg.license + ' */';
 
 export default {
-  entry: 'src/EsriLeaflet.js',
-  moduleName: 'L.esri',
-  format: 'umd',
+  input: 'src/EsriLeaflet.js',
+
   external: ['leaflet', 'esri-leaflet'],
   plugins: [
     nodeResolve({
@@ -20,9 +19,14 @@ export default {
     }),
     json()
   ],
-  globals: {
-    'leaflet': 'L',
-    'esri-leaflet': 'L.esri'
-  },
-  banner: copyright
+
+  output: {
+    banner: copyright,
+    format: 'umd',
+    name: 'L.esri',
+    globals: {
+      'leaflet': 'L',
+      'esri-leaflet': 'L.esri'
+    }
+  }
 };
