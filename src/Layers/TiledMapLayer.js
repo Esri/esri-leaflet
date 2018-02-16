@@ -140,7 +140,7 @@ export var TiledMapLayer = TileLayer.extend({
             }
 
             this.fire('lodmap');
-          } else if (map.options.crs && map.options.crs.code && (map.options.crs.code.indexOf(sr) > -1) || (map.options.crs === CRS.EPSG4326 && (sr === 4326))) {
+          } else if (map.options.crs && map.options.crs.code && (map.options.crs.code.indexOf(sr) > -1)) {
             // if the projection is WGS84, or the developer is using Proj4 to define a custom CRS, no action is required
           } else {
             // if the service was cached in a custom projection and an appropriate LOD hasn't been defined in the map, guide the developer to our Proj4 sample
