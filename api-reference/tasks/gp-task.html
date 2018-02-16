@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]> <html class="ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html class="ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html class="ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html class="ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="not-ie"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+
+  
+    <title>L.esri.GP.Task | Esri Leaflet</title>
+  
+
+  
+
+  <meta name="description" content="Esri Leaflet">
+  <meta name="viewport" content="width=device-width">
+
+  <!--[if lt IE 9]>
+    <script src="//cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv-printshiv.js"></script>
+  <![endif]-->
+
+  <!-- google fonts -->
+  <link href='//fonts.googleapis.com/css?family=Vollkorn:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="//brick.a.ssl.fastly.net/Source+Code+Pro:300">
+  <link href='//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+
+  <!-- stylesheet -->
+  <link rel="stylesheet" href="../../css/style.css">
+
+  
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet-src.js"></script>
+    <script src="https://unpkg.com/esri-leaflet@2.0.8"></script>
+  
+
+  
+
+  <!-- Google Analytics -->
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-44963317-3', 'auto');
+    ga('send', 'pageview');
+  </script>
+  <!-- End Google Analytics -->
+</head>
+<body>
+  <div class="page-content ">
+    <div class="container">
+      <a class="site-nav" href="../../" class="left logo">Esri Leaflet</a>
+      <nav class="right">
+        <a class="site-nav" href="../../tutorials/">Tutorials</a>
+        <a class="site-nav" href="../../plugins/">Plugins</a>
+        <a class="site-nav" href="../../examples/">Examples</a>
+        <a class="site-nav" href="../../api-reference/">API Reference</a>
+        <a class="site-nav" href="../../download/">Download</a>
+        <a class="site-nav" href="https://github.com/Esri/esri-leaflet">View on GitHub</a>
+      </nav>
+    </div>
+    <div id="background-map" class="background-map"></div>
+
+  
+
+<div class="container white">
+  
+
+<aside class="sidebar">
+  <h5>Layers</h5>
+  <nav>
+    <a href="../../api-reference/layers/basemap-layer.html">Basemap Layer</a>
+    <a href="../../api-reference/layers/feature-layer.html">Feature Layer</a>
+    <a href="../../api-reference/layers/tiled-map-layer.html">Tiled Map Layer</a>
+    <a href="../../api-reference/layers/dynamic-map-layer.html">Dynamic Map Layer</a>
+    <a href="../../api-reference/layers/image-map-layer.html">Image Map Layer</a>
+    <a class="plugin" href="../../api-reference/layers/vector-basemap.html">Vector Basemap</a>
+    <a class="plugin" href="../../api-reference/layers/heatmap-feature-layer.html">Heatmap Feature Layer</a>
+    <a class="plugin" href="../../api-reference/layers/clustered-feature-layer.html">Clustered Feature Layer</a>
+    <a class="plugin" href="../../api-reference/layers/vector-layer.html">Vector Layer</a>
+  </nav>
+
+  <h5>Controls</h5>
+  <nav>
+    <a class="plugin" href="../../api-reference/controls/geosearch.html" class="plugin">Geosearch</a>
+  </nav>
+
+  <h5>Tasks</h5>
+  <nav>
+    <a href="../../api-reference/tasks/query.html">Query</a>
+    <a href="../../api-reference/tasks/find.html">Find</a>
+    <a href="../../api-reference/tasks/identify-features.html">Identify Features</a>
+    <a href="../../api-reference/tasks/identify-image.html">Identify Image</a>
+    <a class="plugin" href="../../api-reference/tasks/geocode.html">Geocode</a>
+    <a class="plugin" href="../../api-reference/tasks/reverse-geocode.html">Reverse Geocode</a>
+    <a class="plugin" href="../../api-reference/tasks/suggest.html">Suggest</a>
+    <a class="plugin" href="../../api-reference/tasks/gp-task.html">Geoprocessing Task</a>
+    <a class="plugin" href="../../api-reference/tasks/query-related.html">Query Related</a>
+  </nav>
+
+  <h5>Base Classes</h5>
+  <nav>
+    <a href="../../api-reference/services/image-service.html">ImageService</a>
+    <a href="../../api-reference/services/feature-layer-service.html">FeatureLayerService</a>
+    <a href="../../api-reference/services/map-service.html">MapService</a>
+    <a class="plugin" href="../../api-reference/services/geocode-service.html">Geocode Service</a>
+    <a class="plugin" href="../../api-reference/services/gp-service.html">Geoprocessing Service</a>
+    <a href="../../api-reference/tasks/task.html">Task</a>
+    <a href="../../api-reference/services/service.html">Service</a>
+    <a href="../../api-reference/layers/raster-layer.html">Raster Layer</a>
+  </nav>
+
+  <h5>Misc.</h5>
+  <nav>
+    <a href="../../api-reference/util.html">Util</a>
+    <a href="../../api-reference/request.html">request</a>
+    <a href="../../api-reference/options.html">options</a>
+    <a href="../../api-reference/events.html">Events</a>
+  </nav>
+</aside>
+
+
+<div class="main-content">
+  <h1 id="l-esri-gp-task">L.esri.GP.Task</h1>
+<p>An abstraction to simplify making calls to ArcGIS Online and ArcGIS Server Geoprocessing services.  You can find more information and the source code for this plugin <a href="https://github.com/jgravois/esri-leaflet-gp">here</a>.</p>
+<h3 id="constructor">Constructor</h3>
+<p>This object is typically instantiated by calling L.esri.<a href=".././services/gp-service.html#methods">GP.Service.createTask()</a></p>
+<h3 id="events">Events</h3>
+<p>By default, the plugin assumes services are synchronous and that &#39;execute&#39; is the appropriate path.</p>
+<p>If you are working with an asynchronous service or one with a custom operation name and don&#39;t indicate corresponding information in the constructor, you&#39;ll have to leave the plugin enough time to make a roundtrip to the server to inquire before calling <code>run()</code>.</p>
+<p>The GP.task &#39;initialized&#39; event is intended to help with this timing.</p>
+<pre><code class="language-js"><span class="keyword">var</span> myService = L.esri.GP.service({
+    url: <span class="string">"https://elevation.arcgis.com/arcgis/rest/services/Tools/ElevationSync/GPServer/Profile"</span>
+  });
+<span class="keyword">var</span> myTask = myService.createTask();
+
+myTask.on(<span class="string">'initialized'</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span>{</span>
+  myTask.setParam(<span class="string">"inputFeature"</span>, polyline.toGeoJSON());
+  myTask.run(<span class="function"><span class="keyword">function</span><span class="params">(error, geojson, response)</span>{</span>
+    ...
+  });
+});</code></pre>
+<h3 id="methods">Methods</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Method</th>
+            <td>Returns</td>
+            <td>Description</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>setParam(<nobr class="param"><span>&lt;String&gt;</span> <code>inputParamName</code></nobr>, <nobr class="param"><span>&lt;String||Boolean||Geometry&gt;</span> <code>value</code></nobr>)</code></td>
+            <td><code><code>this</code></code></td>
+            <td>Sets an input parameter named by the service itself. <a href="http://leafletjs.com/reference.html#latlng">L.LatLng</a>, <a href="http://leafletjs.com/reference.html#marker">L.Marker</a>, <a href="http://leafletjs.com/reference.html#latlngbounds">L.LatLngBounds</a>, and <a href="http://leafletjs.com/reference.html#geojson">L.GeoJSON</a> (both Features and Geometries) will be converted to GeoServices JSON to be passed in the request automatically.</td>
+        </tr>
+        <tr>
+            <td><code>run(<nobr class="param"><span>&lt;Function&gt;</span> <code>callback</code></nobr>)</code></td>
+            <td><code><code>this</code></code></td>
+            <td>Calls the corresponding Geoprocessing service, passing the previously supplied input parameters. For synchronous services, <strong>all</strong> result parameters are parsed and returned.</td>
+        </tr>
+        <tr>
+            <td><code>setOutputParam(<nobr class="param"><span>&lt;String&gt;</span> <code>outputParamName</code></nobr>)</code></td>
+            <td><code><code>this</code></code></td>
+            <td>(Optional) Only applicable for asynchronous services. Notifies the plugin of the parameter name to retrieve output for.</td>
+        </tr>
+        <tr>
+            <td><code>gpAsyncResultParam(<nobr class="param"><span>&lt;String&gt;</span> <code>resultParamName</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>value</code></nobr>)</code></td>
+            <td><code><code>this</code></code></td>
+            <td>(Optional) Sets a result parameter for Asynchronous geoprocessing services that require it.</td>
+        </tr>
+    </tbody>
+</table>
+
+<h3 id="results">Results</h3>
+<p>The response from synchronous services will be a JSON object composed of name value pairs of output parameter names and their associated values. GPFeatureRecordSet layer output will converted to GeoJSON.</p>
+<p>A single result from the geoprocessing service. Do not rely on all these properties being present in every result object.</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>jobId</code></td>
+<td><code>&lt;String&gt;</code></td>
+<td>ID of processed job (only applicable for asynchronous services).</td>
+</tr>
+<tr>
+<td><code>outputMapService</code></td>
+<td><code>&lt;String&gt;</code></td>
+<td>Url of temporary map service created by geoprocessing service, if its been designed to create one.</td>
+</tr>
+</tbody>
+</table>
+<p>GP results conform to the following format</p>
+<pre><code class="language-js">[
+  {
+    <span class="comment">// actual parameter name and data type are dependent on the service itself</span>
+    outputParamName: <span class="xml"><span class="tag">&lt;<span class="title">L.GeoJSON</span>&gt;</span> || <span class="tag">&lt;<span class="title">string</span>&gt;</span> || <span class="tag">&lt;<span class="title">boolean</span>&gt;</span>,
+    outputGPFileParamName: {
+        url: "https://server/arcgis/rest/directories/arcgisoutput/./_ags_856aed6eb_.png"
+      }
+    },
+    jobId: "j7123be34ccfe45b4b47a51e867e0084b",
+    mapService: "https://server/arcgis/rest/services/GPServiceName/MapServer/jobs/j7123be34ccfe45b4b47a51e867e0084b/"
+  }
+]</span></code></pre>
+
+  <p><a href="http://github.com/Esri/esri-leaflet-doc/edit/master/src/pages/api-reference/tasks/gp-task.md">Edit this page on GitHub</a></p>
+</div>
+
+  <div style='clear:both;'></div>
+</div>
+<div class="container centered-text">
+  <p class="copyright">Esri Leaflet is a project from the <a href="http://pdx.esri.com">Esri PDX R&amp;D Center</a> and the <a href="https://github.com/Esri/esri-leaflet/graphs/contributors">Esri Community</a></p>
+</div>
+
+  </div>
+  <script src="../../js/script.js"></script>
+  </body>
+</html>
