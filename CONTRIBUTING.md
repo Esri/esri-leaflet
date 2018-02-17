@@ -43,14 +43,15 @@ Of course! if you develop reusuable components for use with Esri Leaflet that yo
 2. `cd` into the `esri-leaflet` folder
 3. Install the [`package.json`](https://github.com/Esri/esri-leaflet/blob/master/package.json#L14-L49) dependencies by running `npm install`
 4. In order to compile/minify the source code of the API in a newly created `dist` folder, run `npm run build`.
-5. If you'd like to run the website locally, run `npm start` or `grunt` from the command line. This will start the web server at [http://localhost:8001](http://localhost:8001) and start watching the website source files for changes.
-6. If you'd like to share your changes, just create a [pull request](https://help.github.com/articles/creating-a-pull-request)
+5. If you'd like to debug interactively, run `npm start`. This will start the web server at [http://localhost:5000](http://localhost:5000) and start watching the raw source for changes.
+6. [http://localhost:5000/debug/sample.html](http://localhost:5000/debug/sample.html) is a demo app that you can use to get the lay of the land.
+7. If you'd like to share your changes, just create a [pull request](https://help.github.com/articles/creating-a-pull-request)
 
 If you'd like to build the Esri Leaflet website locally, make sure you have the [Grunt CLI](http://gruntjs.com/getting-started) installed.
 
 ### Linting
 
-Please make sure your changes pass JS Hint. This will help make sure code is consistent throughout Esri Leaflet. After installing the node dependencies for this project you can run `npm test` so that `semistandard` can make sure all is well.
+Please make sure your changes pass JS Hint. This will help make sure code is consistent throughout Esri Leaflet. After installing the node dependencies for this project you can run `npm run lint` so that `semistandard` can make sure all is well.
 
 ### Testing
 

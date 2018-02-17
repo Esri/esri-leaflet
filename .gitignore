@@ -10,6 +10,9 @@ Icon
 *.sublime-project
 .idea/*
 
+# Code
+.vscode/
+
 # SASS
 .sass-cache
 
@@ -26,6 +29,8 @@ coverage
 # Debugging Files
 working
 debug/*.html
+debug/*.js
+debug/*.json
 debug/archive/
 !debug/sample.html
 

@@ -386,6 +386,28 @@ describe('L.esri.ImageMapLayer', function () {
     server.respond();
   });
 
+  it('should get and set noData with zero passed in the constructor', function (done) {
+    server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockImageService\/ImageServer\/exportImage\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&format=jpgpng&transparent=true&bboxSR=3857&imageSR=3857&noData=0&f=json/), JSON.stringify({
+      href: WithNoData
+    }));
+
+    var noDataLayer = L.esri.imageMapLayer({
+      pane: 'custom',
+      url: url,
+      f: 'json',
+      noData: 0
+    });
+
+    noDataLayer.once('load', function () {
+      expect(noDataLayer._currentImage._url).to.equal(WithNoData);
+      done();
+    });
+
+    expect(noDataLayer.getNoData()).to.equal(0);
+    noDataLayer.addTo(map);
+    server.respond();
+  });
+
   it('should get and set noData as a numeric param', function (done) {
     server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockImageService\/ImageServer\/exportImage\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&format=jpgpng&transparent=true&bboxSR=3857&imageSR=3857&noData=0&f=json/), JSON.stringify({
       href: WithNoData

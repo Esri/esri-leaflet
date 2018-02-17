@@ -1,6 +1,6 @@
 import { Util } from 'leaflet';
 import { RasterLayer } from './RasterLayer';
-import { cleanUrl } from '../Util';
+import { getUrlParams } from '../Util';
 import mapService from '../Services/MapService';
 
 export var DynamicMapLayer = RasterLayer.extend({
@@ -16,7 +16,7 @@ export var DynamicMapLayer = RasterLayer.extend({
   },
 
   initialize: function (options) {
-    options.url = cleanUrl(options.url);
+    options = getUrlParams(options);
     this.service = mapService(options);
     this.service.addEventParent(this);
 
@@ -87,15 +87,31 @@ export var DynamicMapLayer = RasterLayer.extend({
       }, this), 300);
     }, this);
 
-    var identifyRequest = this.identify().on(this._map).at(e.latlng);
-
-    // remove extraneous vertices from response features
-    identifyRequest.simplify(this._map, 0.5);
-
-    if (this.options.layers) {
-      identifyRequest.layers('visible:' + this.options.layers.join(','));
+    var identifyRequest;
+    if (this.options.popup) {
+      identifyRequest = this.options.popup.on(this._map).at(e.latlng);
     } else {
-      identifyRequest.layers('visible');
+      identifyRequest = this.identify().on(this._map).at(e.latlng);
+    }
+
+    // remove extraneous vertices from response features if it has not already been done
+    identifyRequest.params.maxAllowableOffset ? true : identifyRequest.simplify(this._map, 0.5);
+
+    if (!(this.options.popup && this.options.popup.params && this.options.popup.params.layers)) {
+      if (this.options.layers) {
+        identifyRequest.layers('visible:' + this.options.layers.join(','));
+      } else {
+        identifyRequest.layers('visible');
+      }
+    }
+
+    // if present, pass layer ids and sql filters through to the identify task
+    if (this.options.layerDefs && typeof this.options.layerDefs !== 'string' && !identifyRequest.params.layerDefs) {
+      for (var id in this.options.layerDefs) {
+        if (this.options.layerDefs.hasOwnProperty(id)) {
+          identifyRequest.layerDef(id, this.options.layerDefs[id]);
+        }
+      }
     }
 
     identifyRequest.run(callback);
@@ -106,23 +122,11 @@ export var DynamicMapLayer = RasterLayer.extend({
   },
 
   _buildExportParams: function () {
-    var bounds = this._map.getBounds();
-    var size = this._map.getSize();
-    var ne = this._map.options.crs.project(bounds.getNorthEast());
-    var sw = this._map.options.crs.project(bounds.getSouthWest());
     var sr = parseInt(this._map.options.crs.code.split(':')[1], 10);
 
-    // ensure that we don't ask ArcGIS Server for a taller image than we have actual map displaying
-    var top = this._map.latLngToLayerPoint(bounds._northEast);
-    var bottom = this._map.latLngToLayerPoint(bounds._southWest);
-
-    if (top.y > 0 || bottom.y < size.y) {
-      size.y = bottom.y - top.y;
-    }
-
     var params = {
-      bbox: [sw.x, sw.y, ne.x, ne.y].join(','),
-      size: size.x + ',' + size.y,
+      bbox: this._calculateBbox(),
+      size: this._calculateImageSize(),
       dpi: 96,
       format: this.options.format,
       transparent: this.options.transparent,
@@ -135,7 +139,11 @@ export var DynamicMapLayer = RasterLayer.extend({
     }
 
     if (this.options.layers) {
-      params.layers = 'show:' + this.options.layers.join(',');
+      if (this.options.layers.length === 0) {
+        return;
+      } else {
+        params.layers = 'show:' + this.options.layers.join(',');
+      }
     }
 
     if (this.options.layerDefs) {
@@ -156,6 +164,11 @@ export var DynamicMapLayer = RasterLayer.extend({
 
     if (this.options.proxy) {
       params.proxy = this.options.proxy;
+    }
+
+    // use a timestamp to bust server cache
+    if (this.options.disableCache) {
+      params._ts = Date.now();
     }
 
     return params;

@@ -1,4 +1,4 @@
-import { ImageOverlay, CRS, DomUtil, Util, Layer, popup, latLng } from 'leaflet';
+import { ImageOverlay, CRS, DomUtil, Util, Layer, popup, latLng, bounds } from 'leaflet';
 import { cors } from '../Support';
 import { setEsriAttribution } from '../Util';
 
@@ -17,7 +17,6 @@ var Overlay = ImageOverlay.extend({
 });
 
 export var RasterLayer = Layer.extend({
-
   options: {
     opacity: 1,
     position: 'front',
@@ -170,8 +169,14 @@ export var RasterLayer = Layer.extend({
         interactive: this.options.interactive
       }).addTo(this._map);
 
-      // once the image loads
-      image.once('load', function (e) {
+      var onOverlayError = function () {
+        this._map.removeLayer(image);
+        this.fire('error');
+        image.off('load', onOverlayLoad, this);
+      };
+
+      var onOverlayLoad = function (e) {
+        image.off('error', onOverlayLoad, this);
         if (this._map) {
           var newImage = e.target;
           var oldImage = this._currentImage;
@@ -210,7 +215,13 @@ export var RasterLayer = Layer.extend({
         this.fire('load', {
           bounds: bounds
         });
-      }, this);
+      };
+
+      // If loading the image fails
+      image.once('error', onOverlayError, this);
+
+      // once the image loads
+      image.once('load', onOverlayLoad, this);
 
       this.fire('loading', {
         bounds: bounds
@@ -243,8 +254,14 @@ export var RasterLayer = Layer.extend({
     }
 
     var params = this._buildExportParams();
+    Util.extend(params, this.options.requestParams);
 
-    this._requestExport(params, bounds);
+    if (params) {
+      this._requestExport(params, bounds);
+    } else if (this._currentImage) {
+      this._currentImage._map.removeLayer(this._currentImage);
+      this._currentImage = null;
+    }
   },
 
   _renderPopup: function (latlng, error, results, response) {
@@ -261,5 +278,38 @@ export var RasterLayer = Layer.extend({
   _resetPopupState: function (e) {
     this._shouldRenderPopup = false;
     this._lastClick = e.latlng;
+  },
+
+  _calculateBbox: function () {
+    var pixelBounds = this._map.getPixelBounds();
+
+    var sw = this._map.unproject(pixelBounds.getBottomLeft());
+    var ne = this._map.unproject(pixelBounds.getTopRight());
+
+    var neProjected = this._map.options.crs.project(ne);
+    var swProjected = this._map.options.crs.project(sw);
+
+    // this ensures ne/sw are switched in polar maps where north/top bottom/south is inverted
+    var boundsProjected = bounds(neProjected, swProjected);
+
+    return [boundsProjected.getBottomLeft().x, boundsProjected.getBottomLeft().y, boundsProjected.getTopRight().x, boundsProjected.getTopRight().y].join(',');
+  },
+
+  _calculateImageSize: function () {
+    // ensure that we don't ask ArcGIS Server for a taller image than we have actual map displaying within the div
+    var bounds = this._map.getPixelBounds();
+    var size = this._map.getSize();
+
+    var sw = this._map.unproject(bounds.getBottomLeft());
+    var ne = this._map.unproject(bounds.getTopRight());
+
+    var top = this._map.latLngToLayerPoint(ne).y;
+    var bottom = this._map.latLngToLayerPoint(sw).y;
+
+    if (top > 0 || bottom < size.y) {
+      size.y = bottom - top;
+    }
+
+    return size.x + ',' + size.y;
   }
 });

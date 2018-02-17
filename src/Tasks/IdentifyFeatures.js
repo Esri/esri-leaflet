@@ -1,12 +1,17 @@
 import { latLng } from 'leaflet';
 import { Identify } from './Identify';
-import { boundsToExtent, responseToFeatureCollection } from '../Util';
+import { responseToFeatureCollection,
+  boundsToExtent,
+  _setGeometry
+} from '../Util';
 
 export var IdentifyFeatures = Identify.extend({
   setters: {
     'layers': 'layers',
     'precision': 'geometryPrecision',
     'tolerance': 'tolerance',
+    // skipped implementing this (for now) because the REST service implementation isnt consistent between operations.
+    // 'transform': 'datumTransformations'
     'returnGeometry': 'returnGeometry'
   },
 
@@ -25,10 +30,12 @@ export var IdentifyFeatures = Identify.extend({
     return this;
   },
 
-  at: function (latlng) {
-    latlng = latLng(latlng);
-    this.params.geometry = [latlng.lng, latlng.lat];
-    this.params.geometryType = 'esriGeometryPoint';
+  at: function (geometry) {
+    // cast lat, long pairs in raw array form manually
+    if (geometry.length === 2) {
+      geometry = latLng(geometry);
+    }
+    this._setGeometryParams(geometry);
     return this;
   },
 
@@ -62,6 +69,12 @@ export var IdentifyFeatures = Identify.extend({
         callback.call(context, undefined, featureCollection, response);
       }
     });
+  },
+
+  _setGeometryParams: function (geometry) {
+    var converted = _setGeometry(geometry);
+    this.params.geometry = converted.geometry;
+    this.params.geometryType = converted.geometryType;
   }
 });
 

@@ -1,6 +1,6 @@
 import { Class, Util } from 'leaflet';
 import {cors} from '../Support';
-import {cleanUrl} from '../Util';
+import { cleanUrl, getUrlParams } from '../Util';
 import Request from '../Request';
 
 export var Task = Class.extend({
@@ -49,7 +49,17 @@ export var Task = Class.extend({
     return this;
   },
 
+  // ArcGIS Server Find/Identify 10.5+
+  format: function (boolean) {
+    // use double negative to expose a more intuitive positive method name
+    this.params.returnUnformattedValues = !boolean;
+    return this;
+  },
+
   request: function (callback, context) {
+    if (this.options.requestParams) {
+      Util.extend(this.params, this.options.requestParams);
+    }
     if (this._service) {
       return this._service.request(this.path, this.params, callback, context);
     }
@@ -69,6 +79,7 @@ export var Task = Class.extend({
 });
 
 export function task (options) {
+  options = getUrlParams(options);
   return new Task(options);
 }
 

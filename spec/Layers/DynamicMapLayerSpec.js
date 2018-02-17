@@ -22,8 +22,10 @@ describe('L.esri.DynamicMapLayer', function () {
   var WithTimeTimeOptions = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAH0AAAB9CAMAAAC4XpwXAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyhpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMDY3IDc5LjE1Nzc0NywgMjAxNS8wMy8zMC0yMzo0MDo0MiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MkU1NjVENzgyMjZBMTFFNUI1NTc5NjAwMkVENUQwM0IiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6MkU1NjVENzkyMjZBMTFFNUI1NTc5NjAwMkVENUQwM0IiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDoyOUVEREI3NTIyNkExMUU1QjU1Nzk2MDAyRUQ1RDAzQiIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDoyOUVEREI3NjIyNkExMUU1QjU1Nzk2MDAyRUQ1RDAzQiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pno8yQ0AAABgUExURb29va6urqysrKioqLKyssvLy7Gxsbm5ucjIyLe3t7W1tcLCwr6+vsbGxrOzs8XFxbS0tMHBwaqqqsDAwLu7u7i4uLq6usfHx8nJyaurq8PDw8rKyqenp6Ojo7CwsMzMzDDnGUgAAAEDSURBVHja7NTbUoMwFIXhBhJCoJwLbT2t939L02A7elEdO2ov/JkMJGTtfMAAG91z26Cjo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6PfTS//Xp/DnOYbyUou231I74+DpndXtTfT2mm+8UA/CbbPrbSVcicT5apMozDH3RKJQqpL1SEc5MKjdpOR+kGHY4r5hxiNx8rdqBd5n+761Oyqn7qFlRt90n0n39pB9VhrqV/iube4nF2rnLlV7324omvcXvS+HdTknbosLvVUnSvMslZl5c+/8+7K2H6Z/M0vzvG3QUdHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dH//f6qwADAEAoWKnzLlffAAAAAElFTkSuQmCC';
   var WithDefs = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAH0AAAB9CAMAAAC4XpwXAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyhpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMDY3IDc5LjE1Nzc0NywgMjAxNS8wMy8zMC0yMzo0MDo0MiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MjlFRERCNkYyMjZBMTFFNUI1NTc5NjAwMkVENUQwM0IiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6MjlFRERCNzAyMjZBMTFFNUI1NTc5NjAwMkVENUQwM0IiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDoyOUVEREI2RDIyNkExMUU1QjU1Nzk2MDAyRUQ1RDAzQiIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDoyOUVEREI2RTIyNkExMUU1QjU1Nzk2MDAyRUQ1RDAzQiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pg3iWmcAAABgUExURa6urr+/v8HBwcfHx7u7u56enrW1taWlpby8vLe3t7i4uMPDw8LCwqioqKamppmZmcjIyKurq7Kysq2trZaWlsrKypqampycnKOjo5eXl8vLy52dnZubm6KiorCwsMzMzADumocAAAFCSURBVHja7NXLbsMgEEBRMAH8KHEc41cch///yxLXSVrJm0p2uuhlhzTSYWYYEOEvl0BHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR//FurxHb1q1Yk/jHvo1vXhV+CYk+UP3s37wpT09w4pB7qFbo3ya6hCMjbsse+ltoW/PMHndpe9CpIMxbtnV4psezKvasttFz47nqarPUTvG+pZlEXWh5aynQwxIJhdPY30sTTJ2G+uJrkRv0xDy/pl7crzNuvSx8TZzZsm9EmpjvRl62Wn1Q1d1/aUPccy6qq8W/VAmW0/c2F7G+5Va0fM7eTXy49H3vD1trDsd7LSqH3RMOkzmLBZdqbbYWL+5IKo13bfuNJdbF4tuBvf2l7Z5vbENfxw6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6+r/XPwUYAAXsVASA6AUmAAAAAElFTkSuQmCC';
   var WithToken = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAH0AAAB9CAMAAAC4XpwXAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyhpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMDY3IDc5LjE1Nzc0NywgMjAxNS8wMy8zMC0yMzo0MDo0MiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MjlFRERCNzMyMjZBMTFFNUI1NTc5NjAwMkVENUQwM0IiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6MjlFRERCNzQyMjZBMTFFNUI1NTc5NjAwMkVENUQwM0IiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDoyOUVEREI3MTIyNkExMUU1QjU1Nzk2MDAyRUQ1RDAzQiIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDoyOUVEREI3MjIyNkExMUU1QjU1Nzk2MDAyRUQ1RDAzQiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PhEp84oAAABgUExURcjIyJycnLa2tsTExL+/v7i4uJ+fn5mZmbS0tK6urqmpqbGxsaamppqamsDAwLKysrOzs6WlpcrKyqurq6Kioq2trby8vMvLy8PDw6SkpKqqqqysrKOjo8HBwbq6uszMzKcQTFcAAAEoSURBVHja7NTbboMwDIDhhHOABginAm39/m/ZsFGpmqpdQVdpfy4Qsi2+WDhR8pdLoaOjo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojf5iu7I9AGB6oF2MUqcpXb+W2WZ+BMcNWUNUH6km4GDuJ9IXIOXrow2W279DzoSljI+JGkbh/6NIG8g69zrqu8FSWiUxaiU2aetNdrqNVN/596Hxe9FLuqw/z1OXX7xa/er/Yy6Zfm1vuE23i/MZU4qOpS8dd9VD3uXZPenPuNj2eIz8QlV7WrvPSfy+Vk9v3xKVBnchL3ZY3H6iKk1qH04xH6J0dyte6axK7JqrWj4Vu5Qj9t/X0k90/uGnR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dE/X78LMAB6zVaMpfGcowAAAABJRU5ErkJggg==';
+  var WithParams = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAH0AAAB9CAMAAAC4XpwXAAAAYFBMVEWurq6/v7/BwcHHx8e7u7uenp61tbWlpaW8vLy3t7e4uLjDw8PCwsKoqKimpqaZmZnIyMirq6uysrKtra2WlpbKysqampqcnJyjo6OXl5fLy8udnZ2bm5uioqKwsLDMzMwA7pqHAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4QweFBARX6eWJQAAAN5JREFUaN7t1UsOgkAMAFAO0X3vf0tjEJjyS0YFFz5CRjogj3aoDvnLbaDT6XQ6nU6n0+l0Op1Op9PpdDqdTqfT/1KPWIYYD+bpcTLmyQtyf947xmF6jI0e9+jNzLo09+Q+5jqlXBZm+oidKJdLLtCjYaNGNejWX3uu131mYrskS1Rfmt6Om5M51rMtcq6iUp5v61lbr3mUtX7in+rNmPWWTeeVE9FWfvrOcXt06bGXe5bcc7/y3XotXfv71lv5NzrOfxydTqfT6XQ6nU6n0+l0Op1Op9PpdDqdTv9gewCL6FN9G6INjAAAAABJRU5ErkJggg==';
 
   var url = 'http://services.arcgis.com/mock/arcgis/rest/services/MockMapService/MapServer';
+  var urlWithParams = 'http://services.arcgis.com/mock/arcgis/rest/services/MockMapService/MapServer?foo=bar';
   var layer;
   var server;
   var map;
@@ -100,6 +102,33 @@ describe('L.esri.DynamicMapLayer', function () {
       done();
     });
     layer.addTo(map);
+    server.respond();
+  });
+
+  it('should store additional params passed in url', function () {
+    layer = L.esri.dynamicMapLayer({
+      url: urlWithParams
+    }).addTo(map);
+
+    expect(layer.options.requestParams).to.deep.equal({ foo: 'bar' });
+    expect(layer.options.url).to.deep.equal(url + '/');
+  });
+
+  it('should use additional params passed in options', function (done) {
+    server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png24&transparent=true&bboxSR=3857&imageSR=3857&foo=bar&f=json/), JSON.stringify({
+      href: WithParams
+    }));
+    layer = L.esri.dynamicMapLayer({
+      url: url,
+      requestParams: {
+        foo: 'bar'
+      }
+    });
+    layer.addTo(map);
+    layer.on('load', function () {
+      expect(layer._currentImage._url).to.equal(WithParams);
+      done();
+    });
     server.respond();
   });
 
@@ -374,7 +403,11 @@ describe('L.esri.DynamicMapLayer', function () {
   });
 
   it('should bind a popup to the layer', function () {
-    server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/identify\?sr=4326&layers=visible&tolerance=3&returnGeometry=true&imageDisplay=500%2C500%2C96&mapExtent=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&geometry=-?\d+\.\d+%2C-?\d+\.\d+&geometryType=esriGeometryPoint&maxAllowableOffset=0.000171661376953125&f=json/), JSON.stringify(sampleResponse));
+    /* sample unencoded/encoded geometry parameters
+    {"x":-102.919921875,"y":36.66841891894786,"spatialReference":{"wkid":4326}}
+    %7B%22x%22%3A-102.919921875%2C%22y%22%3A36.66841891894786%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D
+    */
+    server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/identify\?sr=4326&layers=visible&tolerance=3&returnGeometry=true&imageDisplay=500%2C500%2C96&mapExtent=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&geometry=%7B%22x%22%3A-?\d+\.\d+%2C%22y%22%3A-?\d+\.\d+%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D+&geometryType=esriGeometryPoint&maxAllowableOffset=0.000171661376953125&f=json/), JSON.stringify(sampleResponse));
 
     layer.bindPopup(function (error, featureCollection) {
       return featureCollection.features.length + ' Feature(s)';
@@ -395,7 +428,7 @@ describe('L.esri.DynamicMapLayer', function () {
   });
 
   it('should bind a popup to the layer if the layer is already on a map', function () {
-    server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/identify\?sr=4326&layers=visible&tolerance=3&returnGeometry=true&imageDisplay=500%2C500%2C96&mapExtent=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&geometry=-?\d+\.\d+%2C-?\d+\.\d+&geometryType=esriGeometryPoint&maxAllowableOffset=0.000171661376953125&f=json/), JSON.stringify(sampleResponse));
+    server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/identify\?sr=4326&layers=visible&tolerance=3&returnGeometry=true&imageDisplay=500%2C500%2C96&mapExtent=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&geometry=.+&geometryType=esriGeometryPoint&maxAllowableOffset=0.000171661376953125&f=json/), JSON.stringify(sampleResponse));
 
     layer.addTo(map);
 
@@ -442,6 +475,34 @@ describe('L.esri.DynamicMapLayer', function () {
 
     expect(spy).to.have.been.calledWith('click', layer._getPopupData, layer);
     expect(spy).to.have.been.calledWith('dblclick', layer._resetPopupState, layer);
+  });
+
+  it('should use custom identify behavior if specified in popup options', function () {
+    server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/identify\?sr=4326&layers=all%3A0&tolerance=5&returnGeometry=false&layerDefs=0%3Afoo%3D%22bar%22&imageDisplay=500%2C500%2C96&mapExtent=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&geometry=%7B%22x%22%3A-?\d+\.\d+%2C%22y%22%3A-?\d+\.\d+%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D+&geometryType=esriGeometryPoint&maxAllowableOffset=0.000171661376953125&f=json/), JSON.stringify(sampleResponse));
+
+    layer.bindPopup(function (error, featureCollection) {
+      return featureCollection.features.length + ' Feature(s)';
+    });
+
+    var customIdentify = L.esri.identifyFeatures({ url: url })
+                          .layers('all:0')
+                          .layerDef(0, 'foo="bar"')
+                          .tolerance(5)
+                          .returnGeometry(false);
+
+    layer.options.popup = customIdentify;
+    layer.addTo(map);
+
+    map.fire('click', {
+      latlng: map.getCenter()
+    });
+
+    server.respond();
+
+    clock.tick(301);
+
+    expect(layer._popup.getContent()).to.equal('1 Feature(s)');
+    expect(layer._popup.getLatLng()).to.equal(map.getCenter());
   });
 
   it('should render an image at the back if specified', function (done) {

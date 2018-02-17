@@ -17,6 +17,8 @@ export var Find = Task.extend({
     'returnZ': 'returnZ',
     'returnM': 'returnM',
     'gdbVersion': 'gdbVersion',
+    // skipped implementing this (for now) because the REST service implementation isnt consistent between operations
+    // 'transform': 'datumTransformations',
     'token': 'token'
   },
 

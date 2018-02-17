@@ -1,4 +1,4 @@
-import { Util, GeoJSON, latLng } from 'leaflet';
+import { Path, Util, GeoJSON, latLng } from 'leaflet';
 import { FeatureManager } from './FeatureManager';
 
 export var FeatureLayer = FeatureManager.extend({
@@ -220,7 +220,7 @@ export var FeatureLayer = FeatureManager.extend({
 
   resetFeatureStyle: function (id) {
     var layer = this._layers[id];
-    var style = this._originalStyle || L.Path.prototype.options;
+    var style = this._originalStyle || Path.prototype.options;
     if (layer) {
       Util.extend(layer.options, layer.defaultOptions);
       this.setFeatureStyle(id, style);
@@ -242,6 +242,25 @@ export var FeatureLayer = FeatureManager.extend({
   /**
    * Utility Methods
    */
+
+  eachActiveFeature: function (fn, context) {
+    // figure out (roughly) which layers are in view
+    if (this._map) {
+      var activeBounds = this._map.getBounds();
+      for (var i in this._layers) {
+        if (this._currentSnapshot.indexOf(this._layers[i].feature.id) !== -1) {
+          // a simple point in poly test for point geometries
+          if (typeof this._layers[i].getLatLng === 'function' && activeBounds.contains(this._layers[i].getLatLng())) {
+            fn.call(context, this._layers[i]);
+          } else if (typeof this._layers[i].getBounds === 'function' && activeBounds.intersects(this._layers[i].getBounds())) {
+            // intersecting bounds check for polyline and polygon geometries
+            fn.call(context, this._layers[i]);
+          }
+        }
+      }
+    }
+    return this;
+  },
 
   eachFeature: function (fn, context) {
     for (var i in this._layers) {

@@ -7,8 +7,11 @@ node_js:
 cache:
   directories: # Cache dependencies
     - node_modules
-    - travis_phantomjs
 before_script:
   - npm prune
+script:
+  - npm run test:ci
 before_install:
-  - npm i -g npm@^4.0.0
+  - npm i -g npm@latest
+addons:
+  chrome: stable

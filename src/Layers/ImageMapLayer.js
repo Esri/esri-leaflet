@@ -1,6 +1,6 @@
 import { Util } from 'leaflet';
 import { RasterLayer } from './RasterLayer';
-import { cleanUrl } from '../Util';
+import { getUrlParams } from '../Util';
 import imageService from '../Services/ImageService';
 
 export var ImageMapLayer = RasterLayer.extend({
@@ -9,7 +9,7 @@ export var ImageMapLayer = RasterLayer.extend({
     updateInterval: 150,
     format: 'jpgpng',
     transparent: true,
-    f: 'json'
+    f: 'image'
   },
 
   query: function () {
@@ -21,7 +21,7 @@ export var ImageMapLayer = RasterLayer.extend({
   },
 
   initialize: function (options) {
-    options.url = cleanUrl(options.url);
+    options = getUrlParams(options);
     this.service = imageService(options);
     this.service.addEventParent(this);
 
@@ -121,24 +121,11 @@ export var ImageMapLayer = RasterLayer.extend({
   },
 
   _buildExportParams: function () {
-    var bounds = this._map.getBounds();
-    var size = this._map.getSize();
-    var ne = this._map.options.crs.project(bounds._northEast);
-    var sw = this._map.options.crs.project(bounds._southWest);
-
-    // ensure that we don't ask ArcGIS Server for a taller image than we have actual map displaying
-    var top = this._map.latLngToLayerPoint(bounds._northEast);
-    var bottom = this._map.latLngToLayerPoint(bounds._southWest);
-
-    if (top.y > 0 || bottom.y < size.y) {
-      size.y = bottom.y - top.y;
-    }
-
     var sr = parseInt(this._map.options.crs.code.split(':')[1], 10);
 
     var params = {
-      bbox: [sw.x, sw.y, ne.x, ne.y].join(','),
-      size: size.x + ',' + size.y,
+      bbox: this._calculateBbox(),
+      size: this._calculateImageSize(),
       format: this.options.format,
       transparent: this.options.transparent,
       bboxSR: sr,
@@ -165,7 +152,8 @@ export var ImageMapLayer = RasterLayer.extend({
       params.bandIds = this.options.bandIds;
     }
 
-    if (this.options.noData) {
+    // 0 is falsy *and* a valid input parameter
+    if (this.options.noData === 0 || this.options.noData) {
       params.noData = this.options.noData;
     }
 

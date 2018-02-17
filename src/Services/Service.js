@@ -1,6 +1,6 @@
 import { Util, Evented } from 'leaflet';
 import {cors} from '../Support';
-import {cleanUrl} from '../Util';
+import {cleanUrl, getUrlParams} from '../Util';
 import Request from '../Request';
 
 export var Service = Evented.extend({
@@ -62,7 +62,9 @@ export var Service = Evented.extend({
     if (this.options.token) {
       params.token = this.options.token;
     }
-
+    if (this.options.requestParams) {
+      Util.extend(params, this.options.requestParams);
+    }
     if (this._authenticating) {
       this._requestQueue.push([method, path, params, callback, context]);
       return;
@@ -131,6 +133,7 @@ export var Service = Evented.extend({
 });
 
 export function service (options) {
+  options = getUrlParams(options);
   return new Service(options);
 }
 

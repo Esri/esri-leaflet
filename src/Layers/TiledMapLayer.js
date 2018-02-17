@@ -1,5 +1,5 @@
-import { TileLayer, Util } from 'leaflet';
-import { warn, cleanUrl, setEsriAttribution } from '../Util';
+import { CRS, DomEvent, TileLayer, Util } from 'leaflet';
+import { warn, getUrlParams, setEsriAttribution } from '../Util';
 import mapService from '../Services/MapService';
 
 export var TiledMapLayer = TileLayer.extend({
@@ -38,11 +38,16 @@ export var TiledMapLayer = TileLayer.extend({
   },
 
   initialize: function (options) {
-    options.url = cleanUrl(options.url);
     options = Util.setOptions(this, options);
 
     // set the urls
-    this.tileUrl = options.url + 'tile/{z}/{y}/{x}';
+    options = getUrlParams(options);
+    this.tileUrl = options.url + 'tile/{z}/{y}/{x}' + (options.requestParams && Object.keys(options.requestParams).length > 0 ? Util.getParamString(options.requestParams) : '');
+    // Remove subdomain in url
+    // https://github.com/Esri/esri-leaflet/issues/991
+    if (options.url.indexOf('{s}') !== -1 && options.subdomains) {
+      options.url = options.url.replace('{s}', options.subdomains[0]);
+    }
     this.service = mapService(options);
     this.service.addEventParent(this);
 
@@ -75,8 +80,8 @@ export var TiledMapLayer = TileLayer.extend({
   createTile: function (coords, done) {
     var tile = document.createElement('img');
 
-    L.DomEvent.on(tile, 'load', L.bind(this._tileOnLoad, this, done, tile));
-    L.DomEvent.on(tile, 'error', L.bind(this._tileOnError, this, done, tile));
+    DomEvent.on(tile, 'load', Util.bind(this._tileOnLoad, this, done, tile));
+    DomEvent.on(tile, 'error', Util.bind(this._tileOnError, this, done, tile));
 
     if (this.options.crossOrigin) {
       tile.crossOrigin = '';
@@ -109,11 +114,14 @@ export var TiledMapLayer = TileLayer.extend({
       this.metadata(function (error, metadata) {
         if (!error && metadata.spatialReference) {
           var sr = metadata.spatialReference.latestWkid || metadata.spatialReference.wkid;
+          // display the copyright text from the service using leaflet's attribution control
           if (!this.options.attribution && map.attributionControl && metadata.copyrightText) {
             this.options.attribution = metadata.copyrightText;
             map.attributionControl.addAttribution(this.getAttribution());
           }
-          if (map.options.crs === L.CRS.EPSG3857 && sr === 102100 || sr === 3857) {
+
+          // if the service tiles were published in web mercator using conventional LODs but missing levels, we can try and remap them
+          if (map.options.crs === CRS.EPSG3857 && (sr === 102100 || sr === 3857)) {
             this._lodMap = {};
             // create the zoom level data
             var arcgisLODs = metadata.tileInfo.lods;
@@ -132,10 +140,11 @@ export var TiledMapLayer = TileLayer.extend({
             }
 
             this.fire('lodmap');
+          } else if (map.options.crs && map.options.crs.code && (map.options.crs.code.indexOf(sr) > -1)) {
+            // if the projection is WGS84, or the developer is using Proj4 to define a custom CRS, no action is required
           } else {
-            if (!proj4) {
-              warn('L.esri.TiledMapLayer is using a non-mercator spatial reference. Support may be available through Proj4Leaflet http://esri.github.io/esri-leaflet/examples/non-mercator-projection.html');
-            }
+            // if the service was cached in a custom projection and an appropriate LOD hasn't been defined in the map, guide the developer to our Proj4 sample
+            warn('L.esri.TiledMapLayer is using a non-mercator spatial reference. Support may be available through Proj4Leaflet http://esri.github.io/esri-leaflet/examples/non-mercator-projection.html');
           }
         }
       }, this);

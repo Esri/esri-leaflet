@@ -92,7 +92,7 @@ function xmlHttpPost (url, params, callback, context) {
       httpRequest.timeout = context.options.timeout;
     }
   }
-  httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
   httpRequest.send(serialize(params));
 
   return httpRequest;
@@ -123,7 +123,7 @@ export function request (url, params, callback, context) {
     httpRequest.open('GET', url + '?' + paramString);
   } else if (requestLength > 2000 && Support.cors) {
     httpRequest.open('POST', url);
-    httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
   }
 
   if (typeof context !== 'undefined' && context !== null) {
@@ -187,6 +187,7 @@ export function jsonp (url, params, callback, context) {
   script.type = 'text/javascript';
   script.src = url + '?' + serialize(params);
   script.id = callbackId;
+  DomUtil.addClass(script, 'esri-leaflet-jsonp');
 
   callbacks++;
 

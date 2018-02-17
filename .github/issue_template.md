@@ -19,7 +19,7 @@ What happens is [X].
 
 I was expecting [Y].
 
-(if possible, create a [jsbin](http://jsbin.com/wudoxe/edit?html,output) that demonstrates the problem)
+(if possible, create a [jsbin](http://jsbin.com/dagilag/edit?html,output) that demonstrates the problem)
 
 * Optional: I'm *not* using the [CDN](http://www.jsdelivr.com/projects/leaflet.esri), I'm loading/bundling the library using:
 

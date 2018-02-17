@@ -1,11 +1,11 @@
-import { latLng, latLngBounds, Util, DomUtil } from 'leaflet';
+import { latLng, latLngBounds, LatLng, LatLngBounds, Util, DomUtil, GeoJSON } from 'leaflet';
 import { jsonp } from './Request';
 import { options } from './Options';
 
 import {
   geojsonToArcGIS as g2a,
   arcgisToGeoJSON as a2g
-} from 'arcgis-to-geojson-utils';
+} from '@esri/arcgis-to-geojson-utils';
 
 export function geojsonToArcGIS (geojson, idAttr) {
   return g2a(geojson, idAttr);
@@ -13,18 +13,6 @@ export function geojsonToArcGIS (geojson, idAttr) {
 
 export function arcgisToGeoJSON (arcgis, idAttr) {
   return a2g(arcgis, idAttr);
-}
-
-// shallow object clone for feature properties and attributes
-// from http://jsperf.com/cloning-an-object/2
-export function shallowClone (obj) {
-  var target = {};
-  for (var i in obj) {
-    if (obj.hasOwnProperty(i)) {
-      target[i] = obj[i];
-    }
-  }
-  return target;
 }
 
 // convert an extent (ArcGIS) to LatLngBounds (Leaflet)
@@ -53,6 +41,45 @@ export function boundsToExtent (bounds) {
   };
 }
 
+var knownFieldNames = /^(OBJECTID|FID|OID|ID)$/i;
+
+// Attempts to find the ID Field from response
+export function _findIdAttributeFromResponse (response) {
+  var result;
+
+  if (response.objectIdFieldName) {
+    // Find Id Field directly
+    result = response.objectIdFieldName;
+  } else if (response.fields) {
+    // Find ID Field based on field type
+    for (var j = 0; j <= response.fields.length - 1; j++) {
+      if (response.fields[j].type === 'esriFieldTypeOID') {
+        result = response.fields[j].name;
+        break;
+      }
+    }
+    if (!result) {
+      // If no field was marked as being the esriFieldTypeOID try well known field names
+      for (j = 0; j <= response.fields.length - 1; j++) {
+        if (response.fields[j].name.match(knownFieldNames)) {
+          result = response.fields[j].name;
+          break;
+        }
+      }
+    }
+  }
+  return result;
+}
+
+// This is the 'last' resort, find the Id field from the specified feature
+export function _findIdAttributeFromFeature (feature) {
+  for (var key in feature.attributes) {
+    if (key.match(knownFieldNames)) {
+      return key;
+    }
+  }
+}
+
 export function responseToFeatureCollection (response, idAttribute) {
   var objectIdField;
   var features = response.features || response.results;
@@ -60,24 +87,8 @@ export function responseToFeatureCollection (response, idAttribute) {
 
   if (idAttribute) {
     objectIdField = idAttribute;
-  } else if (response.objectIdFieldName) {
-    objectIdField = response.objectIdFieldName;
-  } else if (response.fields) {
-    for (var j = 0; j <= response.fields.length - 1; j++) {
-      if (response.fields[j].type === 'esriFieldTypeOID') {
-        objectIdField = response.fields[j].name;
-        break;
-      }
-    }
-  } else if (count) {
-    /* as a last resort, check for common ID fieldnames in the first feature returned
-    not foolproof. identifyFeatures can returned a mixed array of features. */
-    for (var key in features[0].attributes) {
-      if (key.match(/^(OBJECTID|FID|OID|ID)$/i)) {
-        objectIdField = key;
-        break;
-      }
-    }
+  } else {
+    objectIdField = _findIdAttributeFromResponse(response);
   }
 
   var featureCollection = {
@@ -87,7 +98,7 @@ export function responseToFeatureCollection (response, idAttribute) {
 
   if (count) {
     for (var i = features.length - 1; i >= 0; i--) {
-      var feature = arcgisToGeoJSON(features[i], objectIdField);
+      var feature = arcgisToGeoJSON(features[i], objectIdField || _findIdAttributeFromFeature(features[i]));
       featureCollection.features.push(feature);
     }
   }
@@ -106,6 +117,19 @@ export function cleanUrl (url) {
   }
 
   return url;
+}
+
+/* Extract url params if any and store them in requestParams attribute.
+   Return the options params updated */
+export function getUrlParams (options) {
+  if (options.url.indexOf('?') !== -1) {
+    options.requestParams = options.requestParams || {};
+    var queryString = options.url.substring(options.url.indexOf('?') + 1);
+    options.url = options.url.split('?')[0];
+    options.requestParams = JSON.parse('{"' + decodeURI(queryString).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}');
+  }
+  options.url = cleanUrl(options.url.split('?')[0]);
+  return options;
 }
 
 export function isArcgisOnline (url) {
@@ -186,8 +210,77 @@ export function setEsriAttribution (map) {
       map.attributionControl._container.style.maxWidth = calcAttributionWidth(e.target);
     });
 
+    // remove injected scripts and style tags
+    map.on('unload', function () {
+      hoverAttributionStyle.parentNode.removeChild(hoverAttributionStyle);
+      attributionStyle.parentNode.removeChild(attributionStyle);
+      var nodeList = document.querySelectorAll('.esri-leaflet-jsonp');
+      for (var i = 0; i < nodeList.length; i++) {
+        nodeList.item(i).parentNode.removeChild(nodeList.item(i));
+      }
+    });
+
     map.attributionControl._esriAttributionAdded = true;
   }
+}
+
+export function _setGeometry (geometry) {
+  var params = {
+    geometry: null,
+    geometryType: null
+  };
+
+  // convert bounds to extent and finish
+  if (geometry instanceof LatLngBounds) {
+    // set geometry + geometryType
+    params.geometry = boundsToExtent(geometry);
+    params.geometryType = 'esriGeometryEnvelope';
+    return params;
+  }
+
+  // convert L.Marker > L.LatLng
+  if (geometry.getLatLng) {
+    geometry = geometry.getLatLng();
+  }
+
+  // convert L.LatLng to a geojson point and continue;
+  if (geometry instanceof LatLng) {
+    geometry = {
+      type: 'Point',
+      coordinates: [geometry.lng, geometry.lat]
+    };
+  }
+
+  // handle L.GeoJSON, pull out the first geometry
+  if (geometry instanceof GeoJSON) {
+    // reassign geometry to the GeoJSON value  (we are assuming that only one feature is present)
+    geometry = geometry.getLayers()[0].feature.geometry;
+    params.geometry = geojsonToArcGIS(geometry);
+    params.geometryType = geojsonTypeToArcGIS(geometry.type);
+  }
+
+  // Handle L.Polyline and L.Polygon
+  if (geometry.toGeoJSON) {
+    geometry = geometry.toGeoJSON();
+  }
+
+  // handle GeoJSON feature by pulling out the geometry
+  if (geometry.type === 'Feature') {
+    // get the geometry of the geojson feature
+    geometry = geometry.geometry;
+  }
+
+  // confirm that our GeoJSON is a point, line or polygon
+  if (geometry.type === 'Point' || geometry.type === 'LineString' || geometry.type === 'Polygon' || geometry.type === 'MultiPolygon') {
+    params.geometry = geojsonToArcGIS(geometry);
+    params.geometryType = geojsonTypeToArcGIS(geometry.type);
+    return params;
+  }
+
+  // warn the user if we havn't found an appropriate object
+  warn('invalid geometry passed to spatial query. Should be L.LatLng, L.LatLngBounds, L.Marker or a GeoJSON Point, Line, Polygon or MultiPolygon object');
+
+  return;
 }
 
 export function _getAttributionData (url, map) {
@@ -256,9 +349,9 @@ export function _updateMapAttribution (evt) {
 }
 
 export var EsriUtil = {
-  shallowClone: shallowClone,
   warn: warn,
   cleanUrl: cleanUrl,
+  getUrlParams: getUrlParams,
   isArcgisOnline: isArcgisOnline,
   geojsonTypeToArcGIS: geojsonTypeToArcGIS,
   responseToFeatureCollection: responseToFeatureCollection,
@@ -268,8 +361,11 @@ export var EsriUtil = {
   extentToBounds: extentToBounds,
   calcAttributionWidth: calcAttributionWidth,
   setEsriAttribution: setEsriAttribution,
+  _setGeometry: _setGeometry,
   _getAttributionData: _getAttributionData,
-  _updateMapAttribution: _updateMapAttribution
+  _updateMapAttribution: _updateMapAttribution,
+  _findIdAttributeFromFeature: _findIdAttributeFromFeature,
+  _findIdAttributeFromResponse: _findIdAttributeFromResponse
 };
 
 export default EsriUtil;

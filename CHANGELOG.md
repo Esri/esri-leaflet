@@ -5,7 +5,90 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
-## [2.0.7]
+## [2.1.3] - 2018-02-14
+
+### Added
+
+* new `ImageryClarity` basemapLayer (🙏Biboba🙏 [#1047](https://github.com/Esri/esri-leaflet/pull/1047))
+* dynamic attribution for `WorldImagery` basemap layer to attribute local Community Maps content providers
+
+### Fixed
+
+* smarter check for custom coordinate systems [#1045](https://github.com/Esri/esri-leaflet/pull/1045))
+* removed rogue `Proj4` console errors in webpack/browserify apps
+* caught the last few non ES6 imports from Leaflet (🙏finneganh🙏 [#1050](https://github.com/Esri/esri-leaflet/pull/1050))
+
+## [2.1.2] - 2018-01-04
+
+### Fixed
+
+* improved support for custom `wkid:3857` tiled basemaps with custom properties [#1039](https://github.com/Esri/esri-leaflet/pull/1039))
+* `image` is now the default format for ImageMapLayer (🙏nickpeihl🙏 [#998](https://github.com/Esri/esri-leaflet/pull/998))
+* improved response parsing when no objectIdFieldName or esriFieldTypeOID are returned (🙏Saulzi🙏 [#1009](https://github.com/Esri/esri-leaflet/pull/1009))
+* improved cleanup when map instances are destroyed (🙏jfolds🙏 [#1029](https://github.com/Esri/esri-leaflet/pull/1029))
+
+### Added
+
+* It is now possible for layers to pass through arbitrary custom request parameters (🙏Biboba🙏 [#1036](https://github.com/Esri/esri-leaflet/pull/1036))
+* `QueryTask.returnM(bool)` (🙏jmfolds🙏 [#1002](https://github.com/Esri/esri-leaflet/pull/1002))
+* `QueryTask.distinct()` (🙏joelondon🙏 [#1027](https://github.com/Esri/esri-leaflet/pull/1027))
+* `DynamicMapLayer` has a new `popup` constructor option so that custom IdentifyFeatures parameters can be passed through (🙏Biboba🙏 [#1031](https://github.com/Esri/esri-leaflet/pull/1031))
+* more tests for existing features! (🙏Biboba🙏 #1037, #1035)
+
+### Removed
+
+* unused `shallowClone` utility method
+
+## [2.1.1] - 2017-08-11
+
+### Fixed
+
+* made Leaflet a peerDependency so that folks using WebPack can install v1.1.x without problems or duplication in their bundles
+* added `UTF 8` to L.esri.request headers
+
+### Changed
+
+* now using `npm-run-all` for concurrent, cross platform script running
+
+## [2.1.0] - 2017-07-27
+
+### Added
+
+* error handling has been added to classes that extend L.ImageOverlay [#941](https://github.com/Esri/esri-leaflet/pull/941) thank you[@Saulzi](https://github.com/Saulzi)!
+* dynamicMapLayer now supports an option to bust server side caches [#942](https://github.com/Esri/esri-leaflet/issues/942)
+* identifyFeatures and find now support requesting unformatted responses from ArcGIS Server 10.5+ map services [#961](https://github.com/Esri/esri-leaflet/issues/961)
+* identifyFeatures now supports passing through input geometries other than points [#962](https://github.com/Esri/esri-leaflet/pull/962) thank you[@bbehling](https://github.com/bbehling)!
+* dynamicMapLayer and imageMapLayer now support polar projections [#975](https://github.com/Esri/esri-leaflet/pull/975) thank you[@scaddenp](https://github.com/scaddenp)!
+* query now supports datum transformations [#976](https://github.com/Esri/esri-leaflet/pull/976)
+
+### Fixed
+
+* in imageMapLayer, noData values of `0` are now handled correctly [#946](https://github.com/Esri/esri-leaflet/issues/946)
+* ensure that eachActiveFeature correctly handles all geometry types [#948](https://github.com/Esri/esri-leaflet/issues/948)
+* layer definitions are now passed through when binding a popup to dynamicMapLayer [#957](https://github.com/Esri/esri-leaflet/issues/957)
+* ensure definition queries are applied to invisible layers [#964](https://github.com/Esri/esri-leaflet/pull/964) thank you[@jordanparfitt](https://github.com/jordanparfitt)!
+
+## [2.0.8] - 2017-02-28
+
+### Changed
+
+* dynamicMapLayer popups now retrieve generalized geometries from map services to improve performance. [#921](https://github.com/Esri/esri-leaflet/pull/921)
+* queries for features are no longer fired outside the layer's artificially constrained zoom level [#928](https://github.com/Esri/esri-leaflet/pull/928) (thank you[@keithpower](https://github.com/keithpower)!)
+* ES6 syntax is now used to import selected Leaflet dependencies. [#920](https://github.com/Esri/esri-leaflet/pull/920)
+
+### Fixed
+
+* errors are no longer encountered when panning the map outside the artificially constrained zoom level of a previously drawn dynamicMapLayer [#917](https://github.com/Esri/esri-leaflet/pull/917) (thank you[@jordanparfitt](https://github.com/jordanparfitt)!)
+* the value range returned by `IdentifyFeatures.simplify()` has been reversed for consistency with `Query.simplify()` [#921](https://github.com/Esri/esri-leaflet/pull/921)
+* features are no longer accidentally drawn when the map is panned to a new location outside the artificially constrained zoom level of the layer. [#924](https://github.com/Esri/esri-leaflet/pull/924) (thank you[@keithpower](https://github.com/keithpower)!)
+
+### Added
+
+* In situations where a feature layer supports the geojson format, but it is deemed preferable to ask for Esri Geoservices JSON instead, developers can now set `isModern: false` as a constructor option. [#935](https://github.com/Esri/esri-leaflet/pull/935) (thank you[@spoilsportmotors](https://github.com/spoilsportmotors)!)
+* an `eachActiveFeature()` method has been added to `Layers.FeatureLayer` in order to isolate features in the cache that are currently being displayed. [#936](https://github.com/Esri/esri-leaflet/pull/936)
+* `Tasks.Query` now has two new spatial operators. `bboxIntersects` and `indexIntersects`. [#937](https://github.com/Esri/esri-leaflet/pull/937)
+
+## [2.0.7] - 2017-01-10
 
 ### Fixed
 
@@ -20,7 +103,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * an inline base64 encoded transparent image is now substituted for missing tiles [#902](https://github.com/Esri/esri-leaflet/pull/902)
 * the `addfeature` event is no longer triggered when features are fetched and drawn for the very first time [#893](https://github.com/Esri/esri-leaflet/pull/893)
 
-## [2.0.6]
+## [2.0.6] - 2016-11-16
 
 ### Fixed
 
@@ -36,11 +119,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * When a null extent is encountered by L.esri.Query, no matter its form, an `Invalid Bounds` error is passed in the callback. [#879](https://github.com/Esri/esri-leaflet/issues/879)
 * `L.esri.request` now sets the generic `withCredentials` header when appropriate [#881](https://github.com/Esri/esri-leaflet/issues/881)
 
-## [2.0.4]
+## [2.0.4] - 2016-10-18
 
 ### Changed
-* The default maximum width of Leaflet's attribution control is now `55px.
-less than the map itself [#842](https://github.com/Esri/esri-leaflet/pull/842)
+* The default maximum width of Leaflet's attribution control is now `55px` less than the map itself [#842](https://github.com/Esri/esri-leaflet/pull/842)
 
 ### Added
 * A custom width crop can be configured via `L.esri.options.attributionWidthOffset` [#849](https://github.com/Esri/esri-leaflet/pull/849)
@@ -52,7 +134,7 @@ less than the map itself [#842](https://github.com/Esri/esri-leaflet/pull/842)
 * `responseToFeatureCollection` now uses a case insensitive regex to look for common indexing field names
 * `GeoJSON` / `geoJSON` casing is now used consistently
 
-## [2.0.3]
+## [2.0.3] - 2016-09-16
 
 ### Added
 * attribution from service metadata is now automatically displayed in Leaflet's attribution control for all layer types [#832](https://github.com/Esri/esri-leaflet/pull/832), [#842](https://github.com/Esri/esri-leaflet/pull/842) (thank you[@tyleralves](https://github.com/tyleralves)!)
@@ -60,7 +142,7 @@ less than the map itself [#842](https://github.com/Esri/esri-leaflet/pull/842)
 * the attribution control is restricted to a single line, but expands to show all data contributors on mouse hover.
 * support for `DynamicMapLayer` services that require a token to be passed in a request for raw images [#830](https://github.com/Esri/esri-leaflet/pull/830) (thank you[@jaredbrookswhite](https://github.com/jaredbrookswhite)!)
 
-## [2.0.2]
+## [2.0.2] - 2016-08-03
 
 ### Added
 * support for `ImageMapLayer` services that require a token to be passed in a request for raw images [#812](https://github.com/Esri/esri-leaflet/pull/812)
@@ -73,7 +155,7 @@ less than the map itself [#842](https://github.com/Esri/esri-leaflet/pull/842)
 ### Changed
 * Attribution text which is displayed for hosted Esri basemaps is now 'Powered by [Esri](https://www.esri.com)'
 
-## [2.0.1]
+## [2.0.1] - 2016-07-16
 
 ### Added
 * users can now pass tokens to `basemapLayer` [#800](https://github.com/Esri/esri-leaflet/pull/800)
@@ -87,14 +169,14 @@ less than the map itself [#842](https://github.com/Esri/esri-leaflet/pull/842)
 * the esri logo is no longer displayed when hosted basemaps are used. It has been replaced by '&copy; Esri' in the map attribution. [#783](https://github.com/Esri/esri-leaflet/pull/783)
 * Internal methods used to display dynamic attribution for tiled services with supporting static services were moved into L.esri.Util. [#799](https://github.com/Esri/esri-leaflet/pull/799)
 
-## [1.0.4]
+## [1.0.4] - 2016-07-03
 
 ### Fixed
 
 * ensure we remove all Esri logos from the map #795
 * ensure addfeature and removefeature events are emitted when L.esri.featureLayers are added to and removed from the map. #788
 
-## [2.0.0]
+## [2.0.0] - 2016-05-04
 
 ### Added
 
@@ -506,7 +588,12 @@ None
 * Add DarkGray and DarkGrayLabels to BasemapLayer. #190
 * An attributionControl on maps is now required when using BasemapLayer. #159
 
-[unreleased]: https://github.com/esri/esri-leaflet/compare/v2.0.7...HEAD
+[unreleased]: https://github.com/esri/esri-leaflet/compare/v2.1.3...HEAD
+[2.1.2]: https://github.com/esri/esri-leaflet/compare/v2.1.2...v2.1.3
+[2.1.2]: https://github.com/esri/esri-leaflet/compare/v2.1.1...v2.1.2
+[2.1.1]: https://github.com/esri/esri-leaflet/compare/v2.1.0...v2.1.1
+[2.1.0]: https://github.com/esri/esri-leaflet/compare/v2.0.8...v2.1.0
+[2.0.8]: https://github.com/esri/esri-leaflet/compare/v2.0.7...v2.0.8
 [2.0.7]: https://github.com/esri/esri-leaflet/compare/v2.0.6...v2.0.7
 [2.0.6]: https://github.com/esri/esri-leaflet/compare/v2.0.5...v2.0.6
 [2.0.5]: https://github.com/esri/esri-leaflet/compare/v2.0.4...v2.0.5

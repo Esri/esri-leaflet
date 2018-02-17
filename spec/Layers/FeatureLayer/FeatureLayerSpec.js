@@ -105,6 +105,15 @@ describe('L.esri.FeatureLayer', function () {
     expect(layer).to.be.an.instanceof(L.esri.FeatureLayer);
   });
 
+  it('should store additional params passed in url', function () {
+    layer = L.esri.featureLayer({
+      url: 'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0?foo=bar'
+    }).addTo(map);
+
+    expect(layer.options.requestParams).to.deep.equal({ foo: 'bar' });
+    expect(layer.options.url).to.deep.equal('http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/');
+  });
+
   it('should create features on a map', function () {
     expect(map.hasLayer(layer.getFeature(1))).to.equal(true);
     expect(map.hasLayer(layer.getFeature(2))).to.equal(true);
@@ -135,7 +144,7 @@ describe('L.esri.FeatureLayer', function () {
     layer.createLayers(features);
 
     layer.on('removefeature', function (e) {
-      expect(e.feature.id).to.equal(2);
+      expect(e.feature.id).to.equal(1);
       done();
     });
 
@@ -235,6 +244,28 @@ describe('L.esri.FeatureLayer', function () {
     var spy = sinon.spy();
     layer.eachFeature(spy);
     expect(spy.callCount).to.equal(2);
+  });
+
+  it('should iterate over each active polyline/polygon feature', function () {
+    // manually push features into cache, since they werent injected via a service response
+    layer._currentSnapshot.push(1);
+    layer._currentSnapshot.push(2);
+
+    var spy = sinon.spy();
+    layer.eachActiveFeature(spy);
+    expect(spy.callCount).to.equal(2);
+  });
+
+  it('should iterate over each active point feature', function () {
+    var spy = sinon.spy();
+    layer = L.esri.featureLayer({
+      url: 'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0'
+    }).addTo(map);
+    layer.createLayers(point);
+    layer._currentSnapshot.push(1);
+    layer.eachActiveFeature(spy);
+    // because point is outside current map extent
+    expect(spy.callCount).to.equal(0);
   });
 
   it('should run a function against every feature', function () {
