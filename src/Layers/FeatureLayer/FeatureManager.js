@@ -18,8 +18,7 @@ export var FeatureManager = VirtualGrid.extend({
     timeField: false,
     timeFilterMode: 'server',
     simplifyFactor: 0,
-    precision: 6,
-    isModern: true
+    precision: 6
   },
 
   /**
