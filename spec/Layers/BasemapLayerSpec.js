@@ -14,7 +14,6 @@ describe('L.esri.BasemapLayer', function () {
   }
 
   var map;
-  var server;
   var clock;
   var mockAttributions = {
     'contributors': [
@@ -45,14 +44,15 @@ describe('L.esri.BasemapLayer', function () {
 
   beforeEach(function () {
     clock = sinon.useFakeTimers();
-    server = sinon.fakeServer.create();
-    server.respondWith('GET', new RegExp(/.*/), JSON.stringify(mockAttributions));
+    fetchMock.config.overwriteRoutes = true;
+    fetchMock.config.fallbackToNetwork = true;
+    fetchMock.get(new RegExp(/.*/), JSON.stringify(mockAttributions));
     map = createMap();
   });
 
   afterEach(function () {
     clock.restore();
-    server.restore();
+    fetchMock.restore();
     map.remove();
   });
 

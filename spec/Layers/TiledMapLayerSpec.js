@@ -19,11 +19,11 @@ describe('L.esri.TiledMapLayer', function () {
   var subdomainsUrl = 'http://{s}.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer';
   var subdomainsArray = ['server', 'services'];
   var layer;
-  var server;
   var map;
 
   beforeEach(function () {
-    server = sinon.fakeServer.create();
+    fetchMock.config.overwriteRoutes = true;
+    fetchMock.config.fallbackToNetwork = true;
     layer = L.esri.tiledMapLayer({
       url: url
     });
@@ -31,7 +31,7 @@ describe('L.esri.TiledMapLayer', function () {
   });
 
   afterEach(function () {
-    server.restore();
+    fetchMock.restore();
   });
 
   it('will assign a tile scheme to the url', function () {
@@ -76,10 +76,17 @@ describe('L.esri.TiledMapLayer', function () {
     expect(identify._service).to.equal(layer.service);
   });
 
-  it('should propagate events from the service', function () {
-    server.respondWith('GET', 'http://services.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer&f=json', JSON.stringify({
-      currentVersion: 10.2
-    }));
+  it('should propagate events from the service', function (done) {
+    fetchMock.get(
+      'http://services.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer/?f=json',
+      JSON.stringify({
+        copyrightText: 'foo',
+        spatialReference: {
+          wkid: 102100,
+          latestWkid: 3857
+        }
+      })
+    );
 
     var requeststartSpy = sinon.spy();
     var requestendSpy = sinon.spy();
@@ -87,11 +94,12 @@ describe('L.esri.TiledMapLayer', function () {
     layer.on('requeststart', requeststartSpy);
     layer.on('requestend', requestendSpy);
 
-    layer.metadata(function () {});
+    layer.metadata(function () {
+      expect(requeststartSpy.callCount).to.be.above(0);
+      done();
+    });
 
-    server.respond();
-
-    expect(requeststartSpy.callCount).to.be.above(0);
+    // Don't khow how to handle that one as the event requestend is triggered after the metadata callback
     expect(requestendSpy.callCount).to.be.above(0);
   });
 
@@ -161,21 +169,32 @@ describe('L.esri.TiledMapLayer', function () {
     expect(map.attributionControl._container.innerHTML).to.contain('Esri');
   });
 
-  it('should display a metadata attribution if one is present and no attribution option was passed', function () {
-    server.respondWith('GET', 'http://services.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer/?f=json', JSON.stringify({
-      copyrightText: 'foo',
-      spatialReference: {
-        wkid: 102100,
-        latestWkid: 3857
-      }
-    }));
-
+  it('should display a metadata attribution if one is present and no attribution option was passed', function (done) {
+    fetchMock.get(
+      'http://services.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer/?f=json',
+      JSON.stringify({
+        copyrightText: 'foo',
+        spatialReference: {
+          wkid: 102100,
+          latestWkid: 3857
+        },
+        tileInfo: {
+          lods: [{
+            level: 0,
+            resolution: 156543.03392800014,
+            scale: 5.91657527591555E8
+          }]
+        }
+      })
+    );
     layer = L.esri.tiledMapLayer({
       url: url
-    }).addTo(map);
-
-    server.respond();
-    expect(map.attributionControl._container.innerHTML).to.contain('foo');
+    });
+    layer.on('lodmap', function () {
+      expect(map.attributionControl._container.innerHTML).to.contain('foo');
+      done();
+    });
+    layer.addTo(map);
   });
 });
 /* eslint-enable handle-callback-err */

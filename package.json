@@ -12,13 +12,14 @@
     "John Gravois <jgravois@esri.com> (http://johngravois.com)"
   ],
   "dependencies": {
-    "@esri/arcgis-rest-request": "^1.0.2",
-    "@esri/arcgis-to-geojson-utils": "^1.0.5",
+    "@esri/arcgis-rest-request": "^1.1.1",
+    "@esri/arcgis-to-geojson-utils": "^1.1.0",
     "leaflet-virtual-grid": "^1.0.5",
     "tiny-binary-search": "^1.0.2"
   },
   "devDependencies": {
     "chai": "3.5.0",
+    "fetch-mock": "^6.0.1",
     "gh-release": "^2.0.0",
     "highlight.js": "^8.0.0",
     "http-server": "^0.10.0",
@@ -35,7 +36,7 @@
     "mkdirp": "^0.5.1",
     "mocha": "^3.4.2",
     "npm-run-all": "^4.0.2",
-    "rollup": "^0.56.0",
+    "rollup": "^0.56.4",
     "rollup-plugin-json": "^2.3.0",
     "rollup-plugin-node-resolve": "^3.0.3",
     "rollup-plugin-uglify": "^3.0.0",
@@ -84,6 +85,7 @@
     "start": "run-p start-watch serve",
     "serve": "http-server -p 5000 -c-1 -o",
     "test": "npm run lint && karma start",
+    "test-watch": "karma start --browsers=Chrome --single-run=false --auto-watch",
     "test:ci": "npm run lint && karma start --browsers Chrome_travis_ci"
   },
   "semistandard": {
@@ -92,6 +94,7 @@
       "L",
       "XMLHttpRequest",
       "sinon",
+      "fetchMock",
       "xhr",
       "proj4"
     ]

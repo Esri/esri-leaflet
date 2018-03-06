@@ -27,7 +27,6 @@ describe('L.esri.DynamicMapLayer', function () {
   var url = 'http://services.arcgis.com/mock/arcgis/rest/services/MockMapService/MapServer';
   var urlWithParams = 'http://services.arcgis.com/mock/arcgis/rest/services/MockMapService/MapServer?foo=bar';
   var layer;
-  var server;
   var map;
   var clock;
 
@@ -56,10 +55,18 @@ describe('L.esri.DynamicMapLayer', function () {
 
   beforeEach(function () {
     clock = sinon.useFakeTimers();
-    server = sinon.fakeServer.create();
-    server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png24&transparent=true&bboxSR=3857&imageSR=3857&f=json/), JSON.stringify({
-      href: Image1
-    }));
+    fetchMock.config.overwriteRoutes = true;
+    fetchMock.config.fallbackToNetwork = true;
+    fetchMock.get(
+      'http://services.arcgis.com/mock/arcgis/rest/services/MockMapService/MapServer/?f=json',
+      JSON.stringify({
+        copyrightText: 'foo',
+        spatialReference: {
+          wkid: 102100,
+          latestWkid: 3857
+        }
+      })
+    );
     layer = L.esri.dynamicMapLayer({
       url: url
     });
@@ -68,7 +75,7 @@ describe('L.esri.DynamicMapLayer', function () {
 
   afterEach(function () {
     clock.restore();
-    server.restore();
+    fetchMock.restore();
     map.remove();
   });
 
@@ -78,46 +85,102 @@ describe('L.esri.DynamicMapLayer', function () {
     })).to.be.instanceof(L.esri.DynamicMapLayer);
   });
 
-  it('should display an attribution if one was passed', function () {
-    L.esri.dynamicMapLayer({
+  it('should display an attribution if one was passed', function (done) {
+    fetchMock.getOnce(
+      new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?f=json&bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png24&transparent=true&bboxSR=3857&imageSR=3857/),
+      JSON.stringify({
+        href: Image1
+      })
+    );
+    layer = L.esri.dynamicMapLayer({
       url: url,
-      attribution: 'Esri'
-    }).addTo(map);
-
-    expect(map.attributionControl._container.innerHTML).to.contain('Esri');
+      attribution: 'Esri',
+      f: 'json'
+    });
+    layer.on('load', function (e) {
+      expect(map.attributionControl._container.innerHTML).to.contain('Esri');
+      done();
+    });
+    layer.addTo(map);
   });
 
   it('will fire a loading event when it starts loading', function (done) {
+    fetchMock.getOnce(
+      new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?f=json&bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png24&transparent=true&bboxSR=3857&imageSR=3857/),
+      JSON.stringify({
+        href: Image1
+      })
+    );
     layer.on('loading', function (e) {
       expect(e.type).to.equal('loading');
       done();
     });
     layer.addTo(map);
-    server.respond();
   });
 
   it('will fire a load event when it completes loading', function (done) {
+    fetchMock.getOnce(
+      new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?f=json&bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png24&transparent=true&bboxSR=3857&imageSR=3857/),
+      JSON.stringify({
+        href: Image1
+      })
+    );
     layer.on('load', function (e) {
       expect(e.type).to.equal('load');
       done();
     });
     layer.addTo(map);
-    server.respond();
   });
 
-  it('should store additional params passed in url', function () {
+  it('should store additional params passed in url', function (done) {
+    fetchMock.getOnce(
+      'http://services.arcgis.com/mock/arcgis/rest/services/MockMapService/MapServer/?f=json&foo=bar',
+      JSON.stringify({
+        copyrightText: 'foo',
+        spatialReference: {
+          wkid: 102100,
+          latestWkid: 3857
+        }
+      })
+    );
+
+    fetchMock.getOnce(
+      new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?f=json&bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png24&transparent=true&bboxSR=3857&imageSR=3857&foo=bar/),
+      JSON.stringify({
+        href: WithParams
+      })
+    );
+
     layer = L.esri.dynamicMapLayer({
       url: urlWithParams
-    }).addTo(map);
+    });
 
-    expect(layer.options.requestParams).to.deep.equal({ foo: 'bar' });
-    expect(layer.options.url).to.deep.equal(url + '/');
+    layer.on('load', function (e) {
+      expect(layer.options.requestParams).to.deep.equal({ foo: 'bar' });
+      expect(layer.options.url).to.deep.equal(url + '/');
+      done();
+    });
+
+    layer.addTo(map);
   });
 
   it('should use additional params passed in options', function (done) {
-    server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png24&transparent=true&bboxSR=3857&imageSR=3857&foo=bar&f=json/), JSON.stringify({
-      href: WithParams
-    }));
+    fetchMock.getOnce(
+      'http://services.arcgis.com/mock/arcgis/rest/services/MockMapService/MapServer/?f=json&foo=bar',
+      JSON.stringify({
+        copyrightText: 'foo',
+        spatialReference: {
+          wkid: 102100,
+          latestWkid: 3857
+        }
+      })
+    );
+    fetchMock.getOnce(
+      new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?f=json&bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png24&transparent=true&bboxSR=3857&imageSR=3857&foo=bar/),
+      JSON.stringify({
+        href: WithParams
+      })
+    );
     layer = L.esri.dynamicMapLayer({
       url: url,
       requestParams: {
@@ -129,10 +192,15 @@ describe('L.esri.DynamicMapLayer', function () {
       expect(layer._currentImage._url).to.equal(WithParams);
       done();
     });
-    server.respond();
   });
 
   it('will load a new image when the map moves', function (done) {
+    fetchMock.getOnce(
+      new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?f=json&bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png24&transparent=true&bboxSR=3857&imageSR=3857/),
+      JSON.stringify({
+        href: Image1
+      })
+    );
     layer.addTo(map);
 
     layer.once('load', function () {
@@ -141,16 +209,23 @@ describe('L.esri.DynamicMapLayer', function () {
         done();
       });
       clock.tick(151);
+      fetchMock.getOnce(
+        new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?f=json&bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png24&transparent=true&bboxSR=3857&imageSR=3857/),
+        JSON.stringify({
+          href: Image2
+        })
+      );
       map.setView([37.30, -121.96], 10);
-      server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png24&transparent=true&bboxSR=3857&imageSR=3857&f=json/), JSON.stringify({
-        href: Image2
-      }));
-      server.respond();
     });
-    server.respond();
   });
 
   it('can be added to a map', function (done) {
+    fetchMock.getOnce(
+      new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?f=json&bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png24&transparent=true&bboxSR=3857&imageSR=3857/),
+      JSON.stringify({
+        href: Image1
+      })
+    );
     layer.on('load', function () {
       expect(layer._currentImage).to.be.an.instanceof(L.ImageOverlay);
       expect(layer._currentImage._url).to.equal(Image1);
@@ -158,17 +233,21 @@ describe('L.esri.DynamicMapLayer', function () {
       done();
     });
     layer.addTo(map);
-    server.respond();
   });
 
   it('can be removed from a map', function (done) {
+    fetchMock.getOnce(
+      new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?f=json&bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png24&transparent=true&bboxSR=3857&imageSR=3857/),
+      JSON.stringify({
+        href: Image1
+      })
+    );
     layer.on('load', function () {
       layer.removeFrom(map);
       expect(map.hasLayer(layer._currentImage)).to.equal(false);
       done();
     });
     layer.addTo(map);
-    server.respond();
   });
 
   it('should expose the authenticate method on the underlying service', function () {
@@ -185,10 +264,6 @@ describe('L.esri.DynamicMapLayer', function () {
   });
 
   it('should propagate events from the service', function (done) {
-    server.respondWith('GET', 'http://services.arcgis.com/mock/arcgis/rest/services/MockMapService/MapServer&f=json', JSON.stringify({
-      currentVersion: 10.2
-    }));
-
     var requeststartSpy = sinon.spy();
     var requestendSpy = sinon.spy();
 
@@ -196,16 +271,20 @@ describe('L.esri.DynamicMapLayer', function () {
     layer.on('requestend', requestendSpy);
 
     layer.metadata(function () {
+      expect(requeststartSpy.callCount).to.be.above(0);
       done();
     });
-
-    server.respond();
-
-    expect(requeststartSpy.callCount).to.be.above(0);
+    // Don't khow how to handle that one as the event requestend is triggered after the metadata callback
     expect(requestendSpy.callCount).to.be.above(0);
   });
 
   it('should fetch a new image when redraw is called', function (done) {
+    fetchMock.getOnce(
+      new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?f=json&bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png24&transparent=true&bboxSR=3857&imageSR=3857/),
+      JSON.stringify({
+        href: Image1
+      })
+    );
     var spy = sinon.spy(layer, '_update');
 
     layer.on('load', function () {
@@ -215,11 +294,15 @@ describe('L.esri.DynamicMapLayer', function () {
 
     layer.addTo(map);
     layer.redraw();
-
-    server.respond();
   });
 
   it('should bring itself to the front', function (done) {
+    fetchMock.getOnce(
+      new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?f=json&bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png24&transparent=true&bboxSR=3857&imageSR=3857/),
+      JSON.stringify({
+        href: Image1
+      })
+    );
     layer.on('load', function () {
       var spy = sinon.spy(layer._currentImage, 'bringToFront');
       layer.bringToFront();
@@ -227,10 +310,15 @@ describe('L.esri.DynamicMapLayer', function () {
       done();
     });
     layer.addTo(map);
-    server.respond();
   });
 
   it('should bring itself to the back', function (done) {
+    fetchMock.getOnce(
+      new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?f=json&bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png24&transparent=true&bboxSR=3857&imageSR=3857/),
+      JSON.stringify({
+        href: Image1
+      })
+    );
     layer.on('load', function () {
       var spy = sinon.spy(layer._currentImage, 'bringToBack');
       layer.bringToBack();
@@ -238,10 +326,15 @@ describe('L.esri.DynamicMapLayer', function () {
       done();
     });
     layer.addTo(map);
-    server.respond();
   });
 
   it('should get and set opacity', function (done) {
+    fetchMock.getOnce(
+      new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?f=json&bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png24&transparent=true&bboxSR=3857&imageSR=3857/),
+      JSON.stringify({
+        href: Image1
+      })
+    );
     expect(layer.getOpacity()).to.equal(1);
 
     layer.on('load', function () {
@@ -253,13 +346,15 @@ describe('L.esri.DynamicMapLayer', function () {
     });
 
     layer.addTo(map);
-    server.respond();
   });
 
   it('should get and set visible layers', function (done) {
-    server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png24&transparent=true&bboxSR=3857&imageSR=3857&layers=show%3A0%2C1%2C2&f=json/), JSON.stringify({
-      href: WithLayers
-    }));
+    fetchMock.getOnce(
+      new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?f=json&bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png24&transparent=true&bboxSR=3857&imageSR=3857&layers=show%3A0%2C1%2C2/),
+      JSON.stringify({
+        href: WithLayers
+      })
+    );
 
     layer.once('load', function () {
       expect(layer._currentImage._url).to.equal(WithLayers);
@@ -269,13 +364,15 @@ describe('L.esri.DynamicMapLayer', function () {
     layer.setLayers([0, 1, 2]);
     expect(layer.getLayers()).to.deep.equal([0, 1, 2]);
     layer.addTo(map);
-    server.respond();
   });
 
   it('should get and set time ranges', function (done) {
-    server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png24&transparent=true&bboxSR=3857&imageSR=3857&time=1389254400000%2C1389513600000&f=json/), JSON.stringify({
-      href: WithTime
-    }));
+    fetchMock.getOnce(
+      new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?f=json&bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png24&transparent=true&bboxSR=3857&imageSR=3857&time=1389254400000%2C1389513600000/),
+      JSON.stringify({
+        href: WithTime
+      })
+    );
 
     layer.once('load', function () {
       expect(layer._currentImage._url).to.equal(WithTime);
@@ -285,13 +382,15 @@ describe('L.esri.DynamicMapLayer', function () {
     layer.setTimeRange(new Date('January 9 2014 GMT-0800'), new Date('January 12 2014 GMT-0800'));
     expect(layer.getTimeRange()).to.deep.equal([new Date('January 9 2014 GMT-0800'), new Date('January 12 2014 GMT-0800')]);
     layer.addTo(map);
-    server.respond();
   });
 
   it('should get and set extra time options', function (done) {
-    server.respondWith('GET', new RegExp(/http:\/\/services\.arcgis\.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png24&transparent=true&bboxSR=3857&imageSR=3857&timeOptions=%7B%22foo%22%3A%22bar%22%7D&time=1389254400000%2C1389513600000&f=json/), JSON.stringify({
-      href: WithTimeTimeOptions
-    }));
+    fetchMock.getOnce(
+      new RegExp(/http:\/\/services\.arcgis\.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?f=json&bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png24&transparent=true&bboxSR=3857&imageSR=3857&timeOptions=%7B%22foo%22%3A%22bar%22%7D&time=1389254400000%2C1389513600000/),
+      JSON.stringify({
+        href: WithTimeTimeOptions
+      })
+    );
 
     layer.once('load', function () {
       expect(layer._currentImage._url).to.equal(WithTimeTimeOptions);
@@ -303,13 +402,15 @@ describe('L.esri.DynamicMapLayer', function () {
     layer.setTimeOptions({ foo: 'bar' });
     expect(layer.getTimeOptions()).to.deep.equal({ foo: 'bar' });
     layer.addTo(map);
-    server.respond();
   });
 
   it('should get and set a JSON layer definition', function (done) {
-    server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png24&transparent=true&bboxSR=3857&imageSR=3857&layerDefs=%7B%221%22%3A%22Foo%3DBar%22%7D&f=json/), JSON.stringify({
-      href: WithDefs
-    }));
+    fetchMock.getOnce(
+      new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?f=json&bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png24&transparent=true&bboxSR=3857&imageSR=3857&layerDefs=%7B%221%22%3A%22Foo%3DBar%22%7D/),
+      JSON.stringify({
+        href: WithDefs
+      })
+    );
 
     layer.once('load', function () {
       expect(layer._currentImage._url).to.equal(WithDefs);
@@ -320,13 +421,15 @@ describe('L.esri.DynamicMapLayer', function () {
     expect(layer.getLayerDefs()).to.deep.equal({ 1: 'Foo=Bar' });
 
     layer.addTo(map);
-    server.respond();
   });
 
   it('should get and set a string layer definition', function (done) {
-    server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png24&transparent=true&bboxSR=3857&imageSR=3857&layerDefs=Foo%3DBar&f=json/), JSON.stringify({
-      href: WithDefs
-    }));
+    fetchMock.getOnce(
+      new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?f=json&bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png24&transparent=true&bboxSR=3857&imageSR=3857&layerDefs=Foo%3DBar/),
+      JSON.stringify({
+        href: WithDefs
+      })
+    );
 
     layer.once('load', function () {
       expect(layer._currentImage._url).to.equal(WithDefs);
@@ -337,13 +440,25 @@ describe('L.esri.DynamicMapLayer', function () {
     expect(layer.getLayerDefs()).to.equal('Foo=Bar');
 
     layer.addTo(map);
-    server.respond();
   });
 
   it('should pass a token if one is set', function (done) {
-    server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png24&transparent=true&bboxSR=3857&imageSR=3857&token=foo&f=json/), JSON.stringify({
-      href: WithToken
-    }));
+    fetchMock.getOnce(
+      'http://services.arcgis.com/mock/arcgis/rest/services/MockMapService/MapServer/?f=json&token=foo',
+      JSON.stringify({
+        copyrightText: 'foo',
+        spatialReference: {
+          wkid: 102100,
+          latestWkid: 3857
+        }
+      })
+    );
+    fetchMock.getOnce(
+      new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?f=json&bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png24&transparent=true&bboxSR=3857&imageSR=3857&token=foo/),
+      JSON.stringify({
+        href: WithToken
+      })
+    );
 
     layer.once('load', function () {
       expect(layer._currentImage._url).to.equal(WithToken);
@@ -352,10 +467,15 @@ describe('L.esri.DynamicMapLayer', function () {
 
     layer.authenticate('foo');
     layer.addTo(map);
-    server.respond();
   });
 
   it('should be able to request an image directly from the export service', function () {
+    fetchMock.getOnce(
+      new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png24&transparent=true&bboxSR=3857&imageSR=3857&f=image/),
+      JSON.stringify({
+        href: Image1
+      })
+    );
     layer = L.esri.dynamicMapLayer({
       url: url,
       f: 'image'
@@ -388,10 +508,13 @@ describe('L.esri.DynamicMapLayer', function () {
   // });
 
   it('should be able to parse real base64 images from the export service', function (done) {
-    server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png24&transparent=true&bboxSR=3857&imageSR=3857&f=json/), JSON.stringify({
-      imageData: base64Image,
-      contentType: 'image/png'
-    }));
+    fetchMock.getOnce(
+      new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?f=json&bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png24&transparent=true&bboxSR=3857&imageSR=3857/),
+      JSON.stringify({
+        imageData: base64Image,
+        contentType: 'image/png'
+      })
+    );
 
     layer.once('load', function () {
       expect(layer._currentImage._url).to.equal(Image1);
@@ -399,16 +522,22 @@ describe('L.esri.DynamicMapLayer', function () {
     });
 
     layer.addTo(map);
-    server.respond();
   });
 
-  it('should bind a popup to the layer', function () {
+  it('should bind a popup to the layer', function (done) {
     /* sample unencoded/encoded geometry parameters
     {"x":-102.919921875,"y":36.66841891894786,"spatialReference":{"wkid":4326}}
-    %7B%22x%22%3A-102.919921875%2C%22y%22%3A36.66841891894786%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D
-    */
-    server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/identify\?sr=4326&layers=visible&tolerance=3&returnGeometry=true&imageDisplay=500%2C500%2C96&mapExtent=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&geometry=%7B%22x%22%3A-?\d+\.\d+%2C%22y%22%3A-?\d+\.\d+%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D+&geometryType=esriGeometryPoint&maxAllowableOffset=0.000171661376953125&f=json/), JSON.stringify(sampleResponse));
-
+    %7B%22x%22%3A-102.919921875%2C%22y%22%3A36.66841891894786%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D */
+    fetchMock.getOnce(
+      new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?f=json&bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png24&transparent=true&bboxSR=3857&imageSR=3857/),
+      JSON.stringify({
+        href: Image1
+      })
+    );
+    fetchMock.getOnce(
+      new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/identify\?f=json&sr=4326&layers=visible&tolerance=3&returnGeometry=true&imageDisplay=500%2C500%2C96&mapExtent=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&geometry=%7B%22x%22%3A-?\d+\.\d+%2C%22y%22%3A-?\d+\.\d+%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D+&geometryType=esriGeometryPoint&maxAllowableOffset=0.000171661376953125/),
+      JSON.stringify(sampleResponse)
+    );
     layer.bindPopup(function (error, featureCollection) {
       return featureCollection.features.length + ' Feature(s)';
     });
@@ -419,16 +548,25 @@ describe('L.esri.DynamicMapLayer', function () {
       latlng: map.getCenter()
     });
 
-    server.respond();
-
-    clock.tick(301);
-
-    expect(layer._popup.getContent()).to.equal('1 Feature(s)');
-    expect(layer._popup.getLatLng()).to.equal(map.getCenter());
+    fetchMock.flush().then(function (data, error) {
+      clock.tick(301);
+      expect(layer._popup.getContent()).to.equal('1 Feature(s)');
+      expect(layer._popup.getLatLng()).to.equal(map.getCenter());
+      done();
+    });
   });
 
   it('should bind a popup to the layer if the layer is already on a map', function () {
-    server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/identify\?sr=4326&layers=visible&tolerance=3&returnGeometry=true&imageDisplay=500%2C500%2C96&mapExtent=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&geometry=.+&geometryType=esriGeometryPoint&maxAllowableOffset=0.000171661376953125&f=json/), JSON.stringify(sampleResponse));
+    fetchMock.getOnce(
+      new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?f=json&bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png24&transparent=true&bboxSR=3857&imageSR=3857/),
+      JSON.stringify({
+        href: Image1
+      })
+    );
+    fetchMock.getOnce(
+      new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/identify\?f=json&sr=4326&layers=visible&tolerance=3&returnGeometry=true&imageDisplay=500%2C500%2C96&mapExtent=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&geometry=%7B%22x%22%3A-?\d+\.\d+%2C%22y%22%3A-?\d+\.\d+%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D+&geometryType=esriGeometryPoint&maxAllowableOffset=0.000171661376953125/),
+      JSON.stringify(sampleResponse)
+    );
 
     layer.addTo(map);
 
@@ -439,8 +577,6 @@ describe('L.esri.DynamicMapLayer', function () {
     map.fire('click', {
       latlng: map.getCenter()
     });
-
-    server.respond();
 
     clock.tick(301);
 
@@ -477,9 +613,21 @@ describe('L.esri.DynamicMapLayer', function () {
     expect(spy).to.have.been.calledWith('dblclick', layer._resetPopupState, layer);
   });
 
-  it('should use custom identify behavior if specified in popup options', function () {
-    server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/identify\?sr=4326&layers=all%3A0&tolerance=5&returnGeometry=false&layerDefs=0%3Afoo%3D%22bar%22&imageDisplay=500%2C500%2C96&mapExtent=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&geometry=%7B%22x%22%3A-?\d+\.\d+%2C%22y%22%3A-?\d+\.\d+%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D+&geometryType=esriGeometryPoint&maxAllowableOffset=0.000171661376953125&f=json/), JSON.stringify(sampleResponse));
-
+  it('should use custom identify behavior if specified in popup options', function (done) {
+    fetchMock.get(
+      new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?f=json&bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png24&transparent=true&bboxSR=3857&imageSR=3857/),
+      JSON.stringify({
+        href: Image1
+      })
+    );
+    fetchMock.getOnce(
+      new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/identify\?f=json&sr=4326&layers=all%3A0&tolerance=5&returnGeometry=false&layerDefs=0%3Afoo%3D%22bar%22&imageDisplay=500%2C500%2C96&mapExtent=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&geometry=%7B%22x%22%3A-?\d+\.\d+%2C%22y%22%3A-?\d+\.\d+%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D+&geometryType=esriGeometryPoint&maxAllowableOffset=0.000171661376953125/),
+      JSON.stringify(sampleResponse)
+    );
+    fetchMock.getOnce(
+      new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/identify\?f=json&sr=4326&layers=visible&tolerance=3&returnGeometry=true&imageDisplay=500%2C500%2C96&mapExtent=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&geometry=%7B%22x%22%3A-122.45%2C%22y%22%3A37.75%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPoint&maxAllowableOffset=0.000171661376953125/),
+      JSON.stringify(sampleResponse)
+    );
     layer.bindPopup(function (error, featureCollection) {
       return featureCollection.features.length + ' Feature(s)';
     });
@@ -497,15 +645,21 @@ describe('L.esri.DynamicMapLayer', function () {
       latlng: map.getCenter()
     });
 
-    server.respond();
-
-    clock.tick(301);
-
-    expect(layer._popup.getContent()).to.equal('1 Feature(s)');
-    expect(layer._popup.getLatLng()).to.equal(map.getCenter());
+    fetchMock.flush().then(function (data, error) {
+      clock.tick(301);
+      expect(layer._popup.getContent()).to.equal('1 Feature(s)');
+      expect(layer._popup.getLatLng()).to.equal(map.getCenter());
+      done();
+    });
   });
 
   it('should render an image at the back if specified', function (done) {
+    fetchMock.get(
+      new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?f=json&bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png24&transparent=true&bboxSR=3857&imageSR=3857/),
+      JSON.stringify({
+        href: Image1
+      })
+    );
     layer.bringToBack();
     var spy = sinon.spy(layer, 'bringToBack');
     layer.on('load', function () {
@@ -513,7 +667,6 @@ describe('L.esri.DynamicMapLayer', function () {
       done();
     });
     layer.addTo(map);
-    server.respond();
   });
 });
 /* eslint-enable handle-callback-err */

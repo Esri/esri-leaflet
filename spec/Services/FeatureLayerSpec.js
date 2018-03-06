@@ -2,26 +2,31 @@
 describe('L.esri.FeatureLayer', function () {
   var featureServiceUrl = 'http://services.arcgis.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0';
   var service;
-  var xhr;
-  var requests = [];
 
   beforeEach(function () {
-    xhr = sinon.useFakeXMLHttpRequest();
-    requests = [];
-
-    xhr.onCreate = function (xhr) {
-      requests.push(xhr);
-    };
+    fetchMock.config.warnOnFallback = false;
 
     service = L.esri.featureLayerService({url: featureServiceUrl});
   });
 
   afterEach(function () {
-    requests = [];
+    fetchMock.restore();
   });
 
-  it('should be able to add a feature to the layer', function () {
+  it('should be able to add a feature to the layer', function (done) {
     var callback = sinon.spy();
+
+    fetchMock.catch(function (responseUrl, responseOpts) {
+      expect(responseOpts.method).to.equal('POST');
+      var requestBody = window.decodeURIComponent(responseOpts.body);
+      expect(requestBody).to.equal('f=json&features=[{"geometry":{"x":45,"y":-121,"spatialReference":{"wkid":4326}},"attributes":{"foo":"bar"}}]');
+      return JSON.stringify({
+        'addResults': [{
+          'objectId': 1,
+          'success': true
+        }]
+      });
+    });
 
     service.addFeature({
       type: 'Feature',
@@ -34,24 +39,25 @@ describe('L.esri.FeatureLayer', function () {
       }
     }, callback);
 
-    requests[0].respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, JSON.stringify({
-      'addResults': [{
+    service.on('requestend', function (e) {
+      callback.should.have.been.calledWith(undefined, {
         'objectId': 1,
         'success': true
-      }]
-    }));
-
-    var requestBody = window.decodeURIComponent(requests[0].requestBody);
-
-    expect(requestBody).to.equal('features=[{"geometry":{"x":45,"y":-121,"spatialReference":{"wkid":4326}},"attributes":{"foo":"bar"}}]&f=json');
-
-    callback.should.have.been.calledWith(undefined, {
-      'objectId': 1,
-      'success': true
+      });
+      done();
     });
   });
 
   it('should be able to add a feature to the layer without a callback', function () {
+    fetchMock.catch(function (responseUrl, responseOpts) {
+      return JSON.stringify({
+        'addResults': [{
+          'objectId': 1,
+          'success': true
+        }]
+      });
+    });
+
     expect(function () {
       service.addFeature({
         type: 'Feature',
@@ -64,17 +70,21 @@ describe('L.esri.FeatureLayer', function () {
         }
       });
     }).to.not.throw(Error);
-
-    requests[0].respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, JSON.stringify({
-      'addResults': [{
-        'objectId': 1,
-        'success': true
-      }]
-    }));
   });
 
-  it('should be able to update a feature on the layer', function () {
+  it('should be able to update a feature on the layer', function (done) {
     var callback = sinon.spy();
+    fetchMock.catch(function (responseUrl, responseOpts) {
+      expect(responseOpts.method).to.equal('POST');
+      var requestBody = window.decodeURIComponent(responseOpts.body);
+      expect(requestBody).to.equal('f=json&features=[{"geometry":{"x":45,"y":-121,"spatialReference":{"wkid":4326}},"attributes":{"foo":"bar","OBJECTID":1}}]');
+      return JSON.stringify({
+        'updateResults': [{
+          'objectId': 1,
+          'success': true
+        }]
+      });
+    });
 
     service.updateFeature({
       type: 'Feature',
@@ -88,24 +98,24 @@ describe('L.esri.FeatureLayer', function () {
       }
     }, callback);
 
-    requests[0].respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, JSON.stringify({
-      'updateResults': [{
+    service.on('requestend', function (e) {
+      callback.should.have.been.calledWith(undefined, {
         'objectId': 1,
         'success': true
-      }]
-    }));
-
-    var requestBody = window.decodeURIComponent(requests[0].requestBody);
-
-    expect(requestBody).to.equal('features=[{"geometry":{"x":45,"y":-121,"spatialReference":{"wkid":4326}},"attributes":{"foo":"bar","OBJECTID":1}}]&f=json');
-
-    callback.should.have.been.calledWith(undefined, {
-      'objectId': 1,
-      'success': true
+      });
+      done();
     });
   });
 
-  it('should be able to update a feature on the layer without a callback', function () {
+  it('should be able to update a feature on the layer without a callback', function (done) {
+    fetchMock.catch(function (responseUrl, responseOpts) {
+      return JSON.stringify({
+        'updateResults': [{
+          'objectId': 1,
+          'success': true
+        }]
+      });
+    });
     expect(function () {
       service.updateFeature({
         type: 'Feature',
@@ -119,75 +129,84 @@ describe('L.esri.FeatureLayer', function () {
         }
       });
     }).to.not.throw(Error);
-
-    requests[0].respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, JSON.stringify({
-      'updateResults': [{
-        'objectId': 1,
-        'success': true
-      }]
-    }));
-  });
-
-  it('should be able to remove a feature from the layer', function () {
-    var callback = sinon.spy();
-
-    service.deleteFeature(1, callback);
-
-    requests[0].respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, JSON.stringify({
-      'deleteResults': [{
-        'objectId': 1,
-        'success': true
-      }]
-    }));
-
-    var requestBody = window.decodeURIComponent(requests[0].requestBody);
-
-    expect(requestBody).to.equal('objectIds=1&f=json');
-
-    callback.should.have.been.calledWith(undefined, {
-      'objectId': 1,
-      'success': true
+    fetchMock.flush().then(function (responses) {
+      done();
     });
   });
 
-  it('should be able to remove features from the layer without a callback', function () {
+  it('should be able to remove a feature from the layer', function (done) {
+    var callback = sinon.spy();
+
+    fetchMock.catch(function (responseUrl, responseOpts) {
+      expect(responseOpts.method).to.equal('POST');
+      var requestBody = window.decodeURIComponent(responseOpts.body);
+      expect(requestBody).to.equal('f=json&objectIds=1');
+      return JSON.stringify({
+        'deleteResults': [{
+          'objectId': 1,
+          'success': true
+        }]
+      });
+    });
+
+    service.deleteFeature(1, callback);
+
+    service.on('requestend', function (e) {
+      callback.should.have.been.calledWith(undefined, {
+        'objectId': 1,
+        'success': true
+      });
+      done();
+    });
+  });
+
+  it('should be able to remove features from the layer without a callback', function (done) {
+    fetchMock.catch(function (responseUrl, responseOpts) {
+      return JSON.stringify({
+        'deleteResults': [{
+          'objectId': 1,
+          'success': true
+        }]
+      });
+    });
     expect(function () {
       service.deleteFeature(1);
     }).to.not.throw(Error);
 
-    requests[0].respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, JSON.stringify({
-      'deleteResults': [{
-        'objectId': 1,
-        'success': true
-      }]
-    }));
+    fetchMock.flush().then(function (responses) {
+      done();
+    });
   });
 
-  it('should be able to remove features from the layer', function () {
+  it('should be able to remove features from the layer', function (done) {
     var callback = sinon.spy();
+
+    fetchMock.catch(function (responseUrl, responseOpts) {
+      expect(responseOpts.method).to.equal('POST');
+      var requestBody = window.decodeURIComponent(responseOpts.body);
+      expect(requestBody).to.equal('f=json&objectIds=1,2');
+      return JSON.stringify({
+        'deleteResults': [{
+          'objectId': 1,
+          'success': true
+        }, {
+          'objectId': 2,
+          'success': true
+        }]
+      });
+    });
 
     service.deleteFeatures([1, 2], callback);
 
-    requests[0].respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, JSON.stringify({
-      'deleteResults': [{
+    service.on('requestend', function (e) {
+      callback.should.have.been.calledWith(undefined, [{
         'objectId': 1,
         'success': true
       }, {
         'objectId': 2,
         'success': true
-      }]
-    }));
-
-    var requestBody = window.decodeURIComponent(requests[0].requestBody);
-
-    expect(requestBody).to.equal('objectIds=1,2&f=json');
-
-    callback.should.have.been.calledWith(undefined, [{
-      'objectId': 1,
-      'success': true
-    }, {
-      'objectId': 2,
-      'success': true
-    }]);
+      }]);
+      done();
+    });
   });
 });
