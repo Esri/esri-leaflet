@@ -14,6 +14,7 @@ module.exports = function (config) {
     // list of files / patterns to load in the browser
     // not sure why tests are failing when files are loaded in bulk
     files: [
+      'node_modules/fetch-mock/es5/client-bundle.js',
       'node_modules/leaflet/dist/leaflet.css',
       'node_modules/leaflet/dist/leaflet-src.js',
       'dist/esri-leaflet-debug.js',

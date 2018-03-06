@@ -18,7 +18,6 @@ describe('L.esri.IdentifyImage', function () {
     return L.map(container).setView([45.51, -122.66], 16);
   }
 
-  var server;
   var task;
 
   // create map
@@ -341,45 +340,48 @@ describe('L.esri.IdentifyImage', function () {
   };
 
   beforeEach(function () {
-    server = sinon.fakeServer.create();
     task = L.esri.identifyImage({url: imageServiceUrl}).at(latlng);
   });
 
   afterEach(function () {
-    server.restore();
+    fetchMock.restore();
   });
 
   it('should identify a pixel value at location', function (done) {
-    server.respondWith('GET', imageServiceUrl + 'identify?returnGeometry=false&geometry=%7B%22x%22%3A-122.66%2C%22y%22%3A45.51%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPoint&f=json', JSON.stringify(sampleResponse));
-
-    var request = task.run(function (error, results, raw) {
+    fetchMock.getOnce(
+      imageServiceUrl + 'identify?f=json&returnGeometry=false&geometry=%7B%22x%22%3A-122.66%2C%22y%22%3A45.51%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPoint',
+      JSON.stringify(sampleResponse)
+    );
+    task.run(function (error, results, raw) {
       expect(results).to.deep.equal(sampleResults);
       expect(raw).to.deep.equal(sampleResponse);
       done();
     });
-
-    expect(request).to.be.an.instanceof(XMLHttpRequest);
-
-    server.respond();
+    // Test for Promise ?
+    // expect(request).to.be.an.instanceof(XMLHttpRequest);
   });
 
   it('should identify a pixel value at location with simple LatLng', function (done) {
-    server.respondWith('GET', imageServiceUrl + 'identify?returnGeometry=false&geometry=%7B%22x%22%3A-122.66%2C%22y%22%3A45.51%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPoint&f=json', JSON.stringify(sampleResponse));
-
-    var request = task.at(rawLatlng).run(function (error, results, raw) {
+    fetchMock.getOnce(
+      imageServiceUrl + 'identify?f=json&returnGeometry=false&geometry=%7B%22x%22%3A-122.66%2C%22y%22%3A45.51%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPoint',
+      JSON.stringify(sampleResponse)
+    );
+    task.at(rawLatlng).run(function (error, results, raw) {
       expect(results).to.deep.equal(sampleResults);
       expect(raw).to.deep.equal(sampleResponse);
       done();
     });
 
-    expect(request).to.be.an.instanceof(XMLHttpRequest);
-
-    server.respond();
+    // Test for Promise ?
+    // expect(request).to.be.an.instanceof(XMLHttpRequest);
   });
 
   it('should identify a pixel value with mosaic rule', function (done) {
     var mosaicRule = {mosaicMethod: 'esriMosaicLockRaster', 'lockRasterIds': [8]};
-    server.respondWith('GET', imageServiceUrl + 'identify?returnGeometry=false&geometry=%7B%22x%22%3A-122.66%2C%22y%22%3A45.51%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A%22esriMosaicLockRaster%22%2C%22lockRasterIds%22%3A%5B8%5D%7D&f=json', JSON.stringify(sampleResponse));
+    fetchMock.getOnce(
+      imageServiceUrl + 'identify?f=json&returnGeometry=false&geometry=%7B%22x%22%3A-122.66%2C%22y%22%3A45.51%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A%22esriMosaicLockRaster%22%2C%22lockRasterIds%22%3A%5B8%5D%7D',
+      JSON.stringify(sampleResponse)
+    );
 
     task.setMosaicRule(mosaicRule);
     expect(task.getMosaicRule()).to.deep.equal(mosaicRule);
@@ -389,14 +391,14 @@ describe('L.esri.IdentifyImage', function () {
       expect(raw).to.deep.equal(sampleResponse);
       done();
     });
-
-    server.respond();
   });
 
   it('should identify a pixel value with rendering rule', function (done) {
     var renderingRule = {rasterFunction: 'RFTAspectColor'};
-    server.respondWith('GET', imageServiceUrl + 'identify?returnGeometry=false&geometry=%7B%22x%22%3A-122.66%2C%22y%22%3A45.51%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPoint&renderingRule=%7B%22rasterFunction%22%3A%22RFTAspectColor%22%7D&f=json', JSON.stringify(sampleResponse));
-
+    fetchMock.getOnce(
+      imageServiceUrl + 'identify?f=json&returnGeometry=false&geometry=%7B%22x%22%3A-122.66%2C%22y%22%3A45.51%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPoint&renderingRule=%7B%22rasterFunction%22%3A%22RFTAspectColor%22%7D',
+      JSON.stringify(sampleResponse)
+    );
     task.setRenderingRule(renderingRule);
     expect(task.getRenderingRule()).to.deep.equal(renderingRule);
 
@@ -405,15 +407,14 @@ describe('L.esri.IdentifyImage', function () {
       expect(raw).to.deep.equal(sampleResponse);
       done();
     });
-
-    server.respond();
   });
 
   it('should identify a pixel value with a pixel size array', function (done) {
     var pixelSize = [15, 15];
-
-    server.respondWith('GET', imageServiceUrl + 'identify?returnGeometry=false&geometry=%7B%22x%22%3A-122.66%2C%22y%22%3A45.51%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPoint&pixelSize=15%2C15&f=json', JSON.stringify(sampleResponse));
-
+    fetchMock.getOnce(
+      imageServiceUrl + 'identify?f=json&returnGeometry=false&geometry=%7B%22x%22%3A-122.66%2C%22y%22%3A45.51%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPoint&pixelSize=15%2C15',
+      JSON.stringify(sampleResponse)
+    );
     task.setPixelSize(pixelSize);
 
     expect(task.getPixelSize()).to.equal(pixelSize);
@@ -423,14 +424,15 @@ describe('L.esri.IdentifyImage', function () {
       expect(raw).to.deep.equal(sampleResponse);
       done();
     });
-
-    server.respond();
   });
 
   it('should identify a pixel value with a pixel size string', function (done) {
     var pixelSize = '1,1';
 
-    server.respondWith('GET', imageServiceUrl + 'identify?returnGeometry=false&geometry=%7B%22x%22%3A-122.66%2C%22y%22%3A45.51%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPoint&pixelSize=1%2C1&f=json', JSON.stringify(sampleResponse));
+    fetchMock.getOnce(
+      imageServiceUrl + 'identify?f=json&returnGeometry=false&geometry=%7B%22x%22%3A-122.66%2C%22y%22%3A45.51%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPoint&pixelSize=1%2C1',
+      JSON.stringify(sampleResponse)
+    );
 
     task.setPixelSize(pixelSize);
     expect(task.getPixelSize()).to.equal(pixelSize);
@@ -440,12 +442,13 @@ describe('L.esri.IdentifyImage', function () {
       expect(raw).to.deep.equal(sampleResponse);
       done();
     });
-
-    server.respond();
   });
 
   it('should return catalog items', function (done) {
-    server.respondWith('GET', imageServiceUrl + 'identify?returnGeometry=true&geometry=%7B%22x%22%3A-122.66%2C%22y%22%3A45.51%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPoint&returnCatalogItems=true&f=json', JSON.stringify(sampleResponseWithCatalogItems));
+    fetchMock.getOnce(
+      imageServiceUrl + 'identify?f=json&returnGeometry=true&geometry=%7B%22x%22%3A-122.66%2C%22y%22%3A45.51%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPoint&returnCatalogItems=true',
+      JSON.stringify(sampleResponseWithCatalogItems)
+    );
 
     task.returnGeometry(true).returnCatalogItems(true);
     task.run(function (error, results, raw) {
@@ -453,8 +456,6 @@ describe('L.esri.IdentifyImage', function () {
       expect(raw).to.deep.equal(sampleResponseWithCatalogItems);
       done();
     });
-
-    server.respond();
   });
 
   it('should return catalog items w/o geometry', function (done) {
@@ -464,7 +465,10 @@ describe('L.esri.IdentifyImage', function () {
       delete (sampleResponseWithCatalogItemsNoGeometry.catalogItems.features[i].geometry);
       sampleResultsWithCatalogItemsNoGeomerty.catalogItems.features[i].geometry = null;
     }
-    server.respondWith('GET', imageServiceUrl + 'identify?returnGeometry=false&geometry=%7B%22x%22%3A-122.66%2C%22y%22%3A45.51%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPoint&returnCatalogItems=true&f=json', JSON.stringify(sampleResponseWithCatalogItemsNoGeometry));
+    fetchMock.getOnce(
+      imageServiceUrl + 'identify?f=json&returnGeometry=false&geometry=%7B%22x%22%3A-122.66%2C%22y%22%3A45.51%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPoint&returnCatalogItems=true',
+      JSON.stringify(sampleResponseWithCatalogItemsNoGeometry)
+    );
 
     task.returnCatalogItems(true);
     task.run(function (error, results, raw) {
@@ -472,8 +476,6 @@ describe('L.esri.IdentifyImage', function () {
       expect(raw).to.deep.equal(sampleResponseWithCatalogItemsNoGeometry);
       done();
     });
-
-    server.respond();
   });
 
   it('should pass through arbitrary parameters', function (done) {
@@ -484,15 +486,16 @@ describe('L.esri.IdentifyImage', function () {
       }
     }).at(latlng);
 
-    server.respondWith('GET', imageServiceUrl + 'identify?returnGeometry=false&geometry=%7B%22x%22%3A-122.66%2C%22y%22%3A45.51%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPoint&foo=bar&f=json', JSON.stringify(sampleResponse));
+    fetchMock.getOnce(
+      imageServiceUrl + 'identify?f=json&returnGeometry=false&geometry=%7B%22x%22%3A-122.66%2C%22y%22%3A45.51%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPoint&foo=bar',
+      JSON.stringify(sampleResponse)
+    );
 
     customTask.run(function (error, results, raw) {
       expect(results).to.deep.equal(sampleResults);
       expect(raw).to.deep.equal(sampleResponse);
       done();
     });
-
-    server.respond();
   });
 });
 /* eslint-enable handle-callback-err */

@@ -1,29 +1,21 @@
 /* eslint-env mocha */
 /* eslint-disable handle-callback-err */
 describe('L.esri request helpers', function () {
-  var xhr;
-  var requests = [];
-
   beforeEach(function () {
-    xhr = sinon.useFakeXMLHttpRequest();
-    requests = [];
-
-    xhr.onCreate = function (xhr) {
-      requests.push(xhr);
-    };
+    fetchMock.config.warnOnFallback = false;
   });
 
   afterEach(function () {
-    requests = [];
+    fetchMock.restore();
   });
 
   var sampleResponse = {
-    currentVersion: 10.2,
-    fullVersion: '10.2.0',
+    currentVersion: 10.3,
+    fullVersion: '10.3.0',
     soapUrl: 'http://services.arcgisonline.com/arcgis/services',
     secureSoapUrl: 'https://services.arcgisonline.com/arcgis/services',
     authInfo: {
-      'isTokenBasedSecurity': 'false'
+      'isTokenBasedSecurity': false
     }
   };
 
@@ -35,6 +27,11 @@ describe('L.esri request helpers', function () {
   };
 
   it('should be able to make a GET request with CORS', function (done) {
+    fetchMock.catch(function (responseUrl, responseOpts) {
+      expect(responseUrl).to.equal('http://services.arcgisonline.com/ArcGIS/rest/info?f=json');
+      expect(responseOpts.method).to.equal('GET');
+      return sampleResponse;
+    });
     L.esri.get.CORS('http://services.arcgisonline.com/ArcGIS/rest/info', {}, function (error, response) {
       expect(this.foo).to.equal('bar');
       expect(response).to.deep.equal(sampleResponse);
@@ -42,10 +39,6 @@ describe('L.esri request helpers', function () {
     }, {
       foo: 'bar'
     });
-
-    expect(requests[0].url).to.equal('http://services.arcgisonline.com/ArcGIS/rest/info?f=json');
-    expect(requests[0].method).to.equal('GET');
-    requests[0].respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, JSON.stringify(sampleResponse));
   });
 
   it('should be able to make a GET request with JSONP', function (done) {
@@ -84,53 +77,62 @@ describe('L.esri request helpers', function () {
   });
 
   it('should be able to make a POST request with CORS', function (done) {
+    fetchMock.catch(function (responseUrl, responseOpts) {
+      expect(responseOpts.body).to.equal('f=json');
+      return sampleResponse;
+    });
     L.esri.post('http://services.arcgisonline.com/ArcGIS/rest/info', {}, function (error, response) {
       expect(response).to.deep.equal(sampleResponse);
       done();
     });
-
-    expect(requests[0].requestBody).to.equal('f=json');
-    requests[0].respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, JSON.stringify(sampleResponse));
   });
 
   it('should make a request with a token', function (done) {
+    fetchMock.catch(function (responseUrl, responseOpts) {
+      expect(responseUrl).to.contain('token=foo');
+      return sampleResponse;
+    });
     L.esri.request('http://services.arcgisonline.com/ArcGIS/rest/info', { token: 'foo' }, function (error, response) {
       expect(response).to.deep.equal(sampleResponse);
       done();
     });
-
-    expect(requests[0].url).to.contain('token=foo');
-    expect(requests[0].withCredentials).to.equal(false);
-    requests[0].respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, JSON.stringify(sampleResponse));
   });
 
   it('should serialize arrays of objects as JSON', function (done) {
+    fetchMock.catch(function (responseUrl, responseOpts) {
+      expect(responseUrl).to.equal('http://services.arcgisonline.com/ArcGIS/rest/info?f=json&object=%5B%7B%22foo%22%3A%22bar%22%7D%5D');
+      expect(responseOpts.method).to.equal('GET');
+      return sampleResponse;
+    });
     L.esri.get.CORS('http://services.arcgisonline.com/ArcGIS/rest/info', {
       object: [{foo: 'bar'}]
     }, function (error, response) {
       expect(response).to.deep.equal(sampleResponse);
+      fetchMock.restore();
       done();
     });
-
-    expect(requests[0].url).to.equal('http://services.arcgisonline.com/ArcGIS/rest/info?object=%5B%7B%22foo%22%3A%22bar%22%7D%5D&f=json');
-    expect(requests[0].method).to.equal('GET');
-    requests[0].respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, JSON.stringify(sampleResponse));
   });
 
   it('should serialize arrays of non objects as comma seperated strings', function (done) {
+    fetchMock.catch(function (responseUrl, responseOpts) {
+      expect(responseUrl).to.equal('http://services.arcgisonline.com/ArcGIS/rest/info?f=json&array=foo%2Cbar');
+      expect(responseOpts.method).to.equal('GET');
+      return sampleResponse;
+    });
     L.esri.get.CORS('http://services.arcgisonline.com/ArcGIS/rest/info', {
       array: ['foo', 'bar']
     }, function (error, response) {
       expect(response).to.deep.equal(sampleResponse);
       done();
     });
-
-    expect(requests[0].url).to.equal('http://services.arcgisonline.com/ArcGIS/rest/info?array=foo%2Cbar&f=json');
-    expect(requests[0].method).to.equal('GET');
-    requests[0].respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, JSON.stringify(sampleResponse));
   });
 
   it('should serialize Objects as JSON', function (done) {
+    fetchMock.catch(function (responseUrl, responseOpts) {
+      expect(responseUrl).to.equal('http://services.arcgisonline.com/ArcGIS/rest/info?f=json&object=%7B%22foo%22%3A%22bar%22%7D');
+      expect(responseOpts.method).to.equal('GET');
+      return sampleResponse;
+    });
     L.esri.get.CORS('http://services.arcgisonline.com/ArcGIS/rest/info', {
       object: {
         foo: 'bar'
@@ -139,15 +141,17 @@ describe('L.esri request helpers', function () {
       expect(response).to.deep.equal(sampleResponse);
       done();
     });
-
-    expect(requests[0].url).to.equal('http://services.arcgisonline.com/ArcGIS/rest/info?object=%7B%22foo%22%3A%22bar%22%7D&f=json');
-    expect(requests[0].method).to.equal('GET');
-    requests[0].respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, JSON.stringify(sampleResponse));
   });
 
   it('should serialize Dates as seconds', function (done) {
     var now = new Date();
     var stamp = now.valueOf();
+
+    fetchMock.catch(function (responseUrl, responseOpts) {
+      expect(responseUrl).to.equal('http://services.arcgisonline.com/ArcGIS/rest/info?f=json&time=' + stamp);
+      expect(responseOpts.method).to.equal('GET');
+      return sampleResponse;
+    });
 
     L.esri.get.CORS('http://services.arcgisonline.com/ArcGIS/rest/info', {
       time: now
@@ -155,13 +159,14 @@ describe('L.esri request helpers', function () {
       expect(response).to.deep.equal(sampleResponse);
       done();
     });
-
-    expect(requests[0].url).to.equal('http://services.arcgisonline.com/ArcGIS/rest/info?time=' + stamp + '&f=json');
-    expect(requests[0].method).to.equal('GET');
-    requests[0].respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, JSON.stringify(sampleResponse));
   });
 
   it('should throw errors when response is not a JSON object', function (done) {
+    fetchMock.catch(function (responseUrl, responseOpts) {
+      expect(responseUrl).to.equal('http://services.arcgisonline.com/ArcGIS/rest/info?f=json');
+      expect(responseOpts.method).to.equal('GET');
+      return 'foo';
+    });
     L.esri.get.CORS('http://services.arcgisonline.com/ArcGIS/rest/info', {}, function (error) {
       expect(error).to.deep.equal({
         message: 'Could not parse response as JSON. This could also be caused by a CORS or XMLHttpRequest error.',
@@ -169,10 +174,6 @@ describe('L.esri request helpers', function () {
       });
       done();
     });
-
-    expect(requests[0].url).to.equal('http://services.arcgisonline.com/ArcGIS/rest/info?f=json');
-    expect(requests[0].method).to.equal('GET');
-    requests[0].respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, 'foo');
   });
 
   it('should callback with an error when an XMLHttpRequest error is encountered', function (done) {

@@ -16,7 +16,6 @@ describe('L.esri.Query', function () {
 
   var map = createMap();
 
-  var server;
   var task;
 
   var bounds = L.latLngBounds([[45.5, -122.66], [45.51, -122.65]]);
@@ -43,7 +42,9 @@ describe('L.esri.Query', function () {
   var geoJsonPolygon = L.geoJSON(rawGeoJsonPolygon);
 
   var featureLayerUrl = 'http://gis.example.com/mock/arcgis/rest/services/MockFeatureService/FeatureServer/0/';
+
   var mapServiceUrl = 'http://gis.example.com/mock/arcgis/rest/services/MockMapService/MapServer/';
+
   var imageServiceUrl = 'http://gis.example.com/mock/arcgis/rest/services/MockImageService/ImageServer/';
 
   var sampleImageServiceQueryResponse = {
@@ -298,311 +299,326 @@ describe('L.esri.Query', function () {
       'this is a dumb way to make sure the request is more than 2000 characters';
 
   beforeEach(function () {
-    server = sinon.fakeServer.create();
     task = L.esri.query({url: featureLayerUrl});
+    fetchMock.config.warnOnFallback = false;
   });
 
   afterEach(function () {
-    server.restore();
+    fetchMock.restore();
   });
 
   it('should query features', function (done) {
-    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&f=json', JSON.stringify(sampleQueryResponse));
-
-    var request = task.run(function (error, featureCollection, raw) {
+    fetchMock.getOnce(
+      featureLayerUrl + 'query?f=json&returnGeometry=true&where=1%3D1&outSr=4326&outFields=*',
+      JSON.stringify(sampleQueryResponse)
+    );
+    task.run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleQueryResponse);
       done();
     });
 
-    expect(request).to.be.an.instanceof(XMLHttpRequest);
-
-    server.respond();
+    // Test for Promise ?
+    // expect(request).to.be.an.instanceof(XMLHttpRequest);
   });
 
   it('should send requests for M values in response geometry', function (done) {
-    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&returnM=false&f=json', JSON.stringify(sampleQueryResponse));
+    fetchMock.getOnce(
+      featureLayerUrl + 'query?f=json&returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&returnM=false',
+      JSON.stringify(sampleQueryResponse)
+    );
 
     task.returnM(false);
-    var request = task.run(function (error, featureCollection, raw) {
+    task.run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleQueryResponse);
       done();
     });
 
-    expect(request).to.be.an.instanceof(XMLHttpRequest);
-
-    server.respond();
+    // Test for Promise ?
+    // expect(request).to.be.an.instanceof(XMLHttpRequest);
   });
 
   it('should query features within bounds', function (done) {
-    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.66%2C%22ymin%22%3A45.5%2C%22xmax%22%3A-122.65%2C%22ymax%22%3A45.51%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelContains&f=json', JSON.stringify(sampleQueryResponse));
+    fetchMock.getOnce(
+      featureLayerUrl + 'query?f=json&returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.66%2C%22ymin%22%3A45.5%2C%22xmax%22%3A-122.65%2C%22ymax%22%3A45.51%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelContains',
+      JSON.stringify(sampleQueryResponse)
+    );
 
     task.within(bounds).run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleQueryResponse);
       done();
     });
-
-    server.respond();
   });
 
   it('should query features within geojson geometry', function (done) {
-    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&inSr=4326&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelContains&f=json', JSON.stringify(sampleQueryResponse));
-
+    fetchMock.getOnce(
+      featureLayerUrl + 'query?f=json&returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&inSr=4326&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelContains',
+      JSON.stringify(sampleQueryResponse)
+    );
     task.within(rawGeoJsonPolygon).run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleQueryResponse);
       done();
     });
-
-    server.respond();
   });
 
   it('should query features within a geojson multipolygon geometry', function (done) {
-    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&inSr=4326&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%2C%5B%5B-96%2C39.5%5D%2C%5B-96%2C40.5%5D%2C%5B-95%2C40.5%5D%2C%5B-95%2C39.5%5D%2C%5B-96%2C39.5%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelContains&f=json', JSON.stringify(sampleQueryResponse));
-
+    fetchMock.getOnce(
+      featureLayerUrl + 'query?f=json&returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&inSr=4326&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%2C%5B%5B-96%2C39.5%5D%2C%5B-96%2C40.5%5D%2C%5B-95%2C40.5%5D%2C%5B-95%2C39.5%5D%2C%5B-96%2C39.5%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelContains',
+      JSON.stringify(sampleQueryResponse)
+    );
     task.within(rawGeoJsonMultiPolygon).run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleQueryResponse);
       done();
     });
-
-    server.respond();
   });
 
   it('should query features within geojson feature', function (done) {
-    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&inSr=4326&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelContains&f=json', JSON.stringify(sampleQueryResponse));
-
+    fetchMock.getOnce(
+      featureLayerUrl + 'query?f=json&returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&inSr=4326&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelContains',
+      JSON.stringify(sampleQueryResponse)
+    );
     task.within(rawGeoJsonFeature).run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleQueryResponse);
       done();
     });
-
-    server.respond();
   });
 
   it('should query features within leaflet geojson object', function (done) {
-    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&inSr=4326&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelContains&f=json', JSON.stringify(sampleQueryResponse));
-
+    fetchMock.getOnce(
+      featureLayerUrl + 'query?f=json&returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&inSr=4326&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelContains',
+      JSON.stringify(sampleQueryResponse)
+    );
     task.within(geoJsonPolygon).run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleQueryResponse);
       done();
     });
-
-    server.respond();
   });
 
   it('should query features that intersect bounds', function (done) {
-    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.66%2C%22ymin%22%3A45.5%2C%22xmax%22%3A-122.65%2C%22ymax%22%3A45.51%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&f=json', JSON.stringify(sampleQueryResponse));
-
+    fetchMock.getOnce(
+      featureLayerUrl + 'query?f=json&returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.66%2C%22ymin%22%3A45.5%2C%22xmax%22%3A-122.65%2C%22ymax%22%3A45.51%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects',
+      JSON.stringify(sampleQueryResponse)
+    );
     task.intersects(bounds).run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleQueryResponse);
       done();
     });
-
-    server.respond();
   });
 
   it('should query features that intersect geojson geometry', function (done) {
-    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&inSr=4326&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelIntersects&f=json', JSON.stringify(sampleQueryResponse));
-
+    fetchMock.getOnce(
+      featureLayerUrl + 'query?f=json&returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&inSr=4326&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelIntersects',
+      JSON.stringify(sampleQueryResponse)
+    );
     task.intersects(rawGeoJsonPolygon).run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleQueryResponse);
       done();
     });
-
-    server.respond();
   });
 
   it('should query features that intersect geojson feature', function (done) {
-    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&inSr=4326&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelIntersects&f=json', JSON.stringify(sampleQueryResponse));
-
+    fetchMock.getOnce(
+      featureLayerUrl + 'query?f=json&returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&inSr=4326&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelIntersects',
+      JSON.stringify(sampleQueryResponse)
+    );
     task.intersects(rawGeoJsonFeature).run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleQueryResponse);
       done();
     });
-
-    server.respond();
   });
 
   it('should query features that intersect leaflet geojson object', function (done) {
-    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&inSr=4326&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelIntersects&f=json', JSON.stringify(sampleQueryResponse));
-
+    fetchMock.getOnce(
+      featureLayerUrl + 'query?f=json&returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&inSr=4326&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelIntersects',
+      JSON.stringify(sampleQueryResponse)
+    );
     task.intersects(geoJsonPolygon).run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleQueryResponse);
       done();
     });
-
-    server.respond();
   });
 
   it('should query features that contain bounds', function (done) {
-    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.66%2C%22ymin%22%3A45.5%2C%22xmax%22%3A-122.65%2C%22ymax%22%3A45.51%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelWithin&f=json', JSON.stringify(sampleQueryResponse));
-
+    fetchMock.getOnce(
+      featureLayerUrl + 'query?f=json&returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.66%2C%22ymin%22%3A45.5%2C%22xmax%22%3A-122.65%2C%22ymax%22%3A45.51%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelWithin',
+      JSON.stringify(sampleQueryResponse)
+    );
     task.contains(bounds).run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleQueryResponse);
       done();
     });
-
-    server.respond();
   });
 
   it('should query features that contain geojson geometry', function (done) {
-    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&inSr=4326&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelWithin&f=json', JSON.stringify(sampleQueryResponse));
+    fetchMock.getOnce(
+      featureLayerUrl + 'query?f=json&returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&inSr=4326&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelWithin',
+      JSON.stringify(sampleQueryResponse)
+    );
 
     task.contains(rawGeoJsonPolygon).run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleQueryResponse);
       done();
     });
-
-    server.respond();
   });
 
   it('should query features that contain geojson feature', function (done) {
-    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&inSr=4326&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelWithin&f=json', JSON.stringify(sampleQueryResponse));
-
+    fetchMock.getOnce(
+      featureLayerUrl + 'query?f=json&returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&inSr=4326&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelWithin',
+      JSON.stringify(sampleQueryResponse)
+    );
     task.contains(rawGeoJsonFeature).run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleQueryResponse);
       done();
     });
-
-    server.respond();
   });
 
   it('should query features that contain leaflet geojson object', function (done) {
-    //                                           query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&inSr=4326&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelWithin&f=json
-    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&inSr=4326&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelWithin&f=json', JSON.stringify(sampleQueryResponse));
-
+    fetchMock.getOnce(
+      featureLayerUrl + 'query?f=json&returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&inSr=4326&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelWithin',
+      JSON.stringify(sampleQueryResponse)
+    );
     task.contains(geoJsonPolygon).run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleQueryResponse);
       done();
     });
-
-    server.respond();
   });
 
   it('should query features that overlap bounds', function (done) {
-    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.66%2C%22ymin%22%3A45.5%2C%22xmax%22%3A-122.65%2C%22ymax%22%3A45.51%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelOverlaps&f=json', JSON.stringify(sampleQueryResponse));
+    fetchMock.getOnce(
+      featureLayerUrl + 'query?f=json&returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.66%2C%22ymin%22%3A45.5%2C%22xmax%22%3A-122.65%2C%22ymax%22%3A45.51%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelOverlaps',
+      JSON.stringify(sampleQueryResponse)
+    );
 
     task.overlaps(bounds).run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleQueryResponse);
       done();
     });
-
-    server.respond();
   });
 
   it('should query features that overlap geojson geometry', function (done) {
-    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&inSr=4326&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelOverlaps&f=json', JSON.stringify(sampleQueryResponse));
+    fetchMock.getOnce(
+      featureLayerUrl + 'query?f=json&returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&inSr=4326&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelOverlaps',
+      JSON.stringify(sampleQueryResponse)
+    );
 
     task.overlaps(rawGeoJsonPolygon).run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleQueryResponse);
       done();
     });
-
-    server.respond();
   });
 
   it('should query features that overlap geojson feature', function (done) {
-    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&inSr=4326&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelOverlaps&f=json', JSON.stringify(sampleQueryResponse));
+    fetchMock.getOnce(
+      featureLayerUrl + 'query?f=json&returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&inSr=4326&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelOverlaps',
+      JSON.stringify(sampleQueryResponse)
+    );
 
     task.overlaps(rawGeoJsonFeature).run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleQueryResponse);
       done();
     });
-
-    server.respond();
   });
 
   it('should query features that overlap leaflet geojson object', function (done) {
-    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&inSr=4326&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelOverlaps&f=json', JSON.stringify(sampleQueryResponse));
+    fetchMock.getOnce(
+      featureLayerUrl + 'query?f=json&returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&inSr=4326&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelOverlaps',
+      JSON.stringify(sampleQueryResponse)
+    );
 
     task.overlaps(geoJsonPolygon).run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleQueryResponse);
       done();
     });
-
-    server.respond();
   });
 
   it('should query features near a latlng', function (done) {
-    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&geometry=-122.66%2C45.51&geometryType=esriGeometryPoint&spatialRel=esriSpatialRelIntersects&units=esriSRUnit_Meter&distance=500&inSr=4326&f=json', JSON.stringify(sampleQueryResponse));
+    fetchMock.getOnce(
+      featureLayerUrl + 'query?f=json&returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&geometry=-122.66%2C45.51&geometryType=esriGeometryPoint&spatialRel=esriSpatialRelIntersects&units=esriSRUnit_Meter&distance=500&inSr=4326',
+      JSON.stringify(sampleQueryResponse)
+    );
 
     task.nearby(latlng, 500).run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleQueryResponse);
       done();
     });
-
-    server.respond();
   });
 
   it('should query features that have intersecting envelopes', function (done) {
-    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&inSr=4326&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelEnvelopeIntersects&f=json', JSON.stringify(sampleQueryResponse));
+    fetchMock.getOnce(
+      featureLayerUrl + 'query?f=json&returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&inSr=4326&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelEnvelopeIntersects',
+      JSON.stringify(sampleQueryResponse)
+    );
 
     task.bboxIntersects(geoJsonPolygon).run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleQueryResponse);
       done();
     });
-
-    server.respond();
   });
 
   it('should query features with a where option', function (done) {
-    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=NAME%3D\'Site\'&outSr=4326&outFields=*&f=json', JSON.stringify(sampleQueryResponse));
+    fetchMock.getOnce(
+      featureLayerUrl + 'query?f=json&returnGeometry=true&where=NAME%3D\'Site\'&outSr=4326&outFields=*',
+      JSON.stringify(sampleQueryResponse)
+    );
 
     task.where('NAME=\'Site\'').run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleQueryResponse);
       done();
     });
-
-    server.respond();
   });
 
   it('should limit queries for pagination', function (done) {
-    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&resultRecordCount=10&f=json', JSON.stringify(sampleQueryResponse));
+    fetchMock.getOnce(
+      featureLayerUrl + 'query?f=json&returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&resultRecordCount=10',
+      JSON.stringify(sampleQueryResponse)
+    );
 
     task.limit(10).run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleQueryResponse);
       done();
     });
-
-    server.respond();
   });
 
   it('should offset queries for pagination', function (done) {
-    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&resultOffset=10&f=json', JSON.stringify(sampleQueryResponse));
+    fetchMock.getOnce(
+      featureLayerUrl + 'query?f=json&returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&resultOffset=10',
+      JSON.stringify(sampleQueryResponse)
+    );
 
     task.offset(10).run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleQueryResponse);
       done();
     });
-
-    server.respond();
   });
 
   it('should query features in a given time range', function (done) {
-    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&time=1357027200000%2C1388563200000&f=json', JSON.stringify(sampleQueryResponse));
-
+    fetchMock.getOnce(
+      featureLayerUrl + 'query?f=json&returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&time=1357027200000%2C1388563200000',
+      JSON.stringify(sampleQueryResponse)
+    );
     var start = new Date('January 1 2013 GMT-0800');
     var end = new Date('January 1 2014 GMT-0800');
 
@@ -611,197 +627,218 @@ describe('L.esri.Query', function () {
       expect(raw).to.deep.equal(sampleQueryResponse);
       done();
     });
-
-    server.respond();
   });
 
   it('should set output fields for queries', function (done) {
-    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=Name%2CFID&f=json', JSON.stringify(sampleQueryResponse));
+    fetchMock.getOnce(
+      featureLayerUrl + 'query?f=json&returnGeometry=true&where=1%3D1&outSr=4326&outFields=Name%2CFID',
+      JSON.stringify(sampleQueryResponse)
+    );
 
     task.fields(['Name', 'FID']).run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleQueryResponse);
       done();
     });
-
-    server.respond();
   });
 
   it('should limit geometry percision', function (done) {
-    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&geometryPrecision=4&f=json', JSON.stringify(sampleQueryResponse));
+    fetchMock.getOnce(
+      featureLayerUrl + 'query?f=json&returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&geometryPrecision=4',
+      JSON.stringify(sampleQueryResponse)
+    );
 
     task.precision(4).run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleQueryResponse);
       done();
     });
-
-    server.respond();
   });
 
   it('should identify features and simplify geometries', function (done) {
-    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&maxAllowableOffset=0.000010728836059570312&f=json', JSON.stringify(sampleQueryResponse));
+    fetchMock.getOnce(
+      featureLayerUrl + 'query?f=json&returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&maxAllowableOffset=0.000010728836059570312',
+      JSON.stringify(sampleQueryResponse)
+    );
 
     task.simplify(map, 0.5).run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleQueryResponse);
       done();
     });
-
-    server.respond();
   });
 
   it('should order query output ascending', function (done) {
-    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&orderByFields=Name%20ASC&f=json', JSON.stringify(sampleQueryResponse));
+    fetchMock.getOnce(
+      featureLayerUrl + 'query?f=json&returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&orderByFields=Name%20ASC',
+      JSON.stringify(sampleQueryResponse)
+    );
 
     task.orderBy('Name').run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleQueryResponse);
       done();
     });
-
-    server.respond();
   });
 
   it('should order query output descending', function (done) {
-    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&orderByFields=Name%20DESC&f=json', JSON.stringify(sampleQueryResponse));
+    fetchMock.getOnce(
+      featureLayerUrl + 'query?f=json&returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&orderByFields=Name%20DESC',
+      JSON.stringify(sampleQueryResponse)
+    );
 
     task.orderBy('Name', 'DESC').run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleQueryResponse);
       done();
     });
-
-    server.respond();
   });
 
   it('should order query output with multiple features', function (done) {
-    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&orderByFields=Name%20DESC%2CScore%20ASC&f=json', JSON.stringify(sampleQueryResponse));
+    fetchMock.getOnce(
+      featureLayerUrl + 'query?f=json&returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&orderByFields=Name%20DESC%2CScore%20ASC',
+      JSON.stringify(sampleQueryResponse)
+    );
 
     task.orderBy('Name', 'DESC').orderBy('Score', 'ASC').run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleQueryResponse);
       done();
     });
-
-    server.respond();
   });
 
   it('should be able to query specific feature ids', function (done) {
-    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&objectIds=1%2C2&f=json', JSON.stringify(sampleQueryResponse));
+    fetchMock.getOnce(
+      featureLayerUrl + 'query?f=json&returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&objectIds=1%2C2',
+      JSON.stringify(sampleQueryResponse)
+    );
 
     task.featureIds([1, 2]).run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleQueryResponse);
       done();
     });
-
-    server.respond();
   });
 
   it('should be able to query token', function (done) {
-    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&token=foo&f=json', JSON.stringify(sampleQueryResponse));
+    fetchMock.getOnce(
+      featureLayerUrl + 'query?f=json&returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&token=foo',
+      JSON.stringify(sampleQueryResponse)
+    );
 
     task.token('foo').run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleQueryResponse);
       done();
     });
-
-    server.respond();
   });
 
   it('should query bounds', function (done) {
-    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&returnExtentOnly=true&f=json', JSON.stringify(sampleExtentResponse));
+    fetchMock.getOnce(
+      featureLayerUrl + 'query?f=json&returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&returnExtentOnly=true',
+      JSON.stringify(sampleExtentResponse)
+    );
 
-    var request = task.bounds(function (error, latlngbounds, raw) {
+    task.bounds(function (error, latlngbounds, raw) {
       expect(latlngbounds).to.deep.equal(bounds);
       expect(raw).to.deep.equal(sampleExtentResponse);
       done();
     });
 
-    expect(request).to.be.an.instanceof(XMLHttpRequest);
-
-    server.respond();
+    // Test for Promise ?
+    // expect(request).to.be.an.instanceof(XMLHttpRequest);
   });
 
   it('should query nullified bounds', function (done) {
-    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D2&outSr=4326&outFields=*&returnExtentOnly=true&f=json', JSON.stringify(sampleNaNExtentResponse));
+    fetchMock.getOnce(
+      featureLayerUrl + 'query?f=json&returnGeometry=true&where=1%3D2&outSr=4326&outFields=*&returnExtentOnly=true',
+      JSON.stringify(sampleNaNExtentResponse)
+    );
 
     task.where('1=2');
-    var request = task.bounds(function (error, latlngbounds, raw) {
+    task.bounds(function (error, latlngbounds, raw) {
       expect(error.message).to.equal('Invalid Bounds');
       expect(latlngbounds).to.deep.equal(null);
       expect(raw).to.deep.equal(sampleNaNExtentResponse);
       done();
     });
 
-    expect(request).to.be.an.instanceof(XMLHttpRequest);
+    // Test for Promise ?
+    // expect(request).to.be.an.instanceof(XMLHttpRequest);
 
-    server.respond();
     task.where('1=1');
   });
 
   it('should query count', function (done) {
-    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&returnCountOnly=true&f=json', JSON.stringify(sampleCountResponse));
+    fetchMock.getOnce(
+      featureLayerUrl + 'query?f=json&returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&returnCountOnly=true',
+      JSON.stringify(sampleCountResponse)
+    );
 
-    var request = task.count(function (error, count, raw) {
+    task.count(function (error, count, raw) {
       expect(count).to.equal(1);
       expect(raw).to.deep.equal(sampleCountResponse);
       done();
     });
 
-    expect(request).to.be.an.instanceof(XMLHttpRequest);
-
-    server.respond();
+    // Test for Promise ?
+    // expect(request).to.be.an.instanceof(XMLHttpRequest);
   });
 
   it('should query ids', function (done) {
-    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&returnIdsOnly=true&f=json', JSON.stringify(sampleIdsResponse));
+    fetchMock.getOnce(
+      featureLayerUrl + 'query?f=json&returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&returnIdsOnly=true',
+      JSON.stringify(sampleIdsResponse)
+    );
 
-    var request = task.ids(function (error, ids, raw) {
+    task.ids(function (error, ids, raw) {
       expect(ids).to.deep.equal([1, 2]);
       expect(raw).to.deep.equal(sampleIdsResponse);
       done();
     });
 
-    expect(request).to.be.an.instanceof(XMLHttpRequest);
-
-    server.respond();
+    // Test for Promise ?
+    // expect(request).to.be.an.instanceof(XMLHttpRequest);
   });
 
   it('should query distinct', function (done) {
-    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=false&where=1%3D1&outSr=4326&outFields=*&returnDistinctValues=true&f=json', JSON.stringify(sampleDistinctQueryResponse));
+    fetchMock.getOnce(
+      featureLayerUrl + 'query?f=json&returnGeometry=false&where=1%3D1&outSr=4326&outFields=*&returnDistinctValues=true',
+      JSON.stringify(sampleDistinctQueryResponse)
+    );
 
-    var request = task.distinct(true).run(function (error, featureCollection, raw) {
+    task.distinct(true).run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleDistinctFeatureCollection);
       expect(raw).to.deep.equal(sampleDistinctQueryResponse);
       done();
     });
 
-    expect(request).to.be.an.instanceof(XMLHttpRequest);
-
-    server.respond();
+    // Test for Promise ?
+    // expect(request).to.be.an.instanceof(XMLHttpRequest);
   });
 
   it('should use a feature layer service to query features', function (done) {
-    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&f=json', JSON.stringify(sampleQueryResponse));
-
+    fetchMock.getOnce(
+      featureLayerUrl + 'query?f=json&returnGeometry=true&where=1%3D1&outSr=4326&outFields=*',
+      JSON.stringify(sampleQueryResponse)
+    );
     var service = new L.esri.FeatureLayerService({url: featureLayerUrl});
 
-    var request = service.query().run(function (error, featureCollection, raw) {
+    service.query().run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleQueryResponse);
       done();
     });
 
-    expect(request).to.be.an.instanceof(XMLHttpRequest);
-
-    server.respond();
+    // Test for Promise ?
+    // expect(request).to.be.an.instanceof(XMLHttpRequest);
   });
 
   it('should use a map service to query features', function (done) {
-    server.respondWith('GET', mapServiceUrl + '0/query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&f=json', JSON.stringify(sampleMapServiceQueryResponse));
+    fetchMock.getOnce(
+      mapServiceUrl + '0/query?f=json&returnGeometry=true&where=1%3D1&outSr=4326&outFields=*',
+      JSON.stringify(sampleMapServiceQueryResponse)
+    );
 
     var service = new L.esri.MapService({url: mapServiceUrl});
 
@@ -810,13 +847,13 @@ describe('L.esri.Query', function () {
       expect(raw).to.deep.equal(sampleMapServiceQueryResponse);
       done();
     });
-
-    server.respond();
   });
 
   it('should pass through a simple datum transformation when making a query', function (done) {
-    server.respondWith('GET', mapServiceUrl + '0/query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&datumTransformation=1234&f=json', JSON.stringify(sampleMapServiceQueryResponse));
-
+    fetchMock.getOnce(
+      mapServiceUrl + '0/query?f=json&returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&datumTransformation=1234',
+      JSON.stringify(sampleMapServiceQueryResponse)
+    );
     var service = new L.esri.MapService({url: mapServiceUrl});
 
     service.query().layer(0).transform(1234).run(function (error, featureCollection, raw) {
@@ -824,12 +861,13 @@ describe('L.esri.Query', function () {
       expect(raw).to.deep.equal(sampleMapServiceQueryResponse);
       done();
     });
-
-    server.respond();
   });
 
   it('should pass through a JSON datum transformation when making a query', function (done) {
-    server.respondWith('GET', mapServiceUrl + '0/query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&datumTransformation=%7B%22wkid%22%3A1234%7D&f=json', JSON.stringify(sampleMapServiceQueryResponse));
+    fetchMock.getOnce(
+      mapServiceUrl + '0/query?f=json&returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&datumTransformation=%7B%22wkid%22%3A1234%7D',
+      JSON.stringify(sampleMapServiceQueryResponse)
+    );
 
     var service = new L.esri.MapService({url: mapServiceUrl});
 
@@ -838,28 +876,31 @@ describe('L.esri.Query', function () {
       expect(raw).to.deep.equal(sampleMapServiceQueryResponse);
       done();
     });
-
-    server.respond();
   });
 
   it('should use a image service to query features', function (done) {
-    server.respondWith('GET', imageServiceUrl + 'query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&pixelSize=1%2C1&f=json', JSON.stringify(sampleImageServiceQueryResponse));
+    fetchMock.getOnce(
+      imageServiceUrl + 'query?f=json&returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&pixelSize=1%2C1',
+      JSON.stringify(sampleImageServiceQueryResponse)
+    );
 
     var service = new L.esri.MapService({url: imageServiceUrl});
 
-    var request = service.query().pixelSize([1, 1]).run(function (error, featureCollection, raw) {
+    service.query().pixelSize([1, 1]).run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleImageServiceCollection);
       expect(raw).to.deep.equal(sampleImageServiceQueryResponse);
       done();
     });
 
-    expect(request).to.be.an.instanceof(XMLHttpRequest);
-
-    server.respond();
+    // Test for Promise ?
+    // expect(request).to.be.an.instanceof(XMLHttpRequest);
   });
 
   it('should make GET queries with no service', function (done) {
-    server.respondWith('GET', mapServiceUrl + '0/query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&f=json', JSON.stringify(sampleMapServiceQueryResponse));
+    fetchMock.getOnce(
+      mapServiceUrl + '0/query?f=json&returnGeometry=true&where=1%3D1&outSr=4326&outFields=*',
+      JSON.stringify(sampleMapServiceQueryResponse)
+    );
 
     var queryTask = new L.esri.Query({url: mapServiceUrl + '0'});
 
@@ -868,8 +909,6 @@ describe('L.esri.Query', function () {
       expect(raw).to.deep.equal(sampleMapServiceQueryResponse);
       done();
     });
-
-    server.respond();
   });
 
   it('query tasks without services should make GET requests w/ JSONP', function (done) {
@@ -886,19 +925,25 @@ describe('L.esri.Query', function () {
   });
 
   it('query tasks without services should make POST requests', function (done) {
-    server.respondWith('POST', mapServiceUrl + '0/query', JSON.stringify(sampleMapServiceQueryResponse));
+    fetchMock.postOnce(
+      mapServiceUrl + '0/query',
+      JSON.stringify(sampleMapServiceQueryResponse)
+    );
     var queryTask = new L.esri.Query({url: mapServiceUrl + '0'});
     queryTask.where(dumbLongQuery).run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleMapServiceCollection);
       expect(raw).to.deep.equal(sampleMapServiceQueryResponse);
       done();
     });
-
-    server.respond();
   });
 
   it('query tasks should pass through arbitrary parameters when POSTing too', function (done) {
-    server.respondWith('POST', mapServiceUrl + '0/query', JSON.stringify(sampleMapServiceQueryResponse));
+    fetchMock.catch(function (responseUrl, responseOpts) {
+      expect(responseUrl).to.contain(mapServiceUrl + '0/query');
+      expect(responseOpts.method).to.equal('POST');
+      expect(responseOpts.body).to.contain('foo=bar');
+      return sampleMapServiceQueryResponse;
+    });
     var queryTask = new L.esri.Query({
       url: mapServiceUrl + '0',
       requestParams: {
@@ -907,47 +952,46 @@ describe('L.esri.Query', function () {
     });
     queryTask.where(dumbLongQuery);
 
-    var request = queryTask.run(function (error, featureCollection, raw) {
+    queryTask.run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleMapServiceCollection);
       expect(raw).to.deep.equal(sampleMapServiceQueryResponse);
       done();
     });
-
-    console.log(request);
-    expect(request.requestBody).to.contain('foo=bar');
-    server.respond();
   });
 
   it('should query GeoJSON from ArcGIS Online', function (done) {
     task = L.esri.query({url: 'http://services.arcgis.com/mock/arcgis/rest/services/MockFeatureService/FeatureServer/0/'});
 
-    server.respondWith('GET', 'http://services.arcgis.com/mock/arcgis/rest/services/MockFeatureService/FeatureServer/0/query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&f=geojson', JSON.stringify(sampleFeatureCollection));
+    fetchMock.getOnce(
+      'http://services.arcgis.com/mock/arcgis/rest/services/MockFeatureService/FeatureServer/0/query?f=geojson&returnGeometry=true&where=1%3D1&outSr=4326&outFields=*',
+      JSON.stringify(sampleFeatureCollection)
+    );
 
-    var request = task.run(function (error, featureCollection, raw) {
+    task.run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleFeatureCollection);
       done();
     });
 
-    expect(request).to.be.an.instanceof(XMLHttpRequest);
-
-    server.respond();
+    // Test for Promise ?
+    // expect(request).to.be.an.instanceof(XMLHttpRequest);
   });
 
   it('should not ask for GeoJSON from utility.arcgis.com', function (done) {
     task = L.esri.query({url: 'http://utility.arcgis.com/mock/arcgis/rest/services/MockFeatureService/FeatureServer/0/'});
 
-    server.respondWith('GET', 'http://utility.arcgis.com/mock/arcgis/rest/services/MockFeatureService/FeatureServer/0/query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&f=json', JSON.stringify(sampleMapServiceQueryResponse));
+    fetchMock.getOnce(
+      'http://utility.arcgis.com/mock/arcgis/rest/services/MockFeatureService/FeatureServer/0/query?f=json&returnGeometry=true&where=1%3D1&outSr=4326&outFields=*',
+      JSON.stringify(sampleMapServiceQueryResponse)
+    );
 
-    var request = task.run(function (error, featureCollection, raw) {
+    task.run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleMapServiceCollection);
       expect(raw).to.deep.equal(sampleMapServiceQueryResponse);
       done();
     });
-
-    expect(request).to.be.an.instanceof(XMLHttpRequest);
-
-    server.respond();
+    // Test for Promise ?
+    // expect(request).to.be.an.instanceof(XMLHttpRequest);
   });
 
   it('should pass through arbitrary request parameters', function (done) {
@@ -958,17 +1002,19 @@ describe('L.esri.Query', function () {
       }
     });
 
-    server.respondWith('GET', 'http://services.arcgis.com/mock/arcgis/rest/services/MockFeatureService/FeatureServer/0/query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&f=geojson&foo=bar', JSON.stringify(sampleFeatureCollection));
+    fetchMock.getOnce(
+      'http://services.arcgis.com/mock/arcgis/rest/services/MockFeatureService/FeatureServer/0/query?f=geojson&returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&foo=bar',
+      JSON.stringify(sampleFeatureCollection)
+    );
 
-    var request = task.run(function (error, featureCollection, raw) {
+    task.run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
       expect(raw).to.deep.equal(sampleFeatureCollection);
       done();
     });
 
-    expect(request).to.be.an.instanceof(XMLHttpRequest);
-
-    server.respond();
+    // Test for Promise ?
+    // expect(request).to.be.an.instanceof(XMLHttpRequest);
   });
 });
 /* eslint-enable handle-callback-err */
