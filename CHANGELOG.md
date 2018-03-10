@@ -5,6 +5,19 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+## [2.1.4] - 2018-03-09
+
+### Changed
+
+* upgraded to Rollup `v0.56.5`
+* upgraded to @esri/arcgis-to-geojson-utils `v1.1.1`
+
+### Fixed
+
+* ensure tiledMapLayers utilize a configured proxy (🙏spoilsportmotors🙏 [#1053](https://github.com/Esri/esri-leaflet/pull/1053))
+
+* fix logic error and simplify check for supported non-web mercator CRSs [#1051](https://github.com/Esri/esri-leaflet/pull/1051)
+
 ## [2.1.3] - 2018-02-14
 
 ### Added
@@ -588,7 +601,8 @@ None
 * Add DarkGray and DarkGrayLabels to BasemapLayer. #190
 * An attributionControl on maps is now required when using BasemapLayer. #159
 
-[unreleased]: https://github.com/esri/esri-leaflet/compare/v2.1.3...HEAD
+[unreleased]: https://github.com/esri/esri-leaflet/compare/v2.1.4...HEAD
+[2.1.4]: https://github.com/esri/esri-leaflet/compare/v2.1.3...v2.1.4
 [2.1.3]: https://github.com/esri/esri-leaflet/compare/v2.1.2...v2.1.3
 [2.1.2]: https://github.com/esri/esri-leaflet/compare/v2.1.1...v2.1.2
 [2.1.1]: https://github.com/esri/esri-leaflet/compare/v2.1.0...v2.1.1
