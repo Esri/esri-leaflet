@@ -193,7 +193,7 @@ export function jsonp (url, params, callback, context) {
       var err = {
         error: {
           code: 500,
-          message: 'Server error'
+          message: 'An unknown error occurred'
         }
       };
 
