@@ -187,6 +187,20 @@ export function jsonp (url, params, callback, context) {
   script.type = 'text/javascript';
   script.src = url + '?' + serialize(params);
   script.id = callbackId;
+  script.onerror = function (error) {
+    if (error && window._EsriLeafletCallbacks[callbackId] !== true) {
+      // Can't get true error code: it can be 404, or 401, or 500
+      var err = {
+        error: {
+          code: 500,
+          message: 'An unknown error occurred'
+        }
+      };
+
+      callback.call(context, err);
+      window._EsriLeafletCallbacks[callbackId] = true;
+    }
+  };
   DomUtil.addClass(script, 'esri-leaflet-jsonp');
 
   callbacks++;
