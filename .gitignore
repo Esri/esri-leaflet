@@ -33,6 +33,7 @@ debug/*.js
 debug/*.json
 debug/archive/
 !debug/sample.html
+!debug/esm.html
 
 # Docs Build
 site/build

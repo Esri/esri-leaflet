@@ -1,10 +1,7 @@
-import uglify from 'rollup-plugin-uglify';
 import config from './base.js';
+import uglify from 'rollup-plugin-uglify';
 
 config.output.file = 'dist/esri-leaflet.js';
-config.output.sourcemap = 'dist/esri-leaflet.js.map';
-
-// use a Regex to preserve copyright text
-config.plugins.push(uglify({ output: {comments: /Institute, Inc/} }));
+config.plugins.push(uglify());
 
 export default config;

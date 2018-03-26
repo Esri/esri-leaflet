@@ -13,8 +13,8 @@
   ],
   "dependencies": {
     "@esri/arcgis-to-geojson-utils": "^1.1.1",
-    "leaflet-virtual-grid": "^1.0.5",
-    "tiny-binary-search": "^1.0.2"
+    "leaflet-virtual-grid": "^1.0.6",
+    "tiny-binary-search": "^1.0.3"
   },
   "devDependencies": {
     "chai": "3.5.0",
@@ -46,8 +46,7 @@
     "watch": "^0.17.1"
   },
   "homepage": "http://esri.github.io/esri-leaflet",
-  "module": "src/EsriLeaflet.js",
-  "jsnext:main": "src/EsriLeaflet.js",
+  "module": "dist/esri-leaflet.esm.js",
   "jspm": {
     "registry": "npm",
     "format": "es6",
@@ -72,7 +71,7 @@
     "url": "git@github.com:Esri/esri-leaflet.git"
   },
   "scripts": {
-    "build": "rollup -c profiles/debug.js & rollup -c profiles/production.js",
+    "build": "rollup -c profiles/es_module.js & rollup -c profiles/debug.js & rollup -c profiles/production.js",
     "lint": "semistandard | snazzy",
     "prebuild": "mkdirp dist",
     "prepublish": "npm run build",
