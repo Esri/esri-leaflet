@@ -317,8 +317,9 @@ export function _getAttributionData (url, map) {
 export function _updateMapAttribution (evt) {
   var map = evt.target;
   var oldAttributions = map._esriAttributions;
+  var attributionElement = map.attributionControl._container.querySelector('.esri-dynamic-attribution');
 
-  if (map && map.attributionControl && oldAttributions) {
+  if (map && map.attributionControl && attributionElement && oldAttributions) {
     var newAttributions = '';
     var bounds = map.getBounds();
     var wrappedBounds = latLngBounds(
@@ -337,8 +338,6 @@ export function _updateMapAttribution (evt) {
     }
 
     newAttributions = newAttributions.substr(2);
-    var attributionElement = map.attributionControl._container.querySelector('.esri-dynamic-attribution');
-
     attributionElement.innerHTML = newAttributions;
     attributionElement.style.maxWidth = calcAttributionWidth(map);
 
