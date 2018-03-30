@@ -1,5 +1,6 @@
 import { Path, Util, GeoJSON, latLng } from 'leaflet';
 import { FeatureManager } from './FeatureManager';
+import { warn } from '../../Util';
 
 export var FeatureLayer = FeatureManager.extend({
 
@@ -35,7 +36,10 @@ export var FeatureLayer = FeatureManager.extend({
 
   createNewLayer: function (geojson) {
     var layer = GeoJSON.geometryToLayer(geojson, this.options);
-    layer.defaultOptions = layer.options;
+    // trap for GeoJSON without geometry
+    if (layer) {
+      layer.defaultOptions = layer.options;
+    }
     return layer;
   },
 
@@ -99,28 +103,33 @@ export var FeatureLayer = FeatureManager.extend({
 
       if (!layer) {
         newLayer = this.createNewLayer(geojson);
-        newLayer.feature = geojson;
 
-        // bubble events from individual layers to the feature layer
-        newLayer.addEventParent(this);
+        if (!newLayer) {
+          warn('invalid GeoJSON encountered');
+        } else {
+          newLayer.feature = geojson;
 
-        if (this.options.onEachFeature) {
-          this.options.onEachFeature(newLayer.feature, newLayer);
-        }
+          // bubble events from individual layers to the feature layer
+          newLayer.addEventParent(this);
 
-        // cache the layer
-        this._layers[newLayer.feature.id] = newLayer;
+          if (this.options.onEachFeature) {
+            this.options.onEachFeature(newLayer.feature, newLayer);
+          }
 
-        // style the layer
-        this.setFeatureStyle(newLayer.feature.id, this.options.style);
+          // cache the layer
+          this._layers[newLayer.feature.id] = newLayer;
 
-        this.fire('createfeature', {
-          feature: newLayer.feature
-        }, true);
+          // style the layer
+          this.setFeatureStyle(newLayer.feature.id, this.options.style);
 
-        // add the layer if the current zoom level is inside the range defined for the layer, it is within the current time bounds or our layer is not time enabled
-        if (this._visibleZoom() && (!this.options.timeField || (this.options.timeField && this._featureWithinTimeRange(geojson)))) {
-          this._map.addLayer(newLayer);
+          this.fire('createfeature', {
+            feature: newLayer.feature
+          }, true);
+
+          // add the layer if the current zoom level is inside the range defined for the layer, it is within the current time bounds or our layer is not time enabled
+          if (this._visibleZoom() && (!this.options.timeField || (this.options.timeField && this._featureWithinTimeRange(geojson)))) {
+            this._map.addLayer(newLayer);
+          }
         }
       }
     }
