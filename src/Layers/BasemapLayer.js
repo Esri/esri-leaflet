@@ -47,7 +47,8 @@ export var BasemapLayer = TileLayer.extend({
           minZoom: 1,
           maxZoom: 16,
           subdomains: ['server', 'services'],
-          pane: (pointerEvents) ? 'esri-labels' : 'tilePane'
+          pane: (pointerEvents) ? 'esri-labels' : 'tilePane',
+          attribution: ''
         }
       },
       NationalGeographic: {
@@ -124,7 +125,8 @@ export var BasemapLayer = TileLayer.extend({
           minZoom: 1,
           maxZoom: 19,
           subdomains: ['server', 'services'],
-          pane: (pointerEvents) ? 'esri-labels' : 'tilePane'
+          pane: (pointerEvents) ? 'esri-labels' : 'tilePane',
+          attribution: ''
         }
       },
       ShadedRelief: {
