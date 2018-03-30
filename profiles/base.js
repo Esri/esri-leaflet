@@ -1,29 +1,26 @@
 import json from 'rollup-plugin-json';
-import nodeResolve from 'rollup-plugin-node-resolve';
+import resolve from 'rollup-plugin-node-resolve';
+import pkg from '../package.json';
 
-var pkg = require('../package.json');
-var copyright = '/* ' + pkg.name + ' - v' + pkg.version + ' - ' + new Date().toString() + '\n' +
-                ' * Copyright (c) ' + new Date().getFullYear() + ' Environmental Systems Research Institute, Inc.\n' +
-                ' * ' + pkg.license + ' */';
+const copyright = `/* @preserve
+ * ${pkg.name} - v${pkg.version} - ${new Date().toString()}
+ * Copyright (c) ${new Date().getFullYear()} Environmental Systems Research Institute, Inc.
+ * ${pkg.license}
+ */
+`;
 
 export default {
   input: 'src/EsriLeaflet.js',
-
   external: ['leaflet', 'esri-leaflet'],
   plugins: [
-    nodeResolve({
-      jsnext: true,
-      main: false,
-      browser: false,
-      extensions: [ '.js', '.json' ]
-    }),
+    resolve(),
     json()
   ],
-
   output: {
     banner: copyright,
     format: 'umd',
     name: 'L.esri',
+    sourcemap: true,
     globals: {
       'leaflet': 'L',
       'esri-leaflet': 'L.esri'
