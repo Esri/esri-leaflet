@@ -45,6 +45,12 @@
     "uglify-js": "^2.8.29",
     "watch": "^0.17.1"
   },
+  "files": [
+    "src/**.js",
+    "dist/esri-leaflet.js",
+    "dist/esri-leaflet-debug.js",
+    "dist/esri-leaflet.js.map"
+  ],
   "homepage": "http://esri.github.io/esri-leaflet",
   "module": "src/EsriLeaflet.js",
   "jsnext:main": "src/EsriLeaflet.js",
