@@ -404,8 +404,6 @@ describe('L.esri.IdentifyImage', function () {
 
     task.returnGeometry(true).returnCatalogItems(true);
     task.run(function (error, results, raw) {
-      console.log(JSON.stringify(results));
-      console.log(JSON.stringify(sampleResultsWithCatalogItems));
       expect(results).to.deep.equal(sampleResultsWithCatalogItems);
       expect(raw).to.deep.equal(sampleResponseWithCatalogItems);
       done();

@@ -240,8 +240,6 @@ describe('L.esri.Find', function () {
       done();
     });
 
-    console.log(request.url);
-
     expect(request).to.be.an.instanceof(XMLHttpRequest);
 
     server.respond();

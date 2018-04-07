@@ -919,7 +919,6 @@ describe('L.esri.Query', function () {
       done();
     });
 
-    console.log(request);
     expect(request.requestBody).to.contain('foo=bar');
     server.respond();
   });

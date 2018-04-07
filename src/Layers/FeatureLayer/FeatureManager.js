@@ -507,11 +507,53 @@ export var FeatureManager = VirtualGrid.extend({
     }, this));
   },
 
+  addFeatures: function (featureCollection, callback, context) {
+    this._getMetadata(Util.bind(function (error, metadata) {
+      if (error) {
+        if (callback) { callback.call(this, error, null); }
+        return;
+      }
+
+      this.service.addFeatures(featureCollection, Util.bind(function (error, response) {
+        if (!error) {
+          for (var i = featureCollection.features.length - 1; i >= 0; i--) {
+            // assign ID from result to appropriate objectid field from service metadata
+            featureCollection.features[i].properties[metadata.objectIdField] = response[i].objectId;
+            // we also need to update the geojson id for createLayers() to function
+            featureCollection.features[i].id = response[i].objectId;
+          }
+          this.createLayers(featureCollection.features);
+        }
+
+        if (callback) {
+          callback.call(context, error, response);
+        }
+      }, this));
+    }, this));
+  },
+
   updateFeature: function (feature, callback, context) {
     this.service.updateFeature(feature, function (error, response) {
       if (!error) {
         this.removeLayers([feature.id], true);
         this.createLayers([feature]);
+      }
+
+      if (callback) {
+        callback.call(context, error, response);
+      }
+    }, this);
+  },
+
+  updateFeatures: function (featureCollection, callback, context) {
+    this.service.updateFeatures(featureCollection, function (error, response) {
+      if (!error) {
+        var ids = [];
+        for (var i = featureCollection.features.length - 1; i >= 0; i--) {
+          ids.push(featureCollection.features[i].id);
+        }
+        this.removeLayers(ids, true);
+        this.createLayers(featureCollection.features);
       }
 
       if (callback) {
