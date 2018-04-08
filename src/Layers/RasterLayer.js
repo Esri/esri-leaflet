@@ -228,7 +228,7 @@ export var RasterLayer = Layer.extend({
 
             if (this.options.position === 'front') {
               this.bringToFront();
-            } else {
+            } else if (this.options.position === 'back') {
               this.bringToBack();
             }
             
