@@ -484,45 +484,27 @@ export var FeatureManager = VirtualGrid.extend({
   },
 
   addFeature: function (feature, callback, context) {
-    this._getMetadata(Util.bind(function (error, metadata) {
-      if (error) {
-        if (callback) { callback.call(this, error, null); }
-        return;
-      }
-
-      this.service.addFeature(feature, Util.bind(function (error, response) {
-        if (!error) {
-          // assign ID from result to appropriate objectid field from service metadata
-          feature.properties[metadata.objectIdField] = response.objectId;
-
-          // we also need to update the geojson id for createLayers() to function
-          feature.id = response.objectId;
-          this.createLayers([feature]);
-        }
-
-        if (callback) {
-          callback.call(context, error, response);
-        }
-      }, this));
-    }, this));
+    this.addFeatures(feature, callback, context);
   },
 
-  addFeatures: function (featureCollection, callback, context) {
+  addFeatures: function (features, callback, context) {
     this._getMetadata(Util.bind(function (error, metadata) {
       if (error) {
         if (callback) { callback.call(this, error, null); }
         return;
       }
+      // GeoJSON featureCollection or simple feature
+      var featuresArray = features.features ? features.features : [features];
 
-      this.service.addFeatures(featureCollection, Util.bind(function (error, response) {
+      this.service.addFeatures(features, Util.bind(function (error, response) {
         if (!error) {
-          for (var i = featureCollection.features.length - 1; i >= 0; i--) {
+          for (var i = featuresArray.length - 1; i >= 0; i--) {
             // assign ID from result to appropriate objectid field from service metadata
-            featureCollection.features[i].properties[metadata.objectIdField] = response[i].objectId;
+            featuresArray[i].properties[metadata.objectIdField] = featuresArray.length > 1 ? response[i].objectId : response.objectId;
             // we also need to update the geojson id for createLayers() to function
-            featureCollection.features[i].id = response[i].objectId;
+            featuresArray[i].id = featuresArray.length > 1 ? response[i].objectId : response.objectId;
           }
-          this.createLayers(featureCollection.features);
+          this.createLayers(featuresArray);
         }
 
         if (callback) {
@@ -533,27 +515,18 @@ export var FeatureManager = VirtualGrid.extend({
   },
 
   updateFeature: function (feature, callback, context) {
-    this.service.updateFeature(feature, function (error, response) {
-      if (!error) {
-        this.removeLayers([feature.id], true);
-        this.createLayers([feature]);
-      }
-
-      if (callback) {
-        callback.call(context, error, response);
-      }
-    }, this);
+    this.updateFeatures(feature, callback, context);
   },
 
-  updateFeatures: function (featureCollection, callback, context) {
-    this.service.updateFeatures(featureCollection, function (error, response) {
+  updateFeatures: function (features, callback, context) {
+    // GeoJSON featureCollection or simple feature
+    var featuresArray = features.features ? features.features : [features];
+    this.service.updateFeatures(features, function (error, response) {
       if (!error) {
-        var ids = [];
-        for (var i = featureCollection.features.length - 1; i >= 0; i--) {
-          ids.push(featureCollection.features[i].id);
+        for (var i = featuresArray.length - 1; i >= 0; i--) {
+          this.removeLayers([featuresArray[i].id], true);
         }
-        this.removeLayers(ids, true);
-        this.createLayers(featureCollection.features);
+        this.createLayers(featuresArray);
       }
 
       if (callback) {
@@ -563,21 +536,15 @@ export var FeatureManager = VirtualGrid.extend({
   },
 
   deleteFeature: function (id, callback, context) {
-    this.service.deleteFeature(id, function (error, response) {
-      if (!error && response.objectId) {
-        this.removeLayers([response.objectId], true);
-      }
-      if (callback) {
-        callback.call(context, error, response);
-      }
-    }, this);
+    this.deleteFeatures(id, callback, context);
   },
 
   deleteFeatures: function (ids, callback, context) {
     return this.service.deleteFeatures(ids, function (error, response) {
-      if (!error && response.length > 0) {
-        for (var i = 0; i < response.length; i++) {
-          this.removeLayers([response[i].objectId], true);
+      var responseArray = response.length ? response : [response];
+      if (!error && responseArray.length > 0) {
+        for (var i = responseArray.length - 1; i >= 0; i--) {
+          this.removeLayers([responseArray[i].objectId], true);
         }
       }
       if (callback) {
