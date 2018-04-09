@@ -27,6 +27,7 @@ export default {
     globals: {
       'leaflet': 'L',
       'esri-leaflet': 'L.esri'
-    }
+    },
+    sourcemap: true
   }
 };
