@@ -41,8 +41,8 @@
     
 
     
-      <script src="https://unpkg.com/esri-leaflet@2.1.3/dist/esri-leaflet.js"
-      integrity="sha512-pijLQd2FbV/7+Jwa86Mk3ACxnasfIMzJRrIlVQsuPKPCfUBCDMDUoLiBQRg7dAQY6D1rkmCcR8286hVTn/wlIg=="
+      <script src="https://unpkg.com/esri-leaflet@2.1.4/dist/esri-leaflet.js"
+      integrity="sha512-m+BZ3OSlzGdYLqUBZt3u6eA0sH+Txdmq7cqA1u8/B2aTXviGMMLOfrKyiIW7181jbzZAY0u+3jWoiL61iLcTKQ=="
       crossorigin=""></script>
     
 
@@ -237,9 +237,9 @@
 </tr>
 <tr>
 <td><code>dynamicLayers</code></td>
-<td><code>Object</code></td>
+<td><code>[Object]</code></td>
 <td></td>
-<td>JSON object literal used to manipulate the layer symbology defined in the service itself.  Requires a 10.1 (or above) map service which supports <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/index.html#/Export_Map/02r3000000v7000000/">dynamicLayers</a> requests.</td>
+<td>Array of one or more JSON objects used to override the layer symbology defined by the service.  Requires a 10.1+ map service which supports <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/index.html#/Export_Map/02r3000000v7000000/">dynamicLayers</a> requests.</td>
 </tr>
 <tr>
 <td><code>disableCache</code></td>
@@ -357,19 +357,19 @@ dynamicMapLayer.bindPopup(
             <td>Returns the current time options being used for rendering.</td>
         </tr>
         <tr>
-            <td><code>setTimeOptions(<nobr class="param"><span>&lt;<a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Export_Map/02r3000000v7000000/">Object</a>&gt;</span> <code>timeOptions</code></nobr>)</code></td>
+            <td><code>setTimeOptions(<nobr class="param"><span>&lt;<a href="https://developers.arcgis.com/rest/services-reference/export-map.htm">Object</a>&gt;</span> <code>timeOptions</code></nobr>)</code></td>
             <td><code>this</code></td>
             <td>Sets the current time options being used to render the layer. Corresponds to the <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Export_Map/02r3000000v7000000/">layerTimeOptions</a> option on the export API.</td>
         </tr>
         <tr>
             <td><code>getDynamicLayers()</code></td>
-            <td><code>Object</code></td>
-            <td>Returns a JSON object representing the modified layer symbology being requested from the map service.</td>
+            <td><code>[Object]</code></td>
+            <td>Returns an array of JSON objects representing the modified layer symbology being requested from the map service.</td>
         </tr>
         <tr>
-            <td><code>setDynamicLayers(<nobr class="param"><span>&lt;Object&gt;</span> <code>layers</code></nobr>)</code></td>
-            <td><code>Object</code></td>
-            <td>Used to insert raw dynamicLayers JSON in situations where you&#39;d like to modify layer symbology defined in the service itself.
+            <td><code>setDynamicLayers(<nobr class="param"><span>&lt;<a href="https://developers.arcgis.com/rest/services-reference/export-map.htm">Array</a>&gt;</span> <code>dynamicLayers</code></nobr>)</code></td>
+            <td><code>this</code></td>
+            <td>Used to insert raw dynamicLayers JSON in array form in situations where you&#39;d like to modify layer symbology defined in the service itself.
 <pre class="js"><code>dynamicMapLayer.setDynamicLayers([{
   ...
   &quot;drawingInfo&quot;: { ... }
