@@ -82,6 +82,10 @@ export var FeatureManager = VirtualGrid.extend({
           this.service.options.isModern = true;
         }
 
+        if (metadata.objectIdField) {
+          this.service.options.idAttribute = metadata.objectIdField;
+        }
+
         // add copyright text listed in service metadata
         if (!this.options.attribution && map.attributionControl && metadata.copyrightText) {
           this.options.attribution = metadata.copyrightText;
