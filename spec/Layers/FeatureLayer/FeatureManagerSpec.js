@@ -759,43 +759,43 @@ describe('L.esri.FeatureManager', function () {
   it('should wrap the updateFeatures method on the underlying service and refresh', function (done) {
     server.respondWith('POST', 'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/updateFeatures', JSON.stringify({
       'updateResults': [{
-        'objectId': 1,
+        'objectid': 1,
         'success': true
       }, {
-        'objectId': 2,
+        'objectid': 2,
         'success': true
       }]
     }));
 
     layer.updateFeatures({
-      type: 'FeatureCollecton',
+      type: 'FeatureCollection',
       features: [{
-        type: 'Point',
+        type: 'Feature',
         id: 1,
         properties: {
           foo: 'bar'
         },
         geometry: {
           type: 'Point',
-          coordinates: [45, -121]
+          coordinates: [-121, 45]
         }
       }, {
-        type: 'Point',
+        type: 'Feature',
         id: 2,
         properties: {
           foo: 'bar'
         },
         geometry: {
           type: 'Point',
-          coordinates: [45, -121]
+          coordinates: [-121, 45]
         }
       }]
     }, function (error, response) {
       expect(response).to.deep.equal([{
-        'objectId': 1,
+        'objectid': 1,
         'success': true
       }, {
-        'objectId': 2,
+        'objectid': 2,
         'success': true
       }]);
       done();
