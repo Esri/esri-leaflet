@@ -204,7 +204,7 @@ export var BasemapLayer = TileLayer.extend({
 
     Util.setOptions(this, tileOptions);
 
-    if (this.options.token) {
+    if (this.options.token && !config.urlTemplate.includes('token=')) {
       config.urlTemplate += ('?token=' + this.options.token);
     }
 
