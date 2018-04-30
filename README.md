@@ -2,7 +2,7 @@
 
 [![npm version][npm-img]][npm-url]
 [![build status][travis-img]][travis-url]
-[![apache licensed](https://img.shields.io/badge/license-Apache-green.svg?style=flat-square)](https://raw.githubusercontent.com/Esri/esri-leaflet/master/LICENSE)
+[![apache licensed](https://img.shields.io/badge/license-Apache%202.0-orange.svg?style=flat-square)](https://raw.githubusercontent.com/Esri/esri-leaflet/master/LICENSE)
 [![jsDelivr Hits](https://data.jsdelivr.com/v1/package/npm/esri-leaflet/badge)](https://www.jsdelivr.com/package/npm/esri-leaflet)
 
 [npm-img]: https://img.shields.io/npm/v/esri-leaflet.svg?style=flat-square
