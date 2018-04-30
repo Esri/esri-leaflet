@@ -13,14 +13,22 @@ export var FeatureLayerService = Service.extend({
   },
 
   addFeature: function (feature, callback, context) {
-    delete feature.id;
+    this.addFeatures(feature, callback, context);
+  },
 
-    feature = geojsonToArcGIS(feature);
-
+  addFeatures: function (features, callback, context) {
+    var featuresArray = features.features ? features.features : [features];
+    for (var i = featuresArray.length - 1; i >= 0; i--) {
+      delete featuresArray[i].id;
+    }
+    features = geojsonToArcGIS(features);
+    features = featuresArray.length > 1 ? features : [features];
     return this.post('addFeatures', {
-      features: [feature]
+      features: features
     }, function (error, response) {
-      var result = (response && response.addResults) ? response.addResults[0] : undefined;
+      // For compatibility reason with former addFeature function,
+      // we return the object in the array and not the array itself
+      var result = (response && response.addResults) ? response.addResults.length > 1 ? response.addResults : response.addResults[0] : undefined;
       if (callback) {
         callback.call(context, error || response.addResults[0].error, result);
       }
@@ -28,12 +36,20 @@ export var FeatureLayerService = Service.extend({
   },
 
   updateFeature: function (feature, callback, context) {
-    feature = geojsonToArcGIS(feature, this.options.idAttribute);
+    this.updateFeatures(feature, callback, context);
+  },
+
+  updateFeatures: function (features, callback, context) {
+    var featuresArray = features.features ? features.features : [features];
+    features = geojsonToArcGIS(features, this.options.idAttribute);
+    features = featuresArray.length > 1 ? features : [features];
 
     return this.post('updateFeatures', {
-      features: [feature]
+      features: features
     }, function (error, response) {
-      var result = (response && response.updateResults) ? response.updateResults[0] : undefined;
+      // For compatibility reason with former updateFeature function,
+      // we return the object in the array and not the array itself
+      var result = (response && response.updateResults) ? response.updateResults.length > 1 ? response.updateResults : response.updateResults[0] : undefined;
       if (callback) {
         callback.call(context, error || response.updateResults[0].error, result);
       }
@@ -41,22 +57,16 @@ export var FeatureLayerService = Service.extend({
   },
 
   deleteFeature: function (id, callback, context) {
-    return this.post('deleteFeatures', {
-      objectIds: id
-    }, function (error, response) {
-      var result = (response && response.deleteResults) ? response.deleteResults[0] : undefined;
-      if (callback) {
-        callback.call(context, error || response.deleteResults[0].error, result);
-      }
-    }, context);
+    this.deleteFeatures(id, callback, context);
   },
 
   deleteFeatures: function (ids, callback, context) {
     return this.post('deleteFeatures', {
       objectIds: ids
     }, function (error, response) {
-      // pass back the entire array
-      var result = (response && response.deleteResults) ? response.deleteResults : undefined;
+      // For compatibility reason with former deleteFeature function,
+      // we return the object in the array and not the array itself
+      var result = (response && response.deleteResults) ? response.deleteResults.length > 1 ? response.deleteResults : response.deleteResults[0] : undefined;
       if (callback) {
         callback.call(context, error || response.deleteResults[0].error, result);
       }
