@@ -12,7 +12,7 @@
 
 [Leaflet](http://leafletjs.com/) plugins for working with a handful of the most popular [ArcGIS Service](http://developers.arcgis.com) types. This includes Esri [basemaps](http://esri.github.io/esri-leaflet/examples/switching-basemaps.html) and [feature services](http://esri.github.io/esri-leaflet/examples/simple-feature-layer.html), as well as [tiled](http://esri.github.io/esri-leaflet/examples/tile-layer-2.html) map, [dynamic](http://esri.github.io/esri-leaflet/examples/simple-dynamic-map-layer.html) map and [image](http://esri.github.io/esri-leaflet/examples/simple-image-map-layer.html)  services.
 
-> Esri Leaflet is maintained with :heart: by folks spanning multiple teams within Esri, but we provide no guarantee of individual features, nor a traditional product lifecycle to support planning.
+> This project is maintained with :heart: by folks spanning multiple teams within Esri, but we provide no guarantee of individual features, nor a traditional product lifecycle to support planning.
 
 The goal of this project is **not** to replace the [ArcGIS API for JavaScript](https://developers.arcgis.com/en/javascript/) but rather to provide small components for *only some* aspects of the ArcGIS platform for developers who prefer to build mapping applications with [Leaflet](http://leafletjs.com/).
 
@@ -55,15 +55,11 @@ The easiest way to get started is to load Esri Leaflet via [CDN](https://unpkg.c
 <html>
   <head>
     <!-- Load Leaflet from CDN -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css"
-   integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
-   crossorigin=""/>
-    <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"
-   integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw=="
-   crossorigin=""></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
     <!-- Load Esri Leaflet from CDN -->
-    <script src="https://unpkg.com/esri-leaflet@2.1.3"></script>
+    <script src="https://unpkg.com/esri-leaflet/dist/esri-leaflet.js"></script>
 
     <style>
       html, body, #map {
@@ -94,15 +90,9 @@ The easiest way to get started is to load Esri Leaflet via [CDN](https://unpkg.c
 </html>
 ```
 
-## API Reference
+## [API Reference](http://esri.github.io/esri-leaflet/api-reference/)
 
-A full API Reference can be found in the Esri Leaflet website.
-
-http://esri.github.io/esri-leaflet/api-reference/
-
-The source code for the documentation site can be found in the repository below.  If you notice a typo or other problem, please [let us know](https://github.com/Esri/esri-leaflet-doc/issues)!
-
-https://github.com/Esri/esri-leaflet-doc
+The source code for our documentation site can be found [here](https://github.com/Esri/esri-leaflet-doc). If you notice a typo or other problem, _please_ [let us know](https://github.com/Esri/esri-leaflet-doc/issues)!
 
 ## Additional Plugins
 
@@ -179,7 +169,12 @@ Esri welcomes contributions from anyone and everyone. Please see our [guidelines
 
 ### Terms
 
-If your app is for public, non-revenue generating, non-government, non-commercial use, the free [Essentials Developer Plan](https://developers.arcgis.com/pricing/) is sufficient. If you're going to generate revenue or are using the app for government or business purposes, you'll have to purchase a paid [ArcGIS Online Deployment Plan](https://developers.arcgis.com/pricing/credits/) when you're ready to deploy your app to production.
+If your app is for public, non-revenue generating, non-government, non-commercial use, the free [Essentials Developer Plan](https://developers.arcgis.com/pricing/) is sufficient. If you're going to generate revenue or are using the app for government or business purposes, you'll have to purchase one of the products below:
+
+* ArcGIS [Pro](https://www.esri.com/en-us/arcgis/products/arcgis-pro/overview)
+* ArcGIS [Online for Organizations](http://www.esri.com/software/arcgis/arcgisonline)
+* ArcGIS [Enterprise](https://www.esri.com/en-us/arcgis/products/arcgis-enterprise/overview)
+* ArcGIS [Online Deployment Plan](https://developers.arcgis.com/pricing/credits/) 
 
 If you display an ArcGIS Online service in **any** Leaflet application, we require that you display Esri attribution and recognize data providers. Using this plugin, it couldn't be easier to follow the terms.  Just select your basemap and the appropriate credits will be displayed in Leaflet's own [Attribution control](http://leafletjs.com/reference.html#control-attribution) as users pan/zoom automatically.
 
@@ -202,7 +197,7 @@ If you need more than 1 million [map transactions](http://doc.arcgis.com/en/arcg
 
 ### License
 
-Copyright 2017 Esri
+Copyright &copy; 2014-2018 Esri
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
