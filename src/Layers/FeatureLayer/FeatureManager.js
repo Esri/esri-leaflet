@@ -69,6 +69,7 @@ export var FeatureManager = VirtualGrid.extend({
 
     this.service.metadata(function (err, metadata) {
       if (!err) {
+        this._metadata = metadata;
         var supportedFormats = metadata.supportedQueryFormats;
 
         // Check if someone has requested that we don't use geoJSON, even if it's available
@@ -90,6 +91,10 @@ export var FeatureManager = VirtualGrid.extend({
         if (!this.options.attribution && map.attributionControl && metadata.copyrightText) {
           this.options.attribution = metadata.copyrightText;
           map.attributionControl.addAttribution(this.getAttribution());
+        }
+
+        if (this.options.onMetadata) {
+          this.options.onMetadata(metadata);
         }
       }
     }, this);
