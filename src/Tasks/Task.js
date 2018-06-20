@@ -71,10 +71,10 @@ export var Task = Class.extend({
     var url = (this.options.proxy) ? this.options.proxy + '?' + this.options.url + path : this.options.url + path;
 
     if ((method === 'get' || method === 'request') && !this.options.useCors) {
-      return Request.get.JSONP(url, params, callback, context);
+      return Request.get.JSONP(url, params, callback, context, this.options.headers);
     }
 
-    return Request[method](url, params, callback, context);
+    return Request[method](url, params, callback, context, this.options.headers);
   }
 });
 
