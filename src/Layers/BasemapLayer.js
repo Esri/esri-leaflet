@@ -191,7 +191,7 @@ export var BasemapLayer = TileLayer.extend({
           maxZoom: 19,
           attribution: 'Esri, DigitalGlobe, GeoEye, Earthstar Geographics, CNES/Airbus DS, USDA, USGS, AeroGRID, IGN, and the GIS User Community'
         }
-      }        
+      }
     }
   },
 
