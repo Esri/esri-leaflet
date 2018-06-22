@@ -57,7 +57,7 @@ describe('L.esri.BasemapLayer', function () {
   });
 
   it('can return valid basemaps', function () {
-    var testmaps = ['Streets', 'Topographic', 'NationalGeographic', 'Oceans', 'OceansLabels', 'DarkGray', 'DarkGrayLabels', 'Gray', 'GrayLabels', 'Imagery', 'ImageryLabels', 'ImageryTransportation', 'ShadedRelief', 'ShadedReliefLabels', 'Terrain', 'TerrainLabels', 'USATopo', 'ImageryClarity'];
+    var testmaps = ['Streets', 'Topographic', 'NationalGeographic', 'Oceans', 'OceansLabels', 'DarkGray', 'DarkGrayLabels', 'Gray', 'GrayLabels', 'Imagery', 'ImageryLabels', 'ImageryTransportation', 'ShadedRelief', 'ShadedReliefLabels', 'Terrain', 'TerrainLabels', 'USATopo', 'ImageryClarity', 'WorldPhysical', 'WorldPhysicalLabels'];
     for (var i = 0, len = testmaps.length; i < len; i++) {
       var name = testmaps[i];
       expect(L.esri.basemapLayer(name)).to.be.instanceof(L.esri.BasemapLayer);
@@ -66,7 +66,7 @@ describe('L.esri.BasemapLayer', function () {
   });
 
   it('can survive adding/removing basemaps w/ labels', function () {
-    var moremaps = ['Oceans', 'DarkGray', 'Gray', 'Imagery', 'ShadedRelief', 'Terrain'];
+    var moremaps = ['Oceans', 'DarkGray', 'Gray', 'Imagery', 'ShadedRelief', 'Terrain', 'WorldPhysical'];
     for (var i = 0, len = moremaps.length; i < len; i++) {
       var layer = L.esri.basemapLayer(moremaps[i]).addTo(map);
       var layerWithLabels = L.esri.basemapLayer(moremaps[i] + 'Labels').addTo(map);
