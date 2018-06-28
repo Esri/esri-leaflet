@@ -148,6 +148,7 @@
 <p><strong>Feature Layer URLs always end in a number (ex: <code>/FeatureServer/{LAYER_ID}</code> or <code>/MapServer/{LAYER_ID}</code>).</strong></p>
 <p>You can create a new empty feature service with a single layer on the <a href="https://developers.arcgis.com/en/hosted-data/#/new">ArcGIS for Developers website</a> or you can use ArcGIS Online to <a href="https://doc.arcgis.com/en/arcgis-online/share-maps/publish-features.htm">create a Feature Service from a CSV or Shapefile</a>.</p>
 <p><code>L.esri.FeatureLayer</code> divides the current map extent into a grid of individual cells and uses them to fire queries to fetch nearby features. This technique is comparable to <a href="https://developers.arcgis.com/javascript/3/jshelp/best_practices_feature_layers.html">MODE_ONDEMAND</a> in the ArcGIS API for JavaScript.</p>
+<p>If you want your <code>FeatureLayer</code> to display the symbology defined in the map or feature service, you need to use the <a href="https://github.com/Esri/esri-leaflet-renderers">Esri Leaflet Renderers</a> plugin.</p>
 <h3 id="constructor">Constructor</h3>
 <table>
     <thead>

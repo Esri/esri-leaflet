@@ -208,6 +208,8 @@
   var map = L.map('map').setView([45.526, -122.667], 13);
 
   L.esri.basemapLayer('Streets').addTo(map);
+
+  // a Leaflet marker is used by default to symbolize point features.
   L.esri.featureLayer({
     url: 'https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Heritage_Trees_Portland/FeatureServer/0'
   }).addTo(map);
@@ -248,6 +250,8 @@
   <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">45.526</span>, -<span class="number">122.667</span>], <span class="number">13</span>);
 
   L.esri.basemapLayer(<span class="string">'Streets'</span>).addTo(map);
+
+  <span class="comment">// a Leaflet marker is used by default to symbolize point features.</span>
   L.esri.featureLayer({
     url: <span class="string">'https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Heritage_Trees_Portland/FeatureServer/0'</span>
   }).addTo(map);
