@@ -12,7 +12,7 @@
   
 
   
-    <meta name="description" content="Display ArcGIS Online vector basemaps. Notice that the map attribution updates automatically as users pan and zoom in accordance with Esri&#x27;s &lt;a href=&#x27;https://github.com/esri/esri-leaflet#terms&#x27;&gt;Terms of Use&lt;/a&gt;.">
+    <meta name="description" content="Display &lt;a href=&#x27;https://www.esri.com/arcgis-blog/products/arcgis-living-atlas/mapping/whats-new-in-esri-vector-basemaps-december-2017/&#x27;&gt;v1&lt;/a&gt; ArcGIS Online vector basemaps using an &lt;a href=&#x27;https://github.com/Esri/esri-leaflet-vector&#x27;&gt;experimental&lt;/a&gt; plugin.">
   
 
   <meta name="description" content="Esri Leaflet">
@@ -197,7 +197,7 @@
 <div class="example-content">
 <div class="wrap">
   <h1>Vector Basemaps</h1>
-  <p>Display ArcGIS Online vector basemaps. Notice that the map attribution updates automatically as users pan and zoom in accordance with Esri's <a href='https://github.com/esri/esri-leaflet#terms'>Terms of Use</a>.</p>
+  <p>Display <a href='https://www.esri.com/arcgis-blog/products/arcgis-living-atlas/mapping/whats-new-in-esri-vector-basemaps-december-2017/'>v1</a> ArcGIS Online vector basemaps using an <a href='https://github.com/Esri/esri-leaflet-vector'>experimental</a> plugin.</p>
 </div>
 <div id="map-wrapper">
   
@@ -242,6 +242,7 @@
   var map = L.map('map').setView([40, -4], 6);
   var layer = L.esri.Vector.basemap('Newspaper').addTo(map);
 
+  // v1 basemaps stopped receiving updates in Dec 2017
   function setBasemap(basemap) {
     if (layer) {
       map.removeLayer(layer);
@@ -326,6 +327,7 @@
   <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">40</span>, -<span class="number">4</span>], <span class="number">6</span>);
   <span class="keyword">var</span> layer = L.esri.Vector.basemap(<span class="string">'Newspaper'</span>).addTo(map);
 
+  <span class="comment">// v1 basemaps stopped receiving updates in Dec 2017</span>
   <span class="function"><span class="keyword">function</span> <span class="title">setBasemap</span><span class="params">(basemap)</span> {</span>
     <span class="keyword">if</span> (layer) {
       map.removeLayer(layer);
