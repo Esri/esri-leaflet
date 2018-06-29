@@ -74,7 +74,7 @@ export var Service = Evented.extend({
       if ((method === 'get' || method === 'request') && !this.options.useCors) {
         return Request.get.JSONP(url, params, wrappedCallback, context);
       } else {
-        return Request[method](url, params, wrappedCallback, context);
+        return Request[method](url, params, wrappedCallback, context, this.options.headers);
       }
     }
   },
