@@ -135,4 +135,46 @@ describe('L.esri.Util', function () {
       });
     }
   });
+
+  describe('responseToFeatureCollection', function () {
+    it('should convert date fields to javascript dates', function () {
+      var data = {
+        'geometryType': 'esriGeometryPoint',
+        'fields': [
+          {
+            'name': 'oid',
+            'type': 'esriFieldTypeInteger',
+            'alias': 'oid'
+          }, {
+            'name': 'striketime',
+            'type': 'esriFieldTypeDate',
+            'alias': 'striketime',
+            'length': 16
+          }, {
+            'name': 'latitude',
+            'type': 'esriFieldTypeSingle',
+            'alias': 'latitude'
+          }],
+        'features': [
+          {
+            'attributes': {
+              'oid': 39734967,
+              'striketime': 1518434809000,
+              'latitude': 1.30747
+            },
+            'geometry': {
+              'x': 3.860490083694458,
+              'y': 1.3074699640274048
+            }
+          }
+        ]
+      };
+
+      var result = L.esri.Util.responseToFeatureCollection(data, 'oid');
+      console.log(JSON.stringify(result));
+
+      expect(result.features.length).to.equal(1);
+      expect(result.features[0].properties['striketime'] instanceof Date).to.equal(true);
+    });
+  });
 });
