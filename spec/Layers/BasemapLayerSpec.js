@@ -57,7 +57,8 @@ describe('L.esri.BasemapLayer', function () {
   });
 
   it('can return valid basemaps', function () {
-    var testmaps = ['Streets', 'Topographic', 'NationalGeographic', 'Oceans', 'OceansLabels', 'DarkGray', 'DarkGrayLabels', 'Gray', 'GrayLabels', 'Imagery', 'ImageryLabels', 'ImageryTransportation', 'ShadedRelief', 'ShadedReliefLabels', 'Terrain', 'TerrainLabels', 'USATopo', 'ImageryClarity', 'ImageryFirefly'];
+    var testmaps = ['Streets', 'Topographic', 'NationalGeographic', 'Oceans', 'OceansLabels', 'DarkGray', 'DarkGrayLabels', 'Gray', 'GrayLabels', 'Imagery', 'ImageryLabels', 'ImageryTransportation', 'ShadedRelief', 'ShadedReliefLabels', 'Terrain', 'TerrainLabels', 'USATopo', 'ImageryClarity', 'ImageryFirefly', 'Physical'];
+
     for (var i = 0, len = testmaps.length; i < len; i++) {
       var name = testmaps[i];
       expect(L.esri.basemapLayer(name)).to.be.instanceof(L.esri.BasemapLayer);
