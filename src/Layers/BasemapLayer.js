@@ -184,7 +184,7 @@ export var BasemapLayer = TileLayer.extend({
           attribution: 'Esri, DigitalGlobe, GeoEye, Earthstar Geographics, CNES/Airbus DS, USDA, USGS, AeroGRID, IGN, and the GIS User Community'
         }
       },
-      WorldPhysical: {
+      Physical: {
         urlTemplate: tileProtocol + '//{s}.arcgisonline.com/arcgis/rest/services/World_Physical_Map/MapServer/tile/{z}/{y}/{x}',
         options: {
           minZoom: 1,
@@ -193,14 +193,13 @@ export var BasemapLayer = TileLayer.extend({
           attribution: 'U.S. National Park Service'
         }
       },
-      WorldPhysicalLabels: {
-        urlTemplate: tileProtocol + '//{s}.arcgisonline.com/arcgis/rest/services/Reference/World_Boundaries_and_Places_Alternate/MapServer/tile/{z}/{y}/{x}',
+      ImageryFirefly: {
+        urlTemplate: tileProtocol + '//fly.maptiles.arcgis.com/arcgis/rest/services/World_Imagery_Firefly/MapServer/tile/{z}/{y}/{x}',
         options: {
           minZoom: 1,
-          maxZoom: 12,
-          subdomains: ['server', 'services'],
-          pane: (pointerEvents) ? 'esri-labels' : 'tilePane',
-          attribution: 'Esri, Garmin, HERE, &copy OpenStreetMap contributors, and the GIS User Community'
+          maxZoom: 19,
+          attribution: 'Esri, DigitalGlobe, GeoEye, Earthstar Geographics, CNES/Airbus DS, USDA, USGS, AeroGRID, IGN, and the GIS User Community',
+          attributionUrl: 'https://static.arcgis.com/attribution/World_Imagery'
         }
       }
     }
@@ -215,7 +214,7 @@ export var BasemapLayer = TileLayer.extend({
     } else if (typeof key === 'string' && BasemapLayer.TILES[key]) {
       config = BasemapLayer.TILES[key];
     } else {
-      throw new Error('L.esri.BasemapLayer: Invalid parameter. Use one of "Streets", "Topographic", "Oceans", "OceansLabels", "NationalGeographic", "WorldPhysical", "WorldPhysicalLabels", "Gray", "GrayLabels", "DarkGray", "DarkGrayLabels", "Imagery", "ImageryLabels", "ImageryTransportation", "ImageryClarity", "ShadedRelief", "ShadedReliefLabels", "Terrain", "TerrainLabels" or "USATopo"');
+      throw new Error('L.esri.BasemapLayer: Invalid parameter. Use one of "Streets", "Topographic", "Oceans", "OceansLabels", "NationalGeographic", "Physical", "Gray", "GrayLabels", "DarkGray", "DarkGrayLabels", "Imagery", "ImageryLabels", "ImageryTransportation", "ImageryClarity", "ImageryFirefly", ShadedRelief", "ShadedReliefLabels", "Terrain", "TerrainLabels" or "USATopo"');
     }
 
     // merge passed options into the config options
