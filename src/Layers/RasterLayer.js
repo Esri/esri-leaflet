@@ -126,28 +126,24 @@ export var RasterLayer = Layer.extend({
   },
   
   _setAutoZIndex: function (compare) {
-		// go through all other layers of the same pane, set zIndex to max + 1 (front) or min - 1 (back)
+    // go through all other layers of the same pane, set zIndex to max + 1 (front) or min - 1 (back)
     if (!this._currentImage) {
       return;
     }
-    
-		var layers = this._currentImage.getPane().children,
-		    edgeZIndex = -compare(-Infinity, Infinity); // -Infinity for max, Infinity for min
+    var layers = this._currentImage.getPane().children;
+    var edgeZIndex = -compare(-Infinity, Infinity); // -Infinity for max, Infinity for min
+    for (var i = 0, len = layers.length, zIndex; i < len; i++) {
+      zIndex = layers[i].style.zIndex;
+      if (layers[i] !== this._currentImage._image && zIndex) {
+        edgeZIndex = compare(edgeZIndex, +zIndex);
+      }
+    }
 
-		for (var i = 0, len = layers.length, zIndex; i < len; i++) {
-
-			zIndex = layers[i].style.zIndex;
-
-			if (layers[i] !== this._currentImage._image && zIndex) {
-				edgeZIndex = compare(edgeZIndex, +zIndex);
-			}
-		}
-
-		if (isFinite(edgeZIndex)) {
-			this.options.zIndex = edgeZIndex + compare(-1, 1);
-			this.setZIndex(this.options.zIndex);
-		}
-	},
+    if (isFinite(edgeZIndex)) {
+      this.options.zIndex = edgeZIndex + compare(-1, 1);
+      this.setZIndex(this.options.zIndex);
+    }
+  },
 
   getAttribution: function () {
     return this.options.attribution;
