@@ -158,6 +158,10 @@ export var RasterLayer = Layer.extend({
       if (contentType) {
         url = 'data:' + contentType + ';base64,' + url;
       }
+
+      // if server returns an inappropriate response, abort.
+      if (!url) return;
+
       // create a new image overlay and add it to the map
       // to start loading the image
       // opacity is 0 while the image is loading
