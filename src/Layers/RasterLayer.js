@@ -30,11 +30,11 @@ export var RasterLayer = Layer.extend({
   onAdd: function (map) {
     // include 'Powered by Esri' in map attribution
     setEsriAttribution(map);
-    
+
     if (this.options.zIndex) {
       this.options.position = null;
     }
-    
+
     this._update = Util.throttle(this._update, this.options.updateInterval, this);
 
     map.on('moveend', this._update, this);
@@ -103,7 +103,7 @@ export var RasterLayer = Layer.extend({
     this.options.position = 'front';
     if (this._currentImage) {
       this._currentImage.bringToFront();
-      this._setAutoZIndex(Math.max)
+      this._setAutoZIndex(Math.max);
     }
     return this;
   },
@@ -112,11 +112,11 @@ export var RasterLayer = Layer.extend({
     this.options.position = 'back';
     if (this._currentImage) {
       this._currentImage.bringToBack();
-      this._setAutoZIndex(Math.min)
+      this._setAutoZIndex(Math.min);
     }
     return this;
   },
-  
+
   setZIndex: function (value) {
     this.options.zIndex = value;
     if (this._currentImage) {
@@ -124,7 +124,7 @@ export var RasterLayer = Layer.extend({
     }
     return this;
   },
-  
+
   _setAutoZIndex: function (compare) {
     // go through all other layers of the same pane, set zIndex to max + 1 (front) or min - 1 (back)
     if (!this._currentImage) {
@@ -227,7 +227,7 @@ export var RasterLayer = Layer.extend({
             } else if (this.options.position === 'back') {
               this.bringToBack();
             }
-            
+
             if (this.options.zIndex) {
               this.setZIndex(this.options.zIndex);
             }
