@@ -46,10 +46,10 @@
     "watch": "^0.17.1"
   },
   "files": [
-    "src/**.js",
+    "src/**/*.js",
     "dist/esri-leaflet.js",
-    "dist/esri-leaflet-debug.js",
-    "dist/esri-leaflet.js.map"
+    "dist/esri-leaflet.js.map",
+    "dist/esri-leaflet-debug.js.map"
   ],
   "homepage": "http://esri.github.io/esri-leaflet",
   "module": "src/EsriLeaflet.js",
@@ -81,7 +81,7 @@
     "build": "rollup -c profiles/debug.js & rollup -c profiles/production.js",
     "lint": "semistandard | snazzy",
     "prebuild": "mkdirp dist",
-    "prepublish": "npm run build",
+    "prepare": "npm run build",
     "pretest": "npm run build",
     "precommit": "npm run lint",
     "release": "./scripts/release.sh",
