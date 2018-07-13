@@ -43,8 +43,8 @@
     
 
     
-      <script src="https://unpkg.com/esri-leaflet@2.1.4/dist/esri-leaflet.js"
-      integrity="sha512-m+BZ3OSlzGdYLqUBZt3u6eA0sH+Txdmq7cqA1u8/B2aTXviGMMLOfrKyiIW7181jbzZAY0u+3jWoiL61iLcTKQ=="
+      <script src="https://unpkg.com/esri-leaflet@2.2.1/dist/esri-leaflet.js"
+      integrity="sha512-6BBVttv13OVrrUSoGmy9/aIVHateyIEGFaQxqnzCgXT9LNCAQ1Cxxj43R6Eq0ynydS7a7bLLfmEWwXFiO6lW2g=="
       crossorigin=""></script>
     
 
@@ -228,7 +228,9 @@
     <option value="DarkGray">Dark Gray</option>
     <option value="Imagery">Imagery</option>
     <option value="ImageryClarity">Imagery (Clarity)</option>
+    <option value="ImageryFirefly">Imagery (Firefly)</option>
     <option value="ShadedRelief">Shaded Relief</option>
+    <option value="Physical">Physical</option>
   </select>
 </div>
 
@@ -254,10 +256,12 @@
      || basemap === 'Oceans'
      || basemap === 'Gray'
      || basemap === 'DarkGray'
-     || basemap === 'Imagery'
      || basemap === 'Terrain'
    ) {
       layerLabels = L.esri.basemapLayer(basemap + 'Labels');
+      map.addLayer(layerLabels);
+    } else if (basemap.includes('Imagery')) {
+      layerLabels = L.esri.basemapLayer('ImageryLabels');
       map.addLayer(layerLabels);
     }
   }
@@ -285,8 +289,8 @@
 
 
     <span class="comment">&lt;!-- Load Esri Leaflet from CDN --&gt;</span>
-    <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/esri-leaflet@2.1.4/dist/esri-leaflet.js"</span>
-    <span class="attribute">integrity</span>=<span class="value">"sha512-m+BZ3OSlzGdYLqUBZt3u6eA0sH+Txdmq7cqA1u8/B2aTXviGMMLOfrKyiIW7181jbzZAY0u+3jWoiL61iLcTKQ=="</span>
+    <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/esri-leaflet@2.2.1/dist/esri-leaflet.js"</span>
+    <span class="attribute">integrity</span>=<span class="value">"sha512-6BBVttv13OVrrUSoGmy9/aIVHateyIEGFaQxqnzCgXT9LNCAQ1Cxxj43R6Eq0ynydS7a7bLLfmEWwXFiO6lW2g=="</span>
     <span class="attribute">crossorigin</span>=<span class="value">""</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 
@@ -323,7 +327,9 @@
     <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"DarkGray"</span>&gt;</span>Dark Gray<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
     <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"Imagery"</span>&gt;</span>Imagery<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
     <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"ImageryClarity"</span>&gt;</span>Imagery (Clarity)<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"ImageryFirefly"</span>&gt;</span>Imagery (Firefly)<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
     <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"ShadedRelief"</span>&gt;</span>Shaded Relief<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"Physical"</span>&gt;</span>Physical<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
   <span class="tag">&lt;/<span class="title">select</span>&gt;</span>
 <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 
@@ -349,10 +355,12 @@
      || basemap === <span class="string">'Oceans'</span>
      || basemap === <span class="string">'Gray'</span>
      || basemap === <span class="string">'DarkGray'</span>
-     || basemap === <span class="string">'Imagery'</span>
      || basemap === <span class="string">'Terrain'</span>
    ) {
       layerLabels = L.esri.basemapLayer(basemap + <span class="string">'Labels'</span>);
+      map.addLayer(layerLabels);
+    } <span class="keyword">else</span> <span class="keyword">if</span> (basemap.includes(<span class="string">'Imagery'</span>)) {
+      layerLabels = L.esri.basemapLayer(<span class="string">'ImageryLabels'</span>);
       map.addLayer(layerLabels);
     }
   }
