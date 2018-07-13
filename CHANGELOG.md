@@ -5,6 +5,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+## [2.2.1] - 2018-07-11
+
+### Fixed
+
+* resolved issue that caused _some_ raw ES6 files to not be bundled on npm.
+
 ## [2.2.0] - 2018-07-08
 
 ### Added
@@ -624,7 +630,8 @@ None
 * Add DarkGray and DarkGrayLabels to BasemapLayer. #190
 * An attributionControl on maps is now required when using BasemapLayer. #159
 
-[unreleased]: https://github.com/esri/esri-leaflet/compare/v2.2.0...HEAD
+[unreleased]: https://github.com/esri/esri-leaflet/compare/v2.2.1...HEAD
+[2.2.1]: https://github.com/esri/esri-leaflet/compare/v2.2.0...v2.2.1
 [2.2.0]: https://github.com/esri/esri-leaflet/compare/v2.1.4...v2.2.0
 [2.1.4]: https://github.com/esri/esri-leaflet/compare/v2.1.3...v2.1.4
 [2.1.3]: https://github.com/esri/esri-leaflet/compare/v2.1.2...v2.1.3
