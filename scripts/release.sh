@@ -10,9 +10,6 @@ npm test || exit 1
 # checkout temp branch for release
 git checkout -b gh-release
 
-# run prepublish to build files
-npm run prepublish
-
 # force add files
 git add dist -f
 
