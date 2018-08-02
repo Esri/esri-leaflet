@@ -5,6 +5,16 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+## [2.2.2] - 2018-08-02
+
+### Fixed
+
+* trapped an error when Map.attribution control is _not_ loaded.
+
+### Added
+
+* `dynamicMapLayer()` and `imageMapLayer()` now both expose a new `zIndex` constructor option and modify `zIndex` values appropriately internally when `bringToFront()` and `bringToBack()` are called.  (🙏appleshowc🙏 [#1084](https://github.com/Esri/esri-leaflet/pull/1084))
+
 ## [2.2.1] - 2018-07-11
 
 ### Fixed
@@ -630,7 +640,8 @@ None
 * Add DarkGray and DarkGrayLabels to BasemapLayer. #190
 * An attributionControl on maps is now required when using BasemapLayer. #159
 
-[unreleased]: https://github.com/esri/esri-leaflet/compare/v2.2.1...HEAD
+[unreleased]: https://github.com/esri/esri-leaflet/compare/v2.2.2...HEAD
+[2.2.2]: https://github.com/esri/esri-leaflet/compare/v2.2.1...v2.2.2
 [2.2.1]: https://github.com/esri/esri-leaflet/compare/v2.2.0...v2.2.1
 [2.2.0]: https://github.com/esri/esri-leaflet/compare/v2.1.4...v2.2.0
 [2.1.4]: https://github.com/esri/esri-leaflet/compare/v2.1.3...v2.1.4
