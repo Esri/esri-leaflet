@@ -183,6 +183,9 @@ export var ImageMapLayer = RasterLayer.extend({
         if (this.options.token) {
           response.href += ('?token=' + this.options.token);
         }
+        if (this.options.proxy) {
+          response.href = this.options.proxy + '?' + response.href;
+        }
         this._renderImage(response.href, bounds);
       }, this);
     } else {
