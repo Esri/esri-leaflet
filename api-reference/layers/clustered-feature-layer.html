@@ -8,13 +8,13 @@
   <meta charset="utf-8">
 
   
-    <title>L.esri.Heat.FeatureLayer | Esri Leaflet</title>
+    <title>L.esri.Cluster.FeatureLayer | Esri Leaflet</title>
   
 
   
 
   <meta name="description" content="Esri Leaflet">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width">
 
   <!--[if lt IE 9]>
     <script src="//cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv-printshiv.js"></script>
@@ -31,21 +31,9 @@
   
 
   
-    
-      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.3/dist/leaflet.css"
-      integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
-      crossorigin=""/>
-      <script src="https://unpkg.com/leaflet@1.3.3/dist/leaflet.js"
-      integrity="sha512-tAGcCfR4Sc5ZP5ZoVz0quoZDYX5aCtEm/eu1KhSLj2c9eFrylXZknQYmxUssFaVJKvvc0dJQixhGjG2yXWiV9Q=="
-      crossorigin=""></script>
-    
-
-    
-      <script src="https://unpkg.com/esri-leaflet@2.2.3/dist/esri-leaflet.js"
-      integrity="sha512-YZ6b5bXRVwipfqul5krehD9qlbJzc6KOGXYsDjU9HHXW2gK57xmWl2gU6nAegiErAqFXhygKIsWPKbjLPXVb2g=="
-      crossorigin=""></script>
-    
-
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet-src.js"></script>
+    <script src="https://unpkg.com/esri-leaflet@2.0.8"></script>
   
 
   
@@ -65,9 +53,8 @@
 <body>
   <div class="page-content ">
     <div class="container">
-      <span id="mobileMenuButton" class="mobileMenuButton">&#9776;</span>
       <a class="site-nav" href="../../" class="left logo">Esri Leaflet</a>
-      <nav id="site-nav-wrapper" class="site-nav-wrapper">
+      <nav class="right">
         <a class="site-nav" href="../../tutorials/">Tutorials</a>
         <a class="site-nav" href="../../plugins/">Plugins</a>
         <a class="site-nav" href="../../examples/">Examples</a>
@@ -93,7 +80,7 @@
     <a href="../../api-reference/layers/image-map-layer.html">Image Map Layer</a>
     <a class="plugin" href="../../api-reference/layers/vector-basemap.html">Vector Basemap</a>
     <a class="plugin" href="../../api-reference/layers/heatmap-feature-layer.html">Heatmap Feature Layer</a>
-    <a class="plugin" href="../../api-reference/layers/cluster-feature-layer.html">Cluster Feature Layer</a>
+    <a class="plugin" href="../../api-reference/layers/clustered-feature-layer.html">Clustered Feature Layer</a>
     <a class="plugin" href="../../api-reference/layers/vector-layer.html">Vector Layer</a>
   </nav>
 
@@ -111,7 +98,7 @@
     <a class="plugin" href="../../api-reference/tasks/geocode.html">Geocode</a>
     <a class="plugin" href="../../api-reference/tasks/reverse-geocode.html">Reverse Geocode</a>
     <a class="plugin" href="../../api-reference/tasks/suggest.html">Suggest</a>
-    <a class="plugin" href="../../api-reference/tasks/gp.html">Geoprocessing Task</a>
+    <a class="plugin" href="../../api-reference/tasks/gp-task.html">Geoprocessing Task</a>
     <a class="plugin" href="../../api-reference/tasks/query-related.html">Query Related</a>
   </nav>
 
@@ -138,10 +125,9 @@
 
 
 <div class="main-content">
-  <h1 id="l-esri-heat-featurelayer">L.esri.Heat.FeatureLayer</h1>
-<p>Extends <a href="../../api-reference/layers-feature-layer.html"><code>L.esri.Layers.FeatureLayer</code></a></p>
-<p><code>L.esri.Heat.FeatureLayer</code> provides integration for Feature Layers with the <a href="https://github.com/Leaflet/Leaflet.heat">Leaflet.heat</a> plugin. Because of the extra dependency on Leaflet.heat we do not include <code>L.esri.Heat.FeatureLayer</code> in the default build of Esri Leaflet. You will need to include your own copy of the <a href="https://github.com/Leaflet/Leaflet.heat">Leaflet.heat</a> plugin in your application as well.</p>
-<p>More information about Feature Layers can be found in the <a href="../../api-reference/layers/feature-layer.html"><code>L.esri.FeatureLayer</code></a> documentation.</p>
+  <h1 id="l-esri-cluster-featurelayer">L.esri.Cluster.FeatureLayer</h1>
+<p><code>L.esri.Cluster.FeatureLayer</code> provides integration for Feature Layers with the <a href="https://github.com/Leaflet/Leaflet.markercluster">Leaflet.markercluster plugin</a>. Because of the extra dependency on Leaflet.markercluster we do not include <code>L.esri.Cluster.FeatureLayer</code> in the default build of Esri Leaflet.  You will also need to include your own copy of the <a href="https://github.com/Leaflet/Leaflet.markercluster">Leaflet.markercluster plugin</a>.</p>
+<p>More information about Feature Layers can be found in the <a href="../../api-reference/layers/feature-layer.html"><code>L.esri.FeatureLayer</code> documentation</a>.</p>
 <h3 id="constructor">Constructor</h3>
 <table>
     <thead>
@@ -152,13 +138,13 @@
     </thead>
     <tbody>
         <tr>
-            <td><code class="nobr">L.esri.Heat.featureLayer(<nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code></td>
+            <td><code class="nobr">L.esri.Cluster.featureLayer(<nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code></td>
             <td>You must pass a <code>url</code> to a <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Layer/02r3000000w6000000/">Feature Layer</a> in your <code>options</code></td>
         </tr>
     </tbody>
 </table>
-### Options
 
+<h3 id="options">Options</h3>
 <table>
     <thead>
         <tr>
@@ -172,6 +158,21 @@
           <td><code>url</code></td>
           <td><code>String</code></td>
           <td><strong>Required</strong> The URL to the <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Layer/02r3000000w6000000/">Feature Layer</a>.</td>
+        </tr>
+        <tr>
+            <td><code>pointToLayer(<nobr class="param"><span>&lt;<a href="http://geojson.org/geojson-spec.html#feature-objects">GeoJSON Feature</a>&gt;</span> <code>feature</code></nobr>, <nobr class="param"><span>&lt;<a href="http://leafletjs.com/reference.html#latlng">LatLng</a>&gt;</span> <code>latlng</code></nobr>)</code></td>
+            <td><code>Function</code></td>
+            <td>Function that will be used for creating layers for GeoJSON points (if not specified, simple markers will be created).</td>
+        </tr>
+        <tr>
+            <td><code>style(<nobr class="param"><span>&lt;<a href="http://geojson.org/geojson-spec.html#feature-objects">GeoJSON Feature</a>&gt;</span> <code>feature</code></nobr>, <nobr class="param"><span>&lt;<a href="http://leafletjs.com/reference.html#ilayer">ILayer</a>&gt;</span> <code>layer</code></nobr>)</code></td>
+            <td><code>Function</code></td>
+            <td>Function that will be used to get style options for vector layers created for GeoJSON features.</td>
+        </tr>
+        <tr>
+            <td><code>onEachFeature(<nobr class="param"><span>&lt;<a href="http://geojson.org/geojson-spec.html#feature-objects">GeoJSON Feature</a>&gt;</span> <code>feature</code></nobr>, <nobr class="param"><span>&lt;<a href="http://leafletjs.com/reference.html#ilayer">ILayer</a>&gt;</span> <code>layer</code></nobr>)</code></td>
+            <td><code>Function</code></td>
+            <td> </td>
         </tr>
         <tr>
             <td><code>where</code></td>
@@ -204,9 +205,14 @@
             <td>Determines where features are filtered by time. By default features will be filtered by the server. If set to <code>&#39;client&#39;</code> all features are requested and filtered by the app before display.</td>
         </tr>
         <tr>
+            <td><code>simplifyFactor</code></td>
+            <td><code>Integer</code></td>
+            <td>How much to simplify polygons and polylines. More means better performance, and less means more accurate representation.</td>
+        </tr>
+        <tr>
             <td><code>precision</code></td>
             <td><code>Integer</code></td>
-            <td>How many digits of geometry precision to request from the server. <a href="http://en.wikipedia.org/wiki/Decimal_degrees">Wikipedia</a> has a great reference of digit precision to meters.</td>
+            <td>How many digits of precision to request from the server. <a href="http://en.wikipedia.org/wiki/Decimal_degrees">Wikipedia</a> has a great reference of digit precision to meters.</td>
         </tr>
         <tr>
             <td><code>token</code></td>
@@ -226,7 +232,7 @@
     </tbody>
 </table>
 
-<p><code>L.esri.Heat.FeatureLayer</code> will also accept any options that can be passed to <a href="https://github.com/Leaflet/Leaflet.heat#lheatlayerlatlngs-options">Leaflet.heat</a> to customize the appearance of the heatmap.</p>
+<p><code>ClusteredFeatureLayer</code> will also accept any options that can be passed to <a href="https://github.com/Leaflet/Leaflet.markercluster#all-options">Leaflet.MarkerClusterGroup</a> to customize the behavior and appearance of the clustering.</p>
 <h3 id="events">Events</h3>
 <table>
 <thead>
@@ -239,17 +245,33 @@
 <tbody>
 <tr>
 <td><code>loading</code></td>
-<td><a href="">&lt;LoadingEvent&gt;</a></td>
+<td><a href="../../api-reference/events.html#loading-event">&lt;<code>LoadingEvent</code>&gt;</a></td>
 <td>Fires when new features start loading.</td>
 </tr>
 <tr>
 <td><code>load</code></td>
-<td><a href="">&lt;Load&gt;</a></td>
+<td><a href="../../api-reference/events.html#load-event">&lt;<code>LoadEvent</code>&gt;</a></td>
 <td>Fires when all features in the current bounds of the map have loaded.</td>
+</tr>
+<tr>
+<td><code>createfeature</code></td>
+<td><a href="../../api-reference/events.html#feature-create">&lt;<code>CreateFeatureEvent</code>&gt;</a></td>
+<td>Fired when a feature from the Feature Layer is loaded for the first time.</td>
+</tr>
+<tr>
+<td><code>removefeature</code></td>
+<td><a href="../../api-reference/events.html#feature-remove">&lt;<code>RemoveFeatureEvent</code>&gt;</a></td>
+<td>Fired when a feature on the layer is removed from the map.</td>
+</tr>
+<tr>
+<td><code>addfeature</code></td>
+<td><a href="../../api-reference/events.html#feature-add">&lt;<code>AddFeatureEvent</code>&gt;</a></td>
+<td>Fired when a previously removed feature is added back to the map.</td>
 </tr>
 </tbody>
 </table>
-<p><code>L.esri.Heat.FeatureLayer</code> also fires all  <a href="../../api-reference/services/feature-layer-service.html"><code>L.esri.FeatureLayerService</code></a> events.</p>
+<p><code>L.esri.FeatureLayer</code> also fires all  <a href="../../api-reference/services/feature-layer-service.html"><code>L.esri.FeatureLayerService</code></a> events.</p>
+<p>In additon to these events <code>L.esri.Cluster.FeatureLayer</code> also fires the following <a href="http://leafletjs.com/reference.html#event-objects">Mouse Events</a> <code>click</code>, <code>dblclick</code>, <code>mouseover</code>, <code>mouseout</code>, <code>mousemove</code>, and <code>contextmenu</code>, <code>clusterclick</code>, <code>clusterdblclick</code>, <code>clustermouseover</code>, <code>clustermousemove</code>, and <code>clustercontextmenu</code> as well as the following the <a href="http://leafletjs.com/reference.html#event-objects">Popup Events</a> <code>popupopen</code> and <code>popupclose</code>.</p>
 <h3 id="methods">Methods</h3>
 <table>
     <thead>
@@ -260,12 +282,49 @@
         </tr>
     </thead>
     <tbody>
-    <tr>
+        <tr>
+            <td><code>setStyle(<nobr class="param"><span>&lt;<a href="http://leafletjs.com/reference.html#path-options">PathOptions</a>&gt;</span> <code>style</code></nobr>)</code><br><br><code>setStyle(<nobr class="param"><span>&lt;Function&gt;</span> <code>style</code></nobr>)</code></td>
+            <td><code>this</code></td>
+            <td>Sets the given path options to each layer that has a <code>setStyle</code> method. Can also be a <code>Function</code> that will recive a <code>layer</code> argument and should return <a href="http://leafletjs.com/reference.html#path-options">Path Options</a></td>
+        </tr>
+        <tr>
+            <td><code>resetStyle(<nobr class="param"><span>&lt;String or Integer&gt;</span> <code>undefined</code></nobr>)</code></td>
+            <td><code>this</code></td>
+            <td>Given the ID of a feature, reset that feature to the original style, useful for resetting style after hover events.</td>
+        </tr>
+        <tr>
+            <td><code>setStyle(<nobr class="param"><span>&lt;<a href="http://leafletjs.com/reference.html#path-options">PathOptions</a>&gt;</span> <code>style</code></nobr>)</code><br><br><code>setStyle(<nobr class="param"><span>&lt;Function&gt;</span> <code>style</code></nobr>)</code></td>
+            <td><code>this</code></td>
+            <td>Sets the given path options to each layer that has a <code>setStyle</code> method. Can also be a <code>Function</code> that will receive a <code>feature</code> argument and should return <a href="http://leafletjs.com/reference.html#path-options">Path Options</a>
+            <pre><code class="language-javascript">featureLayer.setStyle({
+  color: &#39;white&#39;
+})</code></pre>
+            <pre><code class="language-javascript">featureLayer.setStyle(1, function(feature){
+  return {
+    weight: feature.properties.pixelWidth
+  };
+})</code></pre>
+        <tr>
+            <td><code>eachFeature(<nobr class="param"><span>&lt;Function&gt;</span> <code>fn</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>context</code></nobr>)</code></td>
+            <td><code>this</code></td>
+            <td>
+                Calls the passed function against every feature. The function will be passed the layer that represents the feature.
+<pre class="js"><code>featureLayer.eachFeature(function(layer){
+  console.log(layer.feature.properties.NAME);
+});</code></pre>
+            </td>
+        </tr>
+        <tr>
+            <td><code>getFeature(<nobr class="param"><span>&lt;String or Integer&gt;</span> <code>undefined</code></nobr> id)</code></td>
+            <td><code>Layer</code></td>
+            <td>Given the id of a Feature return the layer on the map that represents it. This will usually be a Leaflet vector layer like <a href="http://leafletjs.com/reference.html#polyline">Polygon</a> or <a href="http://leafletjs.com/reference.html#polyline">Polygon</a>, or a Leaflet <a href="http://leafletjs.com/reference.html#marker">Marker</a>.</td>
+        </tr>
+        <tr>
             <td><code>getWhere()</code></td>
             <td><code>String</code></td>
             <td>Returns the current <code>where</code> setting</td>
         </tr>
-                <tr>
+        <tr>
             <td><code>setWhere(<nobr class="param"><span>&lt;String&gt;</span> <code>where</code></nobr>, <nobr class="param"><span>&lt;Function&gt;</span> <code>callback</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>context</code></nobr>)</code></td>
             <td><code>this</code></td>
             <td>Sets the new <code>where</code> option and refreshes the layer to reflect the new <code>where</code> filter. Accepts an optional callback and function context.</td>
@@ -345,84 +404,39 @@
 </table>
 
 <h3 id="example">Example</h3>
-<p>Live sample <a href="http://esri.github.io/esri-leaflet/examples/visualize-points-as-a-heatmap.html">here</a>.</p>
-<pre><code class="language-xml"><span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"./leaflet-heat.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
-<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"./esri-leaflet-heatmap.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></code></pre>
-<pre><code class="language-js"><span class="keyword">var</span> map = <span class="keyword">new</span> L.Map(<span class="string">'map'</span>).setView([<span class="number">40.722868115037</span>,-<span class="number">73.92142295837404</span>], <span class="number">14</span>);
-L.esri.basemapLayer(<span class="string">'Gray'</span>).addTo(map);
+<p>Live sample <a href="http://esri.github.io/esri-leaflet/examples/clustering-feature-layers.html">here</a>.</p>
+<pre><code class="language-xml"><span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">type</span>=<span class="value">"text/css"</span> <span class="attribute">href</span>=<span class="value">"./MarkerCluster.Default.css"</span>&gt;</span>
+<span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">type</span>=<span class="value">"text/css"</span> <span class="attribute">href</span>=<span class="value">"./MarkerCluster.css"</span>&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"./leaflet.markercluster.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+<span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">.<span class="regexp">/esri-leaflet-cluster.js</span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></code></pre>
+<pre><code class="language-js"><span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">45.53</span>,-<span class="number">122.64</span>], <span class="number">16</span>);
+L.esri.basemapLayer(<span class="string">"Streets"</span>).addTo(map);
 
-<span class="keyword">var</span> heatmap = L.esri.Heat.featureLayer({
-  url : <span class="string">"https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Graffiti_Locations3/FeatureServer/0"</span>,
-  radius: <span class="number">12</span>
+<span class="keyword">var</span> url = <span class="string">"https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0"</span>;
+
+<span class="keyword">var</span> busStops = L.esri.Cluster.featureLayer({
+  url: url,
+  <span class="comment">// Cluster Options</span>
+  polygonOptions: {
+    color: <span class="string">"#2d84c8"</span>
+  },
+  <span class="comment">// Feature Layer Options</span>
+  pointToLayer: <span class="function"><span class="keyword">function</span> <span class="params">(geojson, latlng)</span> {</span>
+    <span class="keyword">return</span> L.circleMarker(latlng, <span class="number">10</span>, {
+      color: <span class="string">"#2D84C8"</span>
+    });
+  }
 }).addTo(map);</code></pre>
 
-  <p><a href="http://github.com/Esri/esri-leaflet-doc/edit/master/src/pages/api-reference/layers/heatmap-feature-layer.md">Edit this page on GitHub</a></p>
-
-  <div class="mobile-menu">
-    <aside class="sidebar">
-  <h5>Layers</h5>
-  <nav>
-    <a href="../../api-reference/layers/basemap-layer.html">Basemap Layer</a>
-    <a href="../../api-reference/layers/feature-layer.html">Feature Layer</a>
-    <a href="../../api-reference/layers/tiled-map-layer.html">Tiled Map Layer</a>
-    <a href="../../api-reference/layers/dynamic-map-layer.html">Dynamic Map Layer</a>
-    <a href="../../api-reference/layers/image-map-layer.html">Image Map Layer</a>
-    <a class="plugin" href="../../api-reference/layers/vector-basemap.html">Vector Basemap</a>
-    <a class="plugin" href="../../api-reference/layers/heatmap-feature-layer.html">Heatmap Feature Layer</a>
-    <a class="plugin" href="../../api-reference/layers/cluster-feature-layer.html">Cluster Feature Layer</a>
-    <a class="plugin" href="../../api-reference/layers/vector-layer.html">Vector Layer</a>
-  </nav>
-
-  <h5>Controls</h5>
-  <nav>
-    <a class="plugin" href="../../api-reference/controls/geosearch.html" class="plugin">Geosearch</a>
-  </nav>
-
-  <h5>Tasks</h5>
-  <nav>
-    <a href="../../api-reference/tasks/query.html">Query</a>
-    <a href="../../api-reference/tasks/find.html">Find</a>
-    <a href="../../api-reference/tasks/identify-features.html">Identify Features</a>
-    <a href="../../api-reference/tasks/identify-image.html">Identify Image</a>
-    <a class="plugin" href="../../api-reference/tasks/geocode.html">Geocode</a>
-    <a class="plugin" href="../../api-reference/tasks/reverse-geocode.html">Reverse Geocode</a>
-    <a class="plugin" href="../../api-reference/tasks/suggest.html">Suggest</a>
-    <a class="plugin" href="../../api-reference/tasks/gp.html">Geoprocessing Task</a>
-    <a class="plugin" href="../../api-reference/tasks/query-related.html">Query Related</a>
-  </nav>
-
-  <h5>Base Classes</h5>
-  <nav>
-    <a href="../../api-reference/services/image-service.html">ImageService</a>
-    <a href="../../api-reference/services/feature-layer-service.html">FeatureLayerService</a>
-    <a href="../../api-reference/services/map-service.html">MapService</a>
-    <a class="plugin" href="../../api-reference/services/geocode-service.html">Geocode Service</a>
-    <a class="plugin" href="../../api-reference/services/gp-service.html">Geoprocessing Service</a>
-    <a href="../../api-reference/tasks/task.html">Task</a>
-    <a href="../../api-reference/services/service.html">Service</a>
-    <a href="../../api-reference/layers/raster-layer.html">Raster Layer</a>
-  </nav>
-
-  <h5>Misc.</h5>
-  <nav>
-    <a href="../../api-reference/util.html">Util</a>
-    <a href="../../api-reference/request.html">request</a>
-    <a href="../../api-reference/options.html">options</a>
-    <a href="../../api-reference/events.html">Events</a>
-  </nav>
-</aside>
-
-  </div>
+  <p><a href="http://github.com/Esri/esri-leaflet-doc/edit/master/src/pages/api-reference/layers/clustered-feature-layer.md">Edit this page on GitHub</a></p>
 </div>
 
   <div style='clear:both;'></div>
 </div>
-<div class="container center-text">
+<div class="container centered-text">
   <p class="copyright">Esri Leaflet is a project from the <a href="http://pdx.esri.com">Esri PDX R&amp;D Center</a> and the <a href="https://github.com/Esri/esri-leaflet/graphs/contributors">Esri Community</a></p>
 </div>
 
-  <div class="container center-text">
-    <p class="copyright"><a href="https://github.com/esri/esri-leaflet#terms">Terms</a></p>
   </div>
   <script src="../../js/script.js"></script>
   </body>
