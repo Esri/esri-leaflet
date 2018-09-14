@@ -12,7 +12,7 @@
   
 
   
-    <meta name="description" content="Display &lt;a href=&#x27;https://www.esri.com/arcgis-blog/products/arcgis-living-atlas/mapping/whats-new-in-esri-vector-basemaps-december-2017/&#x27;&gt;v1&lt;/a&gt; ArcGIS Online vector basemaps using an &lt;a href=&#x27;https://github.com/Esri/esri-leaflet-vector&#x27;&gt;experimental&lt;/a&gt; plugin.">
+    <meta name="description" content="Display ArcGIS Online vector basemaps using an &lt;a href=&#x27;https://github.com/Esri/esri-leaflet-vector&#x27;&gt;experimental&lt;/a&gt; plugin.">
   
 
   <meta name="description" content="Esri Leaflet">
@@ -198,10 +198,13 @@
 <div class="example-content">
 <div class="wrap">
   <h1>Vector Basemaps</h1>
-  <p>Display <a href='https://www.esri.com/arcgis-blog/products/arcgis-living-atlas/mapping/whats-new-in-esri-vector-basemaps-december-2017/'>v1</a> ArcGIS Online vector basemaps using an <a href='https://github.com/Esri/esri-leaflet-vector'>experimental</a> plugin.</p>
+  <p>Display ArcGIS Online vector basemaps using an <a href='https://github.com/Esri/esri-leaflet-vector'>experimental</a> plugin.</p>
 </div>
 <div id="map-wrapper">
   
+
+<link rel="stylesheet" href="https://unpkg.com/mapbox-gl/dist/mapbox-gl.css"/>
+<script src="https://unpkg.com/mapbox-gl/dist/mapbox-gl.js"></script>
 
 <!-- load the latest release from the cdn automatically -->
 <script src="https://unpkg.com/esri-leaflet-vector"></script>
@@ -224,14 +227,9 @@
 
 <div id="basemaps-wrapper" class="leaflet-bar">
   <select name="basemaps" id="basemaps" onChange="changeBasemap(basemaps)">
+    <option value="OpenStreetMap">OpenStreetMap</option>
     <option value="Newspaper">Newspaper</option>
-    <option value="ModernAntique">ModernAntique</option>
-    <option value="BlackAndWhite">BlackAndWhite</option>
-    <option value="Spring">Spring</option>
-    <option value="MidCentury">Mid-Century</option>
     <option value="Topographic">Topographic</option>
-    <option value="Gray">Gray</option>
-    <option value="DarkGray">Dark Gray</option>
     <option value="Navigation">Navigation</option>
     <option value="Streets">Streets</option>
     <option value="StreetsNight">Streets Night</option>
@@ -241,9 +239,8 @@
 
 <script>
   var map = L.map('map').setView([40, -4], 6);
-  var layer = L.esri.Vector.basemap('Newspaper').addTo(map);
+  var layer = L.esri.Vector.basemap('OpenStreetMap').addTo(map);
 
-  // v1 basemaps stopped receiving updates in Dec 2017
   function setBasemap(basemap) {
     if (layer) {
       map.removeLayer(layer);
@@ -288,6 +285,9 @@
 <span class="tag">&lt;/<span class="title">head</span>&gt;</span>
 <span class="tag">&lt;<span class="title">body</span>&gt;</span>
 
+<span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"https://unpkg.com/mapbox-gl/dist/mapbox-gl.css"</span>/&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/mapbox-gl/dist/mapbox-gl.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+
 <span class="comment">&lt;!-- load the latest release from the cdn automatically --&gt;</span>
 <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/esri-leaflet-vector"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
@@ -309,14 +309,9 @@
 
 <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"basemaps-wrapper"</span> <span class="attribute">class</span>=<span class="value">"leaflet-bar"</span>&gt;</span>
   <span class="tag">&lt;<span class="title">select</span> <span class="attribute">name</span>=<span class="value">"basemaps"</span> <span class="attribute">id</span>=<span class="value">"basemaps"</span> <span class="attribute">onChange</span>=<span class="value">"changeBasemap(basemaps)"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"OpenStreetMap"</span>&gt;</span>OpenStreetMap<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
     <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"Newspaper"</span>&gt;</span>Newspaper<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"ModernAntique"</span>&gt;</span>ModernAntique<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"BlackAndWhite"</span>&gt;</span>BlackAndWhite<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"Spring"</span>&gt;</span>Spring<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"MidCentury"</span>&gt;</span>Mid-Century<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
     <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"Topographic"</span>&gt;</span>Topographic<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"Gray"</span>&gt;</span>Gray<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"DarkGray"</span>&gt;</span>Dark Gray<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
     <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"Navigation"</span>&gt;</span>Navigation<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
     <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"Streets"</span>&gt;</span>Streets<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
     <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"StreetsNight"</span>&gt;</span>Streets Night<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
@@ -326,9 +321,8 @@
 
 <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
   <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">40</span>, -<span class="number">4</span>], <span class="number">6</span>);
-  <span class="keyword">var</span> layer = L.esri.Vector.basemap(<span class="string">'Newspaper'</span>).addTo(map);
+  <span class="keyword">var</span> layer = L.esri.Vector.basemap(<span class="string">'OpenStreetMap'</span>).addTo(map);
 
-  <span class="comment">// v1 basemaps stopped receiving updates in Dec 2017</span>
   <span class="function"><span class="keyword">function</span> <span class="title">setBasemap</span><span class="params">(basemap)</span> {</span>
     <span class="keyword">if</span> (layer) {
       map.removeLayer(layer);
