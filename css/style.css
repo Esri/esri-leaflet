@@ -92,13 +92,13 @@ html em {
   font-style: italic;
   text-rendering: optimizeLegibility; }
 
-html strong, html em strong em {
+html strong, html em strong em, html em strong strong {
   font-family: "Lato", sans-serif;
   font-weight: 700;
   font-style: normal;
   text-rendering: optimizeLegibility; }
 
-html em strong, html strong em {
+html em strong {
   font-family: "Lato", sans-serif;
   font-weight: 700;
   font-style: italic;
@@ -116,13 +116,13 @@ h1 em, h2 em, h3 em, h4 em, h5 em {
   font-style: italic;
   text-rendering: optimizeLegibility; }
 
-h1 strong, h2 strong, h3 strong, h4 strong, h5 strong, h1 em strong em, h2 em strong em, h3 em strong em, h4 em strong em, h5 em strong em {
+h1 strong, h2 strong, h3 strong, h4 strong, h5 strong, h1 em strong em, h2 em strong em, h3 em strong em, h4 em strong em, h5 em strong em, h1 em strong strong, h2 em strong strong, h3 em strong strong, h4 em strong strong, h5 em strong strong {
   font-family: "Vollkorn", serif;
   font-weight: 700;
   font-style: normal;
   text-rendering: optimizeLegibility; }
 
-h1 em strong, h2 em strong, h3 em strong, h4 em strong, h5 em strong, h1 strong em, h2 strong em, h3 strong em, h4 strong em, h5 strong em {
+h1 em strong, h2 em strong, h3 em strong, h4 em strong, h5 em strong {
   font-family: "Vollkorn", serif;
   font-weight: 700;
   font-style: italic;
@@ -742,3 +742,5 @@ td pre {
   z-index: 3; }
   .plugins .card h3 {
     margin: 0; }
+
+/*# sourceMappingURL=style.css.map */

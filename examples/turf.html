@@ -203,7 +203,7 @@
 <div id="map-wrapper">
   
 
-<script src="https://unpkg.com/@turf/turf@3.5.1/turf.min.js"></script>
+<script src="https://unpkg.com/@turf/turf@5.1.6/turf.min.js"></script>
 
 <style>
   #info-pane {
@@ -220,7 +220,7 @@
 <div id="map"></div>
 <div id="info-pane" class="leaflet-bar">
   <label>
-  Census block points that intersect both bounding boxes and are shown in red.
+  Census block points that intersect both bounding boxes are red.
   </label>
 </div>
 
@@ -281,7 +281,7 @@
 
     // query for census block points that intersect the smaller box
     var query = L.esri.query({
-      url: 'http://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer/0'
+      url: 'https://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer/0'
     })
     query.intersects(boundingBoxes.features[0])
     query.run(function (err, censusCollection, raw) {
@@ -298,7 +298,7 @@
             }
           }).addTo(map);
         } else {
-          // if its outside (or not contained) by the bigger box, make it less opaque.
+          // if it is not contained by the bigger box, make it gray and partially transparent.
           L.geoJSON(features[i], {
             pointToLayer: function(geoJsonPoint, latlng) {
               return L.circleMarker(latlng, {
@@ -342,7 +342,7 @@
 <span class="tag">&lt;/<span class="title">head</span>&gt;</span>
 <span class="tag">&lt;<span class="title">body</span>&gt;</span>
 
-<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/@turf/turf@3.5.1/turf.min.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/@turf/turf@5.1.6/turf.min.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css">
   <span class="id">#info-pane</span> <span class="rules">{
@@ -359,7 +359,7 @@
 <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"info-pane"</span> <span class="attribute">class</span>=<span class="value">"leaflet-bar"</span>&gt;</span>
   <span class="tag">&lt;<span class="title">label</span>&gt;</span>
-  Census block points that intersect both bounding boxes and are shown in red.
+  Census block points that intersect both bounding boxes are red.
   <span class="tag">&lt;/<span class="title">label</span>&gt;</span>
 <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 
@@ -420,7 +420,7 @@
 
     <span class="comment">// query for census block points that intersect the smaller box</span>
     <span class="keyword">var</span> query = L.esri.query({
-      url: <span class="string">'http://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer/0'</span>
+      url: <span class="string">'https://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer/0'</span>
     })
     query.intersects(boundingBoxes.features[<span class="number">0</span>])
     query.run(<span class="function"><span class="keyword">function</span> <span class="params">(err, censusCollection, raw)</span> {</span>
@@ -437,7 +437,7 @@
             }
           }).addTo(map);
         } <span class="keyword">else</span> {
-          <span class="comment">// if its outside (or not contained) by the bigger box, make it less opaque.</span>
+          <span class="comment">// if it is not contained by the bigger box, make it gray and partially transparent.</span>
           L.geoJSON(features[i], {
             pointToLayer: <span class="function"><span class="keyword">function</span><span class="params">(geoJsonPoint, latlng)</span> {</span>
               <span class="keyword">return</span> L.circleMarker(latlng, {
