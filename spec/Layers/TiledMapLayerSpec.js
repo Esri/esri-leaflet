@@ -167,6 +167,38 @@ describe('L.esri.TiledMapLayer', function () {
       spatialReference: {
         wkid: 102100,
         latestWkid: 3857
+      },
+      tileInfo: {
+        rows: 256,
+        cols: 256,
+        dpi: 96,
+        format: 'JPEG',
+        compressionQuality: 90,
+        origin: {
+          x: -20037508.342787,
+          y: 20037508.342787
+        },
+        spatialReference: {
+          wkid: 102100,
+          latestWkid: 3857
+        },
+        lods: [
+          {
+            level: 0,
+            resolution: 156543.03392800014,
+            scale: 5.91657527591555E8
+          },
+          {
+            level: 1,
+            resolution: 78271.51696399994,
+            scale: 2.95828763795777E8
+          },
+          {
+            level: 2,
+            resolution: 39135.75848200009,
+            scale: 1.47914381897889E8
+          }
+        ]
       }
     }));
 

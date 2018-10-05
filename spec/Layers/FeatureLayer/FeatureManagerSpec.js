@@ -38,7 +38,7 @@ describe('L.esri.FeatureManager', function () {
     };
 
     server = sinon.fakeServer.create();
-    sandbox = sinon.sandbox.create();
+    sandbox = sinon.createSandbox();
     oldRaf = L.Util.requestAnimFrame;
 
     MockLayer = L.esri.FeatureManager.extend({
