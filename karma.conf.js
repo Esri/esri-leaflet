@@ -80,12 +80,6 @@ module.exports = function (config) {
 
     // Configure the coverage reporters
     coverageReporter: {
-      instrumenters: {
-        isparta: require('isparta')
-      },
-      instrumenter: {
-        'src/**/*.js': 'isparta'
-      },
       reporters: [
         {
           type: 'html',
