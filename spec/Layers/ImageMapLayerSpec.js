@@ -65,7 +65,7 @@ describe('L.esri.ImageMapLayer', function () {
   afterEach(function () {
     clock.restore();
     server.restore();
-    map.remove();
+    map = null;
   });
 
   it('should have a L.esri.imageMapLayer alias', function () {

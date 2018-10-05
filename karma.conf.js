@@ -17,17 +17,7 @@ module.exports = function (config) {
       'node_modules/leaflet/dist/leaflet.css',
       'node_modules/leaflet/dist/leaflet-src.js',
       'dist/esri-leaflet-debug.js',
-      // these two are the tempermental ones
-      'spec/Layers/ImageMapLayerSpec.js',
-      'spec/Layers/DynamicMapLayerSpec.js',
-      'spec/Layers/BasemapLayerSpec.js',
-      'spec/Layers/TiledMapLayerSpec.js',
-      'spec/Layers/RasterLayerSpec.js',
-      'spec/Layers/FeatureLayer/*Spec.js',
-      // 'spec/Layers/*Spec.js',
-      'spec/Tasks/*Spec.js',
-      'spec/Services/*Spec.js',
-      'spec/*Spec.js'
+      'spec/**/*Spec.js'
     ],
 
     // list of files to exclude
