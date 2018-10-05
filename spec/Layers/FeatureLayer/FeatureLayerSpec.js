@@ -68,6 +68,8 @@ describe('L.esri.FeatureLayer', function () {
   })];
 
   beforeEach(function () {
+    L.Icon.Default.imagePath = 'https://unpkg.com/leaflet/dist/images/';
+
     layer = L.esri.featureLayer({
       url: 'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0',
       timeField: 'time',

@@ -70,6 +70,7 @@ describe('L.esri.DynamicMapLayer', function () {
     clock.restore();
     server.restore();
     map = null;
+    sinon.restore();
   });
 
   it('should have a L.esri.dynamicMapLayer alias', function () {

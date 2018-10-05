@@ -66,6 +66,7 @@ describe('L.esri.ImageMapLayer', function () {
     clock.restore();
     server.restore();
     map = null;
+    sinon.restore();
   });
 
   it('should have a L.esri.imageMapLayer alias', function () {
