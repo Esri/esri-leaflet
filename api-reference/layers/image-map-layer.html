@@ -477,7 +477,9 @@ L.esri.basemapLayer(<span class="string">'Gray'</span>).addTo(map);
 
 L.esri.imageMapLayer({
   url: url,
-  opacity : <span class="number">0.25</span>
+  opacity : <span class="number">0.25</span>,
+  <span class="comment">// only necessary for old versions of ArcGIS Server</span>
+  useCors: <span class="literal">false</span>
 }).addTo(map);</code></pre>
 <h4 id="infrared-image-layer-using-bandids-property">Infrared image layer using bandIds property</h4>
 <pre><code class="language-js"><span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">43.50</span>, -<span class="number">120.23</span>], <span class="number">7</span>);
