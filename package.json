@@ -42,7 +42,7 @@
     "sinon-chai": "3.2.0",
     "snazzy": "^8.0.0",
     "uglify-js": "^2.8.29",
-    "watch": "^0.17.1"
+    "watch": "^1.0.2"
   },
   "files": [
     "src/**/*.js",
