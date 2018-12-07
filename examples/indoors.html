@@ -184,7 +184,7 @@
     <a href="../examples/getting-service-metadata.html">Getting Service Metadata</a>
     <a href="../examples/parse-feature-collection.html">Parsing Feature Collections</a>
     <a href="../examples/indoors.html">Indoor Mapping</a>
-
+    <a href="../examples/dynamic-chart.html">Dynamic Chart</a>
   </nav>
 </aside>
 
@@ -198,16 +198,16 @@
   
 
 <!-- Include Leaflet Indoor package (https://github.com/cbaines/leaflet-indoor) -->
-<script src="https://rawgit.com/cbaines/leaflet-indoor/master/leaflet-indoor.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/cbaines/leaflet-indoor/leaflet-indoor.js"></script>
 
 <div id="map"></div>
 
 <script>
-  var map = L.map('map').setView([28.470, -82.444], 18);
+  var map = L.map('map').setView([38.6391, -90.294], 18);
 
-  L.esri.basemapLayer('Streets').addTo(map);
+  L.esri.basemapLayer('Imagery').addTo(map);
   var featureLayer = L.esri.featureLayer({
-    url: 'https://www25.swfwmd.state.fl.us/arcgis/rest/services/Internal/FacilitiesSearch/MapServer/0'
+    url: 'https://services1.arcgis.com/g2TonOxuRkIqSOFx/arcgis/rest/services/StLouisArtMuseumFloorPlan/FeatureServer/0'
   });
   
   // Run a query against our Feature Layer (that we have not added to the map) 
@@ -219,12 +219,12 @@
       }
     });
     // set the initial level to show
-    indoorLayer.setLevel("1");
+    indoorLayer.setLevel(2);
     indoorLayer.addTo(map);
 
     // Add Level Control (code from https://github.com/cbaines/leaflet-indoor)
     var levelControl = new L.Control.Level({
-        level: "1",
+        level: 2,
         levels: indoorLayer.getLevels()
     });
 
@@ -260,16 +260,16 @@
 <span class="tag">&lt;<span class="title">body</span>&gt;</span>
 
 <span class="comment">&lt;!-- Include Leaflet Indoor package (https://github.com/cbaines/leaflet-indoor) --&gt;</span>
-<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://rawgit.com/cbaines/leaflet-indoor/master/leaflet-indoor.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://cdn.jsdelivr.net/gh/cbaines/leaflet-indoor/leaflet-indoor.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
-  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">28.470</span>, -<span class="number">82.444</span>], <span class="number">18</span>);
+  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">38.6391</span>, -<span class="number">90.294</span>], <span class="number">18</span>);
 
-  L.esri.basemapLayer(<span class="string">'Streets'</span>).addTo(map);
+  L.esri.basemapLayer(<span class="string">'Imagery'</span>).addTo(map);
   <span class="keyword">var</span> featureLayer = L.esri.featureLayer({
-    url: <span class="string">'https://www25.swfwmd.state.fl.us/arcgis/rest/services/Internal/FacilitiesSearch/MapServer/0'</span>
+    url: <span class="string">'https://services1.arcgis.com/g2TonOxuRkIqSOFx/arcgis/rest/services/StLouisArtMuseumFloorPlan/FeatureServer/0'</span>
   });
 
   <span class="comment">// Run a query against our Feature Layer (that we have not added to the map) </span>
@@ -281,12 +281,12 @@
       }
     });
     <span class="comment">// set the initial level to show</span>
-    indoorLayer.setLevel(<span class="string">"1"</span>);
+    indoorLayer.setLevel(<span class="number">2</span>);
     indoorLayer.addTo(map);
 
     <span class="comment">// Add Level Control (code from https://github.com/cbaines/leaflet-indoor)</span>
     <span class="keyword">var</span> levelControl = <span class="keyword">new</span> L.Control.Level({
-        level: <span class="string">"1"</span>,
+        level: <span class="number">2</span>,
         levels: indoorLayer.getLevels()
     });
 
@@ -411,7 +411,7 @@
     <a href="../examples/getting-service-metadata.html">Getting Service Metadata</a>
     <a href="../examples/parse-feature-collection.html">Parsing Feature Collections</a>
     <a href="../examples/indoors.html">Indoor Mapping</a>
-
+    <a href="../examples/dynamic-chart.html">Dynamic Chart</a>
   </nav>
 </aside>
 
