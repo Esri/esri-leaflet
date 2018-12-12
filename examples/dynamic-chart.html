@@ -12,7 +12,7 @@
   
 
   
-    <meta name="description" content="Plot feature attributes on a dynamic chart that updates as users pan and zoom. This demo relies on &lt;a href=&quot;https://www.chartjs.org/&quot;&gt;Chart.js&lt;/a&gt; to render an interactive scatterplot.">
+    <meta name="description" content="Plot feature attributes on a dynamic chart that updates as users pan and zoom, and respond to chart interactions by modifying feature layer contents. This demo relies on &lt;a href=&quot;https://www.chartjs.org/&quot;&gt;Chart.js&lt;/a&gt; to render an interactive scatterplot.">
   
 
   <meta name="description" content="Esri Leaflet">
@@ -198,7 +198,7 @@
 <div class="example-content">
 <div class="wrap">
   <h1>Dynamic feature charting with Chart.js</h1>
-  <p>Plot feature attributes on a dynamic chart that updates as users pan and zoom. This demo relies on <a href="https://www.chartjs.org/">Chart.js</a> to render an interactive scatterplot.</p>
+  <p>Plot feature attributes on a dynamic chart that updates as users pan and zoom, and respond to chart interactions by modifying feature layer contents. This demo relies on <a href="https://www.chartjs.org/">Chart.js</a> to render an interactive scatterplot.</p>
 </div>
 <div id="map-wrapper">
   
@@ -234,10 +234,11 @@
 
   // create and add a feature layer
   // features from this layer will appear in the Chart.js scatterplot
-  var portlandTreesFeatureLayer = L.esri.featureLayer({
+  var treesFeatureLayer = L.esri.featureLayer({
     url: 'https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Heritage_Trees_Portland/FeatureServer/0',
   });
-  portlandTreesFeatureLayer.addTo(map);
+
+  treesFeatureLayer.addTo(map);
 
   // STEP 2: DEFINE A CHART
   // this is a static scatterplot chart definition for now, but it will
@@ -280,7 +281,9 @@
     // turn off animations during chart data updates
     animation: {
       duration: 0,
-    }
+    },
+    // see STEP 4 below
+    onHover: handleChartHover
   };
 
   var chart = new Chart('chartCanvas', {
@@ -289,29 +292,31 @@
     options: chartOptions
   });
 
-  // STEP 3: MAKE THE CHART DYNAMIC
+  // STEP 3: MAKE THE CHART DYNAMIC BY ESTABLISHING MAP-TO-CHART COMMUNICATION
   // show in the scatterplot only the features in the map's current extent
   // by handling several events from both the map and feature layer
   map.on('zoom move', updateChart);
-  portlandTreesFeatureLayer.on('load', updateChart);
+  treesFeatureLayer.on('load', updateChart);
 
   function updateChart() {
     // reformat the features' attributes of interest into
     // the data array format required by the Chart.js scatterplot
     var scatterPlotDataArray = [];
 
-    portlandTreesFeatureLayer.eachActiveFeature(function(e) {
+    treesFeatureLayer.eachActiveFeature(function(e) {
       // loop over each active feature in the map extent and
       // push an object into the scatterPlotDataArray in this format:
 
       // {
       //   x: diameter attribute value,
-      //   y: height attribute value
+      //   y: height attribute value,
+      //   featureId: unique ID for chart-to-map communication in STEP 4
       // }
 
       scatterPlotDataArray.push({
         x: e.feature.properties.DIAMETER,
-        y: e.feature.properties.HEIGHT
+        y: e.feature.properties.HEIGHT,
+        featureId: e.feature.id
       });
     });
 
@@ -320,6 +325,41 @@
 
     // finally, instruct the chart to re-draw itself with the new data
     chart.update();
+  }
+
+  // STEP 4 (OPTIONAL): ESTABLISH CHART-TO-MAP COMMUNICATION
+  // up until now the map and feature layer inform the chart what to render,
+  // but interactions with the chart can also influence the map contents
+  function handleChartHover(e) {
+    var chartHoverData = chart.getElementsAtEvent(e);
+
+    if (!chartHoverData.length) {
+      // if there were no data elements found when hovering over the chart,
+      // reset any previous styling overrides and return
+      treesFeatureLayer.eachFeature(function(e) {
+        e.setOpacity(1);
+        e.setZIndexOffset(0);
+      });
+
+      return;
+    }
+
+    // otherwise, bring attention to the features on the map
+    // that are currently being hovered over in the chart
+    var hoverFeatureIds = chartHoverData.map(function(datum) {
+      return chart.data.datasets[0].data[datum._index].featureId;
+    });
+
+    treesFeatureLayer.eachFeature(function(e, idx) {
+      if (
+        hoverFeatureIds.indexOf(e.feature.id) > -1
+      ) {
+        e.setOpacity(1);
+        e.setZIndexOffset(10000);
+      } else {
+        e.setOpacity(0.1);
+      }
+    });
   }
 </script>
 
@@ -384,10 +424,11 @@
 
   <span class="comment">// create and add a feature layer</span>
   <span class="comment">// features from this layer will appear in the Chart.js scatterplot</span>
-  <span class="keyword">var</span> portlandTreesFeatureLayer = L.esri.featureLayer({
+  <span class="keyword">var</span> treesFeatureLayer = L.esri.featureLayer({
     url: <span class="string">'https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Heritage_Trees_Portland/FeatureServer/0'</span>,
   });
-  portlandTreesFeatureLayer.addTo(map);
+
+  treesFeatureLayer.addTo(map);
 
   <span class="comment">// STEP 2: DEFINE A CHART</span>
   <span class="comment">// this is a static scatterplot chart definition for now, but it will</span>
@@ -430,7 +471,9 @@
     <span class="comment">// turn off animations during chart data updates</span>
     animation: {
       duration: <span class="number">0</span>,
-    }
+    },
+    <span class="comment">// see STEP 4 below</span>
+    onHover: handleChartHover
   };
 
   <span class="keyword">var</span> chart = <span class="keyword">new</span> Chart(<span class="string">'chartCanvas'</span>, {
@@ -439,29 +482,31 @@
     options: chartOptions
   });
 
-  <span class="comment">// STEP 3: MAKE THE CHART DYNAMIC</span>
+  <span class="comment">// STEP 3: MAKE THE CHART DYNAMIC BY ESTABLISHING MAP-TO-CHART COMMUNICATION</span>
   <span class="comment">// show in the scatterplot only the features in the map's current extent</span>
   <span class="comment">// by handling several events from both the map and feature layer</span>
   map.on(<span class="string">'zoom move'</span>, updateChart);
-  portlandTreesFeatureLayer.on(<span class="string">'load'</span>, updateChart);
+  treesFeatureLayer.on(<span class="string">'load'</span>, updateChart);
 
   <span class="function"><span class="keyword">function</span> <span class="title">updateChart</span><span class="params">()</span> {</span>
     <span class="comment">// reformat the features' attributes of interest into</span>
     <span class="comment">// the data array format required by the Chart.js scatterplot</span>
     <span class="keyword">var</span> scatterPlotDataArray = [];
 
-    portlandTreesFeatureLayer.eachActiveFeature(<span class="function"><span class="keyword">function</span><span class="params">(e)</span> {</span>
+    treesFeatureLayer.eachActiveFeature(<span class="function"><span class="keyword">function</span><span class="params">(e)</span> {</span>
       <span class="comment">// loop over each active feature in the map extent and</span>
       <span class="comment">// push an object into the scatterPlotDataArray in this format:</span>
 
       <span class="comment">// {</span>
       <span class="comment">//   x: diameter attribute value,</span>
-      <span class="comment">//   y: height attribute value</span>
+      <span class="comment">//   y: height attribute value,</span>
+      <span class="comment">//   featureId: unique ID for chart-to-map communication in STEP 4</span>
       <span class="comment">// }</span>
 
       scatterPlotDataArray.push({
         x: e.feature.properties.DIAMETER,
-        y: e.feature.properties.HEIGHT
+        y: e.feature.properties.HEIGHT,
+        featureId: e.feature.id
       });
     });
 
@@ -470,6 +515,41 @@
 
     <span class="comment">// finally, instruct the chart to re-draw itself with the new data</span>
     chart.update();
+  }
+
+  <span class="comment">// STEP 4 (OPTIONAL): ESTABLISH CHART-TO-MAP COMMUNICATION</span>
+  <span class="comment">// up until now the map and feature layer inform the chart what to render,</span>
+  <span class="comment">// but interactions with the chart can also influence the map contents</span>
+  <span class="function"><span class="keyword">function</span> <span class="title">handleChartHover</span><span class="params">(e)</span> {</span>
+    <span class="keyword">var</span> chartHoverData = chart.getElementsAtEvent(e);
+
+    <span class="keyword">if</span> (!chartHoverData.length) {
+      <span class="comment">// if there were no data elements found when hovering over the chart,</span>
+      <span class="comment">// reset any previous styling overrides and return</span>
+      treesFeatureLayer.eachFeature(<span class="function"><span class="keyword">function</span><span class="params">(e)</span> {</span>
+        e.setOpacity(<span class="number">1</span>);
+        e.setZIndexOffset(<span class="number">0</span>);
+      });
+
+      <span class="keyword">return</span>;
+    }
+
+    <span class="comment">// otherwise, bring attention to the features on the map</span>
+    <span class="comment">// that are currently being hovered over in the chart</span>
+    <span class="keyword">var</span> hoverFeatureIds = chartHoverData.map(<span class="function"><span class="keyword">function</span><span class="params">(datum)</span> {</span>
+      <span class="keyword">return</span> chart.data.datasets[<span class="number">0</span>].data[datum._index].featureId;
+    });
+
+    treesFeatureLayer.eachFeature(<span class="function"><span class="keyword">function</span><span class="params">(e, idx)</span> {</span>
+      <span class="keyword">if</span> (
+        hoverFeatureIds.indexOf(e.feature.id) &gt; -<span class="number">1</span>
+      ) {
+        e.setOpacity(<span class="number">1</span>);
+        e.setZIndexOffset(<span class="number">10000</span>);
+      } <span class="keyword">else</span> {
+        e.setOpacity(<span class="number">0.1</span>);
+      }
+    });
   }
 </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
