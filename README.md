@@ -132,7 +132,7 @@ http://esri.github.io/esri-leaflet/plugins/
 
 If something isn't working the way you expected, please take a look at [previously logged issues](https://github.com/Esri/esri-leaflet/issues?labels=FAQ&milestone=&page=1&state=closed) that resolve common problems first.  Have you found a new bug?  Want to request a new feature?  We'd love to hear from you.  Please let us know by submitting an [issue](https://github.com/Esri/esri-leaflet/issues).
 
-If you're looking for help you can also post issues on [GIS Stackexchange](http://gis.stackexchange.com/questions/ask?tags=esri-leaflet,leaflet) and/or the [Esri Leaflet place](https://geonet.esri.com/discussion/create.jspa?sr=pmenu&containerID=1841&containerType=700&tags=esri-leaflet,leaflet) on GeoNet.
+If you're looking for help you can also find answers on [GIS StackExchange](https://gis.stackexchange.com/questions/tagged/esri-leaflet) and [GeoNet](https://community.esri.com/groups/esri-leaflet/activity).
 
 ## Going Deeper
 
