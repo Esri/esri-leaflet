@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]> <html class="ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html class="ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html class="ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html class="ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="not-ie"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+
+  
+    <title>Migrating from Esri Leaflet Release Candidates to 1.0.0 | Esri Leaflet</title>
+  
+
+  
+    <meta name="description" content="Learn how to upgrade from Esri Leaflet Release Candidates to the 1.0.0 release.">
+  
+
+  <meta name="description" content="Esri Leaflet">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!--[if lt IE 9]>
+    <script src="//cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv-printshiv.js"></script>
+  <![endif]-->
+
+  <!-- google fonts -->
+  <link href='//fonts.googleapis.com/css?family=Vollkorn:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="//brick.a.ssl.fastly.net/Source+Code+Pro:300">
+  <link href='//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+
+  <!-- stylesheet -->
+  <link rel="stylesheet" href="../css/style.css">
+
+  
+
+  
+    
+      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.3/dist/leaflet.css"
+      integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
+      crossorigin=""/>
+      <script src="https://unpkg.com/leaflet@1.3.3/dist/leaflet.js"
+      integrity="sha512-tAGcCfR4Sc5ZP5ZoVz0quoZDYX5aCtEm/eu1KhSLj2c9eFrylXZknQYmxUssFaVJKvvc0dJQixhGjG2yXWiV9Q=="
+      crossorigin=""></script>
+    
+
+    
+      <script src="https://unpkg.com/esri-leaflet@2.2.2/dist/esri-leaflet.js"
+      integrity="sha512-cll/dcqNKG7yfQBrTbRNzGQ70Bh4m+J5jnvU97tPyMnWsD1Ry+CXi0JE+T7Rk54pdJEYlRgXtpwxa9sUqzUAyg=="
+      crossorigin=""></script>
+    
+
+  
+
+  
+
+  <!-- Google Analytics -->
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-44963317-3', 'auto');
+    ga('send', 'pageview');
+  </script>
+  <!-- End Google Analytics -->
+</head>
+<body>
+  <div class="page-content ">
+    <div class="container">
+      <span id="mobileMenuButton" class="mobileMenuButton">&#9776;</span>
+      <a class="site-nav" href="../" class="left logo">Esri Leaflet</a>
+      <nav id="site-nav-wrapper" class="site-nav-wrapper">
+        <a class="site-nav" href="../tutorials/">Tutorials</a>
+        <a class="site-nav" href="../plugins/">Plugins</a>
+        <a class="site-nav" href="../examples/">Examples</a>
+        <a class="site-nav" href="../api-reference/">API Reference</a>
+        <a class="site-nav" href="../download/">Download</a>
+        <a class="site-nav" href="https://github.com/Esri/esri-leaflet">View on GitHub</a>
+      </nav>
+    </div>
+    <div id="background-map" class="background-map"></div>
+
+  
+
+<div class="container white">
+  
+
+<aside class="sidebar">
+  <h5>General</h5>
+  <nav>
+    <a href="create-your-first-app.html">Create your First App</a>
+    <a href="introduction-to-layer-types.html">Introduction to Layer Types</a>
+    <a href="working-with-feature-layers.html">Working with Feature Layers</a>
+    <a href="working-with-authenticated-services-server.html">Working with Authenticated Services</a>
+    <a href="discovering-content.html">Discovering Content</a>
+  </nav>
+
+  <h5>Migration Guides</h5>
+  <nav>
+    <a href="migrating-1-to-2.html">1.0.0 to 2.0.0</a>
+    <a href="migrating-release-candidates-to-1.html">Release Candidates to 1.0.0</a>
+  </nav>
+
+  <h5>Module Systems</h5>
+  <nav>
+    <a href="using-with-browserify.html">Browserify</a>
+    <a href="using-with-webpack.html">WebPack</a>
+    <a href="using-with-jspm.html">JSPM</a>
+    <a href="using-with-requirejs.html">RequireJS</a>
+  </nav>
+</aside>
+
+
+<div class="main-content">
+  <h1 id="migrating-from-esri-leaflet-release-candidates-to-1-0-0">Migrating from Esri Leaflet Release Candidates to 1.0.0</h1>
+<p>Learn how to upgrade from Esri Leaflet Release Candidates to the 1.0.0 release.</p>
+<p>Coming Soon.</p>
+
+  <p><a href="http://github.com/esri/esri-leaflet-doc/edit/master/src/pages/tutorials/migrating-release-candidates-to-1.md">Edit this page on GitHub</a></p>
+
+  <div class="mobile-menu">
+    <aside class="sidebar">
+  <h5>General</h5>
+  <nav>
+    <a href="create-your-first-app.html">Create your First App</a>
+    <a href="introduction-to-layer-types.html">Introduction to Layer Types</a>
+    <a href="working-with-feature-layers.html">Working with Feature Layers</a>
+    <a href="working-with-authenticated-services-server.html">Working with Authenticated Services</a>
+    <a href="discovering-content.html">Discovering Content</a>
+  </nav>
+
+  <h5>Migration Guides</h5>
+  <nav>
+    <a href="migrating-1-to-2.html">1.0.0 to 2.0.0</a>
+    <a href="migrating-release-candidates-to-1.html">Release Candidates to 1.0.0</a>
+  </nav>
+
+  <h5>Module Systems</h5>
+  <nav>
+    <a href="using-with-browserify.html">Browserify</a>
+    <a href="using-with-webpack.html">WebPack</a>
+    <a href="using-with-jspm.html">JSPM</a>
+    <a href="using-with-requirejs.html">RequireJS</a>
+  </nav>
+</aside>
+
+  </div>
+</div>
+
+  <div style='clear:both;'></div>
+</div>
+<div class="container center-text">
+  <p class="copyright">Esri Leaflet is a project from the <a href="http://pdx.esri.com">Esri PDX R&amp;D Center</a> and the <a href="https://github.com/Esri/esri-leaflet/graphs/contributors">Esri Community</a></p>
+</div>
+
+  <div class="container center-text">
+    <p class="copyright"><a href="https://github.com/esri/esri-leaflet#terms">Terms</a></p>
+  </div>
+  <script src="../js/script.js"></script>
+  </body>
+</html>
