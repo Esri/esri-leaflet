@@ -12,7 +12,7 @@
 
 [Leaflet](http://leafletjs.com/) plugins for working with a handful of the most popular [ArcGIS Service](http://developers.arcgis.com) types. This includes Esri [basemaps](http://esri.github.io/esri-leaflet/examples/switching-basemaps.html) and [feature services](http://esri.github.io/esri-leaflet/examples/simple-feature-layer.html), as well as [tiled](http://esri.github.io/esri-leaflet/examples/tile-layer-2.html) map, [dynamic](http://esri.github.io/esri-leaflet/examples/simple-dynamic-map-layer.html) map and [image](http://esri.github.io/esri-leaflet/examples/simple-image-map-layer.html)  services.
 
-> This project is maintained with :heart: by folks spanning multiple teams within Esri, but we provide no guarantee of individual features, nor a traditional product lifecycle to support planning.
+> This project is maintained with :heart: by folks on multiple teams at Esri, but we provide no guarantee of individual features, nor a traditional product lifecycle to support planning.
 
 The goal of this project is **not** to replace the [ArcGIS API for JavaScript](https://developers.arcgis.com/en/javascript/) but rather to provide small components for *only some* aspects of the ArcGIS platform for developers who prefer to build mapping applications with [Leaflet](http://leafletjs.com/).
 
@@ -169,14 +169,13 @@ Esri welcomes contributions from anyone and everyone. Please see our [guidelines
 
 ### Terms
 
-If your app is for public, non-revenue generating, non-government, non-commercial use, the free [Essentials Developer Plan](https://developers.arcgis.com/pricing/) is sufficient. If you're going to generate revenue or are using the app for government or business purposes, you'll have to purchase one of the products below:
+For most public apps, a free [Developer Plan](https://developers.arcgis.com/pricing/) is sufficient. If you're going to generate revenue, you'll need to purchase either a paid [Developer Plan](https://developers.arcgis.com/pricing/) or one of the products below:
 
 * ArcGIS [Pro](https://www.esri.com/en-us/arcgis/products/arcgis-pro/overview)
 * ArcGIS [Online for Organizations](http://www.esri.com/software/arcgis/arcgisonline)
 * ArcGIS [Enterprise](https://www.esri.com/en-us/arcgis/products/arcgis-enterprise/overview)
-* ArcGIS [Online Deployment Plan](https://developers.arcgis.com/pricing/credits/) 
 
-If you display an ArcGIS Online service in **any** Leaflet application, we require that you display Esri attribution and recognize data providers. Using this plugin, it couldn't be easier to follow the terms.  Just select your basemap and the appropriate credits will be displayed in Leaflet's own [Attribution control](http://leafletjs.com/reference.html#control-attribution) as users pan/zoom automatically.
+If you display an ArcGIS Online service in **any** Leaflet application, we require that you include Esri attribution and recognize data providers. Using this plugin, it couldn't be easier to follow the terms.  Just select your basemap and the appropriate credits will be displayed dynamically in Leaflet's own [Attribution control](http://leafletjs.com/reference.html#control-attribution) as users pan/zoom.
 
 ```js
 L.esri.basemapLayer('Topographic').addTo(map);
@@ -197,7 +196,7 @@ If you need more than 1 million [map transactions](http://doc.arcgis.com/en/arcg
 
 ### License
 
-Copyright &copy; 2014-2018 Esri
+Copyright &copy; 2014-2019 Esri
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
