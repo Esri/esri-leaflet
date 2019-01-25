@@ -225,6 +225,9 @@ export var BasemapLayer = TileLayer.extend({
     if (this.options.token && config.urlTemplate.indexOf('token=') === -1) {
       config.urlTemplate += ('?token=' + this.options.token);
     }
+    if (this.options.proxy) {
+      config.urlTemplate = this.options.proxy + '?' + config.urlTemplate;
+    }
 
     // call the initialize method on L.TileLayer to set everything up
     TileLayer.prototype.initialize.call(this, config.urlTemplate, tileOptions);
@@ -239,7 +242,7 @@ export var BasemapLayer = TileLayer.extend({
     }
     // some basemaps can supply dynamic attribution
     if (this.options.attributionUrl) {
-      _getAttributionData(this.options.attributionUrl, map);
+      _getAttributionData((this.options.proxy ? this.options.proxy + '?' : '') + this.options.attributionUrl, map);
     }
 
     map.on('moveend', _updateMapAttribution);
