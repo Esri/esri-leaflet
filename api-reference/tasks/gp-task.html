@@ -14,7 +14,7 @@
   
 
   <meta name="description" content="Esri Leaflet">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width">
 
   <!--[if lt IE 9]>
     <script src="//cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv-printshiv.js"></script>
@@ -31,21 +31,9 @@
   
 
   
-    
-      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
-      integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
-      crossorigin=""/>
-      <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
-      integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
-      crossorigin=""></script>
-    
-
-    
-      <script src="https://unpkg.com/esri-leaflet@2.2.3/dist/esri-leaflet.js"
-      integrity="sha512-YZ6b5bXRVwipfqul5krehD9qlbJzc6KOGXYsDjU9HHXW2gK57xmWl2gU6nAegiErAqFXhygKIsWPKbjLPXVb2g=="
-      crossorigin=""></script>
-    
-
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet-src.js"></script>
+    <script src="https://unpkg.com/esri-leaflet@2.0.8"></script>
   
 
   
@@ -65,9 +53,8 @@
 <body>
   <div class="page-content ">
     <div class="container">
-      <span id="mobileMenuButton" class="mobileMenuButton">&#9776;</span>
       <a class="site-nav" href="../../" class="left logo">Esri Leaflet</a>
-      <nav id="site-nav-wrapper" class="site-nav-wrapper">
+      <nav class="right">
         <a class="site-nav" href="../../tutorials/">Tutorials</a>
         <a class="site-nav" href="../../plugins/">Plugins</a>
         <a class="site-nav" href="../../examples/">Examples</a>
@@ -91,10 +78,10 @@
     <a href="../../api-reference/layers/tiled-map-layer.html">Tiled Map Layer</a>
     <a href="../../api-reference/layers/dynamic-map-layer.html">Dynamic Map Layer</a>
     <a href="../../api-reference/layers/image-map-layer.html">Image Map Layer</a>
-    <a class="experimental" href="../../api-reference/layers/vector-basemap.html">Vector Basemap</a>
+    <a class="plugin" href="../../api-reference/layers/vector-basemap.html">Vector Basemap</a>
     <a class="plugin" href="../../api-reference/layers/heatmap-feature-layer.html">Heatmap Feature Layer</a>
-    <a class="plugin" href="../../api-reference/layers/cluster-feature-layer.html">Cluster Feature Layer</a>
-    <a class="experimental" href="../../api-reference/layers/vector-layer.html">Vector Layer</a>
+    <a class="plugin" href="../../api-reference/layers/clustered-feature-layer.html">Clustered Feature Layer</a>
+    <a class="plugin" href="../../api-reference/layers/vector-layer.html">Vector Layer</a>
   </nav>
 
   <h5>Controls</h5>
@@ -111,7 +98,7 @@
     <a class="plugin" href="../../api-reference/tasks/geocode.html">Geocode</a>
     <a class="plugin" href="../../api-reference/tasks/reverse-geocode.html">Reverse Geocode</a>
     <a class="plugin" href="../../api-reference/tasks/suggest.html">Suggest</a>
-    <a class="plugin" href="../../api-reference/tasks/gp.html">Geoprocessing Task</a>
+    <a class="plugin" href="../../api-reference/tasks/gp-task.html">Geoprocessing Task</a>
     <a class="plugin" href="../../api-reference/tasks/query-related.html">Query Related</a>
   </nav>
 
@@ -139,7 +126,6 @@
 
 <div class="main-content">
   <h1 id="l-esri-gp-task">L.esri.GP.Task</h1>
-<p>Extends <a href="../../api-reference/tasks/task.html"><code>L.esri.Task</code></a></p>
 <p>An abstraction to simplify making calls to ArcGIS Online and ArcGIS Server Geoprocessing services.  You can find more information and the source code for this plugin <a href="https://github.com/jgravois/esri-leaflet-gp">here</a>.</p>
 <h3 id="constructor">Constructor</h3>
 <p>This object is typically instantiated by calling L.esri.<a href=".././services/gp-service.html#methods">GP.Service.createTask()</a></p>
@@ -229,73 +215,15 @@ myTask.on(<span class="string">'initialized'</span>, <span class="function"><spa
   }
 ]</span></code></pre>
 
-  <p><a href="http://github.com/Esri/esri-leaflet-doc/edit/master/src/pages/api-reference/tasks/gp.md">Edit this page on GitHub</a></p>
-
-  <div class="mobile-menu">
-    <aside class="sidebar">
-  <h5>Layers</h5>
-  <nav>
-    <a href="../../api-reference/layers/basemap-layer.html">Basemap Layer</a>
-    <a href="../../api-reference/layers/feature-layer.html">Feature Layer</a>
-    <a href="../../api-reference/layers/tiled-map-layer.html">Tiled Map Layer</a>
-    <a href="../../api-reference/layers/dynamic-map-layer.html">Dynamic Map Layer</a>
-    <a href="../../api-reference/layers/image-map-layer.html">Image Map Layer</a>
-    <a class="experimental" href="../../api-reference/layers/vector-basemap.html">Vector Basemap</a>
-    <a class="plugin" href="../../api-reference/layers/heatmap-feature-layer.html">Heatmap Feature Layer</a>
-    <a class="plugin" href="../../api-reference/layers/cluster-feature-layer.html">Cluster Feature Layer</a>
-    <a class="experimental" href="../../api-reference/layers/vector-layer.html">Vector Layer</a>
-  </nav>
-
-  <h5>Controls</h5>
-  <nav>
-    <a class="plugin" href="../../api-reference/controls/geosearch.html" class="plugin">Geosearch</a>
-  </nav>
-
-  <h5>Tasks</h5>
-  <nav>
-    <a href="../../api-reference/tasks/query.html">Query</a>
-    <a href="../../api-reference/tasks/find.html">Find</a>
-    <a href="../../api-reference/tasks/identify-features.html">Identify Features</a>
-    <a href="../../api-reference/tasks/identify-image.html">Identify Image</a>
-    <a class="plugin" href="../../api-reference/tasks/geocode.html">Geocode</a>
-    <a class="plugin" href="../../api-reference/tasks/reverse-geocode.html">Reverse Geocode</a>
-    <a class="plugin" href="../../api-reference/tasks/suggest.html">Suggest</a>
-    <a class="plugin" href="../../api-reference/tasks/gp.html">Geoprocessing Task</a>
-    <a class="plugin" href="../../api-reference/tasks/query-related.html">Query Related</a>
-  </nav>
-
-  <h5>Base Classes</h5>
-  <nav>
-    <a href="../../api-reference/services/image-service.html">ImageService</a>
-    <a href="../../api-reference/services/feature-layer-service.html">FeatureLayerService</a>
-    <a href="../../api-reference/services/map-service.html">MapService</a>
-    <a class="plugin" href="../../api-reference/services/geocode-service.html">Geocode Service</a>
-    <a class="plugin" href="../../api-reference/services/gp-service.html">Geoprocessing Service</a>
-    <a href="../../api-reference/tasks/task.html">Task</a>
-    <a href="../../api-reference/services/service.html">Service</a>
-    <a href="../../api-reference/layers/raster-layer.html">Raster Layer</a>
-  </nav>
-
-  <h5>Misc.</h5>
-  <nav>
-    <a href="../../api-reference/util.html">Util</a>
-    <a href="../../api-reference/request.html">request</a>
-    <a href="../../api-reference/options.html">options</a>
-    <a href="../../api-reference/events.html">Events</a>
-  </nav>
-</aside>
-
-  </div>
+  <p><a href="http://github.com/Esri/esri-leaflet-doc/edit/master/src/pages/api-reference/tasks/gp-task.md">Edit this page on GitHub</a></p>
 </div>
 
   <div style='clear:both;'></div>
 </div>
-<div class="container center-text">
+<div class="container centered-text">
   <p class="copyright">Esri Leaflet is a project from the <a href="http://pdx.esri.com">Esri PDX R&amp;D Center</a> and the <a href="https://github.com/Esri/esri-leaflet/graphs/contributors">Esri Community</a></p>
 </div>
 
-  <div class="container center-text">
-    <p class="copyright"><a href="https://github.com/esri/esri-leaflet#terms">Terms</a></p>
   </div>
   <script src="../../js/script.js"></script>
   </body>

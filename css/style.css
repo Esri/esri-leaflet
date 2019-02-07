@@ -514,6 +514,16 @@ table {
     font-size: .75rem;
     padding: .25rem;
     letter-spacing: .5px; }
+  .sidebar nav a.experimental:after {
+    content: 'experimental';
+    display: inline;
+    margin-left: .25rem;
+    text-transform: uppercase;
+    background: #ECF0F3;
+    border-radius: 3px;
+    font-size: .75rem;
+    padding: .25rem;
+    letter-spacing: .5px; }
   .sidebar h5 {
     float: left;
     clear: both;
