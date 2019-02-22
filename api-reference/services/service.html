@@ -151,7 +151,7 @@
     </thead>
     <tbody>
         <tr>
-            <td><code class="nobr">L.esri.service(<nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code></td>
+            <td><code class="nobr">L.esri.service(<span>&lt;Object&gt;</span> <code>options</code>)</code></td>
             <td>Options includes a <code>url</code> parameter which refers to the ArcGIS Server or ArcGIS Online service you would like to consume.</td>
         </tr>
     </tbody>
@@ -248,22 +248,22 @@
     </thead>
     <tbody>
         <tr>
-            <td><code>get(<nobr class="param"><span>&lt;String&gt;</span> <code>url</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>params</code></nobr>, <nobr class="param"><span>&lt;Function&gt;</span> <code>callback</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>context</code></nobr>)</code></td>
+            <td><code>get(<span>&lt;String&gt;</span> <code>url</code>, <span>&lt;Object&gt;</span> <code>params</code>, <span>&lt;Function&gt;</span> <code>callback</code>, <span>&lt;Object&gt;</span> <code>context</code>)</code></td>
             <td><code>this</code></td>
             <td>Makes a GET request to the service. The service&#39;s URL will be combined with the <code>path</code> option and parameters will be serialized to a query string. Accepts an optional function context for the callback.</td>
         </tr>
         <tr>
-            <td><code>post(<nobr class="param"><span>&lt;String&gt;</span> <code>url</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>params</code></nobr>, <nobr class="param"><span>&lt;Function&gt;</span> <code>callback</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>context</code></nobr>)</code></td>
+            <td><code>post(<span>&lt;String&gt;</span> <code>url</code>, <span>&lt;Object&gt;</span> <code>params</code>, <span>&lt;Function&gt;</span> <code>callback</code>, <span>&lt;Object&gt;</span> <code>context</code>)</code></td>
             <td><code>this</code></td>
             <td>Makes a POST request to the service. The service&#39;s URL will be combined with the <code>path</code> option and parameters will be serialized. Accepts an optional function context for the callback.</td>
         </tr>
         <tr>
-            <td><code>metadata(<nobr class="param"><span>&lt;Function&gt;</span> <code>callback</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>context</code></nobr>)</code></td>
+            <td><code>metadata(<span>&lt;Function&gt;</span> <code>callback</code>, <span>&lt;Object&gt;</span> <code>context</code>)</code></td>
             <td><code>this</code></td>
             <td>Requests the metadata about the service. This is an alias for get(&quot;/&quot;, {}, callback, context).</td>
         </tr>
         <tr>
-            <td><code>authenticate(<nobr class="param"><span>&lt;String&gt;</span> <code>token</code></nobr>)</code></td>
+            <td><code>authenticate(<span>&lt;String&gt;</span> <code>token</code>)</code></td>
             <td><code>this</code></td>
             <td>Authenticates this service with a new token and runs any pending requests that required a token.</td>
         </tr>

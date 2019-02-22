@@ -8,11 +8,11 @@
   <meta charset="utf-8">
 
   
-    <title>Load each and every feature initially | Esri Leaflet</title>
+    <title>Dynamic feature charting with Chart.js | Esri Leaflet</title>
   
 
   
-    <meta name="description" content="Sometimes it is desirable to load a &quot;snapshot&quot; of a Feature Layer instead of loading it progressively as you pan around the map. The approach is useful for smaller services.">
+    <meta name="description" content="Plot feature attributes on a dynamic chart that updates automatically as users pan and zoom. This demo relies on &lt;a href=&quot;https://www.chartjs.org/&quot;&gt;Chart.js&lt;/a&gt; to render an interactive scatterplot.">
   
 
   <meta name="description" content="Esri Leaflet">
@@ -31,14 +31,17 @@
   <link rel="stylesheet" href="../css/style.css">
 
   
+    <!-- 'livereload' for development -->
+    <script src="//localhost:35729/livereload.js"></script>
+  
 
   
     
-      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
+      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
       integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
       crossorigin=""/>
-      <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
-      integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
+      <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"
+      integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
       crossorigin=""></script>
     
 
@@ -112,8 +115,6 @@
     <a href="../examples/layer-ordering.html">Ordering Layers</a>
     <a href="../examples/simple-editing.html">Editing #1</a>
     <a href="../examples/editable.html">Editing #2</a>
-    <a href="../examples/cedar-chart.html">Dynamic Chart (Cedar)</a>
-    <a href="../examples/dynamic-chart.html">Dynamic Chart (Chart.js)</a>
   </nav>
 
   <h5>Feature Layer Plugins</h5>
@@ -192,60 +193,156 @@
     <a href="../examples/getting-service-metadata.html">Getting Service Metadata</a>
     <a href="../examples/parse-feature-collection.html">Parsing Feature Collections</a>
     <a href="../examples/indoors.html">Indoor Mapping</a>
+    <a href="../examples/dynamic-charting.html">Dynamic Charting</a>
   </nav>
 </aside>
 
 
 <div class="example-content">
 <div class="wrap">
-  <h1>Load each and every feature initially</h1>
-  <p>Sometimes it is desirable to load a "snapshot" of a Feature Layer instead of loading it progressively as you pan around the map. The approach is useful for smaller services.</p>
+  <h1>Dynamic feature charting with Chart.js</h1>
+  <p>Plot feature attributes on a dynamic chart that updates automatically as users pan and zoom. This demo relies on <a href="https://www.chartjs.org/">Chart.js</a> to render an interactive scatterplot.</p>
 </div>
 <div id="map-wrapper">
   
+<!-- Load Chart.js from CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+
+<style>
+  .chart-container {
+    height: 275px;
+    width: 275px;
+    /* horizontally center and
+    add some vertical spacing  */
+    margin: 10px auto;
+    outline: 1px solid #00ADA7;
+  }
+
+  #info-pane {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 400;
+    padding: 1em;
+    background: white;
+  }
+</style>
 
 <div id="map"></div>
+<div id="info-pane" class="leaflet-bar chart-container">
+  <canvas id="chartCanvas"></canvas>
+</div>
 
 <script>
-  var map = L.map("map").setView([45.5252, -122.6284], 11);
+  // STEP 1: MAKE A MAP AND ADD LAYERS
+  var map = L.map('map').setView([45.526, -122.667], 13);
 
-  L.esri.basemapLayer("Topographic").addTo(map);
+  L.esri.basemapLayer('Topographic').addTo(map);
 
-  var neighborhoodsUrl = "https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Neighborhoods_pdx/FeatureServer/0";
-  var bikeParkingUrl = "https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Portland_Bicycle_Parking/FeatureServer/0";
-
-  // query a feature service for a neighborhood
-  L.esri.query({
-    url: neighborhoodsUrl
-  }).where("NAME='HOLLYWOOD'").run(function(error, neighborhoods){
-    // draw neighborhood on the map
-    var hollywood = L.geoJSON(neighborhoods).addTo(map);
-
-    // fit map to boundary
-    map.fitBounds(hollywood.getBounds().pad(0.5));
-
-    // query all bike parking where BPSTYLE='STAPLE' inside our boundary
-    L.esri.query({
-      url: bikeParkingUrl
-    }).where("BPSTYLE='STAPLE'").within(hollywood).run(function(error, bikeParking){
-      L.geoJSON(bikeParking).addTo(map);
-    });
+  // create and add a feature layer
+  // features from this layer will appear in the Chart.js scatterplot
+  var portlandTreesFeatureLayer = L.esri.featureLayer({
+    url: 'https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Heritage_Trees_Portland/FeatureServer/0',
   });
+  portlandTreesFeatureLayer.addTo(map);
+
+  // STEP 2: DEFINE A CHART
+  // this is a static scatterplot chart definition for now, but it will
+  // soon become dynamic by responding to map and feature layer events
+  var initialChartData = {
+    datasets: [{
+      label: 'Portland Heritage Trees',
+      // the data values are empty at this moment
+      // and will be updated dynamically below
+      data: []
+    }]
+  };
+
+  var chartOptions = {
+    scales: {
+      xAxes: [{
+        scaleLabel: {
+          display: true,
+          labelString: 'tree diameter'
+        },
+        ticks: {
+          beginAtZero: true,
+          max: 250,
+          stepSize: 50
+        }
+      }],
+      yAxes: [{
+        scaleLabel: {
+          display: true,
+          labelString: 'tree height'
+        },
+        ticks: {
+          beginAtZero: true,
+          max: 250,
+          stepSize: 50
+        }
+      }]
+    },
+    maintainAspectRatio: false,
+    // turn off animations during chart data updates
+    animation: {
+      duration: 0,
+    }
+  };
+
+  var chart = new Chart('chartCanvas', {
+    type: 'scatter',
+    data: initialChartData,
+    options: chartOptions
+  });
+
+  // STEP 3: MAKE THE CHART DYNAMIC
+  // show in the scatterplot only the features in the map's current extent
+  // by handling several events from both the map and feature layer
+  map.on('zoom move', updateChart);
+  portlandTreesFeatureLayer.on('load', updateChart);
+
+  function updateChart() {
+    // reformat the features' attributes of interest into
+    // the data array format required by the Chart.js scatterplot
+    var scatterPlotDataArray = [];
+
+    portlandTreesFeatureLayer.eachActiveFeature(function(e) {
+      // loop over each active feature in the map extent and
+      // push an object into the scatterPlotDataArray in this format:
+
+      // {
+      //   x: diameter attribute value,
+      //   y: height attribute value
+      // }
+
+      scatterPlotDataArray.push({
+        x: e.feature.properties.DIAMETER,
+        y: e.feature.properties.HEIGHT
+      });
+    });
+
+    // assign the new scatterPlotDataArray to the chart's data property
+    chart.data.datasets[0].data = scatterPlotDataArray;
+
+    // finally, instruct the chart to re-draw itself with the new data
+    chart.update();
+  }
 </script>
 
 </div>
 <pre><code class="language-xml"><span class="tag">&lt;<span class="title">html</span>&gt;</span>
 <span class="tag">&lt;<span class="title">head</span>&gt;</span>
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">utf-8</span> /&gt;</span>
-  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Load each and every feature initially<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Dynamic feature charting with Chart.js<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">name</span>=<span class="value">'viewport'</span> <span class="attribute">content</span>=<span class="value">'initial-scale=1,maximum-scale=1,user-scalable=no'</span> /&gt;</span>
 
     <span class="comment">&lt;!-- Load Leaflet from CDN --&gt;</span>
-    <span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"</span>
+    <span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"</span>
     <span class="attribute">integrity</span>=<span class="value">"sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="</span>
     <span class="attribute">crossorigin</span>=<span class="value">""</span>/&gt;</span>
-    <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"</span>
-    <span class="attribute">integrity</span>=<span class="value">"sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="</span>
+    <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"</span>
+    <span class="attribute">integrity</span>=<span class="value">"sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="</span>
     <span class="attribute">crossorigin</span>=<span class="value">""</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 
@@ -262,40 +359,136 @@
 <span class="tag">&lt;/<span class="title">head</span>&gt;</span>
 <span class="tag">&lt;<span class="title">body</span>&gt;</span>
 
+<span class="comment">&lt;!-- Load Chart.js from CDN --&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+
+<span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css">
+  <span class="class">.chart-container</span> <span class="rules">{
+    <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">275</span>px</span></span>;
+    <span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">275</span>px</span></span>;
+    <span class="comment">/* horizontally center and
+    add some vertical spacing  */</span>
+    <span class="rule"><span class="attribute">margin</span>:<span class="value"> <span class="number">10</span>px auto</span></span>;
+    <span class="rule"><span class="attribute">outline</span>:<span class="value"> <span class="number">1</span>px solid <span class="hexcolor">#00ADA7</span></span></span>;
+  <span class="rule">}</span></span>
+
+  <span class="id">#info-pane</span> <span class="rules">{
+    <span class="rule"><span class="attribute">position</span>:<span class="value"> absolute</span></span>;
+    <span class="rule"><span class="attribute">top</span>:<span class="value"> <span class="number">10</span>px</span></span>;
+    <span class="rule"><span class="attribute">right</span>:<span class="value"> <span class="number">10</span>px</span></span>;
+    <span class="rule"><span class="attribute">z-index</span>:<span class="value"> <span class="number">400</span></span></span>;
+    <span class="rule"><span class="attribute">padding</span>:<span class="value"> <span class="number">1</span>em</span></span>;
+    <span class="rule"><span class="attribute">background</span>:<span class="value"> white</span></span>;
+  <span class="rule">}</span></span>
+</span><span class="tag">&lt;/<span class="title">style</span>&gt;</span>
+
 <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+<span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"info-pane"</span> <span class="attribute">class</span>=<span class="value">"leaflet-bar chart-container"</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">canvas</span> <span class="attribute">id</span>=<span class="value">"chartCanvas"</span>&gt;</span><span class="tag">&lt;/<span class="title">canvas</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
-  <span class="keyword">var</span> map = L.map(<span class="string">"map"</span>).setView([<span class="number">45.5252</span>, -<span class="number">122.6284</span>], <span class="number">11</span>);
+  <span class="comment">// STEP 1: MAKE A MAP AND ADD LAYERS</span>
+  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">45.526</span>, -<span class="number">122.667</span>], <span class="number">13</span>);
 
-  L.esri.basemapLayer(<span class="string">"Topographic"</span>).addTo(map);
+  L.esri.basemapLayer(<span class="string">'Topographic'</span>).addTo(map);
 
-  <span class="keyword">var</span> neighborhoodsUrl = <span class="string">"https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Neighborhoods_pdx/FeatureServer/0"</span>;
-  <span class="keyword">var</span> bikeParkingUrl = <span class="string">"https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Portland_Bicycle_Parking/FeatureServer/0"</span>;
-
-  <span class="comment">// query a feature service for a neighborhood</span>
-  L.esri.query({
-    url: neighborhoodsUrl
-  }).where(<span class="string">"NAME='HOLLYWOOD'"</span>).run(<span class="function"><span class="keyword">function</span><span class="params">(error, neighborhoods)</span>{</span>
-    <span class="comment">// draw neighborhood on the map</span>
-    <span class="keyword">var</span> hollywood = L.geoJSON(neighborhoods).addTo(map);
-
-    <span class="comment">// fit map to boundary</span>
-    map.fitBounds(hollywood.getBounds().pad(<span class="number">0.5</span>));
-
-    <span class="comment">// query all bike parking where BPSTYLE='STAPLE' inside our boundary</span>
-    L.esri.query({
-      url: bikeParkingUrl
-    }).where(<span class="string">"BPSTYLE='STAPLE'"</span>).within(hollywood).run(<span class="function"><span class="keyword">function</span><span class="params">(error, bikeParking)</span>{</span>
-      L.geoJSON(bikeParking).addTo(map);
-    });
+  <span class="comment">// create and add a feature layer</span>
+  <span class="comment">// features from this layer will appear in the Chart.js scatterplot</span>
+  <span class="keyword">var</span> portlandTreesFeatureLayer = L.esri.featureLayer({
+    url: <span class="string">'https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Heritage_Trees_Portland/FeatureServer/0'</span>,
   });
+  portlandTreesFeatureLayer.addTo(map);
+
+  <span class="comment">// STEP 2: DEFINE A CHART</span>
+  <span class="comment">// this is a static scatterplot chart definition for now, but it will</span>
+  <span class="comment">// soon become dynamic by responding to map and feature layer events</span>
+  <span class="keyword">var</span> initialChartData = {
+    datasets: [{
+      label: <span class="string">'Portland Heritage Trees'</span>,
+      <span class="comment">// the data values are empty at this moment</span>
+      <span class="comment">// and will be updated dynamically below</span>
+      data: []
+    }]
+  };
+
+  <span class="keyword">var</span> chartOptions = {
+    scales: {
+      xAxes: [{
+        scaleLabel: {
+          display: <span class="literal">true</span>,
+          labelString: <span class="string">'tree diameter'</span>
+        },
+        ticks: {
+          beginAtZero: <span class="literal">true</span>,
+          max: <span class="number">250</span>,
+          stepSize: <span class="number">50</span>
+        }
+      }],
+      yAxes: [{
+        scaleLabel: {
+          display: <span class="literal">true</span>,
+          labelString: <span class="string">'tree height'</span>
+        },
+        ticks: {
+          beginAtZero: <span class="literal">true</span>,
+          max: <span class="number">250</span>,
+          stepSize: <span class="number">50</span>
+        }
+      }]
+    },
+    maintainAspectRatio: <span class="literal">false</span>,
+    <span class="comment">// turn off animations during chart data updates</span>
+    animation: {
+      duration: <span class="number">0</span>,
+    }
+  };
+
+  <span class="keyword">var</span> chart = <span class="keyword">new</span> Chart(<span class="string">'chartCanvas'</span>, {
+    type: <span class="string">'scatter'</span>,
+    data: initialChartData,
+    options: chartOptions
+  });
+
+  <span class="comment">// STEP 3: MAKE THE CHART DYNAMIC</span>
+  <span class="comment">// show in the scatterplot only the features in the map's current extent</span>
+  <span class="comment">// by handling several events from both the map and feature layer</span>
+  map.on(<span class="string">'zoom move'</span>, updateChart);
+  portlandTreesFeatureLayer.on(<span class="string">'load'</span>, updateChart);
+
+  <span class="function"><span class="keyword">function</span> <span class="title">updateChart</span><span class="params">()</span> {</span>
+    <span class="comment">// reformat the features' attributes of interest into</span>
+    <span class="comment">// the data array format required by the Chart.js scatterplot</span>
+    <span class="keyword">var</span> scatterPlotDataArray = [];
+
+    portlandTreesFeatureLayer.eachActiveFeature(<span class="function"><span class="keyword">function</span><span class="params">(e)</span> {</span>
+      <span class="comment">// loop over each active feature in the map extent and</span>
+      <span class="comment">// push an object into the scatterPlotDataArray in this format:</span>
+
+      <span class="comment">// {</span>
+      <span class="comment">//   x: diameter attribute value,</span>
+      <span class="comment">//   y: height attribute value</span>
+      <span class="comment">// }</span>
+
+      scatterPlotDataArray.push({
+        x: e.feature.properties.DIAMETER,
+        y: e.feature.properties.HEIGHT
+      });
+    });
+
+    <span class="comment">// assign the new scatterPlotDataArray to the chart's data property</span>
+    chart.data.datasets[<span class="number">0</span>].data = scatterPlotDataArray;
+
+    <span class="comment">// finally, instruct the chart to re-draw itself with the new data</span>
+    chart.update();
+  }
 </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 <span class="tag">&lt;/<span class="title">body</span>&gt;</span>
 <span class="tag">&lt;/<span class="title">html</span>&gt;</span></code></pre>
 
 <div class="wrap">
-  <p><a href="http://github.com/Esri/esri-leaflet-doc/edit/master/src/pages/examples/feature-layer-snapshot.hbs">Edit this sample on GitHub</a></p>
+  <p><a href="http://github.com/Esri/esri-leaflet-doc/edit/master/src/pages/examples/dynamic-charting.hbs">Edit this sample on GitHub</a></p>
 </div>
 
 <div class="mobile-menu">
@@ -326,8 +519,6 @@
     <a href="../examples/layer-ordering.html">Ordering Layers</a>
     <a href="../examples/simple-editing.html">Editing #1</a>
     <a href="../examples/editable.html">Editing #2</a>
-    <a href="../examples/cedar-chart.html">Dynamic Chart (Cedar)</a>
-    <a href="../examples/dynamic-chart.html">Dynamic Chart (Chart.js)</a>
   </nav>
 
   <h5>Feature Layer Plugins</h5>
@@ -406,6 +597,7 @@
     <a href="../examples/getting-service-metadata.html">Getting Service Metadata</a>
     <a href="../examples/parse-feature-collection.html">Parsing Feature Collections</a>
     <a href="../examples/indoors.html">Indoor Mapping</a>
+    <a href="../examples/dynamic-charting.html">Dynamic Charting</a>
   </nav>
 </aside>
 

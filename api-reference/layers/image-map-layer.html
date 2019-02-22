@@ -152,7 +152,7 @@
     </thead>
     <tbody>
         <tr>
-            <td><code class="nobr">L.esri.imageMapLayer(<nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code></td>
+            <td><code class="nobr">L.esri.imageMapLayer(<span>&lt;Object&gt;</span> <code>options</code>)</code></td>
             <td>The <code>options</code> parameter can accept the same options as <a href="http://leafletjs.com/reference.html#imageoverlay"><code>L.ImageOverlay</code></a>. You also must pass a <code>url</code> key in your <code>options</code>.</td>
         </tr>
     </tbody>
@@ -313,7 +313,7 @@
             <td>Redraws this layer above all other overlay layers.</td>
         </tr>
         <tr>
-            <td><code>bindPopup(<nobr class="param"><span>&lt;Function&gt;</span> <code>fn</code></nobr>, <nobr class="param"><span>&lt;<a href="http://leafletjs.com/reference.html#popup-options">PopupOptions</a>&gt;</span> <code>popupOptions</code></nobr>)</code></td>
+            <td><code>bindPopup(<span>&lt;Function&gt;</span> <code>fn</code>, <span>&lt;<a href="http://leafletjs.com/reference.html#popup-options">PopupOptions</a>&gt;</span> <code>popupOptions</code>)</code></td>
             <td><code>this</code></td>
             <td>
                 Uses the provided function to create a popup that will identify pixel value(s) whenever the map is clicked. Your function will be passed an object with a <code>pixel</code> property that is a <a href="http://geojson.org/geojson-spec.html#point">GeoJSON Point</a> with the pixel value(s) at the clicked location and should return the appropriate HTML. If you do not want to open the popup when there are no results, return <code>false</code>.
@@ -339,7 +339,7 @@ imageMapLayer.bindPopup(
             <td>Returns the current opacity of the layer.</td>
         </tr>
         <tr>
-            <td><code>setOpacity(<nobr class="param"><span>&lt;Float&gt;</span> <code>opacity</code></nobr>)</code></td>
+            <td><code>setOpacity(<span>&lt;Float&gt;</span> <code>opacity</code>)</code></td>
             <td><code>this</code></td>
             <td>Sets the opacity of the layer.</td>
         </tr>
@@ -349,7 +349,7 @@ imageMapLayer.bindPopup(
             <td>Returns the current time range being used for rendering.</td>
         </tr>
         <tr>
-            <td><code>setTimeRange(<nobr class="param"><span>&lt;Date&gt;</span> <code>from</code></nobr>, <nobr class="param"><span>&lt;Date&gt;</span> <code>to</code></nobr>)</code></td>
+            <td><code>setTimeRange(<span>&lt;Date&gt;</span> <code>from</code>, <span>&lt;Date&gt;</span> <code>to</code>)</code></td>
             <td><code>this</code></td>
             <td>Redraws the layer with the passed time range.</td>
         </tr>
@@ -359,7 +359,7 @@ imageMapLayer.bindPopup(
             <td>Returns the current band value(s).</td>
         </tr>
         <tr>
-            <td><code>setBandIds(<nobr class="param"><span>&lt;Array&gt;</span> <code>bandIds</code></nobr> or <nobr class="param"><span>&lt;String&gt;</span> <code>bandIds</code></nobr>)</code></td>
+            <td><code>setBandIds(<span>&lt;Array&gt;</span> <code>bandIds</code> or <span>&lt;String&gt;</span> <code>bandIds</code>)</code></td>
             <td><code>this</code></td>
             <td>Specify a single band to export, or you can change the band combination (red, green, blue) by specifying the band number.</td>
         </tr>
@@ -369,7 +369,7 @@ imageMapLayer.bindPopup(
             <td>Returns the current no data value.</td>
         </tr>
         <tr>
-            <td><code>setNoData(<nobr class="param"><span>&lt;Array&gt;</span> <code>noData</code></nobr> or <nobr class="param"><span>&lt;Number&gt;</span> <code>noData</code></nobr>, <nobr class="param"><span>&lt;String&gt;</span> <code>noDataInterpretation</code></nobr>)</code></td>
+            <td><code>setNoData(<span>&lt;Array&gt;</span> <code>noData</code> or <span>&lt;Number&gt;</span> <code>noData</code>, <span>&lt;String&gt;</span> <code>noDataInterpretation</code>)</code></td>
             <td><code>this</code></td>
             <td>Specify a single value, or an array of values to treat as no data. No data will values will be rendered transparent.<br />The optional <code>noDataInterpretation</code> can be either <code>esriNoDataMatchAny</code> | <code>esriNoDataMatchAll</code>. The default is <code>esriNoDataMatchAny</code> when <code>noData</code> is a number, and <code>esriNoDataMatchAll</code> when noData is an array. See <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Export_Image/02r3000000wm000000/">Image Service Export Image documentation</a> for more details</td>
         </tr>
@@ -384,17 +384,17 @@ imageMapLayer.bindPopup(
             <td>Returns the current pixel type.</td>
         </tr>
         <tr>
-            <td><code>setPixelType(<nobr class="param"><span>&lt;String&gt;</span> <code>pixelType</code></nobr>)</code></td>
+            <td><code>setPixelType(<span>&lt;String&gt;</span> <code>pixelType</code>)</code></td>
             <td><code>this</code></td>
             <td>The pixel type, also known as data type, pertains to the type of values stored in the raster, such as signed integer, unsigned integer, or floating point. Possible values: <code>C128</code>, <code>C64</code>, <code>F32</code>, <code>F64</code>, <code>S16</code>, <code>S32</code>, <code>S8</code>, <code>U1</code>, <code>U16</code>, <code>U2</code>, <code>U32</code>, <code>U4</code>, <code>U8</code>, <code>UNKNOWN</code>.</td>
         </tr>
         <tr>
-            <td><code>authenticate(<nobr class="param"><span>&lt;String&gt;</span> <code>token</code></nobr>)</code></td>
+            <td><code>authenticate(<span>&lt;String&gt;</span> <code>token</code>)</code></td>
             <td><code>this</code></td>
             <td>Authenticates this service with a new token and runs any pending requests that required a token.</td>
         </tr>
         <tr>
-            <td><code>metadata(<nobr class="param"><span>&lt;Function&gt;</span> <code>callback</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>context</code></nobr>)</code></td>
+            <td><code>metadata(<span>&lt;Function&gt;</span> <code>callback</code>, <span>&lt;Object&gt;</span> <code>context</code>)</code></td>
             <td><code>this</code></td>
             <td>
                 Requests metadata about this Feature Layer. Callback will be called with <code>error</code> and <code>metadata</code>.
@@ -422,7 +422,7 @@ imageService.query()
             <td>Returns the current rendering rule of the layer.</td>
         </tr>
         <tr>
-            <td><code>setRenderingRule(<nobr class="param"><span>&lt;Object&gt;</span> <code>renderingRule</code></nobr>)</code></td>
+            <td><code>setRenderingRule(<span>&lt;Object&gt;</span> <code>renderingRule</code>)</code></td>
             <td><code>this</code></td>
             <td>Redraws the layer with the passed rendering rule.</td>
         </tr>
@@ -432,7 +432,7 @@ imageService.query()
             <td>Returns the current mosaic rule of the layer.</td>
         </tr>
         <tr>
-            <td><code>setMosaicRule(<nobr class="param"><span>&lt;Object&gt;</span> <code>mosaicRule</code></nobr>)</code></td>
+            <td><code>setMosaicRule(<span>&lt;Object&gt;</span> <code>mosaicRule</code>)</code></td>
             <td><code>this</code></td>
             <td>Redraws the layer with the passed mosaic rule.</td>
         </tr>

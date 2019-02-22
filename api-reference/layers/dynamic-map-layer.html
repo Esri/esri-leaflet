@@ -154,7 +154,7 @@
     </thead>
     <tbody>
         <tr>
-            <td>L.esri.dynamicMapLayer(<nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code></td>
+            <td>L.esri.dynamicMapLayer(<span>&lt;Object&gt;</span> <code>options</code>)</code></td>
             <td>The <code>options</code> parameter can accept the same options as <a href="http://leafletjs.com/reference.html#imageoverlay"><code>L.ImageOverlay</code></a>.<br>Passing a <code>url</code> is mandatory.</td>
         </tr>
     </tbody>
@@ -320,7 +320,7 @@
             <td>Redraws this layer above all other overlay layers.</td>
         </tr>
         <tr>
-            <td><code>bindPopup(<nobr class="param"><span>&lt;Function&gt;</span> <code>fn</code></nobr>, <nobr class="param"><span>&lt;<a href="http://leafletjs.com/reference.html#popup-options">PopupOptions</a>&gt;</span> <code>popupOptions</code></nobr>)</code></td>
+            <td><code>bindPopup(<span>&lt;Function&gt;</span> <code>fn</code>, <span>&lt;<a href="http://leafletjs.com/reference.html#popup-options">PopupOptions</a>&gt;</span> <code>popupOptions</code>)</code></td>
             <td><code>this</code></td>
             <td>
                 Uses the provided function to create a popup that will identify features whenever the map is clicked. Your function will be passed a <a href="http://geojson.org/geojson-spec.html#feature-collection-objects">GeoJSON FeatureCollection</a> of the features at the clicked location and should return the appropriate HTML. If you do not want to open the popup when there are no results, return <code>false</code>.
@@ -343,7 +343,7 @@ dynamicMapLayer.bindPopup(
             <td>Returns the current opacity of the layer.</td>
         </tr>
         <tr>
-            <td><code>setOpacity(<nobr class="param"><span>&lt;Float&gt;</span> <code>opacity</code></nobr>)</code></td>
+            <td><code>setOpacity(<span>&lt;Float&gt;</span> <code>opacity</code>)</code></td>
             <td><code>this</code></td>
             <td>Sets the opacity of the layer.</td>
         </tr>
@@ -353,7 +353,7 @@ dynamicMapLayer.bindPopup(
             <td>Returns the array of visible layers specified in the layer constructor.</td>
         </tr>
         <tr>
-            <td><code>setLayers(<nobr class="param"><span>&lt;Array&gt;</span> <code>layers</code></nobr>)</code></td>
+            <td><code>setLayers(<span>&lt;Array&gt;</span> <code>layers</code>)</code></td>
             <td><code>this</code></td>
             <td>Redraws the layer to show the passed array of layer ids.</td>
         </tr>
@@ -363,7 +363,7 @@ dynamicMapLayer.bindPopup(
             <td>Returns the current layer definition(s) being used for rendering.</td>
         </tr>
         <tr>
-            <td><code>setLayerDefs(<nobr class="param"><span>&lt;<a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Export_Map/02r3000000v7000000/">Object</a>&gt;</span> <code>layerDefs</code></nobr>)</code></td>
+            <td><code>setLayerDefs(<span>&lt;<a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Export_Map/02r3000000v7000000/">Object</a>&gt;</span> <code>layerDefs</code>)</code></td>
             <td><code>this</code></td>
             <td>Redraws the layer with the new layer definitions. Corresponds to the <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Export_Map/02r3000000v7000000/">layerDefs</a> option on the export API.</td>
         </tr>
@@ -373,7 +373,7 @@ dynamicMapLayer.bindPopup(
             <td>Returns the current time range being used for rendering.</td>
         </tr>
         <tr>
-            <td><code>setTimeRange(<nobr class="param"><span>&lt;Date&gt;</span> <code>from</code></nobr>, <nobr class="param"><span>&lt;Date&gt;</span> <code>to</code></nobr>)</code></td>
+            <td><code>setTimeRange(<span>&lt;Date&gt;</span> <code>from</code>, <span>&lt;Date&gt;</span> <code>to</code>)</code></td>
             <td><code>this</code></td>
             <td>Redraws the layer with he passed time range.</td>
         </tr>
@@ -383,7 +383,7 @@ dynamicMapLayer.bindPopup(
             <td>Returns the current time options being used for rendering.</td>
         </tr>
         <tr>
-            <td><code>setTimeOptions(<nobr class="param"><span>&lt;<a href="https://developers.arcgis.com/rest/services-reference/export-map.htm">Object</a>&gt;</span> <code>timeOptions</code></nobr>)</code></td>
+            <td><code>setTimeOptions(<span>&lt;<a href="https://developers.arcgis.com/rest/services-reference/export-map.htm">Object</a>&gt;</span> <code>timeOptions</code>)</code></td>
             <td><code>this</code></td>
             <td>Sets the current time options being used to render individual layers. Corresponds to the <a href="https://developers.arcgis.com/rest/services-reference/export-map.htm">layerTimeOptions</a> option on the export API.</td>
         </tr>
@@ -393,7 +393,7 @@ dynamicMapLayer.bindPopup(
             <td>Returns an array of JSON objects representing the modified layer symbology being requested from the map service.</td>
         </tr>
         <tr>
-            <td><code>setDynamicLayers(<nobr class="param"><span>&lt;<a href="https://developers.arcgis.com/rest/services-reference/export-map.htm">Array</a>&gt;</span> <code>dynamicLayers</code></nobr>)</code></td>
+            <td><code>setDynamicLayers(<span>&lt;<a href="https://developers.arcgis.com/rest/services-reference/export-map.htm">Array</a>&gt;</span> <code>dynamicLayers</code>)</code></td>
             <td><code>this</code></td>
             <td>Used to insert raw dynamicLayers JSON in array form in situations where you&#39;d like to modify layer symbology defined in the service itself.
 <pre class="js"><code>dynamicMapLayer.setDynamicLayers([{
@@ -404,7 +404,7 @@ dynamicMapLayer.bindPopup(
             </td>
         </tr>
         <tr>
-            <td><code>metadata(<nobr class="param"><span>&lt;Function&gt;</span> <code>callback</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>context</code></nobr>)</code></td>
+            <td><code>metadata(<span>&lt;Function&gt;</span> <code>callback</code>, <span>&lt;Object&gt;</span> <code>context</code>)</code></td>
             <td><code>this</code></td>
             <td>
                 Requests metadata about this Feature Layer. Callback will be called with <code>error</code> and <code>metadata</code>.
@@ -414,7 +414,7 @@ dynamicMapLayer.bindPopup(
             </td>
         </tr>
         <tr>
-            <td><code>authenticate(<nobr class="param"><span>&lt;String&gt;</span> <code>token</code></nobr>)</code></td>
+            <td><code>authenticate(<span>&lt;String&gt;</span> <code>token</code>)</code></td>
             <td><code>this</code></td>
             <td>Authenticates this service with a new token and runs any pending requests that required a token.</td>
         </tr>

@@ -152,8 +152,8 @@
     <tbody>
         <tr>
             <td>
-                <code>L.esri.find(<nobr class="param"><span>&lt;<a href="../../api-reference/services/service.html">MapService</a>&gt;</span> <code>endpoint</code></nobr>)</code><br><br>
-                <code>L.esri.find(<nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code>
+                <code>L.esri.find(<span>&lt;<a href="../../api-reference/services/service.html">MapService</a>&gt;</span> <code>endpoint</code>)</code><br><br>
+                <code>L.esri.find(<span>&lt;Object&gt;</span> <code>options</code>)</code>
             </td>
             <td>Accepts either an <code>options</code> object or an instance of <a href="../..//api-reference/services/map-service.html">MapService</a>.</td>
         </tr>
@@ -202,82 +202,82 @@
     </thead>
     <tbody>
         <tr>
-            <td><code>text(<nobr class="param"><span>&lt;String&gt;</span> <code>text</code></nobr>)</code></td>
+            <td><code>text(<span>&lt;String&gt;</span> <code>text</code>)</code></td>
             <td><code>this</code></td>
             <td>Text that is searched across the layers and fields the user specifies.</td>
         </tr>
         <tr>
-            <td><code>contains(<nobr class="param"><span>&lt;Boolean&gt;</span> <code>contains</code></nobr>)</code></td>
+            <td><code>contains(<span>&lt;Boolean&gt;</span> <code>contains</code>)</code></td>
             <td><code>this</code></td>
             <td>When <code>true</code> find task will search for a value that contains the <code>text</code>. When <code>false</code> it will do an exact match on the <code>text</code> string. Default is <code>true</code>.</td>
         </tr>
         <tr>
-            <td><code>fields(<nobr class="param"><span>&lt;Array&gt;</span> <code>fields</code></nobr> or <nobr class="param"><span>&lt;String&gt;</span> <code>fields</code></nobr>)</code></td>
+            <td><code>fields(<span>&lt;Array&gt;</span> <code>fields</code> or <span>&lt;String&gt;</span> <code>fields</code>)</code></td>
             <td><code>this</code></td>
             <td>An array or comma-separated list of field names to search. If not specified, all fields are searched.</td>
         </tr>
         <tr>
-            <td><code>spatialReference(<nobr class="param"><span>&lt;Integer&gt;</span> <code>sr</code></nobr>)</code></td>
+            <td><code>spatialReference(<span>&lt;Integer&gt;</span> <code>sr</code>)</code></td>
             <td><code>this</code></td>
             <td>The well known ID (ex. 4326) for the results.</td>
         </tr>
         <tr>
-            <td><code>layerDef(<nobr class="param"><span>&lt;Integer&gt;</span> <code>id</code></nobr>, <nobr class="param"><span>&lt;String&gt;</span> <code>where</code></nobr>)</code></td>
+            <td><code>layerDef(<span>&lt;Integer&gt;</span> <code>id</code>, <span>&lt;String&gt;</span> <code>where</code>)</code></td>
             <td><code>this</code></td>
             <td>Add a layer definition to the find task.</td>
         </tr>
         <tr>
-            <td><code>layers(<nobr class="param"><span>&lt;Array&gt;</span> <code>layers</code></nobr> or <nobr class="param"><span>&lt;String&gt;</span> <code>layers</code></nobr>)</code></td>
+            <td><code>layers(<span>&lt;Array&gt;</span> <code>layers</code> or <span>&lt;String&gt;</span> <code>layers</code>)</code></td>
             <td><code>this</code></td>
             <td>Layers to perform find task on. Accepts an array of layer IDs or comma-separated list.</td>
         </tr>
         <tr>
-            <td><code>returnGeometry(<nobr class="param"><span>&lt;Boolean&gt;</span> <code>returnGeometry</code></nobr>)</code></td>
+            <td><code>returnGeometry(<span>&lt;Boolean&gt;</span> <code>returnGeometry</code>)</code></td>
             <td><code>this</code></td>
             <td>Return geometry with results. Default is <code>true</code>.</td>
         </tr>
         <tr>
-            <td><code>maxAllowableOffset(<nobr class="param"><span>&lt;Integer&gt;</span> <code>maxAllowableOffset</code></nobr>)</code></td>
+            <td><code>maxAllowableOffset(<span>&lt;Integer&gt;</span> <code>maxAllowableOffset</code>)</code></td>
             <td><code>this</code></td>
             <td>Specifies the maximum allowable offset to be used for generalizing geometries returned by the <code>find</code> task.</td>
         </tr>
         <tr>
-            <td><code>precision(<nobr class="param"><span>&lt;Integer&gt;</span> <code>precision</code></nobr>)</code></td>
+            <td><code>precision(<span>&lt;Integer&gt;</span> <code>precision</code>)</code></td>
             <td><code>this</code></td>
             <td>Specifies the number of decimal places in returned geometries.</td>
         </tr>
         <tr>
-            <td><code>returnZ(<nobr class="param"><span>&lt;Boolean&gt;</span> <code>returnZ</code></nobr>)</code></td>
+            <td><code>returnZ(<span>&lt;Boolean&gt;</span> <code>returnZ</code>)</code></td>
             <td><code>this</code></td>
             <td>Include Z values in the results. Default value is <code>true</code>. This parameter only applies if <code>returnGeometry=true</code>.</td>
         </tr>
         <tr>
-            <td><code>returnM(<nobr class="param"><span>&lt;Boolean&gt;</span> <code>returnM</code></nobr>)</code></td>
+            <td><code>returnM(<span>&lt;Boolean&gt;</span> <code>returnM</code>)</code></td>
             <td><code>this</code></td>
             <td>Includes M values if the features have them. Default value is <code>false</code>. This parameter only applies if <code>returnGeometry=true</code>.</td>
         </tr>
         <tr>
-            <td><code>dynamicLayers(<nobr class="param"><span>&lt;Object&gt;</span> <code>dynamicLayers</code></nobr>)</code></td>
+            <td><code>dynamicLayers(<span>&lt;Object&gt;</span> <code>dynamicLayers</code>)</code></td>
             <td><code>this</code></td>
             <td>Property used for adding new layers or modifying the data source of existing ones in the current map service.</td>
         </tr>
         <tr>
-            <td><code>simplify(<nobr class="param"><span>&lt;<a href="http://leafletjs.com/reference.html#map">Map</a>&gt;</span> <code>map</code></nobr>,  <nobr class="param"><span>&lt;Integer&gt;</span> <code>factor</code></nobr>)</code></td>
+            <td><code>simplify(<span>&lt;<a href="http://leafletjs.com/reference.html#map">Map</a>&gt;</span> <code>map</code>,  <span>&lt;Integer&gt;</span> <code>factor</code>)</code></td>
             <td><code>this</code></td>
             <td>Simplify the geometries of the output features for the current map view. the <code>factor</code> parameter controls the amount of simplification between 0 (no simplification) and 1 (simplify to the most basic shape possible).</td>
         </tr>
         <tr>
-            <td><code>format(<nobr class="param"><span>&lt;Boolean&gt;</span> <code>formatResponse</code></nobr>)</code></td>
+            <td><code>format(<span>&lt;Boolean&gt;</span> <code>formatResponse</code>)</code></td>
             <td><code>this</code></td>
             <td>Use <code>false</code> to ensure that the server returns unformatted feature attributes.<br><small>Only available for ArcGIS Server 10.5+.</small></td>
         </tr>
         <tr>
-            <td><code>token(<nobr class="param"><span>&lt;String&gt;</span> <code>token</code></nobr>)</code></td>
+            <td><code>token(<span>&lt;String&gt;</span> <code>token</code>)</code></td>
             <td><code>this</code></td>
             <td>Adds a token to this request if the service requires authentication. Will be added automatically if used with a service.</td>
         </tr>
         <tr>
-            <td><code>run(<nobr class="param"><span>&lt;Function&gt;</span> <code>callback</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>context</code></nobr>)</code></td>
+            <td><code>run(<span>&lt;Function&gt;</span> <code>callback</code>, <span>&lt;Object&gt;</span> <code>context</code>)</code></td>
             <td><code>this</code></td>
             <td>Exectues the find request with the current parameters, features will be passed to <code>callback</code> as a <a href="http://geojson.org/geojson-spec.html#feature-collection-objects">GeoJSON FeatureCollection</a>. Accepts an optional function context.</td>
         </tr>

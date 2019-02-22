@@ -159,7 +159,7 @@
     </thead>
     <tbody>
         <tr>
-            <td><code class="nobr">L.esri.featureLayer(<nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code></td>
+            <td><code class="nobr">L.esri.featureLayer(<span>&lt;Object&gt;</span> <code>options</code>)</code></td>
             <td>You must pass a <code>url</code> to a <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Layer/02r3000000w6000000/">Feature Layer</a> in your <code>options</code></td>
         </tr>
     </tbody>
@@ -181,17 +181,17 @@
           <td><strong>Required</strong> The URL to the <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Layer/02r3000000w6000000/">Feature Layer</a>.</td>
         </tr>
         <tr>
-            <td><code>pointToLayer(<nobr class="param"><span>&lt;<a href="http://geojson.org/geojson-spec.html#feature-objects">GeoJSON Feature</a>&gt;</span> <code>feature</code></nobr>, <nobr class="param"><span>&lt;<a href="http://leafletjs.com/reference.html#latlng">LatLng</a>&gt;</span> <code>latlng</code></nobr>)</code></td>
+            <td><code>pointToLayer(<span>&lt;<a href="http://geojson.org/geojson-spec.html#feature-objects">GeoJSON Feature</a>&gt;</span> <code>feature</code>, <span>&lt;<a href="http://leafletjs.com/reference.html#latlng">LatLng</a>&gt;</span> <code>latlng</code>)</code></td>
             <td><code>Function</code></td>
             <td>Function that will be used for creating layers for GeoJSON points.  If the option is not specified, simple markers will be created).  For point layers, custom panes should be passed through pointToLayer (example <a href="../../examples/layer-ordering.html">here</a>).</td>
         </tr>
         <tr>
-            <td><code>style(<nobr class="param"><span>&lt;<a href="http://geojson.org/geojson-spec.html#feature-objects">GeoJSON Feature</a>&gt;</span> <code>feature</code></nobr>, <nobr class="param"><span>&lt;<a href="http://leafletjs.com/reference.html#ilayer">ILayer</a>&gt;</span> <code>layer</code></nobr>)</code></td>
+            <td><code>style(<span>&lt;<a href="http://geojson.org/geojson-spec.html#feature-objects">GeoJSON Feature</a>&gt;</span> <code>feature</code>, <span>&lt;<a href="http://leafletjs.com/reference.html#ilayer">ILayer</a>&gt;</span> <code>layer</code>)</code></td>
             <td><code>Function</code></td>
             <td>Function that will be used to get <a href="http://leafletjs.com/reference-1.4.0.html#path-option">style options</a> for vector layers created for GeoJSON features.</td>
         </tr>
         <tr>
-            <td><code>onEachFeature(<nobr class="param"><span>&lt;<a href="http://geojson.org/geojson-spec.html#feature-objects">GeoJSON Feature</a>&gt;</span> <code>feature</code></nobr>, <nobr class="param"><span>&lt;<a href="http://leafletjs.com/reference.html#ilayer">ILayer</a>&gt;</span> <code>layer</code></nobr>)</code></td>
+            <td><code>onEachFeature(<span>&lt;<a href="http://geojson.org/geojson-spec.html#feature-objects">GeoJSON Feature</a>&gt;</span> <code>feature</code>, <span>&lt;<a href="http://leafletjs.com/reference.html#ilayer">ILayer</a>&gt;</span> <code>layer</code>)</code></td>
             <td><code>Function</code></td>
             <td>Provides an opportunity to introspect individual GeoJSON features in the layer.</td>
         </tr>
@@ -333,7 +333,7 @@
     </thead>
     <tbody>
         <tr>
-            <td><code>setStyle(<nobr class="param"><span>&lt;<a href="http://leafletjs.com/reference.html#path-options">PathOptions</a>&gt;</span> <code>style</code></nobr>)</code><br><br><code>setStyle(<nobr class="param"><span>&lt;Function&gt;</span> <code>style</code></nobr>)</code></td>
+            <td><code>setStyle(<span>&lt;<a href="http://leafletjs.com/reference.html#path-options">PathOptions</a>&gt;</span> <code>style</code>)</code><br><br><code>setStyle(<span>&lt;Function&gt;</span> <code>style</code>)</code></td>
             <td><code>this</code></td>
             <td>Sets the given path options to each layer that has a <code>setStyle</code> method. Can also be a <code>Function</code> that will receive a <code>feature</code> argument and should return <a href="http://leafletjs.com/reference.html#path-options">Path Options</a>
             <pre><code class="language-javascript">featureLayer.setStyle({
@@ -347,17 +347,17 @@
             </td>
         </tr>
         <tr>
-            <td><code>setFeatureStyle(<nobr class="param"><span>&lt;String or Integer&gt;</span> <code>id</code></nobr>, <nobr class="param"><span>&lt;Function or <a href="http://leafletjs.com/reference.html#path-options">Path Options</a>a&gt;&gt;</span> <code>[object Object]</code></nobr>)</code></td>
+            <td><code>setFeatureStyle(<span>&lt;String or Integer&gt;</span> <code>id</code>, <span>&lt;Function or <a href="http://leafletjs.com/reference.html#path-options">Path Options</a>a&gt;&gt;</span> <code>[object Object]</code>)</code></td>
             <td><code>this</code></td>
             <td>Changes the style on a specfic feature.</td>
         </tr>
         <tr>
-            <td><code>resetStyle(<nobr class="param"><span>&lt;String or Integer&gt;</span> <code>undefined</code></nobr>)</code></td>
+            <td><code>resetStyle(<span>&lt;String or Integer&gt;</span> <code>undefined</code>)</code></td>
             <td><code>this</code></td>
             <td>Given the ID of a feature, reset that feature to the original style.</td>
         </tr>
         <tr>
-            <td><code>eachFeature(<nobr class="param"><span>&lt;Function&gt;</span> <code>fn</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>context</code></nobr>)</code></td>
+            <td><code>eachFeature(<span>&lt;Function&gt;</span> <code>fn</code>, <span>&lt;Object&gt;</span> <code>context</code>)</code></td>
             <td><code>this</code></td>
             <td>
                 Calls the passed function against every feature. The function will be passed the layer that represents the feature.
@@ -372,14 +372,14 @@ function iterateFeatures () {
             </td>
         </tr>
         <tr>
-            <td><code>eachActiveFeature(<nobr class="param"><span>&lt;Function&gt;</span> <code>fn</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>context</code></nobr>)</code></td>
+            <td><code>eachActiveFeature(<span>&lt;Function&gt;</span> <code>fn</code>, <span>&lt;Object&gt;</span> <code>context</code>)</code></td>
             <td><code>this</code></td>
             <td>
                 Calls the passed function against every feature that is currently being displayed.
             </td>
         </tr>
         <tr>
-            <td><code>getFeature(<nobr class="param"><span>&lt;String or Integer&gt;</span> <code>undefined</code></nobr> id)</code></td>
+            <td><code>getFeature(<span>&lt;String or Integer&gt;</span> <code>undefined</code> id)</code></td>
             <td><code>Layer</code></td>
             <td>Given the id of a Feature return the layer on the map that represents it. This will usually be a Leaflet vector layer like <a href="http://leafletjs.com/reference.html#polyline">Polyline</a> or <a href="http://leafletjs.com/reference.html#polygon">Polygon</a>, or a Leaflet <a href="http://leafletjs.com/reference.html#marker">Marker</a>.</td>
         </tr>
@@ -389,7 +389,7 @@ function iterateFeatures () {
             <td>Returns the current <code>where</code> setting</td>
         </tr>
         <tr>
-            <td><code>setWhere(<nobr class="param"><span>&lt;String&gt;</span> <code>where</code></nobr>, <nobr class="param"><span>&lt;Function&gt;</span> <code>callback</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>context</code></nobr>)</code></td>
+            <td><code>setWhere(<span>&lt;String&gt;</span> <code>where</code>, <span>&lt;Function&gt;</span> <code>callback</code>, <span>&lt;Object&gt;</span> <code>context</code>)</code></td>
             <td><code>this</code></td>
             <td>Sets the new <code>where</code> option and refreshes the layer to reflect the new <code>where</code> filter. Accepts an optional callback and function context.</td>
         </tr>
@@ -399,12 +399,12 @@ function iterateFeatures () {
             <td>Returns the current time range as an array like <code>[from, to]</code></td>
         </tr>
         <tr>
-            <td><code>setTimeRange(<nobr class="param"><span>&lt;Date&gt;</span> <code>from</code></nobr>, <nobr class="param"><span>&lt;Date&gt;</span> <code>to</code></nobr>, , <nobr class="param"><span>&lt;Function&gt;</span> <code>callback</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>context</code></nobr>)</code></td>
+            <td><code>setTimeRange(<span>&lt;Date&gt;</span> <code>from</code>, <span>&lt;Date&gt;</span> <code>to</code>, , <span>&lt;Function&gt;</span> <code>callback</code>, <span>&lt;Object&gt;</span> <code>context</code>)</code></td>
             <td><code>this</code></td>
             <td>Sets the current time filter applied to features. An optional callback is run upon completion if <code>timeFilterMode</code> is set to <code>&#39;server&#39;</code>. Also accepts function context as the last argument.</td>
         </tr>
         <tr>
-            <td><code>authenticate(<nobr class="param"><span>&lt;String&gt;</span> <code>token</code></nobr>)</code></td>
+            <td><code>authenticate(<span>&lt;String&gt;</span> <code>token</code>)</code></td>
             <td><code>this</code></td>
             <td>Authenticates this service with a new token and runs any pending requests that required a token.</td>
         </tr>
@@ -424,7 +424,7 @@ featureLayer.query()
             </td>
         </tr>
         <tr>
-            <td><code>metadata(<nobr class="param"><span>&lt;Function&gt;</span> <code>callback</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>context</code></nobr>)</code></td>
+            <td><code>metadata(<span>&lt;Function&gt;</span> <code>callback</code>, <span>&lt;Object&gt;</span> <code>context</code>)</code></td>
             <td><code>this</code></td>
             <td>
                 Requests metadata about this Feature Layer. Callback will be called with <code>error</code> and <code>metadata</code>.
@@ -434,7 +434,7 @@ featureLayer.query()
             </td>
         </tr>
  <tr>
-            <td><code>addFeature(<nobr class="param"><span>&lt;<a href="http://geojson.org/geojson-spec.html#feature-objects">GeoJSON Feature</a>&gt;</span> <code>feature</code></nobr>, <nobr class="param"><span>&lt;Function&gt;</span> <code>callback</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>context</code></nobr>)</code></td>
+            <td><code>addFeature(<span>&lt;<a href="http://geojson.org/geojson-spec.html#feature-objects">GeoJSON Feature</a>&gt;</span> <code>feature</code>, <span>&lt;Function&gt;</span> <code>callback</code>, <span>&lt;Object&gt;</span> <code>context</code>)</code></td>
             <td><code>this</code></td>
             <td>
                 Adds a new feature to the feature layer. this also adds the feature to the map if creation is successful.
@@ -445,7 +445,7 @@ featureLayer.query()
             </td>
         </tr>
         <tr>
-            <td><code>updateFeature(<nobr class="param"><span>&lt;<a href="http://geojson.org/geojson-spec.html#feature-objects">GeoJSON Feature</a>&gt;</span> <code>feature</code></nobr>, <nobr class="param"><span>&lt;Function&gt;</span> <code>callback</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>context</code></nobr>)</code></td>
+            <td><code>updateFeature(<span>&lt;<a href="http://geojson.org/geojson-spec.html#feature-objects">GeoJSON Feature</a>&gt;</span> <code>feature</code>, <span>&lt;Function&gt;</span> <code>callback</code>, <span>&lt;Object&gt;</span> <code>context</code>)</code></td>
             <td><code>this</code></td>
             <td>
                 Update the provided feature on the Feature Layer. This also updates the feature on the map.
@@ -456,7 +456,7 @@ featureLayer.query()
             </td>
         </tr>
         <tr>
-            <td><code>deleteFeature(<nobr class="param"><span>&lt;String or Integer&gt;</span> <code>id</code></nobr>, <nobr class="param"><span>&lt;Function&gt;</span> <code>callback</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>context</code></nobr>)</code></td>
+            <td><code>deleteFeature(<span>&lt;String or Integer&gt;</span> <code>id</code>, <span>&lt;Function&gt;</span> <code>callback</code>, <span>&lt;Object&gt;</span> <code>context</code>)</code></td>
             <td><code>this</code></td>
             <td>
                 Remove the feature with the provided id from the feature layer. This will also remove the feature from the map if it exists.
@@ -467,7 +467,7 @@ featureLayer.query()
             </td>
         </tr>
         <tr>
-            <td><code>deleteFeatures(<nobr class="param"><span>&lt;Array of String or Integers&gt;</span> <code>ids</code></nobr>, <nobr class="param"><span>&lt;Function&gt;</span> <code>callback</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>context</code></nobr>)</code></td>
+            <td><code>deleteFeatures(<span>&lt;Array of String or Integers&gt;</span> <code>ids</code>, <span>&lt;Function&gt;</span> <code>callback</code>, <span>&lt;Object&gt;</span> <code>context</code>)</code></td>
             <td><code>this</code></td>
             <td>
                 Removes an array of features with the provided ids from the feature layer. This will also remove the features from the map if they exist.
@@ -478,7 +478,7 @@ featureLayer.query()
             </td>
         </tr>
         <tr>
-            <td><code>redraw(<nobr class="param"><span>&lt;String or Integer&gt;</span> <code>id</code></nobr>)</code></td>
+            <td><code>redraw(<span>&lt;String or Integer&gt;</span> <code>id</code>)</code></td>
             <td><code>this</code></td>
             <td>
                 Redraws a feature with the provided id from the feature layer.

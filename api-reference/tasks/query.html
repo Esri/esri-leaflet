@@ -153,10 +153,10 @@
     <tbody>
         <tr>
             <td>
-            <code>L.esri.query(<nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br><br>
-            <code>L.esri.query(<nobr class="param"><span>&lt;<a href="../../api-reference/services/feature-layer-service.html">FeatureLayerService</a>&gt;</span> <code>endpoint</code></nobr>)</code><br><br>
-            <code>L.esri.query(<nobr class="param"><span>&lt;<a href="../../api-reference/services/map-service.html">MapService</a>&gt;</span> <code>endpoint</code></nobr>)</code><br><br>
-            <code>L.esri.query(<nobr class="param"><span>&lt;<a href="../../api-reference/services/image-service.html">ImageService</a>&gt;</span> <code>endpoint</code></nobr>)</code>
+            <code>L.esri.query(<span>&lt;Object&gt;</span> <code>options</code>)</code><br><br>
+            <code>L.esri.query(<span>&lt;<a href="../../api-reference/services/feature-layer-service.html">FeatureLayerService</a>&gt;</span> <code>endpoint</code>)</code><br><br>
+            <code>L.esri.query(<span>&lt;<a href="../../api-reference/services/map-service.html">MapService</a>&gt;</span> <code>endpoint</code>)</code><br><br>
+            <code>L.esri.query(<span>&lt;<a href="../../api-reference/services/image-service.html">ImageService</a>&gt;</span> <code>endpoint</code>)</code>
             </td>
             <td>Accepts either an <code>options</code> object or an instance of <a href="../..//api-reference/services/map-service.html">MapService</a>, <a href="../..//api-reference/services/feature-layer-service.html">FeatureLayerService</a> or <a href="../..//api-reference/services/image-service.html">ImageService</a>.</td>
         </tr>
@@ -205,102 +205,102 @@
     </thead>
     <tbody>
         <tr>
-            <td><code>within(<nobr class="param"><span>&lt;Geometry&gt;</span> <code>geometry</code></nobr>)</code></td>
+            <td><code>within(<span>&lt;Geometry&gt;</span> <code>geometry</code>)</code></td>
             <td><code>this</code></td>
             <td>Queries features from the service within (fully contained by) the passed geometry object. <code>geometry</code> can be an instance of <a href="http://leafletjs.com/reference.html#marker"><code>L.Marker</code></a>, <a href="http://leafletjs.com/reference.html#polygon"><code>L.Polygon</code></a>, <a href="http://leafletjs.com/reference.html#polyline"><code>L.Polyline</code></a>, <a href="http://leafletjs.com/reference.html#latlng"><code>L.LatLng</code></a>, <a href="http://leafletjs.com/reference.html#latlngbounds"><code>L.LatLngBounds</code></a> and <a href="http://leafletjs.com/reference.html#geojson"><code>L.GeoJSON</code></a>. It can also accept valid GeoJSON <a href="http://geojson.org/geojson-spec.html#point">Point</a>, <a href="http://geojson.org/geojson-spec.html#polyline">Polyline</a>, <a href="http://geojson.org/geojson-spec.html#polygon">Polygon</a> objects and GeoJSON <a href="http://geojson.org/geojson-spec.html#feature-objects">Feature objects</a> containing Point, Polyline, Polygon.</td>
         </tr>
         <tr>
-            <td><code>contains(<nobr class="param"><span>&lt;Geometry&gt;</span> <code>geometry</code></nobr>)</code></td>
+            <td><code>contains(<span>&lt;Geometry&gt;</span> <code>geometry</code>)</code></td>
             <td><code>this</code></td>
             <td>Queries features from the service that fully contain the passed geometry object. <code>geometry</code> can be an instance of <a href="http://leafletjs.com/reference.html#marker"><code>L.Marker</code></a>, <a href="http://leafletjs.com/reference.html#polygon"><code>L.Polygon</code></a>, <a href="http://leafletjs.com/reference.html#polyline"><code>L.Polyline</code></a>, <a href="http://leafletjs.com/reference.html#latlng"><code>L.LatLng</code></a>, <a href="http://leafletjs.com/reference.html#latlngbounds"><code>L.LatLngBounds</code></a> and <a href="http://leafletjs.com/reference.html#geojson"><code>L.GeoJSON</code></a>. It can also accept valid GeoJSON <a href="http://geojson.org/geojson-spec.html#point">Point</a>, <a href="http://geojson.org/geojson-spec.html#polyline">Polyline</a>, <a href="http://geojson.org/geojson-spec.html#polygon">Polygon</a> objects and GeoJSON <a href="http://geojson.org/geojson-spec.html#feature-objects">Feature objects</a> containing Point, Polyline, Polygon.</td>
         </tr>
         <tr>
-            <td><code>intersects(<nobr class="param"><span>&lt;Geometry&gt;</span> <code>geometry</code></nobr>)</code></td>
+            <td><code>intersects(<span>&lt;Geometry&gt;</span> <code>geometry</code>)</code></td>
             <td><code>this</code></td>
             <td>Queries features from the service that intersect (touch anywhere) the passed geometry object. <code>geometry</code> can be an instance of <a href="http://leafletjs.com/reference.html#marker"><code>L.Marker</code></a>, <a href="http://leafletjs.com/reference.html#polygon"><code>L.Polygon</code></a>, <a href="http://leafletjs.com/reference.html#polyline"><code>L.Polyline</code></a>, <a href="http://leafletjs.com/reference.html#latlng"><code>L.LatLng</code></a>, <a href="http://leafletjs.com/reference.html#latlngbounds"><code>L.LatLngBounds</code></a> and <a href="http://leafletjs.com/reference.html#geojson"><code>L.GeoJSON</code></a>. It can also accept valid GeoJSON <a href="http://geojson.org/geojson-spec.html#point">Point</a>, <a href="http://geojson.org/geojson-spec.html#polyline">Polyline</a>, <a href="http://geojson.org/geojson-spec.html#polygon">Polygon</a> objects and GeoJSON <a href="http://geojson.org/geojson-spec.html#feature-objects">Feature objects</a> containing Point, Polyline, Polygon.</td>
         </tr>
         <tr>
-            <td><code>bboxIntersects(<nobr class="param"><span>&lt;Geometry&gt;</span> <code>geometry</code></nobr>)</code></td>
+            <td><code>bboxIntersects(<span>&lt;Geometry&gt;</span> <code>geometry</code>)</code></td>
             <td><code>this</code></td>
             <td>Queries features from the service that have a bounding box that intersects the bounding box of the passed geometry object. <code>geometry</code> can be an instance of <a href="http://leafletjs.com/reference.html#marker"><code>L.Marker</code></a>, <a href="http://leafletjs.com/reference.html#polygon"><code>L.Polygon</code></a>, <a href="http://leafletjs.com/reference.html#polyline"><code>L.Polyline</code></a>, <a href="http://leafletjs.com/reference.html#latlng"><code>L.LatLng</code></a>, <a href="http://leafletjs.com/reference.html#latlngbounds"><code>L.LatLngBounds</code></a> and <a href="http://leafletjs.com/reference.html#geojson"><code>L.GeoJSON</code></a>. It can also accept valid GeoJSON <a href="http://geojson.org/geojson-spec.html#point">Point</a>, <a href="http://geojson.org/geojson-spec.html#polyline">Polyline</a>, <a href="http://geojson.org/geojson-spec.html#polygon">Polygon</a> objects and GeoJSON <a href="http://geojson.org/geojson-spec.html#feature-objects">Feature objects</a> containing Point, Polyline, Polygon.</td>
         </tr>
         <tr>
-            <td><code>overlap(<nobr class="param"><span>&lt;Geometry&gt;</span> <code>geometry</code></nobr>)</code></td>
+            <td><code>overlap(<span>&lt;Geometry&gt;</span> <code>geometry</code>)</code></td>
             <td><code>this</code></td>
             <td>Queries features from the service that overlap (touch but are not fully contained by) the passed geometry object. <code>geometry</code> can be an instance of <a href="http://leafletjs.com/reference.html#marker"><code>L.Marker</code></a>, <a href="http://leafletjs.com/reference.html#polygon"><code>L.Polygon</code></a>, <a href="http://leafletjs.com/reference.html#polyline"><code>L.Polyline</code></a>, <a href="http://leafletjs.com/reference.html#latlng"><code>L.LatLng</code></a>, <a href="http://leafletjs.com/reference.html#latlngbounds"><code>L.LatLngBounds</code></a> and <a href="http://leafletjs.com/reference.html#geojson"><code>L.GeoJSON</code></a>. It can also accept valid GeoJSON <a href="http://geojson.org/geojson-spec.html#point">Point</a>, <a href="http://geojson.org/geojson-spec.html#polyline">Polyline</a>, <a href="http://geojson.org/geojson-spec.html#polygon">Polygon</a> objects and GeoJSON <a href="http://geojson.org/geojson-spec.html#feature-objects">Feature objects</a> containing Point, Polyline, Polygon.</td>
         </tr>
         <tr>
-            <td><code>nearby(<nobr class="param"><span>&lt;<a href="http://leafletjs.com/reference.html#latlng">LatLng</a>&gt;</span> <code>latlng</code></nobr>, <nobr class="param"><span>&lt;Integer&gt;</span> <code>distance</code></nobr>)</code></td>
+            <td><code>nearby(<span>&lt;<a href="http://leafletjs.com/reference.html#latlng">LatLng</a>&gt;</span> <code>latlng</code>, <span>&lt;Integer&gt;</span> <code>distance</code>)</code></td>
             <td><code>this</code></td>
             <td>Queries features a given distance in meters around a <a href="http://leafletjs.com/reference.html#latlng">LatLng</a>. <br><small>Only available for Feature Layers hosted on ArcGIS Online or ArcGIS Server 10.3+ that include the capability <code>supportsQueryWithDistance</code>.</small></td>
         </tr>
         <tr>
-            <td><code>where(<nobr class="param"><span>&lt;String&gt;</span> <code>where</code></nobr>)</code></td>
+            <td><code>where(<span>&lt;String&gt;</span> <code>where</code>)</code></td>
             <td><code>this</code></td>
             <td>Adds a <code>where</code> clause to the query.  String values should be denoted using single quotes ie: <code>query.where(&quot;FIELDNAME = &#39;field value&#39;&quot;);</code> More info about valid SQL can be found <a href="http://resources.arcgis.com/en/help/main/10.2/index.html#/SQL_reference_for_query_expressions_used_in_ArcGIS/00s500000033000000/">here</a>.</td>
         </tr>
         <tr>
-            <td><code>offset(<nobr class="param"><span>&lt;Integer&gt;</span> <code>offset</code></nobr>)</code></td>
+            <td><code>offset(<span>&lt;Integer&gt;</span> <code>offset</code>)</code></td>
             <td><code>this</code></td>
             <td>Define the offset of the results, when combined with <code>limit</code> can be used for paging. <br><small>Only available for Feature Layers hosted on ArcGIS Online or ArcGIS Server 10.3+.</small></td>
         </tr>
         <tr>
-            <td><code>limit(<nobr class="param"><span>&lt;Integer&gt;</span> <code>limit</code></nobr>)</code></td>
+            <td><code>limit(<span>&lt;Integer&gt;</span> <code>limit</code>)</code></td>
             <td><code>this</code></td>
             <td>Limit the number of results returned by this query, when combined with <code>offset</code> can be used for paging. <br><small>Only available for Feature Layers hosted on ArcGIS Online or ArcGIS Server 10.3.</small></td>
         </tr>
         <tr>
-            <td><code>between(<nobr class="param"><span>&lt;Date&gt;</span> <code>from</code></nobr>, <nobr class="param"><span>&lt;Date&gt;</span> <code>to</code></nobr>)</code></td>
+            <td><code>between(<span>&lt;Date&gt;</span> <code>from</code>, <span>&lt;Date&gt;</span> <code>to</code>)</code></td>
             <td><code>this</code></td>
             <td>Queries features within a given time range. <small>Only available for Layers/Services with <code>timeInfo</code> in their metadata.</small></td>
         </tr>
         <tr>
-            <td><code>fields(<nobr class="param"><span>&lt;Array&gt;</span> <code>fields</code></nobr> or <nobr class="param"><span>&lt;String&gt;</span> <code>fields</code></nobr>)</code></td>
+            <td><code>fields(<span>&lt;Array&gt;</span> <code>fields</code> or <span>&lt;String&gt;</span> <code>fields</code>)</code></td>
             <td><code>this</code></td>
             <td>An array of associated fields to request for each feature.</td>
         </tr>
         <tr>
-            <td><code>returnGeometry(<nobr class="param"><span>&lt;Boolean&gt;</span> <code>returnGeometry</code></nobr>)</code></td>
+            <td><code>returnGeometry(<span>&lt;Boolean&gt;</span> <code>returnGeometry</code>)</code></td>
             <td><code>this</code></td>
             <td>Return geometry with results. Default is <code>true</code>.</td>
         </tr>
         <tr>
-            <td><code>simplify(<nobr class="param"><span>&lt;<a href="http://leafletjs.com/reference.html#map">Map</a>&gt;</span> <code>map</code></nobr>,  <nobr class="param"><span>&lt;Number&gt;</span> <code>factor</code></nobr>)</code></td>
+            <td><code>simplify(<span>&lt;<a href="http://leafletjs.com/reference.html#map">Map</a>&gt;</span> <code>map</code>,  <span>&lt;Number&gt;</span> <code>factor</code>)</code></td>
             <td><code>this</code></td>
             <td>Simplify the geometries of the output features for the current map view. the <code>factor</code> parameter controls the amount of simplification between 0 (no simplification) and 1 (the most basic shape possible).</td>
         </tr>
         <tr>
-            <td><code>orderBy(<nobr class="param"><span>&lt;String&gt;</span> <code>fieldName</code></nobr>, <nobr class="param"><span>&lt;String&gt;</span> <code>order</code></nobr>)</code></td>
+            <td><code>orderBy(<span>&lt;String&gt;</span> <code>fieldName</code>, <span>&lt;String&gt;</span> <code>order</code>)</code></td>
             <td><code>this</code></td>
             <td>Sort output features using values from an individual field. <code>&quot;ASC&quot;</code> (ascending) is the default sort order, but <code>&quot;DESC&quot;</code> can be passed as an alternative.  This method can be called more than once to apply advanced sorting.</td>
         </tr>
         <tr>
-            <td><code>featureIds(<nobr class="param"><span>&lt;Array&gt;</span> <code>ids</code></nobr>)</code></td>
+            <td><code>featureIds(<span>&lt;Array&gt;</span> <code>ids</code>)</code></td>
             <td><code>this</code></td>
             <td>Return only specific feature IDs if they match other query parameters.</td>
         </tr>
         <tr>
-            <td><code>precision(<nobr class="param"><span>&lt;Integer&gt;</span> <code>precision</code></nobr>)</code></td>
+            <td><code>precision(<span>&lt;Integer&gt;</span> <code>precision</code>)</code></td>
             <td><code>this</code></td>
             <td>Return only this many decimal points of precision in the output geometries.</td>
         </tr>
         <tr>
-            <td><code>token(<nobr class="param"><span>&lt;String&gt;</span> <code>token</code></nobr>)</code></td>
+            <td><code>token(<span>&lt;String&gt;</span> <code>token</code>)</code></td>
             <td><code>this</code></td>
             <td>Adds a token to this request if the service requires authentication. Will be added automatically if used with a service.</td>
         </tr>
         <tr>
-            <td><code>layer(<nobr class="param"><span>&lt;String or Integer&gt;</span> <code>layer</code></nobr>)</code></td>
+            <td><code>layer(<span>&lt;String or Integer&gt;</span> <code>layer</code>)</code></td>
             <td><code>this</code></td>
             <td>Used to select which layer inside a Map Service to perform the query on. <br><small>Only available for Map Services.</small></td>
         </tr>
         <tr>
-            <td><code>pixelSize(<nobr class="param"><span>&lt;<a href="http://leafletjs.com/reference.html#point">Point</a>&gt;</span> <code>point</code></nobr>)</code></td>
+            <td><code>pixelSize(<span>&lt;<a href="http://leafletjs.com/reference.html#point">Point</a>&gt;</span> <code>point</code>)</code></td>
             <td><code>this</code></td>
             <td>Override the default pixelSize when querying an Image Service. <br><small>Only available for Image Services.</small></td>
         </tr>
         <tr>
-            <td><code>transform(<nobr class="param"><span>&lt;Number&gt;</span> <code>Number</code></nobr>)</code></td>
+            <td><code>transform(<span>&lt;Number&gt;</span> <code>Number</code>)</code></td>
             <td><code>this</code></td>
             <td>The WKID of a <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/index.html#/Datum_transformations/02r3000000r8000000/">datum transformation</a> for the server to apply when reprojecting output features.<br><small>Only available for ArcGIS Server 10.5+.</small></td>
         </tr>
@@ -310,27 +310,27 @@
             <td>Ensures that no geometry or duplicate field values will be returned in the subsequent request.</td>
         </tr>
         <tr>
-            <td><code>returnM(<nobr class="param"><span>&lt;Boolean&gt;</span> <code>returnM</code></nobr>)</code></td>
+            <td><code>returnM(<span>&lt;Boolean&gt;</span> <code>returnM</code>)</code></td>
             <td><code>this</code></td>
             <td>Return geometry with four dimensional measure values in results.</td>
         </tr>
         <tr>
-            <td><code>run(<nobr class="param"><span>&lt;Function&gt;</span> <code>callback</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>context</code></nobr>)</code></td>
+            <td><code>run(<span>&lt;Function&gt;</span> <code>callback</code>, <span>&lt;Object&gt;</span> <code>context</code>)</code></td>
             <td><code>this</code></td>
             <td>Executes the query request with the current parameters, features will be passed to <code>callback</code> as a <a href="http://geojson.org/geojson-spec.html#feature-collection-objects">GeoJSON FeatureCollection</a>. Accepts an optional function context.</td>
         </tr>
         <tr>
-            <td><code>count(<nobr class="param"><span>&lt;Function&gt;</span> <code>callback</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>context</code></nobr>)</code></td>
+            <td><code>count(<span>&lt;Function&gt;</span> <code>callback</code>, <span>&lt;Object&gt;</span> <code>context</code>)</code></td>
             <td><code>this</code></td>
             <td>Executes the query request with the current parameters, passing only the number of features matching the query to callback as an <code>Integer</code>. Accepts an optional function context.</td>
         </tr>
         <tr>
-            <td><code>ids(<nobr class="param"><span>&lt;Function&gt;</span> <code>callback</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>context</code></nobr>)</code></td>
+            <td><code>ids(<span>&lt;Function&gt;</span> <code>callback</code>, <span>&lt;Object&gt;</span> <code>context</code>)</code></td>
             <td><code>this</code></td>
             <td>Executes the query request with the current parameters, passing only an array of the feature ids matching the query to callback<code>callback</code>. Accepts an optional function context.</td>
         </tr>
         <tr>
-            <td><code>bounds(<nobr class="param"><span>&lt;Function&gt;</span> <code>callback</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>context</code></nobr>)</code></td>
+            <td><code>bounds(<span>&lt;Function&gt;</span> <code>callback</code>, <span>&lt;Object&gt;</span> <code>context</code>)</code></td>
             <td><code>this</code></td>
             <td>Executes the query request with the current parameters, passing only the <a href="http://leafletjs.com/reference.html#latlngbounds"><code>LatLngBounds</code></a> of all features matching the query in the <code>callback</code>. Accepts an optional function context.  <small>Only available for Feature Layers hosted on ArcGIS Online or ArcGIS Server 10.3.1.</small></td>
         </tr>

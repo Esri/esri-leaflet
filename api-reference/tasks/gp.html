@@ -169,22 +169,22 @@ myTask.on(<span class="string">'initialized'</span>, <span class="function"><spa
     </thead>
     <tbody>
         <tr>
-            <td><code>setParam(<nobr class="param"><span>&lt;String&gt;</span> <code>inputParamName</code></nobr>, <nobr class="param"><span>&lt;String||Boolean||Geometry&gt;</span> <code>value</code></nobr>)</code></td>
+            <td><code>setParam(<span>&lt;String&gt;</span> <code>inputParamName</code>, <span>&lt;String||Boolean||Geometry&gt;</span> <code>value</code>)</code></td>
             <td><code><code>this</code></code></td>
             <td>Sets an input parameter named by the service itself. <a href="http://leafletjs.com/reference.html#latlng">L.LatLng</a>, <a href="http://leafletjs.com/reference.html#marker">L.Marker</a>, <a href="http://leafletjs.com/reference.html#latlngbounds">L.LatLngBounds</a>, and <a href="http://leafletjs.com/reference.html#geojson">L.GeoJSON</a> (both Features and Geometries) will be converted to GeoServices JSON to be passed in the request automatically.</td>
         </tr>
         <tr>
-            <td><code>run(<nobr class="param"><span>&lt;Function&gt;</span> <code>callback</code></nobr>)</code></td>
+            <td><code>run(<span>&lt;Function&gt;</span> <code>callback</code>)</code></td>
             <td><code><code>this</code></code></td>
             <td>Calls the corresponding Geoprocessing service, passing the previously supplied input parameters. For synchronous services, <strong>all</strong> result parameters are parsed and returned.</td>
         </tr>
         <tr>
-            <td><code>setOutputParam(<nobr class="param"><span>&lt;String&gt;</span> <code>outputParamName</code></nobr>)</code></td>
+            <td><code>setOutputParam(<span>&lt;String&gt;</span> <code>outputParamName</code>)</code></td>
             <td><code><code>this</code></code></td>
             <td>(Optional) Only applicable for asynchronous services. Notifies the plugin of the parameter name to retrieve output for.</td>
         </tr>
         <tr>
-            <td><code>gpAsyncResultParam(<nobr class="param"><span>&lt;String&gt;</span> <code>resultParamName</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>value</code></nobr>)</code></td>
+            <td><code>gpAsyncResultParam(<span>&lt;String&gt;</span> <code>resultParamName</code>, <span>&lt;Object&gt;</span> <code>value</code>)</code></td>
             <td><code><code>this</code></code></td>
             <td>(Optional) Sets a result parameter for Asynchronous geoprocessing services that require it.</td>
         </tr>

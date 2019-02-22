@@ -718,6 +718,9 @@ td pre {
 
 .nobr {
   white-space: nowrap; }
+  @media screen and (max-width: 960px) {
+    .nobr {
+      white-space: pre-line; } }
 
 #map-wrapper {
   position: relative; }

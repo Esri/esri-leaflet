@@ -153,7 +153,7 @@
     </thead>
     <tbody>
         <tr>
-            <td><code>L.esri.Related.query(<nobr class="param"><span>&lt;L.esri.FeatureLayer&gt;</span> <code>endpoint</code></nobr>)</code><br>or<br><code>L.esri.Related.query(<nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code></td>
+            <td><code>L.esri.Related.query(<span>&lt;L.esri.FeatureLayer&gt;</span> <code>endpoint</code>)</code><br>or<br><code>L.esri.Related.query(<span>&lt;Object&gt;</span> <code>options</code>)</code></td>
             <td><code><code>&lt;L.esri.FeatureLayer&gt;</code> or <code>&lt;Options&gt;</code></code></td>
             <td>Accepts either an <code>options</code> object or an instance of <a href="../layers/feature-layer.html"><code>L.esri.FeatureLayer</code></a>.</td>
         </tr>
@@ -173,47 +173,47 @@
     </thead>
     <tbody>
         <tr>
-            <td><code>objectIds(<nobr class="param"><span>&lt;Array&gt;</span> <code>objectIds</code></nobr> or <nobr class="param"><span>&lt;String&gt;</span> <code>objectId</code></nobr>)</code></td>
+            <td><code>objectIds(<span>&lt;Array&gt;</span> <code>objectIds</code> or <span>&lt;String&gt;</span> <code>objectId</code>)</code></td>
             <td><code><code>this</code></code></td>
             <td>The ObjectId(s) of the features to query for related records.</td>
         </tr>
         <tr>
-            <td><code>relationshipId(<nobr class="param"><span>&lt;String&gt;</span> <code>relationship id</code></nobr>)</code></td>
+            <td><code>relationshipId(<span>&lt;String&gt;</span> <code>relationship id</code>)</code></td>
             <td><code><code>this</code></code></td>
             <td>The id of the relationship itself.</td>
         </tr>
         <tr>
-            <td><code>run(<nobr class="param"><span>&lt;Function&gt;</span> <code>callback</code></nobr>)</code></td>
+            <td><code>run(<span>&lt;Function&gt;</span> <code>callback</code>)</code></td>
             <td><code><code>this</code></code></td>
             <td>Executes the query, passing the previously supplied input parameters.</td>
         </tr>
         <tr>
-            <td><code>fields(<nobr class="param"><span>&lt;Array&gt;</span> <code>fields</code></nobr> or <nobr class="param"><span>&lt;String&gt;</span> <code>field</code></nobr>)</code></td>
+            <td><code>fields(<span>&lt;Array&gt;</span> <code>fields</code> or <span>&lt;String&gt;</span> <code>field</code>)</code></td>
             <td><code><code>this</code></code></td>
             <td>(Optional) Indicates which fields from matched records to include in response (default is &#39;all&#39;).</td>
         </tr>
         <tr>
-            <td><code>returnGeometry(<nobr class="param"><span>&lt;Boolean&gt;</span> <code>true</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>value</code></nobr>)</code></td>
+            <td><code>returnGeometry(<span>&lt;Boolean&gt;</span> <code>true</code>, <span>&lt;Object&gt;</span> <code>value</code>)</code></td>
             <td><code><code>this</code></code></td>
             <td>(Optional) Indicates whether or request the geometry of response features (default is true).</td>
         </tr>
         <tr>
-            <td><code>returnZ(<nobr class="param"><span>&lt;Boolean&gt;</span> <code>true</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>value</code></nobr>)</code></td>
+            <td><code>returnZ(<span>&lt;Boolean&gt;</span> <code>true</code>, <span>&lt;Object&gt;</span> <code>value</code>)</code></td>
             <td><code><code>this</code></code></td>
             <td>(Optional) Indicates whether to request information about elevation in response features (default is true).</td>
         </tr>
         <tr>
-            <td><code>returnM(<nobr class="param"><span>&lt;Boolean&gt;</span> <code>true</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>value</code></nobr>)</code></td>
+            <td><code>returnM(<span>&lt;Boolean&gt;</span> <code>true</code>, <span>&lt;Object&gt;</span> <code>value</code>)</code></td>
             <td><code><code>this</code></code></td>
             <td>(Optional) Indicates whether to request information about 4-D M values in response features (default is false).</td>
         </tr>
         <tr>
-            <td><code>precision(<nobr class="param"><span>&lt;Number&gt;</span> <code>number</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>value</code></nobr>)</code></td>
+            <td><code>precision(<span>&lt;Number&gt;</span> <code>number</code>, <span>&lt;Object&gt;</span> <code>value</code>)</code></td>
             <td><code><code>this</code></code></td>
             <td>(Optional) Indicates the desired decimal precision of response feature geometries.</td>
         </tr>
         <tr>
-            <td><code>definitionExpression(<nobr class="param"><span>&lt;String&gt;</span> <code>sqlfilter</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>value</code></nobr>)</code></td>
+            <td><code>definitionExpression(<span>&lt;String&gt;</span> <code>sqlfilter</code>, <span>&lt;Object&gt;</span> <code>value</code>)</code></td>
             <td><code><code>this</code></code></td>
             <td>(Optional) An opportunity to specify a SQL <code>where</code> clause to further filter results. (Example: &quot;STATE_NAME = &#39;California&#39;&quot;)</td>
         </tr>

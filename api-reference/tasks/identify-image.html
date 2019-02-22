@@ -152,8 +152,8 @@
     <tbody>
         <tr>
             <td>
-            <code>L.esri.identifyImage(<nobr class="param"><span>&lt;<a href="../../api-reference/services/map-service.html">ImageService</a>&gt;</span> <code>endpoint</code></nobr>)</code><br><br>
-            <code>L.esri.identifyImage(<nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br></td>
+            <code>L.esri.identifyImage(<span>&lt;<a href="../../api-reference/services/map-service.html">ImageService</a>&gt;</span> <code>endpoint</code>)</code><br><br>
+            <code>L.esri.identifyImage(<span>&lt;Object&gt;</span> <code>options</code>)</code><br></td>
             <td>Accepts either an <code>options</code> object or an instance of <a href="../..//api-reference/services/image-service.html">ImageService</a>.</td>
         </tr>
     </tbody>
@@ -201,12 +201,12 @@
     </thead>
     <tbody>
         <tr>
-            <td><code>at(<nobr class="param"><span>&lt;<a href="http://leafletjs.com/reference.html#latlng">LatLng</a>&gt;</span> <code>latlng</code></nobr>)</code></td>
+            <td><code>at(<span>&lt;<a href="http://leafletjs.com/reference.html#latlng">LatLng</a>&gt;</span> <code>latlng</code>)</code></td>
             <td><code>this</code></td>
             <td>Identifie the pixel value at a given <a href="http://leafletjs.com/reference.html#latlng">LatLng</a></td>
         </tr>
         <tr>
-            <td><code>between(<nobr class="param"><span>&lt;Date&gt;</span> <code>from</code></nobr>, <nobr class="param"><span>&lt;Date&gt;</span> <code>to</code></nobr>)</code></td>
+            <td><code>between(<span>&lt;Date&gt;</span> <code>from</code>, <span>&lt;Date&gt;</span> <code>to</code>)</code></td>
             <td><code>this</code></td>
             <td>Identifies pixel values within a given time range.</td>
         </tr>
@@ -216,7 +216,7 @@
             <td>Returns the current rendering rule of the task.</td>
         </tr>
         <tr>
-            <td><code>setRenderingRule(<nobr class="param"><span>&lt;Object&gt;</span> <code>renderingRule</code></nobr>)</code></td>
+            <td><code>setRenderingRule(<span>&lt;Object&gt;</span> <code>renderingRule</code>)</code></td>
             <td><code>this</code></td>
             <td>Sets the rendering rule to apply when getting a pixel value.</td>
         </tr>
@@ -226,12 +226,12 @@
             <td>Returns the current mosaic rule of the task.</td>
         </tr>
         <tr>
-            <td><code>setMosaicRule(<nobr class="param"><span>&lt;Object&gt;</span> <code>mosaicRule</code></nobr>)</code></td>
+            <td><code>setMosaicRule(<span>&lt;Object&gt;</span> <code>mosaicRule</code>)</code></td>
             <td><code>this</code></td>
             <td>Sets the mosaic rule to apply when getting a pixel value.</td>
         </tr>
         <tr>
-            <td><code>setPixelSize(<nobr class="param"><span>&lt;Array&gt;</span> <code>pixelSize</code></nobr> or <nobr class="param"><span>&lt;String&gt;</span> <code>pixelSize</code></nobr>)</code></td>
+            <td><code>setPixelSize(<span>&lt;Array&gt;</span> <code>pixelSize</code> or <span>&lt;String&gt;</span> <code>pixelSize</code>)</code></td>
             <td><code>this</code></td>
             <td>Sets the pixel size to use when getting a pixel value. Either an array (<code>[x,y]</code>) or string (<code>&#39;x,y&#39;</code>). If not set, it will use the pixel size defined by the service.</td>
         </tr>
@@ -241,22 +241,22 @@
             <td>Returns the current pixel size of the task.</td>
         </tr>
         <tr>
-            <td><code>returnCatalogItems(<nobr class="param"><span>&lt;Boolean&gt;</span> <code>returnCatalogItems</code></nobr>)</code></td>
+            <td><code>returnCatalogItems(<span>&lt;Boolean&gt;</span> <code>returnCatalogItems</code>)</code></td>
             <td><code>this</code></td>
             <td>Indicates whether or not to return raster catalog items. Set it to <code>false</code> when catalog items are not needed to improve the identify operation&#39;s performance significantly. When set to <code>false</code>, neither the geometry nor attributes of catalog items will be returned. Default is <code>false</code>.</td>
         </tr>
         <tr>
-            <td><code>returnGeometry(<nobr class="param"><span>&lt;Boolean&gt;</span> <code>returnGeometry</code></nobr>)</code></td>
+            <td><code>returnGeometry(<span>&lt;Boolean&gt;</span> <code>returnGeometry</code>)</code></td>
             <td><code>this</code></td>
             <td>Return catalog footprints (geometry) with catalog item results. Default is <code>false</code>.</td>
         </tr>
         <tr>
-            <td><code>token(<nobr class="param"><span>&lt;String&gt;</span> <code>token</code></nobr>)</code></td>
+            <td><code>token(<span>&lt;String&gt;</span> <code>token</code>)</code></td>
             <td><code>this</code></td>
             <td>Adds a token to this request if the service requires authentication. Will be added automatically if used with a service.</td>
         </tr>
         <tr>
-            <td><code>run(<nobr class="param"><span>&lt;Function&gt;</span> <code>callback</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>context</code></nobr>)</code></td>
+            <td><code>run(<span>&lt;Function&gt;</span> <code>callback</code>, <span>&lt;Object&gt;</span> <code>context</code>)</code></td>
             <td><code>this</code></td>
             <td>Executes the identify request with the current parameters, identified pixel value will be passed to <code>callback</code> as a <a href="http://wiki.geojson.org/GeoJSON_draft_version_5#Point">GeoJSON Point</a>. Accepts an optional function context</td>
         </tr>

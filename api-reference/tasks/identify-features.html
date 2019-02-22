@@ -152,8 +152,8 @@
     <tbody>
         <tr>
             <td>
-            <code>L.esri.identifyFeatures(<nobr class="param"><span>&lt;<a href="../../api-reference/services/map-service.html">ImageService</a>&gt;</span> <code>endpoint</code></nobr>)</code><br><br>
-            <code>L.esri.identifyFeatures(<nobr class="param"><span>&lt;Object&gt;</span> <code>options</code></nobr>)</code><br></td>
+            <code>L.esri.identifyFeatures(<span>&lt;<a href="../../api-reference/services/map-service.html">ImageService</a>&gt;</span> <code>endpoint</code>)</code><br><br>
+            <code>L.esri.identifyFeatures(<span>&lt;Object&gt;</span> <code>options</code>)</code><br></td>
             <td>Accepts either an <code>options</code> object or an instance of <a href="../..//api-reference/services/image-service.html"></a>.</td>
         </tr>
     </tbody>
@@ -201,65 +201,65 @@
     </thead>
     <tbody>
         <tr>
-            <td><code>on(<nobr class="param"><span>&lt;<a href="http://leafletjs.com/reference.html#map">Map</a>&gt;</span> <code>map</code></nobr>)</code></td>
+            <td><code>on(<span>&lt;<a href="http://leafletjs.com/reference.html#map">Map</a>&gt;</span> <code>map</code>)</code></td>
             <td><code>this</code></td>
             <td>The map to identify features on.</td>
         </tr>
         <tr>
-            <td><code>at(<nobr class="param"><span>&lt;Geometry&gt;</span> <code>geometry</code></nobr>)</code></td>
+            <td><code>at(<span>&lt;Geometry&gt;</span> <code>geometry</code>)</code></td>
             <td><code>this</code></td>
             <td>Identifies features at a given <a href="http://leafletjs.com/reference.html#latlng">LatLng</a>. <code>geometry</code> can also be an instance of <a href="http://leafletjs.com/reference.html#marker"><code>L.Marker</code></a>, <a href="http://leafletjs.com/reference.html#polygon"><code>L.Polygon</code></a>, <a href="http://leafletjs.com/reference.html#polyline"><code>L.Polyline</code></a>, <a href="http://leafletjs.com/reference.html#latlngbounds"><code>L.LatLngBounds</code></a>, <a href="http://leafletjs.com/reference.html#geojson"><code>L.GeoJSON</code></a> or a valid <a href="http://geojson.org/geojson-spec.html">GeoJSON</a> object literal.</td>
         </tr>
         <tr>
-            <td><code>layerDef(<nobr class="param"><span>&lt;Integer&gt;</span> <code>id</code></nobr>, <nobr class="param"><span>&lt;String&gt;</span> <code>where</code></nobr>)</code></td>
+            <td><code>layerDef(<span>&lt;Integer&gt;</span> <code>id</code>, <span>&lt;String&gt;</span> <code>where</code>)</code></td>
             <td><code>this</code></td>
             <td>Add a layer definition to the query.</td>
         </tr>
         <tr>
-            <td><code>between(<nobr class="param"><span>&lt;Date&gt;</span> <code>from</code></nobr>, <nobr class="param"><span>&lt;Date&gt;</span> <code>to</code></nobr>)</code></td>
+            <td><code>between(<span>&lt;Date&gt;</span> <code>from</code>, <span>&lt;Date&gt;</span> <code>to</code>)</code></td>
             <td><code>this</code></td>
             <td>Identifies features within a given time range.</td>
         </tr>
         <tr>
-            <td><code>layers(<nobr class="param"><span>&lt;String&gt;</span> <code>layers</code></nobr>)</code></td>
+            <td><code>layers(<span>&lt;String&gt;</span> <code>layers</code>)</code></td>
             <td><code>this</code></td>
             <td>
-              By default, only the topmost feature will be identified, but it is possible to specify both an alternative strategy and array of individual layers.  See the REST API <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/index.html#/Identify_Map_Service/02r300000113000000/">documentation</a> for more information about valid combinations.<br>
+              By default, all features will be identified, but it is possible to specify both an alternative strategy and array of individual layers.  See the REST API <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/index.html#/Identify_Map_Service/02r300000113000000/">documentation</a> for more information about valid combinations.<br>
               ex: <code>.layers(&#39;all:0&#39;)</code>.
             </td>
         </tr>
         <tr>
-            <td><code>precision(<nobr class="param"><span>&lt;Integer&gt;</span> <code>precision</code></nobr>)</code></td>
+            <td><code>precision(<span>&lt;Integer&gt;</span> <code>precision</code>)</code></td>
             <td><code>this</code></td>
             <td>Used to cap the number of decimal points included in output geometries.</td>
         </tr>
         <tr>
-            <td><code>tolerance(<nobr class="param"><span>&lt;Integer&gt;</span> <code>precision</code></nobr>)</code></td>
+            <td><code>tolerance(<span>&lt;Integer&gt;</span> <code>precision</code>)</code></td>
             <td><code>this</code></td>
             <td>Buffer the identify area by a given number of screen pixels.</td>
         </tr>
         <tr>
-            <td><code>returnGeometry(<nobr class="param"><span>&lt;Boolean&gt;</span> <code>returnGeometry</code></nobr>)</code></td>
+            <td><code>returnGeometry(<span>&lt;Boolean&gt;</span> <code>returnGeometry</code>)</code></td>
             <td><code>this</code></td>
             <td>Return geometry with results. Default is <code>true</code>.</td>
         </tr>
         <tr>
-            <td><code>simplify(<nobr class="param"><span>&lt;<a href="http://leafletjs.com/reference.html#map">Map</a>&gt;</span> <code>map</code></nobr>,  <nobr class="param"><span>&lt;Number&gt;</span> <code>factor</code></nobr>)</code></td>
+            <td><code>simplify(<span>&lt;<a href="http://leafletjs.com/reference.html#map">Map</a>&gt;</span> <code>map</code>,  <span>&lt;Number&gt;</span> <code>factor</code>)</code></td>
             <td><code>this</code></td>
             <td>Simplify the geometries of the output features for the current map view. the <code>factor</code> parameter controls the amount of simplification between 0 (no simplification) and 1 (the most basic shape possible).</td>
         </tr>
         <tr>
-            <td><code>format(<nobr class="param"><span>&lt;Boolean&gt;</span> <code>formatResponse</code></nobr>)</code></td>
+            <td><code>format(<span>&lt;Boolean&gt;</span> <code>formatResponse</code>)</code></td>
             <td><code>this</code></td>
             <td>Use <code>false</code> to ensure that the server returns unformatted feature attributes.<br><small>Only available for ArcGIS Server 10.5+.</small></td>
         </tr>
         <tr>
-            <td><code>token(<nobr class="param"><span>&lt;String&gt;</span> <code>token</code></nobr>)</code></td>
+            <td><code>token(<span>&lt;String&gt;</span> <code>token</code>)</code></td>
             <td><code>this</code></td>
             <td>Adds a token to this request if the service requires authentication. Will be added automatically if used with a service.</td>
         </tr>
         <tr>
-            <td><code>run(<nobr class="param"><span>&lt;Function&gt;</span> <code>callback</code></nobr>, <nobr class="param"><span>&lt;Object&gt;</span> <code>context</code></nobr>)</code></td>
+            <td><code>run(<span>&lt;Function&gt;</span> <code>callback</code>, <span>&lt;Object&gt;</span> <code>context</code>)</code></td>
             <td><code>this</code></td>
             <td>Executes the identify request with the current parameters, identified features will be passed to <code>callback</code> as a <a href="http://geojson.org/geojson-spec.html#feature-collection-objects">GeoJSON FeatureCollection</a>. Accepts an optional function context</td>
         </tr>
