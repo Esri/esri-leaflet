@@ -1,5 +1,5 @@
 import { Util, DomUtil } from 'leaflet';
-import Support from './Support';
+import { Support } from './Support';
 import { warn } from './Util';
 
 var callbacks = 0;
