@@ -5,6 +5,15 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+## [2.2.4] - 2019-03-20
+
+### Fixed
+
+* ensure a CORS request is made to fetch dynamic attribution for Esri basemaps instead of a JSONP request. (🙏jubasse🙏 [#1142](https://github.com/Esri/esri-leaflet/issues/1142))
+* make sure webpack clients can access the ES source. [#1134](https://github.com/Esri/esri-leaflet/issues/1134))
+* ensure `basemapLayer` honors a proxy if one is set. (🙏dangowans🙏 [#1122](https://github.com/Esri/esri-leaflet/pull/1122))
+* resolve devDependency security vulnerabilities (🙏gavinr🙏 [#1126](https://github.com/Esri/esri-leaflet/pull/1126))
+
 ## [2.2.3] - 2018-08-16
 
 ### Fixed
@@ -646,7 +655,8 @@ None
 * Add DarkGray and DarkGrayLabels to BasemapLayer. #190
 * An attributionControl on maps is now required when using BasemapLayer. #159
 
-[unreleased]: https://github.com/esri/esri-leaflet/compare/v2.2.3...HEAD
+[unreleased]: https://github.com/esri/esri-leaflet/compare/v2.2.4...HEAD
+[2.2.3]: https://github.com/esri/esri-leaflet/compare/v2.2.3...v2.2.4
 [2.2.3]: https://github.com/esri/esri-leaflet/compare/v2.2.2...v2.2.3
 [2.2.2]: https://github.com/esri/esri-leaflet/compare/v2.2.1...v2.2.2
 [2.2.1]: https://github.com/esri/esri-leaflet/compare/v2.2.0...v2.2.1
