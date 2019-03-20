@@ -1,5 +1,5 @@
 import { latLng, latLngBounds, LatLng, LatLngBounds, Util, DomUtil, GeoJSON } from 'leaflet';
-import { jsonp } from './Request';
+import { request } from './Request';
 import { options } from './Options';
 
 import {
@@ -210,16 +210,6 @@ export function setEsriAttribution (map) {
       map.attributionControl._container.style.maxWidth = calcAttributionWidth(e.target);
     });
 
-    // remove injected scripts and style tags
-    map.on('unload', function () {
-      hoverAttributionStyle.parentNode.removeChild(hoverAttributionStyle);
-      attributionStyle.parentNode.removeChild(attributionStyle);
-      var nodeList = document.querySelectorAll('.esri-leaflet-jsonp');
-      for (var i = 0; i < nodeList.length; i++) {
-        nodeList.item(i).parentNode.removeChild(nodeList.item(i));
-      }
-    });
-
     map.attributionControl._esriAttributionAdded = true;
   }
 }
@@ -284,7 +274,7 @@ export function _setGeometry (geometry) {
 }
 
 export function _getAttributionData (url, map) {
-  jsonp(url, {}, Util.bind(function (error, attributions) {
+  request(url, {}, Util.bind(function (error, attributions) {
     if (error) { return; }
     map._esriAttributions = [];
     for (var c = 0; c < attributions.contributors.length; c++) {
