@@ -264,10 +264,6 @@ export var RasterLayer = Layer.extend({
 
       // once the image loads
       image.once('load', onOverlayLoad, this);
-
-      this.fire('loading', {
-        bounds: bounds
-      });
     }
   },
 
@@ -300,6 +296,10 @@ export var RasterLayer = Layer.extend({
 
     if (params) {
       this._requestExport(params, bounds);
+
+      this.fire('loading', {
+        bounds: bounds
+      });
     } else if (this._currentImage) {
       this._currentImage._map.removeLayer(this._currentImage);
       this._currentImage = null;
