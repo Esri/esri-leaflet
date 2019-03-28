@@ -296,7 +296,7 @@ export var RasterLayer = Layer.extend({
 
     if (params) {
       this._requestExport(params, bounds);
-      
+
       this.fire('loading', {
         bounds: bounds
       });
