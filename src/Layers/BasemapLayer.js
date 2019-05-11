@@ -103,7 +103,9 @@ export var BasemapLayer = TileLayer.extend({
         urlTemplate: tileProtocol + '//{s}.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
         options: {
           minZoom: 1,
-          maxZoom: 19,
+          maxZoom: 22,
+          maxNativeZoom: 22,
+          downsampled: false,
           subdomains: ['server', 'services'],
           attribution: 'DigitalGlobe, GeoEye, i-cubed, USDA, USGS, AEX, Getmapping, Aerogrid, IGN, IGP, swisstopo, and the GIS User Community',
           attributionUrl: 'https://static.arcgis.com/attribution/World_Imagery'
@@ -247,6 +249,11 @@ export var BasemapLayer = TileLayer.extend({
 
     map.on('moveend', _updateMapAttribution);
 
+    // Esri World Imagery is cached all the way to zoom 22 in select regions
+    if (this._url.indexOf('World_Imagery') !== -1) {
+      map.on('zoomanim', _fetchTilemap, this);
+    }
+
     TileLayer.prototype.onAdd.call(this, map);
   },
 
@@ -270,6 +277,50 @@ export var BasemapLayer = TileLayer.extend({
     return attribution;
   }
 });
+
+function _fetchTilemap (evt) {
+  var map = evt.target;
+  if (!map) { return; }
+
+  var oldZoom = map.getZoom();
+  var newZoom = evt.zoom;
+  var newCenter = map.wrapLatLng(evt.center);
+
+  if (newZoom > oldZoom && newZoom > 13 && !this.options.downsampled) {
+    // convert wrapped lat/long into tile coordinates and use them to generate the tilemap url
+    var tilePoint = map.project(newCenter, newZoom).divideBy(256).floor();
+
+    // use new coords to determine the tilemap url
+    var tileUrl = Util.template(this._url, Util.extend({
+      s: this._getSubdomain(tilePoint),
+      x: tilePoint.x,
+      y: tilePoint.y,
+      z: newZoom
+    }, this.options));
+
+    // 8x8 grids are cached
+    var tilemapUrl = tileUrl.replace(/tile/, 'tilemap') + '/8/8';
+
+    // an array of booleans in the response indicate missing tiles
+    L.esri.request(tilemapUrl, {}, function (err, response) {
+      if (!err) {
+        for (var i = 0; i < response.data.length; i++) {
+          if (!response.data[i]) {
+            // if necessary, resample a lower zoom
+            this.options.maxNativeZoom = newZoom - 1;
+            this.options.downsampled = true;
+            break;
+          }
+          // if no tiles are missing, reset the original maxZoom
+          this.options.maxNativeZoom = 22;
+        }
+      }
+    }, this);
+  } else if (newZoom < 13) {
+    // if the user moves to a new region, time for a fresh test
+    this.options.downsampled = false;
+  }
+}
 
 export function basemapLayer (key, options) {
   return new BasemapLayer(key, options);
