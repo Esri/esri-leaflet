@@ -354,6 +354,27 @@ describe('L.esri.FeatureManager', function () {
     expect(layer.addLayers).to.have.been.calledWith([2]);
   });
 
+  it('should warn if you call setTimeRange but have not set a TimeField', function () {
+    var consoleWarnSpy = sinon.spy(console, 'warn');
+
+    var basiclayer = new MockLayer({
+      url: url
+    });
+
+    server.respondWith('GET', 'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.6953125%2C%22ymin%22%3A45.521743896993634%2C%22xmax%22%3A-122.6513671875%2C%22ymax%22%3A45.55252525134013%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&f=json', JSON.stringify({
+      fields: fields,
+      features: [feature2, feature3],
+      objectIdFieldName: 'OBJECTID'
+    }));
+
+    basiclayer.addTo(map);
+
+    server.respond();
+
+    basiclayer.setTimeRange(new Date('January 11 2014 GMT-0800'), new Date('January 13 2014 GMT-0800'));
+    expect(consoleWarnSpy).to.have.been.calledWith('You must set a timeField to manipulate the start and end time filter.');
+  });
+
   it('should load more features with a single time field', function () {
     server.respondWith('GET', 'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.6953125%2C%22ymin%22%3A45.521743896993634%2C%22xmax%22%3A-122.6513671875%2C%22ymax%22%3A45.55252525134013%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&time=1385884800000%2C1389340800000&f=json', JSON.stringify({
       fields: fields,

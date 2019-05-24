@@ -361,8 +361,11 @@ export var FeatureManager = VirtualGrid.extend({
       var startTimes = this._startTimeIndex.between(start, end);
       var endTimes = this._endTimeIndex.between(start, end);
       search = startTimes.concat(endTimes);
-    } else {
+    } else if (this._timeIndex) {
       search = this._timeIndex.between(start, end);
+    } else {
+      warn('You must set a timeField to manipulate the start and end time filter.');
+      return [];
     }
 
     for (var i = search.length - 1; i >= 0; i--) {
