@@ -372,7 +372,7 @@ describe('L.esri.FeatureManager', function () {
     server.respond();
 
     basiclayer.setTimeRange(new Date('January 11 2014 GMT-0800'), new Date('January 13 2014 GMT-0800'));
-    expect(consoleWarnSpy).to.have.been.calledWith('You must set a timeField to manipulate the start and end time filter.');
+    expect(consoleWarnSpy).to.have.been.calledWith('You must set timeField in the layer constructor in order to manipulate the start and end time filter.');
   });
 
   it('should load more features with a single time field', function () {

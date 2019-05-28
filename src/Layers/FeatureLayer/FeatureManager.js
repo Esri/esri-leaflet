@@ -364,7 +364,7 @@ export var FeatureManager = VirtualGrid.extend({
     } else if (this._timeIndex) {
       search = this._timeIndex.between(start, end);
     } else {
-      warn('You must set a timeField to manipulate the start and end time filter.');
+      warn('You must set timeField in the layer constructor in order to manipulate the start and end time filter.');
       return [];
     }
 
