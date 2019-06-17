@@ -205,9 +205,6 @@
 </div>
 <div id="map-wrapper">
   
-<!-- Load Chart.js from CDN -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
-
 <style>
   .chart-container {
     height: 275px;
@@ -216,22 +213,27 @@
     add some vertical spacing  */
     margin: 10px auto;
     outline: 1px solid #00ADA7;
-  }
 
-  #info-pane {
+    /* rules to allow the chart to hover over the Leaflet map control: */
+    z-index: 401;
     position: absolute;
-    top: 10px;
+    top: 0px;
     right: 10px;
-    z-index: 400;
-    padding: 1em;
-    background: white;
+    background-color: white;
   }
 </style>
 
-<div id="map"></div>
-<div id="info-pane" class="leaflet-bar chart-container">
-  <canvas id="chartCanvas"></canvas>
+<div id="map">
+  <!-- Chart.js scatterplot location -->
+  <div class="chart-container">
+    <canvas id="chartCanvas"></canvas>
+  </div>
 </div>
+
+
+
+<!-- Load Chart.js from CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
 
 <script>
   // STEP 1: MAKE A MAP AND ADD LAYERS
@@ -267,7 +269,7 @@
         },
         ticks: {
           beginAtZero: true,
-          max: 250,
+          max: 150,
           stepSize: 50
         }
       }],
@@ -359,9 +361,6 @@
 <span class="tag">&lt;/<span class="title">head</span>&gt;</span>
 <span class="tag">&lt;<span class="title">body</span>&gt;</span>
 
-<span class="comment">&lt;!-- Load Chart.js from CDN --&gt;</span>
-<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
-
 <span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css">
   <span class="class">.chart-container</span> <span class="rules">{
     <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">275</span>px</span></span>;
@@ -370,22 +369,27 @@
     add some vertical spacing  */</span>
     <span class="rule"><span class="attribute">margin</span>:<span class="value"> <span class="number">10</span>px auto</span></span>;
     <span class="rule"><span class="attribute">outline</span>:<span class="value"> <span class="number">1</span>px solid <span class="hexcolor">#00ADA7</span></span></span>;
-  <span class="rule">}</span></span>
 
-  <span class="id">#info-pane</span> <span class="rules">{
+    <span class="comment">/* rules to allow the chart to hover over the Leaflet map control: */</span>
+    <span class="rule"><span class="attribute">z-index</span>:<span class="value"> <span class="number">401</span></span></span>;
     <span class="rule"><span class="attribute">position</span>:<span class="value"> absolute</span></span>;
-    <span class="rule"><span class="attribute">top</span>:<span class="value"> <span class="number">10</span>px</span></span>;
+    <span class="rule"><span class="attribute">top</span>:<span class="value"> <span class="number">0</span>px</span></span>;
     <span class="rule"><span class="attribute">right</span>:<span class="value"> <span class="number">10</span>px</span></span>;
-    <span class="rule"><span class="attribute">z-index</span>:<span class="value"> <span class="number">400</span></span></span>;
-    <span class="rule"><span class="attribute">padding</span>:<span class="value"> <span class="number">1</span>em</span></span>;
-    <span class="rule"><span class="attribute">background</span>:<span class="value"> white</span></span>;
+    <span class="rule"><span class="attribute">background-color</span>:<span class="value"> white</span></span>;
   <span class="rule">}</span></span>
 </span><span class="tag">&lt;/<span class="title">style</span>&gt;</span>
 
-<span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
-<span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"info-pane"</span> <span class="attribute">class</span>=<span class="value">"leaflet-bar chart-container"</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">canvas</span> <span class="attribute">id</span>=<span class="value">"chartCanvas"</span>&gt;</span><span class="tag">&lt;/<span class="title">canvas</span>&gt;</span>
+<span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span>
+  <span class="comment">&lt;!-- Chart.js scatterplot location --&gt;</span>
+  <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"chart-container"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">canvas</span> <span class="attribute">id</span>=<span class="value">"chartCanvas"</span>&gt;</span><span class="tag">&lt;/<span class="title">canvas</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+
+
+
+<span class="comment">&lt;!-- Load Chart.js from CDN --&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
   <span class="comment">// STEP 1: MAKE A MAP AND ADD LAYERS</span>
@@ -421,7 +425,7 @@
         },
         ticks: {
           beginAtZero: <span class="literal">true</span>,
-          max: <span class="number">250</span>,
+          max: <span class="number">150</span>,
           stepSize: <span class="number">50</span>
         }
       }],
