@@ -89,7 +89,7 @@ export var FeatureLayer = FeatureManager.extend({
       var layer = this._layers[geojson.id];
       var newLayer;
 
-      if (this._visibleZoom() && layer && !this._map.hasLayer(layer)) {
+      if (this._visibleZoom() && layer && !this._map.hasLayer(layer) && (!this.options.timeField || this._featureWithinTimeRange(geojson))) {
         this._map.addLayer(layer);
         this.fire('addfeature', {
           feature: layer.feature
@@ -138,7 +138,7 @@ export var FeatureLayer = FeatureManager.extend({
   addLayers: function (ids) {
     for (var i = ids.length - 1; i >= 0; i--) {
       var layer = this._layers[ids[i]];
-      if (layer) {
+      if (layer && (!this.options.timeField || this._featureWithinTimeRange(layer.feature))) {
         this._map.addLayer(layer);
       }
     }
