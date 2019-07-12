@@ -218,15 +218,20 @@
 <div id="map"></div>
 <div id="info" class="leaflet-bar"></div>
 <script>
-  var map = L.map('map').setView([45.526, -122.667], 13);
+  var map = L.map('map').setView([37.837, -122.479], 8);
 
   L.esri.basemapLayer('Streets').addTo(map);
-  var stops = L.esri.featureLayer({
-    url: 'https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Heritage_Trees_Portland/FeatureServer/0'
+
+  var earthquakes = L.esri.featureLayer({
+    url: 'https://sampleserver6.arcgisonline.com/arcgis/rest/services/Earthquakes_Since1970/MapServer/0'
   }).addTo(map);
 
-  stops.metadata(function (error, metadata) {
-    document.getElementById('info').innerHTML = metadata.name;
+  earthquakes.metadata(function (error, metadata) {
+    var htmlContent = '<ul>';
+    htmlContent += '<li>Name: ' + metadata.name + '</li>';
+    htmlContent += '<li>Geometry Type: ' + metadata.geometryType + '</li>';htmlContent += '<li>Supported Query Formats: ' + metadata.supportedQueryFormats + '</li>';  
+    
+    document.getElementById('info').innerHTML = htmlContent;
   });
 </script>
 
@@ -273,15 +278,20 @@
 <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"info"</span> <span class="attribute">class</span>=<span class="value">"leaflet-bar"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
-  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">45.526</span>, -<span class="number">122.667</span>], <span class="number">13</span>);
+  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">37.837</span>, -<span class="number">122.479</span>], <span class="number">8</span>);
 
   L.esri.basemapLayer(<span class="string">'Streets'</span>).addTo(map);
-  <span class="keyword">var</span> stops = L.esri.featureLayer({
-    url: <span class="string">'https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Heritage_Trees_Portland/FeatureServer/0'</span>
+
+  <span class="keyword">var</span> earthquakes = L.esri.featureLayer({
+    url: <span class="string">'https://sampleserver6.arcgisonline.com/arcgis/rest/services/Earthquakes_Since1970/MapServer/0'</span>
   }).addTo(map);
 
-  stops.metadata(<span class="function"><span class="keyword">function</span> <span class="params">(error, metadata)</span> {</span>
-    document.getElementById(<span class="string">'info'</span>).innerHTML = metadata.name;
+  earthquakes.metadata(<span class="function"><span class="keyword">function</span> <span class="params">(error, metadata)</span> {</span>
+    <span class="keyword">var</span> htmlContent = <span class="string">'&lt;ul&gt;'</span>;
+    htmlContent += <span class="string">'&lt;li&gt;Name: '</span> + metadata.name + <span class="string">'&lt;/li&gt;'</span>;
+    htmlContent += <span class="string">'&lt;li&gt;Geometry Type: '</span> + metadata.geometryType + <span class="string">'&lt;/li&gt;'</span>;htmlContent += <span class="string">'&lt;li&gt;Supported Query Formats: '</span> + metadata.supportedQueryFormats + <span class="string">'&lt;/li&gt;'</span>;  
+
+    document.getElementById(<span class="string">'info'</span>).innerHTML = htmlContent;
   });
 </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
