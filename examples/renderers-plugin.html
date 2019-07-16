@@ -210,12 +210,12 @@
 <div id="map"></div>
 
 <script type='text/javascript'>
-  var map = L.map('map').setView([45.548, -122.632], 12);
-  L.esri.basemapLayer('DarkGray').addTo(map);
+  var map = L.map('map').setView([37.837, -122.479], 6);
+  L.esri.basemapLayer('Gray').addTo(map);
 
   //renderer type: unique value
   L.esri.featureLayer({
-    url: 'https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Trimet%20Transit%20Stops%20In%20Portland%20Neighborhoods/FeatureServer/0'
+    url: 'https://sampleserver6.arcgisonline.com/arcgis/rest/services/Earthquakes_Since1970/MapServer/0'
   }).addTo(map);
 </script>
 
@@ -254,12 +254,12 @@
 <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">'text/javascript'</span>&gt;</span><span class="javascript">
-  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">45.548</span>, -<span class="number">122.632</span>], <span class="number">12</span>);
-  L.esri.basemapLayer(<span class="string">'DarkGray'</span>).addTo(map);
+  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">37.837</span>, -<span class="number">122.479</span>], <span class="number">6</span>);
+  L.esri.basemapLayer(<span class="string">'Gray'</span>).addTo(map);
 
   <span class="comment">//renderer type: unique value</span>
   L.esri.featureLayer({
-    url: <span class="string">'https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Trimet%20Transit%20Stops%20In%20Portland%20Neighborhoods/FeatureServer/0'</span>
+    url: <span class="string">'https://sampleserver6.arcgisonline.com/arcgis/rest/services/Earthquakes_Since1970/MapServer/0'</span>
   }).addTo(map);
 </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 

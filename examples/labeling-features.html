@@ -215,6 +215,7 @@
   .label div {
     position: relative;
     left: -50%;
+    top: 10px;
     text-shadow: 0px 2px 1px rgba(255,255,255,0.85);
   }
 </style>
@@ -222,44 +223,38 @@
 <div id="map"></div>
 
 <script>
-  var map = L.map('map').setView([45.526, -122.667], 15);
+  var map = L.map('map').setView([37.428, -121.978], 9);
 
   L.esri.basemapLayer('Gray').addTo(map);
 
-  var neighborhoods = L.esri.featureLayer({
-    url: 'https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Neighborhoods_pdx/FeatureServer/0',
-    style: function() {
-      return {
-        color: '#5B7CBA',
-        weight: 2
-      };
-    }
+  var earthquakes = L.esri.featureLayer({
+    url: 'https://sampleserver6.arcgisonline.com/arcgis/rest/services/Earthquakes_Since1970/MapServer/0'    
   }).addTo(map);
 
   var labels = {};
 
-  neighborhoods.on('createfeature', function(e){
+  earthquakes.on('createfeature', function(e){
     var id = e.feature.id;
-    var feature = neighborhoods.getFeature(id);
-    var center = feature.getBounds().getCenter();
+    var feature = earthquakes.getFeature(id);
+    var center = feature.getLatLng();
     var label = L.marker(center, {
       icon: L.divIcon({
         iconSize: null,
         className: 'label',
-        html: '<div>' + e.feature.properties.NAME + '</div>'
+        html: '<div>' + e.feature.properties.name + '</div>'
       })
     }).addTo(map);
     labels[id] = label;
   });
 
-  neighborhoods.on('addfeature', function(e){
+  earthquakes.on('addfeature', function(e){
     var label = labels[e.feature.id];
     if(label){
       label.addTo(map);
     }
   });
 
-  neighborhoods.on('removefeature', function(e){
+  earthquakes.on('removefeature', function(e){
     var label = labels[e.feature.id];
     if(label){
       map.removeLayer(label);
@@ -307,6 +302,7 @@
   <span class="class">.label</span> <span class="tag">div</span> <span class="rules">{
     <span class="rule"><span class="attribute">position</span>:<span class="value"> relative</span></span>;
     <span class="rule"><span class="attribute">left</span>:<span class="value"> -<span class="number">50</span>%</span></span>;
+    <span class="rule"><span class="attribute">top</span>:<span class="value"> <span class="number">10</span>px</span></span>;
     <span class="rule"><span class="attribute">text-shadow</span>:<span class="value"> <span class="number">0</span>px <span class="number">2</span>px <span class="number">1</span>px <span class="function">rgba(<span class="number">255</span>,<span class="number">255</span>,<span class="number">255</span>,<span class="number">0.85</span>)</span></span></span>;
   <span class="rule">}</span></span>
 </span><span class="tag">&lt;/<span class="title">style</span>&gt;</span>
@@ -314,44 +310,38 @@
 <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
-  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">45.526</span>, -<span class="number">122.667</span>], <span class="number">15</span>);
+  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">37.428</span>, -<span class="number">121.978</span>], <span class="number">9</span>);
 
   L.esri.basemapLayer(<span class="string">'Gray'</span>).addTo(map);
 
-  <span class="keyword">var</span> neighborhoods = L.esri.featureLayer({
-    url: <span class="string">'https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Neighborhoods_pdx/FeatureServer/0'</span>,
-    style: <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
-      <span class="keyword">return</span> {
-        color: <span class="string">'#5B7CBA'</span>,
-        weight: <span class="number">2</span>
-      };
-    }
+  <span class="keyword">var</span> earthquakes = L.esri.featureLayer({
+    url: <span class="string">'https://sampleserver6.arcgisonline.com/arcgis/rest/services/Earthquakes_Since1970/MapServer/0'</span>    
   }).addTo(map);
 
   <span class="keyword">var</span> labels = {};
 
-  neighborhoods.on(<span class="string">'createfeature'</span>, <span class="function"><span class="keyword">function</span><span class="params">(e)</span>{</span>
+  earthquakes.on(<span class="string">'createfeature'</span>, <span class="function"><span class="keyword">function</span><span class="params">(e)</span>{</span>
     <span class="keyword">var</span> id = e.feature.id;
-    <span class="keyword">var</span> feature = neighborhoods.getFeature(id);
-    <span class="keyword">var</span> center = feature.getBounds().getCenter();
+    <span class="keyword">var</span> feature = earthquakes.getFeature(id);
+    <span class="keyword">var</span> center = feature.getLatLng();
     <span class="keyword">var</span> label = L.marker(center, {
       icon: L.divIcon({
         iconSize: <span class="literal">null</span>,
         className: <span class="string">'label'</span>,
-        html: <span class="string">'&lt;div&gt;'</span> + e.feature.properties.NAME + <span class="string">'&lt;/div&gt;'</span>
+        html: <span class="string">'&lt;div&gt;'</span> + e.feature.properties.name + <span class="string">'&lt;/div&gt;'</span>
       })
     }).addTo(map);
     labels[id] = label;
   });
 
-  neighborhoods.on(<span class="string">'addfeature'</span>, <span class="function"><span class="keyword">function</span><span class="params">(e)</span>{</span>
+  earthquakes.on(<span class="string">'addfeature'</span>, <span class="function"><span class="keyword">function</span><span class="params">(e)</span>{</span>
     <span class="keyword">var</span> label = labels[e.feature.id];
     <span class="keyword">if</span>(label){
       label.addTo(map);
     }
   });
 
-  neighborhoods.on(<span class="string">'removefeature'</span>, <span class="function"><span class="keyword">function</span><span class="params">(e)</span>{</span>
+  earthquakes.on(<span class="string">'removefeature'</span>, <span class="function"><span class="keyword">function</span><span class="params">(e)</span>{</span>
     <span class="keyword">var</span> label = labels[e.feature.id];
     <span class="keyword">if</span>(label){
       map.removeLayer(label);
