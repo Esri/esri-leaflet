@@ -288,54 +288,17 @@
 <div id="map"></div>
 
 <script>
-  var map = L.map('map').setView([45.5276, -122.6674], 13);
+  var map = L.map('map').setView([0, 0], 2);
 
   // Add ArcGIS Online basemap
-  L.esri.basemapLayer('Gray').addTo(map);
-
-  // Define some icons that represent our bus stops
-  var icons = {
-    north: L.icon({
-      iconUrl: 'https://esri.github.io/esri-leaflet/img/bus-stop-north.png',
-      iconRetinaUrl: 'https://esri.github.io/esri-leaflet/img/bus-stop-north@2x.png',
-      iconSize: [27, 31],
-      iconAnchor: [13.5, 17.5],
-      popupAnchor: [0, -11],
-    }),
-    south: L.icon({
-      iconUrl: 'https://esri.github.io/esri-leaflet/img/bus-stop-south.png',
-      iconRetinaUrl: 'https://esri.github.io/esri-leaflet/img/bus-stop-south@2x.png',
-      iconSize: [27, 31],
-      iconAnchor: [13.5, 13.5],
-      popupAnchor: [0, -11],
-    }),
-    east: L.icon({
-      iconUrl: 'https://esri.github.io/esri-leaflet/img/bus-stop-east.png',
-      iconRetinaUrl: 'https://esri.github.io/esri-leaflet/img/bus-stop-east@2x.png',
-      iconSize: [31, 27],
-      iconAnchor: [13.5, 17.5],
-      popupAnchor: [0, -11],
-    }),
-    west: L.icon({
-      iconUrl: 'https://esri.github.io/esri-leaflet/img/bus-stop-west.png',
-      iconRetinaUrl: 'https://esri.github.io/esri-leaflet/img/bus-stop-west@2x.png',
-      iconSize: [31, 27],
-      iconAnchor: [17.5, 13.5],
-      popupAnchor: [0, -11],
-    }),
-  };
+  L.esri.basemapLayer('Gray').addTo(map);  
 
   // create a new cluster layer (new syntax at 2.0.0)
-  var stops = L.esri.Cluster.featureLayer({
-    url: 'https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0',
+  var earthquakes = L.esri.Cluster.featureLayer({
+    url: 'https://sampleserver6.arcgisonline.com/arcgis/rest/services/Earthquakes_Since1970/MapServer/0',
     spiderfyOnMaxZoom:false,
-    disableClusteringAtZoom: 16,
-    polygonOptions: {
-      color: '#2d84c8',
-      weight: 4,
-      opacity: 1,
-      fillOpacity: 0.5
-    },
+    removeOutsideVisibleBounds: true,
+    disableClusteringAtZoom: 8,
     // this function defines how the icons
     // representing  clusters are created
     iconCreateFunction: function(cluster) {
@@ -356,23 +319,38 @@
         iconSize: null
       });
     },
-
     // this function defines how individual markers
     // are created. You can see we are using the
-    // direction from the feature to get the icon
+    // value of the "magnitude" field to set the symbol
     pointToLayer: function (geojson, latlng) {
-      var direction = (geojson.properties.direction) ? geojson.properties.direction.toLowerCase() : 'none';
-      return L.marker(latlng, {
-        icon: icons[direction]
+      var magnitude = (geojson.properties.magnitude);
+      var earthquakeSymbol = '';
+
+      if (!magnitude) {
+        earthquakeSymbol = '../../img/earthquake-icon.png';
+      } else if (magnitude <= 4.999) {
+        earthquakeSymbol = '../../img/yellow-triangle.png';
+      } else if (magnitude >= 5 && magnitude <= 6.999) {
+        earthquakeSymbol = '../../img/orange-triangle.png';
+      } else if (magnitude >= 7) {
+        earthquakeSymbol = '../../img/red-triangle.png';
+      }
+
+      var mapIcon = L.icon({
+        iconUrl: earthquakeSymbol,
+        iconSize: [20,20]
       });
-    }
+
+      return L.marker(latlng, {        
+          icon: mapIcon         
+        });
+      }      
   }).addTo(map);
 
-  stops.bindPopup(function(feature){
-    return L.Util.template('<strong>{stop_name}</strong><br>{stop_desc}', feature.properties);
+  earthquakes.bindPopup(function(layer){
+    return L.Util.template('Magnitude <strong>{magnitude}</strong> earthquake', layer.feature.properties);
   });
 </script>
-
 </div>
 <pre><code class="language-xml"><span class="tag">&lt;<span class="title">html</span>&gt;</span>
 <span class="tag">&lt;<span class="title">head</span>&gt;</span>
@@ -486,54 +464,17 @@
 <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
-  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">45.5276</span>, -<span class="number">122.6674</span>], <span class="number">13</span>);
+  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">0</span>, <span class="number">0</span>], <span class="number">2</span>);
 
   <span class="comment">// Add ArcGIS Online basemap</span>
-  L.esri.basemapLayer(<span class="string">'Gray'</span>).addTo(map);
-
-  <span class="comment">// Define some icons that represent our bus stops</span>
-  <span class="keyword">var</span> icons = {
-    north: L.icon({
-      iconUrl: <span class="string">'https://esri.github.io/esri-leaflet/img/bus-stop-north.png'</span>,
-      iconRetinaUrl: <span class="string">'https://esri.github.io/esri-leaflet/img/bus-stop-north@2x.png'</span>,
-      iconSize: [<span class="number">27</span>, <span class="number">31</span>],
-      iconAnchor: [<span class="number">13.5</span>, <span class="number">17.5</span>],
-      popupAnchor: [<span class="number">0</span>, -<span class="number">11</span>],
-    }),
-    south: L.icon({
-      iconUrl: <span class="string">'https://esri.github.io/esri-leaflet/img/bus-stop-south.png'</span>,
-      iconRetinaUrl: <span class="string">'https://esri.github.io/esri-leaflet/img/bus-stop-south@2x.png'</span>,
-      iconSize: [<span class="number">27</span>, <span class="number">31</span>],
-      iconAnchor: [<span class="number">13.5</span>, <span class="number">13.5</span>],
-      popupAnchor: [<span class="number">0</span>, -<span class="number">11</span>],
-    }),
-    east: L.icon({
-      iconUrl: <span class="string">'https://esri.github.io/esri-leaflet/img/bus-stop-east.png'</span>,
-      iconRetinaUrl: <span class="string">'https://esri.github.io/esri-leaflet/img/bus-stop-east@2x.png'</span>,
-      iconSize: [<span class="number">31</span>, <span class="number">27</span>],
-      iconAnchor: [<span class="number">13.5</span>, <span class="number">17.5</span>],
-      popupAnchor: [<span class="number">0</span>, -<span class="number">11</span>],
-    }),
-    west: L.icon({
-      iconUrl: <span class="string">'https://esri.github.io/esri-leaflet/img/bus-stop-west.png'</span>,
-      iconRetinaUrl: <span class="string">'https://esri.github.io/esri-leaflet/img/bus-stop-west@2x.png'</span>,
-      iconSize: [<span class="number">31</span>, <span class="number">27</span>],
-      iconAnchor: [<span class="number">17.5</span>, <span class="number">13.5</span>],
-      popupAnchor: [<span class="number">0</span>, -<span class="number">11</span>],
-    }),
-  };
+  L.esri.basemapLayer(<span class="string">'Gray'</span>).addTo(map);  
 
   <span class="comment">// create a new cluster layer (new syntax at 2.0.0)</span>
-  <span class="keyword">var</span> stops = L.esri.Cluster.featureLayer({
-    url: <span class="string">'https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0'</span>,
+  <span class="keyword">var</span> earthquakes = L.esri.Cluster.featureLayer({
+    url: <span class="string">'https://sampleserver6.arcgisonline.com/arcgis/rest/services/Earthquakes_Since1970/MapServer/0'</span>,
     spiderfyOnMaxZoom:<span class="literal">false</span>,
-    disableClusteringAtZoom: <span class="number">16</span>,
-    polygonOptions: {
-      color: <span class="string">'#2d84c8'</span>,
-      weight: <span class="number">4</span>,
-      opacity: <span class="number">1</span>,
-      fillOpacity: <span class="number">0.5</span>
-    },
+    removeOutsideVisibleBounds: <span class="literal">true</span>,
+    disableClusteringAtZoom: <span class="number">8</span>,
     <span class="comment">// this function defines how the icons</span>
     <span class="comment">// representing  clusters are created</span>
     iconCreateFunction: <span class="function"><span class="keyword">function</span><span class="params">(cluster)</span> {</span>
@@ -554,20 +495,36 @@
         iconSize: <span class="literal">null</span>
       });
     },
-
     <span class="comment">// this function defines how individual markers</span>
     <span class="comment">// are created. You can see we are using the</span>
-    <span class="comment">// direction from the feature to get the icon</span>
+    <span class="comment">// value of the "magnitude" field to set the symbol</span>
     pointToLayer: <span class="function"><span class="keyword">function</span> <span class="params">(geojson, latlng)</span> {</span>
-      <span class="keyword">var</span> direction = (geojson.properties.direction) ? geojson.properties.direction.toLowerCase() : <span class="string">'none'</span>;
-      <span class="keyword">return</span> L.marker(latlng, {
-        icon: icons[direction]
+      <span class="keyword">var</span> magnitude = (geojson.properties.magnitude);
+      <span class="keyword">var</span> earthquakeSymbol = <span class="string">''</span>;
+
+      <span class="keyword">if</span> (!magnitude) {
+        earthquakeSymbol = <span class="string">'../../img/earthquake-icon.png'</span>;
+      } <span class="keyword">else</span> <span class="keyword">if</span> (magnitude &lt;= <span class="number">4.999</span>) {
+        earthquakeSymbol = <span class="string">'../../img/yellow-triangle.png'</span>;
+      } <span class="keyword">else</span> <span class="keyword">if</span> (magnitude &gt;= <span class="number">5</span> &amp;&amp; magnitude &lt;= <span class="number">6.999</span>) {
+        earthquakeSymbol = <span class="string">'../../img/orange-triangle.png'</span>;
+      } <span class="keyword">else</span> <span class="keyword">if</span> (magnitude &gt;= <span class="number">7</span>) {
+        earthquakeSymbol = <span class="string">'../../img/red-triangle.png'</span>;
+      }
+
+      <span class="keyword">var</span> mapIcon = L.icon({
+        iconUrl: earthquakeSymbol,
+        iconSize: [<span class="number">20</span>,<span class="number">20</span>]
       });
-    }
+
+      <span class="keyword">return</span> L.marker(latlng, {        
+          icon: mapIcon         
+        });
+      }      
   }).addTo(map);
 
-  stops.bindPopup(<span class="function"><span class="keyword">function</span><span class="params">(feature)</span>{</span>
-    <span class="keyword">return</span> L.Util.template(<span class="string">'&lt;strong&gt;{stop_name}&lt;/strong&gt;&lt;br&gt;{stop_desc}'</span>, feature.properties);
+  earthquakes.bindPopup(<span class="function"><span class="keyword">function</span><span class="params">(layer)</span>{</span>
+    <span class="keyword">return</span> L.Util.template(<span class="string">'Magnitude &lt;strong&gt;{magnitude}&lt;/strong&gt; earthquake'</span>, layer.feature.properties);
   });
 </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 

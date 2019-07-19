@@ -12,7 +12,7 @@
   
 
   
-    <meta name="description" content="Filtering a feature layer within a certain time range. Try dates between October 2010 and August 2011. More information about Feature Layers can be found in the &lt;a href=&quot;../api-reference/layers/feature-layer.html&quot;&gt;L.esri.FeatureLayer&lt;/a&gt; documentation.">
+    <meta name="description" content="Filtering a feature layer within a certain time range. Try dates between January 3, 1998, and January 25, 1998. More information about Feature Layers can be found in the &lt;a href=&quot;../api-reference/layers/feature-layer.html&quot;&gt;L.esri.FeatureLayer&lt;/a&gt; documentation.">
   
 
   <meta name="description" content="Esri Leaflet">
@@ -199,16 +199,10 @@
 <div class="example-content">
 <div class="wrap">
   <h1>Visualizing time on a feature layer</h1>
-  <p>Filtering a feature layer within a certain time range. Try dates between October 2010 and August 2011. More information about Feature Layers can be found in the <a href="../api-reference/layers/feature-layer.html">L.esri.FeatureLayer</a> documentation.</p>
+  <p>Filtering a feature layer within a certain time range. Try dates between January 3, 1998, and January 25, 1998. More information about Feature Layers can be found in the <a href="../api-reference/layers/feature-layer.html">L.esri.FeatureLayer</a> documentation.</p>
 </div>
 <div id="map-wrapper">
   
-
-<!-- Include Leaflet.heat from CDN -->
-<script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
-
-<!-- Load Heatmap Feature Layer from CDN -->
-<script src="https://cdn.jsdelivr.net/leaflet.esri.heatmap-feature-layer/2.0.0-beta.1/esri-leaflet-heatmap-feature-layer.js"></script>
 
 <style>
   #time-ranges {
@@ -243,11 +237,11 @@
   <form action="#" id="form">
     <label for="from">
       From
-      <input id='from' type="date" value='2011-01-01' name='from'>
+      <input id='from' type="date" value='1998-01-10' name='from'>
     </label>
     <label for="to">
       To
-      <input  id='to' type="date" value='2011-03-31' name='to'>
+      <input  id='to' type="date" value='1998-01-15' name='to'>
     </label>
     <input type="submit" value="Update">
   </form>
@@ -258,21 +252,20 @@
   var startTimeInput = document.getElementById('from');
   var endTimeInput = document.getElementById('to');
 
-  var map = L.map('map').setView([ 40.706, -73.926], 12);
+  var map = L.map('map').setView([45.48, -122.80], 12);
 
   L.esri.basemapLayer('Gray').addTo(map);
   L.esri.basemapLayer('GrayLabels').addTo(map);
 
-  var reports = L.esri.Heat.heatmapFeatureLayer({
-    url: 'https://services.arcgis.com/rOo16HdIMeOBI4Mb/ArcGIS/rest/services/Graffiti_Reports/FeatureServer/0',
-    timeField: 'CreatedDate',
+  var emergencyCalls = L.esri.featureLayer({
+    url: 'https://sampleserver6.arcgisonline.com/arcgis/rest/services/911CallsHotspot/MapServer/1',
+    timeField: 'Date',
     from: new Date(startTimeInput.value),
-    to: new Date(endTimeInput.value),
-    radius: 12
+    to: new Date(endTimeInput.value)    
   }).addTo(map);
 
   timeForm.addEventListener('submit', function updateTimeRange(e){
-    reports.setTimeRange(new Date(startTimeInput.value), new Date(endTimeInput.value));
+    emergencyCalls.setTimeRange(new Date(startTimeInput.value), new Date(endTimeInput.value));
     e.preventDefault();
   });
 </script>
@@ -305,12 +298,6 @@
   </span><span class="tag">&lt;/<span class="title">style</span>&gt;</span>
 <span class="tag">&lt;/<span class="title">head</span>&gt;</span>
 <span class="tag">&lt;<span class="title">body</span>&gt;</span>
-
-<span class="comment">&lt;!-- Include Leaflet.heat from CDN --&gt;</span>
-<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
-
-<span class="comment">&lt;!-- Load Heatmap Feature Layer from CDN --&gt;</span>
-<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://cdn.jsdelivr.net/leaflet.esri.heatmap-feature-layer/2.0.0-beta.1/esri-leaflet-heatmap-feature-layer.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css">
   <span class="id">#time-ranges</span> <span class="rules">{
@@ -345,11 +332,11 @@
   <span class="tag">&lt;<span class="title">form</span> <span class="attribute">action</span>=<span class="value">"#"</span> <span class="attribute">id</span>=<span class="value">"form"</span>&gt;</span>
     <span class="tag">&lt;<span class="title">label</span> <span class="attribute">for</span>=<span class="value">"from"</span>&gt;</span>
       From
-      <span class="tag">&lt;<span class="title">input</span> <span class="attribute">id</span>=<span class="value">'from'</span> <span class="attribute">type</span>=<span class="value">"date"</span> <span class="attribute">value</span>=<span class="value">'2011-01-01'</span> <span class="attribute">name</span>=<span class="value">'from'</span>&gt;</span>
+      <span class="tag">&lt;<span class="title">input</span> <span class="attribute">id</span>=<span class="value">'from'</span> <span class="attribute">type</span>=<span class="value">"date"</span> <span class="attribute">value</span>=<span class="value">'1998-01-10'</span> <span class="attribute">name</span>=<span class="value">'from'</span>&gt;</span>
     <span class="tag">&lt;/<span class="title">label</span>&gt;</span>
     <span class="tag">&lt;<span class="title">label</span> <span class="attribute">for</span>=<span class="value">"to"</span>&gt;</span>
       To
-      <span class="tag">&lt;<span class="title">input</span>  <span class="attribute">id</span>=<span class="value">'to'</span> <span class="attribute">type</span>=<span class="value">"date"</span> <span class="attribute">value</span>=<span class="value">'2011-03-31'</span> <span class="attribute">name</span>=<span class="value">'to'</span>&gt;</span>
+      <span class="tag">&lt;<span class="title">input</span>  <span class="attribute">id</span>=<span class="value">'to'</span> <span class="attribute">type</span>=<span class="value">"date"</span> <span class="attribute">value</span>=<span class="value">'1998-01-15'</span> <span class="attribute">name</span>=<span class="value">'to'</span>&gt;</span>
     <span class="tag">&lt;/<span class="title">label</span>&gt;</span>
     <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"submit"</span> <span class="attribute">value</span>=<span class="value">"Update"</span>&gt;</span>
   <span class="tag">&lt;/<span class="title">form</span>&gt;</span>
@@ -360,21 +347,20 @@
   <span class="keyword">var</span> startTimeInput = document.getElementById(<span class="string">'from'</span>);
   <span class="keyword">var</span> endTimeInput = document.getElementById(<span class="string">'to'</span>);
 
-  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([ <span class="number">40.706</span>, -<span class="number">73.926</span>], <span class="number">12</span>);
+  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">45.48</span>, -<span class="number">122.80</span>], <span class="number">12</span>);
 
   L.esri.basemapLayer(<span class="string">'Gray'</span>).addTo(map);
   L.esri.basemapLayer(<span class="string">'GrayLabels'</span>).addTo(map);
 
-  <span class="keyword">var</span> reports = L.esri.Heat.heatmapFeatureLayer({
-    url: <span class="string">'https://services.arcgis.com/rOo16HdIMeOBI4Mb/ArcGIS/rest/services/Graffiti_Reports/FeatureServer/0'</span>,
-    timeField: <span class="string">'CreatedDate'</span>,
+  <span class="keyword">var</span> emergencyCalls = L.esri.featureLayer({
+    url: <span class="string">'https://sampleserver6.arcgisonline.com/arcgis/rest/services/911CallsHotspot/MapServer/1'</span>,
+    timeField: <span class="string">'Date'</span>,
     from: <span class="keyword">new</span> Date(startTimeInput.value),
-    to: <span class="keyword">new</span> Date(endTimeInput.value),
-    radius: <span class="number">12</span>
+    to: <span class="keyword">new</span> Date(endTimeInput.value)    
   }).addTo(map);
 
   timeForm.addEventListener(<span class="string">'submit'</span>, <span class="function"><span class="keyword">function</span> <span class="title">updateTimeRange</span><span class="params">(e)</span>{</span>
-    reports.setTimeRange(<span class="keyword">new</span> Date(startTimeInput.value), <span class="keyword">new</span> Date(endTimeInput.value));
+    emergencyCalls.setTimeRange(<span class="keyword">new</span> Date(startTimeInput.value), <span class="keyword">new</span> Date(endTimeInput.value));
     e.preventDefault();
   });
 </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>

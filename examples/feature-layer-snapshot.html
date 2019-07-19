@@ -207,32 +207,31 @@
 <div id="map"></div>
 
 <script>
-  var map = L.map("map").setView([45.5252, -122.6284], 11);
+  var map = L.map("map").setView([41.004, -77.618], 7);
 
   L.esri.basemapLayer("Topographic").addTo(map);
 
-  var neighborhoodsUrl = "https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Neighborhoods_pdx/FeatureServer/0";
-  var bikeParkingUrl = "https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Portland_Bicycle_Parking/FeatureServer/0";
+  var statesUrl = "https://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer/2";
+  var citiesUrl = "https://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer/0";
 
-  // query a feature service for a neighborhood
+  // query a feature service for a state
   L.esri.query({
-    url: neighborhoodsUrl
-  }).where("NAME='HOLLYWOOD'").run(function(error, neighborhoods){
-    // draw neighborhood on the map
-    var hollywood = L.geoJSON(neighborhoods).addTo(map);
+    url: statesUrl
+  }).where("state_name='Pennsylvania'").run(function(error, states){
+    // draw state on the map
+    var pennsylvania = L.geoJSON(states).addTo(map);
 
     // fit map to boundary
-    map.fitBounds(hollywood.getBounds().pad(0.5));
+    map.fitBounds(pennsylvania.getBounds());
 
-    // query all bike parking where BPSTYLE='STAPLE' inside our boundary
+    // query all cities with a population greater than 30,000 (pop2000 > 30000) inside our boundary
     L.esri.query({
-      url: bikeParkingUrl
-    }).where("BPSTYLE='STAPLE'").within(hollywood).run(function(error, bikeParking){
-      L.geoJSON(bikeParking).addTo(map);
-    });
-  });
+      url: citiesUrl
+    }).where("pop2000 > 30000").within(pennsylvania).run(function(error, cities){
+      L.geoJSON(cities).addTo(map);
+    });    
+  });  
 </script>
-
 </div>
 <pre><code class="language-xml"><span class="tag">&lt;<span class="title">html</span>&gt;</span>
 <span class="tag">&lt;<span class="title">head</span>&gt;</span>
@@ -265,30 +264,30 @@
 <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
-  <span class="keyword">var</span> map = L.map(<span class="string">"map"</span>).setView([<span class="number">45.5252</span>, -<span class="number">122.6284</span>], <span class="number">11</span>);
+  <span class="keyword">var</span> map = L.map(<span class="string">"map"</span>).setView([<span class="number">41.004</span>, -<span class="number">77.618</span>], <span class="number">7</span>);
 
   L.esri.basemapLayer(<span class="string">"Topographic"</span>).addTo(map);
 
-  <span class="keyword">var</span> neighborhoodsUrl = <span class="string">"https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Neighborhoods_pdx/FeatureServer/0"</span>;
-  <span class="keyword">var</span> bikeParkingUrl = <span class="string">"https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Portland_Bicycle_Parking/FeatureServer/0"</span>;
+  <span class="keyword">var</span> statesUrl = <span class="string">"https://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer/2"</span>;
+  <span class="keyword">var</span> citiesUrl = <span class="string">"https://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer/0"</span>;
 
-  <span class="comment">// query a feature service for a neighborhood</span>
+  <span class="comment">// query a feature service for a state</span>
   L.esri.query({
-    url: neighborhoodsUrl
-  }).where(<span class="string">"NAME='HOLLYWOOD'"</span>).run(<span class="function"><span class="keyword">function</span><span class="params">(error, neighborhoods)</span>{</span>
-    <span class="comment">// draw neighborhood on the map</span>
-    <span class="keyword">var</span> hollywood = L.geoJSON(neighborhoods).addTo(map);
+    url: statesUrl
+  }).where(<span class="string">"state_name='Pennsylvania'"</span>).run(<span class="function"><span class="keyword">function</span><span class="params">(error, states)</span>{</span>
+    <span class="comment">// draw state on the map</span>
+    <span class="keyword">var</span> pennsylvania = L.geoJSON(states).addTo(map);
 
     <span class="comment">// fit map to boundary</span>
-    map.fitBounds(hollywood.getBounds().pad(<span class="number">0.5</span>));
+    map.fitBounds(pennsylvania.getBounds());
 
-    <span class="comment">// query all bike parking where BPSTYLE='STAPLE' inside our boundary</span>
+    <span class="comment">// query all cities with a population greater than 30,000 (pop2000 &gt; 30000) inside our boundary</span>
     L.esri.query({
-      url: bikeParkingUrl
-    }).where(<span class="string">"BPSTYLE='STAPLE'"</span>).within(hollywood).run(<span class="function"><span class="keyword">function</span><span class="params">(error, bikeParking)</span>{</span>
-      L.geoJSON(bikeParking).addTo(map);
-    });
-  });
+      url: citiesUrl
+    }).where(<span class="string">"pop2000 &gt; 30000"</span>).within(pennsylvania).run(<span class="function"><span class="keyword">function</span><span class="params">(error, cities)</span>{</span>
+      L.geoJSON(cities).addTo(map);
+    });    
+  });  
 </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 <span class="tag">&lt;/<span class="title">body</span>&gt;</span>
