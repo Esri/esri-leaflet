@@ -204,6 +204,9 @@
 <div id="map-wrapper">
   
 
+<!-- Load Esri Leaflet Renderers plugin to use feature service symbology -->
+<script src="https://unpkg.com/esri-leaflet-renderers@2.0.6"></script>
+
 <style>
   #query {
     position: absolute;
@@ -220,71 +223,43 @@
 </style>
 
 <div id="map"></div>
+
 <div id="query" class="leaflet-bar">
-<label>
-  Bus Direction
-  <select id="direction">
-    <!-- make sure to encase string values in single quotes for valid sql -->
-    <option value='1=1'>Any</option>
-    <option value="direction='North'">North</option>
-    <option value="direction='South'">South</option>
-    <option value="direction='East'">East</option>
-    <option value="direction='West'">West</option>
-  </select>
-</label>
+  <label>
+    Zoning District:
+    <select id="district">
+      <!-- make sure to encase string values in single quotes for valid sql -->
+      <option value='1=1'>Any</option>
+      <option value="ZONE_SMRY='OPEN SPACE'">Open Space</option>
+      <option value="ZONE_SMRY='AGRICULTURE'">Agriculture</option>
+      <option value="ZONE_SMRY='RESIDENTIAL'">Residential</option>
+      <option value="ZONE_SMRY='COMMERCIAL'">Commercial</option>
+      <option value="ZONE_SMRY='INDUSTRIAL'">Industrial</option>
+      <option value="ZONE_SMRY='PARKING'">Parking</option>
+      <option value="ZONE_SMRY='PUBLIC FACILITY'">Public Facility</option>
+    </select>
+  </label>
 </div>
 
 <script>
-  var map = L.map('map').setView([45.526, -122.667], 15);
 
-  var icons = {
-    north: L.icon({
-      iconUrl: '//esri.github.io/esri-leaflet/img/bus-stop-north.png',
-      iconRetinaUrl: '//esri.github.io/esri-leaflet/img/bus-stop-north@2x.png',
-      iconSize: [27, 31],
-      iconAnchor: [13.5, 17.5],
-      popupAnchor: [0, -11]
-    }),
-    south: L.icon({
-      iconUrl: '//esri.github.io/esri-leaflet/img/bus-stop-south.png',
-      iconRetinaUrl: '//esri.github.io/esri-leaflet/img/bus-stop-south@2x.png',
-      iconSize: [27, 31],
-      iconAnchor: [13.5, 13.5],
-      popupAnchor: [0, -11]
-    }),
-    east: L.icon({
-      iconUrl: '//esri.github.io/esri-leaflet/img/bus-stop-east.png',
-      iconRetinaUrl: '//esri.github.io/esri-leaflet/img/bus-stop-east@2x.png',
-      iconSize: [31, 27],
-      iconAnchor: [13.5, 17.5],
-      popupAnchor: [0, -11]
-    }),
-    west: L.icon({
-      iconUrl: '//esri.github.io/esri-leaflet/img/bus-stop-west.png',
-      iconRetinaUrl: '//esri.github.io/esri-leaflet/img/bus-stop-west@2x.png',
-      iconSize: [31, 27],
-      iconAnchor: [17.5, 13.5],
-      popupAnchor: [0, -11]
-    })
-  };
+  var map = L.map('map').setView([34.19, -118.53], 15);
 
-  L.esri.basemapLayer('Streets').addTo(map);
-  var stops = L.esri.featureLayer({
-    url: 'https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Trimet_Transit_Stops/FeatureServer/0',
-    pointToLayer: function (geojson, latlng) {
-      return L.marker(latlng, {
-        icon: icons[geojson.properties.direction.toLowerCase()]
-      });
-    }
+  L.esri.basemapLayer('Gray').addTo(map);
+
+  var zoning = L.esri.featureLayer({
+    url: 'https://services5.arcgis.com/7nsPwEMP38bSkCjy/arcgis/rest/services/TEST_PYTHON_ZONING/FeatureServer/0',
+    simplifyFactor: 0.5,
+    precision: 4      
   }).addTo(map);
 
-  var direction = document.getElementById('direction');
+  var zoningDistrict = document.getElementById('district');
 
-  direction.addEventListener('change', function(){
-    stops.setWhere(direction.value);
+  zoningDistrict.addEventListener('change', function(){
+    zoning.setWhere(district.value);
   });
-</script>
 
+</script>
 </div>
 <pre><code class="language-xml"><span class="tag">&lt;<span class="title">html</span>&gt;</span>
 <span class="tag">&lt;<span class="title">head</span>&gt;</span>
@@ -314,6 +289,9 @@
 <span class="tag">&lt;/<span class="title">head</span>&gt;</span>
 <span class="tag">&lt;<span class="title">body</span>&gt;</span>
 
+<span class="comment">&lt;!-- Load Esri Leaflet Renderers plugin to use feature service symbology --&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/esri-leaflet-renderers@2.0.6"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+
 <span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css">
   <span class="id">#query</span> <span class="rules">{
     <span class="rule"><span class="attribute">position</span>:<span class="value"> absolute</span></span>;
@@ -330,69 +308,42 @@
 </span><span class="tag">&lt;/<span class="title">style</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+
 <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"query"</span> <span class="attribute">class</span>=<span class="value">"leaflet-bar"</span>&gt;</span>
-<span class="tag">&lt;<span class="title">label</span>&gt;</span>
-  Bus Direction
-  <span class="tag">&lt;<span class="title">select</span> <span class="attribute">id</span>=<span class="value">"direction"</span>&gt;</span>
-    <span class="comment">&lt;!-- make sure to encase string values in single quotes for valid sql --&gt;</span>
-    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">'1=1'</span>&gt;</span>Any<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"direction='North'"</span>&gt;</span>North<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"direction='South'"</span>&gt;</span>South<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"direction='East'"</span>&gt;</span>East<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"direction='West'"</span>&gt;</span>West<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
-  <span class="tag">&lt;/<span class="title">select</span>&gt;</span>
-<span class="tag">&lt;/<span class="title">label</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">label</span>&gt;</span>
+    Zoning District:
+    <span class="tag">&lt;<span class="title">select</span> <span class="attribute">id</span>=<span class="value">"district"</span>&gt;</span>
+      <span class="comment">&lt;!-- make sure to encase string values in single quotes for valid sql --&gt;</span>
+      <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">'1=1'</span>&gt;</span>Any<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
+      <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"ZONE_SMRY='OPEN SPACE'"</span>&gt;</span>Open Space<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
+      <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"ZONE_SMRY='AGRICULTURE'"</span>&gt;</span>Agriculture<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
+      <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"ZONE_SMRY='RESIDENTIAL'"</span>&gt;</span>Residential<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
+      <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"ZONE_SMRY='COMMERCIAL'"</span>&gt;</span>Commercial<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
+      <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"ZONE_SMRY='INDUSTRIAL'"</span>&gt;</span>Industrial<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
+      <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"ZONE_SMRY='PARKING'"</span>&gt;</span>Parking<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
+      <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"ZONE_SMRY='PUBLIC FACILITY'"</span>&gt;</span>Public Facility<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
+    <span class="tag">&lt;/<span class="title">select</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">label</span>&gt;</span>
 <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
-  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">45.526</span>, -<span class="number">122.667</span>], <span class="number">15</span>);
 
-  <span class="keyword">var</span> icons = {
-    north: L.icon({
-      iconUrl: <span class="string">'//esri.github.io/esri-leaflet/img/bus-stop-north.png'</span>,
-      iconRetinaUrl: <span class="string">'//esri.github.io/esri-leaflet/img/bus-stop-north@2x.png'</span>,
-      iconSize: [<span class="number">27</span>, <span class="number">31</span>],
-      iconAnchor: [<span class="number">13.5</span>, <span class="number">17.5</span>],
-      popupAnchor: [<span class="number">0</span>, -<span class="number">11</span>]
-    }),
-    south: L.icon({
-      iconUrl: <span class="string">'//esri.github.io/esri-leaflet/img/bus-stop-south.png'</span>,
-      iconRetinaUrl: <span class="string">'//esri.github.io/esri-leaflet/img/bus-stop-south@2x.png'</span>,
-      iconSize: [<span class="number">27</span>, <span class="number">31</span>],
-      iconAnchor: [<span class="number">13.5</span>, <span class="number">13.5</span>],
-      popupAnchor: [<span class="number">0</span>, -<span class="number">11</span>]
-    }),
-    east: L.icon({
-      iconUrl: <span class="string">'//esri.github.io/esri-leaflet/img/bus-stop-east.png'</span>,
-      iconRetinaUrl: <span class="string">'//esri.github.io/esri-leaflet/img/bus-stop-east@2x.png'</span>,
-      iconSize: [<span class="number">31</span>, <span class="number">27</span>],
-      iconAnchor: [<span class="number">13.5</span>, <span class="number">17.5</span>],
-      popupAnchor: [<span class="number">0</span>, -<span class="number">11</span>]
-    }),
-    west: L.icon({
-      iconUrl: <span class="string">'//esri.github.io/esri-leaflet/img/bus-stop-west.png'</span>,
-      iconRetinaUrl: <span class="string">'//esri.github.io/esri-leaflet/img/bus-stop-west@2x.png'</span>,
-      iconSize: [<span class="number">31</span>, <span class="number">27</span>],
-      iconAnchor: [<span class="number">17.5</span>, <span class="number">13.5</span>],
-      popupAnchor: [<span class="number">0</span>, -<span class="number">11</span>]
-    })
-  };
+  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">34.19</span>, -<span class="number">118.53</span>], <span class="number">15</span>);
 
-  L.esri.basemapLayer(<span class="string">'Streets'</span>).addTo(map);
-  <span class="keyword">var</span> stops = L.esri.featureLayer({
-    url: <span class="string">'https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Trimet_Transit_Stops/FeatureServer/0'</span>,
-    pointToLayer: <span class="function"><span class="keyword">function</span> <span class="params">(geojson, latlng)</span> {</span>
-      <span class="keyword">return</span> L.marker(latlng, {
-        icon: icons[geojson.properties.direction.toLowerCase()]
-      });
-    }
+  L.esri.basemapLayer(<span class="string">'Gray'</span>).addTo(map);
+
+  <span class="keyword">var</span> zoning = L.esri.featureLayer({
+    url: <span class="string">'https://services5.arcgis.com/7nsPwEMP38bSkCjy/arcgis/rest/services/TEST_PYTHON_ZONING/FeatureServer/0'</span>,
+    simplifyFactor: <span class="number">0.5</span>,
+    precision: <span class="number">4</span>      
   }).addTo(map);
 
-  <span class="keyword">var</span> direction = document.getElementById(<span class="string">'direction'</span>);
+  <span class="keyword">var</span> zoningDistrict = document.getElementById(<span class="string">'district'</span>);
 
-  direction.addEventListener(<span class="string">'change'</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span>{</span>
-    stops.setWhere(direction.value);
+  zoningDistrict.addEventListener(<span class="string">'change'</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span>{</span>
+    zoning.setWhere(district.value);
   });
+
 </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 <span class="tag">&lt;/<span class="title">body</span>&gt;</span>

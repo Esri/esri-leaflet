@@ -12,7 +12,7 @@
   
 
   
-    <meta name="description" content="Performing advanced queries on a Feature Layer. Click on the map to query for features within 500 meters. More information about Feature Layers can be found in the &lt;a href=&quot;../api-reference/layers/feature-layer.html&quot;&gt;L.esri.FeatureLayer&lt;/a&gt; documentation.">
+    <meta name="description" content="Performing advanced queries on a Feature Layer. Click on the map to query for features within 250 meters. More information about Feature Layers can be found in the &lt;a href=&quot;../api-reference/layers/feature-layer.html&quot;&gt;L.esri.FeatureLayer&lt;/a&gt; documentation.">
   
 
   <meta name="description" content="Esri Leaflet">
@@ -199,7 +199,7 @@
 <div class="example-content">
 <div class="wrap">
   <h1>Querying features</h1>
-  <p>Performing advanced queries on a Feature Layer. Click on the map to query for features within 500 meters. More information about Feature Layers can be found in the <a href="../api-reference/layers/feature-layer.html">L.esri.FeatureLayer</a> documentation.</p>
+  <p>Performing advanced queries on a Feature Layer. Click on the map to query for features within 250 meters. More information about Feature Layers can be found in the <a href="../api-reference/layers/feature-layer.html">L.esri.FeatureLayer</a> documentation.</p>
 </div>
 <div id="map-wrapper">
   
@@ -207,11 +207,12 @@
 <div id="map"></div>
 
 <script>
-  var map = L.map('map').setView([45.526, -122.667], 15);
+  var map = L.map('map').setView([34.19, -118.53], 16);
 
   L.esri.basemapLayer('Streets').addTo(map);
-  var stops = L.esri.featureLayer({
-    url: 'https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Trimet_Transit_Stops/FeatureServer/0',
+  
+  var streetLights = L.esri.featureLayer({
+    url: 'https://maps.lacity.org/lahub/rest/services/Bureau_of_Street_Lighting/MapServer/0',
     pointToLayer: function (geojson, latlng) {
       return L.circleMarker(latlng);
     },
@@ -226,15 +227,15 @@
   var previousIds = [];
 
   map.on('click', function(e){
-    stops.query().nearby(e.latlng, 500).ids(function(error, ids){
+    streetLights.query().nearby(e.latlng, 250).ids(function(error, ids){
       for (var j = 0; j < previousIds.length; j++) {
-        stops.resetStyle(previousIds[j]);
+        streetLights.resetStyle(previousIds[j]);
       }
 
       previousIds = ids;
 
       for (var i = 0; i < ids.length; i++) {
-        stops.setFeatureStyle(ids[i], {
+        streetLights.setFeatureStyle(ids[i], {
           color: '#BA454E',
           weight: 2,
           opacity: 0.85,
@@ -277,11 +278,12 @@
 <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
-  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">45.526</span>, -<span class="number">122.667</span>], <span class="number">15</span>);
+  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">34.19</span>, -<span class="number">118.53</span>], <span class="number">16</span>);
 
   L.esri.basemapLayer(<span class="string">'Streets'</span>).addTo(map);
-  <span class="keyword">var</span> stops = L.esri.featureLayer({
-    url: <span class="string">'https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Trimet_Transit_Stops/FeatureServer/0'</span>,
+
+  <span class="keyword">var</span> streetLights = L.esri.featureLayer({
+    url: <span class="string">'https://maps.lacity.org/lahub/rest/services/Bureau_of_Street_Lighting/MapServer/0'</span>,
     pointToLayer: <span class="function"><span class="keyword">function</span> <span class="params">(geojson, latlng)</span> {</span>
       <span class="keyword">return</span> L.circleMarker(latlng);
     },
@@ -296,15 +298,15 @@
   <span class="keyword">var</span> previousIds = [];
 
   map.on(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span><span class="params">(e)</span>{</span>
-    stops.query().nearby(e.latlng, <span class="number">500</span>).ids(<span class="function"><span class="keyword">function</span><span class="params">(error, ids)</span>{</span>
+    streetLights.query().nearby(e.latlng, <span class="number">250</span>).ids(<span class="function"><span class="keyword">function</span><span class="params">(error, ids)</span>{</span>
       <span class="keyword">for</span> (<span class="keyword">var</span> j = <span class="number">0</span>; j &lt; previousIds.length; j++) {
-        stops.resetStyle(previousIds[j]);
+        streetLights.resetStyle(previousIds[j]);
       }
 
       previousIds = ids;
 
       <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; ids.length; i++) {
-        stops.setFeatureStyle(ids[i], {
+        streetLights.setFeatureStyle(ids[i], {
           color: <span class="string">'#BA454E'</span>,
           weight: <span class="number">2</span>,
           opacity: <span class="number">0.85</span>,
