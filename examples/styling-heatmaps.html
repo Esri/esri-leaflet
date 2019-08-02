@@ -213,14 +213,14 @@
 <div id="map"></div>
 
 <script>
-  var map = L.map('map').setView([ 40.706, -73.926], 14);
+  var map = L.map('map').setView([41.759, -88.157], 12);
 
   L.esri.basemapLayer('Gray').addTo(map);
 
   // new constructor syntax at 2.0.0
   L.esri.Heat.featureLayer({
-    url: 'https://services.arcgis.com/rOo16HdIMeOBI4Mb/ArcGIS/rest/services/Graffiti_Reports/FeatureServer/0',
-    radius: 14,
+    url: 'https://sampleserver6.arcgisonline.com/arcgis/rest/services/CommunityAddressing/MapServer/0',
+    radius: 10,
     gradient: {
       0.2: '#ffffb2',
       0.4: '#fd8d3c',
@@ -269,14 +269,14 @@
 <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
-  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([ <span class="number">40.706</span>, -<span class="number">73.926</span>], <span class="number">14</span>);
+  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">41.759</span>, -<span class="number">88.157</span>], <span class="number">12</span>);
 
   L.esri.basemapLayer(<span class="string">'Gray'</span>).addTo(map);
 
   <span class="comment">// new constructor syntax at 2.0.0</span>
   L.esri.Heat.featureLayer({
-    url: <span class="string">'https://services.arcgis.com/rOo16HdIMeOBI4Mb/ArcGIS/rest/services/Graffiti_Reports/FeatureServer/0'</span>,
-    radius: <span class="number">14</span>,
+    url: <span class="string">'https://sampleserver6.arcgisonline.com/arcgis/rest/services/CommunityAddressing/MapServer/0'</span>,
+    radius: <span class="number">10</span>,
     gradient: {
       <span class="number">0.2</span>: <span class="string">'#ffffb2'</span>,
       <span class="number">0.4</span>: <span class="string">'#fd8d3c'</span>,
