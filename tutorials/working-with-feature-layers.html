@@ -133,27 +133,29 @@
     <span class="rule">}</span></span>
   </span><span class="tag">&lt;/<span class="title">style</span>&gt;</span>
 <span class="tag">&lt;/<span class="title">head</span>&gt;</span>
-<span class="tag">&lt;<span class="title">body</span>&gt;</span>    
-    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+<span class="tag">&lt;<span class="title">body</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 
-    <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
-        <span class="keyword">const</span> map = L.map(<span class="string">'map'</span>, {
-          center: [<span class="number">45.526</span>, -<span class="number">122.667</span>],
-          zoom: <span class="number">13</span>
-        });
+  <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
+    <span class="keyword">const</span> map = L.map(<span class="string">'map'</span>, {
+      center: [<span class="number">45.526</span>, -<span class="number">122.667</span>],
+      zoom: <span class="number">13</span>
+    });
 
-        <span class="keyword">const</span> esriStreets = L.esri.basemapLayer(<span class="string">'Streets'</span>).addTo(map);    
-    </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>    
+    <span class="keyword">const</span> esriStreets = L.esri.basemapLayer(<span class="string">'Streets'</span>).addTo(map);
+  </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 <span class="tag">&lt;/<span class="title">body</span>&gt;</span>
 <span class="tag">&lt;/<span class="title">html</span>&gt;</span></code></pre>
 <h5 id="add-a-feature-layer-to-the-map">Add a Feature Layer to the Map</h5>
 <p>We will add a REST service using the <code>L.esri.featureLayer</code> class from the Esri Leaflet plugin.  This can be either a <strong>Map Service</strong> or <strong>Feature Service</strong>.  You must provide the url for the service.  You can learn more about map and feature services at the <a href="https://esri.github.io/esri-leaflet/tutorials/introduction-to-layer-types.html" title="Introduction to Layer Types Tutorial">Introduction to Layer Types</a> tutorial.</p>
 <p>Below is an example for creating a Feature Layer using both types of services:</p>
-<pre><code class="language-JavaScript">const portlandHeritageTrees = L.esri.featureLayer({url: &#39;https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Heritage_Trees_Portland/FeatureServer/0&#39;});
+<pre><code class="language-js"><span class="keyword">const</span> portlandHeritageTrees = L.esri.featureLayer({url: <span class="string">'https://www.portlandmaps.com/arcgis/rest/services/Public/Parks_Misc/MapServer/21/'</span>});
 
-const worldCities =  L.esri.featureLayer({url: &#39;https://sampleserver6.arcgisonline.com/arcgis/rest/services/SampleWorldCities/MapServer/0&#39;});</code></pre>
+<span class="keyword">const</span> worldCities =  L.esri.featureLayer({url: <span class="string">'https://sampleserver6.arcgisonline.com/arcgis/rest/services/SampleWorldCities/MapServer/0'</span>});</code></pre>
 <p>In order to display our new layer, we need to add it to our map using Leaflet&#39;s <code>addTo()</code> method.  We can chain this method directly to the object constructor, or call it in a separate line.  In our sample, we&#39;ll use the chaining approach.</p>
-<pre><code class="language-JavaScript">const portlandHeritageTrees = L.esri.featureLayer({url: &#39;https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Heritage_Trees_Portland/FeatureServer/0&#39;}).addTo(map);</code></pre>
+<pre><code class="language-js"><span class="keyword">const</span> portlandHeritageTrees = L.esri.featureLayer({
+  url: <span class="string">'https://www.portlandmaps.com/arcgis/rest/services/Public/Parks_Misc/MapServer/21/'</span>
+}).addTo(map);</code></pre>
 <p>If we save and refresh our map, we should see many blue markers on the map, which are the features from the service.  Leaflet is applying a default style to the features.  It is up to you to define the styles for the data tha that is drawn. See the links below for examples of doing this:</p>
 <blockquote>
 <p><a href="https://esri.github.io/esri-leaflet/examples/styling-feature-layer-points.html" title="Styling Points Feature Layer">Styling Points</a></p>
@@ -165,14 +167,14 @@ const worldCities =  L.esri.featureLayer({url: &#39;https://sampleserver6.arcgis
 <p>If we want to use the symbology set when a service was published, we&#39;ll need to add the <a href="https://github.com/Esri/esri-leaflet-renderers" title="Esri Leaflet Renderers">Esri Leaflet Renderers</a> helper library.  We&#39;ll add a <code>&lt;script&gt;</code> for this plugin in the <code>&lt;head&gt;</code> element on the page.</p>
 <pre><code class="language-xml"><span class="comment">&lt;!-- Load Esri Leaflet Renderers from CDN --&gt;</span>
 <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/esri-leaflet-renderers@2.0.6/dist/esri-leaflet-renderers.js"</span>
-    <span class="attribute">integrity</span>=<span class="value">"sha512-mhpdD3igvv7A/84hueuHzV0NIKFHmp2IvWnY5tIdtAHkHF36yySdstEVI11JZCmSY4TCvOkgEoW+zcV/rUfo0A=="</span>
-    <span class="attribute">crossorigin</span>=<span class="value">""</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></code></pre>
+  <span class="attribute">integrity</span>=<span class="value">"sha512-mhpdD3igvv7A/84hueuHzV0NIKFHmp2IvWnY5tIdtAHkHF36yySdstEVI11JZCmSY4TCvOkgEoW+zcV/rUfo0A=="</span>
+  <span class="attribute">crossorigin</span>=<span class="value">""</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></code></pre>
 <p>If we save and refresh our map, we&#39;ll now see the trees displayed as red circles.  </p>
 <h5 id="add-a-popup-to-feature-layer">Add a Popup to Feature Layer</h5>
 <p>Now we will add a popup to our feature layer.  The popup can contain both static text and dynamic text from the fields in the service.  We&#39;ll use the <code>bindPopup</code> method to create the popup.  You can learn more about popups in Leaflet by visting the <a href="https://leafletjs.com/reference.html#popup" title="Leaflet Popup Documentation">documentation</a>.</p>
 <p>We will create the content for the popup using Leaflet&#39;s <a href="https://leafletjs.com/reference.html#util-template" title="Leaflet Utility Template">Utility Template</a>.  We place the name of fields from the service in  curly brackets <strong>{ }</strong>, and add <code>feature.properties</code> at the end of the <code>L.Util.template</code> to access the fields. </p>
-<pre><code class="language-JavaScript">portlandHeritageTrees.bindPopup(function(evt) {
-    return L.Util.template(&#39;&lt;h3&gt;{COMMON_NAM}&lt;/h3&gt;&lt;hr /&gt;&lt;p&gt;This tree is located at {ADDRESS} and its scientific name is {SCIENTIFIC}.&#39;, evt.feature.properties);
+<pre><code class="language-js">portlandHeritageTrees.bindPopup(<span class="function"><span class="keyword">function</span><span class="params">(evt)</span> {</span>
+  <span class="keyword">return</span> L.Util.template(<span class="string">'&lt;h3&gt;{COMMON_NAM}&lt;/h3&gt;&lt;hr /&gt;&lt;p&gt;This tree is located at {ADDRESS} and its scientific name is {SCIENTIFIC}.'</span>, evt.feature.properties);
 });</code></pre>
 <p>If we save and refresh our map, we are able to click on the features and a popup will open.</p>
 <h5 id="final-html-file">Final HTML File</h5>
@@ -213,23 +215,25 @@ const worldCities =  L.esri.featureLayer({url: &#39;https://sampleserver6.arcgis
     <span class="rule">}</span></span>
   </span><span class="tag">&lt;/<span class="title">style</span>&gt;</span>
 <span class="tag">&lt;/<span class="title">head</span>&gt;</span>
-<span class="tag">&lt;<span class="title">body</span>&gt;</span>    
-    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+<span class="tag">&lt;<span class="title">body</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 
-    <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
-        <span class="keyword">const</span> map = L.map(<span class="string">'map'</span>, {
-          center: [<span class="number">45.526</span>, -<span class="number">122.667</span>],
-          zoom: <span class="number">13</span>
-        });
+  <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
+    <span class="keyword">const</span> map = L.map(<span class="string">'map'</span>, {
+      center: [<span class="number">45.526</span>, -<span class="number">122.667</span>],
+      zoom: <span class="number">13</span>
+    });
 
-        <span class="keyword">const</span> esriStreets = L.esri.basemapLayer(<span class="string">'Streets'</span>).addTo(map);
+    <span class="keyword">const</span> esriStreets = L.esri.basemapLayer(<span class="string">'Streets'</span>).addTo(map);
 
-        <span class="keyword">const</span> portlandHeritageTrees = L.esri.featureLayer({url: <span class="string">'https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Heritage_Trees_Portland/FeatureServer/0'</span>}).addTo(map);
+    <span class="keyword">const</span> portlandHeritageTrees = L.esri.featureLayer({
+      url: <span class="string">'https://www.portlandmaps.com/arcgis/rest/services/Public/Parks_Misc/MapServer/21/'</span>
+    }).addTo(map);
 
-        portlandHeritageTrees.bindPopup(<span class="function"><span class="keyword">function</span><span class="params">(evt)</span> {</span>
-            <span class="keyword">return</span> L.Util.template(<span class="string">'&lt;h3&gt;{COMMON_NAM}&lt;/h3&gt;&lt;hr /&gt;&lt;p&gt;This tree is located at {ADDRESS} and its scientific name is {SCIENTIFIC}.'</span>, evt.feature.properties);
-        });          
-    </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>    
+    portlandHeritageTrees.bindPopup(<span class="function"><span class="keyword">function</span><span class="params">(evt)</span> {</span>
+      <span class="keyword">return</span> L.Util.template(<span class="string">'&lt;h3&gt;{COMMON_NAM}&lt;/h3&gt;&lt;hr /&gt;&lt;p&gt;This tree is located at {ADDRESS} and its scientific name is {SCIENTIFIC}.'</span>, evt.feature.properties);
+    });
+  </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 <span class="tag">&lt;/<span class="title">body</span>&gt;</span>
 <span class="tag">&lt;/<span class="title">html</span>&gt;</span></code></pre>
 
