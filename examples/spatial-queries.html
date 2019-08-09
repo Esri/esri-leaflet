@@ -231,7 +231,9 @@
     <option value="line">Line<options>
     <option value="polygon">Polygon<options>
   </select>
+  <button id="executeQuery">Run Query</button>
 </div>
+
 <script>
   var map = L.map("map").setView([45.525, -122.628], 11);
 
@@ -239,9 +241,9 @@
 
   // create our layer
   neighborhoods = L.esri.featureLayer({
-    url: "https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Neighborhoods_pdx/FeatureServer/0",
+    url: "https://www.portlandmaps.com/arcgis/rest/services/Public/Zoning/MapServer/32",
     style: {
-      color: 'gray',
+      color: '#000',
       weight: 1,
       opacity: 0.4
     }
@@ -274,14 +276,10 @@
 
   // create a polygon to query against
   var polygon = L.polygon([
-    [45.489261, -122.737198],
-    [45.486373, -122.688446],
-    [45.462539, -122.682266],
-    [45.441104, -122.693596],
-    [45.444717, -122.722435],
-    [45.461094, -122.738228],
-    [45.482521, -122.734108],
-    [45.489261, -122.737198]
+    [45.484894, -122.493696],
+    [45.512025, -122.492199],
+    [45.517669, -122.561457],
+    [45.487343, -122.558573]
   ], {
     color: 'blue',
     weight: 2
@@ -297,36 +295,39 @@
 
   // get references to our <select> elements
   var relationship = document.getElementById('relationSelect');
-  var geometry = document.getElementById('geometrySelect');
+  var geometry = document.getElementById('geometrySelect');  
+  var runQueryButton = document.getElementById('executeQuery');
 
   var previousIds = [];
 
   // reset all features back to their regularly defined styles
-  function reset(){
+  function reset() {
     for (var i = previousIds.length - 1; i >= 0; i--) {
       neighborhoods.resetStyle(previousIds[i]);
     };
   }
-
   // query the API and highlight features
   function query(){
     reset();
-
     // lookup our input geometry
     var inputGeometry = geometries[geometry.value];
 
     // query the service executing the selected relation with the selected input geometry
     neighborhoods.query()[relationship.value](inputGeometry).ids(function(error, ids){
-      previousIds = ids;
-      for (var i = ids.length - 1; i >= 0; i--) {
-        neighborhoods.setFeatureStyle(ids[i], { color: 'red', weight: 2 });
-      };
+      // if there is an error with the query, you can handle it here
+      if (error) {
+        console.log('Error with query: ' + error);
+      } else if (ids) {
+        previousIds = ids;
+        for (var i = ids.length - 1; i >= 0; i--) {
+          neighborhoods.setFeatureStyle(ids[i], { color: 'red', weight: 2 });
+        };
+      }
     });
   }
 
-  // query when an input changes
-  geometry.addEventListener('change', query);
-  relationship.addEventListener('change', query);
+  // query when "Run Query" button is clicked
+  runQueryButton.addEventListener('click', query);
 
   // once all neighborhoods have loaded run the default query
   neighborhoods.once('load', function(){
@@ -391,7 +392,9 @@
     <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"line"</span>&gt;</span>Line<span class="tag">&lt;<span class="title">options</span>&gt;</span>
     <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"polygon"</span>&gt;</span>Polygon<span class="tag">&lt;<span class="title">options</span>&gt;</span>
   <span class="tag">&lt;/<span class="title">select</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">button</span> <span class="attribute">id</span>=<span class="value">"executeQuery"</span>&gt;</span>Run Query<span class="tag">&lt;/<span class="title">button</span>&gt;</span>
 <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+
 <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
   <span class="keyword">var</span> map = L.map(<span class="string">"map"</span>).setView([<span class="number">45.525</span>, -<span class="number">122.628</span>], <span class="number">11</span>);
 
@@ -399,9 +402,9 @@
 
   <span class="comment">// create our layer</span>
   neighborhoods = L.esri.featureLayer({
-    url: <span class="string">"https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Neighborhoods_pdx/FeatureServer/0"</span>,
+    url: <span class="string">"https://www.portlandmaps.com/arcgis/rest/services/Public/Zoning/MapServer/32"</span>,
     style: {
-      color: <span class="string">'gray'</span>,
+      color: <span class="string">'#000'</span>,
       weight: <span class="number">1</span>,
       opacity: <span class="number">0.4</span>
     }
@@ -434,14 +437,10 @@
 
   <span class="comment">// create a polygon to query against</span>
   <span class="keyword">var</span> polygon = L.polygon([
-    [<span class="number">45.489261</span>, -<span class="number">122.737198</span>],
-    [<span class="number">45.486373</span>, -<span class="number">122.688446</span>],
-    [<span class="number">45.462539</span>, -<span class="number">122.682266</span>],
-    [<span class="number">45.441104</span>, -<span class="number">122.693596</span>],
-    [<span class="number">45.444717</span>, -<span class="number">122.722435</span>],
-    [<span class="number">45.461094</span>, -<span class="number">122.738228</span>],
-    [<span class="number">45.482521</span>, -<span class="number">122.734108</span>],
-    [<span class="number">45.489261</span>, -<span class="number">122.737198</span>]
+    [<span class="number">45.484894</span>, -<span class="number">122.493696</span>],
+    [<span class="number">45.512025</span>, -<span class="number">122.492199</span>],
+    [<span class="number">45.517669</span>, -<span class="number">122.561457</span>],
+    [<span class="number">45.487343</span>, -<span class="number">122.558573</span>]
   ], {
     color: <span class="string">'blue'</span>,
     weight: <span class="number">2</span>
@@ -457,36 +456,39 @@
 
   <span class="comment">// get references to our &lt;select&gt; elements</span>
   <span class="keyword">var</span> relationship = document.getElementById(<span class="string">'relationSelect'</span>);
-  <span class="keyword">var</span> geometry = document.getElementById(<span class="string">'geometrySelect'</span>);
+  <span class="keyword">var</span> geometry = document.getElementById(<span class="string">'geometrySelect'</span>);  
+  <span class="keyword">var</span> runQueryButton = document.getElementById(<span class="string">'executeQuery'</span>);
 
   <span class="keyword">var</span> previousIds = [];
 
   <span class="comment">// reset all features back to their regularly defined styles</span>
-  <span class="function"><span class="keyword">function</span> <span class="title">reset</span><span class="params">()</span>{</span>
+  <span class="function"><span class="keyword">function</span> <span class="title">reset</span><span class="params">()</span> {</span>
     <span class="keyword">for</span> (<span class="keyword">var</span> i = previousIds.length - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) {
       neighborhoods.resetStyle(previousIds[i]);
     };
   }
-
   <span class="comment">// query the API and highlight features</span>
   <span class="function"><span class="keyword">function</span> <span class="title">query</span><span class="params">()</span>{</span>
     reset();
-
     <span class="comment">// lookup our input geometry</span>
     <span class="keyword">var</span> inputGeometry = geometries[geometry.value];
 
     <span class="comment">// query the service executing the selected relation with the selected input geometry</span>
     neighborhoods.query()[relationship.value](inputGeometry).ids(<span class="function"><span class="keyword">function</span><span class="params">(error, ids)</span>{</span>
-      previousIds = ids;
-      <span class="keyword">for</span> (<span class="keyword">var</span> i = ids.length - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) {
-        neighborhoods.setFeatureStyle(ids[i], { color: <span class="string">'red'</span>, weight: <span class="number">2</span> });
-      };
+      <span class="comment">// if there is an error with the query, you can handle it here</span>
+      <span class="keyword">if</span> (error) {
+        console.log(<span class="string">'Error with query: '</span> + error);
+      } <span class="keyword">else</span> <span class="keyword">if</span> (ids) {
+        previousIds = ids;
+        <span class="keyword">for</span> (<span class="keyword">var</span> i = ids.length - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) {
+          neighborhoods.setFeatureStyle(ids[i], { color: <span class="string">'red'</span>, weight: <span class="number">2</span> });
+        };
+      }
     });
   }
 
-  <span class="comment">// query when an input changes</span>
-  geometry.addEventListener(<span class="string">'change'</span>, query);
-  relationship.addEventListener(<span class="string">'change'</span>, query);
+  <span class="comment">// query when "Run Query" button is clicked</span>
+  runQueryButton.addEventListener(<span class="string">'click'</span>, query);
 
   <span class="comment">// once all neighborhoods have loaded run the default query</span>
   neighborhoods.once(<span class="string">'load'</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span>{</span>

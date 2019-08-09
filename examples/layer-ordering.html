@@ -211,8 +211,8 @@
 
   L.esri.basemapLayer("Topographic").addTo(map);
 
-  var neighborhoodsUrl = "https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Neighborhoods_pdx/FeatureServer/0";
-  var eliotFootprintsUrl = "https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Eliot%20Building%20Footprints/FeatureServer/0";
+  var neighborhoodsUrl = "https://www.portlandmaps.com/arcgis/rest/services/Public/Zoning/MapServer/32";
+  var buildingFootprintsUrl = "https://www.portlandmaps.com/arcgis/rest/services/Public/Basemap_Color_Buildings/MapServer/0";
   var blockPointsUrl = "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer/0";
 
   // create a map pane for neighborhoods
@@ -228,7 +228,7 @@
   map.createPane('footprints');
 
   L.esri.featureLayer({
-    url: eliotFootprintsUrl,
+    url: buildingFootprintsUrl,
     pane: 'footprints',
     style: function (feature) {
       return {  color: 'white', weight: 0, fillOpacity: 1  };
@@ -286,8 +286,8 @@
 
   L.esri.basemapLayer(<span class="string">"Topographic"</span>).addTo(map);
 
-  <span class="keyword">var</span> neighborhoodsUrl = <span class="string">"https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Neighborhoods_pdx/FeatureServer/0"</span>;
-  <span class="keyword">var</span> eliotFootprintsUrl = <span class="string">"https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Eliot%20Building%20Footprints/FeatureServer/0"</span>;
+  <span class="keyword">var</span> neighborhoodsUrl = <span class="string">"https://www.portlandmaps.com/arcgis/rest/services/Public/Zoning/MapServer/32"</span>;
+  <span class="keyword">var</span> buildingFootprintsUrl = <span class="string">"https://www.portlandmaps.com/arcgis/rest/services/Public/Basemap_Color_Buildings/MapServer/0"</span>;
   <span class="keyword">var</span> blockPointsUrl = <span class="string">"https://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer/0"</span>;
 
   <span class="comment">// create a map pane for neighborhoods</span>
@@ -303,7 +303,7 @@
   map.createPane(<span class="string">'footprints'</span>);
 
   L.esri.featureLayer({
-    url: eliotFootprintsUrl,
+    url: buildingFootprintsUrl,
     pane: <span class="string">'footprints'</span>,
     style: <span class="function"><span class="keyword">function</span> <span class="params">(feature)</span> {</span>
       <span class="keyword">return</span> {  color: <span class="string">'white'</span>, weight: <span class="number">0</span>, fillOpacity: <span class="number">1</span>  };
