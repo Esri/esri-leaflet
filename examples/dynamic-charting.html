@@ -8,11 +8,11 @@
   <meta charset="utf-8">
 
   
-    <title>Editing feature layers | Esri Leaflet</title>
+    <title>Dynamic feature charting with Chart.js | Esri Leaflet</title>
   
 
   
-    <meta name="description" content="This sample uses the Leaflet &lt;a href=&quot;//github.com/Leaflet/Leaflet.Editable&quot;&gt;Editable plugin&lt;/a&gt; to help users manipulate the geometry of features from a hosted feature service and pass the edits back to the server.">
+    <meta name="description" content="Plot feature attributes on a dynamic chart that updates automatically as users pan and zoom. This demo relies on &lt;a href=&quot;https://www.chartjs.org/&quot;&gt;Chart.js&lt;/a&gt; to render an interactive scatterplot.">
   
 
   <meta name="description" content="Esri Leaflet">
@@ -31,20 +31,23 @@
   <link rel="stylesheet" href="../css/style.css">
 
   
+    <!-- 'livereload' for development -->
+    <script src="//localhost:35729/livereload.js"></script>
+  
 
   
     
-      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
-      integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
+      integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
       crossorigin=""/>
-      <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
-      integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
+      <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"
+      integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
       crossorigin=""></script>
     
 
     
-      <script src="https://unpkg.com/esri-leaflet@2.3.0/dist/esri-leaflet.js"
-      integrity="sha512-1tScwpjXwwnm6tTva0l0/ZgM3rYNbdyMj5q6RSQMbNX6EUMhYDE3pMRGZaT41zHEvLoWEK7qFEJmZDOoDMU7/Q=="
+      <script src="https://unpkg.com/esri-leaflet@2.2.3/dist/esri-leaflet.js"
+      integrity="sha512-YZ6b5bXRVwipfqul5krehD9qlbJzc6KOGXYsDjU9HHXW2gK57xmWl2gU6nAegiErAqFXhygKIsWPKbjLPXVb2g=="
       crossorigin=""></script>
     
 
@@ -112,8 +115,6 @@
     <a href="../examples/layer-ordering.html">Ordering Layers</a>
     <a href="../examples/simple-editing.html">Editing #1</a>
     <a href="../examples/editable.html">Editing #2</a>
-    <a href="../examples/cedar-chart.html">Dynamic Chart (Cedar)</a>
-    <a href="../examples/dynamic-chart.html">Dynamic Chart (Chart.js)</a>
   </nav>
 
   <h5>Feature Layer Plugins</h5>
@@ -181,7 +182,7 @@
   <nav>
     <a href="../examples/renderers-plugin.html">Server Side Rendering</a>
     <a href="../examples/stream-plugin.html">Stream Layer</a>
-    <a href="../examples/webmap.html?id=d143b33f1a02421d86b6a4ca1d7b7cd0">Loading Webmaps</a>
+    <a href="../examples/webmap.html?id=13750b8b548d48bfa99a9731f2a93ba0">Loading Webmaps</a>
     <a href="../examples/gp-plugin.html">Geoprocessing</a>
   </nav>
 
@@ -192,126 +193,164 @@
     <a href="../examples/getting-service-metadata.html">Getting Service Metadata</a>
     <a href="../examples/parse-feature-collection.html">Parsing Feature Collections</a>
     <a href="../examples/indoors.html">Indoor Mapping</a>
+    <a href="../examples/dynamic-charting.html">Dynamic Charting</a>
   </nav>
 </aside>
 
 
 <div class="example-content">
 <div class="wrap">
-  <h1>Editing feature layers</h1>
-  <p>This sample uses the Leaflet <a href="//github.com/Leaflet/Leaflet.Editable">Editable plugin</a> to help users manipulate the geometry of features from a hosted feature service and pass the edits back to the server.</p>
+  <h1>Dynamic feature charting with Chart.js</h1>
+  <p>Plot feature attributes on a dynamic chart that updates automatically as users pan and zoom. This demo relies on <a href="https://www.chartjs.org/">Chart.js</a> to render an interactive scatterplot.</p>
 </div>
 <div id="map-wrapper">
   
-<script src="https://unpkg.com/leaflet.path.drag@0.0.5"></script>
-<script src="https://unpkg.com/leaflet-editable@1.2.0/src/Leaflet.Editable.js"></script>
+<style>
+  .chart-container {
+    height: 275px;
+    width: 275px;
+    /* horizontally center and
+    add some vertical spacing  */
+    margin: 10px auto;
+    outline: 1px solid #00ADA7;
 
-<div id='map'></div>
+    /* rules to allow the chart to hover over the Leaflet map control: */
+    z-index: 401;
+    position: absolute;
+    top: 0px;
+    right: 10px;
+    background-color: white;
+  }
+</style>
 
-<script type="text/javascript">
-    // make sure double clicking the map *only* triggers the editing workflow
-    var map = L.map('map', {
-      editable: true,
-      doubleClickZoom: false
-    }).setView([37.345, -110.875], 5);
+<div id="map">
+  <!-- Chart.js scatterplot location -->
+  <div class="chart-container">
+    <canvas id="chartCanvas"></canvas>
+  </div>
+</div>
 
-    var tilelayer = L.esri.basemapLayer("Topographic").addTo(map);
 
-    // create a feature layer and add it to the map
-    var wildfireDistricts = L.esri.featureLayer({
-      url: 'https://sampleserver6.arcgisonline.com/arcgis/rest/services/Wildfire/FeatureServer/2'
-    }).addTo(map);
 
-    // create a generic control to invoke editing
-    L.EditControl = L.Control.extend({
-        options: {
-            position: 'topleft',
-            callback: null,
-            kind: '',
-            html: ''
+<!-- Load Chart.js from CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+
+<script>
+  // STEP 1: MAKE A MAP AND ADD LAYERS
+  var map = L.map('map').setView([45.526, -122.667], 13);
+
+  L.esri.basemapLayer('Topographic').addTo(map);
+
+  // create and add a feature layer
+  // features from this layer will appear in the Chart.js scatterplot
+  var portlandTreesFeatureLayer = L.esri.featureLayer({
+    url: 'https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Heritage_Trees_Portland/FeatureServer/0',
+  });
+  portlandTreesFeatureLayer.addTo(map);
+
+  // STEP 2: DEFINE A CHART
+  // this is a static scatterplot chart definition for now, but it will
+  // soon become dynamic by responding to map and feature layer events
+  var initialChartData = {
+    datasets: [{
+      label: 'Portland Heritage Trees',
+      // the data values are empty at this moment
+      // and will be updated dynamically below
+      data: []
+    }]
+  };
+
+  var chartOptions = {
+    scales: {
+      xAxes: [{
+        scaleLabel: {
+          display: true,
+          labelString: 'tree diameter'
         },
-        // when the control is added to the map, wire up its DOM dynamically and add a click listener
-        onAdd: function (map) {
-            var container = L.DomUtil.create('div', 'leaflet-control leaflet-bar'),
-                link = L.DomUtil.create('a', '', container);
-            link.href = '#';
-            link.title = 'Create a new ' + this.options.kind;
-            link.innerHTML = this.options.html;
-            L.DomEvent.on(link, 'click', L.DomEvent.stop)
-                      .on(link, 'click', function () {
-                        window.LAYER = this.options.callback.call(map.editTools);
-                      }, this);
-            return container;
+        ticks: {
+          beginAtZero: true,
+          max: 150,
+          stepSize: 50
         }
-    });
-
-    // extend the control to draw polygons
-    L.NewPolygonControl = L.EditControl.extend({
-        options: {
-            position: 'topleft',
-            callback: map.editTools.startPolygon,
-            kind: 'polygon',
-            html: '▰'
+      }],
+      yAxes: [{
+        scaleLabel: {
+          display: true,
+          labelString: 'tree height'
+        },
+        ticks: {
+          beginAtZero: true,
+          max: 250,
+          stepSize: 50
         }
+      }]
+    },
+    maintainAspectRatio: false,
+    // turn off animations during chart data updates
+    animation: {
+      duration: 0,
+    }
+  };
+
+  var chart = new Chart('chartCanvas', {
+    type: 'scatter',
+    data: initialChartData,
+    options: chartOptions
+  });
+
+  // STEP 3: MAKE THE CHART DYNAMIC
+  // show in the scatterplot only the features in the map's current extent
+  // by handling several events from both the map and feature layer
+  map.on('zoom move', updateChart);
+  portlandTreesFeatureLayer.on('load', updateChart);
+
+  function updateChart() {
+    // reformat the features' attributes of interest into
+    // the data array format required by the Chart.js scatterplot
+    var scatterPlotDataArray = [];
+
+    portlandTreesFeatureLayer.eachActiveFeature(function(e) {
+      // loop over each active feature in the map extent and
+      // push an object into the scatterPlotDataArray in this format:
+
+      // {
+      //   x: diameter attribute value,
+      //   y: height attribute value
+      // }
+
+      scatterPlotDataArray.push({
+        x: e.feature.properties.DIAMETER,
+        y: e.feature.properties.HEIGHT
+      });
     });
 
-    // extend the control to draw rectangles
-    L.NewRectangleControl = L.EditControl.extend({
-        options: {
-            position: 'topleft',
-            callback: map.editTools.startRectangle,
-            kind: 'rectangle',
-            html: '⬛'
-        }
-    });
+    // assign the new scatterPlotDataArray to the chart's data property
+    chart.data.datasets[0].data = scatterPlotDataArray;
 
-    // add the two new controls to the map
-    map.addControl(new L.NewPolygonControl());
-    map.addControl(new L.NewRectangleControl());
-
-    // when users CMD/CTRL click an editable feature, remove it from the map and delete it from the service
-    wildfireDistricts.on('click', function (e) {
-      if ((e.originalEvent.ctrlKey || e.originalEvent.metaKey) && e.layer.editEnabled()) {
-        e.layer.editor.deleteShapeAt(e.latlng);
-        // delete expects an id, not the whole geojson object
-        wildfireDistricts.deleteFeature(e.layer.feature.id);
-      }
-    });
-
-    // when users double click a graphic toggle its editable status
-    // when deselecting, pass the geometry update to the service
-    wildfireDistricts.on('dblclick', function (e) {
-      e.layer.toggleEdit();
-      if (!e.layer.editEnabled()) {
-        wildfireDistricts.updateFeature(e.layer.toGeoJSON());
-      }
-    });
-
-    // when a new feature is drawn using one of the custom controls, pass the edit to the service
-    map.on('editable:drawing:commit', function (e) {
-      wildfireDistricts.addFeature(e.layer.toGeoJSON());
-      e.layer.toggleEdit();
-    });
+    // finally, instruct the chart to re-draw itself with the new data
+    chart.update();
+  }
 </script>
+
 </div>
 <pre><code class="language-xml"><span class="tag">&lt;<span class="title">html</span>&gt;</span>
 <span class="tag">&lt;<span class="title">head</span>&gt;</span>
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">utf-8</span> /&gt;</span>
-  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Editing feature layers<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Dynamic feature charting with Chart.js<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">name</span>=<span class="value">'viewport'</span> <span class="attribute">content</span>=<span class="value">'initial-scale=1,maximum-scale=1,user-scalable=no'</span> /&gt;</span>
 
     <span class="comment">&lt;!-- Load Leaflet from CDN --&gt;</span>
-    <span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"</span>
-    <span class="attribute">integrity</span>=<span class="value">"sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="</span>
+    <span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"</span>
+    <span class="attribute">integrity</span>=<span class="value">"sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="</span>
     <span class="attribute">crossorigin</span>=<span class="value">""</span>/&gt;</span>
-    <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"</span>
-    <span class="attribute">integrity</span>=<span class="value">"sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="</span>
+    <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"</span>
+    <span class="attribute">integrity</span>=<span class="value">"sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="</span>
     <span class="attribute">crossorigin</span>=<span class="value">""</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 
     <span class="comment">&lt;!-- Load Esri Leaflet from CDN --&gt;</span>
-    <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/esri-leaflet@2.3.0/dist/esri-leaflet.js"</span>
-    <span class="attribute">integrity</span>=<span class="value">"sha512-1tScwpjXwwnm6tTva0l0/ZgM3rYNbdyMj5q6RSQMbNX6EUMhYDE3pMRGZaT41zHEvLoWEK7qFEJmZDOoDMU7/Q=="</span>
+    <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/esri-leaflet@2.2.3/dist/esri-leaflet.js"</span>
+    <span class="attribute">integrity</span>=<span class="value">"sha512-YZ6b5bXRVwipfqul5krehD9qlbJzc6KOGXYsDjU9HHXW2gK57xmWl2gU6nAegiErAqFXhygKIsWPKbjLPXVb2g=="</span>
     <span class="attribute">crossorigin</span>=<span class="value">""</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 
@@ -322,102 +361,138 @@
 <span class="tag">&lt;/<span class="title">head</span>&gt;</span>
 <span class="tag">&lt;<span class="title">body</span>&gt;</span>
 
-<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/leaflet.path.drag@0.0.5"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
-<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/leaflet-editable@1.2.0/src/Leaflet.Editable.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+<span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css">
+  <span class="class">.chart-container</span> <span class="rules">{
+    <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">275</span>px</span></span>;
+    <span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">275</span>px</span></span>;
+    <span class="comment">/* horizontally center and
+    add some vertical spacing  */</span>
+    <span class="rule"><span class="attribute">margin</span>:<span class="value"> <span class="number">10</span>px auto</span></span>;
+    <span class="rule"><span class="attribute">outline</span>:<span class="value"> <span class="number">1</span>px solid <span class="hexcolor">#00ADA7</span></span></span>;
 
-<span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">'map'</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+    <span class="comment">/* rules to allow the chart to hover over the Leaflet map control: */</span>
+    <span class="rule"><span class="attribute">z-index</span>:<span class="value"> <span class="number">401</span></span></span>;
+    <span class="rule"><span class="attribute">position</span>:<span class="value"> absolute</span></span>;
+    <span class="rule"><span class="attribute">top</span>:<span class="value"> <span class="number">0</span>px</span></span>;
+    <span class="rule"><span class="attribute">right</span>:<span class="value"> <span class="number">10</span>px</span></span>;
+    <span class="rule"><span class="attribute">background-color</span>:<span class="value"> white</span></span>;
+  <span class="rule">}</span></span>
+</span><span class="tag">&lt;/<span class="title">style</span>&gt;</span>
 
-<span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span>&gt;</span><span class="javascript">
-    <span class="comment">// make sure double clicking the map *only* triggers the editing workflow</span>
-    <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>, {
-      editable: <span class="literal">true</span>,
-      doubleClickZoom: <span class="literal">false</span>
-    }).setView([<span class="number">37.345</span>, -<span class="number">110.875</span>], <span class="number">5</span>);
+<span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span>
+  <span class="comment">&lt;!-- Chart.js scatterplot location --&gt;</span>
+  <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"chart-container"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">canvas</span> <span class="attribute">id</span>=<span class="value">"chartCanvas"</span>&gt;</span><span class="tag">&lt;/<span class="title">canvas</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 
-    <span class="keyword">var</span> tilelayer = L.esri.basemapLayer(<span class="string">"Topographic"</span>).addTo(map);
 
-    <span class="comment">// create a feature layer and add it to the map</span>
-    <span class="keyword">var</span> wildfireDistricts = L.esri.featureLayer({
-      url: <span class="string">'https://sampleserver6.arcgisonline.com/arcgis/rest/services/Wildfire/FeatureServer/2'</span>
-    }).addTo(map);
 
-    <span class="comment">// create a generic control to invoke editing</span>
-    L.EditControl = L.Control.extend({
-        options: {
-            position: <span class="string">'topleft'</span>,
-            callback: <span class="literal">null</span>,
-            kind: <span class="string">''</span>,
-            html: <span class="string">''</span>
+<span class="comment">&lt;!-- Load Chart.js from CDN --&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+
+<span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
+  <span class="comment">// STEP 1: MAKE A MAP AND ADD LAYERS</span>
+  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">45.526</span>, -<span class="number">122.667</span>], <span class="number">13</span>);
+
+  L.esri.basemapLayer(<span class="string">'Topographic'</span>).addTo(map);
+
+  <span class="comment">// create and add a feature layer</span>
+  <span class="comment">// features from this layer will appear in the Chart.js scatterplot</span>
+  <span class="keyword">var</span> portlandTreesFeatureLayer = L.esri.featureLayer({
+    url: <span class="string">'https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Heritage_Trees_Portland/FeatureServer/0'</span>,
+  });
+  portlandTreesFeatureLayer.addTo(map);
+
+  <span class="comment">// STEP 2: DEFINE A CHART</span>
+  <span class="comment">// this is a static scatterplot chart definition for now, but it will</span>
+  <span class="comment">// soon become dynamic by responding to map and feature layer events</span>
+  <span class="keyword">var</span> initialChartData = {
+    datasets: [{
+      label: <span class="string">'Portland Heritage Trees'</span>,
+      <span class="comment">// the data values are empty at this moment</span>
+      <span class="comment">// and will be updated dynamically below</span>
+      data: []
+    }]
+  };
+
+  <span class="keyword">var</span> chartOptions = {
+    scales: {
+      xAxes: [{
+        scaleLabel: {
+          display: <span class="literal">true</span>,
+          labelString: <span class="string">'tree diameter'</span>
         },
-        <span class="comment">// when the control is added to the map, wire up its DOM dynamically and add a click listener</span>
-        onAdd: <span class="function"><span class="keyword">function</span> <span class="params">(map)</span> {</span>
-            <span class="keyword">var</span> container = L.DomUtil.create(<span class="string">'div'</span>, <span class="string">'leaflet-control leaflet-bar'</span>),
-                link = L.DomUtil.create(<span class="string">'a'</span>, <span class="string">''</span>, container);
-            link.href = <span class="string">'#'</span>;
-            link.title = <span class="string">'Create a new '</span> + <span class="keyword">this</span>.options.kind;
-            link.innerHTML = <span class="keyword">this</span>.options.html;
-            L.DomEvent.on(link, <span class="string">'click'</span>, L.DomEvent.stop)
-                      .on(link, <span class="string">'click'</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
-                        window.LAYER = <span class="keyword">this</span>.options.callback.call(map.editTools);
-                      }, <span class="keyword">this</span>);
-            <span class="keyword">return</span> container;
+        ticks: {
+          beginAtZero: <span class="literal">true</span>,
+          max: <span class="number">150</span>,
+          stepSize: <span class="number">50</span>
         }
-    });
-
-    <span class="comment">// extend the control to draw polygons</span>
-    L.NewPolygonControl = L.EditControl.extend({
-        options: {
-            position: <span class="string">'topleft'</span>,
-            callback: map.editTools.startPolygon,
-            kind: <span class="string">'polygon'</span>,
-            html: <span class="string">'▰'</span>
+      }],
+      yAxes: [{
+        scaleLabel: {
+          display: <span class="literal">true</span>,
+          labelString: <span class="string">'tree height'</span>
+        },
+        ticks: {
+          beginAtZero: <span class="literal">true</span>,
+          max: <span class="number">250</span>,
+          stepSize: <span class="number">50</span>
         }
+      }]
+    },
+    maintainAspectRatio: <span class="literal">false</span>,
+    <span class="comment">// turn off animations during chart data updates</span>
+    animation: {
+      duration: <span class="number">0</span>,
+    }
+  };
+
+  <span class="keyword">var</span> chart = <span class="keyword">new</span> Chart(<span class="string">'chartCanvas'</span>, {
+    type: <span class="string">'scatter'</span>,
+    data: initialChartData,
+    options: chartOptions
+  });
+
+  <span class="comment">// STEP 3: MAKE THE CHART DYNAMIC</span>
+  <span class="comment">// show in the scatterplot only the features in the map's current extent</span>
+  <span class="comment">// by handling several events from both the map and feature layer</span>
+  map.on(<span class="string">'zoom move'</span>, updateChart);
+  portlandTreesFeatureLayer.on(<span class="string">'load'</span>, updateChart);
+
+  <span class="function"><span class="keyword">function</span> <span class="title">updateChart</span><span class="params">()</span> {</span>
+    <span class="comment">// reformat the features' attributes of interest into</span>
+    <span class="comment">// the data array format required by the Chart.js scatterplot</span>
+    <span class="keyword">var</span> scatterPlotDataArray = [];
+
+    portlandTreesFeatureLayer.eachActiveFeature(<span class="function"><span class="keyword">function</span><span class="params">(e)</span> {</span>
+      <span class="comment">// loop over each active feature in the map extent and</span>
+      <span class="comment">// push an object into the scatterPlotDataArray in this format:</span>
+
+      <span class="comment">// {</span>
+      <span class="comment">//   x: diameter attribute value,</span>
+      <span class="comment">//   y: height attribute value</span>
+      <span class="comment">// }</span>
+
+      scatterPlotDataArray.push({
+        x: e.feature.properties.DIAMETER,
+        y: e.feature.properties.HEIGHT
+      });
     });
 
-    <span class="comment">// extend the control to draw rectangles</span>
-    L.NewRectangleControl = L.EditControl.extend({
-        options: {
-            position: <span class="string">'topleft'</span>,
-            callback: map.editTools.startRectangle,
-            kind: <span class="string">'rectangle'</span>,
-            html: <span class="string">'⬛'</span>
-        }
-    });
+    <span class="comment">// assign the new scatterPlotDataArray to the chart's data property</span>
+    chart.data.datasets[<span class="number">0</span>].data = scatterPlotDataArray;
 
-    <span class="comment">// add the two new controls to the map</span>
-    map.addControl(<span class="keyword">new</span> L.NewPolygonControl());
-    map.addControl(<span class="keyword">new</span> L.NewRectangleControl());
-
-    <span class="comment">// when users CMD/CTRL click an editable feature, remove it from the map and delete it from the service</span>
-    wildfireDistricts.on(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(e)</span> {</span>
-      <span class="keyword">if</span> ((e.originalEvent.ctrlKey || e.originalEvent.metaKey) &amp;&amp; e.layer.editEnabled()) {
-        e.layer.editor.deleteShapeAt(e.latlng);
-        <span class="comment">// delete expects an id, not the whole geojson object</span>
-        wildfireDistricts.deleteFeature(e.layer.feature.id);
-      }
-    });
-
-    <span class="comment">// when users double click a graphic toggle its editable status</span>
-    <span class="comment">// when deselecting, pass the geometry update to the service</span>
-    wildfireDistricts.on(<span class="string">'dblclick'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(e)</span> {</span>
-      e.layer.toggleEdit();
-      <span class="keyword">if</span> (!e.layer.editEnabled()) {
-        wildfireDistricts.updateFeature(e.layer.toGeoJSON());
-      }
-    });
-
-    <span class="comment">// when a new feature is drawn using one of the custom controls, pass the edit to the service</span>
-    map.on(<span class="string">'editable:drawing:commit'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(e)</span> {</span>
-      wildfireDistricts.addFeature(e.layer.toGeoJSON());
-      e.layer.toggleEdit();
-    });
+    <span class="comment">// finally, instruct the chart to re-draw itself with the new data</span>
+    chart.update();
+  }
 </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 <span class="tag">&lt;/<span class="title">body</span>&gt;</span>
 <span class="tag">&lt;/<span class="title">html</span>&gt;</span></code></pre>
 
 <div class="wrap">
-  <p><a href="http://github.com/Esri/esri-leaflet-doc/edit/master/src/pages/examples/editable.hbs">Edit this sample on GitHub</a></p>
+  <p><a href="http://github.com/Esri/esri-leaflet-doc/edit/master/src/pages/examples/dynamic-charting.hbs">Edit this sample on GitHub</a></p>
 </div>
 
 <div class="mobile-menu">
@@ -448,8 +523,6 @@
     <a href="../examples/layer-ordering.html">Ordering Layers</a>
     <a href="../examples/simple-editing.html">Editing #1</a>
     <a href="../examples/editable.html">Editing #2</a>
-    <a href="../examples/cedar-chart.html">Dynamic Chart (Cedar)</a>
-    <a href="../examples/dynamic-chart.html">Dynamic Chart (Chart.js)</a>
   </nav>
 
   <h5>Feature Layer Plugins</h5>
@@ -517,7 +590,7 @@
   <nav>
     <a href="../examples/renderers-plugin.html">Server Side Rendering</a>
     <a href="../examples/stream-plugin.html">Stream Layer</a>
-    <a href="../examples/webmap.html?id=d143b33f1a02421d86b6a4ca1d7b7cd0">Loading Webmaps</a>
+    <a href="../examples/webmap.html?id=13750b8b548d48bfa99a9731f2a93ba0">Loading Webmaps</a>
     <a href="../examples/gp-plugin.html">Geoprocessing</a>
   </nav>
 
@@ -528,6 +601,7 @@
     <a href="../examples/getting-service-metadata.html">Getting Service Metadata</a>
     <a href="../examples/parse-feature-collection.html">Parsing Feature Collections</a>
     <a href="../examples/indoors.html">Indoor Mapping</a>
+    <a href="../examples/dynamic-charting.html">Dynamic Charting</a>
   </nav>
 </aside>
 
