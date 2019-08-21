@@ -54,6 +54,7 @@
 
   <!-- Google Analytics -->
   <script>
+    /* eslint-disable */
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -61,6 +62,7 @@
 
     ga('create', 'UA-44963317-3', 'auto');
     ga('send', 'pageview');
+    /* eslint-enable */
   </script>
   <!-- End Google Analytics -->
 </head>
@@ -86,6 +88,10 @@
   
 
 <aside class="sidebar">
+  <nav>
+    <a href="../examples/">Quickstart</a>
+  </nav>
+
   <h5>Basemaps</h5>
   <nav>
     <a href="../examples/showing-a-basemap.html">Showing an ArcGIS Basemap</a>
@@ -119,7 +125,7 @@
   <h5>Feature Layer Plugins</h5>
   <nav>
     <a href="../examples/visualize-points-as-a-heatmap.html">Points as a Heatmap</a>
-    <a href="../examples/styling-heatmaps.html">Styling a heatmap</a>
+    <a href="../examples/styling-heatmaps.html">Styling a Heatmap</a>
     <a href="../examples/visualizing-time-with-feature-layer.html">Time Enabled Services</a>
     <a href="../examples/clustering-feature-layers.html">Clustering Points</a>
     <a href="../examples/styling-clusters.html">Styling Clusters</a>
@@ -236,7 +242,7 @@
   // create and add a feature layer
   // features from this layer will appear in the Chart.js scatterplot
   var treesFeatureLayer = L.esri.featureLayer({
-    url: 'https://www.portlandmaps.com/arcgis/rest/services/Public/Parks_Misc/MapServer/21/',
+    url: 'https://www.portlandmaps.com/arcgis/rest/services/Public/Parks_Misc/MapServer/21/'
   });
 
   treesFeatureLayer.addTo(map);
@@ -281,7 +287,7 @@
     maintainAspectRatio: false,
     // turn off animations during chart data updates
     animation: {
-      duration: 0,
+      duration: 0
     },
     // see STEP 4 below
     onHover: handleChartHover
@@ -299,12 +305,12 @@
   map.on('zoom move', updateChart);
   treesFeatureLayer.on('load', updateChart);
 
-  function updateChart() {
+  function updateChart () {
     // reformat the features' attributes of interest into
     // the data array format required by the Chart.js scatterplot
     var scatterPlotDataArray = [];
 
-    treesFeatureLayer.eachActiveFeature(function(e) {
+    treesFeatureLayer.eachActiveFeature(function (e) {
       // loop over each active feature in the map extent and
       // push an object into the scatterPlotDataArray in this format:
 
@@ -331,13 +337,13 @@
   // STEP 4 (OPTIONAL): ESTABLISH CHART-TO-MAP COMMUNICATION
   // up until now the map and feature layer inform the chart what to render,
   // but interactions with the chart can also influence the map contents
-  function handleChartHover(e) {
+  function handleChartHover (e) {
     var chartHoverData = chart.getElementsAtEvent(e);
 
     if (!chartHoverData.length) {
       // if there were no data elements found when hovering over the chart,
       // reset any previous styling overrides and return
-      treesFeatureLayer.eachFeature(function(e) {
+      treesFeatureLayer.eachFeature(function (e) {
         e.setOpacity(1);
         e.setZIndexOffset(0);
       });
@@ -347,11 +353,11 @@
 
     // otherwise, bring attention to the features on the map
     // that are currently being hovered over in the chart
-    var hoverFeatureIds = chartHoverData.map(function(datum) {
+    var hoverFeatureIds = chartHoverData.map(function (datum) {
       return chart.data.datasets[0].data[datum._index].featureId;
     });
 
-    treesFeatureLayer.eachFeature(function(e, idx) {
+    treesFeatureLayer.eachFeature(function (e, idx) {
       if (
         hoverFeatureIds.indexOf(e.feature.id) > -1
       ) {
@@ -367,23 +373,23 @@
 </div>
 <pre><code class="language-xml"><span class="tag">&lt;<span class="title">html</span>&gt;</span>
 <span class="tag">&lt;<span class="title">head</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">utf-8</span> /&gt;</span>
+  <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">"utf-8"</span> /&gt;</span>
   <span class="tag">&lt;<span class="title">title</span>&gt;</span>Dynamic feature charting with Chart.js<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">name</span>=<span class="value">'viewport'</span> <span class="attribute">content</span>=<span class="value">'initial-scale=1,maximum-scale=1,user-scalable=no'</span> /&gt;</span>
+  <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">name</span>=<span class="value">"viewport"</span> <span class="attribute">content</span>=<span class="value">"initial-scale=1,maximum-scale=1,user-scalable=no"</span> /&gt;</span>
 
-    <span class="comment">&lt;!-- Load Leaflet from CDN --&gt;</span>
-    <span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"</span>
-    <span class="attribute">integrity</span>=<span class="value">"sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="</span>
-    <span class="attribute">crossorigin</span>=<span class="value">""</span>/&gt;</span>
-    <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"</span>
-    <span class="attribute">integrity</span>=<span class="value">"sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="</span>
-    <span class="attribute">crossorigin</span>=<span class="value">""</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+  <span class="comment">&lt;!-- Load Leaflet from CDN --&gt;</span>
+  <span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"</span>
+  <span class="attribute">integrity</span>=<span class="value">"sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="</span>
+  <span class="attribute">crossorigin</span>=<span class="value">""</span>/&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"</span>
+  <span class="attribute">integrity</span>=<span class="value">"sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="</span>
+  <span class="attribute">crossorigin</span>=<span class="value">""</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 
-    <span class="comment">&lt;!-- Load Esri Leaflet from CDN --&gt;</span>
-    <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/esri-leaflet@2.3.0/dist/esri-leaflet.js"</span>
-    <span class="attribute">integrity</span>=<span class="value">"sha512-1tScwpjXwwnm6tTva0l0/ZgM3rYNbdyMj5q6RSQMbNX6EUMhYDE3pMRGZaT41zHEvLoWEK7qFEJmZDOoDMU7/Q=="</span>
-    <span class="attribute">crossorigin</span>=<span class="value">""</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+  <span class="comment">&lt;!-- Load Esri Leaflet from CDN --&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/esri-leaflet@2.3.0/dist/esri-leaflet.js"</span>
+  <span class="attribute">integrity</span>=<span class="value">"sha512-1tScwpjXwwnm6tTva0l0/ZgM3rYNbdyMj5q6RSQMbNX6EUMhYDE3pMRGZaT41zHEvLoWEK7qFEJmZDOoDMU7/Q=="</span>
+  <span class="attribute">crossorigin</span>=<span class="value">""</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 
   <span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css">
@@ -426,7 +432,7 @@
   <span class="comment">// create and add a feature layer</span>
   <span class="comment">// features from this layer will appear in the Chart.js scatterplot</span>
   <span class="keyword">var</span> treesFeatureLayer = L.esri.featureLayer({
-    url: <span class="string">'https://www.portlandmaps.com/arcgis/rest/services/Public/Parks_Misc/MapServer/21/'</span>,
+    url: <span class="string">'https://www.portlandmaps.com/arcgis/rest/services/Public/Parks_Misc/MapServer/21/'</span>
   });
 
   treesFeatureLayer.addTo(map);
@@ -471,7 +477,7 @@
     maintainAspectRatio: <span class="literal">false</span>,
     <span class="comment">// turn off animations during chart data updates</span>
     animation: {
-      duration: <span class="number">0</span>,
+      duration: <span class="number">0</span>
     },
     <span class="comment">// see STEP 4 below</span>
     onHover: handleChartHover
@@ -489,12 +495,12 @@
   map.on(<span class="string">'zoom move'</span>, updateChart);
   treesFeatureLayer.on(<span class="string">'load'</span>, updateChart);
 
-  <span class="function"><span class="keyword">function</span> <span class="title">updateChart</span><span class="params">()</span> {</span>
+  <span class="function"><span class="keyword">function</span> <span class="title">updateChart</span> <span class="params">()</span> {</span>
     <span class="comment">// reformat the features' attributes of interest into</span>
     <span class="comment">// the data array format required by the Chart.js scatterplot</span>
     <span class="keyword">var</span> scatterPlotDataArray = [];
 
-    treesFeatureLayer.eachActiveFeature(<span class="function"><span class="keyword">function</span><span class="params">(e)</span> {</span>
+    treesFeatureLayer.eachActiveFeature(<span class="function"><span class="keyword">function</span> <span class="params">(e)</span> {</span>
       <span class="comment">// loop over each active feature in the map extent and</span>
       <span class="comment">// push an object into the scatterPlotDataArray in this format:</span>
 
@@ -521,13 +527,13 @@
   <span class="comment">// STEP 4 (OPTIONAL): ESTABLISH CHART-TO-MAP COMMUNICATION</span>
   <span class="comment">// up until now the map and feature layer inform the chart what to render,</span>
   <span class="comment">// but interactions with the chart can also influence the map contents</span>
-  <span class="function"><span class="keyword">function</span> <span class="title">handleChartHover</span><span class="params">(e)</span> {</span>
+  <span class="function"><span class="keyword">function</span> <span class="title">handleChartHover</span> <span class="params">(e)</span> {</span>
     <span class="keyword">var</span> chartHoverData = chart.getElementsAtEvent(e);
 
     <span class="keyword">if</span> (!chartHoverData.length) {
       <span class="comment">// if there were no data elements found when hovering over the chart,</span>
       <span class="comment">// reset any previous styling overrides and return</span>
-      treesFeatureLayer.eachFeature(<span class="function"><span class="keyword">function</span><span class="params">(e)</span> {</span>
+      treesFeatureLayer.eachFeature(<span class="function"><span class="keyword">function</span> <span class="params">(e)</span> {</span>
         e.setOpacity(<span class="number">1</span>);
         e.setZIndexOffset(<span class="number">0</span>);
       });
@@ -537,11 +543,11 @@
 
     <span class="comment">// otherwise, bring attention to the features on the map</span>
     <span class="comment">// that are currently being hovered over in the chart</span>
-    <span class="keyword">var</span> hoverFeatureIds = chartHoverData.map(<span class="function"><span class="keyword">function</span><span class="params">(datum)</span> {</span>
+    <span class="keyword">var</span> hoverFeatureIds = chartHoverData.map(<span class="function"><span class="keyword">function</span> <span class="params">(datum)</span> {</span>
       <span class="keyword">return</span> chart.data.datasets[<span class="number">0</span>].data[datum._index].featureId;
     });
 
-    treesFeatureLayer.eachFeature(<span class="function"><span class="keyword">function</span><span class="params">(e, idx)</span> {</span>
+    treesFeatureLayer.eachFeature(<span class="function"><span class="keyword">function</span> <span class="params">(e, idx)</span> {</span>
       <span class="keyword">if</span> (
         hoverFeatureIds.indexOf(e.feature.id) &gt; -<span class="number">1</span>
       ) {
@@ -558,11 +564,15 @@
 <span class="tag">&lt;/<span class="title">html</span>&gt;</span></code></pre>
 
 <div class="wrap">
-  <p><a href="http://github.com/Esri/esri-leaflet-doc/edit/master/src/pages/examples/dynamic-chart.hbs">Edit this sample on GitHub</a></p>
+  <p><a href="https://github.com/Esri/esri-leaflet-doc/edit/master/src/pages/examples/dynamic-chart.hbs">Edit this sample on GitHub</a></p>
 </div>
 
 <div class="mobile-menu">
   <aside class="sidebar">
+  <nav>
+    <a href="../examples/">Quickstart</a>
+  </nav>
+
   <h5>Basemaps</h5>
   <nav>
     <a href="../examples/showing-a-basemap.html">Showing an ArcGIS Basemap</a>
@@ -596,7 +606,7 @@
   <h5>Feature Layer Plugins</h5>
   <nav>
     <a href="../examples/visualize-points-as-a-heatmap.html">Points as a Heatmap</a>
-    <a href="../examples/styling-heatmaps.html">Styling a heatmap</a>
+    <a href="../examples/styling-heatmaps.html">Styling a Heatmap</a>
     <a href="../examples/visualizing-time-with-feature-layer.html">Time Enabled Services</a>
     <a href="../examples/clustering-feature-layers.html">Clustering Points</a>
     <a href="../examples/styling-clusters.html">Styling Clusters</a>
@@ -676,10 +686,7 @@
 
 </div>
 
-  <div style='clear:both;'></div>
-</div>
-<div class="container center-text">
-  <p class="copyright">Esri Leaflet is a project from the <a href="http://pdx.esri.com">Esri PDX R&amp;D Center</a> and the <a href="https://github.com/Esri/esri-leaflet/graphs/contributors">Esri Community</a></p>
+  <div style="clear:both;"></div>
 </div>
 
   <div class="container center-text">

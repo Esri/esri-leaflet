@@ -54,6 +54,7 @@
 
   <!-- Google Analytics -->
   <script>
+    /* eslint-disable */
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -61,6 +62,7 @@
 
     ga('create', 'UA-44963317-3', 'auto');
     ga('send', 'pageview');
+    /* eslint-enable */
   </script>
   <!-- End Google Analytics -->
 </head>
@@ -111,24 +113,24 @@
 <p>Feature Layers can be created in Esri Leaflet from both <code>MapServer</code> or <code>FeatureServer</code> services published by ArcGIS Server. To utilize either service type you need to append the specific layer index, eg &quot;ESRI_Population_World/MapServer<em>/0</em>&quot;.</p>
 <p>So for example both of these are valid:</p>
 <pre><code class="language-js">L.esri.featureLayer({
-    url: <span class="string">'.../ArcGIS/rest/services/BloomfieldHillsMichigan/LandusePlanning/FeatureServer/0'</span>
-})
+  url: <span class="string">'.../ArcGIS/rest/services/BloomfieldHillsMichigan/LandusePlanning/FeatureServer/0'</span>
+});
 
 L.esri.featureLayer({
-    url: <span class="string">'.../ArcGIS/rest/services/Demographics/ESRI_Population_World/MapServer/0'</span>
-})</code></pre>
+  url: <span class="string">'.../ArcGIS/rest/services/Demographics/ESRI_Population_World/MapServer/0'</span>
+});</code></pre>
 <p>If you want to edit data in the browser then you will need to consume a <code>FeatureServer</code> service.</p>
 <h3 id="what-does-the-data-look-like-">What does the data look like?</h3>
 <p>When you request a feature layer from an ArcGIS Server the response will look something like </p>
-<pre><code class="language-js">{<span class="string">"type"</span>:<span class="string">"FeatureCollection"</span>,<span class="string">"crs"</span>:{<span class="string">"type"</span>:<span class="string">"name"</span>,<span class="string">"properties"</span>:{<span class="string">"name"</span>:<span class="string">"EPSG:4326"</span>}},
- <span class="string">"features"</span>:[
-     {<span class="string">"type"</span>:<span class="string">"Feature"</span>,
-     <span class="string">"id"</span>:<span class="number">2</span>,
-     <span class="string">"geometry"</span>:{<span class="string">"type"</span>:<span class="string">"Point"</span>,<span class="string">"coordinates"</span>:[-<span class="number">122.647466</span>,<span class="number">45.543523</span>]},
-     <span class="string">"properties"</span>:{<span class="string">"FID"</span>:<span class="number">2</span>,<span class="string">"GEODB_OID"</span>:<span class="number">144</span>,<span class="string">"OBJECTID"</span>:<span class="number">144</span>,<span class="string">"TREEID"</span>:<span class="number">164</span>,<span class="string">"STATUS"</span>:<span class="string">"Heritage"</span>,<span class="string">"SCIENTIFIC"</span>:<span class="string">"Platanus x acerifolia"</span>,<span class="string">"COMMON_NAM"</span>:<span class="string">"London planetree"</span>,<span class="string">"STATEID"</span>:<span class="string">"1N1E26AC  12000"</span>,<span class="string">"ADDRESS"</span>:<span class="string">"1728 NE STANTON ST"</span>,<span class="string">"HEIGHT"</span>:<span class="number">82</span>,<span class="string">"SPREAD"</span>:<span class="number">85</span>,<span class="string">"CIRCUMFERE"</span>:<span class="number">15.44</span>,<span class="string">"DIAMETER"</span>:<span class="number">59</span>,<span class="string">"YEAR"</span>:<span class="number">1997</span>,<span class="string">"OWNER"</span>:<span class="string">"Private, Front Yard"</span>,<span class="string">"NOTES"</span>:<span class="string">"south side between NE 17th Ave and NE 18th Ave"</span>}
-     }
+<pre><code class="language-json">{"<span class="attribute">type</span>":<span class="value"><span class="string">"FeatureCollection"</span></span>,"<span class="attribute">crs</span>":<span class="value">{"<span class="attribute">type</span>":<span class="value"><span class="string">"name"</span></span>,"<span class="attribute">properties</span>":<span class="value">{"<span class="attribute">name</span>":<span class="value"><span class="string">"EPSG:4326"</span></span>}</span>}</span>,
+ "<span class="attribute">features</span>":<span class="value">[
+     {"<span class="attribute">type</span>":<span class="value"><span class="string">"Feature"</span></span>,
+     "<span class="attribute">id</span>":<span class="value"><span class="number">2</span></span>,
+     "<span class="attribute">geometry</span>":<span class="value">{"<span class="attribute">type</span>":<span class="value"><span class="string">"Point"</span></span>,"<span class="attribute">coordinates</span>":<span class="value">[-<span class="number">122.647466</span>,<span class="number">45.543523</span>]</span>}</span>,
+     "<span class="attribute">properties</span>":<span class="value">{"<span class="attribute">FID</span>":<span class="value"><span class="number">2</span></span>,"<span class="attribute">GEODB_OID</span>":<span class="value"><span class="number">144</span></span>,"<span class="attribute">OBJECTID</span>":<span class="value"><span class="number">144</span></span>,"<span class="attribute">TREEID</span>":<span class="value"><span class="number">164</span></span>,"<span class="attribute">STATUS</span>":<span class="value"><span class="string">"Heritage"</span></span>,"<span class="attribute">SCIENTIFIC</span>":<span class="value"><span class="string">"Platanus x acerifolia"</span></span>,"<span class="attribute">COMMON_NAM</span>":<span class="value"><span class="string">"London planetree"</span></span>,"<span class="attribute">STATEID</span>":<span class="value"><span class="string">"1N1E26AC  12000"</span></span>,"<span class="attribute">ADDRESS</span>":<span class="value"><span class="string">"1728 NE STANTON ST"</span></span>,"<span class="attribute">HEIGHT</span>":<span class="value"><span class="number">82</span></span>,"<span class="attribute">SPREAD</span>":<span class="value"><span class="number">85</span></span>,"<span class="attribute">CIRCUMFERE</span>":<span class="value"><span class="number">15.44</span></span>,"<span class="attribute">DIAMETER</span>":<span class="value"><span class="number">59</span></span>,"<span class="attribute">YEAR</span>":<span class="value"><span class="number">1997</span></span>,"<span class="attribute">OWNER</span>":<span class="value"><span class="string">"Private, Front Yard"</span></span>,"<span class="attribute">NOTES</span>":<span class="value"><span class="string">"south side between NE 17th Ave and NE 18th Ave"</span></span>}
+     </span>}
   ]
-}</code></pre>
+</span>}</code></pre>
 <p>You can see in the above sample that we have some location information in the <code>coordinates</code> array as well as the feature properties in the <code>properties</code> object.</p>
 <h2 id="dynamic-map-layers">Dynamic Map Layers</h2>
 <p>A <a href="https://esri.github.io/esri-leaflet/api-reference/layers/dynamic-map-layer.html">Dynamic Map Layer</a> involves pulling down a representation of your data from an ArcGIS Server instance to your web app, this means an image such as a jpg or a png. Esri-Leaflet then takes care of placing the image on the correct part of the map for you.</p>
@@ -138,8 +140,8 @@ L.esri.featureLayer({
 <p>Dynamic Map Layers can be created in Esri-Leaflet from a <code>MapServer</code> service published by ArcGIS Server. </p>
 <pre><code class="language-js"><span class="comment">// NOTE - The url contains 'MapServer'</span>
 L.esri.dynamicMapLayer({
-    url: <span class="string">'https://services.arcgisonline.com/arcgis/rest/services/Specialty/Soil_Survey_Map/MapServer'</span>
-})</code></pre>
+  url: <span class="string">'https://services.arcgisonline.com/arcgis/rest/services/Specialty/Soil_Survey_Map/MapServer'</span>
+});</code></pre>
 <h3 id="what-does-the-data-look-like-">What does the data look like?</h3>
 <p>When you request a Dynamic Map Layer from an ArcGIS Server the response might look something like the following:</p>
 <p><img src="https://services.arcgisonline.com/arcgis/rest/services/Specialty/Soil_Survey_Map/MapServer/export?bbox=-15214026.109881485,1868732.467515991,-7337954.715376922,8365268.375529694&amp;size=600,200&amp;dpi=96&amp;format=png24&amp;transparent=true&amp;bboxSR=3857&amp;imageSR=3857&amp;f=image" alt="Map tile"></p>
@@ -152,13 +154,13 @@ L.esri.dynamicMapLayer({
 <p>Tiled Map Layers can be created in Esri-Leaflet from a <code>MapServer</code> service published by ArcGIS Server that contains a <code>Single Fused Map Cache</code>, you would create the cache when you publish a layer in ArcGIS Server.</p>
 <pre><code class="language-js"><span class="comment">// NOTE - When you visit the url you will see information relating to the tile cache</span>
 L.esri.tiledMapLayer({
-    url: <span class="string">'https://services.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer'</span>
-})</code></pre>
+  url: <span class="string">'https://services.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer'</span>
+});</code></pre>
 <h3 id="what-does-the-data-look-like-">What does the data look like?</h3>
 <p>You can see an example Tiled Map Layer response from ArcGIS Server below. It is simply an image!</p>
 <p><img src="https://sampleserver1.arcgisonline.com/ArcGIS/rest/services/PublicSafety/PublicSafetyBasemap/MapServer/tile/6/146/267" alt="Map tile"></p>
 
-  <p><a href="http://github.com/esri/esri-leaflet-doc/edit/master/src/pages/tutorials/introduction-to-layer-types.md">Edit this page on GitHub</a></p>
+  <p><a href="https://github.com/esri/esri-leaflet-doc/edit/master/src/pages/tutorials/introduction-to-layer-types.md">Edit this page on GitHub</a></p>
 
   <div class="mobile-menu">
     <aside class="sidebar">
@@ -174,10 +176,7 @@ L.esri.tiledMapLayer({
   </div>
 </div>
 
-  <div style='clear:both;'></div>
-</div>
-<div class="container center-text">
-  <p class="copyright">Esri Leaflet is a project from the <a href="http://pdx.esri.com">Esri PDX R&amp;D Center</a> and the <a href="https://github.com/Esri/esri-leaflet/graphs/contributors">Esri Community</a></p>
+  <div style="clear:both;"></div>
 </div>
 
   <div class="container center-text">

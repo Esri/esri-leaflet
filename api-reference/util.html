@@ -52,6 +52,7 @@
 
   <!-- Google Analytics -->
   <script>
+    /* eslint-disable */
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -59,6 +60,7 @@
 
     ga('create', 'UA-44963317-3', 'auto');
     ga('send', 'pageview');
+    /* eslint-enable */
   </script>
   <!-- End Google Analytics -->
 </head>
@@ -150,29 +152,29 @@
     </thead>
     <tbody>
         <tr>
-            <td><code>extentToBounds(<span>&lt;<a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Geometry_Objects/02r3000000n1000000/">Extent</a>&gt;</span> <code>extent</code>)</code></td>
-            <td><code><a href="http://leafletjs.com/reference.html#latlngbounds">LatLngBounds</a></code></td>
-            <td>Converts ArcGIS Extent objects to Leaflet <a href="http://leafletjs.com/reference.html#latlngbounds">LatLngBounds</a> objects.</td>
+            <td><code>extentToBounds(<span>&lt;<a href="https://developers.arcgis.com/documentation/common-data-types/geometry-objects.htm#ENVELOPE">Extent</a>&gt;</span> <code>extent</code>)</code></td>
+            <td><code><a href="https://leafletjs.com/reference.html#latlngbounds">LatLngBounds</a></code></td>
+            <td>Converts ArcGIS Extent objects to Leaflet <a href="https://leafletjs.com/reference.html#latlngbounds">LatLngBounds</a> objects.</td>
         </tr>
         <tr>
-            <td><code>boundsToExtent(<span>&lt;<a href="http://leafletjs.com/reference.html#latlngbounds">LatLngBounds</a>&gt;</span> <code>bounds</code>)</code></td>
-            <td><code><a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Geometry_Objects/02r3000000n1000000/">Extent</a></code></td>
-            <td>Converts Leaflet <a href="http://leafletjs.com/reference.html#latlngbounds">LatLngBounds</a> objects to ArcGIS Extent objects.</td>
+            <td><code>boundsToExtent(<span>&lt;<a href="https://leafletjs.com/reference.html#latlngbounds">LatLngBounds</a>&gt;</span> <code>bounds</code>)</code></td>
+            <td><code><a href="https://developers.arcgis.com/documentation/common-data-types/geometry-objects.htm#ENVELOPE">Extent</a></code></td>
+            <td>Converts Leaflet <a href="https://leafletjs.com/reference.html#latlngbounds">LatLngBounds</a> objects to ArcGIS Extent objects.</td>
         </tr>
         <tr>
-            <td><code>arcgisToGeoJSON(<span>&lt;<a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Geometry_Objects/02r3000000n1000000/">ArcGIS Geometry</a>&gt;</span> <code>arcgis</code>)</code><br><code>arcgisToGeoJSON(<span>&lt;<a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Feature_object/02r3000000n8000000/">ArcGIS Feature</a>&gt;</span> <code>arcgis</code>)</code></td>
-            <td><code><a href="http://geojson.org/geojson-spec.html#geojson-objects">GeoJSON</a></code></td>
-            <td>Converts <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Geometry_Objects/02r3000000n1000000/">ArcGIS Geometry Objects</a> or <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Feature_object/02r3000000n8000000/">ArcGIS Feature Objects</a> to <a href="http://geojson.org/geojson-spec.html#geojson-objects">GeoJSON</a>. If you pass a GeoJSON Feature or FeatureCollection you should also pass <code>idAttribute</code> to assign a property from the feature attributes to the ID of the GeoJSON Feature, <code>&#39;OBJECTID&#39;</code> or <code>&#39;FID&#39;</code> attributes by default.</td>
+            <td><code>arcgisToGeoJSON(<span>&lt;<a href="https://developers.arcgis.com/documentation/common-data-types/geometry-objects.htm">ArcGIS Geometry</a>&gt;</span> <code>arcgis</code>)</code><br><code>arcgisToGeoJSON(<span>&lt;<a href="https://developers.arcgis.com/documentation/common-data-types/feature-object.htm">ArcGIS Feature</a>&gt;</span> <code>arcgis</code>)</code></td>
+            <td><code><a href="https://tools.ietf.org/html/rfc7946#section-3">GeoJSON</a></code></td>
+            <td>Converts <a href="https://developers.arcgis.com/documentation/common-data-types/geometry-objects.htm">ArcGIS Geometry Objects</a> or <a href="https://developers.arcgis.com/documentation/common-data-types/feature-object.htm">ArcGIS Feature Objects</a> to <a href="https://tools.ietf.org/html/rfc7946#section-3">GeoJSON</a>. If you pass a GeoJSON Feature or FeatureCollection you should also pass <code>idAttribute</code> to assign a property from the feature attributes to the ID of the GeoJSON Feature, <code>&#39;OBJECTID&#39;</code> or <code>&#39;FID&#39;</code> attributes by default.</td>
         </tr>
         <tr>
-            <td>geojsonToArcGIS(<span>&lt;<a href="http://geojson.org/geojson-spec.html#geojson-objects">GeoJSON</a>&gt;</span> <code>geojson</code>, <span>&lt;String&gt;</span> <code>idAttribute</code>)</td>
+            <td>geojsonToArcGIS(<span>&lt;<a href="https://tools.ietf.org/html/rfc7946#section-3">GeoJSON</a>&gt;</span> <code>geojson</code>, <span>&lt;String&gt;</span> <code>idAttribute</code>)</td>
             <td><code>Object</code></td>
-            <td>Converts <a href="http://geojson.org/geojson-spec.html#geojson-objects">GeoJSON</a> objects to <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Geometry_Objects/02r3000000n1000000/">ArcGIS Geometry Objects</a> or <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Feature_object/02r3000000n8000000/">ArcGIS Feature Objects</a>. If you pass a GeoJSON Feature or FeatureCollection you should also pass <code>idAttribute</code> to assign a property in the output features to represent the features id, <code>&#39;OBJECTID&#39;</code> by default.</td>
+            <td>Converts <a href="https://tools.ietf.org/html/rfc7946#section-3">GeoJSON</a> objects to <a href="https://developers.arcgis.com/documentation/common-data-types/geometry-objects.htm">ArcGIS Geometry Objects</a> or <a href="https://developers.arcgis.com/documentation/common-data-types/feature-object.htm">ArcGIS Feature Objects</a>. If you pass a GeoJSON Feature or FeatureCollection you should also pass <code>idAttribute</code> to assign a property in the output features to represent the features id, <code>&#39;OBJECTID&#39;</code> by default.</td>
         </tr>
         <tr>
             <td>responseToFeatureCollection(<span>&lt;Object&gt;</span> <code>response</code>, <span>&lt;String&gt;</span> <code>idAttribute</code>)</td>
-            <td><code><a href="http://geojson.org/geojson-spec.html#feature-collection-objects">FeatureCollection</a></code></td>
-            <td>Converts an API response (returned by identify, query or find API methods) to a <a href="http://geojson.org/geojson-spec.html#feature-collection-objects">GeoJSON FeatureCollection</a>. This is used internally by <code><a href="../api-reference/tasks/query.html">L.esri.Query</a></code>, <code><a href="../api-reference/tasks/identify-features.html">L.esri.IdentifyFeatures</a></code> and <code><a href="../api-reference/tasks/find.html">L.esri.Find</a></code> to convert responses.</td>
+            <td><code><a href="https://tools.ietf.org/html/rfc7946#section-3.3">FeatureCollection</a></code></td>
+            <td>Converts an API response (returned by identify, query or find API methods) to a <a href="https://tools.ietf.org/html/rfc7946#section-3.3">GeoJSON FeatureCollection</a>. This is used internally by <code><a href="../api-reference/tasks/query.html">L.esri.Query</a></code>, <code><a href="../api-reference/tasks/identify-features.html">L.esri.IdentifyFeatures</a></code> and <code><a href="../api-reference/tasks/find.html">L.esri.Find</a></code> to convert responses.</td>
         </tr>
         <tr>
             <td>cleanUrl(<span>&lt;String&gt;</span> <code>url</code>)</td>
@@ -183,8 +185,7 @@
 </table>
 
 
-
-  <p><a href="http://github.com/Esri/esri-leaflet-doc/edit/master/src/pages/api-reference/util.md">Edit this page on GitHub</a></p>
+  <p><a href="https://github.com/Esri/esri-leaflet-doc/edit/master/src/pages/api-reference/util.md">Edit this page on GitHub</a></p>
 
   <div class="mobile-menu">
     <aside class="sidebar">
@@ -243,10 +244,7 @@
   </div>
 </div>
 
-  <div style='clear:both;'></div>
-</div>
-<div class="container center-text">
-  <p class="copyright">Esri Leaflet is a project from the <a href="http://pdx.esri.com">Esri PDX R&amp;D Center</a> and the <a href="https://github.com/Esri/esri-leaflet/graphs/contributors">Esri Community</a></p>
+  <div style="clear:both;"></div>
 </div>
 
   <div class="container center-text">

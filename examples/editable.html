@@ -54,6 +54,7 @@
 
   <!-- Google Analytics -->
   <script>
+    /* eslint-disable */
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -61,6 +62,7 @@
 
     ga('create', 'UA-44963317-3', 'auto');
     ga('send', 'pageview');
+    /* eslint-enable */
   </script>
   <!-- End Google Analytics -->
 </head>
@@ -86,6 +88,10 @@
   
 
 <aside class="sidebar">
+  <nav>
+    <a href="../examples/">Quickstart</a>
+  </nav>
+
   <h5>Basemaps</h5>
   <nav>
     <a href="../examples/showing-a-basemap.html">Showing an ArcGIS Basemap</a>
@@ -119,7 +125,7 @@
   <h5>Feature Layer Plugins</h5>
   <nav>
     <a href="../examples/visualize-points-as-a-heatmap.html">Points as a Heatmap</a>
-    <a href="../examples/styling-heatmaps.html">Styling a heatmap</a>
+    <a href="../examples/styling-heatmaps.html">Styling a Heatmap</a>
     <a href="../examples/visualizing-time-with-feature-layer.html">Time Enabled Services</a>
     <a href="../examples/clustering-feature-layers.html">Clustering Points</a>
     <a href="../examples/styling-clusters.html">Styling Clusters</a>
@@ -215,7 +221,7 @@
       doubleClickZoom: false
     }).setView([37.345, -110.875], 5);
 
-    var tilelayer = L.esri.basemapLayer("Topographic").addTo(map);
+    L.esri.basemapLayer('Topographic').addTo(map);
 
     // create a feature layer and add it to the map
     var wildfireDistricts = L.esri.featureLayer({
@@ -224,45 +230,46 @@
 
     // create a generic control to invoke editing
     L.EditControl = L.Control.extend({
-        options: {
-            position: 'topleft',
-            callback: null,
-            kind: '',
-            html: ''
-        },
-        // when the control is added to the map, wire up its DOM dynamically and add a click listener
-        onAdd: function (map) {
-            var container = L.DomUtil.create('div', 'leaflet-control leaflet-bar'),
-                link = L.DomUtil.create('a', '', container);
-            link.href = '#';
-            link.title = 'Create a new ' + this.options.kind;
-            link.innerHTML = this.options.html;
-            L.DomEvent.on(link, 'click', L.DomEvent.stop)
-                      .on(link, 'click', function () {
-                        window.LAYER = this.options.callback.call(map.editTools);
-                      }, this);
-            return container;
-        }
+      options: {
+        position: 'topleft',
+        callback: null,
+        kind: '',
+        html: ''
+      },
+      // when the control is added to the map, wire up its DOM dynamically and add a click listener
+      onAdd: function (map) {
+        var container = L.DomUtil.create('div', 'leaflet-control leaflet-bar');
+        var link = L.DomUtil.create('a', '', container);
+        link.href = '#';
+        link.title = 'Create a new ' + this.options.kind;
+        link.innerHTML = this.options.html;
+        L.DomEvent
+          .on(link, 'click', L.DomEvent.stop)
+          .on(link, 'click', function () {
+            window.LAYER = this.options.callback.call(map.editTools);
+          }, this);
+        return container;
+      }
     });
 
     // extend the control to draw polygons
     L.NewPolygonControl = L.EditControl.extend({
-        options: {
-            position: 'topleft',
-            callback: map.editTools.startPolygon,
-            kind: 'polygon',
-            html: '▰'
-        }
+      options: {
+        position: 'topleft',
+        callback: map.editTools.startPolygon,
+        kind: 'polygon',
+        html: '▰'
+      }
     });
 
     // extend the control to draw rectangles
     L.NewRectangleControl = L.EditControl.extend({
-        options: {
-            position: 'topleft',
-            callback: map.editTools.startRectangle,
-            kind: 'rectangle',
-            html: '⬛'
-        }
+      options: {
+        position: 'topleft',
+        callback: map.editTools.startRectangle,
+        kind: 'rectangle',
+        html: '⬛'
+      }
     });
 
     // add the two new controls to the map
@@ -293,26 +300,27 @@
       e.layer.toggleEdit();
     });
 </script>
+
 </div>
 <pre><code class="language-xml"><span class="tag">&lt;<span class="title">html</span>&gt;</span>
 <span class="tag">&lt;<span class="title">head</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">utf-8</span> /&gt;</span>
+  <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">"utf-8"</span> /&gt;</span>
   <span class="tag">&lt;<span class="title">title</span>&gt;</span>Editing feature layers<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">name</span>=<span class="value">'viewport'</span> <span class="attribute">content</span>=<span class="value">'initial-scale=1,maximum-scale=1,user-scalable=no'</span> /&gt;</span>
+  <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">name</span>=<span class="value">"viewport"</span> <span class="attribute">content</span>=<span class="value">"initial-scale=1,maximum-scale=1,user-scalable=no"</span> /&gt;</span>
 
-    <span class="comment">&lt;!-- Load Leaflet from CDN --&gt;</span>
-    <span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"</span>
-    <span class="attribute">integrity</span>=<span class="value">"sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="</span>
-    <span class="attribute">crossorigin</span>=<span class="value">""</span>/&gt;</span>
-    <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"</span>
-    <span class="attribute">integrity</span>=<span class="value">"sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="</span>
-    <span class="attribute">crossorigin</span>=<span class="value">""</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+  <span class="comment">&lt;!-- Load Leaflet from CDN --&gt;</span>
+  <span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"</span>
+  <span class="attribute">integrity</span>=<span class="value">"sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="</span>
+  <span class="attribute">crossorigin</span>=<span class="value">""</span>/&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"</span>
+  <span class="attribute">integrity</span>=<span class="value">"sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="</span>
+  <span class="attribute">crossorigin</span>=<span class="value">""</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 
-    <span class="comment">&lt;!-- Load Esri Leaflet from CDN --&gt;</span>
-    <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/esri-leaflet@2.3.0/dist/esri-leaflet.js"</span>
-    <span class="attribute">integrity</span>=<span class="value">"sha512-1tScwpjXwwnm6tTva0l0/ZgM3rYNbdyMj5q6RSQMbNX6EUMhYDE3pMRGZaT41zHEvLoWEK7qFEJmZDOoDMU7/Q=="</span>
-    <span class="attribute">crossorigin</span>=<span class="value">""</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+  <span class="comment">&lt;!-- Load Esri Leaflet from CDN --&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/esri-leaflet@2.3.0/dist/esri-leaflet.js"</span>
+  <span class="attribute">integrity</span>=<span class="value">"sha512-1tScwpjXwwnm6tTva0l0/ZgM3rYNbdyMj5q6RSQMbNX6EUMhYDE3pMRGZaT41zHEvLoWEK7qFEJmZDOoDMU7/Q=="</span>
+  <span class="attribute">crossorigin</span>=<span class="value">""</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 
   <span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css">
@@ -334,7 +342,7 @@
       doubleClickZoom: <span class="literal">false</span>
     }).setView([<span class="number">37.345</span>, -<span class="number">110.875</span>], <span class="number">5</span>);
 
-    <span class="keyword">var</span> tilelayer = L.esri.basemapLayer(<span class="string">"Topographic"</span>).addTo(map);
+    L.esri.basemapLayer(<span class="string">'Topographic'</span>).addTo(map);
 
     <span class="comment">// create a feature layer and add it to the map</span>
     <span class="keyword">var</span> wildfireDistricts = L.esri.featureLayer({
@@ -343,45 +351,46 @@
 
     <span class="comment">// create a generic control to invoke editing</span>
     L.EditControl = L.Control.extend({
-        options: {
-            position: <span class="string">'topleft'</span>,
-            callback: <span class="literal">null</span>,
-            kind: <span class="string">''</span>,
-            html: <span class="string">''</span>
-        },
-        <span class="comment">// when the control is added to the map, wire up its DOM dynamically and add a click listener</span>
-        onAdd: <span class="function"><span class="keyword">function</span> <span class="params">(map)</span> {</span>
-            <span class="keyword">var</span> container = L.DomUtil.create(<span class="string">'div'</span>, <span class="string">'leaflet-control leaflet-bar'</span>),
-                link = L.DomUtil.create(<span class="string">'a'</span>, <span class="string">''</span>, container);
-            link.href = <span class="string">'#'</span>;
-            link.title = <span class="string">'Create a new '</span> + <span class="keyword">this</span>.options.kind;
-            link.innerHTML = <span class="keyword">this</span>.options.html;
-            L.DomEvent.on(link, <span class="string">'click'</span>, L.DomEvent.stop)
-                      .on(link, <span class="string">'click'</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
-                        window.LAYER = <span class="keyword">this</span>.options.callback.call(map.editTools);
-                      }, <span class="keyword">this</span>);
-            <span class="keyword">return</span> container;
-        }
+      options: {
+        position: <span class="string">'topleft'</span>,
+        callback: <span class="literal">null</span>,
+        kind: <span class="string">''</span>,
+        html: <span class="string">''</span>
+      },
+      <span class="comment">// when the control is added to the map, wire up its DOM dynamically and add a click listener</span>
+      onAdd: <span class="function"><span class="keyword">function</span> <span class="params">(map)</span> {</span>
+        <span class="keyword">var</span> container = L.DomUtil.create(<span class="string">'div'</span>, <span class="string">'leaflet-control leaflet-bar'</span>);
+        <span class="keyword">var</span> link = L.DomUtil.create(<span class="string">'a'</span>, <span class="string">''</span>, container);
+        link.href = <span class="string">'#'</span>;
+        link.title = <span class="string">'Create a new '</span> + <span class="keyword">this</span>.options.kind;
+        link.innerHTML = <span class="keyword">this</span>.options.html;
+        L.DomEvent
+          .on(link, <span class="string">'click'</span>, L.DomEvent.stop)
+          .on(link, <span class="string">'click'</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+            window.LAYER = <span class="keyword">this</span>.options.callback.call(map.editTools);
+          }, <span class="keyword">this</span>);
+        <span class="keyword">return</span> container;
+      }
     });
 
     <span class="comment">// extend the control to draw polygons</span>
     L.NewPolygonControl = L.EditControl.extend({
-        options: {
-            position: <span class="string">'topleft'</span>,
-            callback: map.editTools.startPolygon,
-            kind: <span class="string">'polygon'</span>,
-            html: <span class="string">'▰'</span>
-        }
+      options: {
+        position: <span class="string">'topleft'</span>,
+        callback: map.editTools.startPolygon,
+        kind: <span class="string">'polygon'</span>,
+        html: <span class="string">'▰'</span>
+      }
     });
 
     <span class="comment">// extend the control to draw rectangles</span>
     L.NewRectangleControl = L.EditControl.extend({
-        options: {
-            position: <span class="string">'topleft'</span>,
-            callback: map.editTools.startRectangle,
-            kind: <span class="string">'rectangle'</span>,
-            html: <span class="string">'⬛'</span>
-        }
+      options: {
+        position: <span class="string">'topleft'</span>,
+        callback: map.editTools.startRectangle,
+        kind: <span class="string">'rectangle'</span>,
+        html: <span class="string">'⬛'</span>
+      }
     });
 
     <span class="comment">// add the two new controls to the map</span>
@@ -417,11 +426,15 @@
 <span class="tag">&lt;/<span class="title">html</span>&gt;</span></code></pre>
 
 <div class="wrap">
-  <p><a href="http://github.com/Esri/esri-leaflet-doc/edit/master/src/pages/examples/editable.hbs">Edit this sample on GitHub</a></p>
+  <p><a href="https://github.com/Esri/esri-leaflet-doc/edit/master/src/pages/examples/editable.hbs">Edit this sample on GitHub</a></p>
 </div>
 
 <div class="mobile-menu">
   <aside class="sidebar">
+  <nav>
+    <a href="../examples/">Quickstart</a>
+  </nav>
+
   <h5>Basemaps</h5>
   <nav>
     <a href="../examples/showing-a-basemap.html">Showing an ArcGIS Basemap</a>
@@ -455,7 +468,7 @@
   <h5>Feature Layer Plugins</h5>
   <nav>
     <a href="../examples/visualize-points-as-a-heatmap.html">Points as a Heatmap</a>
-    <a href="../examples/styling-heatmaps.html">Styling a heatmap</a>
+    <a href="../examples/styling-heatmaps.html">Styling a Heatmap</a>
     <a href="../examples/visualizing-time-with-feature-layer.html">Time Enabled Services</a>
     <a href="../examples/clustering-feature-layers.html">Clustering Points</a>
     <a href="../examples/styling-clusters.html">Styling Clusters</a>
@@ -535,10 +548,7 @@
 
 </div>
 
-  <div style='clear:both;'></div>
-</div>
-<div class="container center-text">
-  <p class="copyright">Esri Leaflet is a project from the <a href="http://pdx.esri.com">Esri PDX R&amp;D Center</a> and the <a href="https://github.com/Esri/esri-leaflet/graphs/contributors">Esri Community</a></p>
+  <div style="clear:both;"></div>
 </div>
 
   <div class="container center-text">

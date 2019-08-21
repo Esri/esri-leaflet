@@ -52,6 +52,7 @@
 
   <!-- Google Analytics -->
   <script>
+    /* eslint-disable */
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -59,6 +60,7 @@
 
     ga('create', 'UA-44963317-3', 'auto');
     ga('send', 'pageview');
+    /* eslint-enable */
   </script>
   <!-- End Google Analytics -->
 </head>
@@ -141,7 +143,7 @@
   <h1 id="l-esri-request">L.esri.request</h1>
 <p>Generic methods to make GET and POST requests to ArcGIS Online and ArcGIS Enterprise. These methods will handle serializing the input parameters and parsing of the response, making them available in a callback function via a response and error property similar to Node.js.</p>
 <p>GET requests will be made with <code>XMLHttpRequest</code> (via CORS) if the browser supports it and will fallback to JSONP. POST requests will always be made with <code>XMLHttpRequest</code> (via CORS). The <a href="https://github.com/Esri/resource-proxy">ArcGIS Resource Proxy</a> or something similar must be configured to support cross domain requests via <a href="../api-reference/services/service.html"><code>L.esri.Service</code></a> if CORS cannot be leveraged.</p>
-<p>If you are using a version of ArcGIS Server older than 10.1, CORS is not enabled by default but can be configured using the documentation available at <a href="http://enable-cors.org/">http://enable-cors.org/</a>. If you cannot enable CORS, the following line of code will force all requests to be made using JSONP instead.</p>
+<p>If you are using a version of ArcGIS Server older than 10.1, CORS is not enabled by default but can be configured using the documentation available at <a href="https://enable-cors.org/">https://enable-cors.org/</a>. If you cannot enable CORS, the following line of code will force all requests to be made using JSONP instead.</p>
 <pre><code class="language-js">L.esri.Support.cors = <span class="literal">false</span>;</code></pre>
 <h3 id="l-esri-request-url-params-callback-">L.esri.request(url, params, callback);</h3>
 <p>Executes a GET or POST via <code>XMLHttpRequest</code> or JSONP request depending on the capabilities of the browser and the length of the request. GET is used when the browser supports CORS and the request url is less then 2000 characters. POST is used when the browser supports CORS and the request exceeds 2000 characters. JSONP is used when the request is less then 2000 characters and the browser does not support CORS.</p>
@@ -178,8 +180,8 @@
 </tbody>
 </table>
 <h4 id="example">Example</h4>
-<pre><code class="language-js">L.esri.request(<span class="string">'https://www.portlandmaps.com/arcgis/rest/services/Public/Parks_Misc/MapServer/21/'</span>, {}, <span class="function"><span class="keyword">function</span><span class="params">(error, response)</span>{</span>
-  <span class="keyword">if</span>(error){
+<pre><code class="language-js">L.esri.request(<span class="string">'https://www.portlandmaps.com/arcgis/rest/services/Public/Parks_Misc/MapServer/21/'</span>, {}, <span class="function"><span class="keyword">function</span> <span class="params">(error, response)</span> {</span>
+  <span class="keyword">if</span> (error) {
     console.log(error);
   } <span class="keyword">else</span> {
     console.log(response.name);
@@ -221,8 +223,8 @@
 </tbody>
 </table>
 <h4 id="example">Example</h4>
-<pre><code class="language-js">L.esri.get(<span class="string">'https://www.portlandmaps.com/arcgis/rest/services/Public/Parks_Misc/MapServer/21/'</span>, {}, <span class="function"><span class="keyword">function</span><span class="params">(error, response)</span>{</span>
-  <span class="keyword">if</span>(error){
+<pre><code class="language-js">L.esri.get(<span class="string">'https://www.portlandmaps.com/arcgis/rest/services/Public/Parks_Misc/MapServer/21/'</span>, {}, <span class="function"><span class="keyword">function</span> <span class="params">(error, response)</span> {</span>
+  <span class="keyword">if</span> (error) {
     console.log(error);
   } <span class="keyword">else</span> {
     console.log(response.name);
@@ -263,15 +265,15 @@
 </tbody>
 </table>
 <h4 id="example">Example</h4>
-<pre><code class="language-js">L.esri.post(<span class="string">'https://www.portlandmaps.com/arcgis/rest/services/Public/Parks_Misc/MapServer/21/'</span>, {}, <span class="function"><span class="keyword">function</span><span class="params">(error, response)</span>{</span>
-  <span class="keyword">if</span>(error){
+<pre><code class="language-js">L.esri.post(<span class="string">'https://www.portlandmaps.com/arcgis/rest/services/Public/Parks_Misc/MapServer/21/'</span>, {}, <span class="function"><span class="keyword">function</span> <span class="params">(error, response)</span> {</span>
+  <span class="keyword">if</span> (error) {
     console.log(error);
   } <span class="keyword">else</span> {
     console.log(response.name);
   }
 });</code></pre>
 
-  <p><a href="http://github.com/Esri/esri-leaflet-doc/edit/master/src/pages/api-reference/request.md">Edit this page on GitHub</a></p>
+  <p><a href="https://github.com/Esri/esri-leaflet-doc/edit/master/src/pages/api-reference/request.md">Edit this page on GitHub</a></p>
 
   <div class="mobile-menu">
     <aside class="sidebar">
@@ -330,10 +332,7 @@
   </div>
 </div>
 
-  <div style='clear:both;'></div>
-</div>
-<div class="container center-text">
-  <p class="copyright">Esri Leaflet is a project from the <a href="http://pdx.esri.com">Esri PDX R&amp;D Center</a> and the <a href="https://github.com/Esri/esri-leaflet/graphs/contributors">Esri Community</a></p>
+  <div style="clear:both;"></div>
 </div>
 
   <div class="container center-text">

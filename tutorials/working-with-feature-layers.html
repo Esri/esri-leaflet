@@ -54,6 +54,7 @@
 
   <!-- Google Analytics -->
   <script>
+    /* eslint-disable */
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -61,6 +62,7 @@
 
     ga('create', 'UA-44963317-3', 'auto');
     ga('send', 'pageview');
+    /* eslint-enable */
   </script>
   <!-- End Google Analytics -->
 </head>
@@ -107,7 +109,7 @@
 <span class="tag">&lt;<span class="title">head</span>&gt;</span>  
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">"utf-8"</span>&gt;</span>
   <span class="tag">&lt;<span class="title">title</span>&gt;</span>Leaflet Map with a Feature Layer<span class="tag">&lt;/<span class="title">title</span>&gt;</span>  
-  <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">name</span>=<span class="value">'viewport'</span> <span class="attribute">content</span>=<span class="value">'initial-scale=1,maximum-scale=1,user-scalable=no'</span> /&gt;</span>
+  <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">name</span>=<span class="value">"viewport"</span> <span class="attribute">content</span>=<span class="value">"initial-scale=1,maximum-scale=1,user-scalable=no"</span> /&gt;</span>
 
   <span class="comment">&lt;!-- Load Leaflet from CDN--&gt;</span>
   <span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"</span>
@@ -142,16 +144,16 @@
       zoom: <span class="number">13</span>
     });
 
-    <span class="keyword">const</span> esriStreets = L.esri.basemapLayer(<span class="string">'Streets'</span>).addTo(map);
+    L.esri.basemapLayer(<span class="string">'Streets'</span>).addTo(map);
   </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 <span class="tag">&lt;/<span class="title">body</span>&gt;</span>
 <span class="tag">&lt;/<span class="title">html</span>&gt;</span></code></pre>
 <h5 id="add-a-feature-layer-to-the-map">Add a Feature Layer to the Map</h5>
 <p>We will add a REST service using the <code>L.esri.featureLayer</code> class from the Esri Leaflet plugin.  This can be either a <strong>Map Service</strong> or <strong>Feature Service</strong>.  You must provide the url for the service.  You can learn more about map and feature services at the <a href="https://esri.github.io/esri-leaflet/tutorials/introduction-to-layer-types.html" title="Introduction to Layer Types Tutorial">Introduction to Layer Types</a> tutorial.</p>
 <p>Below is an example for creating a Feature Layer using both types of services:</p>
-<pre><code class="language-js"><span class="keyword">const</span> portlandHeritageTrees = L.esri.featureLayer({url: <span class="string">'https://www.portlandmaps.com/arcgis/rest/services/Public/Parks_Misc/MapServer/21/'</span>});
+<pre><code class="language-js"><span class="keyword">const</span> portlandHeritageTrees = L.esri.featureLayer({ url: <span class="string">'https://www.portlandmaps.com/arcgis/rest/services/Public/Parks_Misc/MapServer/21/'</span> });
 
-<span class="keyword">const</span> worldCities =  L.esri.featureLayer({url: <span class="string">'https://sampleserver6.arcgisonline.com/arcgis/rest/services/SampleWorldCities/MapServer/0'</span>});</code></pre>
+<span class="keyword">const</span> worldCities = L.esri.featureLayer({ url: <span class="string">'https://sampleserver6.arcgisonline.com/arcgis/rest/services/SampleWorldCities/MapServer/0'</span> });</code></pre>
 <p>In order to display our new layer, we need to add it to our map using Leaflet&#39;s <code>addTo()</code> method.  We can chain this method directly to the object constructor, or call it in a separate line.  In our sample, we&#39;ll use the chaining approach.</p>
 <pre><code class="language-js"><span class="keyword">const</span> portlandHeritageTrees = L.esri.featureLayer({
   url: <span class="string">'https://www.portlandmaps.com/arcgis/rest/services/Public/Parks_Misc/MapServer/21/'</span>
@@ -172,8 +174,8 @@
 <p>If we save and refresh our map, we&#39;ll now see the trees displayed as red circles.  </p>
 <h5 id="add-a-popup-to-feature-layer">Add a Popup to Feature Layer</h5>
 <p>Now we will add a popup to our feature layer.  The popup can contain both static text and dynamic text from the fields in the service.  We&#39;ll use the <code>bindPopup</code> method to create the popup.  You can learn more about popups in Leaflet by visting the <a href="https://leafletjs.com/reference.html#popup" title="Leaflet Popup Documentation">documentation</a>.</p>
-<p>We will create the content for the popup using Leaflet&#39;s <a href="https://leafletjs.com/reference.html#util-template" title="Leaflet Utility Template">Utility Template</a>.  We place the name of fields from the service in  curly brackets <strong>{ }</strong>, and add <code>feature.properties</code> at the end of the <code>L.Util.template</code> to access the fields. </p>
-<pre><code class="language-js">portlandHeritageTrees.bindPopup(<span class="function"><span class="keyword">function</span><span class="params">(evt)</span> {</span>
+<p>We will create the content for the popup using Leaflet&#39;s <a href="https://leafletjs.com/reference.html#util-template" title="Leaflet Utility Template">Utility Template</a>.  We place the name of fields from the service in  curly brackets <strong>{ }</strong>, and add <code>feature.properties</code> at the end of the <code>L.Util.template</code> to access the fields.</p>
+<pre><code class="language-js">portlandHeritageTrees.bindPopup(<span class="function"><span class="keyword">function</span> <span class="params">(evt)</span> {</span>
   <span class="keyword">return</span> L.Util.template(<span class="string">'&lt;h3&gt;{COMMON_NAM}&lt;/h3&gt;&lt;hr /&gt;&lt;p&gt;This tree is located at {ADDRESS} and its scientific name is {SCIENTIFIC}.'</span>, evt.feature.properties);
 });</code></pre>
 <p>If we save and refresh our map, we are able to click on the features and a popup will open.</p>
@@ -184,7 +186,7 @@
 <span class="tag">&lt;<span class="title">head</span>&gt;</span>
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">"utf-8"</span>&gt;</span>
   <span class="tag">&lt;<span class="title">title</span>&gt;</span>Leaflet Map with a Feature Layer<span class="tag">&lt;/<span class="title">title</span>&gt;</span>  
-  <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">name</span>=<span class="value">'viewport'</span> <span class="attribute">content</span>=<span class="value">'initial-scale=1,maximum-scale=1,user-scalable=no'</span> /&gt;</span>
+  <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">name</span>=<span class="value">"viewport"</span> <span class="attribute">content</span>=<span class="value">"initial-scale=1,maximum-scale=1,user-scalable=no"</span> /&gt;</span>
 
   <span class="comment">&lt;!-- Load Leaflet from CDN--&gt;</span>
    <span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"</span>
@@ -224,20 +226,20 @@
       zoom: <span class="number">13</span>
     });
 
-    <span class="keyword">const</span> esriStreets = L.esri.basemapLayer(<span class="string">'Streets'</span>).addTo(map);
+    L.esri.basemapLayer(<span class="string">'Streets'</span>).addTo(map);
 
     <span class="keyword">const</span> portlandHeritageTrees = L.esri.featureLayer({
       url: <span class="string">'https://www.portlandmaps.com/arcgis/rest/services/Public/Parks_Misc/MapServer/21/'</span>
     }).addTo(map);
 
-    portlandHeritageTrees.bindPopup(<span class="function"><span class="keyword">function</span><span class="params">(evt)</span> {</span>
+    portlandHeritageTrees.bindPopup(<span class="function"><span class="keyword">function</span> <span class="params">(evt)</span> {</span>
       <span class="keyword">return</span> L.Util.template(<span class="string">'&lt;h3&gt;{COMMON_NAM}&lt;/h3&gt;&lt;hr /&gt;&lt;p&gt;This tree is located at {ADDRESS} and its scientific name is {SCIENTIFIC}.'</span>, evt.feature.properties);
     });
   </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 <span class="tag">&lt;/<span class="title">body</span>&gt;</span>
 <span class="tag">&lt;/<span class="title">html</span>&gt;</span></code></pre>
 
-  <p><a href="http://github.com/esri/esri-leaflet-doc/edit/master/src/pages/tutorials/working-with-feature-layers.md">Edit this page on GitHub</a></p>
+  <p><a href="https://github.com/esri/esri-leaflet-doc/edit/master/src/pages/tutorials/working-with-feature-layers.md">Edit this page on GitHub</a></p>
 
   <div class="mobile-menu">
     <aside class="sidebar">
@@ -253,10 +255,7 @@
   </div>
 </div>
 
-  <div style='clear:both;'></div>
-</div>
-<div class="container center-text">
-  <p class="copyright">Esri Leaflet is a project from the <a href="http://pdx.esri.com">Esri PDX R&amp;D Center</a> and the <a href="https://github.com/Esri/esri-leaflet/graphs/contributors">Esri Community</a></p>
+  <div style="clear:both;"></div>
 </div>
 
   <div class="container center-text">

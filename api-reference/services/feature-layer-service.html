@@ -52,6 +52,7 @@
 
   <!-- Google Analytics -->
   <script>
+    /* eslint-disable */
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -59,6 +60,7 @@
 
     ga('create', 'UA-44963317-3', 'auto');
     ga('send', 'pageview');
+    /* eslint-enable */
   </script>
   <!-- End Google Analytics -->
 </head>
@@ -178,14 +180,14 @@
                 Returns a new <a href="../../api-reference/tasks/query.html"><code>L.esri.Query</code></a> object that can be used to query this layer.<pre class="js"><code>featureLayer.query()
   .within(latlngbounds)
   .where(&quot;Direction = &#39;WEST&#39;&quot;)
-  .run(function(error, featureCollection, response){
+  .run(function (error, featureCollection, response) {
     console.log(featureCollection);
   });
 </code></pre>
             </td>
         </tr>
         <tr>
-            <td><code>addFeature(<span>&lt;<a href="http://geojson.org/geojson-spec.html#feature-objects">GeoJSON Feature</a>&gt;</span> <code>feature</code>, <span>&lt;Function&gt;</span> <code>callback</code>, <span>&lt;Object&gt;</span> <code>context</code>)</code></td>
+            <td><code>addFeature(<span>&lt;<a href="https://tools.ietf.org/html/rfc7946#section-3.2">GeoJSON Feature</a>&gt;</span> <code>feature</code>, <span>&lt;Function&gt;</span> <code>callback</code>, <span>&lt;Object&gt;</span> <code>context</code>)</code></td>
             <td><code>this</code></td>
             <td>
                 Adds a new feature to the feature layer. this also adds the feature to the map if creation is successful.
@@ -196,7 +198,7 @@
             </td>
         </tr>
         <tr>
-            <td><code>updateFeature(<span>&lt;<a href="http://geojson.org/geojson-spec.html#feature-objects">GeoJSON Feature</a>&gt;</span> <code>feature</code>, <span>&lt;Function&gt;</span> <code>callback</code>, <span>&lt;Object&gt;</span> <code>context</code>)</code></td>
+            <td><code>updateFeature(<span>&lt;<a href="https://tools.ietf.org/html/rfc7946#section-3.2">GeoJSON Feature</a>&gt;</span> <code>feature</code>, <span>&lt;Function&gt;</span> <code>callback</code>, <span>&lt;Object&gt;</span> <code>context</code>)</code></td>
             <td><code>this</code></td>
             <td>
                 Update the provided feature on the Feature Layer. This also updates the feature on the map.
@@ -235,73 +237,77 @@
 <p><strong>Note</strong>: These examples use a public feature service on ArcGIS Online that does not require authentication.</p>
 <h5 id="adding-features">Adding Features</h5>
 <pre><code class="language-js"><span class="keyword">var</span> service = L.esri.featureLayerService({
-    url: <span class="string">'https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Pubic_Feature_Service/FeatureServer/0'</span>
+  url: <span class="string">'https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Pubic_Feature_Service/FeatureServer/0'</span>
 });
 
 <span class="keyword">var</span> feature = {
-    type: <span class="string">'Feature'</span>,
-    geometry: {
-        type: <span class="string">'Point'</span>,
-        coordinates: [-<span class="number">122</span>, <span class="number">45</span>]
-    },
-    properties: {
-        name: <span class="string">'Hello World'</span>
-    }
+  type: <span class="string">'Feature'</span>,
+  geometry: {
+    type: <span class="string">'Point'</span>,
+    coordinates: [-<span class="number">122</span>, <span class="number">45</span>]
+  },
+  properties: {
+    name: <span class="string">'Hello World'</span>
+  }
 };
 
-service.addFeature(feature, <span class="function"><span class="keyword">function</span><span class="params">(error, response)</span>{</span>
-    <span class="keyword">if</span>(error){
-      console.log(<span class="string">'error creating feature'</span> + error.message);
-    } <span class="keyword">else</span> {
-      console.log(<span class="string">'Successfully created feature with id '</span> + response.objectId);
-    }
+service.addFeature(feature, <span class="function"><span class="keyword">function</span> <span class="params">(error, response)</span> {</span>
+  <span class="keyword">if</span> (error) {
+    console.log(<span class="string">'error creating feature'</span> + error.message);
+  } <span class="keyword">else</span> {
+    console.log(<span class="string">'Successfully created feature with id '</span> + response.objectId);
+  }
 });</code></pre>
 <h5 id="updating-features">Updating Features</h5>
 <pre><code class="language-js"><span class="keyword">var</span> service = L.esri.featureLayerService({
-    url:<span class="string">'https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Pubic_Feature_Service/FeatureServer/0'</span>
+  url: <span class="string">'https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Pubic_Feature_Service/FeatureServer/0'</span>
 });
 
 <span class="keyword">var</span> feature = {
-    type: <span class="string">'Feature'</span>,
-    id: <span class="number">2</span>,
-    geometry: {
-        type: <span class="string">'Point'</span>,
-        coordinates: [-<span class="number">122</span>, <span class="number">45</span>]
-    },
-    properties: {
-        name: <span class="string">'Hi I\'m Feature 2'</span>
-    }
+  type: <span class="string">'Feature'</span>,
+  id: <span class="number">2</span>,
+  geometry: {
+    type: <span class="string">'Point'</span>,
+    coordinates: [-<span class="number">122</span>, <span class="number">45</span>]
+  },
+  properties: {
+    name: <span class="string">'Hi I\'m Feature 2'</span>
+  }
 };
 
-service.updateFeature(feature, <span class="function"><span class="keyword">function</span><span class="params">(error, response)</span>{</span>
-    <span class="keyword">if</span>(error){
-      console.log(<span class="string">'error updating feature'</span> + error.message);
-    } <span class="keyword">else</span> {
-      console.log(<span class="string">'Successfully updated feature '</span> + feature.id);
-    }
+service.updateFeature(feature, <span class="function"><span class="keyword">function</span> <span class="params">(error, response)</span> {</span>
+  <span class="keyword">if</span> (error) {
+    console.log(<span class="string">'error updating feature'</span> + error.message);
+  } <span class="keyword">else</span> {
+    console.log(<span class="string">'Successfully updated feature '</span> + feature.id);
+  }
 });</code></pre>
 <h5 id="deleting-features">Deleting Features</h5>
 <pre><code class="language-js"><span class="keyword">var</span> service = L.esri.featureLayerService({
-    url: <span class="string">'https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Pubic_Feature_Service/FeatureServer/0'</span>
+  url: <span class="string">'https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Pubic_Feature_Service/FeatureServer/0'</span>
 });
 
-service.deleteFeature(<span class="number">2</span>, <span class="function"><span class="keyword">function</span><span class="params">(error, response)</span>{</span>
-    <span class="keyword">if</span>(error){
-      console.log(<span class="string">'error deleting feature'</span> + error.message);
-    } <span class="keyword">else</span> {
-      console.log(<span class="string">'Successfully deleted feature '</span> + response.objectId);
-    }
+service.deleteFeature(<span class="number">2</span>, <span class="function"><span class="keyword">function</span> <span class="params">(error, response)</span> {</span>
+  <span class="keyword">if</span> (error) {
+    console.log(<span class="string">'error deleting feature'</span> + error.message);
+  } <span class="keyword">else</span> {
+    console.log(<span class="string">'Successfully deleted feature '</span> + response.objectId);
+  }
 });</code></pre>
 <h5 id="querying-features">Querying Features</h5>
 <pre><code class="language-js"><span class="keyword">var</span> service = L.esri.featureLayerService({
-    url: <span class="string">'https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Pubic_Feature_Service/FeatureServer/0'</span>
+  url: <span class="string">'https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Pubic_Feature_Service/FeatureServer/0'</span>
 });
 
-service.query().where(<span class="string">"name='Hello World'"</span>).run(<span class="function"><span class="keyword">function</span><span class="params">(error, featureCollection, response)</span>{</span>
-    console.log(featureCollection.features[<span class="number">0</span>].properties.name);
+service.query().where(<span class="string">"name='Hello World'"</span>).run(<span class="function"><span class="keyword">function</span> <span class="params">(error, featureCollection, response)</span> {</span>
+  <span class="keyword">if</span> (error) {
+    console.log(error);
+    <span class="keyword">return</span>;
+  }
+  console.log(featureCollection.features[<span class="number">0</span>].properties.name);
 });</code></pre>
 
-  <p><a href="http://github.com/Esri/esri-leaflet-doc/edit/master/src/pages/api-reference/services/feature-layer-service.md">Edit this page on GitHub</a></p>
+  <p><a href="https://github.com/Esri/esri-leaflet-doc/edit/master/src/pages/api-reference/services/feature-layer-service.md">Edit this page on GitHub</a></p>
 
   <div class="mobile-menu">
     <aside class="sidebar">
@@ -360,10 +366,7 @@ service.query().where(<span class="string">"name='Hello World'"</span>).run(<spa
   </div>
 </div>
 
-  <div style='clear:both;'></div>
-</div>
-<div class="container center-text">
-  <p class="copyright">Esri Leaflet is a project from the <a href="http://pdx.esri.com">Esri PDX R&amp;D Center</a> and the <a href="https://github.com/Esri/esri-leaflet/graphs/contributors">Esri Community</a></p>
+  <div style="clear:both;"></div>
 </div>
 
   <div class="container center-text">

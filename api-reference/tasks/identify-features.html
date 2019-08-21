@@ -52,6 +52,7 @@
 
   <!-- Google Analytics -->
   <script>
+    /* eslint-disable */
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -59,6 +60,7 @@
 
     ga('create', 'UA-44963317-3', 'auto');
     ga('send', 'pageview');
+    /* eslint-enable */
   </script>
   <!-- End Google Analytics -->
 </head>
@@ -152,7 +154,7 @@
     <tbody>
         <tr>
             <td>
-            <code>L.esri.identifyFeatures(<span>&lt;<a href="../../api-reference/services/map-service.html">ImageService</a>&gt;</span> <code>endpoint</code>)</code><br><br>
+            <code>L.esri.identifyFeatures(<span>&lt;<a href="../../api-reference/services/map-service.html">MapService</a>&gt;</span> <code>endpoint</code>)</code><br><br>
             <code>L.esri.identifyFeatures(<span>&lt;Object&gt;</span> <code>options</code>)</code><br></td>
             <td>Accepts either an <code>options</code> object or an instance of <a href="../..//api-reference/services/image-service.html"></a>.</td>
         </tr>
@@ -201,14 +203,14 @@
     </thead>
     <tbody>
         <tr>
-            <td><code>on(<span>&lt;<a href="http://leafletjs.com/reference.html#map">Map</a>&gt;</span> <code>map</code>)</code></td>
+            <td><code>on(<span>&lt;<a href="https://leafletjs.com/reference.html#map">Map</a>&gt;</span> <code>map</code>)</code></td>
             <td><code>this</code></td>
             <td>The map to identify features on.</td>
         </tr>
         <tr>
             <td><code>at(<span>&lt;Geometry&gt;</span> <code>geometry</code>)</code></td>
             <td><code>this</code></td>
-            <td>Identifies features at a given <a href="http://leafletjs.com/reference.html#latlng">LatLng</a>. <code>geometry</code> can also be an instance of <a href="http://leafletjs.com/reference.html#marker"><code>L.Marker</code></a>, <a href="http://leafletjs.com/reference.html#polygon"><code>L.Polygon</code></a>, <a href="http://leafletjs.com/reference.html#polyline"><code>L.Polyline</code></a>, <a href="http://leafletjs.com/reference.html#latlngbounds"><code>L.LatLngBounds</code></a>, <a href="http://leafletjs.com/reference.html#geojson"><code>L.GeoJSON</code></a> or a valid <a href="http://geojson.org/geojson-spec.html">GeoJSON</a> object literal.</td>
+            <td>Identifies features at a given <a href="https://leafletjs.com/reference.html#latlng">LatLng</a>. <code>geometry</code> can also be an instance of <a href="https://leafletjs.com/reference.html#marker"><code>L.Marker</code></a>, <a href="https://leafletjs.com/reference.html#polygon"><code>L.Polygon</code></a>, <a href="https://leafletjs.com/reference.html#polyline"><code>L.Polyline</code></a>, <a href="https://leafletjs.com/reference.html#latlngbounds"><code>L.LatLngBounds</code></a>, <a href="https://leafletjs.com/reference.html#geojson"><code>L.GeoJSON</code></a> or a valid <a href="https://tools.ietf.org/html/rfc7946">GeoJSON</a> object literal.</td>
         </tr>
         <tr>
             <td><code>layerDef(<span>&lt;Integer&gt;</span> <code>id</code>, <span>&lt;String&gt;</span> <code>where</code>)</code></td>
@@ -224,7 +226,7 @@
             <td><code>layers(<span>&lt;String&gt;</span> <code>layers</code>)</code></td>
             <td><code>this</code></td>
             <td>
-              By default, all features will be identified, but it is possible to specify both an alternative strategy and array of individual layers.  See the REST API <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/index.html#/Identify_Map_Service/02r300000113000000/">documentation</a> for more information about valid combinations.<br>
+              By default, all features will be identified, but it is possible to specify both an alternative strategy and array of individual layers.  See the REST API <a href="https://developers.arcgis.com/rest/services-reference/identify-map-service-.htm">documentation</a> for more information about valid combinations.<br>
               ex: <code>.layers(&#39;all:0&#39;)</code>.
             </td>
         </tr>
@@ -244,7 +246,7 @@
             <td>Return geometry with results. Default is <code>true</code>.</td>
         </tr>
         <tr>
-            <td><code>simplify(<span>&lt;<a href="http://leafletjs.com/reference.html#map">Map</a>&gt;</span> <code>map</code>,  <span>&lt;Number&gt;</span> <code>factor</code>)</code></td>
+            <td><code>simplify(<span>&lt;<a href="https://leafletjs.com/reference.html#map">Map</a>&gt;</span> <code>map</code>,  <span>&lt;Number&gt;</span> <code>factor</code>)</code></td>
             <td><code>this</code></td>
             <td>Simplify the geometries of the output features for the current map view. the <code>factor</code> parameter controls the amount of simplification between 0 (no simplification) and 1 (the most basic shape possible).</td>
         </tr>
@@ -261,25 +263,29 @@
         <tr>
             <td><code>run(<span>&lt;Function&gt;</span> <code>callback</code>, <span>&lt;Object&gt;</span> <code>context</code>)</code></td>
             <td><code>this</code></td>
-            <td>Executes the identify request with the current parameters, identified features will be passed to <code>callback</code> as a <a href="http://geojson.org/geojson-spec.html#feature-collection-objects">GeoJSON FeatureCollection</a>. Accepts an optional function context</td>
+            <td>Executes the identify request with the current parameters, identified features will be passed to <code>callback</code> as a <a href="https://tools.ietf.org/html/rfc7946#section-3.3">GeoJSON FeatureCollection</a>. Accepts an optional function context</td>
         </tr>
     </tbody>
 </table>
 
 <h3 id="example">Example</h3>
-<pre><code class="language-js"><span class="keyword">var</span> map = <span class="keyword">new</span> L.Map(<span class="string">'map'</span>).setView([ <span class="number">45.543</span>, -<span class="number">122.621</span> ], <span class="number">5</span>);
+<pre><code class="language-js"><span class="keyword">var</span> map = <span class="keyword">new</span> L.Map(<span class="string">'map'</span>).setView([<span class="number">45.543</span>, -<span class="number">122.621</span>], <span class="number">5</span>);
 
 L.esri.identifyFeatures({
-    url: <span class="string">'https://sampleserver6.arcgisonline.com/arcgis/rest/services/WorldTimeZones/MapServer'</span>
+  url: <span class="string">'https://sampleserver6.arcgisonline.com/arcgis/rest/services/WorldTimeZones/MapServer'</span>
 })
-.on(map)
-.at([<span class="number">45.543</span>, -<span class="number">122.621</span>])
-.layers(<span class="string">'visible:1'</span>)
-.run(<span class="function"><span class="keyword">function</span><span class="params">(error, featureCollection, response)</span>{</span>
-    console.log(<span class="string">"UTC Offset: "</span> + featureCollection.features[<span class="number">0</span>].properties.ZONE);
-});</code></pre>
+  .on(map)
+  .at([<span class="number">45.543</span>, -<span class="number">122.621</span>])
+  .layers(<span class="string">'visible:1'</span>)
+  .run(<span class="function"><span class="keyword">function</span> <span class="params">(error, featureCollection, response)</span> {</span>
+    <span class="keyword">if</span> (error) {
+      console.log(error);
+      <span class="keyword">return</span>;
+    }
+    console.log(<span class="string">'UTC Offset: '</span> + featureCollection.features[<span class="number">0</span>].properties.ZONE);
+  });</code></pre>
 
-  <p><a href="http://github.com/Esri/esri-leaflet-doc/edit/master/src/pages/api-reference/tasks/identify-features.md">Edit this page on GitHub</a></p>
+  <p><a href="https://github.com/Esri/esri-leaflet-doc/edit/master/src/pages/api-reference/tasks/identify-features.md">Edit this page on GitHub</a></p>
 
   <div class="mobile-menu">
     <aside class="sidebar">
@@ -338,10 +344,7 @@ L.esri.identifyFeatures({
   </div>
 </div>
 
-  <div style='clear:both;'></div>
-</div>
-<div class="container center-text">
-  <p class="copyright">Esri Leaflet is a project from the <a href="http://pdx.esri.com">Esri PDX R&amp;D Center</a> and the <a href="https://github.com/Esri/esri-leaflet/graphs/contributors">Esri Community</a></p>
+  <div style="clear:both;"></div>
 </div>
 
   <div class="container center-text">

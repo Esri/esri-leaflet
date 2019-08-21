@@ -12,7 +12,7 @@
   
 
   
-    <meta name="description" content="Esri Leaflet pairs nicely with clientside libraries that can perform spatial analysis in the browser like &lt;a href=&quot;http://turfjs.org/getting-started/&quot;&gt;Turf.js&lt;/a&gt;. This demo shows how the output from a spatial query can be augmented to isolate features that have a spatial relationship with another arbitrary geometry.">
+    <meta name="description" content="Esri Leaflet pairs nicely with clientside libraries that can perform spatial analysis in the browser like &lt;a href=&quot;https://turfjs.org/getting-started/&quot;&gt;Turf.js&lt;/a&gt;. This demo shows how the output from a spatial query can be augmented to isolate features that have a spatial relationship with another arbitrary geometry.">
   
 
   <meta name="description" content="Esri Leaflet">
@@ -54,6 +54,7 @@
 
   <!-- Google Analytics -->
   <script>
+    /* eslint-disable */
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -61,6 +62,7 @@
 
     ga('create', 'UA-44963317-3', 'auto');
     ga('send', 'pageview');
+    /* eslint-enable */
   </script>
   <!-- End Google Analytics -->
 </head>
@@ -86,6 +88,10 @@
   
 
 <aside class="sidebar">
+  <nav>
+    <a href="../examples/">Quickstart</a>
+  </nav>
+
   <h5>Basemaps</h5>
   <nav>
     <a href="../examples/showing-a-basemap.html">Showing an ArcGIS Basemap</a>
@@ -119,7 +125,7 @@
   <h5>Feature Layer Plugins</h5>
   <nav>
     <a href="../examples/visualize-points-as-a-heatmap.html">Points as a Heatmap</a>
-    <a href="../examples/styling-heatmaps.html">Styling a heatmap</a>
+    <a href="../examples/styling-heatmaps.html">Styling a Heatmap</a>
     <a href="../examples/visualizing-time-with-feature-layer.html">Time Enabled Services</a>
     <a href="../examples/clustering-feature-layers.html">Clustering Points</a>
     <a href="../examples/styling-clusters.html">Styling Clusters</a>
@@ -199,7 +205,7 @@
 <div class="example-content">
 <div class="wrap">
   <h1>Use Turf and Esri Leaflet together</h1>
-  <p>Esri Leaflet pairs nicely with clientside libraries that can perform spatial analysis in the browser like <a href="http://turfjs.org/getting-started/">Turf.js</a>. This demo shows how the output from a spatial query can be augmented to isolate features that have a spatial relationship with another arbitrary geometry.</p>
+  <p>Esri Leaflet pairs nicely with clientside libraries that can perform spatial analysis in the browser like <a href="https://turfjs.org/getting-started/">Turf.js</a>. This demo shows how the output from a spatial query can be augmented to isolate features that have a spatial relationship with another arbitrary geometry.</p>
 </div>
 <div id="map-wrapper">
   
@@ -221,119 +227,122 @@
 <div id="map"></div>
 <div id="info-pane" class="leaflet-bar">
   <label>
-  Census block points that intersect both bounding boxes are red.
+    Census block points that intersect both bounding boxes are red.
   </label>
 </div>
 
 <script type='text/javascript'>
   // two GeoJSON bounding boxes.  the first smaller than the second.
-    var boundingBoxes = {
-      "type": "FeatureCollection",
-      "features": [
-        {
-          "type": "Feature",
-          "properties": {
-            "color": "orange"
-          },
-          "geometry": {
-            "type": "Polygon",
-            "coordinates": [
-              [
-                [ -84.39010620117188, 33.747965492070236 ],
-                [ -84.39010620117188, 33.75431694675655 ],
-                [ -84.37311172485352, 33.75431694675655 ],
-                [ -84.37311172485352, 33.747965492070236 ],
-                [ -84.39010620117188, 33.747965492070236 ]
-              ]
-            ]
-          }
+  var boundingBoxes = {
+    type: 'FeatureCollection',
+    features: [
+      {
+        type: 'Feature',
+        properties: {
+          color: 'orange'
         },
-        {
-          "type": "Feature",
-          "properties": {
-            "color": "#0ceb70"
-          },
-          "geometry": {
-            "type": "Polygon",
-            "coordinates": [
-              [
-                [ -84.39963340759277, 33.744254312044156 ],
-                [ -84.39963340759277,  33.75817040902938 ],
-                [ -84.38444137573242, 33.75817040902938 ],
-                [ -84.38444137573242, 33.744254312044156 ],
-                [ -84.39963340759277, 33.744254312044156 ]
-              ]
+        geometry: {
+          type: 'Polygon',
+          coordinates: [
+            [
+              [-84.39010620117188, 33.747965492070236],
+              [-84.39010620117188, 33.75431694675655],
+              [-84.37311172485352, 33.75431694675655],
+              [-84.37311172485352, 33.747965492070236],
+              [-84.39010620117188, 33.747965492070236]
             ]
-          }
+          ]
         }
-      ]
+      },
+      {
+        type: 'Feature',
+        properties: {
+          color: '#0ceb70'
+        },
+        geometry: {
+          type: 'Polygon',
+          coordinates: [
+            [
+              [-84.39963340759277, 33.744254312044156],
+              [-84.39963340759277, 33.75817040902938],
+              [-84.38444137573242, 33.75817040902938],
+              [-84.38444137573242, 33.744254312044156],
+              [-84.39963340759277, 33.744254312044156]
+            ]
+          ]
+        }
+      }
+    ]
+  };
+
+  // draw a map of atlanta
+  var map = L.map('map').setView([33.752, -84.385], 14.5);
+  L.esri.basemapLayer('Topographic').addTo(map);
+
+  // display the bounding boxes on the map
+  L.geoJSON(boundingBoxes, {
+    style: function (feature) {
+      return { color: feature.properties.color };
     }
+  }).addTo(map);
 
-    // draw a map of atlanta
-    var map = L.map('map').setView([33.752, -84.385], 14.5);
-    L.esri.basemapLayer('Topographic').addTo(map);
-
-    // display the bounding boxes on the map
-    L.geoJSON(boundingBoxes, {
-      style: function (feature) {
-        return {color: feature.properties.color};
+  // query for census block points that intersect the smaller box
+  var query = L.esri.query({
+    url: 'https://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer/0'
+  });
+  query.intersects(boundingBoxes.features[0]);
+  query.run(function (err, censusCollection, raw) {
+    if (err) {
+      return;
+    }
+    var features = censusCollection.features;
+    // loop through the collection of census block points
+    for (var i = 0; i < features.length; i++) {
+      // if the point is inside (or contained by, the bigger box) draw it in red
+      if (turf.inside(features[i], boundingBoxes.features[1])) {
+        L.geoJSON(features[i], {
+          pointToLayer: function (geoJsonPoint, latlng) {
+            return L.circleMarker(latlng, {
+              color: '#ff0066'
+            });
+          }
+        }).addTo(map);
+      } else {
+        // if it is not contained by the bigger box, make it gray and partially transparent.
+        L.geoJSON(features[i], {
+          pointToLayer: function (geoJsonPoint, latlng) {
+            return L.circleMarker(latlng, {
+              radius: 10,
+              color: 'gray',
+              opacity: 0.2
+            });
+          }
+        }).addTo(map);
       }
-    }).addTo(map);
-
-    // query for census block points that intersect the smaller box
-    var query = L.esri.query({
-      url: 'https://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer/0'
-    })
-    query.intersects(boundingBoxes.features[0])
-    query.run(function (err, censusCollection, raw) {
-      var features = censusCollection.features;
-      // loop through the collection of census block points
-      for (i=0; i<features.length; i++) {
-        // if the point is inside (or contained by, the bigger box) draw it in red
-        if (turf.inside(features[i], boundingBoxes.features[1])) {
-          L.geoJSON(features[i], {
-            pointToLayer: function(geoJsonPoint, latlng) {
-              return L.circleMarker(latlng, {
-                color: '#ff0066'
-              });
-            }
-          }).addTo(map);
-        } else {
-          // if it is not contained by the bigger box, make it gray and partially transparent.
-          L.geoJSON(features[i], {
-            pointToLayer: function(geoJsonPoint, latlng) {
-              return L.circleMarker(latlng, {
-                radius: 10,
-                color: 'gray',
-                opacity: 0.2
-              });
-            }
-          }).addTo(map);
-        }
-      }
-    });
+    }
+  });
 </script>
 
 </div>
 <pre><code class="language-xml"><span class="tag">&lt;<span class="title">html</span>&gt;</span>
 <span class="tag">&lt;<span class="title">head</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">utf-8</span> /&gt;</span>
+  <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">"utf-8"</span> /&gt;</span>
   <span class="tag">&lt;<span class="title">title</span>&gt;</span>Use Turf and Esri Leaflet together<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">name</span>=<span class="value">'viewport'</span> <span class="attribute">content</span>=<span class="value">'initial-scale=1,maximum-scale=1,user-scalable=no'</span> /&gt;</span>
+  <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">name</span>=<span class="value">"viewport"</span> <span class="attribute">content</span>=<span class="value">"initial-scale=1,maximum-scale=1,user-scalable=no"</span> /&gt;</span>
 
-    <span class="comment">&lt;!-- Load Leaflet from CDN --&gt;</span>
-    <span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"</span>
-    <span class="attribute">integrity</span>=<span class="value">"sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="</span>
-    <span class="attribute">crossorigin</span>=<span class="value">""</span>/&gt;</span>
-    <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"</span>
-    <span class="attribute">integrity</span>=<span class="value">"sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="</span>
-    <span class="attribute">crossorigin</span>=<span class="value">""</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+  <span class="comment">&lt;!-- Load Leaflet from CDN --&gt;</span>
+  <span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"</span>
+  <span class="attribute">integrity</span>=<span class="value">"sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="</span>
+  <span class="attribute">crossorigin</span>=<span class="value">""</span>/&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"</span>
+  <span class="attribute">integrity</span>=<span class="value">"sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="</span>
+  <span class="attribute">crossorigin</span>=<span class="value">""</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 
-    <span class="comment">&lt;!-- Load Esri Leaflet from CDN --&gt;</span>
-    <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/esri-leaflet@2.3.0/dist/esri-leaflet.js"</span>
-    <span class="attribute">integrity</span>=<span class="value">"sha512-1tScwpjXwwnm6tTva0l0/ZgM3rYNbdyMj5q6RSQMbNX6EUMhYDE3pMRGZaT41zHEvLoWEK7qFEJmZDOoDMU7/Q=="</span>
-    <span class="attribute">crossorigin</span>=<span class="value">""</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+  <span class="comment">&lt;!-- Load Esri Leaflet from CDN --&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/esri-leaflet@2.3.0/dist/esri-leaflet.js"</span>
+  <span class="attribute">integrity</span>=<span class="value">"sha512-1tScwpjXwwnm6tTva0l0/ZgM3rYNbdyMj5q6RSQMbNX6EUMhYDE3pMRGZaT41zHEvLoWEK7qFEJmZDOoDMU7/Q=="</span>
+  <span class="attribute">crossorigin</span>=<span class="value">""</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 
   <span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css">
@@ -360,108 +369,115 @@
 <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"info-pane"</span> <span class="attribute">class</span>=<span class="value">"leaflet-bar"</span>&gt;</span>
   <span class="tag">&lt;<span class="title">label</span>&gt;</span>
-  Census block points that intersect both bounding boxes are red.
+    Census block points that intersect both bounding boxes are red.
   <span class="tag">&lt;/<span class="title">label</span>&gt;</span>
 <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">'text/javascript'</span>&gt;</span><span class="javascript">
   <span class="comment">// two GeoJSON bounding boxes.  the first smaller than the second.</span>
-    <span class="keyword">var</span> boundingBoxes = {
-      <span class="string">"type"</span>: <span class="string">"FeatureCollection"</span>,
-      <span class="string">"features"</span>: [
-        {
-          <span class="string">"type"</span>: <span class="string">"Feature"</span>,
-          <span class="string">"properties"</span>: {
-            <span class="string">"color"</span>: <span class="string">"orange"</span>
-          },
-          <span class="string">"geometry"</span>: {
-            <span class="string">"type"</span>: <span class="string">"Polygon"</span>,
-            <span class="string">"coordinates"</span>: [
-              [
-                [ -<span class="number">84.39010620117188</span>, <span class="number">33.747965492070236</span> ],
-                [ -<span class="number">84.39010620117188</span>, <span class="number">33.75431694675655</span> ],
-                [ -<span class="number">84.37311172485352</span>, <span class="number">33.75431694675655</span> ],
-                [ -<span class="number">84.37311172485352</span>, <span class="number">33.747965492070236</span> ],
-                [ -<span class="number">84.39010620117188</span>, <span class="number">33.747965492070236</span> ]
-              ]
-            ]
-          }
+  <span class="keyword">var</span> boundingBoxes = {
+    type: <span class="string">'FeatureCollection'</span>,
+    features: [
+      {
+        type: <span class="string">'Feature'</span>,
+        properties: {
+          color: <span class="string">'orange'</span>
         },
-        {
-          <span class="string">"type"</span>: <span class="string">"Feature"</span>,
-          <span class="string">"properties"</span>: {
-            <span class="string">"color"</span>: <span class="string">"#0ceb70"</span>
-          },
-          <span class="string">"geometry"</span>: {
-            <span class="string">"type"</span>: <span class="string">"Polygon"</span>,
-            <span class="string">"coordinates"</span>: [
-              [
-                [ -<span class="number">84.39963340759277</span>, <span class="number">33.744254312044156</span> ],
-                [ -<span class="number">84.39963340759277</span>,  <span class="number">33.75817040902938</span> ],
-                [ -<span class="number">84.38444137573242</span>, <span class="number">33.75817040902938</span> ],
-                [ -<span class="number">84.38444137573242</span>, <span class="number">33.744254312044156</span> ],
-                [ -<span class="number">84.39963340759277</span>, <span class="number">33.744254312044156</span> ]
-              ]
+        geometry: {
+          type: <span class="string">'Polygon'</span>,
+          coordinates: [
+            [
+              [-<span class="number">84.39010620117188</span>, <span class="number">33.747965492070236</span>],
+              [-<span class="number">84.39010620117188</span>, <span class="number">33.75431694675655</span>],
+              [-<span class="number">84.37311172485352</span>, <span class="number">33.75431694675655</span>],
+              [-<span class="number">84.37311172485352</span>, <span class="number">33.747965492070236</span>],
+              [-<span class="number">84.39010620117188</span>, <span class="number">33.747965492070236</span>]
             ]
-          }
+          ]
         }
-      ]
+      },
+      {
+        type: <span class="string">'Feature'</span>,
+        properties: {
+          color: <span class="string">'#0ceb70'</span>
+        },
+        geometry: {
+          type: <span class="string">'Polygon'</span>,
+          coordinates: [
+            [
+              [-<span class="number">84.39963340759277</span>, <span class="number">33.744254312044156</span>],
+              [-<span class="number">84.39963340759277</span>, <span class="number">33.75817040902938</span>],
+              [-<span class="number">84.38444137573242</span>, <span class="number">33.75817040902938</span>],
+              [-<span class="number">84.38444137573242</span>, <span class="number">33.744254312044156</span>],
+              [-<span class="number">84.39963340759277</span>, <span class="number">33.744254312044156</span>]
+            ]
+          ]
+        }
+      }
+    ]
+  };
+
+  <span class="comment">// draw a map of atlanta</span>
+  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">33.752</span>, -<span class="number">84.385</span>], <span class="number">14.5</span>);
+  L.esri.basemapLayer(<span class="string">'Topographic'</span>).addTo(map);
+
+  <span class="comment">// display the bounding boxes on the map</span>
+  L.geoJSON(boundingBoxes, {
+    style: <span class="function"><span class="keyword">function</span> <span class="params">(feature)</span> {</span>
+      <span class="keyword">return</span> { color: feature.properties.color };
     }
+  }).addTo(map);
 
-    <span class="comment">// draw a map of atlanta</span>
-    <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">33.752</span>, -<span class="number">84.385</span>], <span class="number">14.5</span>);
-    L.esri.basemapLayer(<span class="string">'Topographic'</span>).addTo(map);
-
-    <span class="comment">// display the bounding boxes on the map</span>
-    L.geoJSON(boundingBoxes, {
-      style: <span class="function"><span class="keyword">function</span> <span class="params">(feature)</span> {</span>
-        <span class="keyword">return</span> {color: feature.properties.color};
+  <span class="comment">// query for census block points that intersect the smaller box</span>
+  <span class="keyword">var</span> query = L.esri.query({
+    url: <span class="string">'https://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer/0'</span>
+  });
+  query.intersects(boundingBoxes.features[<span class="number">0</span>]);
+  query.run(<span class="function"><span class="keyword">function</span> <span class="params">(err, censusCollection, raw)</span> {</span>
+    <span class="keyword">if</span> (err) {
+      <span class="keyword">return</span>;
+    }
+    <span class="keyword">var</span> features = censusCollection.features;
+    <span class="comment">// loop through the collection of census block points</span>
+    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; features.length; i++) {
+      <span class="comment">// if the point is inside (or contained by, the bigger box) draw it in red</span>
+      <span class="keyword">if</span> (turf.inside(features[i], boundingBoxes.features[<span class="number">1</span>])) {
+        L.geoJSON(features[i], {
+          pointToLayer: <span class="function"><span class="keyword">function</span> <span class="params">(geoJsonPoint, latlng)</span> {</span>
+            <span class="keyword">return</span> L.circleMarker(latlng, {
+              color: <span class="string">'#ff0066'</span>
+            });
+          }
+        }).addTo(map);
+      } <span class="keyword">else</span> {
+        <span class="comment">// if it is not contained by the bigger box, make it gray and partially transparent.</span>
+        L.geoJSON(features[i], {
+          pointToLayer: <span class="function"><span class="keyword">function</span> <span class="params">(geoJsonPoint, latlng)</span> {</span>
+            <span class="keyword">return</span> L.circleMarker(latlng, {
+              radius: <span class="number">10</span>,
+              color: <span class="string">'gray'</span>,
+              opacity: <span class="number">0.2</span>
+            });
+          }
+        }).addTo(map);
       }
-    }).addTo(map);
-
-    <span class="comment">// query for census block points that intersect the smaller box</span>
-    <span class="keyword">var</span> query = L.esri.query({
-      url: <span class="string">'https://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer/0'</span>
-    })
-    query.intersects(boundingBoxes.features[<span class="number">0</span>])
-    query.run(<span class="function"><span class="keyword">function</span> <span class="params">(err, censusCollection, raw)</span> {</span>
-      <span class="keyword">var</span> features = censusCollection.features;
-      <span class="comment">// loop through the collection of census block points</span>
-      <span class="keyword">for</span> (i=<span class="number">0</span>; i&lt;features.length; i++) {
-        <span class="comment">// if the point is inside (or contained by, the bigger box) draw it in red</span>
-        <span class="keyword">if</span> (turf.inside(features[i], boundingBoxes.features[<span class="number">1</span>])) {
-          L.geoJSON(features[i], {
-            pointToLayer: <span class="function"><span class="keyword">function</span><span class="params">(geoJsonPoint, latlng)</span> {</span>
-              <span class="keyword">return</span> L.circleMarker(latlng, {
-                color: <span class="string">'#ff0066'</span>
-              });
-            }
-          }).addTo(map);
-        } <span class="keyword">else</span> {
-          <span class="comment">// if it is not contained by the bigger box, make it gray and partially transparent.</span>
-          L.geoJSON(features[i], {
-            pointToLayer: <span class="function"><span class="keyword">function</span><span class="params">(geoJsonPoint, latlng)</span> {</span>
-              <span class="keyword">return</span> L.circleMarker(latlng, {
-                radius: <span class="number">10</span>,
-                color: <span class="string">'gray'</span>,
-                opacity: <span class="number">0.2</span>
-              });
-            }
-          }).addTo(map);
-        }
-      }
-    });
+    }
+  });
 </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 <span class="tag">&lt;/<span class="title">body</span>&gt;</span>
 <span class="tag">&lt;/<span class="title">html</span>&gt;</span></code></pre>
 
 <div class="wrap">
-  <p><a href="http://github.com/Esri/esri-leaflet-doc/edit/master/src/pages/examples/turf.hbs">Edit this sample on GitHub</a></p>
+  <p><a href="https://github.com/Esri/esri-leaflet-doc/edit/master/src/pages/examples/turf.hbs">Edit this sample on GitHub</a></p>
 </div>
 
 <div class="mobile-menu">
   <aside class="sidebar">
+  <nav>
+    <a href="../examples/">Quickstart</a>
+  </nav>
+
   <h5>Basemaps</h5>
   <nav>
     <a href="../examples/showing-a-basemap.html">Showing an ArcGIS Basemap</a>
@@ -495,7 +511,7 @@
   <h5>Feature Layer Plugins</h5>
   <nav>
     <a href="../examples/visualize-points-as-a-heatmap.html">Points as a Heatmap</a>
-    <a href="../examples/styling-heatmaps.html">Styling a heatmap</a>
+    <a href="../examples/styling-heatmaps.html">Styling a Heatmap</a>
     <a href="../examples/visualizing-time-with-feature-layer.html">Time Enabled Services</a>
     <a href="../examples/clustering-feature-layers.html">Clustering Points</a>
     <a href="../examples/styling-clusters.html">Styling Clusters</a>
@@ -575,10 +591,7 @@
 
 </div>
 
-  <div style='clear:both;'></div>
-</div>
-<div class="container center-text">
-  <p class="copyright">Esri Leaflet is a project from the <a href="http://pdx.esri.com">Esri PDX R&amp;D Center</a> and the <a href="https://github.com/Esri/esri-leaflet/graphs/contributors">Esri Community</a></p>
+  <div style="clear:both;"></div>
 </div>
 
   <div class="container center-text">

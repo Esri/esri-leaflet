@@ -52,6 +52,7 @@
 
   <!-- Google Analytics -->
   <script>
+    /* eslint-disable */
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -59,6 +60,7 @@
 
     ga('create', 'UA-44963317-3', 'auto');
     ga('send', 'pageview');
+    /* eslint-enable */
   </script>
   <!-- End Google Analytics -->
 </head>
@@ -153,7 +155,7 @@
     <tbody>
         <tr>
             <td><code class="nobr">L.esri.Heat.featureLayer(<span>&lt;Object&gt;</span> <code>options</code>)</code></td>
-            <td>You must pass a <code>url</code> to a <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Layer/02r3000000w6000000/">Feature Layer</a> in your <code>options</code></td>
+            <td>You must pass a <code>url</code> to a <a href="https://developers.arcgis.com/rest/services-reference/layer-feature-service-.htm">Feature Layer</a> in your <code>options</code></td>
         </tr>
     </tbody>
 </table>
@@ -171,7 +173,7 @@
         <tr>
           <td><code>url</code></td>
           <td><code>String</code></td>
-          <td><strong>Required</strong> The URL to the <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Layer/02r3000000w6000000/">Feature Layer</a>.</td>
+          <td><strong>Required</strong> The URL to the <a href="https://developers.arcgis.com/rest/services-reference/layer-feature-service-.htm">Feature Layer</a>.</td>
         </tr>
         <tr>
             <td><code>where</code></td>
@@ -206,7 +208,7 @@
         <tr>
             <td><code>precision</code></td>
             <td><code>Integer</code></td>
-            <td>How many digits of geometry precision to request from the server. <a href="http://en.wikipedia.org/wiki/Decimal_degrees">Wikipedia</a> has a great reference of digit precision to meters.</td>
+            <td>How many digits of geometry precision to request from the server. <a href="https://en.wikipedia.org/wiki/Decimal_degrees">Wikipedia</a> has a great reference of digit precision to meters.</td>
         </tr>
         <tr>
             <td><code>token</code></td>
@@ -289,7 +291,7 @@
             <td><code>query()</code></td>
             <td><code>this</code></td>
             <td>
-                Returns a new <a href="../tasks/query.html"><code>L.esri.Query</code></a> object that can be used to query this layer. Your callback function will be passed a <a href="http://geojson.org/geojson-spec.html#feature-collection-objects">GeoJSON FeatureCollection</a> with the results or an error.
+                Returns a new <a href="../tasks/query.html"><code>L.esri.Query</code></a> object that can be used to query this layer. Your callback function will be passed a <a href="https://tools.ietf.org/html/rfc7946#section-3.3">GeoJSON FeatureCollection</a> with the results or an error.
 <pre class="js"><code>featureLayer.query()
             .within(latlngbounds)
             .where(&quot;Direction = &#39;WEST&#39;&quot;)
@@ -309,7 +311,7 @@
             </td>
         </tr>
  <tr>
-            <td><code>addFeature(<span>&lt;<a href="http://geojson.org/geojson-spec.html#feature-objects">GeoJSON Feature</a>&gt;</span> <code>feature</code>, <span>&lt;Function&gt;</span> <code>callback</code>, <span>&lt;Object&gt;</span> <code>context</code>)</code></td>
+            <td><code>addFeature(<span>&lt;<a href="https://tools.ietf.org/html/rfc7946#section-3.2">GeoJSON Feature</a>&gt;</span> <code>feature</code>, <span>&lt;Function&gt;</span> <code>callback</code>, <span>&lt;Object&gt;</span> <code>context</code>)</code></td>
             <td><code>this</code></td>
             <td>
                 Adds a new feature to the feature layer. this also adds the feature to the map if creation is successful.
@@ -320,7 +322,7 @@
             </td>
         </tr>
         <tr>
-            <td><code>updateFeature(<span>&lt;<a href="http://geojson.org/geojson-spec.html#feature-objects">GeoJSON Feature</a>&gt;</span> <code>feature</code>, <span>&lt;Function&gt;</span> <code>callback</code>, <span>&lt;Object&gt;</span> <code>context</code>)</code></td>
+            <td><code>updateFeature(<span>&lt;<a href="https://tools.ietf.org/html/rfc7946#section-3.2">GeoJSON Feature</a>&gt;</span> <code>feature</code>, <span>&lt;Function&gt;</span> <code>callback</code>, <span>&lt;Object&gt;</span> <code>context</code>)</code></td>
             <td><code>this</code></td>
             <td>
                 Update the provided feature on the Feature Layer. This also updates the feature on the map.
@@ -345,18 +347,19 @@
 </table>
 
 <h3 id="example">Example</h3>
-<p>Live sample <a href="http://esri.github.io/esri-leaflet/examples/visualize-points-as-a-heatmap.html">here</a>.</p>
+<p>Live sample <a href="https://esri.github.io/esri-leaflet/examples/visualize-points-as-a-heatmap.html">here</a>.</p>
 <pre><code class="language-xml"><span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"./leaflet-heat.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"./esri-leaflet-heatmap.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></code></pre>
-<pre><code class="language-js"><span class="keyword">var</span> map = <span class="keyword">new</span> L.Map(<span class="string">'map'</span>).setView([<span class="number">40.722868115037</span>,-<span class="number">73.92142295837404</span>], <span class="number">14</span>);
+<pre><code class="language-js"><span class="keyword">var</span> map = <span class="keyword">new</span> L.Map(<span class="string">'map'</span>).setView([<span class="number">40.722868115037</span>, -<span class="number">73.92142295837404</span>], <span class="number">14</span>);
+
 L.esri.basemapLayer(<span class="string">'Gray'</span>).addTo(map);
 
-<span class="keyword">var</span> heatmap = L.esri.Heat.featureLayer({
-  url : <span class="string">"https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Graffiti_Locations3/FeatureServer/0"</span>,
+L.esri.Heat.featureLayer({
+  url: <span class="string">'https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Graffiti_Locations3/FeatureServer/0'</span>,
   radius: <span class="number">12</span>
 }).addTo(map);</code></pre>
 
-  <p><a href="http://github.com/Esri/esri-leaflet-doc/edit/master/src/pages/api-reference/layers/heatmap-feature-layer.md">Edit this page on GitHub</a></p>
+  <p><a href="https://github.com/Esri/esri-leaflet-doc/edit/master/src/pages/api-reference/layers/heatmap-feature-layer.md">Edit this page on GitHub</a></p>
 
   <div class="mobile-menu">
     <aside class="sidebar">
@@ -415,10 +418,7 @@ L.esri.basemapLayer(<span class="string">'Gray'</span>).addTo(map);
   </div>
 </div>
 
-  <div style='clear:both;'></div>
-</div>
-<div class="container center-text">
-  <p class="copyright">Esri Leaflet is a project from the <a href="http://pdx.esri.com">Esri PDX R&amp;D Center</a> and the <a href="https://github.com/Esri/esri-leaflet/graphs/contributors">Esri Community</a></p>
+  <div style="clear:both;"></div>
 </div>
 
   <div class="container center-text">

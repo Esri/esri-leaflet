@@ -1,28 +1,29 @@
-var map;
-var bgmap = L.map('background-map', {
-    center: [37.739, -117.986],
-    zoom: 10,
-    scrollWheelZoom: false,
-    touchZoom: true,
-    zoomControl: false,
-    tap: false,
-    attributionControl: false,
-    layers: [L.esri.basemapLayer('Topographic')]
+L.map('background-map', {
+  center: [37.739, -117.986],
+  zoom: 10,
+  scrollWheelZoom: false,
+  touchZoom: true,
+  zoomControl: false,
+  tap: false,
+  attributionControl: false,
+  layers: [L.esri.basemapLayer('Topographic')]
 });
+
+var map;
 
 if (map) {
   map.scrollWheelZoom.disable();
-  map.once("click", accidentalScroll, map);
+  map.once('click', accidentalScroll, map);
 }
 
-function accidentalScroll() {
+function accidentalScroll () {
   map.scrollWheelZoom.enable();
 }
 
 // Automatically generate links on the heading elements on a page
-var pageHeadings = document.querySelectorAll("h2, h3, h4, h5, h6")
-for (i = 0; i < pageHeadings.length; ++i) {
-  pageHeadings[i].addEventListener("click", function(){
+var pageHeadings = document.querySelectorAll('h2, h3, h4, h5, h6');
+for (var i = 0; i < pageHeadings.length; ++i) {
+  pageHeadings[i].addEventListener('click', function () {
     window.location.hash = this.id;
   });
 }
@@ -31,10 +32,10 @@ for (i = 0; i < pageHeadings.length; ++i) {
 var touchEvent = 'ontouchstart' in window ? 'touchstart' : 'click';
 
 // Mobile nav logic
-document.addEventListener(touchEvent, function(e) {
-  if(e.target.className !== 'mobileMenuButton') return;
+document.addEventListener(touchEvent, function (e) {
+  if (e.target.className !== 'mobileMenuButton') return;
   e.preventDefault();
 
-  var menu = document.querySelector('#site-nav-wrapper') // Using a class instead, see note below.
+  var menu = document.querySelector('#site-nav-wrapper'); // Using a class instead, see note below.
   menu.classList.toggle('show');
 }, false);

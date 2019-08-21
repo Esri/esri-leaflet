@@ -52,6 +52,7 @@
 
   <!-- Google Analytics -->
   <script>
+    /* eslint-disable */
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -59,6 +60,7 @@
 
     ga('create', 'UA-44963317-3', 'auto');
     ga('send', 'pageview');
+    /* eslint-enable */
   </script>
   <!-- End Google Analytics -->
 </head>
@@ -139,7 +141,7 @@
 
 <div class="main-content">
   <h1 id="l-esri-vector-basemap">L.esri.Vector.Basemap</h1>
-<p>Extends <a href="http://leafletjs.com/reference-1.5.1.html#layer"><code>L.Layer</code></a></p>
+<p>Extends <a href="https://leafletjs.com/reference-1.5.1.html#layer"><code>L.Layer</code></a></p>
 <p><code>L.esri.Vector.Basemap</code> uses an <a href="https://github.com/Esri/esri-leaflet-vector">experimental plugin</a> to display Esri hosted vector basemaps and attribute data providers appropriately. The <a href="https://github.com/esri/esri-leaflet#terms">Terms of Use</a> for Esri hosted services apply to <em>all</em> Leaflet applications.</p>
 <h3 id="constructor">Constructor</h3>
 <table>
@@ -183,15 +185,16 @@
 <li><code>DarkHumanGeographyDetail</code></li>
 </ul>
 <h3 id="options">Options</h3>
-<p><code>L.esri.Vector.Basemap</code> accepts all <a href="http://leafletjs.com/reference-1.0.0.html#layer"><code>L.Layer</code></a> options.</p>
+<p><code>L.esri.Vector.Basemap</code> accepts all <a href="https://leafletjs.com/reference-1.0.0.html#layer"><code>L.Layer</code></a> options.</p>
 <h3 id="methods">Methods</h3>
-<p><code>L.esri.Vector.Basemap</code> inherits all methods from <a href="http://leafletjs.com/reference-1.0.0.html#layer"><code>L.Layer</code></a>.</p>
+<p><code>L.esri.Vector.Basemap</code> inherits all methods from <a href="https://leafletjs.com/reference-1.0.0.html#layer"><code>L.Layer</code></a>.</p>
 <h3 id="example">Example</h3>
 <pre><code class="language-xml"><span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"./esri-leaflet-vector.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></code></pre>
-<pre><code class="language-js"><span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">37.75</span>,-<span class="number">122.45</span>], <span class="number">12</span>);
-L.esri.Vector.basemap(<span class="string">"Newspaper"</span>).addTo(map);</code></pre>
+<pre><code class="language-js"><span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">37.75</span>, -<span class="number">122.45</span>], <span class="number">12</span>);
 
-  <p><a href="http://github.com/Esri/esri-leaflet-doc/edit/master/src/pages/api-reference/layers/vector-basemap.md">Edit this page on GitHub</a></p>
+L.esri.Vector.basemap(<span class="string">'Newspaper'</span>).addTo(map);</code></pre>
+
+  <p><a href="https://github.com/Esri/esri-leaflet-doc/edit/master/src/pages/api-reference/layers/vector-basemap.md">Edit this page on GitHub</a></p>
 
   <div class="mobile-menu">
     <aside class="sidebar">
@@ -250,10 +253,7 @@ L.esri.Vector.basemap(<span class="string">"Newspaper"</span>).addTo(map);</code
   </div>
 </div>
 
-  <div style='clear:both;'></div>
-</div>
-<div class="container center-text">
-  <p class="copyright">Esri Leaflet is a project from the <a href="http://pdx.esri.com">Esri PDX R&amp;D Center</a> and the <a href="https://github.com/Esri/esri-leaflet/graphs/contributors">Esri Community</a></p>
+  <div style="clear:both;"></div>
 </div>
 
   <div class="container center-text">

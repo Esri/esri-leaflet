@@ -52,6 +52,7 @@
 
   <!-- Google Analytics -->
   <script>
+    /* eslint-disable */
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -59,6 +60,7 @@
 
     ga('create', 'UA-44963317-3', 'auto');
     ga('send', 'pageview');
+    /* eslint-enable */
   </script>
   <!-- End Google Analytics -->
 </head>
@@ -248,24 +250,40 @@
 <h3 id="examples">Examples</h3>
 <pre><code class="language-xml"><span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"./esri-leaflet-geocoder.css"</span>&gt;</span>
 <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"./esri-leaflet-geocoder.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></code></pre>
-<pre><code class="language-js">L.esri.Geocoding.geocode().text(<span class="string">'380 New York St, Redlands, California, 92373'</span>).run(<span class="function"><span class="keyword">function</span><span class="params">(err, results, response)</span>{</span>
+<pre><code class="language-js">L.esri.Geocoding.geocode().text(<span class="string">'380 New York St, Redlands, California, 92373'</span>).run(<span class="function"><span class="keyword">function</span> <span class="params">(err, results, response)</span> {</span>
+  <span class="keyword">if</span> (err) {
+    console.log(err);
+    <span class="keyword">return</span>;
+  }
   console.log(results);
 });</code></pre>
-<pre><code class="language-js">L.esri.Geocoding.geocode().address(<span class="string">'380 New York St'</span>).city(<span class="string">'Redlands'</span>).region(<span class="string">'California'</span>).postal(<span class="number">92373</span>).run(<span class="function"><span class="keyword">function</span><span class="params">(err, results, response)</span>{</span>
+<pre><code class="language-js">L.esri.Geocoding.geocode().address(<span class="string">'380 New York St'</span>).city(<span class="string">'Redlands'</span>).region(<span class="string">'California'</span>).postal(<span class="number">92373</span>).run(<span class="function"><span class="keyword">function</span> <span class="params">(err, results, response)</span> {</span>
+  <span class="keyword">if</span> (err) {
+    console.log(err);
+    <span class="keyword">return</span>;
+  }
   console.log(results);
 });</code></pre>
-<pre><code class="language-js"><span class="comment">//Using .within()</span>
-<span class="keyword">var</span> southWest = L.latLng(<span class="number">37.712</span>, -<span class="number">108.227</span>),
-    northEast = L.latLng(<span class="number">41.774</span>, -<span class="number">102.125</span>),
-    bounds = L.latLngBounds(southWest, northEast); <span class="comment">// Colorado</span>
+<pre><code class="language-js"><span class="comment">// Using .within()</span>
+<span class="keyword">var</span> southWest = L.latLng(<span class="number">37.712</span>, -<span class="number">108.227</span>);
+<span class="keyword">var</span> northEast = L.latLng(<span class="number">41.774</span>, -<span class="number">102.125</span>);
+<span class="keyword">var</span> bounds = L.latLngBounds(southWest, northEast); <span class="comment">// Colorado</span>
 
-L.esri.Geocoding.geocode().text(<span class="string">"Denver"</span>).within(bounds).run(<span class="function"><span class="keyword">function</span><span class="params">(err, response)</span>{</span>
+L.esri.Geocoding.geocode().text(<span class="string">'Denver'</span>).within(bounds).run(<span class="function"><span class="keyword">function</span> <span class="params">(err, response)</span> {</span>
+  <span class="keyword">if</span> (err) {
+    console.log(err);
+    <span class="keyword">return</span>;
+  }
   console.log(response);
 });</code></pre>
-<pre><code class="language-js"><span class="comment">//Using .nearby()</span>
+<pre><code class="language-js"><span class="comment">// Using .nearby()</span>
 <span class="keyword">var</span> denver = L.latLng(<span class="number">37.712</span>, -<span class="number">108.227</span>);
 
-L.esri.Geocoding.geocode().text(<span class="string">"Highlands Ranch"</span>).nearby(denver, <span class="number">20000</span>).run(<span class="function"><span class="keyword">function</span><span class="params">(err, response)</span>{</span>
+L.esri.Geocoding.geocode().text(<span class="string">'Highlands Ranch'</span>).nearby(denver, <span class="number">20000</span>).run(<span class="function"><span class="keyword">function</span> <span class="params">(err, response)</span> {</span>
+  <span class="keyword">if</span> (err) {
+    console.log(err);
+    <span class="keyword">return</span>;
+  }
   console.log(response);
 });</code></pre>
 <h3 id="results-object">Results Object</h3>
@@ -283,7 +301,7 @@ L.esri.Geocoding.geocode().text(<span class="string">"Highlands Ranch"</span>).n
   ]
 }</code></pre>
 
-  <p><a href="http://github.com/Esri/esri-leaflet-doc/edit/master/src/pages/api-reference/tasks/geocode.md">Edit this page on GitHub</a></p>
+  <p><a href="https://github.com/Esri/esri-leaflet-doc/edit/master/src/pages/api-reference/tasks/geocode.md">Edit this page on GitHub</a></p>
 
   <div class="mobile-menu">
     <aside class="sidebar">
@@ -342,10 +360,7 @@ L.esri.Geocoding.geocode().text(<span class="string">"Highlands Ranch"</span>).n
   </div>
 </div>
 
-  <div style='clear:both;'></div>
-</div>
-<div class="container center-text">
-  <p class="copyright">Esri Leaflet is a project from the <a href="http://pdx.esri.com">Esri PDX R&amp;D Center</a> and the <a href="https://github.com/Esri/esri-leaflet/graphs/contributors">Esri Community</a></p>
+  <div style="clear:both;"></div>
 </div>
 
   <div class="container center-text">

@@ -52,6 +52,7 @@
 
   <!-- Google Analytics -->
   <script>
+    /* eslint-disable */
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -59,6 +60,7 @@
 
     ga('create', 'UA-44963317-3', 'auto');
     ga('send', 'pageview');
+    /* eslint-enable */
   </script>
   <!-- End Google Analytics -->
 </head>
@@ -139,7 +141,7 @@
 
 <div class="main-content">
   <h1 id="l-esri-vector-layer">L.esri.Vector.Layer</h1>
-<p>Extends <a href="http://leafletjs.com/reference-1.5.1.html#layer"><code>L.Layer</code></a></p>
+<p>Extends <a href="https://leafletjs.com/reference-1.5.1.html#layer"><code>L.Layer</code></a></p>
 <p><code>L.esri.Vector.Layer</code> uses an <a href="https://github.com/Esri/esri-leaflet-vector">experimental plugin</a> to display vector tile services and attribute data providers appropriately. The <a href="https://github.com/esri/esri-leaflet#terms">Terms of Use</a> for Esri hosted services apply to <em>all</em> Leaflet applications.</p>
 <h3 id="constructor">Constructor</h3>
 <table>
@@ -164,21 +166,22 @@
 <p>Disclaimer: In Esri Leaflet, only <a href="https://github.com/esri/esri-leaflet-vector#disclaimer">one vector tile source</a> can be drawn at a time.</p>
 </blockquote>
 <h5 id="custom-vector-tiles">Custom Vector Tiles</h5>
-<p>The <a href="https://developers.arcgis.com/vector-tile-style-editor/">ArcGIS Vector Tile Style Editor</a> can be used to customize any of Esri&#39;s hosted vector basemaps without duplicating the data behind it. Whether you&#39;ve made a <a href="https://www.esri.com/arcgis-blog/products/developers/mapping/design-custom-basemaps-with-the-new-arcgis-vector-tile-style-editor/">small tweak</a> to a hosted vector basemap or used ArcGIS Pro to publish a vector tile service with your own data from scratch, you can draw the layer in Esri Leaflet by referencing the item&#39;s <a href="http://www.arcgis.com/home/item.html?id=bd505ce3efff479bb4e87b182f180159"><code>id</code></a>.</p>
+<p>The <a href="https://developers.arcgis.com/vector-tile-style-editor/">ArcGIS Vector Tile Style Editor</a> can be used to customize any of Esri&#39;s hosted vector basemaps without duplicating the data behind it. Whether you&#39;ve made a <a href="https://www.esri.com/arcgis-blog/products/developers/mapping/design-custom-basemaps-with-the-new-arcgis-vector-tile-style-editor/">small tweak</a> to a hosted vector basemap or used ArcGIS Pro to publish a vector tile service with your own data from scratch, you can draw the layer in Esri Leaflet by referencing the item&#39;s <a href="https://www.arcgis.com/home/item.html?id=bd505ce3efff479bb4e87b182f180159"><code>id</code></a>.</p>
 <h3 id="options">Options</h3>
-<p><code>L.esri.Vector.Layer</code> accepts all <a href="http://leafletjs.com/reference-1.0.0.html#layer"><code>L.Layer</code></a> options.</p>
+<p><code>L.esri.Vector.Layer</code> accepts all <a href="https://leafletjs.com/reference-1.0.0.html#layer"><code>L.Layer</code></a> options.</p>
 <h3 id="methods">Methods</h3>
-<p><code>L.esri.Vector.Layer</code> inherits all methods from <a href="http://leafletjs.com/reference-1.0.0.html#layer"><code>L.Layer</code></a>.</p>
+<p><code>L.esri.Vector.Layer</code> inherits all methods from <a href="https://leafletjs.com/reference-1.0.0.html#layer"><code>L.Layer</code></a>.</p>
 <h3 id="example">Example</h3>
 <pre><code class="language-xml"><span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"./esri-leaflet-vector.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></code></pre>
-<pre><code class="language-js"><span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">37.75</span>,-<span class="number">122.45</span>], <span class="number">12</span>);
+<pre><code class="language-js"><span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">37.75</span>, -<span class="number">122.45</span>], <span class="number">12</span>);
+
 L.esri.Vector.layer(<span class="string">'bd505ce3efff479bb4e87b182f180159'</span>).addTo(map);
 
 <span class="comment">// World Navigation Map (Local Language)</span>
 <span class="comment">// https://www.arcgis.com/home/item.html?id=72be31d1fa6a42fc895d9a3c0fd8aeef</span>
 L.esri.Vector.layer(<span class="string">'72be31d1fa6a42fc895d9a3c0fd8aeef'</span>).addTo(map);</code></pre>
 
-  <p><a href="http://github.com/Esri/esri-leaflet-doc/edit/master/src/pages/api-reference/layers/vector-layer.md">Edit this page on GitHub</a></p>
+  <p><a href="https://github.com/Esri/esri-leaflet-doc/edit/master/src/pages/api-reference/layers/vector-layer.md">Edit this page on GitHub</a></p>
 
   <div class="mobile-menu">
     <aside class="sidebar">
@@ -237,10 +240,7 @@ L.esri.Vector.layer(<span class="string">'72be31d1fa6a42fc895d9a3c0fd8aeef'</spa
   </div>
 </div>
 
-  <div style='clear:both;'></div>
-</div>
-<div class="container center-text">
-  <p class="copyright">Esri Leaflet is a project from the <a href="http://pdx.esri.com">Esri PDX R&amp;D Center</a> and the <a href="https://github.com/Esri/esri-leaflet/graphs/contributors">Esri Community</a></p>
+  <div style="clear:both;"></div>
 </div>
 
   <div class="container center-text">

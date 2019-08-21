@@ -52,6 +52,7 @@
 
   <!-- Google Analytics -->
   <script>
+    /* eslint-disable */
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -59,6 +60,7 @@
 
     ga('create', 'UA-44963317-3', 'auto');
     ga('send', 'pageview');
+    /* eslint-enable */
   </script>
   <!-- End Google Analytics -->
 </head>
@@ -153,7 +155,7 @@
     <tbody>
         <tr>
             <td><code class="nobr">L.esri.Cluster.featureLayer(<span>&lt;Object&gt;</span> <code>options</code>)</code></td>
-            <td>You must pass a <code>url</code> to a <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Layer/02r3000000w6000000/">Feature Layer</a> in your <code>options</code></td>
+            <td>You must pass a <code>url</code> to a <a href="https://developers.arcgis.com/rest/services-reference/layer-feature-service-.htm">Feature Layer</a> in your <code>options</code></td>
         </tr>
     </tbody>
 </table>
@@ -171,20 +173,20 @@
         <tr>
           <td><code>url</code></td>
           <td><code>String</code></td>
-          <td><strong>Required</strong> The URL to the <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Layer/02r3000000w6000000/">Feature Layer</a>.</td>
+          <td><strong>Required</strong> The URL to the <a href="https://developers.arcgis.com/rest/services-reference/layer-feature-service-.htm">Feature Layer</a>.</td>
         </tr>
         <tr>
-            <td><code>pointToLayer(<span>&lt;<a href="http://geojson.org/geojson-spec.html#feature-objects">GeoJSON Feature</a>&gt;</span> <code>feature</code>, <span>&lt;<a href="http://leafletjs.com/reference.html#latlng">LatLng</a>&gt;</span> <code>latlng</code>)</code></td>
+            <td><code>pointToLayer(<span>&lt;<a href="https://tools.ietf.org/html/rfc7946#section-3.2">GeoJSON Feature</a>&gt;</span> <code>feature</code>, <span>&lt;<a href="https://leafletjs.com/reference.html#latlng">LatLng</a>&gt;</span> <code>latlng</code>)</code></td>
             <td><code>Function</code></td>
             <td>Function that will be used for creating layers for GeoJSON points (if not specified, simple markers will be created).</td>
         </tr>
         <tr>
-            <td><code>style(<span>&lt;<a href="http://geojson.org/geojson-spec.html#feature-objects">GeoJSON Feature</a>&gt;</span> <code>feature</code>, <span>&lt;<a href="http://leafletjs.com/reference.html#ilayer">ILayer</a>&gt;</span> <code>layer</code>)</code></td>
+            <td><code>style(<span>&lt;<a href="https://tools.ietf.org/html/rfc7946#section-3.2">GeoJSON Feature</a>&gt;</span> <code>feature</code>, <span>&lt;<a href="https://leafletjs.com/reference.html#ilayer">ILayer</a>&gt;</span> <code>layer</code>)</code></td>
             <td><code>Function</code></td>
             <td>Function that will be used to get style options for vector layers created for GeoJSON features.</td>
         </tr>
         <tr>
-            <td><code>onEachFeature(<span>&lt;<a href="http://geojson.org/geojson-spec.html#feature-objects">GeoJSON Feature</a>&gt;</span> <code>feature</code>, <span>&lt;<a href="http://leafletjs.com/reference.html#ilayer">ILayer</a>&gt;</span> <code>layer</code>)</code></td>
+            <td><code>onEachFeature(<span>&lt;<a href="https://tools.ietf.org/html/rfc7946#section-3.2">GeoJSON Feature</a>&gt;</span> <code>feature</code>, <span>&lt;<a href="https://leafletjs.com/reference.html#ilayer">ILayer</a>&gt;</span> <code>layer</code>)</code></td>
             <td><code>Function</code></td>
             <td> </td>
         </tr>
@@ -226,7 +228,7 @@
         <tr>
             <td><code>precision</code></td>
             <td><code>Integer</code></td>
-            <td>How many digits of precision to request from the server. <a href="http://en.wikipedia.org/wiki/Decimal_degrees">Wikipedia</a> has a great reference of digit precision to meters.</td>
+            <td>How many digits of precision to request from the server. <a href="https://en.wikipedia.org/wiki/Decimal_degrees">Wikipedia</a> has a great reference of digit precision to meters.</td>
         </tr>
         <tr>
             <td><code>token</code></td>
@@ -285,7 +287,7 @@
 </tbody>
 </table>
 <p><code>L.esri.FeatureLayer</code> also fires all  <a href="../../api-reference/services/feature-layer-service.html"><code>L.esri.FeatureLayerService</code></a> events.</p>
-<p>In additon to these events <code>L.esri.Cluster.FeatureLayer</code> also fires the following <a href="http://leafletjs.com/reference.html#event-objects">Mouse Events</a> <code>click</code>, <code>dblclick</code>, <code>mouseover</code>, <code>mouseout</code>, <code>mousemove</code>, and <code>contextmenu</code>, <code>clusterclick</code>, <code>clusterdblclick</code>, <code>clustermouseover</code>, <code>clustermousemove</code>, and <code>clustercontextmenu</code> as well as the following the <a href="http://leafletjs.com/reference.html#event-objects">Popup Events</a> <code>popupopen</code> and <code>popupclose</code>.</p>
+<p>In additon to these events <code>L.esri.Cluster.FeatureLayer</code> also fires the following <a href="https://leafletjs.com/reference.html#event-objects">Mouse Events</a> <code>click</code>, <code>dblclick</code>, <code>mouseover</code>, <code>mouseout</code>, <code>mousemove</code>, and <code>contextmenu</code>, <code>clusterclick</code>, <code>clusterdblclick</code>, <code>clustermouseover</code>, <code>clustermousemove</code>, and <code>clustercontextmenu</code> as well as the following the <a href="https://leafletjs.com/reference.html#event-objects">Popup Events</a> <code>popupopen</code> and <code>popupclose</code>.</p>
 <h3 id="methods">Methods</h3>
 <table>
     <thead>
@@ -297,9 +299,9 @@
     </thead>
     <tbody>
         <tr>
-            <td><code>setStyle(<span>&lt;<a href="http://leafletjs.com/reference.html#path-options">PathOptions</a>&gt;</span> <code>style</code>)</code><br><br><code>setStyle(<span>&lt;Function&gt;</span> <code>style</code>)</code></td>
+            <td><code>setStyle(<span>&lt;<a href="https://leafletjs.com/reference.html#path-options">PathOptions</a>&gt;</span> <code>style</code>)</code><br><br><code>setStyle(<span>&lt;Function&gt;</span> <code>style</code>)</code></td>
             <td><code>this</code></td>
-            <td>Sets the given path options to each layer that has a <code>setStyle</code> method. Can also be a <code>Function</code> that will recive a <code>layer</code> argument and should return <a href="http://leafletjs.com/reference.html#path-options">Path Options</a></td>
+            <td>Sets the given path options to each layer that has a <code>setStyle</code> method. Can also be a <code>Function</code> that will recive a <code>layer</code> argument and should return <a href="https://leafletjs.com/reference.html#path-options">Path Options</a></td>
         </tr>
         <tr>
             <td><code>resetStyle(<span>&lt;String or Integer&gt;</span> <code>undefined</code>)</code></td>
@@ -307,9 +309,9 @@
             <td>Given the ID of a feature, reset that feature to the original style, useful for resetting style after hover events.</td>
         </tr>
         <tr>
-            <td><code>setStyle(<span>&lt;<a href="http://leafletjs.com/reference.html#path-options">PathOptions</a>&gt;</span> <code>style</code>)</code><br><br><code>setStyle(<span>&lt;Function&gt;</span> <code>style</code>)</code></td>
+            <td><code>setStyle(<span>&lt;<a href="https://leafletjs.com/reference.html#path-options">PathOptions</a>&gt;</span> <code>style</code>)</code><br><br><code>setStyle(<span>&lt;Function&gt;</span> <code>style</code>)</code></td>
             <td><code>this</code></td>
-            <td>Sets the given path options to each layer that has a <code>setStyle</code> method. Can also be a <code>Function</code> that will receive a <code>feature</code> argument and should return <a href="http://leafletjs.com/reference.html#path-options">Path Options</a>
+            <td>Sets the given path options to each layer that has a <code>setStyle</code> method. Can also be a <code>Function</code> that will receive a <code>feature</code> argument and should return <a href="https://leafletjs.com/reference.html#path-options">Path Options</a>
             <pre><code class="language-javascript">featureLayer.setStyle({
   color: &#39;white&#39;
 })</code></pre>
@@ -331,7 +333,7 @@
         <tr>
             <td><code>getFeature(<span>&lt;String or Integer&gt;</span> <code>undefined</code> id)</code></td>
             <td><code>Layer</code></td>
-            <td>Given the id of a Feature return the layer on the map that represents it. This will usually be a Leaflet vector layer like <a href="http://leafletjs.com/reference.html#polyline">Polygon</a> or <a href="http://leafletjs.com/reference.html#polyline">Polygon</a>, or a Leaflet <a href="http://leafletjs.com/reference.html#marker">Marker</a>.</td>
+            <td>Given the id of a Feature return the layer on the map that represents it. This will usually be a Leaflet vector layer like <a href="https://leafletjs.com/reference.html#polyline">Polygon</a> or <a href="https://leafletjs.com/reference.html#polyline">Polygon</a>, or a Leaflet <a href="https://leafletjs.com/reference.html#marker">Marker</a>.</td>
         </tr>
         <tr>
             <td><code>getWhere()</code></td>
@@ -362,7 +364,7 @@
             <td><code>query()</code></td>
             <td><code>this</code></td>
             <td>
-                Returns a new <a href="../tasks/query.html"><code>L.esri.Query</code></a> object that can be used to query this layer. Your callback function will be passed a <a href="http://geojson.org/geojson-spec.html#feature-collection-objects">GeoJSON FeatureCollection</a> with the results or an error.
+                Returns a new <a href="../tasks/query.html"><code>L.esri.Query</code></a> object that can be used to query this layer. Your callback function will be passed a <a href="https://tools.ietf.org/html/rfc7946#section-3.3">GeoJSON FeatureCollection</a> with the results or an error.
 <pre class="js"><code>featureLayer.query()
             .within(latlngbounds)
             .where(&quot;Direction = &#39;WEST&#39;&quot;)
@@ -382,7 +384,7 @@
             </td>
         </tr>
  <tr>
-            <td><code>addFeature(<span>&lt;<a href="http://geojson.org/geojson-spec.html#feature-objects">GeoJSON Feature</a>&gt;</span> <code>feature</code>, <span>&lt;Function&gt;</span> <code>callback</code>, <span>&lt;Object&gt;</span> <code>context</code>)</code></td>
+            <td><code>addFeature(<span>&lt;<a href="https://tools.ietf.org/html/rfc7946#section-3.2">GeoJSON Feature</a>&gt;</span> <code>feature</code>, <span>&lt;Function&gt;</span> <code>callback</code>, <span>&lt;Object&gt;</span> <code>context</code>)</code></td>
             <td><code>this</code></td>
             <td>
                 Adds a new feature to the feature layer. this also adds the feature to the map if creation is successful.
@@ -393,7 +395,7 @@
             </td>
         </tr>
         <tr>
-            <td><code>updateFeature(<span>&lt;<a href="http://geojson.org/geojson-spec.html#feature-objects">GeoJSON Feature</a>&gt;</span> <code>feature</code>, <span>&lt;Function&gt;</span> <code>callback</code>, <span>&lt;Object&gt;</span> <code>context</code>)</code></td>
+            <td><code>updateFeature(<span>&lt;<a href="https://tools.ietf.org/html/rfc7946#section-3.2">GeoJSON Feature</a>&gt;</span> <code>feature</code>, <span>&lt;Function&gt;</span> <code>callback</code>, <span>&lt;Object&gt;</span> <code>context</code>)</code></td>
             <td><code>this</code></td>
             <td>
                 Update the provided feature on the Feature Layer. This also updates the feature on the map.
@@ -418,31 +420,31 @@
 </table>
 
 <h3 id="example">Example</h3>
-<p>Live sample <a href="http://esri.github.io/esri-leaflet/examples/clustering-feature-layers.html">here</a>.</p>
+<p>Live sample <a href="https://esri.github.io/esri-leaflet/examples/clustering-feature-layers.html">here</a>.</p>
 <pre><code class="language-xml"><span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">type</span>=<span class="value">"text/css"</span> <span class="attribute">href</span>=<span class="value">"./MarkerCluster.Default.css"</span>&gt;</span>
 <span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">type</span>=<span class="value">"text/css"</span> <span class="attribute">href</span>=<span class="value">"./MarkerCluster.css"</span>&gt;</span>
 <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"./leaflet.markercluster.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">.<span class="regexp">/esri-leaflet-cluster.js</span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></code></pre>
-<pre><code class="language-js"><span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">45.53</span>,-<span class="number">122.64</span>], <span class="number">16</span>);
-L.esri.basemapLayer(<span class="string">"Streets"</span>).addTo(map);
+<pre><code class="language-js"><span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">45.53</span>, -<span class="number">122.64</span>], <span class="number">16</span>);
+L.esri.basemapLayer(<span class="string">'Streets'</span>).addTo(map);
 
-<span class="keyword">var</span> url = <span class="string">"https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0"</span>;
+<span class="keyword">var</span> url = <span class="string">'https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0'</span>;
 
-<span class="keyword">var</span> busStops = L.esri.Cluster.featureLayer({
+L.esri.Cluster.featureLayer({
   url: url,
   <span class="comment">// Cluster Options</span>
   polygonOptions: {
-    color: <span class="string">"#2d84c8"</span>
+    color: <span class="string">'#2d84c8'</span>
   },
   <span class="comment">// Feature Layer Options</span>
   pointToLayer: <span class="function"><span class="keyword">function</span> <span class="params">(geojson, latlng)</span> {</span>
     <span class="keyword">return</span> L.circleMarker(latlng, <span class="number">10</span>, {
-      color: <span class="string">"#2D84C8"</span>
+      color: <span class="string">'#2D84C8'</span>
     });
   }
 }).addTo(map);</code></pre>
 
-  <p><a href="http://github.com/Esri/esri-leaflet-doc/edit/master/src/pages/api-reference/layers/cluster-feature-layer.md">Edit this page on GitHub</a></p>
+  <p><a href="https://github.com/Esri/esri-leaflet-doc/edit/master/src/pages/api-reference/layers/cluster-feature-layer.md">Edit this page on GitHub</a></p>
 
   <div class="mobile-menu">
     <aside class="sidebar">
@@ -501,10 +503,7 @@ L.esri.basemapLayer(<span class="string">"Streets"</span>).addTo(map);
   </div>
 </div>
 
-  <div style='clear:both;'></div>
-</div>
-<div class="container center-text">
-  <p class="copyright">Esri Leaflet is a project from the <a href="http://pdx.esri.com">Esri PDX R&amp;D Center</a> and the <a href="https://github.com/Esri/esri-leaflet/graphs/contributors">Esri Community</a></p>
+  <div style="clear:both;"></div>
 </div>
 
   <div class="container center-text">

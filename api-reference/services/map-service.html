@@ -52,6 +52,7 @@
 
   <!-- Google Analytics -->
   <script>
+    /* eslint-disable */
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -59,6 +60,7 @@
 
     ga('create', 'UA-44963317-3', 'auto');
     ga('send', 'pageview');
+    /* eslint-enable */
   </script>
   <!-- End Google Analytics -->
 </head>
@@ -179,7 +181,7 @@
 <pre class="js"><code>mapService.query()
         .layer(0)
         .within(latlngbounds)
-        .run(function(error, featureCollection, response){
+        .run(function (error, featureCollection, response) {
           console.log(featureCollection);
         });</code></pre>
             </td>
@@ -192,7 +194,7 @@
 <pre class="js"><code>mapService.identify()
         .on(map)
         .at(latlng)
-        .run(function(error, featureCollection, response){
+        .run(function (error, featureCollection, response) {
             console.log(featureCollection)
         });</code></pre>
             </td>
@@ -206,7 +208,7 @@
         .layers(&#39;18&#39;)
         .text(&#39;Colorado&#39;)
         .fields(&#39;name&#39;)
-        .run(function(error, featureCollection, response){
+        .run(function (error, featureCollection, response) {
             console.log(featureCollection)
         });</code></pre>
             </td>
@@ -217,33 +219,41 @@
 
 <h3 id="example">Example</h3>
 <h4 id="identify-task">Identify task</h4>
-<pre><code class="language-js"><span class="keyword">var</span> map = <span class="keyword">new</span> L.Map(<span class="string">'map'</span>).setView([ <span class="number">45.543</span>, -<span class="number">122.621</span> ], <span class="number">5</span>);
+<pre><code class="language-js"><span class="keyword">var</span> map = <span class="keyword">new</span> L.Map(<span class="string">'map'</span>).setView([<span class="number">45.543</span>, -<span class="number">122.621</span>], <span class="number">5</span>);
 
 <span class="keyword">var</span> service = L.esri.mapService({
-    url: <span class="string">'https://sampleserver6.arcgisonline.com/arcgis/rest/services/WorldTimeZones/MapServer'</span>
+  url: <span class="string">'https://sampleserver6.arcgisonline.com/arcgis/rest/services/WorldTimeZones/MapServer'</span>
 });
 
 service.identify()
-    .on(map)
-    .at([<span class="number">45.543</span>, -<span class="number">122.621</span>])
-    .layers(<span class="string">'visible:1'</span>)
-    .run(<span class="function"><span class="keyword">function</span><span class="params">(error, featureCollection, response)</span>{</span>
-        console.log(<span class="string">"UTC Offset: "</span> + featureCollection.features[<span class="number">0</span>].properties.ZONE);
-    });</code></pre>
+  .on(map)
+  .at([<span class="number">45.543</span>, -<span class="number">122.621</span>])
+  .layers(<span class="string">'visible:1'</span>)
+  .run(<span class="function"><span class="keyword">function</span> <span class="params">(error, featureCollection, response)</span> {</span>
+    <span class="keyword">if</span> (error) {
+      console.log(error);
+      <span class="keyword">return</span>;
+    }
+    console.log(<span class="string">'UTC Offset: '</span> + featureCollection.features[<span class="number">0</span>].properties.ZONE);
+  });</code></pre>
 <h4 id="find-task">Find task</h4>
 <pre><code class="language-js"><span class="keyword">var</span> service = L.esri.mapService({
-    url: <span class="string">'https://services.nationalmap.gov/arcgis/rest/services/govunits/MapServer'</span>
+  url: <span class="string">'https://services.nationalmap.gov/arcgis/rest/services/govunits/MapServer'</span>
 });
 
 service.find()
-    .layers(<span class="string">'18'</span>)
-    .text(<span class="string">'Colorado'</span>)
-    .searchFields(<span class="string">'GNIS_NAME'</span>)
-    .run(<span class="function"><span class="keyword">function</span><span class="params">(error, featureCollection, response)</span>{</span>
-        console.log(<span class="string">'Found GNIS ID: '</span> + featureCollection.features[<span class="number">0</span>].properties.GNIS_ID + <span class="string">' for the state of '</span> + featureCollection.features[<span class="number">0</span>].properties.STATE_NAME);
-    });</code></pre>
+  .layers(<span class="string">'18'</span>)
+  .text(<span class="string">'Colorado'</span>)
+  .searchFields(<span class="string">'GNIS_NAME'</span>)
+  .run(<span class="function"><span class="keyword">function</span> <span class="params">(error, featureCollection, response)</span> {</span>
+    <span class="keyword">if</span> (error) {
+      console.log(error);
+      <span class="keyword">return</span>;
+    }
+    console.log(<span class="string">'Found GNIS ID: '</span> + featureCollection.features[<span class="number">0</span>].properties.GNIS_ID + <span class="string">' for the state of '</span> + featureCollection.features[<span class="number">0</span>].properties.STATE_NAME);
+  });</code></pre>
 
-  <p><a href="http://github.com/Esri/esri-leaflet-doc/edit/master/src/pages/api-reference/services/map-service.md">Edit this page on GitHub</a></p>
+  <p><a href="https://github.com/Esri/esri-leaflet-doc/edit/master/src/pages/api-reference/services/map-service.md">Edit this page on GitHub</a></p>
 
   <div class="mobile-menu">
     <aside class="sidebar">
@@ -302,10 +312,7 @@ service.find()
   </div>
 </div>
 
-  <div style='clear:both;'></div>
-</div>
-<div class="container center-text">
-  <p class="copyright">Esri Leaflet is a project from the <a href="http://pdx.esri.com">Esri PDX R&amp;D Center</a> and the <a href="https://github.com/Esri/esri-leaflet/graphs/contributors">Esri Community</a></p>
+  <div style="clear:both;"></div>
 </div>
 
   <div class="container center-text">

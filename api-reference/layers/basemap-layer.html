@@ -52,6 +52,7 @@
 
   <!-- Google Analytics -->
   <script>
+    /* eslint-disable */
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -59,6 +60,7 @@
 
     ga('create', 'UA-44963317-3', 'auto');
     ga('send', 'pageview');
+    /* eslint-enable */
   </script>
   <!-- End Google Analytics -->
 </head>
@@ -139,7 +141,7 @@
 
 <div class="main-content">
   <h1 id="l-esri-basemaplayer">L.esri.BasemapLayer</h1>
-<p>Extends <a href="http://leafletjs.com/reference-1.5.1.html#tilelayer"><code>L.TileLayer</code></a></p>
+<p>Extends <a href="https://leafletjs.com/reference-1.5.1.html#tilelayer"><code>L.TileLayer</code></a></p>
 <p><code>L.esri.basemapLayer</code> is used to display Esri hosted basemaps and attributes data providers appropriately. The <a href="https://github.com/esri/esri-leaflet#terms">Terms of Use</a> for Esri hosted services apply to <em>all</em> Leaflet applications.</p>
 <h3 id="constructor">Constructor</h3>
 <table>
@@ -152,7 +154,7 @@
     <tbody>
         <tr>
             <td><code class="nobr">L.esri.basemapLayer(<span>&lt;String&gt;</span> <code>key</code>, <span>&lt;Object&gt;</span> <code>options</code>)</code></td>
-            <td><code>key</code> refers to the specific basemap you&#39;d like to add. The <code>options</code> parameter can accept the same <a href="http://leafletjs.com/reference.html#tilelayer">options</a> as <code>L.TileLayer</code>.</td>
+            <td><code>key</code> refers to the specific basemap you&#39;d like to add. The <code>options</code> parameter can accept the same <a href="https://leafletjs.com/reference.html#tilelayer">options</a> as <code>L.TileLayer</code>.</td>
         </tr>
     </tbody>
 </table>
@@ -187,7 +189,7 @@
 <li><code>TerrainLabels</code> - Labels for pairing with the <code>Terrain</code> or <code>Physical</code> basemap</li>
 </ul>
 <h3 id="options">Options</h3>
-<p><code>L.esri.basemapLayer</code> also accepts all <a href="http://leafletjs.com/reference.html#tilelayer-options"><code>L.TileLayer</code></a> options.</p>
+<p><code>L.esri.basemapLayer</code> also accepts all <a href="https://leafletjs.com/reference.html#tilelayer-options"><code>L.TileLayer</code></a> options.</p>
 <table>
 <thead>
 <tr>
@@ -207,15 +209,15 @@
 </tbody>
 </table>
 <h3 id="methods">Methods</h3>
-<p><code>L.esri.BasemapLayer</code> inherits all methods from <a href="http://leafletjs.com/reference.html#tilelayer"><code>L.TileLayer</code></a>.</p>
+<p><code>L.esri.BasemapLayer</code> inherits all methods from <a href="https://leafletjs.com/reference.html#tilelayer"><code>L.TileLayer</code></a>.</p>
 <h3 id="events">Events</h3>
-<p><code>L.esri.TiledMapLayer</code> fires all  <a href="http://leafletjs.com/reference.html#tilelayer"><code>L.TileLayer</code></a> events.</p>
+<p><code>L.esri.TiledMapLayer</code> fires all  <a href="https://leafletjs.com/reference.html#tilelayer"><code>L.TileLayer</code></a> events.</p>
 <h3 id="example">Example</h3>
-<pre><code class="language-js"><span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">37.75</span>,-<span class="number">122.45</span>], <span class="number">12</span>);
+<pre><code class="language-js"><span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">37.75</span>, -<span class="number">122.45</span>], <span class="number">12</span>);
 
-L.esri.basemapLayer(<span class="string">"Topographic"</span>).addTo(map);</code></pre>
+L.esri.basemapLayer(<span class="string">'Topographic'</span>).addTo(map);</code></pre>
 
-  <p><a href="http://github.com/Esri/esri-leaflet-doc/edit/master/src/pages/api-reference/layers/basemap-layer.md">Edit this page on GitHub</a></p>
+  <p><a href="https://github.com/Esri/esri-leaflet-doc/edit/master/src/pages/api-reference/layers/basemap-layer.md">Edit this page on GitHub</a></p>
 
   <div class="mobile-menu">
     <aside class="sidebar">
@@ -274,10 +276,7 @@ L.esri.basemapLayer(<span class="string">"Topographic"</span>).addTo(map);</code
   </div>
 </div>
 
-  <div style='clear:both;'></div>
-</div>
-<div class="container center-text">
-  <p class="copyright">Esri Leaflet is a project from the <a href="http://pdx.esri.com">Esri PDX R&amp;D Center</a> and the <a href="https://github.com/Esri/esri-leaflet/graphs/contributors">Esri Community</a></p>
+  <div style="clear:both;"></div>
 </div>
 
   <div class="container center-text">
