@@ -179,10 +179,10 @@ export var DynamicMapLayer = RasterLayer.extend({
       this.service.request('export', params, function (error, response) {
         if (error) { return; } // we really can't do anything here but authenticate or requesterror will fire
 
-        if (this.options.token) {
+        if (this.options.token && response.href) {
           response.href += ('?token=' + this.options.token);
         }
-        if (this.options.proxy) {
+        if (this.options.proxy && response.href) {
           response.href = this.options.proxy + '?' + response.href;
         }
         if (response.href) {
