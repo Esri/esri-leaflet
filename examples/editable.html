@@ -12,7 +12,7 @@
   
 
   
-    <meta name="description" content="This sample uses the Leaflet &lt;a href=&quot;//github.com/Leaflet/Leaflet.Editable&quot;&gt;Editable plugin&lt;/a&gt; to help users manipulate the geometry of features from a hosted feature service and pass the edits back to the server.">
+    <meta name="description" content="This sample uses the Leaflet &lt;a href=&quot;https://github.com/Leaflet/Leaflet.Editable&quot;&gt;Editable plugin&lt;/a&gt; (coupled with the &lt;a href=&quot;https://github.com/w8r/Leaflet.Path.Drag&quot;&gt;Leaflet.Path.Drag plugin&lt;/a&gt;) to help users manipulate the geometry of features from a hosted feature service and pass the edits back to the server.">
   
 
   <meta name="description" content="Esri Leaflet">
@@ -205,14 +205,14 @@
 <div class="example-content">
 <div class="wrap">
   <h1>Editing feature layers</h1>
-  <p>This sample uses the Leaflet <a href="//github.com/Leaflet/Leaflet.Editable">Editable plugin</a> to help users manipulate the geometry of features from a hosted feature service and pass the edits back to the server.</p>
+  <p>This sample uses the Leaflet <a href="https://github.com/Leaflet/Leaflet.Editable">Editable plugin</a> (coupled with the <a href="https://github.com/w8r/Leaflet.Path.Drag">Leaflet.Path.Drag plugin</a>) to help users manipulate the geometry of features from a hosted feature service and pass the edits back to the server.</p>
 </div>
 <div id="map-wrapper">
   
-<script src="https://unpkg.com/leaflet.path.drag@0.0.5"></script>
+<script src="https://unpkg.com/leaflet.path.drag@0.0.6/src/Path.Drag.js"></script>
 <script src="https://unpkg.com/leaflet-editable@1.2.0/src/Leaflet.Editable.js"></script>
 
-<div id='map'></div>
+<div id="map"></div>
 
 <script type="text/javascript">
     // make sure double clicking the map *only* triggers the editing workflow
@@ -276,17 +276,17 @@
     map.addControl(new L.NewPolygonControl());
     map.addControl(new L.NewRectangleControl());
 
-    // when users CMD/CTRL click an editable feature, remove it from the map and delete it from the service
+    // when users CMD/CTRL click an active editable feature,
+    // remove it from the map and delete it from the service
     wildfireDistricts.on('click', function (e) {
       if ((e.originalEvent.ctrlKey || e.originalEvent.metaKey) && e.layer.editEnabled()) {
-        e.layer.editor.deleteShapeAt(e.latlng);
         // delete expects an id, not the whole geojson object
         wildfireDistricts.deleteFeature(e.layer.feature.id);
       }
     });
 
-    // when users double click a graphic toggle its editable status
-    // when deselecting, pass the geometry update to the service
+    // when users double click a graphic, toggle its editable status
+    // but when deselecting via double click, pass the geometry update to the service
     wildfireDistricts.on('dblclick', function (e) {
       e.layer.toggleEdit();
       if (!e.layer.editEnabled()) {
@@ -294,9 +294,20 @@
       }
     });
 
-    // when a new feature is drawn using one of the custom controls, pass the edit to the service
+    // when a new feature is drawn using one of the custom controls,
+    // pass the edit to the featureLayer service
     map.on('editable:drawing:commit', function (e) {
-      wildfireDistricts.addFeature(e.layer.toGeoJSON());
+      wildfireDistricts.addFeature(e.layer.toGeoJSON(), function (error, response) {
+        if (error || !response.success) {
+          console.log(error, response);
+        }
+
+        // now that the L.esri.featureLayer instance will manage this new feature,
+        // remove any temporary features from the map that were created by the Editable plugin
+        map.editTools.featuresLayer.clearLayers();
+      });
+
+      // disable editing
       e.layer.toggleEdit();
     });
 </script>
@@ -330,10 +341,10 @@
 <span class="tag">&lt;/<span class="title">head</span>&gt;</span>
 <span class="tag">&lt;<span class="title">body</span>&gt;</span>
 
-<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/leaflet.path.drag@0.0.5"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/leaflet.path.drag@0.0.6/src/Path.Drag.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/leaflet-editable@1.2.0/src/Leaflet.Editable.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
-<span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">'map'</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+<span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span>&gt;</span><span class="javascript">
     <span class="comment">// make sure double clicking the map *only* triggers the editing workflow</span>
@@ -397,17 +408,17 @@
     map.addControl(<span class="keyword">new</span> L.NewPolygonControl());
     map.addControl(<span class="keyword">new</span> L.NewRectangleControl());
 
-    <span class="comment">// when users CMD/CTRL click an editable feature, remove it from the map and delete it from the service</span>
+    <span class="comment">// when users CMD/CTRL click an active editable feature,</span>
+    <span class="comment">// remove it from the map and delete it from the service</span>
     wildfireDistricts.on(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(e)</span> {</span>
       <span class="keyword">if</span> ((e.originalEvent.ctrlKey || e.originalEvent.metaKey) &amp;&amp; e.layer.editEnabled()) {
-        e.layer.editor.deleteShapeAt(e.latlng);
         <span class="comment">// delete expects an id, not the whole geojson object</span>
         wildfireDistricts.deleteFeature(e.layer.feature.id);
       }
     });
 
-    <span class="comment">// when users double click a graphic toggle its editable status</span>
-    <span class="comment">// when deselecting, pass the geometry update to the service</span>
+    <span class="comment">// when users double click a graphic, toggle its editable status</span>
+    <span class="comment">// but when deselecting via double click, pass the geometry update to the service</span>
     wildfireDistricts.on(<span class="string">'dblclick'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(e)</span> {</span>
       e.layer.toggleEdit();
       <span class="keyword">if</span> (!e.layer.editEnabled()) {
@@ -415,9 +426,20 @@
       }
     });
 
-    <span class="comment">// when a new feature is drawn using one of the custom controls, pass the edit to the service</span>
+    <span class="comment">// when a new feature is drawn using one of the custom controls,</span>
+    <span class="comment">// pass the edit to the featureLayer service</span>
     map.on(<span class="string">'editable:drawing:commit'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(e)</span> {</span>
-      wildfireDistricts.addFeature(e.layer.toGeoJSON());
+      wildfireDistricts.addFeature(e.layer.toGeoJSON(), <span class="function"><span class="keyword">function</span> <span class="params">(error, response)</span> {</span>
+        <span class="keyword">if</span> (error || !response.success) {
+          console.log(error, response);
+        }
+
+        <span class="comment">// now that the L.esri.featureLayer instance will manage this new feature,</span>
+        <span class="comment">// remove any temporary features from the map that were created by the Editable plugin</span>
+        map.editTools.featuresLayer.clearLayers();
+      });
+
+      <span class="comment">// disable editing</span>
       e.layer.toggleEdit();
     });
 </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>

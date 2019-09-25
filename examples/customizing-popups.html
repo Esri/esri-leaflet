@@ -217,7 +217,9 @@
   L.esri.basemapLayer('Gray').addTo(map);
 
   var wildfireRisk = L.esri.dynamicMapLayer({
-    url: 'https://maps7.arcgisonline.com/arcgis/rest/services/USDA_USFS_2014_Wildfire_Hazard_Potential/MapServer'
+    url: 'https://maps7.arcgisonline.com/arcgis/rest/services/USDA_USFS_2014_Wildfire_Hazard_Potential/MapServer',
+    // server response content type can be either 'json' (default) or 'image'
+    f: 'image'
   }).addTo(map);
 
   wildfireRisk.bindPopup(function (error, featureCollection) {
@@ -265,7 +267,9 @@
   L.esri.basemapLayer(<span class="string">'Gray'</span>).addTo(map);
 
   <span class="keyword">var</span> wildfireRisk = L.esri.dynamicMapLayer({
-    url: <span class="string">'https://maps7.arcgisonline.com/arcgis/rest/services/USDA_USFS_2014_Wildfire_Hazard_Potential/MapServer'</span>
+    url: <span class="string">'https://maps7.arcgisonline.com/arcgis/rest/services/USDA_USFS_2014_Wildfire_Hazard_Potential/MapServer'</span>,
+    <span class="comment">// server response content type can be either 'json' (default) or 'image'</span>
+    f: <span class="string">'image'</span>
   }).addTo(map);
 
   wildfireRisk.bindPopup(<span class="function"><span class="keyword">function</span> <span class="params">(error, featureCollection)</span> {</span>
