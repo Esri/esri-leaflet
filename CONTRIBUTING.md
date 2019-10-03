@@ -25,7 +25,7 @@ The Esri Leaflet website is written using http://assemble.io/ and can be found a
 
 ##### More tests
 
-Esri Leaflet has a fairly comprehensive test suite built with [Mocha](http://mochajs.org/), [Chai](http://chaijs.com/), [Sinon](http://sinonjs.org), and [Karma](http://karma-runner.github.io/0.12/index.html). The tests can be found in at https://github.com/Esri/esri-leaflet/tree/master/spec.
+Esri Leaflet has a fairly comprehensive test suite built with [Mocha](http://mochajs.org/), [Chai](http://chaijs.com/), [Sinon](http://sinonjs.org), and [Karma](http://karma-runner.github.io/0.12/index.html). The tests can be found at https://github.com/Esri/esri-leaflet/tree/master/spec.
 
 You can run the tests with `npm test`.
 
@@ -35,7 +35,7 @@ Support for new layer types and services are always needed.  The [plugin candida
 
 ### Can I publish my own Esri Leaflet plugins?
 
-Of course! if you develop reusuable components for use with Esri Leaflet that you think would be helpful to share with other developers, please [file an issue](https://github.com/Esri/esri-leaflet/issues?state=open) so we discuss it.
+Of course! If you develop reusuable components for use with Esri Leaflet that you think would be helpful to share with other developers, please [file an issue](https://github.com/Esri/esri-leaflet/issues?state=open) so we can discuss it.
 
 ### Setting up a dev environment
 
