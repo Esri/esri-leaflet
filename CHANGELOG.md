@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+### Changed 
+
+* REST calls will now use `outSR` instead of `outSr` ([#1168](https://github.com/Esri/esri-leaflet/pull/1168))
+
 ## [2.3.0] - 2019-07-17
 
 ### Fixed
