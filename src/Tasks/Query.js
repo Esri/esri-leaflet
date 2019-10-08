@@ -26,7 +26,7 @@ export var Query = Task.extend({
   params: {
     returnGeometry: true,
     where: '1=1',
-    outSr: 4326,
+    outSR: 4326,
     outFields: '*'
   },
 
