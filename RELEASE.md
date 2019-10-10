@@ -1,0 +1,14 @@
+- Check out the repository and pull the latest updates on MASTER (origin or your fork should work)
+- Update the package version in `package.json`.
+- Update `CHANGELOG.md` - remember to update the links at the bottom of the document.
+- Run `npm install`
+- Commit with message `:package: X.X.X` (replacing with version)
+- Push commit to master
+- Run `scripts/release.sh`
+
+
+After that's all complete, you can do these later at your leisure:
+
+- [Update documentation site](https://github.com/Esri/esri-leaflet-doc#instructions) to use new version
+- Optional: Comment on Issues that were resolved, notifying interested parties that the fix was released
+- Optional: Post on Geonet, social media, etc
