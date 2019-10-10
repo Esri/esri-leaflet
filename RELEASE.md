@@ -4,6 +4,7 @@
 - Run `npm install`
 - Commit with message `:package: X.X.X` (replacing with version)
 - Push commit to master
+- Run `npm whoami`, making sure you're logged in properly to NPM. If not, `npm login`.
 - Run `scripts/release.sh`
 
 
