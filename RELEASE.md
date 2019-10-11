@@ -5,7 +5,7 @@
 - Commit with message `:package: X.X.X` (replacing with version)
 - Push commit to master
 - Run `npm whoami`, making sure you're logged in properly to NPM. If not, `npm login`.
-- Run `scripts/release.sh`
+- Run `npm run release` (or on Windows, run `scripts/release.sh` from a bash-compatible terminal like Git Bash, Windows Subsystem for Linux, etc) 
 
 
 After that's all complete, you can do these later at your leisure:
