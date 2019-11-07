@@ -424,7 +424,7 @@ export var FeatureManager = VirtualGrid.extend({
     if (this.options.timeField.start && this.options.timeField.end) {
       var startDate = +feature.properties[this.options.timeField.start];
       var endDate = +feature.properties[this.options.timeField.end];
-      return ((startDate >= from) && (startDate <= to)) || ((endDate >= from) && (endDate <= to));
+      return ((startDate >= from) && (startDate <= to)) || ((endDate >= from) && (endDate <= to)) || ((startDate <= from) && (endDate >= to));
     }
   },
 
