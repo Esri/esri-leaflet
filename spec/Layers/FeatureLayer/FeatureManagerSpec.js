@@ -661,6 +661,22 @@ describe('L.esri.FeatureManager', function () {
       },
       'id': 2
     })).to.equal(false);
+    
+    expect(layer._featureWithinTimeRange({
+      'type': 'Feature',
+      'geometry': {
+        'type': 'Point',
+        'coordinates': [-122.673345, 45.537188]
+      },
+      'properties': {
+        'OBJECTID': 3,
+        'Name': 'Site 3',
+        'Type': 'Active',
+        'StartTime': new Date('November 29 2013 GMT-0800').valueOf(),
+        'EndTime': new Date('January 15 2014 GMT-0800').valueOf()
+      },
+      'id': 3
+    })).to.equal(true);
   });
 
   it('should return false when no time range is set', function () {
