@@ -661,7 +661,7 @@ describe('L.esri.FeatureManager', function () {
       },
       'id': 2
     })).to.equal(false);
-    
+
     expect(layer._featureWithinTimeRange({
       'type': 'Feature',
       'geometry': {
