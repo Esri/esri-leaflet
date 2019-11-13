@@ -40,21 +40,18 @@ document.addEventListener(touchEvent, function (e) {
   menu.classList.toggle('show');
 }, false);
 
-// attempt to style the active page's corresponding top site nav link
-var headerActiveLinkElement = document.querySelector(`.site-nav-wrapper a[href*="${window.location.pathname.split('/')[1]}"]`);
-if (headerActiveLinkElement) {
-  headerActiveLinkElement.style.borderBottom = '2px solid #FFFFFF';
-}
+var pathnameParts = window.location.pathname.split('/');
+var pathnameEnd = pathnameParts[pathnameParts.length - 1];
 
 // attempt to style the active page's corresponding sidebar link
-var sidebarActiveLinkElement = document.querySelector(`.sidebar a[href$="${window.location.pathname}"]`);
+var sidebarActiveLinkElement = document.querySelector(`.sidebar a[href$="${pathnameEnd}"]`);
 if (sidebarActiveLinkElement) {
   sidebarActiveLinkElement.style.borderBottom = '2px solid #79BD8F';
   sidebarActiveLinkElement.style.fontWeight = 'bold';
 }
 
 // attempt to style the active page's corresponding sidebar link in the mobile menu
-var mobileMenuActiveLinkElement = document.querySelector(`.mobile-menu .sidebar a[href$="${window.location.pathname}"]`);
+var mobileMenuActiveLinkElement = document.querySelector(`.mobile-menu .sidebar a[href$="${pathnameEnd}"]`);
 if (mobileMenuActiveLinkElement) {
   mobileMenuActiveLinkElement.style.borderBottom = '2px solid #79BD8F';
   mobileMenuActiveLinkElement.style.fontWeight = 'bold';
