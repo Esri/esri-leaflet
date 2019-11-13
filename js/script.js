@@ -39,3 +39,23 @@ document.addEventListener(touchEvent, function (e) {
   var menu = document.querySelector('#site-nav-wrapper'); // Using a class instead, see note below.
   menu.classList.toggle('show');
 }, false);
+
+// attempt to style the active page's corresponding top site nav link
+var headerActiveLinkElement = document.querySelector(`.site-nav-wrapper a[href*="${window.location.pathname.split('/')[1]}"]`);
+if (headerActiveLinkElement) {
+  headerActiveLinkElement.style.borderBottom = '2px solid #FFFFFF';
+}
+
+// attempt to style the active page's corresponding sidebar link
+var sidebarActiveLinkElement = document.querySelector(`.sidebar a[href$="${window.location.pathname}"]`);
+if (sidebarActiveLinkElement) {
+  sidebarActiveLinkElement.style.borderBottom = '2px solid #79BD8F';
+  sidebarActiveLinkElement.style.fontWeight = 'bold';
+}
+
+// attempt to style the active page's corresponding sidebar link in the mobile menu
+var mobileMenuActiveLinkElement = document.querySelector(`.mobile-menu .sidebar a[href$="${window.location.pathname}"]`);
+if (mobileMenuActiveLinkElement) {
+  mobileMenuActiveLinkElement.style.borderBottom = '2px solid #79BD8F';
+  mobileMenuActiveLinkElement.style.fontWeight = 'bold';
+}
