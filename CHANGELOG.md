@@ -5,6 +5,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+## [2.3.2] - 2019-11-13
+
+### Fixed
+
+* Time filtering fix which adds a case for when a feature's time range contains the time range given in the to and from options for the layer. (🙏pjbiogit🙏 [#1174](https://github.com/Esri/esri-leaflet/pull/1174))
+
 ## [2.3.1] - 2019-10-10
 
 ### Fixed
@@ -678,7 +684,8 @@ None
 * Add DarkGray and DarkGrayLabels to BasemapLayer. #190
 * An attributionControl on maps is now required when using BasemapLayer. #159
 
-[unreleased]: https://github.com/esri/esri-leaflet/compare/v2.3.1...HEAD
+[unreleased]: https://github.com/esri/esri-leaflet/compare/v2.3.2...HEAD
+[2.3.2]: https://github.com/esri/esri-leaflet/compare/v2.3.1...v2.3.2
 [2.3.1]: https://github.com/esri/esri-leaflet/compare/v2.3.0...v2.3.1
 [2.3.0]: https://github.com/esri/esri-leaflet/compare/v2.2.4...v2.3.0
 [2.2.4]: https://github.com/esri/esri-leaflet/compare/v2.2.3...v2.2.4
