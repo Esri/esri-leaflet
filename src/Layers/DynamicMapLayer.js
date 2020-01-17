@@ -20,10 +20,6 @@ export var DynamicMapLayer = RasterLayer.extend({
     this.service = mapService(options);
     this.service.addEventParent(this);
 
-    if ((options.proxy || options.token) && options.f !== 'json') {
-      options.f = 'json';
-    }
-
     Util.setOptions(this, options);
   },
 
@@ -179,12 +175,16 @@ export var DynamicMapLayer = RasterLayer.extend({
       this.service.request('export', params, function (error, response) {
         if (error) { return; } // we really can't do anything here but authenticate or requesterror will fire
 
-        if (this.options.token && response.href) {
-          response.href += ('?token=' + this.options.token);
+        if (params.token && response.href) {
+          // append token
+          response.href += ('?token=' + params.token);
         }
-        if (this.options.proxy && response.href) {
-          response.href = this.options.proxy + '?' + response.href;
+
+        if (params.proxy && response.href) {
+          // prepend proxy
+          response.href = params.proxy + '?' + response.href;
         }
+
         if (response.href) {
           this._renderImage(response.href, bounds);
         } else {
@@ -192,8 +192,18 @@ export var DynamicMapLayer = RasterLayer.extend({
         }
       }, this);
     } else {
+      // if not 'json', then 'image' is the only other valid value for params.f
+      // (this.options.f should be equal to 'image' if the default 'json' value was not used)
       params.f = 'image';
-      this._renderImage(this.options.url + 'export' + Util.getParamString(params), bounds);
+
+      var url = this.options.url + 'export' + Util.getParamString(params);
+
+      if (params.proxy) {
+        // prepend proxy
+        url = params.proxy + '?' + url;
+      }
+
+      this._renderImage(url, bounds);
     }
   }
 });
