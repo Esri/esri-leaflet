@@ -34,6 +34,7 @@ debug/*.json
 debug/archive/
 !debug/sample.html
 !debug/sample-dynamic-map-layer.html
+!debug/sample-dynamic-map-layer-server-auth.html
 !debug/sample-image-map-layer.html
 
 # Docs Build

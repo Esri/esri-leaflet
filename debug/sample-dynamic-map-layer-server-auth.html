@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset=utf-8 />
+  <title>Esri Leaflet Debugging Sample</title>
+  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+
+  <!-- Load Leaflet -->
+  <link rel="stylesheet" href="../node_modules/leaflet/dist/leaflet.css" />
+  <script src="../node_modules/leaflet/dist/leaflet-src.js"></script>
+
+  <!-- Load Esri Leaflet from source-->
+  <script src="../dist/esri-leaflet-debug.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    #map {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      left: 0;
+    }
+
+    #info-pane {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 1000;
+      padding: 1em;
+      background: white;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="map"></div>
+  <div id="info-pane" class="leaflet-bar">
+    <label>
+      sample application for debugging a <pre>L.esri.dynamicMapLayer</pre>
+    </label>
+  </div>
+
+  <script>
+    /*
+    make a copy of this file in the same folder if you'd like git to ignore your local changes
+    */
+    var map = L.map('map').setView([40, -100], 4);
+    L.esri.basemapLayer('Topographic').addTo(map);
+
+    function serverAuth(callback) {
+      L.esri.post('https://sampleserver6.arcgisonline.com/arcgis/tokens/generateToken', {
+        username: 'user1',
+        password: 'user1',
+        f: 'json',
+        expiration: 86400,
+        client: 'referer',
+        referer: window.location.origin
+      }, callback);
+    }
+
+    serverAuth(function (error, response) {
+      if (error) {
+        return;
+      }
+
+      var dl = L.esri.dynamicMapLayer({
+        url: 'https://sampleserver6.arcgisonline.com/arcgis/rest/services/Wildfire_secure_ac/MapServer',
+        opacity: 1,
+        token: response.token,
+        f: 'json' // or test optional 'image'
+      })
+        .bindPopup(function (error, featureCollection) {
+          // to help test the identify task
+          if (error || featureCollection.features.length === 0) {
+            return false;
+          } else {
+            return 'Description: ' + featureCollection.features[0].properties.Description;
+          }
+        })
+        .addTo(map);
+
+      dl.on('authenticationrequired', function (e) {
+        serverAuth(function (error, response) {
+          if (error) {
+            return;
+          }
+
+          e.authenticate(response.token);
+        });
+      });
+    });
+  </script>
+
+</body>
+
+</html>
