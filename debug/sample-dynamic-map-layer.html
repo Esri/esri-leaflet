@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset=utf-8 />
+  <title>Esri Leaflet Debugging Sample</title>
+  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+
+  <!-- Load Leaflet -->
+  <link rel="stylesheet" href="../node_modules/leaflet/dist/leaflet.css" />
+  <script src="../node_modules/leaflet/dist/leaflet-src.js"></script>
+
+  <!-- Load Esri Leaflet from source-->
+  <script src="../dist/esri-leaflet-debug.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    #map {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      left: 0;
+    }
+
+    #info-pane {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 1000;
+      padding: 1em;
+      background: white;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="map"></div>
+  <div id="info-pane" class="leaflet-bar">
+    <label>
+      sample application for debugging a <pre>L.esri.dynamicMapLayer</pre>
+    </label>
+  </div>
+
+  <script>
+    /*
+    make a copy of this file in the same folder if you'd like git to ignore your local changes
+    */
+    var map = L.map('map').setView([40, -100], 4);
+    L.esri.basemapLayer('Topographic').addTo(map);
+
+    L.esri.dynamicMapLayer({
+      url: 'https://sampleserver6.arcgisonline.com/arcgis/rest/services/Wildfire_secure_ac2/MapServer',
+      opacity: 0.7,
+      
+      // to test with a token, create one at the same server as used in the url param above, i.e.
+      // https://sampleserver6.arcgisonline.com/arcgis/tokens/
+      // and for the HTTP referer value you can use the local dev sever URL
+      // an example user/pass for the same server is available at https://esri.github.io/esri-leaflet/examples/arcgis-server-auth.html
+
+      // token: 'paste in here',
+      
+      f: 'json' // or test optional 'image'
+    })
+      .bindPopup(function (error, featureCollection) {
+        // to help test the identify task
+        if (error || featureCollection.features.length === 0) {
+          return false;
+        } else {
+          return 'Description: ' + featureCollection.features[0].properties.Description;
+        }
+      })
+      .addTo(map);
+  </script>
+
+</body>
+
+</html>

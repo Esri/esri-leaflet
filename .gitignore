@@ -33,6 +33,8 @@ debug/*.js
 debug/*.json
 debug/archive/
 !debug/sample.html
+!debug/sample-dynamic-map-layer.html
+!debug/sample-image-map-layer.html
 
 # Docs Build
 site/build
