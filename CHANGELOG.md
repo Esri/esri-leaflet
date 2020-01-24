@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+### Fixed
+
+* Ensure `DynamicMapLayer` can use both a token and `f: 'image'`. ([#1180](https://github.com/Esri/esri-leaflet/issues/1180))
+
 ## [2.3.2] - 2019-11-13
 
 ### Fixed
