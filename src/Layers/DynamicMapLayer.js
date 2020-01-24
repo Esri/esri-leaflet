@@ -20,6 +20,10 @@ export var DynamicMapLayer = RasterLayer.extend({
     this.service = mapService(options);
     this.service.addEventParent(this);
 
+    if (options.proxy && options.f !== 'json') {
+      options.f = 'json';
+    }
+
     Util.setOptions(this, options);
   },
 
