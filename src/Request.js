@@ -1,6 +1,5 @@
 import { Util, DomUtil } from 'leaflet';
 import { Support } from './Support';
-import { warn } from './Util';
 
 var callbacks = 0;
 
@@ -220,6 +219,12 @@ export function jsonp (url, params, callback, context) {
 var get = ((Support.cors) ? xmlHttpGet : jsonp);
 get.CORS = xmlHttpGet;
 get.JSONP = jsonp;
+
+export function warn () {
+  if (console && console.warn) {
+    console.warn.apply(console, arguments);
+  }
+}
 
 // choose the correct AJAX handler depending on CORS support
 export { get };
