@@ -366,6 +366,29 @@ describe('L.esri.DynamicMapLayer', function () {
     expect(spy.getCall(0).args[0]).to.match(new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png24&transparent=true&bboxSR=3857&imageSR=3857&f=image/));
   });
 
+  it('should be able to request an image directly from the export service, with auth', function () {
+    layer = L.esri.dynamicMapLayer({
+      url: url,
+      f: 'image'
+    });
+    var spy = sinon.spy(layer, '_renderImage');
+    layer.authenticate('foo');
+    layer.addTo(map);
+    expect(spy.getCall(0).args[0]).to.match(new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png24&transparent=true&bboxSR=3857&imageSR=3857&token=foo&f=image/));
+  });
+
+  it('should be able to request an image directly from the export service, with passing a token', function () {
+    layer = L.esri.dynamicMapLayer({
+      url: url,
+      f: 'image',
+      token: 'foo'
+    });
+    var spy = sinon.spy(layer, '_renderImage');
+    // layer.authenticate('foo');
+    layer.addTo(map);
+    expect(spy.getCall(0).args[0]).to.match(new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png24&transparent=true&bboxSR=3857&imageSR=3857&token=foo&f=image/));
+  });
+
   // it('should be able to request an image using a proxy', function (done) {
   //   server.respondWith('GET', new RegExp(/\.\/proxy\?http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png24&transparent=true&bboxSR=3857&imageSR=3857&f=json/), JSON.stringify({
   //     href: 'http://services.arcgis.com/mock/arcgis/rest/directories/arcgisoutput/Census_MapServer/_ags_mapec70f175eca3415a97c0db6779ad9976.png',
