@@ -1,5 +1,5 @@
 import { latLng, latLngBounds, LatLng, LatLngBounds, Util, DomUtil, GeoJSON } from 'leaflet';
-import { request } from './Request';
+import { request, warn } from './Request';
 import { options } from './Options';
 import { Support } from './Support';
 
@@ -163,12 +163,6 @@ export function geojsonTypeToArcGIS (geoJsonType) {
   }
 
   return arcgisGeometryType;
-}
-
-export function warn () {
-  if (console && console.warn) {
-    console.warn.apply(console, arguments);
-  }
 }
 
 export function calcAttributionWidth (map) {
@@ -342,6 +336,9 @@ export function _updateMapAttribution (evt) {
     });
   }
 }
+
+// for backwards compatibility
+export { warn };
 
 export var EsriUtil = {
   warn: warn,

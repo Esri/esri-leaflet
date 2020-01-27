@@ -135,4 +135,10 @@ describe('L.esri.Util', function () {
       });
     }
   });
+
+  describe('warn', function () {
+    it('should setup an alias for L.esri.Util.warn', function () {
+      expect(L.esri.Util.warn).to.be.a('function');
+    });
+  });
 });
