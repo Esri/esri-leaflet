@@ -14,7 +14,6 @@ A clear and concise description of what the bug is.
 
 - Describe what you expected or wanted to happen.
 - What you are trying to achieve?
-- Describe your environment/framework and be specific with version numbers (e.g. React 16.2, react-router 4.2, redux 3.7, node 8.3).
 
 **Actual behavior**
 
