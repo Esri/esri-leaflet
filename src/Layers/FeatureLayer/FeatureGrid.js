@@ -46,7 +46,7 @@ export var FeatureGrid = Layer.extend({
 
   onAdd: function() {
     this._cells = {};
-    this._cellCache = {};
+    this._activeCells = {};
     this._resetView();
     this._update();
   },
@@ -384,7 +384,7 @@ export var FeatureGrid = Layer.extend({
         var coords = queue[i];
         var key = this._cellCoordsToKey(coords);
 
-        if (this._cellCache[key]) {
+        if (this._activeCells[key]) {
           this._reuseCell(coords);
         } else {
           this._createCell(coords);
@@ -469,7 +469,7 @@ export var FeatureGrid = Layer.extend({
     cell.current = false;
 
     delete this._cells[key];
-    this._cellCache[key] = cell;
+    this._activeCells[key] = cell;
 
     this.cellLeave(cellBounds, wrappedCoords, key);
 
@@ -484,7 +484,7 @@ export var FeatureGrid = Layer.extend({
     var key = this._cellCoordsToKey(coords);
 
     // save cell in cache
-    this._cells[key] = this._cellCache[key];
+    this._cells[key] = this._activeCells[key];
     this._cells[key].current = true;
 
     var wrappedCoords = this._wrapCoords(coords);
