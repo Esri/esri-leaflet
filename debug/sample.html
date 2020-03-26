@@ -62,14 +62,14 @@
       /*
     make a copy of this file in the same folder if you'd like git to ignore your local changes
     */
-      var map = L.map("map").setView([33.836, -118.22], 8);
+      var map = L.map("map").setView([40, -96], 6);
 
       L.esri.basemapLayer("Topographic").addTo(map);
 
       var fl = L.esri
         .featureLayer({
           url:
-            "https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Alternative_Fueling_Stations_Editable/FeatureServer/0"
+            "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/flash_flood_warnings_2002_2012/FeatureServer/0"
         })
         .addTo(map);
     </script>

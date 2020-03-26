@@ -6,7 +6,7 @@ import {
   Util,
   Point,
   Bounds
-} from "leaflet";
+} from 'leaflet';
 
 export var FeatureGrid = Layer.extend({
   // @section
@@ -40,31 +40,31 @@ export var FeatureGrid = Layer.extend({
     keepBuffer: 1.5
   },
 
-  initialize: function(options) {
+  initialize: function (options) {
     Util.setOptions(this, options);
   },
 
-  onAdd: function() {
+  onAdd: function () {
     this._cells = {};
     this._activeCells = {};
     this._resetView();
     this._update();
   },
 
-  onRemove: function(map) {
+  onRemove: function (map) {
     this._removeAllCells();
     this._cellZoom = undefined;
   },
 
   // @method isLoading: Boolean
   // Returns `true` if any cell in the grid layer has not finished loading.
-  isLoading: function() {
+  isLoading: function () {
     return this._loading;
   },
 
   // @method redraw: this
   // Causes the layer to clear all the cells and request them again.
-  redraw: function() {
+  redraw: function () {
     if (this._map) {
       this._removeAllCells();
       this._update();
@@ -72,7 +72,7 @@ export var FeatureGrid = Layer.extend({
     return this;
   },
 
-  getEvents: function() {
+  getEvents: function () {
     var events = {
       viewprereset: this._invalidateAll,
       viewreset: this._resetView,
@@ -102,27 +102,27 @@ export var FeatureGrid = Layer.extend({
   // Called only internally, must be overridden by classes extending `GridLayer`.
   // Returns the `HTMLElement` corresponding to the given `coords`. If the `done` callback
   // is specified, it must be called when the cell has finished loading and drawing.
-  createCell: function() {
-    return document.createElement("div");
+  createCell: function () {
+    return document.createElement('div');
   },
 
-  removeCell: function() {
+  removeCell: function () {
     return;
   },
 
-  reuseCell: function() {
+  reuseCell: function () {
     return;
   },
 
   // @section
   // @method getCellSize: Point
   // Normalizes the [cellSize option](#gridlayer-cellsize) into a point. Used by the `createCell()` method.
-  getCellSize: function() {
+  getCellSize: function () {
     var s = this.options.cellSize;
     return s instanceof Point ? s : new Point(s, s);
   },
 
-  _pruneCells: function() {
+  _pruneCells: function () {
     if (!this._map) {
       return;
     }
@@ -151,19 +151,19 @@ export var FeatureGrid = Layer.extend({
     }
   },
 
-  _removeAllCells: function() {
+  _removeAllCells: function () {
     for (var key in this._cells) {
       this._removeCell(key);
     }
   },
 
-  _invalidateAll: function() {
+  _invalidateAll: function () {
     this._removeAllCells();
 
     this._cellZoom = undefined;
   },
 
-  _retainParent: function(x, y, z, minZoom) {
+  _retainParent: function (x, y, z, minZoom) {
     var x2 = Math.floor(x / 2);
     var y2 = Math.floor(y / 2);
     var z2 = z - 1;
@@ -187,14 +187,14 @@ export var FeatureGrid = Layer.extend({
     return false;
   },
 
-  _retainChildren: function(x, y, z, maxZoom) {
+  _retainChildren: function (x, y, z, maxZoom) {
     for (var i = 2 * x; i < 2 * x + 2; i++) {
       for (var j = 2 * y; j < 2 * y + 2; j++) {
         var coords = new Point(i, j);
         coords.z = z + 1;
 
-        var key = this._cellCoordsToKey(coords),
-          cell = this._cells[key];
+        var key = this._cellCoordsToKey(coords);
+        var cell = this._cells[key];
 
         if (cell && cell.active) {
           cell.retain = true;
@@ -210,7 +210,7 @@ export var FeatureGrid = Layer.extend({
     }
   },
 
-  _resetView: function(e) {
+  _resetView: function (e) {
     var animating = e && (e.pinch || e.flyTo);
 
     if (animating) {
@@ -225,7 +225,7 @@ export var FeatureGrid = Layer.extend({
     );
   },
 
-  _setView: function(center, zoom, noPrune, noUpdate) {
+  _setView: function (center, zoom, noPrune, noUpdate) {
     var cellZoom = Math.round(zoom);
 
     if (!noUpdate) {
@@ -251,7 +251,7 @@ export var FeatureGrid = Layer.extend({
     }
   },
 
-  _resetGrid: function() {
+  _resetGrid: function () {
     var map = this._map;
     var crs = map.options.crs;
     var cellSize = (this._cellSize = this.getCellSize());
@@ -274,7 +274,7 @@ export var FeatureGrid = Layer.extend({
       ];
   },
 
-  _onMoveEnd: function(e) {
+  _onMoveEnd: function (e) {
     var animating = e && (e.pinch || e.flyTo);
 
     if (animating || !this._map || this._map._animatingZoom) {
@@ -284,7 +284,7 @@ export var FeatureGrid = Layer.extend({
     this._update();
   },
 
-  _getCelldPixelBounds: function(center) {
+  _getCelldPixelBounds: function (center) {
     var map = this._map;
     var mapZoom = map._animatingZoom
       ? Math.max(map._animateToZoom, map.getZoom())
@@ -300,7 +300,7 @@ export var FeatureGrid = Layer.extend({
   },
 
   // Private method to load cells in the grid's active zoom level according to map bounds
-  _update: function(center) {
+  _update: function (center) {
     var map = this._map;
     if (!map) {
       return;
@@ -330,7 +330,7 @@ export var FeatureGrid = Layer.extend({
         isFinite(cellRange.max.y)
       )
     ) {
-      throw new Error("Attempted to load an infinite number of cells");
+      throw new Error('Attempted to load an infinite number of cells');
     }
 
     for (var key in this._cells) {
@@ -370,7 +370,7 @@ export var FeatureGrid = Layer.extend({
     }
 
     // sort cell queue to load cells in order of their distance to center
-    queue.sort(function(a, b) {
+    queue.sort(function (a, b) {
       return a.distanceTo(cellCenter) - b.distanceTo(cellCenter);
     });
 
@@ -381,19 +381,16 @@ export var FeatureGrid = Layer.extend({
       }
 
       for (i = 0; i < queue.length; i++) {
-        var coords = queue[i];
-        var key = this._cellCoordsToKey(coords);
-
-        if (this._activeCells[key]) {
-          this._reuseCell(coords);
+        if (this._activeCells[this._cellCoordsToKey(queue[i])]) {
+          this._reuseCell(queue[i]);
         } else {
-          this._createCell(coords);
+          this._createCell(queue[i]);
         }
       }
     }
   },
 
-  _isValidCell: function(coords) {
+  _isValidCell: function (coords) {
     var crs = this._map.options.crs;
 
     if (!crs.infinite) {
@@ -417,11 +414,11 @@ export var FeatureGrid = Layer.extend({
     return latLngBounds(this.options.bounds).overlaps(cellBounds);
   },
 
-  _keyToBounds: function(key) {
+  _keyToBounds: function (key) {
     return this._cellCoordsToBounds(this._keyToCellCoords(key));
   },
 
-  _cellCoordsToNwSe: function(coords) {
+  _cellCoordsToNwSe: function (coords) {
     var map = this._map;
     var cellSize = this.getCellSize();
     var nwPoint = coords.scaleBy(cellSize);
@@ -433,9 +430,9 @@ export var FeatureGrid = Layer.extend({
   },
 
   // converts cell coordinates to its geographical bounds
-  _cellCoordsToBounds: function(coords) {
-    var bp = this._cellCoordsToNwSe(coords),
-      bounds = new LatLngBounds(bp[0], bp[1]);
+  _cellCoordsToBounds: function (coords) {
+    var bp = this._cellCoordsToNwSe(coords);
+    var bounds = new LatLngBounds(bp[0], bp[1]);
 
     if (!this.options.noWrap) {
       bounds = this._map.wrapLatLngBounds(bounds);
@@ -443,19 +440,20 @@ export var FeatureGrid = Layer.extend({
     return bounds;
   },
   // converts cell coordinates to key for the cell cache
-  _cellCoordsToKey: function(coords) {
-    return coords.x + ":" + coords.y + ":" + coords.z;
+  _cellCoordsToKey: function (coords) {
+    return coords.x + ':' + coords.y + ':' + coords.z;
   },
 
   // converts cell cache key to coordinates
-  _keyToCellCoords: function(key) {
-    var k = key.split(":"),
-      coords = new Point(+k[0], +k[1]);
+  _keyToCellCoords: function (key) {
+    var k = key.split(':');
+    var coords = new Point(+k[0], +k[1]);
+
     coords.z = +k[2];
     return coords;
   },
 
-  _removeCell: function(key) {
+  _removeCell: function (key) {
     var cell = this._cells[key];
 
     if (!cell) {
@@ -473,14 +471,14 @@ export var FeatureGrid = Layer.extend({
 
     this.cellLeave(cellBounds, wrappedCoords, key);
 
-    this.fire("cellleave", {
+    this.fire('cellleave', {
       key: key,
       coords: wrappedCoords,
       bounds: cellBounds
     });
   },
 
-  _reuseCell: function(coords) {
+  _reuseCell: function (coords) {
     var key = this._cellCoordsToKey(coords);
 
     // save cell in cache
@@ -492,14 +490,14 @@ export var FeatureGrid = Layer.extend({
 
     this.cellEnter(cellBounds, wrappedCoords, key);
 
-    this.fire("cellenter", {
+    this.fire('cellenter', {
       key: key,
       coords: wrappedCoords,
       bounds: cellBounds
     });
   },
 
-  _createCell: function(coords) {
+  _createCell: function (coords) {
     var key = this._cellCoordsToKey(coords);
 
     var wrappedCoords = this._wrapCoords(coords);
@@ -507,7 +505,7 @@ export var FeatureGrid = Layer.extend({
 
     this.createCell(cellBounds, wrappedCoords, key);
 
-    this.fire("cellcreate", {
+    this.fire('cellcreate', {
       key: key,
       coords: wrappedCoords,
       bounds: cellBounds
@@ -522,7 +520,7 @@ export var FeatureGrid = Layer.extend({
     Util.requestAnimFrame(this._pruneCells, this);
   },
 
-  _cellReady: function(coords, err, cell) {
+  _cellReady: function (coords, err, cell) {
     var key = this._cellCoordsToKey(coords);
 
     cell = this._cells[key];
@@ -536,11 +534,11 @@ export var FeatureGrid = Layer.extend({
     cell.active = true;
   },
 
-  _getCellPos: function(coords) {
+  _getCellPos: function (coords) {
     return coords.scaleBy(this.getCellSize());
   },
 
-  _wrapCoords: function(coords) {
+  _wrapCoords: function (coords) {
     var newCoords = new Point(
       this._wrapX ? Util.wrapNum(coords.x, this._wrapX) : coords.x,
       this._wrapY ? Util.wrapNum(coords.y, this._wrapY) : coords.y
@@ -549,7 +547,7 @@ export var FeatureGrid = Layer.extend({
     return newCoords;
   },
 
-  _pxBoundsToCellRange: function(bounds) {
+  _pxBoundsToCellRange: function (bounds) {
     var cellSize = this.getCellSize();
     return new Bounds(
       bounds.min.unscaleBy(cellSize).floor(),
