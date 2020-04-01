@@ -1,5 +1,6 @@
 import { TileLayer, Util } from 'leaflet';
 import { pointerEvents } from '../Support';
+import { request } from '../Request';
 import {
   setEsriAttribution,
   _getAttributionData,
@@ -302,7 +303,7 @@ function _fetchTilemap (evt) {
     var tilemapUrl = tileUrl.replace(/tile/, 'tilemap') + '/8/8';
 
     // an array of booleans in the response indicate missing tiles
-    L.esri.request(tilemapUrl, {}, function (err, response) {
+    request(tilemapUrl, {}, function (err, response) {
       if (!err) {
         for (var i = 0; i < response.data.length; i++) {
           if (!response.data[i]) {
