@@ -6,7 +6,7 @@ import { Support } from './Support';
 import {
   geojsonToArcGIS as g2a,
   arcgisToGeoJSON as a2g
-} from '@esri/arcgis-to-geojson-utils';
+} from '@terraformer/arcgis';
 
 export function geojsonToArcGIS (geojson, idAttr) {
   return g2a(geojson, idAttr);

@@ -11,7 +11,7 @@
     "John Gravois <jgravois@esri.com> (http://johngravois.com)"
   ],
   "dependencies": {
-    "@esri/arcgis-to-geojson-utils": "^1.3.0",
+    "@terraformer/arcgis": "^2.0.1",
     "leaflet-virtual-grid": "^1.0.7",
     "tiny-binary-search": "^1.0.3"
   },
