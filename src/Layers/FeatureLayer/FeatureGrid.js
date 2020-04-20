@@ -114,6 +114,10 @@ export var FeatureGrid = Layer.extend({
     return;
   },
 
+  cellLeave: function () {
+    return;
+  },
+
   // @section
   // @method getCellSize: Point
   // Normalizes the [cellSize option](#gridlayer-cellsize) into a point. Used by the `createCell()` method.
@@ -551,10 +555,7 @@ export var FeatureGrid = Layer.extend({
     var cellSize = this.getCellSize();
     return new Bounds(
       bounds.min.unscaleBy(cellSize).floor(),
-      bounds.max
-        .unscaleBy(cellSize)
-        .ceil()
-        .subtract([1, 1])
+      bounds.max.unscaleBy(cellSize).ceil().subtract([1, 1])
     );
   }
 });

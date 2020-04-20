@@ -289,8 +289,7 @@ export var FeatureManager = FeatureGrid.extend({
     for (var i = this._currentSnapshot.length - 1; i >= 0; i--) {
       oldSnapshot.push(this._currentSnapshot[i]);
     }
-
-    for (var key in this._activeCells) {
+    for (var key in this._cells) {
       pendingRequests++;
       var coords = this._keyToCellCoords(key);
       var bounds = this._cellCoordsToBounds(coords);
@@ -336,7 +335,7 @@ export var FeatureManager = FeatureGrid.extend({
     this._filterExistingFeatures(oldFrom, oldTo, from, to);
 
     if (this.options.timeFilterMode === 'server') {
-      for (var key in this._activeCells) {
+      for (var key in this._cells) {
         pendingRequests++;
         var coords = this._keyToCellCoords(key);
         var bounds = this._cellCoordsToBounds(coords);
@@ -348,7 +347,7 @@ export var FeatureManager = FeatureGrid.extend({
   },
 
   refresh: function () {
-    for (var key in this._activeCells) {
+    for (var key in this._cells) {
       var coords = this._keyToCellCoords(key);
       var bounds = this._cellCoordsToBounds(coords);
       this._requestFeatures(bounds, key);
@@ -492,13 +491,13 @@ export var FeatureManager = FeatureGrid.extend({
       this._currentSnapshot = [];
     } else {
       /*
-      for every cell in this._activeCells
+      for every cell in this._cells
         1. Get the cache key for the coords of the cell
         2. If this._cache[key] exists it will be an array of feature IDs.
         3. Call this.addLayers(this._cache[key]) to instruct the feature layer to add the layers back.
       */
-      for (var i in this._activeCells) {
-        var coords = this._activeCells[i].coords;
+      for (var i in this._cells) {
+        var coords = this._cells[i].coords;
         var key = this._cacheKey(coords);
         if (this._cache[key]) {
           this.addLayers(this._cache[key]);

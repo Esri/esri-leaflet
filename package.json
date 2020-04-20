@@ -40,7 +40,8 @@
     "sinon-chai": "3.2.0",
     "snazzy": "^8.0.0",
     "uglify-js": "^2.8.29",
-    "watch": "^1.0.2"
+    "watch": "^1.0.2",
+    "leaflet": "^1.0.0"
   },
   "files": [
     "src/**/*.js",
@@ -82,6 +83,7 @@
     "prepare": "npm run build",
     "pretest": "npm run build",
     "precommit": "npm run lint",
+    "fix": "semistandard --fix",
     "release": "./scripts/release.sh",
     "start-watch": "watch \"npm run build\" src",
     "start": "run-p start-watch serve",
