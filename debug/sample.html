@@ -1,28 +1,43 @@
 <!DOCTYPE html>
-  <html>
+<html>
   <head>
-    <meta charset=utf-8 />
+    <meta charset="utf-8" />
     <title>Esri Leaflet Debugging Sample</title>
-    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
 
     <!-- Load Leaflet -->
-    <link rel="stylesheet" href="../node_modules/leaflet/dist/leaflet.css" />
-    <script src="../node_modules/leaflet/dist/leaflet-src.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+      integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+      crossorigin=""
+    />
+
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+    <script
+      src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+      integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+      crossorigin=""
+    ></script>
 
     <!-- Load Esri Leaflet from source-->
     <script src="../dist/esri-leaflet-debug.js"></script>
 
     <style>
       body {
-        margin:0;
-        padding:0;
+        margin: 0;
+        padding: 0;
       }
 
       #map {
         position: absolute;
-        top:0;
-        bottom:0;
-        right:0;left:0;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
       }
 
       #info-pane {
@@ -36,25 +51,27 @@
     </style>
   </head>
   <body>
+    <div id="map"></div>
+    <div id="info-pane" class="leaflet-bar">
+      <label>
+        sample application for debugging
+      </label>
+    </div>
 
-  <div id="map"></div>
-  <div id="info-pane" class="leaflet-bar">
-    <label>
-    sample application for debugging
-    </label>
-  </div>
-
-  <script>
-    /*
+    <script>
+      /*
     make a copy of this file in the same folder if you'd like git to ignore your local changes
     */
-    var map = L.map('map').setView([40, -100], 4);
-    L.esri.basemapLayer('Topographic').addTo(map);
+      var map = L.map("map").setView([43.5, -98.5], 6);
 
-    var fl = L.esri.featureLayer({
-      url:'http://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer/3'
-    }).addTo(map);
-  </script>
+      L.esri.basemapLayer("Topographic").addTo(map);
 
+      var fl = L.esri
+        .featureLayer({
+          url:
+            "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/flash_flood_warnings_2002_2012/FeatureServer/0"
+        })
+        .addTo(map);
+    </script>
   </body>
-  </html>
+</html>
