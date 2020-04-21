@@ -18,8 +18,10 @@ describe('L.esri.FeatureManager', function () {
     }).setView([45.51, -122.66], 14);
   }
 
-  var url = 'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0';
-  var urlWithParams = 'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0?foo=bar';
+  var url =
+    'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0';
+  var urlWithParams =
+    'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0?foo=bar';
   var layer;
   var sandbox;
   var server;
@@ -56,8 +58,8 @@ describe('L.esri.FeatureManager', function () {
     });
 
     map = createMap();
-    L.Util.requestAnimFrame = function (cd) {
-      cd();
+    L.Util.requestAnimFrame = function (cd, context) {
+      cd.call(context);
     };
   });
 
@@ -71,130 +73,132 @@ describe('L.esri.FeatureManager', function () {
 
   var fields = [
     {
-      'name': 'OBJECTID',
-      'type': 'esriFieldTypeOID',
-      'alias': 'OBJECTID',
-      'sqlType': 'sqlTypeInteger',
-      'domain': null,
-      'defaultValue': null
-    }, {
-      'name': 'Name',
-      'type': 'esriFieldTypeString',
-      'alias': 'Name',
-      'sqlType': 'sqlTypeNVarchar',
-      'length': 256,
-      'domain': null,
-      'defaultValue': null
-    }, {
-      'name': 'Type',
-      'type': 'esriFieldTypeString',
-      'alias': 'Type',
-      'sqlType': 'sqlTypeNVarchar',
-      'domain': null,
-      'defaultValue': null
+      name: 'OBJECTID',
+      type: 'esriFieldTypeOID',
+      alias: 'OBJECTID',
+      sqlType: 'sqlTypeInteger',
+      domain: null,
+      defaultValue: null
     },
     {
-      'name': 'Time',
-      'type': 'esriFieldTypeDate',
-      'alias': 'Time',
-      'sqlType': 'sqlTypeTimestamp2',
-      'domain': null,
-      'defaultValue': null
+      name: 'Name',
+      type: 'esriFieldTypeString',
+      alias: 'Name',
+      sqlType: 'sqlTypeNVarchar',
+      length: 256,
+      domain: null,
+      defaultValue: null
+    },
+    {
+      name: 'Type',
+      type: 'esriFieldTypeString',
+      alias: 'Type',
+      sqlType: 'sqlTypeNVarchar',
+      domain: null,
+      defaultValue: null
+    },
+    {
+      name: 'Time',
+      type: 'esriFieldTypeDate',
+      alias: 'Time',
+      sqlType: 'sqlTypeTimestamp2',
+      domain: null,
+      defaultValue: null
     }
   ];
 
   var feature1 = {
-    'attributes': {
-      'OBJECTID': 1,
-      'Name': 'Site 1',
-      'Type': 'Active',
-      'Time': new Date('January 1 2014 GMT-0800').valueOf()
+    attributes: {
+      OBJECTID: 1,
+      Name: 'Site 1',
+      Type: 'Active',
+      Time: new Date('January 1 2014 GMT-0800').valueOf()
     },
-    'geometry': {
-      'x': -122.673339,
-      'y': 45.537134,
-      'spatialReference': {
-        'wkid': 4326
+    geometry: {
+      x: -122.673339,
+      y: 45.537134,
+      spatialReference: {
+        wkid: 4326
       }
     }
   };
 
   var feature2 = {
-    'attributes': {
-      'OBJECTID': 2,
-      'Name': 'Site 2',
-      'Type': 'Inactive',
-      'Time': new Date('January 15 2014 GMT-0800').valueOf()
+    attributes: {
+      OBJECTID: 2,
+      Name: 'Site 2',
+      Type: 'Inactive',
+      Time: new Date('January 15 2014 GMT-0800').valueOf()
     },
-    'geometry': {
-      'x': -122.673342,
-      'y': 45.537161,
-      'spatialReference': {
-        'wkid': 4326
+    geometry: {
+      x: -122.673342,
+      y: 45.537161,
+      spatialReference: {
+        wkid: 4326
       }
     }
   };
 
   var feature3 = {
-    'attributes': {
-      'OBJECTID': 3,
-      'Name': 'Site 3',
-      'Type': 'Active',
-      'Time': new Date('January 12 2014 GMT-0800').valueOf()
+    attributes: {
+      OBJECTID: 3,
+      Name: 'Site 3',
+      Type: 'Active',
+      Time: new Date('January 12 2014 GMT-0800').valueOf()
     },
-    'geometry': {
-      'x': -122.629394,
-      'y': 45.537134,
-      'spatialReference': {
-        'wkid': 4326
+    geometry: {
+      x: -122.629394,
+      y: 45.537134,
+      spatialReference: {
+        wkid: 4326
       }
     }
   };
 
   var feature4 = {
-    'attributes': {
-      'OBJECTID': 4,
-      'Name': 'Site 4',
-      'Type': 'Inactive',
-      'StartTime': new Date('January 10 2014 GMT-0800').valueOf(),
-      'EndTime': new Date('January 11 2014 GMT-0800').valueOf()
+    attributes: {
+      OBJECTID: 4,
+      Name: 'Site 4',
+      Type: 'Inactive',
+      StartTime: new Date('January 10 2014 GMT-0800').valueOf(),
+      EndTime: new Date('January 11 2014 GMT-0800').valueOf()
     },
-    'geometry': {
-      'x': -122.673342,
-      'y': 45.537161,
-      'spatialReference': {
-        'wkid': 4326
+    geometry: {
+      x: -122.673342,
+      y: 45.537161,
+      spatialReference: {
+        wkid: 4326
       }
     }
   };
 
   var feature5 = {
-    'attributes': {
-      'OBJECTID': 5,
-      'Name': 'Site 5',
-      'Type': 'Active',
-      'StartTime': new Date('January 14 2014 GMT-0800').valueOf(),
-      'EndTime': new Date('January 15 2014 GMT-0800').valueOf()
+    attributes: {
+      OBJECTID: 5,
+      Name: 'Site 5',
+      Type: 'Active',
+      StartTime: new Date('January 14 2014 GMT-0800').valueOf(),
+      EndTime: new Date('January 15 2014 GMT-0800').valueOf()
     },
-    'geometry': {
-      'x': -122.629394,
-      'y': 45.537134,
-      'spatialReference': {
-        'wkid': 4326
+    geometry: {
+      x: -122.629394,
+      y: 45.537134,
+      spatialReference: {
+        wkid: 4326
       }
     }
   };
 
   var feature6 = {
-    'attributes': {
-      'OBJECTID': 6,
-      'Name': 'Site 6',
-      'Type': 'Active',
-      'StartTime': new Date('January 14 2014 GMT-0800').valueOf(),
-      'EndTime': new Date('January 15 2014 GMT-0800').valueOf()
+    attributes: {
+      OBJECTID: 6,
+      Name: 'Site 6',
+      Type: 'Active',
+      StartTime: new Date('January 14 2014 GMT-0800').valueOf(),
+      EndTime: new Date('January 15 2014 GMT-0800').valueOf()
     },
-    'geometry': {
-      'rings': [
+    geometry: {
+      rings: [
         [
           [-109.02, 36.98],
           [-109.02, 40.97],
@@ -203,8 +207,8 @@ describe('L.esri.FeatureManager', function () {
           [-109.02, 36.98]
         ]
       ],
-      'spatialReference': {
-        'wkid': 4326
+      spatialReference: {
+        wkid: 4326
       }
     }
   };
@@ -229,11 +233,15 @@ describe('L.esri.FeatureManager', function () {
   });
 
   it('should use additional params passed in options', function () {
-    server.respondWith('GET', 'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.6953125%2C%22ymin%22%3A45.521743896993634%2C%22xmax%22%3A-122.6513671875%2C%22ymax%22%3A45.55252525134013%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&foo=bar&f=json', JSON.stringify({
-      fields: fields,
-      features: [feature2],
-      objectIdFieldName: 'OBJECTID'
-    }));
+    server.respondWith(
+      'GET',
+      'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.6953125%2C%22ymin%22%3A45.49094569262732%2C%22xmax%22%3A-122.6513671875%2C%22ymax%22%3A45.521743896993634%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&resultType=tile&foo=bar&f=json',
+      JSON.stringify({
+        fields: fields,
+        features: [feature2],
+        objectIdFieldName: 'OBJECTID'
+      })
+    );
 
     layer = new MockLayer({
       url: url,
@@ -248,18 +256,18 @@ describe('L.esri.FeatureManager', function () {
 
     expect(layer.createLayers).to.have.been.calledWith([
       {
-        'type': 'Feature',
-        'geometry': {
-          'type': 'Point',
-          'coordinates': [-122.673342, 45.537161]
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: [-122.673342, 45.537161]
         },
-        'properties': {
-          'OBJECTID': 2,
-          'Name': 'Site 2',
-          'Type': 'Inactive',
-          'Time': new Date('January 15 2014 GMT-0800').valueOf()
+        properties: {
+          OBJECTID: 2,
+          Name: 'Site 2',
+          Type: 'Inactive',
+          Time: new Date('January 15 2014 GMT-0800').valueOf()
         },
-        'id': 2
+        id: 2
       }
     ]);
   });
@@ -272,11 +280,15 @@ describe('L.esri.FeatureManager', function () {
   });
 
   it('should create features based on the current view of the map', function () {
-    server.respondWith('GET', 'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.6953125%2C%22ymin%22%3A45.521743896993634%2C%22xmax%22%3A-122.6513671875%2C%22ymax%22%3A45.55252525134013%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&f=json', JSON.stringify({
-      fields: fields,
-      features: [feature1, feature2],
-      objectIdFieldName: 'OBJECTID'
-    }));
+    server.respondWith(
+      'GET',
+      'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.6953125%2C%22ymin%22%3A45.521743896993634%2C%22xmax%22%3A-122.6513671875%2C%22ymax%22%3A45.55252525134013%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&resultType=tile&f=json',
+      JSON.stringify({
+        fields: fields,
+        features: [feature1, feature2],
+        objectIdFieldName: 'OBJECTID'
+      })
+    );
 
     layer.addTo(map);
 
@@ -284,43 +296,47 @@ describe('L.esri.FeatureManager', function () {
 
     expect(layer.createLayers).to.have.been.calledWith([
       {
-        'type': 'Feature',
-        'geometry': {
-          'type': 'Point',
-          'coordinates': [-122.673342, 45.537161]
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: [-122.673342, 45.537161]
         },
-        'properties': {
-          'OBJECTID': 2,
-          'Name': 'Site 2',
-          'Type': 'Inactive',
-          'Time': new Date('January 15 2014 GMT-0800').valueOf()
+        properties: {
+          OBJECTID: 2,
+          Name: 'Site 2',
+          Type: 'Inactive',
+          Time: new Date('January 15 2014 GMT-0800').valueOf()
         },
-        'id': 2
+        id: 2
       },
       {
-        'type': 'Feature',
-        'geometry': {
-          'type': 'Point',
-          'coordinates': [-122.673339, 45.537134]
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: [-122.673339, 45.537134]
         },
-        'properties': {
-          'OBJECTID': 1,
-          'Name': 'Site 1',
-          'Type': 'Active',
-          'Time': new Date('January 1 2014 GMT-0800').valueOf()
+        properties: {
+          OBJECTID: 1,
+          Name: 'Site 1',
+          Type: 'Active',
+          Time: new Date('January 1 2014 GMT-0800').valueOf()
         },
-        'id': 1
+        id: 1
       }
     ]);
   });
 
   it('should fire a drawlimitexceeded event when there are more features then can be requested', function (done) {
-    server.respondWith('GET', 'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.6953125%2C%22ymin%22%3A45.521743896993634%2C%22xmax%22%3A-122.6513671875%2C%22ymax%22%3A45.55252525134013%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&f=json', JSON.stringify({
-      fields: fields,
-      features: [],
-      objectIdFieldName: 'OBJECTID',
-      exceededTransferLimit: true
-    }));
+    server.respondWith(
+      'GET',
+      'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.6953125%2C%22ymin%22%3A45.521743896993634%2C%22xmax%22%3A-122.6513671875%2C%22ymax%22%3A45.55252525134013%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&resultType=tile&f=json',
+      JSON.stringify({
+        fields: fields,
+        features: [],
+        objectIdFieldName: 'OBJECTID',
+        exceededTransferLimit: true
+      })
+    );
 
     layer.addTo(map);
 
@@ -333,22 +349,32 @@ describe('L.esri.FeatureManager', function () {
   });
 
   it('should filter existing features with a single time field', function () {
-    server.respondWith('GET', 'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.6953125%2C%22ymin%22%3A45.521743896993634%2C%22xmax%22%3A-122.6513671875%2C%22ymax%22%3A45.55252525134013%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&f=json', JSON.stringify({
-      fields: fields,
-      features: [feature2, feature3],
-      objectIdFieldName: 'OBJECTID'
-    }));
+    server.respondWith(
+      'GET',
+      'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.6953125%2C%22ymin%22%3A45.521743896993634%2C%22xmax%22%3A-122.6513671875%2C%22ymax%22%3A45.55252525134013%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&resultType=tile&f=json',
+      JSON.stringify({
+        fields: fields,
+        features: [feature2, feature3],
+        objectIdFieldName: 'OBJECTID'
+      })
+    );
 
     layer.addTo(map);
 
     server.respond();
 
-    layer.setTimeRange(new Date('January 11 2014 GMT-0800'), new Date('January 13 2014 GMT-0800'));
+    layer.setTimeRange(
+      new Date('January 11 2014 GMT-0800'),
+      new Date('January 13 2014 GMT-0800')
+    );
 
     expect(layer.removeLayers).to.have.been.calledWith([2]);
     expect(layer.addLayers).to.have.been.calledWith([3]);
 
-    layer.setTimeRange(new Date('January 14 2014 GMT-0800'), new Date('January 16 2014 GMT-0800'));
+    layer.setTimeRange(
+      new Date('January 14 2014 GMT-0800'),
+      new Date('January 16 2014 GMT-0800')
+    );
 
     expect(layer.removeLayers).to.have.been.calledWith([3]);
     expect(layer.addLayers).to.have.been.calledWith([2]);
@@ -361,74 +387,102 @@ describe('L.esri.FeatureManager', function () {
       url: url
     });
 
-    server.respondWith('GET', 'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.6953125%2C%22ymin%22%3A45.521743896993634%2C%22xmax%22%3A-122.6513671875%2C%22ymax%22%3A45.55252525134013%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&f=json', JSON.stringify({
-      fields: fields,
-      features: [feature2, feature3],
-      objectIdFieldName: 'OBJECTID'
-    }));
+    server.respondWith(
+      'GET',
+      'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.6953125%2C%22ymin%22%3A45.521743896993634%2C%22xmax%22%3A-122.6513671875%2C%22ymax%22%3A45.55252525134013%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&resultType=tile&f=json',
+      JSON.stringify({
+        fields: fields,
+        features: [feature2, feature3],
+        objectIdFieldName: 'OBJECTID'
+      })
+    );
 
     basiclayer.addTo(map);
 
     server.respond();
 
-    basiclayer.setTimeRange(new Date('January 11 2014 GMT-0800'), new Date('January 13 2014 GMT-0800'));
-    expect(consoleWarnSpy).to.have.been.calledWith('You must set timeField in the layer constructor in order to manipulate the start and end time filter.');
+    basiclayer.setTimeRange(
+      new Date('January 11 2014 GMT-0800'),
+      new Date('January 13 2014 GMT-0800')
+    );
+    expect(consoleWarnSpy).to.have.been.calledWith(
+      'You must set timeField in the layer constructor in order to manipulate the start and end time filter.'
+    );
   });
 
   it('should load more features with a single time field', function () {
-    server.respondWith('GET', 'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.6953125%2C%22ymin%22%3A45.521743896993634%2C%22xmax%22%3A-122.6513671875%2C%22ymax%22%3A45.55252525134013%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&time=1385884800000%2C1389340800000&f=json', JSON.stringify({
-      fields: fields,
-      features: [feature1],
-      objectIdFieldName: 'OBJECTID'
-    }));
+    server.respondWith(
+      'GET',
+      'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.6513671875%2C%22ymin%22%3A45.49094569262732%2C%22xmax%22%3A-122.607421875%2C%22ymax%22%3A45.521743896993634%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&resultType=tile&time=1385884800000%2C1389340800000&f=json',
+      JSON.stringify({
+        fields: fields,
+        features: [feature1],
+        objectIdFieldName: 'OBJECTID'
+      })
+    );
 
-    layer.setTimeRange(new Date('Dec 1 2013 GMT-0800'), new Date('January 10 2014 GMT-0800'));
+    layer.setTimeRange(
+      new Date('Dec 1 2013 GMT-0800'),
+      new Date('January 10 2014 GMT-0800')
+    );
 
     layer.addTo(map);
 
     server.respond();
+    console.log(1, server.lastRequest.url);
 
-    expect(layer.createLayers).to.have.been.calledWith([{
-      'type': 'Feature',
-      'geometry': {
-        'type': 'Point',
-        'coordinates': [-122.673339, 45.537134]
-      },
-      'properties': {
-        'OBJECTID': 1,
-        'Name': 'Site 1',
-        'Type': 'Active',
-        'Time': new Date('January 1 2014 GMT-0800').valueOf()
-      },
-      'id': 1
-    }]);
+    expect(layer.createLayers).to.have.been.calledWith([
+      {
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: [-122.673339, 45.537134]
+        },
+        properties: {
+          OBJECTID: 1,
+          Name: 'Site 1',
+          Type: 'Active',
+          Time: new Date('January 1 2014 GMT-0800').valueOf()
+        },
+        id: 1
+      }
+    ]);
 
-    server.respondWith('GET', 'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.6953125%2C%22ymin%22%3A45.521743896993634%2C%22xmax%22%3A-122.6513671875%2C%22ymax%22%3A45.55252525134013%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&time=1389686400000%2C1389859200000&f=json', JSON.stringify({
-      fields: fields,
-      features: [feature2],
-      objectIdFieldName: 'OBJECTID'
-    }));
+    server.respondWith(
+      'GET',
+      'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.6513671875%2C%22ymin%22%3A45.49094569262732%2C%22xmax%22%3A-122.607421875%2C%22ymax%22%3A45.521743896993634%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&resultType=tile&time=1389686400000%2C1389859200000&f=json',
+      JSON.stringify({
+        fields: fields,
+        features: [feature2],
+        objectIdFieldName: 'OBJECTID'
+      })
+    );
 
-    layer.setTimeRange(new Date('January 14 2014 GMT-0800'), new Date('January 16 2014 GMT-0800'));
+    layer.setTimeRange(
+      new Date('January 14 2014 GMT-0800'),
+      new Date('January 16 2014 GMT-0800')
+    );
 
     server.respond();
-
+    console.log(2, server.lastRequest.url);
     expect(layer.removeLayers).to.have.been.calledWith([1]);
 
-    expect(layer.createLayers).to.have.been.calledWith([{
-      'type': 'Feature',
-      'geometry': {
-        'type': 'Point',
-        'coordinates': [-122.673342, 45.537161]
-      },
-      'properties': {
-        'OBJECTID': 2,
-        'Name': 'Site 2',
-        'Type': 'Inactive',
-        'Time': new Date('January 15 2014 GMT-0800').valueOf()
-      },
-      'id': 2
-    }]);
+    expect(layer.createLayers).to.have.been.calledWith([
+      {
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: [-122.673342, 45.537161]
+        },
+        properties: {
+          OBJECTID: 2,
+          Name: 'Site 2',
+          Type: 'Inactive',
+          Time: new Date('January 15 2014 GMT-0800').valueOf()
+        },
+        id: 2
+      }
+    ]);
   });
 
   it('should filter existing features with a start and end time field', function () {
@@ -440,22 +494,32 @@ describe('L.esri.FeatureManager', function () {
       }
     });
 
-    server.respondWith('GET', 'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.6953125%2C%22ymin%22%3A45.521743896993634%2C%22xmax%22%3A-122.6513671875%2C%22ymax%22%3A45.55252525134013%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&f=json', JSON.stringify({
-      fields: fields,
-      features: [feature4, feature5],
-      objectIdFieldName: 'OBJECTID'
-    }));
+    server.respondWith(
+      'GET',
+      'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.6953125%2C%22ymin%22%3A45.521743896993634%2C%22xmax%22%3A-122.6513671875%2C%22ymax%22%3A45.55252525134013%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&resultType=tile&f=json',
+      JSON.stringify({
+        fields: fields,
+        features: [feature4, feature5],
+        objectIdFieldName: 'OBJECTID'
+      })
+    );
 
     layer.addTo(map);
 
     server.respond();
 
-    layer.setTimeRange(new Date('January 9 2014 GMT-0800'), new Date('January 12 2014 GMT-0800'));
+    layer.setTimeRange(
+      new Date('January 9 2014 GMT-0800'),
+      new Date('January 12 2014 GMT-0800')
+    );
 
     expect(layer.removeLayers).to.have.been.calledWith([5]);
     expect(layer.addLayers).to.have.been.calledWith([4, 4]);
 
-    layer.setTimeRange(new Date('January 13 2014 GMT-0800'), new Date('January 16 2014 GMT-0800'));
+    layer.setTimeRange(
+      new Date('January 13 2014 GMT-0800'),
+      new Date('January 16 2014 GMT-0800')
+    );
 
     expect(layer.removeLayers).to.have.been.calledWith([4, 4]);
     expect(layer.addLayers).to.have.been.calledWith([5, 5]);
@@ -470,153 +534,190 @@ describe('L.esri.FeatureManager', function () {
       }
     });
 
-    server.respondWith('GET', 'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.6953125%2C%22ymin%22%3A45.521743896993634%2C%22xmax%22%3A-122.6513671875%2C%22ymax%22%3A45.55252525134013%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&time=1389254400000%2C1389513600000&f=json', JSON.stringify({
-      fields: fields,
-      features: [feature4],
-      objectIdFieldName: 'OBJECTID'
-    }));
+    server.respondWith(
+      'GET',
+      'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.6513671875%2C%22ymin%22%3A45.49094569262732%2C%22xmax%22%3A-122.607421875%2C%22ymax%22%3A45.521743896993634%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&resultType=tile&time=1389254400000%2C1389513600000&f=json',
+      JSON.stringify({
+        fields: fields,
+        features: [feature4],
+        objectIdFieldName: 'OBJECTID'
+      })
+    );
 
-    layer.setTimeRange(new Date('January 9 2014 GMT-0800'), new Date('January 12 2014 GMT-0800'));
+    layer.setTimeRange(
+      new Date('January 9 2014 GMT-0800'),
+      new Date('January 12 2014 GMT-0800')
+    );
     layer.addTo(map);
 
     server.respond();
+    expect(layer.createLayers).to.have.been.calledWith([
+      {
+        geometry: {
+          type: 'Point',
+          coordinates: [-122.673342, 45.537161]
+        },
+        id: 4,
+        properties: {
+          OBJECTID: 4,
+          Name: 'Site 4',
+          Type: 'Inactive',
+          StartTime: new Date('January 10 2014 GMT-0800').valueOf(),
+          EndTime: new Date('January 11 2014 GMT-0800').valueOf()
+        },
+        type: 'Feature'
+      }
+    ]);
 
-    expect(layer.createLayers).to.have.been.calledWith([{
-      'geometry': {
-        'type': 'Point',
-        'coordinates': [-122.673342, 45.537161]
-      },
-      'id': 4,
-      'properties': {
-        'OBJECTID': 4,
-        'Name': 'Site 4',
-        'Type': 'Inactive',
-        'StartTime': new Date('January 10 2014 GMT-0800').valueOf(),
-        'EndTime': new Date('January 11 2014 GMT-0800').valueOf()
-      },
-      'type': 'Feature'
-    }]);
-
-    server.respondWith('GET', 'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.6953125%2C%22ymin%22%3A45.521743896993634%2C%22xmax%22%3A-122.6513671875%2C%22ymax%22%3A45.55252525134013%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&time=1389600000000%2C1389859200000&f=json', JSON.stringify({
-      fields: fields,
-      features: [feature5],
-      objectIdFieldName: 'OBJECTID'
-    }));
+    server.respondWith(
+      'GET',
+      'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.6513671875%2C%22ymin%22%3A45.49094569262732%2C%22xmax%22%3A-122.607421875%2C%22ymax%22%3A45.521743896993634%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&resultType=tile&time=1389600000000%2C1389859200000&f=json',
+      JSON.stringify({
+        fields: fields,
+        features: [feature5],
+        objectIdFieldName: 'OBJECTID'
+      })
+    );
 
     var callback = sinon.spy();
 
-    layer.setTimeRange(new Date('January 13 2014 GMT-0800'), new Date('January 16 2014 GMT-0800'), callback);
+    layer.setTimeRange(
+      new Date('January 13 2014 GMT-0800'),
+      new Date('January 16 2014 GMT-0800'),
+      callback
+    );
 
     server.respond();
-
     expect(callback).to.have.been.called;
     expect(layer.removeLayers).to.have.been.calledWith([4, 4]);
-    expect(layer.createLayers).to.have.been.calledWith([{
-      'geometry': {
-        'type': 'Point',
-        'coordinates': [-122.629394, 45.537134]
-      },
-      'id': 5,
-      'properties': {
-        'OBJECTID': 5,
-        'Name': 'Site 5',
-        'Type': 'Active',
-        'StartTime': new Date('January 14 2014 GMT-0800').valueOf(),
-        'EndTime': new Date('January 15 2014 GMT-0800').valueOf()
-      },
-      'type': 'Feature'
-    }]);
+    expect(layer.createLayers).to.have.been.calledWith([
+      {
+        geometry: {
+          type: 'Point',
+          coordinates: [-122.629394, 45.537134]
+        },
+        id: 5,
+        properties: {
+          OBJECTID: 5,
+          Name: 'Site 5',
+          Type: 'Active',
+          StartTime: new Date('January 14 2014 GMT-0800').valueOf(),
+          EndTime: new Date('January 15 2014 GMT-0800').valueOf()
+        },
+        type: 'Feature'
+      }
+    ]);
   });
 
   it('should filter features with a where parameter', function () {
-    server.respondWith('GET', /Type%3D'Active'/g, JSON.stringify({
-      fields: fields,
-      features: [feature1],
-      objectIdFieldName: 'OBJECTID'
-    }));
+    server.respondWith(
+      'GET',
+      /Type%3D'Active'/g,
+      JSON.stringify({
+        fields: fields,
+        features: [feature1],
+        objectIdFieldName: 'OBJECTID'
+      })
+    );
 
-    server.respondWith('GET', /Type%3D'Inactive'/g, JSON.stringify({
-      fields: fields,
-      features: [feature2],
-      objectIdFieldName: 'OBJECTID'
-    }));
+    server.respondWith(
+      'GET',
+      /Type%3D'Inactive'/g,
+      JSON.stringify({
+        fields: fields,
+        features: [feature2],
+        objectIdFieldName: 'OBJECTID'
+      })
+    );
 
-    layer.setWhere('Type=\'Active\'');
+    layer.setWhere("Type='Active'");
 
     layer.addTo(map);
+
     server.respond();
 
-    expect(layer.createLayers).to.have.been.calledWith([{
-      'type': 'Feature',
-      'geometry': {
-        'type': 'Point',
-        'coordinates': [-122.673339, 45.537134]
-      },
-      'properties': {
-        'OBJECTID': 1,
-        'Name': 'Site 1',
-        'Type': 'Active',
-        'Time': new Date('January 1 2014 GMT-0800').valueOf()
-      },
-      'id': 1
-    }]);
+    expect(layer.createLayers).to.have.been.calledWith([
+      {
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: [-122.673339, 45.537134]
+        },
+        properties: {
+          OBJECTID: 1,
+          Name: 'Site 1',
+          Type: 'Active',
+          Time: new Date('January 1 2014 GMT-0800').valueOf()
+        },
+        id: 1
+      }
+    ]);
 
     var callback = sinon.spy();
 
-    layer.setWhere('Type=\'Inactive\'', callback);
+    layer.setWhere("Type='Inactive'", callback);
 
     server.respond();
 
     expect(callback).to.have.been.called;
     expect(layer.removeLayers.getCall(0).args[0][0]).to.equal(1);
-    expect(layer.createLayers).to.have.been.calledWith([{
-      'type': 'Feature',
-      'geometry': {
-        'type': 'Point',
-        'coordinates': [-122.673342, 45.537161]
-      },
-      'properties': {
-        'OBJECTID': 2,
-        'Name': 'Site 2',
-        'Type': 'Inactive',
-        'Time': new Date('January 15 2014 GMT-0800').valueOf()
-      },
-      'id': 2
-    }]);
+    expect(layer.createLayers).to.have.been.calledWith([
+      {
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: [-122.673342, 45.537161]
+        },
+        properties: {
+          OBJECTID: 2,
+          Name: 'Site 2',
+          Type: 'Inactive',
+          Time: new Date('January 15 2014 GMT-0800').valueOf()
+        },
+        id: 2
+      }
+    ]);
   });
 
   it('should return true for features with a single time field in the current time range', function () {
-    layer.setTimeRange(new Date('Dec 1 2013 GMT-0800'), new Date('January 10 2014 GMT-0800'));
+    layer.setTimeRange(
+      new Date('Dec 1 2013 GMT-0800'),
+      new Date('January 10 2014 GMT-0800')
+    );
 
-    expect(layer._featureWithinTimeRange({
-      'type': 'Feature',
-      'geometry': {
-        'type': 'Point',
-        'coordinates': [-122.673339, 45.537134]
-      },
-      'properties': {
-        'OBJECTID': 1,
-        'Name': 'Site 1',
-        'Type': 'Active',
-        'Time': new Date('January 1 2014 GMT-0800').valueOf()
-      },
-      'id': 1
-    })).to.equal(true);
+    expect(
+      layer._featureWithinTimeRange({
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: [-122.673339, 45.537134]
+        },
+        properties: {
+          OBJECTID: 1,
+          Name: 'Site 1',
+          Type: 'Active',
+          Time: new Date('January 1 2014 GMT-0800').valueOf()
+        },
+        id: 1
+      })
+    ).to.equal(true);
 
-    expect(layer._featureWithinTimeRange({
-      'type': 'Feature',
-      'geometry': {
-        'type': 'Point',
-        'coordinates': [-122.673342, 45.537161]
-      },
-      'properties': {
-        'OBJECTID': 2,
-        'Name': 'Site 2',
-        'Type': 'Inactive',
-        'Time': new Date('January 15 2014 GMT-0800').valueOf()
-      },
-      'id': 2
-    })).not.to.equal(true);
+    expect(
+      layer._featureWithinTimeRange({
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: [-122.673342, 45.537161]
+        },
+        properties: {
+          OBJECTID: 2,
+          Name: 'Site 2',
+          Type: 'Inactive',
+          Time: new Date('January 15 2014 GMT-0800').valueOf()
+        },
+        id: 2
+      })
+    ).not.to.equal(true);
   });
 
   it('should return true for features with a single feature with start and end time fields in the current time range', function () {
@@ -630,76 +731,90 @@ describe('L.esri.FeatureManager', function () {
       }
     });
 
-    expect(layer._featureWithinTimeRange({
-      'type': 'Feature',
-      'geometry': {
-        'type': 'Point',
-        'coordinates': [-122.673339, 45.537134]
-      },
-      'properties': {
-        'OBJECTID': 1,
-        'Name': 'Site 1',
-        'Type': 'Active',
-        'StartTime': new Date('January 10 2014 GMT-0800').valueOf(),
-        'EndTime': new Date('January 11 2014 GMT-0800').valueOf()
-      },
-      'id': 1
-    })).to.equal(true);
+    expect(
+      layer._featureWithinTimeRange({
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: [-122.673339, 45.537134]
+        },
+        properties: {
+          OBJECTID: 1,
+          Name: 'Site 1',
+          Type: 'Active',
+          StartTime: new Date('January 10 2014 GMT-0800').valueOf(),
+          EndTime: new Date('January 11 2014 GMT-0800').valueOf()
+        },
+        id: 1
+      })
+    ).to.equal(true);
 
-    expect(layer._featureWithinTimeRange({
-      'type': 'Feature',
-      'geometry': {
-        'type': 'Point',
-        'coordinates': [-122.673342, 45.537161]
-      },
-      'properties': {
-        'OBJECTID': 2,
-        'Name': 'Site 2',
-        'Type': 'Inactive',
-        'StartTime': new Date('January 14 2014 GMT-0800').valueOf(),
-        'EndTime': new Date('January 15 2014 GMT-0800').valueOf()
-      },
-      'id': 2
-    })).to.equal(false);
+    expect(
+      layer._featureWithinTimeRange({
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: [-122.673342, 45.537161]
+        },
+        properties: {
+          OBJECTID: 2,
+          Name: 'Site 2',
+          Type: 'Inactive',
+          StartTime: new Date('January 14 2014 GMT-0800').valueOf(),
+          EndTime: new Date('January 15 2014 GMT-0800').valueOf()
+        },
+        id: 2
+      })
+    ).to.equal(false);
 
-    expect(layer._featureWithinTimeRange({
-      'type': 'Feature',
-      'geometry': {
-        'type': 'Point',
-        'coordinates': [-122.673345, 45.537188]
-      },
-      'properties': {
-        'OBJECTID': 3,
-        'Name': 'Site 3',
-        'Type': 'Active',
-        'StartTime': new Date('November 29 2013 GMT-0800').valueOf(),
-        'EndTime': new Date('January 15 2014 GMT-0800').valueOf()
-      },
-      'id': 3
-    })).to.equal(true);
+    expect(
+      layer._featureWithinTimeRange({
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: [-122.673345, 45.537188]
+        },
+        properties: {
+          OBJECTID: 3,
+          Name: 'Site 3',
+          Type: 'Active',
+          StartTime: new Date('November 29 2013 GMT-0800').valueOf(),
+          EndTime: new Date('January 15 2014 GMT-0800').valueOf()
+        },
+        id: 3
+      })
+    ).to.equal(true);
   });
 
   it('should return false when no time range is set', function () {
-    expect(layer._featureWithinTimeRange({
-      'type': 'Feature',
-      'geometry': {
-        'type': 'Point',
-        'coordinates': [-122.673339, 45.537134]
-      },
-      'properties': {
-        'OBJECTID': 1,
-        'Name': 'Site 1',
-        'Type': 'Active',
-        'StartTime': new Date('January 10 2014 GMT-0800').valueOf(),
-        'EndTime': new Date('January 11 2014 GMT-0800').valueOf()
-      },
-      'id': 1
-    })).to.equal(true);
+    expect(
+      layer._featureWithinTimeRange({
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: [-122.673339, 45.537134]
+        },
+        properties: {
+          OBJECTID: 1,
+          Name: 'Site 1',
+          Type: 'Active',
+          StartTime: new Date('January 10 2014 GMT-0800').valueOf(),
+          EndTime: new Date('January 11 2014 GMT-0800').valueOf()
+        },
+        id: 1
+      })
+    ).to.equal(true);
   });
 
   it('should be able to get the time range', function () {
-    layer.setTimeRange(new Date('January 13 2014 GMT-0800'), new Date('January 16 2014 GMT-0800'));
-    expect(layer.getTimeRange()).to.deep.equal([new Date('January 13 2014 GMT-0800'), new Date('January 16 2014 GMT-0800')]);
+    layer.setTimeRange(
+      new Date('January 13 2014 GMT-0800'),
+      new Date('January 16 2014 GMT-0800')
+    );
+    expect(layer.getTimeRange()).to.deep.equal([
+      new Date('January 13 2014 GMT-0800'),
+      new Date('January 16 2014 GMT-0800')
+    ]);
   });
 
   it('should be able to get the where', function () {
@@ -765,95 +880,126 @@ describe('L.esri.FeatureManager', function () {
   // });
 
   it('should wrap the updateFeature method on the underlying service and refresh', function (done) {
-    server.respondWith('POST', 'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/updateFeatures', JSON.stringify({
-      'updateResults': [{
-        'objectId': 1,
-        'success': true
-      }]
-    }));
+    server.respondWith(
+      'POST',
+      'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/updateFeatures',
+      JSON.stringify({
+        updateResults: [
+          {
+            objectId: 1,
+            success: true
+          }
+        ]
+      })
+    );
 
-    layer.updateFeature({
-      type: 'Feature',
-      id: 1,
-      geometry: {
-        type: 'Point',
-        coordinates: [45, -121]
+    layer.updateFeature(
+      {
+        type: 'Feature',
+        id: 1,
+        geometry: {
+          type: 'Point',
+          coordinates: [45, -121]
+        },
+        properties: {
+          foo: 'bar'
+        }
       },
-      properties: {
-        foo: 'bar'
+      function (error, response) {
+        expect(response).to.deep.equal({
+          objectId: 1,
+          success: true
+        });
+        done();
       }
-    }, function (error, response) {
-      expect(response).to.deep.equal({
-        'objectId': 1,
-        'success': true
-      });
-      done();
-    });
+    );
 
     server.respond();
   });
 
   it('should wrap the updateFeatures method on the underlying service and refresh', function (done) {
-    server.respondWith('POST', 'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/updateFeatures', JSON.stringify({
-      'updateResults': [{
-        'objectid': 1,
-        'success': true
-      }, {
-        'objectid': 2,
-        'success': true
-      }]
-    }));
+    server.respondWith(
+      'POST',
+      'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/updateFeatures',
+      JSON.stringify({
+        updateResults: [
+          {
+            objectid: 1,
+            success: true
+          },
+          {
+            objectid: 2,
+            success: true
+          }
+        ]
+      })
+    );
 
-    layer.updateFeatures({
-      type: 'FeatureCollection',
-      features: [{
-        type: 'Feature',
-        id: 1,
-        properties: {
-          foo: 'bar'
-        },
-        geometry: {
-          type: 'Point',
-          coordinates: [-121, 45]
-        }
-      }, {
-        type: 'Feature',
-        id: 2,
-        properties: {
-          foo: 'bar'
-        },
-        geometry: {
-          type: 'Point',
-          coordinates: [-121, 45]
-        }
-      }]
-    }, function (error, response) {
-      expect(response).to.deep.equal([{
-        'objectid': 1,
-        'success': true
-      }, {
-        'objectid': 2,
-        'success': true
-      }]);
-      done();
-    });
+    layer.updateFeatures(
+      {
+        type: 'FeatureCollection',
+        features: [
+          {
+            type: 'Feature',
+            id: 1,
+            properties: {
+              foo: 'bar'
+            },
+            geometry: {
+              type: 'Point',
+              coordinates: [-121, 45]
+            }
+          },
+          {
+            type: 'Feature',
+            id: 2,
+            properties: {
+              foo: 'bar'
+            },
+            geometry: {
+              type: 'Point',
+              coordinates: [-121, 45]
+            }
+          }
+        ]
+      },
+      function (error, response) {
+        expect(response).to.deep.equal([
+          {
+            objectid: 1,
+            success: true
+          },
+          {
+            objectid: 2,
+            success: true
+          }
+        ]);
+        done();
+      }
+    );
 
     server.respond();
   });
 
   it('should wrap the removeFeature method on the underlying service', function (done) {
-    server.respondWith('POST', 'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/deleteFeatures', JSON.stringify({
-      'deleteResults': [{
-        'objectId': 1,
-        'success': true
-      }]
-    }));
+    server.respondWith(
+      'POST',
+      'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/deleteFeatures',
+      JSON.stringify({
+        deleteResults: [
+          {
+            objectId: 1,
+            success: true
+          }
+        ]
+      })
+    );
 
     layer.deleteFeature(1, function (error, response) {
       expect(layer.removeLayers).to.have.been.calledWith([1]);
       expect(response).to.deep.equal({
-        'objectId': 1,
-        'success': true
+        objectId: 1,
+        success: true
       });
       done();
     });
@@ -862,22 +1008,29 @@ describe('L.esri.FeatureManager', function () {
   });
 
   it('should wrap the removeFeatures method on the underlying service', function (done) {
-    server.respondWith('POST', 'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/deleteFeatures', JSON.stringify({
-      'deleteResults': [{
-        'objectId': 1,
-        'success': true
-      }, {
-        'objectId': 2,
-        'success': true
-      }]
-    }));
+    server.respondWith(
+      'POST',
+      'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/deleteFeatures',
+      JSON.stringify({
+        deleteResults: [
+          {
+            objectId: 1,
+            success: true
+          },
+          {
+            objectId: 2,
+            success: true
+          }
+        ]
+      })
+    );
 
     layer.deleteFeatures([1, 2], function (error, response) {
       expect(layer.removeLayers).to.have.been.calledWith([1]);
       expect(layer.removeLayers).to.have.been.calledWith([2]);
       expect(response[1]).to.deep.equal({
-        'objectId': 2,
-        'success': true
+        objectId: 2,
+        success: true
       });
       done();
     });
@@ -886,51 +1039,63 @@ describe('L.esri.FeatureManager', function () {
   });
 
   it('should support generalizing geometries', function () {
-    server.respondWith('GET', 'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.6953125%2C%22ymin%22%3A45.521743896993634%2C%22xmax%22%3A-122.6513671875%2C%22ymax%22%3A45.55252525134013%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&maxAllowableOffset=0.00004291534423826704&f=json', JSON.stringify({
-      fields: fields,
-      features: [feature6],
-      objectIdFieldName: 'OBJECTID'
-    }));
+    server.respondWith(
+      'GET',
+      'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.6953125%2C%22ymin%22%3A45.521743896993634%2C%22xmax%22%3A-122.6513671875%2C%22ymax%22%3A45.55252525134013%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&resultType=tile&maxAllowableOffset=0.00004291534423826704&f=json',
+      JSON.stringify({
+        fields: fields,
+        features: [feature6],
+        objectIdFieldName: 'OBJECTID'
+      })
+    );
 
     var layer = new MockLayer({
-      url: 'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/',
+      url:
+        'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/',
       simplifyFactor: 0.5
     });
 
     layer.addTo(map);
     server.respond();
-    expect(layer.createLayers).to.have.been.calledWith([{
-      'type': 'Feature',
-      'geometry': {
-        'type': 'Polygon',
-        'coordinates': [
-          [
-            [-109.02, 36.98],
-            [-102.06, 37.01],
-            [-102.06, 40.97],
-            [-109.02, 40.97],
-            [-109.02, 36.98]
+
+    expect(layer.createLayers).to.have.been.calledWith([
+      {
+        type: 'Feature',
+        geometry: {
+          type: 'Polygon',
+          coordinates: [
+            [
+              [-109.02, 36.98],
+              [-102.06, 37.01],
+              [-102.06, 40.97],
+              [-109.02, 40.97],
+              [-109.02, 36.98]
+            ]
           ]
-        ]
-      },
-      'properties': {
-        'OBJECTID': 6,
-        'Name': 'Site 6',
-        'Type': 'Active',
-        'StartTime': new Date('January 14 2014 GMT-0800').valueOf(),
-        'EndTime': new Date('January 15 2014 GMT-0800').valueOf()
-      },
-      'id': 6
-    }]);
+        },
+        properties: {
+          OBJECTID: 6,
+          Name: 'Site 6',
+          Type: 'Active',
+          StartTime: new Date('January 14 2014 GMT-0800').valueOf(),
+          EndTime: new Date('January 15 2014 GMT-0800').valueOf()
+        },
+        id: 6
+      }
+    ]);
   });
 
   it('should propagate events from the service', function () {
-    server.respondWith('GET', new RegExp(/.*/), JSON.stringify({
-      fields: fields,
-      features: [],
-      objectIdFieldName: 'OBJECTID',
-      exceededTransferLimit: true
-    }));
+    server.respondWith(
+      'GET',
+      new RegExp(/.*/),
+      JSON.stringify({
+        fields: fields,
+        features: [],
+        objectIdFieldName: 'OBJECTID',
+        exceededTransferLimit: true
+      })
+    );
 
     var requeststartSpy = sinon.spy();
     var requestendSpy = sinon.spy();
@@ -1009,24 +1174,40 @@ describe('L.esri.FeatureManager', function () {
     var bounds = L.latLngBounds(southWest, northEast);
     var point = L.point(200, 300);
 
-    server.respondWith('GET', new RegExp(/.*/), JSON.stringify({
-      fields: fields
-    }));
+    server.respondWith(
+      'GET',
+      new RegExp(/.*/),
+      JSON.stringify({
+        fields: fields
+      })
+    );
 
-    layer._requestFeatures(bounds, point, function () { return; });
+    layer._requestFeatures(bounds, point, function () {
+      return;
+    });
 
-    server.respondWith('GET', new RegExp(/.*/), JSON.stringify({
-      fields: fields
-    }));
+    server.respondWith(
+      'GET',
+      new RegExp(/.*/),
+      JSON.stringify({
+        fields: fields
+      })
+    );
 
-    layer._requestFeatures(bounds, point, function () { return; });
+    layer._requestFeatures(bounds, point, function () {
+      return;
+    });
 
     expect(layer._activeRequests).to.equal(2);
 
-    server.respondWith('GET', new RegExp(/.*/),
-      [500, { 'Content-Type': 'application/json' },
-        '']);
-    layer._requestFeatures(bounds, point, function () { return; });
+    server.respondWith('GET', new RegExp(/.*/), [
+      500,
+      { 'Content-Type': 'application/json' },
+      ''
+    ]);
+    layer._requestFeatures(bounds, point, function () {
+      return;
+    });
 
     server.respond();
     server.respond();
