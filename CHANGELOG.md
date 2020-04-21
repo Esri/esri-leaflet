@@ -5,6 +5,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+* Updated `request` to be imported in `BasemapLayer.js` rather than relying on global `L.esri`. (🙏danieloliveira117🙏 [#1191](https://github.com/Esri/esri-leaflet/issues/1191))
+
 ## [2.3.3] - 2020-01-29
 
 ### Fixed
