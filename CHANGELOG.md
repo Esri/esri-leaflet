@@ -7,6 +7,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 - Updated `request` to be imported in `BasemapLayer.js` rather than relying on global `L.esri`. (🙏danieloliveira117🙏 [#1191](https://github.com/Esri/esri-leaflet/issues/1191))
 - Updated `FeatureLayer` allowing queries to be consistently cached both on the server and on ArcGIS Online CDN. This should result in a decent performance boost for most use cases and in some cases (public, non-editable data) a significant performance boost. [#1189](https://github.com/Esri/esri-leaflet/pull/1189).
+- use `@terraformer/arcgis` (instead of `@esri/arcgis-to-geojson-utils`) to generate GeoJSON from older ArcGIS services [#1194](https://github.com/Esri/esri-leaflet/pull/1194).
 
 ## [2.3.3] - 2020-01-29
 
