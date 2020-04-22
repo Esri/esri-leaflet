@@ -5,7 +5,14 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+## [2.4.0] - 2020-04-22
+
+### Fixed
+
 - Updated `request` to be imported in `BasemapLayer.js` rather than relying on global `L.esri`. (🙏danieloliveira117🙏 [#1191](https://github.com/Esri/esri-leaflet/issues/1191))
+
+### Changed
+
 - Updated `FeatureLayer` allowing queries to be consistently cached both on the server and on ArcGIS Online CDN. This should result in a decent performance boost for most use cases and in some cases (public, non-editable data) a significant performance boost. [#1189](https://github.com/Esri/esri-leaflet/pull/1189).
 - use `@terraformer/arcgis` (instead of `@esri/arcgis-to-geojson-utils`) to generate GeoJSON from older ArcGIS services [#1194](https://github.com/Esri/esri-leaflet/pull/1194).
 
@@ -711,7 +718,8 @@ None
 - Add DarkGray and DarkGrayLabels to BasemapLayer. #190
 - An attributionControl on maps is now required when using BasemapLayer. #159
 
-[unreleased]: https://github.com/esri/esri-leaflet/compare/v2.3.3...HEAD
+[unreleased]: https://github.com/esri/esri-leaflet/compare/v2.4.0...HEAD
+[2.4.0]: https://github.com/esri/esri-leaflet/compare/v2.3.3...v2.4.0
 [2.3.3]: https://github.com/esri/esri-leaflet/compare/v2.3.2...v2.3.3
 [2.3.2]: https://github.com/esri/esri-leaflet/compare/v2.3.1...v2.3.2
 [2.3.1]: https://github.com/esri/esri-leaflet/compare/v2.3.0...v2.3.1
