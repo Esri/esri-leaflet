@@ -11,13 +11,10 @@
     "John Gravois <jgravois@esri.com> (http://johngravois.com)"
   ],
   "dependencies": {
-    "@terraformer/arcgis": "^2.0.1",
+    "@terraformer/arcgis": "^2.0.7",
     "tiny-binary-search": "^1.0.3"
   },
   "devDependencies": {
-    "@babel/core": "^7.9.6",
-    "@babel/preset-env": "^7.9.6",
-    "@rollup/plugin-babel": "^5.0.0",
     "chai": "4.2.0",
     "gh-release": "^3.3.2",
     "highlight.js": "^9.12.0",
