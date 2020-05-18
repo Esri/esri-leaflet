@@ -1,4 +1,4 @@
-import uglify from 'rollup-plugin-uglify';
+import { uglify } from 'rollup-plugin-uglify';
 import config from './base.js';
 
 config.output.file = 'dist/esri-leaflet.js';
