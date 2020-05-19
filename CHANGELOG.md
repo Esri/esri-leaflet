@@ -5,6 +5,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+## [2.4.1] - 2020-05-19
+
+### Fixed
+
+- Fixed ES5 issue ([#1201](https://github.com/Esri/esri-leaflet/pull/1201))
+
 ## [2.4.0] - 2020-04-22
 
 ### Fixed
@@ -718,7 +724,8 @@ None
 - Add DarkGray and DarkGrayLabels to BasemapLayer. #190
 - An attributionControl on maps is now required when using BasemapLayer. #159
 
-[unreleased]: https://github.com/esri/esri-leaflet/compare/v2.4.0...HEAD
+[unreleased]: https://github.com/esri/esri-leaflet/compare/v2.4.1..HEAD
+[2.4.1]: https://github.com/esri/esri-leaflet/compare/v2.4.0...v2.4.1
 [2.4.0]: https://github.com/esri/esri-leaflet/compare/v2.3.3...v2.4.0
 [2.3.3]: https://github.com/esri/esri-leaflet/compare/v2.3.2...v2.3.3
 [2.3.2]: https://github.com/esri/esri-leaflet/compare/v2.3.1...v2.3.2
