@@ -1,5 +1,5 @@
-import json from 'rollup-plugin-json';
-import nodeResolve from 'rollup-plugin-node-resolve';
+import json from '@rollup/plugin-json';
+import nodeResolve from '@rollup/plugin-node-resolve';
 
 var pkg = require('../package.json');
 var copyright = '/* ' + pkg.name + ' - v' + pkg.version + ' - ' + new Date().toString() + '\n' +
@@ -26,7 +26,8 @@ export default {
     name: 'L.esri',
     globals: {
       'leaflet': 'L',
-      'esri-leaflet': 'L.esri'
+      'esri-leaflet': 'L.esri',
+      '@terraformer/arcgis': 'Terraformer'
     },
     sourcemap: true
   }
