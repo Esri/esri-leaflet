@@ -455,6 +455,12 @@ L.esri.Geocoding.Controls.geosearch({
 <td>1000</td>
 <td>If a service or layer contains points, buffer points by this radius (in meters) to create bounds.</td>
 </tr>
+<tr>
+<td><code>searchMode</code></td>
+<td><code>String</code></td>
+<td>&#39;contain&#39;</td>
+<td>Sets how the search is performed against features.  Options are <code>contain</code>, <code>startWith</code>, <code>endWith</code>, or <code>strict</code>. Please refer to the <a href="https://github.com/Esri/esri-leaflet-geocoder/blob/master/src/Providers/FeatureLayer.js#L103">FeatureLayer Provider</a> JavaScript file for how the different searches are structed.</td>
+</tr>
 </tbody>
 </table>
 <h5 id="featurelayerprovider-methods">featureLayerProvider Methods</h5>
