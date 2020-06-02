@@ -8,11 +8,11 @@
   <meta charset="utf-8">
 
   
-    <title>ArcGIS Server username/password | Esri Leaflet</title>
+    <title>Search modes for searching within feature layers | Esri Leaflet</title>
   
 
   
-    <meta name="description" content="Example showing authentication with ArcGIS Server via a username and password. In this example a username and password are hardcoded in.">
+    <meta name="description" content="Searches features layers for matching text in addition to geocoding. This demo relies on the &lt;a href=&quot;https://github.com/Esri/esri-leaflet-geocoder&quot;&gt;Esri Leaflet Geocoder&lt;/a&gt; plugin.">
   
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -49,6 +49,13 @@
 
   
 
+  
+  <link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder@2.3.3/dist/esri-leaflet-geocoder.css"
+    integrity="sha512-IM3Hs+feyi40yZhDH6kV8vQMg4Fh20s9OzInIIAc4nx7aMYMfo+IenRUekoYsHZqGkREUgx0VvlEsgm7nCDW9g=="
+    crossorigin="">
+  <script src="https://unpkg.com/esri-leaflet-geocoder@2.3.3/dist/esri-leaflet-geocoder.js"
+    integrity="sha512-HrFUyCEtIpxZloTgEKKMq4RFYhxjJkCiF5sDxuAokklOeZ68U2NPfh4MFtyIVWlsKtVbK5GD2/JzFyAfvT5ejA=="
+    crossorigin=""></script>
   
 
   
@@ -206,54 +213,67 @@
 
 <div class="example-content">
 <div class="wrap">
-  <h1>ArcGIS Server username/password</h1>
-  <p>Example showing authentication with ArcGIS Server via a username and password. In this example a username and password are hardcoded in.</p>
+  <h1>Search modes for searching within feature layers</h1>
+  <p>Searches features layers for matching text in addition to geocoding. This demo relies on the <a href="https://github.com/Esri/esri-leaflet-geocoder">Esri Leaflet Geocoder</a> plugin.</p>
 </div>
 <div id="map-wrapper">
   
 
+<style>
+  #selectContainer {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1000;
+    background: white;
+    padding: 1em;
+  }
+
+  #selectContainer select {
+    font-size: 16px;
+  }
+</style>
+
 <div id="map"></div>
 
+<div id="selectContainer" class="leaflet-bar">
+  <label>
+    Search Mode:
+    <select id="searchMode">
+      <option value="contain">contain</option>
+      <option value="startWith">startWith</option>
+      <option value="endWith">endWith</option>
+      <option value="strict">strict</option>
+    </select>
+  </label>
+</div>
+
 <script>
-  // workaround for old ie
-  if (!window.location.origin) {
-    window.location.origin = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '');
-  }
+  var map = L.map('map').setView([40.91, -96.63], 4);
 
-  var map = L.map('map').setView([34.089, -116.865], 9);
-  L.esri.basemapLayer('Topographic').addTo(map);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
+  }).addTo(map);
 
-  function serverAuth (callback) {
-    L.esri.post('https://sampleserver6.arcgisonline.com/arcgis/tokens/generateToken', {
-      username: 'user1',
-      password: 'user1',
-      f: 'json',
-      expiration: 86400,
-      client: 'referer',
-      referer: window.location.origin
-    }, callback);
-  }
+  // searchMode can be 'contain', 'startWith', 'endWith', or 'strict'
+  var gisDayProvider = L.esri.Geocoding.featureLayerProvider({
+    url: 'https://services.arcgis.com/uCXeTVveQzP4IIcx/arcgis/rest/services/gisday/FeatureServer/0/',
+    searchFields: ['Name'],
+    label: 'GIS Day Events',
+    formatSuggestion: function (feature) {
+      return feature.properties.Name;
+    },
+    searchMode: 'contain'
+  });
 
-  serverAuth(function (error, response) {
-    if (error) {
-      return;
-    }
+  L.esri.Geocoding.geosearch({
+    providers: [gisDayProvider]
+  }).addTo(map);
 
-    var dl = L.esri.dynamicMapLayer({
-      url: 'https://sampleserver6.arcgisonline.com/arcgis/rest/services/Wildfire_secure_ac/MapServer',
-      opacity: 1,
-      token: response.token
-    }).addTo(map);
+  var searchMode = document.getElementById('searchMode');
 
-    dl.on('authenticationrequired', function (e) {
-      serverAuth(function (error, response) {
-        if (error) {
-          return;
-        }
-
-        e.authenticate(response.token);
-      });
-    });
+  searchMode.addEventListener('change', function () {
+    gisDayProvider.options.searchMode = searchMode.value;
   });
 </script>
 
@@ -261,7 +281,7 @@
 <pre><code class="language-xml"><span class="tag">&lt;<span class="title">html</span>&gt;</span>
 <span class="tag">&lt;<span class="title">head</span>&gt;</span>
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">"utf-8"</span> /&gt;</span>
-  <span class="tag">&lt;<span class="title">title</span>&gt;</span>ArcGIS Server username/password<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Search modes for searching within feature layers<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">name</span>=<span class="value">"viewport"</span> <span class="attribute">content</span>=<span class="value">"initial-scale=1,maximum-scale=1,user-scalable=no"</span> /&gt;</span>
 
   <span class="comment">&lt;!-- Load Leaflet from CDN --&gt;</span>
@@ -279,6 +299,14 @@
   <span class="attribute">crossorigin</span>=<span class="value">""</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 
+  <span class="comment">&lt;!-- Load Esri Leaflet Geocoder from CDN --&gt;</span>
+  <span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"https://unpkg.com/esri-leaflet-geocoder@2.3.3/dist/esri-leaflet-geocoder.css"</span>
+    <span class="attribute">integrity</span>=<span class="value">"sha512-IM3Hs+feyi40yZhDH6kV8vQMg4Fh20s9OzInIIAc4nx7aMYMfo+IenRUekoYsHZqGkREUgx0VvlEsgm7nCDW9g=="</span>
+    <span class="attribute">crossorigin</span>=<span class="value">""</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/esri-leaflet-geocoder@2.3.3/dist/esri-leaflet-geocoder.js"</span>
+    <span class="attribute">integrity</span>=<span class="value">"sha512-HrFUyCEtIpxZloTgEKKMq4RFYhxjJkCiF5sDxuAokklOeZ68U2NPfh4MFtyIVWlsKtVbK5GD2/JzFyAfvT5ejA=="</span>
+    <span class="attribute">crossorigin</span>=<span class="value">""</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+
 
 
   <span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css">
@@ -288,48 +316,61 @@
 <span class="tag">&lt;/<span class="title">head</span>&gt;</span>
 <span class="tag">&lt;<span class="title">body</span>&gt;</span>
 
+<span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css">
+  <span class="id">#selectContainer</span> <span class="rules">{
+    <span class="rule"><span class="attribute">position</span>:<span class="value"> absolute</span></span>;
+    <span class="rule"><span class="attribute">top</span>:<span class="value"> <span class="number">10</span>px</span></span>;
+    <span class="rule"><span class="attribute">right</span>:<span class="value"> <span class="number">10</span>px</span></span>;
+    <span class="rule"><span class="attribute">z-index</span>:<span class="value"> <span class="number">1000</span></span></span>;
+    <span class="rule"><span class="attribute">background</span>:<span class="value"> white</span></span>;
+    <span class="rule"><span class="attribute">padding</span>:<span class="value"> <span class="number">1</span>em</span></span>;
+  <span class="rule">}</span></span>
+
+  <span class="id">#selectContainer</span> <span class="tag">select</span> <span class="rules">{
+    <span class="rule"><span class="attribute">font-size</span>:<span class="value"> <span class="number">16</span>px</span></span>;
+  <span class="rule">}</span></span>
+</span><span class="tag">&lt;/<span class="title">style</span>&gt;</span>
+
 <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 
+<span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"selectContainer"</span> <span class="attribute">class</span>=<span class="value">"leaflet-bar"</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">label</span>&gt;</span>
+    Search Mode:
+    <span class="tag">&lt;<span class="title">select</span> <span class="attribute">id</span>=<span class="value">"searchMode"</span>&gt;</span>
+      <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"contain"</span>&gt;</span>contain<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
+      <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"startWith"</span>&gt;</span>startWith<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
+      <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"endWith"</span>&gt;</span>endWith<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
+      <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"strict"</span>&gt;</span>strict<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
+    <span class="tag">&lt;/<span class="title">select</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">label</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+
 <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
-  <span class="comment">// workaround for old ie</span>
-  <span class="keyword">if</span> (!window.location.origin) {
-    window.location.origin = window.location.protocol + <span class="string">'//'</span> + window.location.hostname + (window.location.port ? <span class="string">':'</span> + window.location.port : <span class="string">''</span>);
-  }
+  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">40.91</span>, -<span class="number">96.63</span>], <span class="number">4</span>);
 
-  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">34.089</span>, -<span class="number">116.865</span>], <span class="number">9</span>);
-  L.esri.basemapLayer(<span class="string">'Topographic'</span>).addTo(map);
+  L.tileLayer(<span class="string">'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'</span>, {
+    attribution: <span class="string">'&amp;copy; &lt;a href="https://osm.org/copyright"&gt;OpenStreetMap&lt;/a&gt; contributors'</span>
+  }).addTo(map);
 
-  <span class="function"><span class="keyword">function</span> <span class="title">serverAuth</span> <span class="params">(callback)</span> {</span>
-    L.esri.post(<span class="string">'https://sampleserver6.arcgisonline.com/arcgis/tokens/generateToken'</span>, {
-      username: <span class="string">'user1'</span>,
-      password: <span class="string">'user1'</span>,
-      f: <span class="string">'json'</span>,
-      expiration: <span class="number">86400</span>,
-      client: <span class="string">'referer'</span>,
-      referer: window.location.origin
-    }, callback);
-  }
+  <span class="comment">// searchMode can be 'contain', 'startWith', 'endWith', or 'strict'</span>
+  <span class="keyword">var</span> gisDayProvider = L.esri.Geocoding.featureLayerProvider({
+    url: <span class="string">'https://services.arcgis.com/uCXeTVveQzP4IIcx/arcgis/rest/services/gisday/FeatureServer/0/'</span>,
+    searchFields: [<span class="string">'Name'</span>],
+    label: <span class="string">'GIS Day Events'</span>,
+    formatSuggestion: <span class="function"><span class="keyword">function</span> <span class="params">(feature)</span> {</span>
+      <span class="keyword">return</span> feature.properties.Name;
+    },
+    searchMode: <span class="string">'contain'</span>
+  });
 
-  serverAuth(<span class="function"><span class="keyword">function</span> <span class="params">(error, response)</span> {</span>
-    <span class="keyword">if</span> (error) {
-      <span class="keyword">return</span>;
-    }
+  L.esri.Geocoding.geosearch({
+    providers: [gisDayProvider]
+  }).addTo(map);
 
-    <span class="keyword">var</span> dl = L.esri.dynamicMapLayer({
-      url: <span class="string">'https://sampleserver6.arcgisonline.com/arcgis/rest/services/Wildfire_secure_ac/MapServer'</span>,
-      opacity: <span class="number">1</span>,
-      token: response.token
-    }).addTo(map);
+  <span class="keyword">var</span> searchMode = document.getElementById(<span class="string">'searchMode'</span>);
 
-    dl.on(<span class="string">'authenticationrequired'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(e)</span> {</span>
-      serverAuth(<span class="function"><span class="keyword">function</span> <span class="params">(error, response)</span> {</span>
-        <span class="keyword">if</span> (error) {
-          <span class="keyword">return</span>;
-        }
-
-        e.authenticate(response.token);
-      });
-    });
+  searchMode.addEventListener(<span class="string">'change'</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+    gisDayProvider.options.searchMode = searchMode.value;
   });
 </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
@@ -337,7 +378,7 @@
 <span class="tag">&lt;/<span class="title">html</span>&gt;</span></code></pre>
 
 <div class="wrap">
-  <p><a href="https://github.com/Esri/esri-leaflet-doc/edit/master/src/pages/examples/arcgis-server-auth.hbs">Edit this sample on GitHub</a></p>
+  <p><a href="https://github.com/Esri/esri-leaflet-doc/edit/master/src/pages/examples/search-feature-layer-search-mode.hbs">Edit this sample on GitHub</a></p>
 </div>
 
 <div class="mobile-menu">
