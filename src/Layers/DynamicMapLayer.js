@@ -10,7 +10,7 @@ export var DynamicMapLayer = RasterLayer.extend({
     layers: false,
     layerDefs: false,
     timeOptions: false,
-    format: 'png24',
+    format: 'png32',
     transparent: true,
     f: 'json'
   },
