@@ -72,6 +72,11 @@
             "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/flash_flood_warnings_2002_2012/FeatureServer/0"
         })
         .addTo(map);
+
+      L.esri.dynamicMapLayer({
+        url: 'https://services.arcgisonline.com/arcgis/rest/services/Specialty/Soil_Survey_Map/MapServer',
+        opacity: 0.7
+      }).addTo(map);
     </script>
   </body>
 </html>

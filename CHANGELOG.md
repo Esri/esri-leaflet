@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+### Changed
+
+- `DynamicMapLayer` now defaults to using `format: 'png32'` instead of `'png24'`. (🙏pmacMaps🙏 [#1202](https://github.com/Esri/esri-leaflet/pull/1202), [#1187](https://github.com/Esri/esri-leaflet/issues/1187))
+
 ## [2.4.1] - 2020-05-19
 
 ### Fixed
