@@ -117,8 +117,8 @@ export var FeatureGrid = Layer.extend({
   cellLeave: function () {
     return;
   },
-  
-  cellEnter: function(){
+
+  cellEnter: function () {
     return;
   },
   // @section
