@@ -130,7 +130,7 @@ export var FeatureManager = FeatureGrid.extend({
     }
   },
 
-  _requestFeatures: function (bounds, coords, callback) {
+  _requestFeatures: function (bounds, coords, callback, offset) {
     this._activeRequests++;
 
     // our first active request fires loading
@@ -144,7 +144,7 @@ export var FeatureManager = FeatureGrid.extend({
       );
     }
 
-    return this._buildQuery(bounds).run(function (
+    return this._buildQuery(bounds, offset).run(function (
       error,
       featureCollection,
       response
@@ -175,6 +175,9 @@ export var FeatureManager = FeatureGrid.extend({
 
       if (callback) {
         callback.call(this, error, featureCollection);
+      }
+      if (response && response.exceededTransferLimit && this.options.fetchAllFeatures) {
+        this._requestFeatures(bounds, coords, callback, offset + featureCollection.features.length);
       }
     },
     this);
@@ -218,13 +221,14 @@ export var FeatureManager = FeatureGrid.extend({
     this.createLayers(features);
   },
 
-  _buildQuery: function (bounds) {
+  _buildQuery: function (bounds, offset = 0) {
     var query = this.service
       .query()
       .intersects(bounds)
       .where(this.options.where)
       .fields(this.options.fields)
-      .precision(this.options.precision);
+      .precision(this.options.precision)
+      .offset(offset);
 
     query.params['resultType'] = 'tile';
 
