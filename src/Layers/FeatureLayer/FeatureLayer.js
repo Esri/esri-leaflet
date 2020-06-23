@@ -5,8 +5,7 @@ import { warn } from '../../Util';
 export var FeatureLayer = FeatureManager.extend({
 
   options: {
-    cacheLayers: true,
-    fetchAllFeatures: false
+    cacheLayers: true
   },
 
   /**
