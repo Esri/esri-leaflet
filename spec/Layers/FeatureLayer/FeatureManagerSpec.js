@@ -253,7 +253,6 @@ describe('L.esri.FeatureManager', function () {
     layer.addTo(map);
 
     server.respond();
-
     expect(layer.createLayers).to.have.been.calledWith([
       {
         type: 'Feature',
@@ -1215,6 +1214,157 @@ describe('L.esri.FeatureManager', function () {
 
     expect(layer._activeRequests).to.equal(0);
     expect(triggered).to.be.true;
+  });
+
+  it('should fetch another request if limit exceeded', function () {
+    server.respondWith(
+      'GET',
+      'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.6513671875%2C%22ymin%22%3A45.49094569262732%2C%22xmax%22%3A-122.607421875%2C%22ymax%22%3A45.521743896993634%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&resultOffset=0&resultType=tile&f=json',
+      JSON.stringify({
+        fields: fields,
+        features: [feature6],
+        objectIdFieldName: 'OBJECTID',
+        exceededTransferLimit: true
+      })
+    );
+
+    var layer = new MockLayer({
+      url:
+        'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/',
+      fetchAllFeatures: true
+    });
+
+    layer.addTo(map);
+    server.respond();
+    expect(layer.createLayers).to.have.been.calledWith([
+      {
+        type: 'Feature',
+        geometry: {
+          type: 'Polygon',
+          coordinates: [
+            [
+              [-109.02, 36.98],
+              [-102.06, 37.01],
+              [-102.06, 40.97],
+              [-109.02, 40.97],
+              [-109.02, 36.98]
+            ]
+          ]
+        },
+        properties: {
+          OBJECTID: 6,
+          Name: 'Site 6',
+          Type: 'Active',
+          StartTime: new Date('January 14 2014 GMT-0800').valueOf(),
+          EndTime: new Date('January 15 2014 GMT-0800').valueOf()
+        },
+        id: 6
+      }
+    ]);
+
+    // second call due to fetchAllFeatures
+    server.respondWith(
+      'GET',
+      'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.6513671875%2C%22ymin%22%3A45.49094569262732%2C%22xmax%22%3A-122.607421875%2C%22ymax%22%3A45.521743896993634%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&resultOffset=1&resultType=tile&f=json',
+      JSON.stringify({
+        fields: fields,
+        features: [feature5],
+        objectIdFieldName: 'OBJECTID'
+      })
+    );
+    server.respond();
+    expect(layer.createLayers).to.have.been.calledWith([
+      {
+        geometry: {
+          type: 'Point',
+          coordinates: [-122.629394, 45.537134]
+        },
+        id: 5,
+        properties: {
+          OBJECTID: 5,
+          Name: 'Site 5',
+          Type: 'Active',
+          StartTime: new Date('January 14 2014 GMT-0800').valueOf(),
+          EndTime: new Date('January 15 2014 GMT-0800').valueOf()
+        },
+        type: 'Feature'
+      }
+    ]);
+  });
+
+  it('should not fetch another request even if limit exceeded', function () {
+    server.respondWith(
+      'GET',
+      'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.6513671875%2C%22ymin%22%3A45.49094569262732%2C%22xmax%22%3A-122.607421875%2C%22ymax%22%3A45.521743896993634%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&resultType=tile&f=json',
+      JSON.stringify({
+        fields: fields,
+        features: [feature6],
+        objectIdFieldName: 'OBJECTID',
+        exceededTransferLimit: true
+      })
+    );
+
+    var layer = new MockLayer({
+      url:
+        'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/'
+    });
+
+    layer.addTo(map);
+    server.respond();
+    expect(layer.createLayers).to.have.been.calledWith([
+      {
+        type: 'Feature',
+        geometry: {
+          type: 'Polygon',
+          coordinates: [
+            [
+              [-109.02, 36.98],
+              [-102.06, 37.01],
+              [-102.06, 40.97],
+              [-109.02, 40.97],
+              [-109.02, 36.98]
+            ]
+          ]
+        },
+        properties: {
+          OBJECTID: 6,
+          Name: 'Site 6',
+          Type: 'Active',
+          StartTime: new Date('January 14 2014 GMT-0800').valueOf(),
+          EndTime: new Date('January 15 2014 GMT-0800').valueOf()
+        },
+        id: 6
+      }
+    ]);
+
+    // unexpected second call
+    server.respondWith(
+      'GET',
+      'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.6513671875%2C%22ymin%22%3A45.49094569262732%2C%22xmax%22%3A-122.607421875%2C%22ymax%22%3A45.521743896993634%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&resultOffset=1&resultType=tile&f=json',
+      JSON.stringify({
+        fields: fields,
+        features: [feature5],
+        objectIdFieldName: 'OBJECTID'
+      })
+    );
+    server.respond();
+    expect(layer.createLayers).not.to.have.been.calledWith([
+      {
+        geometry: {
+          type: 'Point',
+          coordinates: [-122.629394, 45.537134]
+        },
+        id: 5,
+        properties: {
+          OBJECTID: 5,
+          Name: 'Site 5',
+          Type: 'Active',
+          StartTime: new Date('January 14 2014 GMT-0800').valueOf(),
+          EndTime: new Date('January 15 2014 GMT-0800').valueOf()
+        },
+        type: 'Feature'
+      }
+    ]);
   });
 });
 /* eslint-enable handle-callback-err */
