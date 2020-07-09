@@ -118,6 +118,9 @@ export var FeatureGrid = Layer.extend({
     return;
   },
 
+  cellEnter: function () {
+    return;
+  },
   // @section
   // @method getCellSize: Point
   // Normalizes the [cellSize option](#gridlayer-cellsize) into a point. Used by the `createCell()` method.
