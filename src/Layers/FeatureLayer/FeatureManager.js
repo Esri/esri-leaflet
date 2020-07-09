@@ -133,7 +133,7 @@ export var FeatureManager = FeatureGrid.extend({
   _requestFeatures: function (bounds, coords, callback) {
     this._activeRequests++;
 
-    const originalWhere = this.options.where;
+    var originalWhere = this.options.where;
 
     // our first active request fires loading
     if (this._activeRequests === 1) {
