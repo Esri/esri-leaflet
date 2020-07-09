@@ -502,7 +502,6 @@ export var FeatureManager = FeatureGrid.extend({
   _handleZoomChange: function () {
     if (!this._visibleZoom()) {
       this.removeLayers(this._currentSnapshot);
-      this._currentSnapshot = [];
     } else {
       /*
       for every cell in this._cells
