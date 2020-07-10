@@ -307,7 +307,7 @@ export var FeatureManager = FeatureGrid.extend({
       pendingRequests++;
       var coords = this._keyToCellCoords(key);
       var bounds = this._cellCoordsToBounds(coords);
-      this._requestFeatures(bounds, key, requestCallback);
+      this._requestFeatures(bounds, coords, requestCallback);
     }
 
     return this;
@@ -353,7 +353,7 @@ export var FeatureManager = FeatureGrid.extend({
         pendingRequests++;
         var coords = this._keyToCellCoords(key);
         var bounds = this._cellCoordsToBounds(coords);
-        this._requestFeatures(bounds, key, requestCallback);
+        this._requestFeatures(bounds, coords, requestCallback);
       }
     }
 
@@ -364,7 +364,7 @@ export var FeatureManager = FeatureGrid.extend({
     for (var key in this._cells) {
       var coords = this._keyToCellCoords(key);
       var bounds = this._cellCoordsToBounds(coords);
-      this._requestFeatures(bounds, key);
+      this._requestFeatures(bounds, coords);
     }
 
     if (this.redraw) {
