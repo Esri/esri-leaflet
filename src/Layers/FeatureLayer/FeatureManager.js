@@ -133,8 +133,12 @@ export var FeatureManager = FeatureGrid.extend({
 
   _requestFeatures: function (bounds, coords, callback, offset) {
     this._activeRequests++;
+    
     // default param
     offset = offset || 0;
+    
+    var originalWhere = this.options.where;
+    
     // our first active request fires loading
     if (this._activeRequests === 1) {
       this.fire(
@@ -153,6 +157,11 @@ export var FeatureManager = FeatureGrid.extend({
     ) {
       if (response && response.exceededTransferLimit) {
         this.fire('drawlimitexceeded');
+      }
+
+      // the where changed while this request was being run so don't it.
+      if (this.options.where !== originalWhere) {
+        return;
       }
 
       // no error, features
@@ -280,7 +289,11 @@ export var FeatureManager = FeatureGrid.extend({
 
       pendingRequests--;
 
-      if (pendingRequests <= 0 && this._visibleZoom()) {
+      if (
+        pendingRequests <= 0 &&
+        this._visibleZoom() &&
+        where === this.options.where // the where is still the same so use this one
+      ) {
         this._currentSnapshot = newSnapshot;
         // schedule adding features for the next animation frame
         Util.requestAnimFrame(
@@ -298,6 +311,9 @@ export var FeatureManager = FeatureGrid.extend({
     for (var i = this._currentSnapshot.length - 1; i >= 0; i--) {
       oldSnapshot.push(this._currentSnapshot[i]);
     }
+
+    this._cache = {};
+
     for (var key in this._cells) {
       pendingRequests++;
       var coords = this._keyToCellCoords(key);

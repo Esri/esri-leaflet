@@ -44,7 +44,7 @@ export var FeatureGrid = Layer.extend({
     Util.setOptions(this, options);
   },
 
-  onAdd: function () {
+  onAdd: function (map) {
     this._cells = {};
     this._activeCells = {};
     this._resetView();
