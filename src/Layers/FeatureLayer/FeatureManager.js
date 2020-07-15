@@ -76,7 +76,7 @@ export var FeatureManager = FeatureGrid.extend({
 
         // Check if someone has requested that we don't use geoJSON, even if it's available
         var forceJsonFormat = false;
-        if (this.service.options.isModern === false) {
+        if (this.service.options.isModern === false || this.options.fetchAllFeatures) {
           forceJsonFormat = true;
         }
 
@@ -133,12 +133,12 @@ export var FeatureManager = FeatureGrid.extend({
 
   _requestFeatures: function (bounds, coords, callback, offset) {
     this._activeRequests++;
-    
+
     // default param
     offset = offset || 0;
-    
+
     var originalWhere = this.options.where;
-    
+
     // our first active request fires loading
     if (this._activeRequests === 1) {
       this.fire(
@@ -191,7 +191,7 @@ export var FeatureManager = FeatureGrid.extend({
         this._requestFeatures(bounds, coords, callback, offset + featureCollection.features.length);
       }
     },
-    this);
+      this);
   },
 
   _postProcessFeatures: function (bounds) {
