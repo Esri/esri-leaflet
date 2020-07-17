@@ -388,7 +388,9 @@ export var FeatureGrid = Layer.extend({
       }
 
       for (i = 0; i < queue.length; i++) {
-        if (this._activeCells[this._cellCoordsToKey(queue[i])]) {
+        var _key = this._cellCoordsToKey(queue[i]);
+        var _coords = this._keyToCellCoords(_key);
+        if (this._activeCells[_coords]) {
           this._reuseCell(queue[i]);
         } else {
           this._createCell(queue[i]);
