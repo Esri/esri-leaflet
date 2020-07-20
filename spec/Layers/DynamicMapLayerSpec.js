@@ -389,27 +389,26 @@ describe('L.esri.DynamicMapLayer', function () {
     expect(spy.getCall(0).args[0]).to.match(new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png32&transparent=true&bboxSR=3857&imageSR=3857&token=foo&f=image/));
   });
 
-  // it('should be able to request an image using a proxy', function (done) {
-  //   server.respondWith('GET', new RegExp(/\.\/proxy\?http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png32&transparent=true&bboxSR=3857&imageSR=3857&f=json/), JSON.stringify({
-  //     href: 'http://services.arcgis.com/mock/arcgis/rest/directories/arcgisoutput/Census_MapServer/_ags_mapec70f175eca3415a97c0db6779ad9976.png',
-  //     height: 421,
-  //     width: 1675,
-  //     scale: 18055.95482153688
-  //   }));
+  it('should be able to request an image using a proxy', function () {
+    var imageUrl = 'http://services.arcgis.com/mock/arcgis/rest/directories/arcgisoutput/Census_MapServer/_ags_mapec70f175eca3415a97c0db6779ad9976.png';
+    server.respondWith('GET', new RegExp(/\.\/proxy.ashx\?http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png32&transparent=true&bboxSR=3857&imageSR=3857&proxy=\.%2Fproxy.ashx&f=json/), JSON.stringify({
+      href: imageUrl,
+      height: 421,
+      width: 1675,
+      scale: 18055.95482153688
+    }));
 
-  //   var proxiedLayer = L.esri.dynamicMapLayer({
-  //     url: url,
-  //     proxy: './proxy.ashx'
-  //   });
+    layer = L.esri.dynamicMapLayer({
+      url: url,
+      f: 'json',
+      proxy: './proxy.ashx'
+    });
+    var spy = sinon.spy(layer, '_renderImage');
 
-  //   proxiedLayer.once('load', function () {
-  //     expect(proxiedLayer._currentImage._url).to.equal('foo');
-  //     done();
-  //   });
-
-  //   proxiedLayer.addTo(map);
-  //   server.respond();
-  // });
+    layer.addTo(map);
+    server.respond();
+    expect(spy.getCall(0).args[0]).to.equal('./proxy.ashx?' + imageUrl);
+  });
 
   it('should be able to parse real base64 images from the export service', function (done) {
     server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png32&transparent=true&bboxSR=3857&imageSR=3857&f=json/), JSON.stringify({
