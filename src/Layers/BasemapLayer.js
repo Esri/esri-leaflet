@@ -260,6 +260,11 @@ export var BasemapLayer = TileLayer.extend({
 
   onRemove: function (map) {
     map.off('moveend', _updateMapAttribution);
+
+    if (this._url.indexOf('World_Imagery') !== -1) {
+      map.off('zoomanim', _fetchTilemap, this);
+    }
+
     TileLayer.prototype.onRemove.call(this, map);
   },
 
