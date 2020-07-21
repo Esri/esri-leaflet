@@ -389,7 +389,7 @@ describe('L.esri.DynamicMapLayer', function () {
     expect(spy.getCall(0).args[0]).to.match(new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png32&transparent=true&bboxSR=3857&imageSR=3857&token=foo&f=image/));
   });
 
-  it('should be able to request an image using a proxy', function () {
+  it('should be able to request json using a proxy', function () {
     var imageUrl = 'http://services.arcgis.com/mock/arcgis/rest/directories/arcgisoutput/Census_MapServer/_ags_mapec70f175eca3415a97c0db6779ad9976.png';
     server.respondWith('GET', new RegExp(/\.\/proxy.ashx\?http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png32&transparent=true&bboxSR=3857&imageSR=3857&proxy=\.%2Fproxy.ashx&f=json/), JSON.stringify({
       href: imageUrl,

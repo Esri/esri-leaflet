@@ -493,5 +493,23 @@ describe('L.esri.ImageMapLayer', function () {
     layer.addTo(map);
     server.respond();
   });
+
+  it('should be able to request json using a proxy', function () {
+    var imageUrl = 'http://services.arcgis.com/mock/arcgis/rest/directories/arcgisoutput/Census_MapServer/_ags_mapec70f175eca3415a97c0db6779ad9976.png';
+    server.respondWith('GET', new RegExp(/\.\/proxy.ashx\?http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockImageService\/ImageServer\/exportImage\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&format=jpgpng&transparent=true&bboxSR=3857&imageSR=3857&f=json/), JSON.stringify({
+      href: imageUrl
+    }));
+
+    layer = L.esri.imageMapLayer({
+      url: url,
+      f: 'json',
+      proxy: './proxy.ashx'
+    });
+    var spy = sinon.spy(layer, '_renderImage');
+
+    layer.addTo(map);
+    server.respond();
+    expect(spy.getCall(0).args[0]).to.equal('./proxy.ashx?' + imageUrl);
+  });
 });
 /* eslint-enable handle-callback-err */
