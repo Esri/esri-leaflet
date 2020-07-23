@@ -56,7 +56,7 @@ describe('L.esri.DynamicMapLayer', function () {
 
   beforeEach(function () {
     clock = sinon.useFakeTimers();
-    server = sinon.fakeServer.create();
+    server = sinon.fakeServer.create(); // { logger: console.log }
     server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png32&transparent=true&bboxSR=3857&imageSR=3857&f=json/), JSON.stringify({
       href: Image1
     }));
@@ -408,6 +408,21 @@ describe('L.esri.DynamicMapLayer', function () {
     layer.addTo(map);
     server.respond();
     expect(spy.getCall(0).args[0]).to.equal('./proxy.ashx?' + imageUrl);
+  });
+
+  it('should be able to request image using a proxy', function () {
+    server.respondWith('GET', new RegExp(/\.\/proxy.ashx\?http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png32&transparent=true&bboxSR=3857&imageSR=3857&f=json/), JSON.stringify({
+      imageData: base64Image,
+      contentType: 'image/png'
+    }));
+    layer = L.esri.dynamicMapLayer({
+      url: url,
+      f: 'image',
+      proxy: './proxy.ashx'
+    });
+    var spy = sinon.spy(layer, '_renderImage');
+    layer.addTo(map);
+    expect(spy.getCall(0).args[0]).to.match(new RegExp(/\.\/proxy.ashx\?http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockMapService\/MapServer\/export\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&dpi=96&format=png32&transparent=true&bboxSR=3857&imageSR=3857&proxy=\.%2Fproxy.ashx&f=image/));
   });
 
   it('should be able to parse real base64 images from the export service', function (done) {
