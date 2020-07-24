@@ -20,10 +20,6 @@ export var DynamicMapLayer = RasterLayer.extend({
     this.service = mapService(options);
     this.service.addEventParent(this);
 
-    if (options.proxy && options.f !== 'json') {
-      options.f = 'json';
-    }
-
     Util.setOptions(this, options);
   },
 
@@ -193,7 +189,11 @@ export var DynamicMapLayer = RasterLayer.extend({
       }, this);
     } else {
       params.f = 'image';
-      this._renderImage(this.options.url + 'export' + Util.getParamString(params), bounds);
+      var fullUrl = this.options.url + 'export' + Util.getParamString(params);
+      if (this.options.proxy) {
+        fullUrl = this.options.proxy + '?' + fullUrl;
+      }
+      this._renderImage(fullUrl, bounds);
     }
   }
 });
