@@ -513,6 +513,26 @@ describe('L.esri.ImageMapLayer', function () {
     expect(spy.getCall(0).args[0]).to.equal('./proxy.ashx?' + imageUrl);
   });
 
+  it('should be able to request image using a proxy', function () {
+    server.respondWith('GET', new RegExp(/\/proxy.ashx\?http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockImageService\/ImageServer\/exportImage\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&format=jpgpng&transparent=true&bboxSR=3857&imageSR=3857&f=image/), JSON.stringify({
+      imageData: Image1,
+      contentType: 'image/png'
+    }));
+
+    layer = L.esri.imageMapLayer({
+      url: url,
+      f: 'image',
+      proxy: './proxy.ashx'
+    });
+    server.respond();
+
+    var spy = sinon.spy(layer, '_renderImage');
+
+    layer.addTo(map);
+    server.respond();
+    expect(spy.getCall(0).args[0]).to.match(new RegExp(/\.\/proxy.ashx\?http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockImageService\/ImageServer\/exportImage\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&format=jpgpng&transparent=true&bboxSR=3857&imageSR=3857&f=image/));
+  });
+
   it('should pass a token if one is set', function (done) {
     server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockImageService\/ImageServer\/exportImage\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&format=jpgpng&transparent=true&bboxSR=3857&imageSR=3857&token=foo&f=json/), JSON.stringify({
       href: WithToken
