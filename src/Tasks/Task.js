@@ -49,6 +49,10 @@ export var Task = Class.extend({
     return this;
   },
 
+  apikey: function (apikey) {
+    return this.token(apikey);
+  },
+
   // ArcGIS Server Find/Identify 10.5+
   format: function (boolean) {
     // use double negative to expose a more intuitive positive method name
