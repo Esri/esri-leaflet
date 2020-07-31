@@ -82,7 +82,7 @@
     "prebuild": "mkdirp dist",
     "prepare": "npm run build",
     "pretest": "npm run build",
-    "precommit": "npm run lint",
+    "pre-commit": "npm run lint",
     "fix": "semistandard --fix",
     "release": "./scripts/release.sh",
     "start-watch": "watch \"npm run build\" src",
