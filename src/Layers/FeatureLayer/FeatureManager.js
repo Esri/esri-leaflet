@@ -204,8 +204,11 @@ export var FeatureManager = FeatureGrid.extend({
   },
 
   _addFeatures: function (features, coords) {
-    var key = this._cacheKey(coords);
-    this._cache[key] = this._cache[key] || [];
+    // coords is optional - will be false if coming from addFeatures() function
+    if (coords) {
+      var key = this._cacheKey(coords);
+      this._cache[key] = this._cache[key] || [];
+    }
 
     for (var i = features.length - 1; i >= 0; i--) {
       var id = features[i].id;
@@ -213,7 +216,7 @@ export var FeatureManager = FeatureGrid.extend({
       if (this._currentSnapshot.indexOf(id) === -1) {
         this._currentSnapshot.push(id);
       }
-      if (this._cache[key].indexOf(id) === -1) {
+      if (typeof key !== 'undefined' && this._cache[key].indexOf(id) === -1) {
         this._cache[key].push(id);
       }
     }
@@ -583,7 +586,7 @@ export var FeatureManager = FeatureGrid.extend({
                     ? response[i].objectId
                     : response.objectId;
               }
-              this.createLayers(featuresArray);
+              this._addFeatures(featuresArray);
             }
 
             if (callback) {
@@ -609,7 +612,7 @@ export var FeatureManager = FeatureGrid.extend({
           for (var i = featuresArray.length - 1; i >= 0; i--) {
             this.removeLayers([featuresArray[i].id], true);
           }
-          this.createLayers(featuresArray);
+          this._addFeatures(featuresArray);
         }
 
         if (callback) {
