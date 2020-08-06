@@ -361,23 +361,7 @@ export var FeatureManager = FeatureGrid.extend({
   },
 
   refresh: function () {
-    for (var key in this._cells) {
-      var coords = this._keyToCellCoords(key);
-      var bounds = this._cellCoordsToBounds(coords);
-      this._requestFeatures(bounds, coords);
-    }
-
-    if (this.redraw) {
-      this.once(
-        'load',
-        function () {
-          this.eachFeature(function (layer) {
-            this._redraw(layer.feature.id);
-          }, this);
-        },
-        this
-      );
-    }
+    this.setWhere(this.options.where);
   },
 
   _filterExistingFeatures: function (oldFrom, oldTo, newFrom, newTo) {
