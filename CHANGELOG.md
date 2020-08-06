@@ -5,6 +5,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+## [2.5.0] - 2020-08-06
+
 ### Fixed
 
 - Fix Error on cellEnter (🙏francharbo🙏 [#1204](https://github.com/Esri/esri-leaflet/pull/1204))
@@ -739,7 +741,8 @@ None
 - Add DarkGray and DarkGrayLabels to BasemapLayer. #190
 - An attributionControl on maps is now required when using BasemapLayer. #159
 
-[unreleased]: https://github.com/esri/esri-leaflet/compare/v2.4.1..HEAD
+[unreleased]: https://github.com/esri/esri-leaflet/compare/v2.5.0..HEAD
+[2.5.0]: https://github.com/esri/esri-leaflet/compare/v2.4.1...v2.5.0
 [2.4.1]: https://github.com/esri/esri-leaflet/compare/v2.4.0...v2.4.1
 [2.4.0]: https://github.com/esri/esri-leaflet/compare/v2.3.3...v2.4.0
 [2.3.3]: https://github.com/esri/esri-leaflet/compare/v2.3.2...v2.3.3
