@@ -12,7 +12,6 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - MinZoom issue - do not clear _currentSnapshot when hiding the layer ([#1212](https://github.com/Esri/esri-leaflet/pull/1212))
 - ImageMapLayer - proxy support now works when `f:image` ([#1221](https://github.com/Esri/esri-leaflet/pull/1221))
 - DynamicMapLayer - proxy support now works when `f:image` ([#1220](https://github.com/Esri/esri-leaflet/pull/1220))
-- ERR_NAME_NOT_RESOLVED while zooming in with ImageryClarity fixed ([#1218](https://github.com/Esri/esri-leaflet/pull/1218))
 - FeatureLayer issues when `refresh()` was called ([#1224](https://github.com/Esri/esri-leaflet/pull/1224))
 - Issues when `addFeatures()` (or `updateFeatures()`) then `setWhere()` was called ([#1226](https://github.com/Esri/esri-leaflet/pull/1226))
 
