@@ -12,6 +12,9 @@ export var FeatureLayer = FeatureManager.extend({
    * Constructor
    */
   initialize: function (options) {
+    if (options.apikey) {
+      options.token = options.apikey;
+    }
     FeatureManager.prototype.initialize.call(this, options);
     this._originalStyle = this.options.style;
     this._layers = {};
