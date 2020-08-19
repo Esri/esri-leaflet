@@ -187,7 +187,7 @@ export var FeatureManager = FeatureGrid.extend({
       if (callback) {
         callback.call(this, error, featureCollection);
       }
-      if (response && response.exceededTransferLimit && this.options.fetchAllFeatures) {
+      if (response && (response.exceededTransferLimit || (response.properties && response.properties.exceededTransferLimit)) && this.options.fetchAllFeatures) {
         this._requestFeatures(bounds, coords, callback, offset + featureCollection.features.length);
       }
     },
