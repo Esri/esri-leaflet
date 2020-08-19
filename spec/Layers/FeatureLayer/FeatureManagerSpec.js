@@ -428,7 +428,7 @@ describe('L.esri.FeatureManager', function () {
     layer.addTo(map);
 
     server.respond();
-    console.log(1, server.lastRequest.url);
+    // console.log(1, server.lastRequest.url);
 
     expect(layer.createLayers).to.have.been.calledWith([
       {
@@ -463,7 +463,7 @@ describe('L.esri.FeatureManager', function () {
     );
 
     server.respond();
-    console.log(2, server.lastRequest.url);
+    // console.log(2, server.lastRequest.url);
     expect(layer.removeLayers).to.have.been.calledWith([1]);
 
     expect(layer.createLayers).to.have.been.calledWith([

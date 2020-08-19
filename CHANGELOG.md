@@ -5,9 +5,22 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+## [2.5.0] - 2020-08-06
+
+### Fixed
+
+- Fix Error on cellEnter (🙏francharbo🙏 [#1204](https://github.com/Esri/esri-leaflet/pull/1204))
+- Fix bugs with feature layer setWhere ([#1211](https://github.com/Esri/esri-leaflet/pull/1211))
+- MinZoom issue - do not clear _currentSnapshot when hiding the layer ([#1212](https://github.com/Esri/esri-leaflet/pull/1212))
+- ImageMapLayer - proxy support now works when `f:image` ([#1221](https://github.com/Esri/esri-leaflet/pull/1221))
+- DynamicMapLayer - proxy support now works when `f:image` ([#1220](https://github.com/Esri/esri-leaflet/pull/1220))
+- FeatureLayer issues when `refresh()` was called ([#1224](https://github.com/Esri/esri-leaflet/pull/1224))
+- Issues when `addFeatures()` (or `updateFeatures()`) then `setWhere()` was called ([#1226](https://github.com/Esri/esri-leaflet/pull/1226))
+
 ### Changed
 
 - `DynamicMapLayer` now defaults to using `format: 'png32'` instead of `'png24'`. (🙏pmacMaps🙏 [#1202](https://github.com/Esri/esri-leaflet/pull/1202), [#1187](https://github.com/Esri/esri-leaflet/issues/1187))
+- Reverted the functionality that allowed over-zooming with the Imagery basemap in certain areas of the world due to bugs that were caused by that change ([#1223](https://github.com/Esri/esri-leaflet/pull/1223))
 
 ## [2.4.1] - 2020-05-19
 
@@ -728,7 +741,8 @@ None
 - Add DarkGray and DarkGrayLabels to BasemapLayer. #190
 - An attributionControl on maps is now required when using BasemapLayer. #159
 
-[unreleased]: https://github.com/esri/esri-leaflet/compare/v2.4.1..HEAD
+[unreleased]: https://github.com/esri/esri-leaflet/compare/v2.5.0..HEAD
+[2.5.0]: https://github.com/esri/esri-leaflet/compare/v2.4.1...v2.5.0
 [2.4.1]: https://github.com/esri/esri-leaflet/compare/v2.4.0...v2.4.1
 [2.4.0]: https://github.com/esri/esri-leaflet/compare/v2.3.3...v2.4.0
 [2.3.3]: https://github.com/esri/esri-leaflet/compare/v2.3.2...v2.3.3

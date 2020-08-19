@@ -24,6 +24,7 @@ describe('L.esri.ImageMapLayer', function () {
   // var WithPixelType = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAH0AAAB9CAMAAAC4XpwXAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyhpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMDY3IDc5LjE1Nzc0NywgMjAxNS8wMy8zMC0yMzo0MDo0MiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6RkZBMTFDNzgyMjYwMTFFNUJEOEJCNkRDM0Q3NUQxQ0UiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6RkZBMTFDNzkyMjYwMTFFNUJEOEJCNkRDM0Q3NUQxQ0UiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpGRkExMUM3NjIyNjAxMUU1QkQ4QkI2REMzRDc1RDFDRSIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpGRkExMUM3NzIyNjAxMUU1QkQ4QkI2REMzRDc1RDFDRSIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pj6n55wAAAAwUExURcnJydHR0aWlpbW1tcXFxcHBwdXV1by8vNra2pqamqysrM3NzbGxsbm5uc/Pz8zMzJTUK3UAAAFXSURBVHja7NtJasAwDAVQjVY83/+2VUq3bcnCTRdfxBAT8EO27CxCiNd7wbTfDFov4gs6dOjQoUOHDh06dOjQoUOHDh06dOjQoUOHDh069H+p9x+7h/T7syX3tFa2wrt/satz9k7rRkTZuGhwj2CiT541XJ3P6p3byHCz3uIyqR5WuK9Smo7qhZnL2o8m4UnuRUVamNU5hWjIoHA3GmXEHtvNrRk/moRHeojIHrPFrI2r9Oaj0qihYY1aU63Tq3A/orPXVjNRNR1qwkW21kuapy7XqFszZNIZfZGoXC2Gq6SedTBVQoXGTP1+lLmL8qn9bmRsd9nncvvu5pSX3nvBymg5DfvcumfVLybuWeecWzyXgu+bsvMM4KVelPhczf8yUg7V/+Sk/eb07fs1HW9Y6NChQ4cOHTp06NChQ4cOHTp06NChQ4cOHTp06N/p+82gV/+D/hBgAPzNhkZ0jwchAAAAAElFTkSuQmCC';
   var WithRenderingRule = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAH0AAAB9CAMAAAC4XpwXAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyhpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMDY3IDc5LjE1Nzc0NywgMjAxNS8wMy8zMC0yMzo0MDo0MiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6RkZBMTFDNzQyMjYwMTFFNUJEOEJCNkRDM0Q3NUQxQ0UiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6RkZBMTFDNzUyMjYwMTFFNUJEOEJCNkRDM0Q3NUQxQ0UiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpGM0Y4Mjk3RjIyNjAxMUU1QkQ4QkI2REMzRDc1RDFDRSIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpGM0Y4Mjk4MDIyNjAxMUU1QkQ4QkI2REMzRDc1RDFDRSIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PlNwcmIAAAAwUExURb29va2trcrKyrm5uc7OzqKiopubm9DQ0LW1tbKystPT08TExMDAwMLCws/Pz8zMzJixIfsAAAFASURBVHja7NvBjoQwCAZgCrS0gPX933ZxNpPsnvYyxj38JDZI1a821YuRbD8XRueTQftBfEOHDh06dOjQoUOHDh06dOjQoUOHDh06dOjQoUOHDv1XaJ2g71z5Z09trHqLzmqmtvVkVrdvtdJXx2uvqtUw36JbSiSxxfRo5H66WSx3dc5qt3MTd1/5HtpHdafelsSSFsdYZyqlt6WpSclyBkVvfOik4P15XbmNmTSltWMEjWiNekqnlkSDKh81gMzZl9+gWxuSQnNNGWXQmtVIF4mZnajGIjmSVhe7Yc1rEEdFHjXLh3Amr5rzCD5YWOrOM1YdIXmHzuZbr0/2tn2bX49AFXxXUd1p1Zq/CvuWVffXhVwZb1ro0KFDhw4dOnTo0KFDhw4dOnTo0KFDhw4dOnTo0P+Vfj4Z9Oh/0F8CDADZmofLM3dxUgAAAABJRU5ErkJggg==';
   var WithTime = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAH0AAAB9CAMAAAC4XpwXAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyhpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMDY3IDc5LjE1Nzc0NywgMjAxNS8wMy8zMC0yMzo0MDo0MiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6RjNGODI5N0QyMjYwMTFFNUJEOEJCNkRDM0Q3NUQxQ0UiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6RjNGODI5N0UyMjYwMTFFNUJEOEJCNkRDM0Q3NUQxQ0UiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpGM0Y4Mjk3QjIyNjAxMUU1QkQ4QkI2REMzRDc1RDFDRSIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpGM0Y4Mjk3QzIyNjAxMUU1QkQ4QkI2REMzRDc1RDFDRSIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pk/Tz9QAAAAwUExURbS0tMrKypKSkqOjo6urq87OztnZ2dTU1JmZmb29vZ2dncLCwtHR0bi4uM/Pz8zMzLWz9KMAAAGMSURBVHja7NtB0pggDAVgQgiEEML9b9to2wt0ht8uHjKoq4+HElcWj++al/NlK/EhHtChQ4cOHTp06NChQ4cOHTp06NChQ4cOHTp06ND/d11+WBdJUv6qLnQk8vgZnRKORx+R7uE53hlRjJzHbV2Il7BMprJ8+KlljKlWCxWS+7onVFfRqNMbhe7utCv7rGtEhDyPwuPWyg9uCTXu5KvOodvDh85OJHmQUxx/Tpf01nYtXAavXdswy/RHS18sZGattr6qkV/SNzdr+bLVeXKxdbOlvvuskmuhXLTbzqW5o/syLpzhdLqmTsXe7FNl6eC9zI2NXa7oIqqk5qJTdOUEyp/sjy5cZuptTrmkD9WuKdYpdXl99ZrZa6waVqYO25PHpVo38qFy68dmZHZbJaXMnsGXvdnHqjpv6c9+zop3iE5uqxzea3lun57DuLfjDkU8PSv87y7vNYlnJTohknBcqzb4vkOHDh06dOjQoUOHDh06dOjQoUOHDh06dOjQoUP/N/182cqn/0H/EmAAhleDsZtu/OkAAAAASUVORK5CYII=';
+  var WithToken = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAH0AAAB9CAMAAAC4XpwXAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyhpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMDY3IDc5LjE1Nzc0NywgMjAxNS8wMy8zMC0yMzo0MDo0MiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MjlFRERCNzMyMjZBMTFFNUI1NTc5NjAwMkVENUQwM0IiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6MjlFRERCNzQyMjZBMTFFNUI1NTc5NjAwMkVENUQwM0IiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDoyOUVEREI3MTIyNkExMUU1QjU1Nzk2MDAyRUQ1RDAzQiIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDoyOUVEREI3MjIyNkExMUU1QjU1Nzk2MDAyRUQ1RDAzQiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PhEp84oAAABgUExURcjIyJycnLa2tsTExL+/v7i4uJ+fn5mZmbS0tK6urqmpqbGxsaamppqamsDAwLKysrOzs6WlpcrKyqurq6Kioq2trby8vMvLy8PDw6SkpKqqqqysrKOjo8HBwbq6uszMzKcQTFcAAAEoSURBVHja7NTbboMwDIDhhHOABginAm39/m/ZsFGpmqpdQVdpfy4Qsi2+WDhR8pdLoaOjo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojf5iu7I9AGB6oF2MUqcpXb+W2WZ+BMcNWUNUH6km4GDuJ9IXIOXrow2W279DzoSljI+JGkbh/6NIG8g69zrqu8FSWiUxaiU2aetNdrqNVN/596Hxe9FLuqw/z1OXX7xa/er/Yy6Zfm1vuE23i/MZU4qOpS8dd9VD3uXZPenPuNj2eIz8QlV7WrvPSfy+Vk9v3xKVBnchL3ZY3H6iKk1qH04xH6J0dyte6axK7JqrWj4Vu5Qj9t/X0k90/uGnR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dE/X78LMAB6zVaMpfGcowAAAABJRU5ErkJggg==';
 
   var url = 'http://services.arcgis.com/mock/arcgis/rest/services/MockImageService/ImageServer';
   var layer;
@@ -492,6 +493,70 @@ describe('L.esri.ImageMapLayer', function () {
     });
     layer.addTo(map);
     server.respond();
+  });
+
+  it('should be able to request json using a proxy', function () {
+    var imageUrl = 'http://services.arcgis.com/mock/arcgis/rest/directories/arcgisoutput/Census_MapServer/_ags_mapec70f175eca3415a97c0db6779ad9976.png';
+    server.respondWith('GET', new RegExp(/\.\/proxy.ashx\?http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockImageService\/ImageServer\/exportImage\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&format=jpgpng&transparent=true&bboxSR=3857&imageSR=3857&f=json/), JSON.stringify({
+      href: imageUrl
+    }));
+
+    layer = L.esri.imageMapLayer({
+      url: url,
+      f: 'json',
+      proxy: './proxy.ashx'
+    });
+    var spy = sinon.spy(layer, '_renderImage');
+
+    layer.addTo(map);
+    server.respond();
+    expect(spy.getCall(0).args[0]).to.equal('./proxy.ashx?' + imageUrl);
+  });
+
+  it('should be able to request image using a proxy', function () {
+    server.respondWith('GET', new RegExp(/\/proxy.ashx\?http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockImageService\/ImageServer\/exportImage\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&format=jpgpng&transparent=true&bboxSR=3857&imageSR=3857&f=image/), JSON.stringify({
+      imageData: Image1,
+      contentType: 'image/png'
+    }));
+
+    layer = L.esri.imageMapLayer({
+      url: url,
+      f: 'image',
+      proxy: './proxy.ashx'
+    });
+    server.respond();
+
+    var spy = sinon.spy(layer, '_renderImage');
+
+    layer.addTo(map);
+    server.respond();
+    expect(spy.getCall(0).args[0]).to.match(new RegExp(/\.\/proxy.ashx\?http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockImageService\/ImageServer\/exportImage\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&format=jpgpng&transparent=true&bboxSR=3857&imageSR=3857&f=image/));
+  });
+
+  it('should pass a token if one is set', function (done) {
+    server.respondWith('GET', new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockImageService\/ImageServer\/exportImage\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&format=jpgpng&transparent=true&bboxSR=3857&imageSR=3857&token=foo&f=json/), JSON.stringify({
+      href: WithToken
+    }));
+
+    layer.once('load', function () {
+      expect(layer._currentImage._url).to.equal(WithToken);
+      done();
+    });
+
+    layer.authenticate('foo');
+    layer.addTo(map);
+    server.respond();
+  });
+
+  it('should pass a token if one is set (f:image)', function () {
+    layer = L.esri.imageMapLayer({
+      url: url,
+      f: 'image'
+    });
+    var spy = sinon.spy(layer, '_renderImage');
+    layer.authenticate('foo');
+    layer.addTo(map);
+    expect(spy.getCall(0).args[0]).to.match(new RegExp(/http:\/\/services.arcgis.com\/mock\/arcgis\/rest\/services\/MockImageService\/ImageServer\/exportImage\?bbox=-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+%2C-?\d+\.\d+&size=500%2C500&format=jpgpng&transparent=true&bboxSR=3857&imageSR=3857&token=foo&f=image/));
   });
 });
 /* eslint-enable handle-callback-err */
