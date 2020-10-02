@@ -104,6 +104,7 @@ function xmlHttpGet (url, params, callback, context) {
   if (typeof context !== 'undefined' && context !== null) {
     if (typeof context.options !== 'undefined') {
       httpRequest.timeout = context.options.timeout;
+      if (context.options.withCredentials) httpRequest.withCredentials = true;
     }
   }
   httpRequest.send(null);
@@ -128,6 +129,7 @@ export function request (url, params, callback, context) {
   if (typeof context !== 'undefined' && context !== null) {
     if (typeof context.options !== 'undefined') {
       httpRequest.timeout = context.options.timeout;
+      if (context.options.withCredentials) httpRequest.withCredentials = true;
     }
   }
 
