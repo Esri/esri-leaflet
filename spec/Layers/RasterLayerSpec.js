@@ -10,6 +10,7 @@ describe('L.esri.RasterLayer', function () {
   // Extend 'abstract' RasterLayer object and implement functionality required for tests
   var TestRasterLayer = L.esri.RasterLayer.extend({
     initialize: function (options) {
+      L.setOptions(this, options);
       this.service = {
         metadata: function () {}
       };
@@ -90,6 +91,13 @@ describe('L.esri.RasterLayer', function () {
         imageOverlay.fire('load');
 
         expect(imageOverlay.off.calledWith('error', sinon.match.func, layer)).to.be.true;
+      });
+
+      it('should send credentials', function () {
+        var layer = new TestRasterLayer({withCredentials: true});
+        layer.addTo(map);
+        var imageOverlay = map.addLayer.getCall(1).args[0];
+        expect(imageOverlay._image.crossOrigin).to.be.equal('use-credentials');
       });
     });
   });
