@@ -5,6 +5,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+## [2.5.1] - 2020-10-04
+
+### Added
+
+- Support 'withCredentials' option (🙏luiscamachopt🙏 [#1233](https://github.com/Esri/esri-leaflet/pull/1233))
+- Support 'fetchAllFeatures' option (🙏francharbo🙏 [#1229](https://github.com/Esri/esri-leaflet/pull/1229))
+
 ## [2.5.0] - 2020-08-06
 
 ### Fixed
@@ -741,7 +748,8 @@ None
 - Add DarkGray and DarkGrayLabels to BasemapLayer. #190
 - An attributionControl on maps is now required when using BasemapLayer. #159
 
-[unreleased]: https://github.com/esri/esri-leaflet/compare/v2.5.0..HEAD
+[unreleased]: https://github.com/esri/esri-leaflet/compare/v2.5.1..HEAD
+[2.5.1]: https://github.com/esri/esri-leaflet/compare/v2.5.0...v2.5.1
 [2.5.0]: https://github.com/esri/esri-leaflet/compare/v2.4.1...v2.5.0
 [2.4.1]: https://github.com/esri/esri-leaflet/compare/v2.4.0...v2.4.1
 [2.4.0]: https://github.com/esri/esri-leaflet/compare/v2.3.3...v2.4.0
