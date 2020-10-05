@@ -18,7 +18,8 @@ export var FeatureManager = FeatureGrid.extend({
     timeField: false,
     timeFilterMode: 'server',
     simplifyFactor: 0,
-    precision: 6
+    precision: 6,
+    fetchAllFeatures: false
   },
 
   /**
@@ -75,7 +76,7 @@ export var FeatureManager = FeatureGrid.extend({
 
         // Check if someone has requested that we don't use geoJSON, even if it's available
         var forceJsonFormat = false;
-        if (this.service.options.isModern === false) {
+        if (this.service.options.isModern === false || this.options.fetchAllFeatures) {
           forceJsonFormat = true;
         }
 
@@ -130,8 +131,11 @@ export var FeatureManager = FeatureGrid.extend({
     }
   },
 
-  _requestFeatures: function (bounds, coords, callback) {
+  _requestFeatures: function (bounds, coords, callback, offset) {
     this._activeRequests++;
+
+    // default param
+    offset = offset || 0;
 
     var originalWhere = this.options.where;
 
@@ -146,7 +150,7 @@ export var FeatureManager = FeatureGrid.extend({
       );
     }
 
-    return this._buildQuery(bounds).run(function (
+    return this._buildQuery(bounds, offset).run(function (
       error,
       featureCollection,
       response
@@ -183,8 +187,11 @@ export var FeatureManager = FeatureGrid.extend({
       if (callback) {
         callback.call(this, error, featureCollection);
       }
+      if (response && (response.exceededTransferLimit || (response.properties && response.properties.exceededTransferLimit)) && this.options.fetchAllFeatures) {
+        this._requestFeatures(bounds, coords, callback, offset + featureCollection.features.length);
+      }
     },
-    this);
+      this);
   },
 
   _postProcessFeatures: function (bounds) {
@@ -228,13 +235,17 @@ export var FeatureManager = FeatureGrid.extend({
     this.createLayers(features);
   },
 
-  _buildQuery: function (bounds) {
+  _buildQuery: function (bounds, offset) {
     var query = this.service
       .query()
       .intersects(bounds)
       .where(this.options.where)
       .fields(this.options.fields)
       .precision(this.options.precision);
+
+    if (this.options.fetchAllFeatures && !isNaN(parseInt(offset))) {
+      query = query.offset(offset);
+    }
 
     query.params['resultType'] = 'tile';
 
