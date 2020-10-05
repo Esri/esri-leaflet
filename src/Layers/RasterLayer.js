@@ -201,7 +201,7 @@ export var RasterLayer = Layer.extend({
       // opacity is 0 while the image is loading
       var image = new Overlay(url, bounds, {
         opacity: 0,
-        crossOrigin: this.options.useCors,
+        crossOrigin: this.options.withCredentials ? 'use-credentials' : this.options.useCors,
         alt: this.options.alt,
         pane: this.options.pane || this.getPane(),
         interactive: this.options.interactive

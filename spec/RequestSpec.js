@@ -48,6 +48,24 @@ describe('L.esri request helpers', function () {
     requests[0].respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, JSON.stringify(sampleResponse));
   });
 
+  it('should be able to make a GET request with CORS and credentials', function (done) {
+    L.esri.get.CORS('http://services.arcgisonline.com/ArcGIS/rest/info', {}, function (error, response) {
+      expect(this.foo).to.equal('bar');
+      expect(response).to.deep.equal(sampleResponse);
+      done();
+    }, {
+      foo: 'bar',
+      options: {
+        withCredentials: true
+      }
+    });
+
+    expect(requests[0].url).to.equal('http://services.arcgisonline.com/ArcGIS/rest/info?f=json');
+    expect(requests[0].method).to.equal('GET');
+    expect(requests[0].withCredentials).to.equal(true);
+    requests[0].respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, JSON.stringify(sampleResponse));
+  });
+
   it('should be able to make a GET request with JSONP', function (done) {
     var request = L.esri.get.JSONP('http://example.com/foo', {}, function (error, response) {
       expect(this.foo).to.equal('bar');

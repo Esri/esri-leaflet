@@ -84,7 +84,7 @@ export function _findIdAttributeFromFeature (feature) {
 export function responseToFeatureCollection (response, idAttribute) {
   var objectIdField;
   var features = response.features || response.results;
-  var count = features.length;
+  var count = features && features.length;
 
   if (idAttribute) {
     objectIdField = idAttribute;
