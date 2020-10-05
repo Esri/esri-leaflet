@@ -12,44 +12,36 @@
   
 
   
-    <meta name="description" content="This sample uses &lt;a href=&quot;https://github.com/Leaflet/Leaflet.draw&quot;&gt;Leaflet Draw&lt;/a&gt; to help edit the geometry of features in a hosted feature service.">
+    <meta name="description" content="This sample uses &lt;a href=&quot;//github.com/Leaflet/Leaflet.draw&quot;&gt;Leaflet Draw&lt;/a&gt; to help edit the geometry of features in a hosted feature service.">
   
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Esri Leaflet">
+  <meta name="viewport" content="width=device-width">
 
   <!--[if lt IE 9]>
     <script src="//cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv-printshiv.js"></script>
   <![endif]-->
 
   <!-- google fonts -->
-  <link href="//fonts.googleapis.com/css?family=Vollkorn:400italic,700italic,400,700" rel="stylesheet" type="text/css">
+  <link href='//fonts.googleapis.com/css?family=Vollkorn:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="//brick.a.ssl.fastly.net/Source+Code+Pro:300">
-  <link href="//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+  <link href='//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
 
   <!-- stylesheet -->
   <link rel="stylesheet" href="../css/style.css">
 
   
-    <!-- 'livereload' for development -->
-    <script src="//localhost:35729/livereload.js"></script>
-  
 
-  
-    <!-- Load local linked resources -->
-    <link rel="stylesheet" href="/js/linked/leaflet-dist/leaflet.css" />
-    <script src="/js/linked/leaflet-dist/leaflet-src.js"></script>
-    <script src="/js/linked/esri-leaflet-dist/esri-leaflet-debug.js"></script>
-  
+    <!-- use CDN -->
+    <script src="https://cdn.jsdelivr.net/jsdelivr-rum/latest/jsdelivr-rum.min.js"></script>
 
-  
-
-  
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.3/leaflet.css" />
+    <script src="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.3/leaflet-src.js"></script>
+    <script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.2/esri-leaflet-debug.js"></script>
   
 
   <!-- Google Analytics -->
   <script>
-    /* eslint-disable */
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -57,16 +49,14 @@
 
     ga('create', 'UA-44963317-3', 'auto');
     ga('send', 'pageview');
-    /* eslint-enable */
   </script>
   <!-- End Google Analytics -->
 </head>
 <body>
   <div class="page-content ">
     <div class="container">
-      <span id="mobileMenuButton" class="mobileMenuButton">&#9776;</span>
       <a class="site-nav" href="../" class="left logo">Esri Leaflet</a>
-      <nav id="site-nav-wrapper" class="site-nav-wrapper">
+      <nav class="right">
         <a class="site-nav" href="../tutorials/">Tutorials</a>
         <a class="site-nav" href="../plugins/">Plugins</a>
         <a class="site-nav" href="../examples/">Examples</a>
@@ -83,17 +73,12 @@
   
 
 <aside class="sidebar">
-  <nav>
-    <a href="../examples/">Quickstart</a>
-  </nav>
-
   <h5>Basemaps</h5>
   <nav>
     <a href="../examples/showing-a-basemap.html">Showing an ArcGIS Basemap</a>
     <a href="../examples/basemap-with-labels.html">Basemap with Labels</a>
     <a href="../examples/switching-basemaps.html">Switching Basemaps</a>
     <a href="../examples/retina-basemap.html">Retina Basemap</a>
-    <a href="../examples/vector-basemap.html">Vector Basemaps</a>
   </nav>
 
   <h5>Feature Layers</h5>
@@ -111,19 +96,19 @@
     <a href="../examples/zooming-to-all-features-2.html">Zoom to all Features #2</a>
     <a href="../examples/labeling-features.html">Labeling Features</a>
     <a href="../examples/layer-ordering.html">Ordering Layers</a>
-    <a href="../examples/simple-editing.html">Editing #1</a>
-    <a href="../examples/editable.html">Editing #2</a>
-    <a href="../examples/cedar-chart.html">Dynamic Chart (Cedar)</a>
-    <a href="../examples/dynamic-chart.html">Dynamic Chart (Chart.js)</a>
+
+
+    <!--<a href="../examples/editing.html">Editing</a>-->
   </nav>
 
   <h5>Feature Layer Plugins</h5>
   <nav>
     <a href="../examples/visualize-points-as-a-heatmap.html">Points as a Heatmap</a>
-    <a href="../examples/styling-heatmaps.html">Styling a Heatmap</a>
+    <a href="../examples/styling-heatmaps.html">Styling a heatmap</a>
     <a href="../examples/visualizing-time-with-feature-layer.html">Time Enabled Services</a>
     <a href="../examples/clustering-feature-layers.html">Clustering Points</a>
     <a href="../examples/styling-clusters.html">Styling Clusters</a>
+    <a href="../examples/stream-plugin.html">Stream Layer</a>
   </nav>
 
   <h5>Tile Layers</h5>
@@ -147,7 +132,6 @@
     <a href="../examples/identifying-imagery.html">Identify Imagery</a>
     <a href="../examples/image-map-layer-mosaic-rule.html">Mosaic Rule</a>
     <a href="../examples/imagery-popups.html">Custom Popups</a>
-    <a href="../examples/visualizing-time-on-image-layer.html">Time Ranges</a>
   </nav>
 
   <h5>Non-Mercator Projections</h5>
@@ -174,41 +158,37 @@
     <a href="../examples/geocoding-control.html">Geocoding Control</a>
     <a href="../examples/search-map-service.html">Searching Map Services</a>
     <a href="../examples/search-feature-layer.html">Searching Feature Layers</a>
-    <a href="../examples/search-feature-layer-search-mode.html">Geocoding Control - searchMode</a>
     <a href="../examples/center-map-on-address.html">Center the Initial Map State</a>
     <a href="../examples/reverse-geocoding.html">Reverse Geocoding</a>
   </nav>
 
   <h5>Other Plugins</h5>
   <nav>
-    <a href="../examples/renderers-plugin.html">Server Side Rendering</a>
-    <a href="../examples/stream-plugin.html">Stream Layer</a>
-    <a href="../examples/webmap.html?id=d143b33f1a02421d86b6a4ca1d7b7cd0">Loading Webmaps</a>
     <a href="../examples/gp-plugin.html">Geoprocessing</a>
+    <a href="../examples/renderers-plugin.html">Server Side Rendering</a>
+    <a href="../examples/webmap.html?id=22c504d229f14c789c5b49ebff38b941">Loading Webmaps</a>
   </nav>
 
   <h5>Misc.</h5>
   <nav>
-    <a href="../examples/layers-control.html">Control.Layers</a>
-    <a href="../examples/turf.html">Turf.js Mashup</a>
     <a href="../examples/getting-service-metadata.html">Getting Service Metadata</a>
     <a href="../examples/parse-feature-collection.html">Parsing Feature Collections</a>
-    <a href="../examples/indoors.html">Indoor Mapping</a>
   </nav>
+
 </aside>
 
 
 <div class="example-content">
 <div class="wrap">
   <h1>Editing feature layers</h1>
-  <p>This sample uses <a href="https://github.com/Leaflet/Leaflet.draw">Leaflet Draw</a> to help edit the geometry of features in a hosted feature service.</p>
+  <p>This sample uses <a href="//github.com/Leaflet/Leaflet.draw">Leaflet Draw</a> to help edit the geometry of features in a hosted feature service.</p>
 </div>
 <div id="map-wrapper">
   
 
 <!-- Leaflet Draw -->
-<script src="https://unpkg.com/leaflet-draw@0.4.7/dist/leaflet.draw-src.js"></script>
-<link rel="stylesheet" href="https://unpkg.com/leaflet-draw@0.4.7/dist/leaflet.draw-src.css">
+<script src="//rawgit.com/Leaflet/Leaflet.draw/master/dist/leaflet.draw-src.js"></script>
+<link rel="stylesheet" href="//rawgit.com/Leaflet/Leaflet.draw/master/dist/leaflet.draw.css">
 
 <style>
   #info-pane {
@@ -226,23 +206,22 @@
   }
 </style>
 
-<div id="map"></div>
-<div id="info-pane" class="leaflet-bar">
-  <label id="greeting">
+<div id='map'></div>
+<div id='info-pane' class='leaflet-bar'>
+  <label id='greeting'>
     Let's edit!
   </label>
-  <form action="#" id="form">
-    <label for="PEDDISTRIC">
+  <form action='#' id='form'>
+    <label for='PEDDISTRIC'>
       Pedestrian District Name<br>
-      <input id="PEDDISTRIC" type="text" value="" name="PEDDISTRIC"><br>
+      <input id='PEDDISTRIC' type="text" value='' name='PEDDISTRIC'><br>
     </label>
-    <label for="TRANPLANID">
+    <label for='TRANPLANID'>
       Transportation Plan Id<br>
-      <input id="TRANPLANID" type="text" value="" name="TRANPLANID" disabled="disabled">
+      <input id='TRANPLANID' type='text' value='' name='TRANPLANID' disabled='disabled'>
     </label>
   </form>
 </div>
-
 <script>
   // create the map
   var map = L.map('map').setView([45.512, -122.619], 12);
@@ -265,10 +244,10 @@
   var disableEditing = false;
 
   // start editing a given layer
-  function startEditing (layer) {
-    document.getElementById('PEDDISTRIC').value = layer.feature.properties.PEDDISTRIC;
+  function startEditing(layer) {
+    document.getElementById("PEDDISTRIC").value = layer.feature.properties.PEDDISTRIC;
     // read only
-    document.getElementById('TRANPLANID').value = layer.feature.properties.TRANPLANID;
+    document.getElementById("TRANPLANID").value = layer.feature.properties.TRANPLANID;
     if (!disableEditing) {
       layer.editing.enable();
       currentlyEditing = layer;
@@ -276,7 +255,7 @@
   }
 
   // stop editing a given layer
-  function stopEditing () {
+  function stopEditing() {
     // if a layer is being edited, finish up and disable editing on it afterward.
     if (currentlyEditing) {
       handleEdit(currentlyEditing);
@@ -285,62 +264,56 @@
     currentlyEditing = undefined;
   }
 
-  function handleEdit (layer) {
+  function handleEdit(layer) {
     // convert the layer to GeoJSON and build a new updated GeoJSON object for that feature
-    layer.feature.properties.PEDDISTRIC = document.getElementById('PEDDISTRIC').value;
+    layer.feature.properties.PEDDISTRIC = document.getElementById("PEDDISTRIC").value;
     pedestrianDistricts.updateFeature({
       type: 'Feature',
       id: layer.feature.id,
       geometry: layer.toGeoJSON().geometry,
       properties: layer.feature.properties
-    }, function (error, response) {
-      if (error) {
-        console.error(error);
-      }
-
+    }, function(error, response) {
       displayGreeting();
     });
   }
 
-  function displayAttributes () {
-    document.getElementById('greeting').innerHTML = null;
-    document.getElementById('form').style.display = 'block';
+  function displayAttributes() {
+    document.getElementById("greeting").innerHTML = null;
+    document.getElementById("form").style.display = 'block';
   }
 
-  function displayGreeting () {
-    document.getElementById('greeting').innerHTML = 'Lets edit!';
-    document.getElementById('form').style.display = 'none';
+  function displayGreeting() {
+    document.getElementById("greeting").innerHTML = "Lets edit!";
+    document.getElementById("form").style.display = 'none';
   }
 
   // when the map is clicked, stop editing
-  map.on('click', function (e) {
+  map.on('click', function(e) {
     stopEditing();
   });
 
   // when a pedestrian district is clicked, stop editing the current feature and edit the clicked feature
-  pedestrianDistricts.on('click', function (e) {
+  pedestrianDistricts.on('click', function(e) {
     stopEditing();
     startEditing(e.layer);
     if (!currentlyDeleting) {
       displayAttributes();
     }
-    // make sure map click event isn't fired. (seems like a bug)
-    L.DomEvent.stopPropagation(e);
   });
 
   // when pedestrian districts start loading (because of pan/zoom) stop editing
-  pedestrianDistricts.on('loading', function () {
+  pedestrianDistricts.on('loading', function() {
     stopEditing();
   });
 
   // when new features are loaded clear our current guides and feature groups
   // then load the current features into the guides and feature group
-  pedestrianDistricts.on('load', function () {
+  pedestrianDistricts.on('load', function() {
     // wipe the current layers available for deltion and clear the current guide layers.
     drawnItems.clearLayers();
 
     // for each feature push the layer representing that feature into the guides and deletion group
-    pedestrianDistricts.eachFeature(function (layer) {
+    pedestrianDistricts.eachFeature(function(layer) {
       drawnItems.addLayer(layer);
     });
   });
@@ -360,7 +333,7 @@
         drawError: {
           color: 'red', // color the shape will turn when intersects
           message: '<strong>Oh snap!<strong> you can\'t draw that!' // message that will show when intersect
-        }
+        },
       }
     }
   });
@@ -369,31 +342,31 @@
   map.addControl(drawControl);
 
   // when we start using creation tools disable our custom editing
-  map.on('draw:createstart', function () {
+  map.on('draw:createstart', function() {
     disableEditing = true;
   });
 
   // when we start using deletion tools, hide attributes and disable custom editing
-  map.on('draw:deletestart', function () {
+  map.on('draw:deletestart', function() {
     disableEditing = true;
     currentlyDeleting = true;
   });
 
   // listen to the draw created event
-  map.on('draw:created', function (e) {
+  map.on('draw:created', function(e) {
     // add the feature as GeoJSON (feature will be converted to ArcGIS JSON internally)
     pedestrianDistricts.addFeature(e.layer.toGeoJSON());
     disableEditing = false;
   });
 
   // listen to the draw deleted event
-  map.on('draw:deleted', function (e) {
+  map.on('draw:deleted', function(e) {
     var delArray = [];
-    e.layers.eachLayer(function (layer) {
+    e.layers.eachLayer(function(layer) {
       var id = layer.feature.id;
       delArray.push(id);
     });
-    pedestrianDistricts.deleteFeatures(delArray, function (error, response) {
+    pedestrianDistricts.deleteFeatures(delArray, function(error, response) {
       if (error) {
         console.log(error, response);
       }
@@ -404,21 +377,18 @@
 </script>
 
 </div>
-<pre><code class="language-xml"><span class="doctype">&lt;!DOCTYPE html&gt;</span>
-<span class="tag">&lt;<span class="title">html</span>&gt;</span>
+<pre><code class="language-xml"><span class="tag">&lt;<span class="title">html</span>&gt;</span>
 <span class="tag">&lt;<span class="title">head</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">"utf-8"</span> /&gt;</span>
+  <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">utf-8</span> /&gt;</span>
   <span class="tag">&lt;<span class="title">title</span>&gt;</span>Editing feature layers<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">name</span>=<span class="value">"viewport"</span> <span class="attribute">content</span>=<span class="value">"initial-scale=1,maximum-scale=1,user-scalable=no"</span> /&gt;</span>
+  <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">name</span>=<span class="value">'viewport'</span> <span class="attribute">content</span>=<span class="value">'initial-scale=1,maximum-scale=1,user-scalable=no'</span> /&gt;</span>
 
-  <span class="comment">&lt;!-- Load Leaflet (not latest version due to dependencies) --&gt;</span>
-  <span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"https://unpkg.com/leaflet@1.0.3/dist/leaflet.css"</span> /&gt;</span>
-  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/leaflet@1.0.3/dist/leaflet-src.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+  <span class="comment">&lt;!-- Load Leaflet from CDN--&gt;</span>
+  <span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"https://cdn.jsdelivr.net/leaflet/1.0.0-rc.3/leaflet.css"</span> /&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://cdn.jsdelivr.net/leaflet/1.0.0-rc.3/leaflet-src.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
   <span class="comment">&lt;!-- Load Esri Leaflet from CDN --&gt;</span>
-  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/esri-leaflet@2.5.0/dist/esri-leaflet.js"</span>
-    <span class="attribute">integrity</span>=<span class="value">"sha512-ucw7Grpc+iEQZa711gcjgMBnmd9qju1CICsRaryvX7HJklK0pGl/prxKvtHwpgm5ZHdvAil7YPxI1oWPOWK3UQ=="</span>
-    <span class="attribute">crossorigin</span>=<span class="value">""</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://cdn.jsdelivr.net/leaflet.esri/2.0.2/esri-leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
   <span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css">
     <span class="tag">body</span> <span class="rules">{ <span class="rule"><span class="attribute">margin</span>:<span class="value"><span class="number">0</span></span></span>; <span class="rule"><span class="attribute">padding</span>:<span class="value"><span class="number">0</span></span></span>; <span class="rule">}</span></span>
@@ -428,8 +398,8 @@
 <span class="tag">&lt;<span class="title">body</span>&gt;</span>
 
 <span class="comment">&lt;!-- Leaflet Draw --&gt;</span>
-<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/leaflet-draw@0.4.7/dist/leaflet.draw-src.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
-<span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"https://unpkg.com/leaflet-draw@0.4.7/dist/leaflet.draw-src.css"</span>&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"//rawgit.com/Leaflet/Leaflet.draw/master/dist/leaflet.draw-src.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+<span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"//rawgit.com/Leaflet/Leaflet.draw/master/dist/leaflet.draw.css"</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css">
   <span class="id">#info-pane</span> <span class="rules">{
@@ -447,23 +417,22 @@
   <span class="rule">}</span></span>
 </span><span class="tag">&lt;/<span class="title">style</span>&gt;</span>
 
-<span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
-<span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"info-pane"</span> <span class="attribute">class</span>=<span class="value">"leaflet-bar"</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">label</span> <span class="attribute">id</span>=<span class="value">"greeting"</span>&gt;</span>
+<span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">'map'</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+<span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">'info-pane'</span> <span class="attribute">class</span>=<span class="value">'leaflet-bar'</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">label</span> <span class="attribute">id</span>=<span class="value">'greeting'</span>&gt;</span>
     Let's edit!
   <span class="tag">&lt;/<span class="title">label</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">form</span> <span class="attribute">action</span>=<span class="value">"#"</span> <span class="attribute">id</span>=<span class="value">"form"</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">label</span> <span class="attribute">for</span>=<span class="value">"PEDDISTRIC"</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">form</span> <span class="attribute">action</span>=<span class="value">'#'</span> <span class="attribute">id</span>=<span class="value">'form'</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">label</span> <span class="attribute">for</span>=<span class="value">'PEDDISTRIC'</span>&gt;</span>
       Pedestrian District Name<span class="tag">&lt;<span class="title">br</span>&gt;</span>
-      <span class="tag">&lt;<span class="title">input</span> <span class="attribute">id</span>=<span class="value">"PEDDISTRIC"</span> <span class="attribute">type</span>=<span class="value">"text"</span> <span class="attribute">value</span>=<span class="value">""</span> <span class="attribute">name</span>=<span class="value">"PEDDISTRIC"</span>&gt;</span><span class="tag">&lt;<span class="title">br</span>&gt;</span>
+      <span class="tag">&lt;<span class="title">input</span> <span class="attribute">id</span>=<span class="value">'PEDDISTRIC'</span> <span class="attribute">type</span>=<span class="value">"text"</span> <span class="attribute">value</span>=<span class="value">''</span> <span class="attribute">name</span>=<span class="value">'PEDDISTRIC'</span>&gt;</span><span class="tag">&lt;<span class="title">br</span>&gt;</span>
     <span class="tag">&lt;/<span class="title">label</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">label</span> <span class="attribute">for</span>=<span class="value">"TRANPLANID"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">label</span> <span class="attribute">for</span>=<span class="value">'TRANPLANID'</span>&gt;</span>
       Transportation Plan Id<span class="tag">&lt;<span class="title">br</span>&gt;</span>
-      <span class="tag">&lt;<span class="title">input</span> <span class="attribute">id</span>=<span class="value">"TRANPLANID"</span> <span class="attribute">type</span>=<span class="value">"text"</span> <span class="attribute">value</span>=<span class="value">""</span> <span class="attribute">name</span>=<span class="value">"TRANPLANID"</span> <span class="attribute">disabled</span>=<span class="value">"disabled"</span>&gt;</span>
+      <span class="tag">&lt;<span class="title">input</span> <span class="attribute">id</span>=<span class="value">'TRANPLANID'</span> <span class="attribute">type</span>=<span class="value">'text'</span> <span class="attribute">value</span>=<span class="value">''</span> <span class="attribute">name</span>=<span class="value">'TRANPLANID'</span> <span class="attribute">disabled</span>=<span class="value">'disabled'</span>&gt;</span>
     <span class="tag">&lt;/<span class="title">label</span>&gt;</span>
   <span class="tag">&lt;/<span class="title">form</span>&gt;</span>
 <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
-
 <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
   <span class="comment">// create the map</span>
   <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">45.512</span>, -<span class="number">122.619</span>], <span class="number">12</span>);
@@ -486,10 +455,10 @@
   <span class="keyword">var</span> disableEditing = <span class="literal">false</span>;
 
   <span class="comment">// start editing a given layer</span>
-  <span class="function"><span class="keyword">function</span> <span class="title">startEditing</span> <span class="params">(layer)</span> {</span>
-    document.getElementById(<span class="string">'PEDDISTRIC'</span>).value = layer.feature.properties.PEDDISTRIC;
+  <span class="function"><span class="keyword">function</span> <span class="title">startEditing</span><span class="params">(layer)</span> {</span>
+    document.getElementById(<span class="string">"PEDDISTRIC"</span>).value = layer.feature.properties.PEDDISTRIC;
     <span class="comment">// read only</span>
-    document.getElementById(<span class="string">'TRANPLANID'</span>).value = layer.feature.properties.TRANPLANID;
+    document.getElementById(<span class="string">"TRANPLANID"</span>).value = layer.feature.properties.TRANPLANID;
     <span class="keyword">if</span> (!disableEditing) {
       layer.editing.enable();
       currentlyEditing = layer;
@@ -497,7 +466,7 @@
   }
 
   <span class="comment">// stop editing a given layer</span>
-  <span class="function"><span class="keyword">function</span> <span class="title">stopEditing</span> <span class="params">()</span> {</span>
+  <span class="function"><span class="keyword">function</span> <span class="title">stopEditing</span><span class="params">()</span> {</span>
     <span class="comment">// if a layer is being edited, finish up and disable editing on it afterward.</span>
     <span class="keyword">if</span> (currentlyEditing) {
       handleEdit(currentlyEditing);
@@ -506,62 +475,56 @@
     currentlyEditing = <span class="literal">undefined</span>;
   }
 
-  <span class="function"><span class="keyword">function</span> <span class="title">handleEdit</span> <span class="params">(layer)</span> {</span>
+  <span class="function"><span class="keyword">function</span> <span class="title">handleEdit</span><span class="params">(layer)</span> {</span>
     <span class="comment">// convert the layer to GeoJSON and build a new updated GeoJSON object for that feature</span>
-    layer.feature.properties.PEDDISTRIC = document.getElementById(<span class="string">'PEDDISTRIC'</span>).value;
+    layer.feature.properties.PEDDISTRIC = document.getElementById(<span class="string">"PEDDISTRIC"</span>).value;
     pedestrianDistricts.updateFeature({
       type: <span class="string">'Feature'</span>,
       id: layer.feature.id,
       geometry: layer.toGeoJSON().geometry,
       properties: layer.feature.properties
-    }, <span class="function"><span class="keyword">function</span> <span class="params">(error, response)</span> {</span>
-      <span class="keyword">if</span> (error) {
-        console.error(error);
-      }
-
+    }, <span class="function"><span class="keyword">function</span><span class="params">(error, response)</span> {</span>
       displayGreeting();
     });
   }
 
-  <span class="function"><span class="keyword">function</span> <span class="title">displayAttributes</span> <span class="params">()</span> {</span>
-    document.getElementById(<span class="string">'greeting'</span>).innerHTML = <span class="literal">null</span>;
-    document.getElementById(<span class="string">'form'</span>).style.display = <span class="string">'block'</span>;
+  <span class="function"><span class="keyword">function</span> <span class="title">displayAttributes</span><span class="params">()</span> {</span>
+    document.getElementById(<span class="string">"greeting"</span>).innerHTML = <span class="literal">null</span>;
+    document.getElementById(<span class="string">"form"</span>).style.display = <span class="string">'block'</span>;
   }
 
-  <span class="function"><span class="keyword">function</span> <span class="title">displayGreeting</span> <span class="params">()</span> {</span>
-    document.getElementById(<span class="string">'greeting'</span>).innerHTML = <span class="string">'Lets edit!'</span>;
-    document.getElementById(<span class="string">'form'</span>).style.display = <span class="string">'none'</span>;
+  <span class="function"><span class="keyword">function</span> <span class="title">displayGreeting</span><span class="params">()</span> {</span>
+    document.getElementById(<span class="string">"greeting"</span>).innerHTML = <span class="string">"Lets edit!"</span>;
+    document.getElementById(<span class="string">"form"</span>).style.display = <span class="string">'none'</span>;
   }
 
   <span class="comment">// when the map is clicked, stop editing</span>
-  map.on(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(e)</span> {</span>
+  map.on(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span><span class="params">(e)</span> {</span>
     stopEditing();
   });
 
   <span class="comment">// when a pedestrian district is clicked, stop editing the current feature and edit the clicked feature</span>
-  pedestrianDistricts.on(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(e)</span> {</span>
+  pedestrianDistricts.on(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span><span class="params">(e)</span> {</span>
     stopEditing();
     startEditing(e.layer);
     <span class="keyword">if</span> (!currentlyDeleting) {
       displayAttributes();
     }
-    <span class="comment">// make sure map click event isn't fired. (seems like a bug)</span>
-    L.DomEvent.stopPropagation(e);
   });
 
   <span class="comment">// when pedestrian districts start loading (because of pan/zoom) stop editing</span>
-  pedestrianDistricts.on(<span class="string">'loading'</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+  pedestrianDistricts.on(<span class="string">'loading'</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
     stopEditing();
   });
 
   <span class="comment">// when new features are loaded clear our current guides and feature groups</span>
   <span class="comment">// then load the current features into the guides and feature group</span>
-  pedestrianDistricts.on(<span class="string">'load'</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+  pedestrianDistricts.on(<span class="string">'load'</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
     <span class="comment">// wipe the current layers available for deltion and clear the current guide layers.</span>
     drawnItems.clearLayers();
 
     <span class="comment">// for each feature push the layer representing that feature into the guides and deletion group</span>
-    pedestrianDistricts.eachFeature(<span class="function"><span class="keyword">function</span> <span class="params">(layer)</span> {</span>
+    pedestrianDistricts.eachFeature(<span class="function"><span class="keyword">function</span><span class="params">(layer)</span> {</span>
       drawnItems.addLayer(layer);
     });
   });
@@ -581,7 +544,7 @@
         drawError: {
           color: <span class="string">'red'</span>, <span class="comment">// color the shape will turn when intersects</span>
           message: <span class="string">'&lt;strong&gt;Oh snap!&lt;strong&gt; you can\'t draw that!'</span> <span class="comment">// message that will show when intersect</span>
-        }
+        },
       }
     }
   });
@@ -590,31 +553,31 @@
   map.addControl(drawControl);
 
   <span class="comment">// when we start using creation tools disable our custom editing</span>
-  map.on(<span class="string">'draw:createstart'</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+  map.on(<span class="string">'draw:createstart'</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
     disableEditing = <span class="literal">true</span>;
   });
 
   <span class="comment">// when we start using deletion tools, hide attributes and disable custom editing</span>
-  map.on(<span class="string">'draw:deletestart'</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+  map.on(<span class="string">'draw:deletestart'</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
     disableEditing = <span class="literal">true</span>;
     currentlyDeleting = <span class="literal">true</span>;
   });
 
   <span class="comment">// listen to the draw created event</span>
-  map.on(<span class="string">'draw:created'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(e)</span> {</span>
+  map.on(<span class="string">'draw:created'</span>, <span class="function"><span class="keyword">function</span><span class="params">(e)</span> {</span>
     <span class="comment">// add the feature as GeoJSON (feature will be converted to ArcGIS JSON internally)</span>
     pedestrianDistricts.addFeature(e.layer.toGeoJSON());
     disableEditing = <span class="literal">false</span>;
   });
 
   <span class="comment">// listen to the draw deleted event</span>
-  map.on(<span class="string">'draw:deleted'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(e)</span> {</span>
+  map.on(<span class="string">'draw:deleted'</span>, <span class="function"><span class="keyword">function</span><span class="params">(e)</span> {</span>
     <span class="keyword">var</span> delArray = [];
-    e.layers.eachLayer(<span class="function"><span class="keyword">function</span> <span class="params">(layer)</span> {</span>
+    e.layers.eachLayer(<span class="function"><span class="keyword">function</span><span class="params">(layer)</span> {</span>
       <span class="keyword">var</span> id = layer.feature.id;
       delArray.push(id);
     });
-    pedestrianDistricts.deleteFeatures(delArray, <span class="function"><span class="keyword">function</span> <span class="params">(error, response)</span> {</span>
+    pedestrianDistricts.deleteFeatures(delArray, <span class="function"><span class="keyword">function</span><span class="params">(error, response)</span> {</span>
       <span class="keyword">if</span> (error) {
         console.log(error, response);
       }
@@ -628,134 +591,16 @@
 <span class="tag">&lt;/<span class="title">html</span>&gt;</span></code></pre>
 
 <div class="wrap">
-  <p><a href="https://github.com/Esri/esri-leaflet-doc/edit/master/src/pages/examples/editing.hbs">Edit this sample on GitHub</a></p>
+  <p><a href="http://github.com/Esri/esri-leaflet-doc/edit/master/src/pages/examples/editing.hbs">Edit this sample on GitHub</a></p>
+</div>
 </div>
 
-<div class="mobile-menu">
-  <aside class="sidebar">
-  <nav>
-    <a href="../examples/">Quickstart</a>
-  </nav>
-
-  <h5>Basemaps</h5>
-  <nav>
-    <a href="../examples/showing-a-basemap.html">Showing an ArcGIS Basemap</a>
-    <a href="../examples/basemap-with-labels.html">Basemap with Labels</a>
-    <a href="../examples/switching-basemaps.html">Switching Basemaps</a>
-    <a href="../examples/retina-basemap.html">Retina Basemap</a>
-    <a href="../examples/vector-basemap.html">Vector Basemaps</a>
-  </nav>
-
-  <h5>Feature Layers</h5>
-  <nav>
-    <a href="../examples/simple-feature-layer.html">Simple FeatureLayer</a>
-    <a href="../examples/styling-feature-layer-points.html">Styling Points</a>
-    <a href="../examples/styling-feature-layer-polylines.html">Styling Lines</a>
-    <a href="../examples/styling-feature-layer-polygons.html">Styling Polygons</a>
-    <a href="../examples/feature-layer-popups.html">Custom Popups</a>
-    <a href="../examples/querying-feature-layers-1.html">Querying Features #1</a>
-    <a href="../examples/querying-feature-layers-2.html">Querying Features #2</a>
-    <a href="../examples/spatial-queries.html">Spatial Queries</a>
-    <a href="../examples/simplifying-complex-features.html">Simplifying Complex Features</a>
-    <a href="../examples/zooming-to-all-features-1.html">Zoom to all Features #1</a>
-    <a href="../examples/zooming-to-all-features-2.html">Zoom to all Features #2</a>
-    <a href="../examples/labeling-features.html">Labeling Features</a>
-    <a href="../examples/layer-ordering.html">Ordering Layers</a>
-    <a href="../examples/simple-editing.html">Editing #1</a>
-    <a href="../examples/editable.html">Editing #2</a>
-    <a href="../examples/cedar-chart.html">Dynamic Chart (Cedar)</a>
-    <a href="../examples/dynamic-chart.html">Dynamic Chart (Chart.js)</a>
-  </nav>
-
-  <h5>Feature Layer Plugins</h5>
-  <nav>
-    <a href="../examples/visualize-points-as-a-heatmap.html">Points as a Heatmap</a>
-    <a href="../examples/styling-heatmaps.html">Styling a Heatmap</a>
-    <a href="../examples/visualizing-time-with-feature-layer.html">Time Enabled Services</a>
-    <a href="../examples/clustering-feature-layers.html">Clustering Points</a>
-    <a href="../examples/styling-clusters.html">Styling Clusters</a>
-  </nav>
-
-  <h5>Tile Layers</h5>
-  <nav>
-    <a href="../examples/tile-layer-1.html">Tiles from a Map Service #1</a>
-    <a href="../examples/tile-layer-2.html">Tiles from a Map Service #2</a>
-  </nav>
-
-  <h5>Dynamic Map Layer</h5>
-  <nav>
-    <a href="../examples/simple-dynamic-map-layer.html">Simple Dynamic Map Layer</a>
-    <a href="../examples/identifying-features.html">Identifying Features</a>
-    <a href="../examples/customizing-popups.html">Custom Popups</a>
-    <a href="../examples/visualizing-time-on-dynamic-map-layer.html">Time Ranges</a>
-  </nav>
-
-  <h5>Image Map Layer</h5>
-  <nav>
-    <a href="../examples/simple-image-map-layer.html">Simple Image Map Layer</a>
-    <a href="../examples/image-map-layer-rendering-rule.html">Rendering Rule</a>
-    <a href="../examples/identifying-imagery.html">Identify Imagery</a>
-    <a href="../examples/image-map-layer-mosaic-rule.html">Mosaic Rule</a>
-    <a href="../examples/imagery-popups.html">Custom Popups</a>
-    <a href="../examples/visualizing-time-on-image-layer.html">Time Ranges</a>
-  </nav>
-
-  <h5>Non-Mercator Projections</h5>
-  <nav>
-    <a href="../examples/non-mercator-projection.html">Tiles + Feature Layer</a>
-    <a href="../examples/non-mercator-projection-2.html">Tiles + Dynamic Map Layer</a>
-  </nav>
-
-  <h5>Query</h5>
-  <nav>
-    <a href="../examples/feature-layer-snapshot.html">Layer "Snapshot"</a>
-    <a href="../examples/query-no-map.html">Query without a Map</a>
-  </nav>
-
-  <h5>Authentication</h5>
-  <nav>
-    <a href="../examples/arcgis-online-auth.html">ArcGIS Online OAuth</a>
-    <a href="../examples/premium-content.html">Premium ArcGIS Online Content</a>
-    <a href="../examples/arcgis-server-auth.html">ArcGIS Server username/password</a>
-  </nav>
-
-  <h5>Geocoding</h5>
-  <nav>
-    <a href="../examples/geocoding-control.html">Geocoding Control</a>
-    <a href="../examples/search-map-service.html">Searching Map Services</a>
-    <a href="../examples/search-feature-layer.html">Searching Feature Layers</a>
-    <a href="../examples/search-feature-layer-search-mode.html">Geocoding Control - searchMode</a>
-    <a href="../examples/center-map-on-address.html">Center the Initial Map State</a>
-    <a href="../examples/reverse-geocoding.html">Reverse Geocoding</a>
-  </nav>
-
-  <h5>Other Plugins</h5>
-  <nav>
-    <a href="../examples/renderers-plugin.html">Server Side Rendering</a>
-    <a href="../examples/stream-plugin.html">Stream Layer</a>
-    <a href="../examples/webmap.html?id=d143b33f1a02421d86b6a4ca1d7b7cd0">Loading Webmaps</a>
-    <a href="../examples/gp-plugin.html">Geoprocessing</a>
-  </nav>
-
-  <h5>Misc.</h5>
-  <nav>
-    <a href="../examples/layers-control.html">Control.Layers</a>
-    <a href="../examples/turf.html">Turf.js Mashup</a>
-    <a href="../examples/getting-service-metadata.html">Getting Service Metadata</a>
-    <a href="../examples/parse-feature-collection.html">Parsing Feature Collections</a>
-    <a href="../examples/indoors.html">Indoor Mapping</a>
-  </nav>
-</aside>
-
+  <div style='clear:both;'></div>
+</div>
+<div class="container centered-text">
+  <p class="copyright">Esri Leaflet is a project from the <a href="http://pdx.esri.com">Esri PDX R&amp;D Center</a> and the <a href="https://github.com/Esri/esri-leaflet/graphs/contributors">Esri Community</a></p>
 </div>
 
-</div>
-
-  <div style="clear:both;"></div>
-</div>
-
-  <div class="container center-text">
-    <p class="copyright"><a href="https://github.com/esri/esri-leaflet#terms">Terms</a></p>
   </div>
   <script src="../js/script.js"></script>
   </body>
