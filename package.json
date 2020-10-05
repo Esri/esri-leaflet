@@ -35,7 +35,7 @@
     "mocha": "^5.2.0",
     "npm-run-all": "^4.0.2",
     "rollup": "^2.0.0",
-    "rollup-plugin-uglify": "^6.0.4",
+    "rollup-plugin-terser": "^7.0.2",
     "semistandard": "^9.0.0",
     "sinon": "^6.3.5",
     "sinon-chai": "3.2.0",
