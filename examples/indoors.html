@@ -8,11 +8,11 @@
   <meta charset="utf-8">
 
   
-    <title>Simple FeatureLayer | Esri Leaflet</title>
+    <title>Indoor Mapping | Esri Leaflet</title>
   
 
   
-    <meta name="description" content="Display a feature layer from ArcGIS Online or ArcGIS server. More information about Feature Layers can be found in the &lt;a href=&quot;../api-reference/layers/feature-layer.html&quot;&gt;L.esri.FeatureLayer&lt;/a&gt; documentation.">
+    <meta name="description" content="Display a layer using the &lt;a href=&quot;https://github.com/cbaines/leaflet-indoor&quot;&gt;Leaflet Indoors plugin&lt;/a&gt;.">
   
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -31,17 +31,16 @@
 
   
 
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-    crossorigin=""/>
-  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-    crossorigin=""></script>
-
   
-    <script src="https://unpkg.com/esri-leaflet@2.5.0/dist/esri-leaflet.js"
-      integrity="sha512-ucw7Grpc+iEQZa711gcjgMBnmd9qju1CICsRaryvX7HJklK0pGl/prxKvtHwpgm5ZHdvAil7YPxI1oWPOWK3UQ=="
-      crossorigin=""></script>
+    
+      <link rel="stylesheet" href="https://unpkg.com/leaflet@0.7.7/dist/leaflet.css" />
+      <script src="https://unpkg.com/leaflet@0.7.7/dist/leaflet-src.js"></script>
+    
+
+    
+      <script src="https://unpkg.com/esri-leaflet@1.0.4/dist/esri-leaflet.js"></script>
+    
+
   
 
   
@@ -196,29 +195,59 @@
     <a href="../examples/turf.html">Turf.js Mashup</a>
     <a href="../examples/getting-service-metadata.html">Getting Service Metadata</a>
     <a href="../examples/parse-feature-collection.html">Parsing Feature Collections</a>
+    <a href="../examples/indoors.html">Indoor Mapping</a>
   </nav>
 </aside>
 
 
 <div class="example-content">
 <div class="wrap">
-  <h1>Simple FeatureLayer</h1>
-  <p>Display a feature layer from ArcGIS Online or ArcGIS server. More information about Feature Layers can be found in the <a href="../api-reference/layers/feature-layer.html">L.esri.FeatureLayer</a> documentation.</p>
+  <h1>Indoor Mapping</h1>
+  <p>Display a layer using the <a href="https://github.com/cbaines/leaflet-indoor">Leaflet Indoors plugin</a>.</p>
 </div>
 <div id="map-wrapper">
   
 
+<!-- Include Leaflet Indoor package (https://github.com/cbaines/leaflet-indoor) -->
+<script src="https://cdn.jsdelivr.net/gh/cbaines/leaflet-indoor/leaflet-indoor.js"></script>
+
 <div id="map"></div>
 
 <script>
-  var map = L.map('map').setView([37.837, -122.479], 8);
+  var map = L.map('map').setView([38.6391, -90.294], 18);
 
-  L.esri.basemapLayer('Streets').addTo(map);
+  L.esri.basemapLayer('Imagery').addTo(map);
+  var featureLayer = L.esri.featureLayer({
+    url: 'https://services1.arcgis.com/g2TonOxuRkIqSOFx/arcgis/rest/services/StLouisArtMuseumFloorPlan/FeatureServer/0'
+  });
+  
+  // Run a query against our Feature Layer (that we have not added to the map)
+  // to get a FeatureCollection (https://tools.ietf.org/html/rfc7946#section-3.3)
+  featureLayer.query().run(function (error, featureCollection) {
+    if (error) {
+      return;
+    }
 
-  // a Leaflet marker is used by default to symbolize point features.
-  L.esri.featureLayer({
-    url: 'https://sampleserver6.arcgisonline.com/arcgis/rest/services/Earthquakes_Since1970/MapServer/0'
-  }).addTo(map);
+    var indoorLayer = new L.Indoor(featureCollection, {
+      getLevel: function (feature) {
+        return feature.properties.FLOOR;
+      }
+    });
+    // set the initial level to show
+    indoorLayer.setLevel(2);
+    indoorLayer.addTo(map);
+
+    // Add Level Control (code from https://github.com/cbaines/leaflet-indoor)
+    var levelControl = new L.Control.Level({
+      level: 2,
+      levels: indoorLayer.getLevels()
+    });
+
+    // Connect the level control to the indoor layer
+    levelControl.addEventListener('levelchange', indoorLayer.setLevel, indoorLayer);
+
+    levelControl.addTo(map);
+  });
 </script>
 
 </div>
@@ -226,21 +255,15 @@
 <span class="tag">&lt;<span class="title">html</span>&gt;</span>
 <span class="tag">&lt;<span class="title">head</span>&gt;</span>
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">"utf-8"</span> /&gt;</span>
-  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Simple FeatureLayer<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Indoor Mapping<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">name</span>=<span class="value">"viewport"</span> <span class="attribute">content</span>=<span class="value">"initial-scale=1,maximum-scale=1,user-scalable=no"</span> /&gt;</span>
 
-  <span class="comment">&lt;!-- Load Leaflet from CDN --&gt;</span>
-  <span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"</span>
-    <span class="attribute">integrity</span>=<span class="value">"sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="</span>
-    <span class="attribute">crossorigin</span>=<span class="value">""</span>/&gt;</span>
-  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"</span>
-    <span class="attribute">integrity</span>=<span class="value">"sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="</span>
-    <span class="attribute">crossorigin</span>=<span class="value">""</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+  <span class="comment">&lt;!-- Load Leaflet (not latest version due to dependencies) --&gt;</span>
+  <span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"https://unpkg.com/leaflet@0.7.7/dist/leaflet.css"</span> /&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/leaflet@0.7.7/dist/leaflet-src.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
-  <span class="comment">&lt;!-- Load Esri Leaflet from CDN --&gt;</span>
-  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/esri-leaflet@2.5.0/dist/esri-leaflet.js"</span>
-    <span class="attribute">integrity</span>=<span class="value">"sha512-ucw7Grpc+iEQZa711gcjgMBnmd9qju1CICsRaryvX7HJklK0pGl/prxKvtHwpgm5ZHdvAil7YPxI1oWPOWK3UQ=="</span>
-    <span class="attribute">crossorigin</span>=<span class="value">""</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+  <span class="comment">&lt;!-- Load Esri Leaflet (not latest version due to dependencies) --&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/esri-leaflet@1.0.4/dist/esri-leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
   <span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css">
     <span class="tag">body</span> <span class="rules">{ <span class="rule"><span class="attribute">margin</span>:<span class="value"><span class="number">0</span></span></span>; <span class="rule"><span class="attribute">padding</span>:<span class="value"><span class="number">0</span></span></span>; <span class="rule">}</span></span>
@@ -249,24 +272,53 @@
 <span class="tag">&lt;/<span class="title">head</span>&gt;</span>
 <span class="tag">&lt;<span class="title">body</span>&gt;</span>
 
+<span class="comment">&lt;!-- Include Leaflet Indoor package (https://github.com/cbaines/leaflet-indoor) --&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://cdn.jsdelivr.net/gh/cbaines/leaflet-indoor/leaflet-indoor.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+
 <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
-  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">37.837</span>, -<span class="number">122.479</span>], <span class="number">8</span>);
+  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">38.6391</span>, -<span class="number">90.294</span>], <span class="number">18</span>);
 
-  L.esri.basemapLayer(<span class="string">'Streets'</span>).addTo(map);
+  L.esri.basemapLayer(<span class="string">'Imagery'</span>).addTo(map);
+  <span class="keyword">var</span> featureLayer = L.esri.featureLayer({
+    url: <span class="string">'https://services1.arcgis.com/g2TonOxuRkIqSOFx/arcgis/rest/services/StLouisArtMuseumFloorPlan/FeatureServer/0'</span>
+  });
 
-  <span class="comment">// a Leaflet marker is used by default to symbolize point features.</span>
-  L.esri.featureLayer({
-    url: <span class="string">'https://sampleserver6.arcgisonline.com/arcgis/rest/services/Earthquakes_Since1970/MapServer/0'</span>
-  }).addTo(map);
+  <span class="comment">// Run a query against our Feature Layer (that we have not added to the map)</span>
+  <span class="comment">// to get a FeatureCollection (https://tools.ietf.org/html/rfc7946#section-3.3)</span>
+  featureLayer.query().run(<span class="function"><span class="keyword">function</span> <span class="params">(error, featureCollection)</span> {</span>
+    <span class="keyword">if</span> (error) {
+      <span class="keyword">return</span>;
+    }
+
+    <span class="keyword">var</span> indoorLayer = <span class="keyword">new</span> L.Indoor(featureCollection, {
+      getLevel: <span class="function"><span class="keyword">function</span> <span class="params">(feature)</span> {</span>
+        <span class="keyword">return</span> feature.properties.FLOOR;
+      }
+    });
+    <span class="comment">// set the initial level to show</span>
+    indoorLayer.setLevel(<span class="number">2</span>);
+    indoorLayer.addTo(map);
+
+    <span class="comment">// Add Level Control (code from https://github.com/cbaines/leaflet-indoor)</span>
+    <span class="keyword">var</span> levelControl = <span class="keyword">new</span> L.Control.Level({
+      level: <span class="number">2</span>,
+      levels: indoorLayer.getLevels()
+    });
+
+    <span class="comment">// Connect the level control to the indoor layer</span>
+    levelControl.addEventListener(<span class="string">'levelchange'</span>, indoorLayer.setLevel, indoorLayer);
+
+    levelControl.addTo(map);
+  });
 </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 <span class="tag">&lt;/<span class="title">body</span>&gt;</span>
 <span class="tag">&lt;/<span class="title">html</span>&gt;</span></code></pre>
 
 <div class="wrap">
-  <p><a href="https://github.com/Esri/esri-leaflet-doc/edit/master/src/pages/examples/simple-feature-layer.hbs">Edit this sample on GitHub</a></p>
+  <p><a href="https://github.com/Esri/esri-leaflet-doc/edit/master/src/pages/examples/indoors.hbs">Edit this sample on GitHub</a></p>
 </div>
 
 <div class="mobile-menu">
@@ -381,6 +433,7 @@
     <a href="../examples/turf.html">Turf.js Mashup</a>
     <a href="../examples/getting-service-metadata.html">Getting Service Metadata</a>
     <a href="../examples/parse-feature-collection.html">Parsing Feature Collections</a>
+    <a href="../examples/indoors.html">Indoor Mapping</a>
   </nav>
 </aside>
 
