@@ -1,6 +1,6 @@
 import { ImageOverlay, CRS, DomUtil, Util, Layer, popup, latLng, bounds } from 'leaflet';
 import { cors } from '../Support';
-import { setEsriAttribution } from '../Util';
+import { setEsriAttribution, removeEsriAttribution } from '../Util';
 
 var Overlay = ImageOverlay.extend({
   onAdd: function (map) {
@@ -65,6 +65,8 @@ export var RasterLayer = Layer.extend({
   },
 
   onRemove: function (map) {
+    removeEsriAttribution(map);
+
     if (this._currentImage) {
       this._map.removeLayer(this._currentImage);
     }

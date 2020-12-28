@@ -1,5 +1,5 @@
 import { CRS, DomEvent, TileLayer, Util } from 'leaflet';
-import { warn, getUrlParams, setEsriAttribution } from '../Util';
+import { warn, getUrlParams, setEsriAttribution, removeEsriAttribution } from '../Util';
 import mapService from '../Services/MapService';
 
 export var TiledMapLayer = TileLayer.extend({
@@ -151,6 +151,10 @@ export var TiledMapLayer = TileLayer.extend({
     }
 
     TileLayer.prototype.onAdd.call(this, map);
+  },
+
+  onRemove: function (map) {
+    removeEsriAttribution(map);
   },
 
   metadata: function (callback, context) {
