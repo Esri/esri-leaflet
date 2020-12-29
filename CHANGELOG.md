@@ -5,6 +5,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+## [2.5.2] - 2020-12-29
+
+### Fixed
+
+- When esri-leaflet layers are removed from the map, the attribution will be removed ([#1248](https://github.com/Esri/esri-leaflet/pull/1248))
+
 ## [2.5.1] - 2020-10-04
 
 ### Added
@@ -748,7 +754,8 @@ None
 - Add DarkGray and DarkGrayLabels to BasemapLayer. #190
 - An attributionControl on maps is now required when using BasemapLayer. #159
 
-[unreleased]: https://github.com/esri/esri-leaflet/compare/v2.5.1..HEAD
+[unreleased]: https://github.com/esri/esri-leaflet/compare/v2.5.2..HEAD
+[2.5.2]: https://github.com/esri/esri-leaflet/compare/v2.5.1...v2.5.2
 [2.5.1]: https://github.com/esri/esri-leaflet/compare/v2.5.0...v2.5.1
 [2.5.0]: https://github.com/esri/esri-leaflet/compare/v2.4.1...v2.5.0
 [2.4.1]: https://github.com/esri/esri-leaflet/compare/v2.4.0...v2.4.1
