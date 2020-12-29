@@ -2,6 +2,7 @@ import { TileLayer, Util } from 'leaflet';
 import { pointerEvents } from '../Support';
 import {
   setEsriAttribution,
+  removeEsriAttribution,
   _getAttributionData,
   _updateMapAttribution
 } from '../Util';
@@ -251,6 +252,8 @@ export var BasemapLayer = TileLayer.extend({
   },
 
   onRemove: function (map) {
+    removeEsriAttribution(map);
+
     map.off('moveend', _updateMapAttribution);
 
     TileLayer.prototype.onRemove.call(this, map);

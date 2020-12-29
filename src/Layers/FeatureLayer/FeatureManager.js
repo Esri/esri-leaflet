@@ -1,6 +1,6 @@
 import { Util } from 'leaflet';
 import featureLayerService from '../../Services/FeatureLayerService';
-import { getUrlParams, warn, setEsriAttribution } from '../../Util';
+import { getUrlParams, warn, setEsriAttribution, removeEsriAttribution } from '../../Util';
 import { FeatureGrid } from './FeatureGrid';
 import BinarySearchIndex from 'tiny-binary-search';
 
@@ -111,6 +111,7 @@ export var FeatureManager = FeatureGrid.extend({
   },
 
   onRemove: function (map) {
+    removeEsriAttribution(map);
     map.off('zoomend', this._handleZoomChange, this);
 
     return FeatureGrid.prototype.onRemove.call(this, map);
