@@ -342,7 +342,7 @@ describe('L.esri.Query', function () {
   });
 
   it('should query features within bounds', function (done) {
-    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.66%2C%22ymin%22%3A45.5%2C%22xmax%22%3A-122.65%2C%22ymax%22%3A45.51%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelContains&f=json', JSON.stringify(sampleQueryResponse));
+    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSR=4326&geometry=%7B%22xmin%22%3A-122.66%2C%22ymin%22%3A45.5%2C%22xmax%22%3A-122.65%2C%22ymax%22%3A45.51%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelContains&f=json', JSON.stringify(sampleQueryResponse));
 
     task.within(bounds).run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
@@ -354,7 +354,7 @@ describe('L.esri.Query', function () {
   });
 
   it('should query features within geojson geometry', function (done) {
-    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSr=4326&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelContains&f=json', JSON.stringify(sampleQueryResponse));
+    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSR=4326&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelContains&f=json', JSON.stringify(sampleQueryResponse));
 
     task.within(rawGeoJsonPolygon).run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
@@ -366,7 +366,7 @@ describe('L.esri.Query', function () {
   });
 
   it('should query features within a geojson multipolygon geometry', function (done) {
-    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSr=4326&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%2C%5B%5B-96%2C39.5%5D%2C%5B-96%2C40.5%5D%2C%5B-95%2C40.5%5D%2C%5B-95%2C39.5%5D%2C%5B-96%2C39.5%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelContains&f=json', JSON.stringify(sampleQueryResponse));
+    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSR=4326&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%2C%5B%5B-96%2C39.5%5D%2C%5B-96%2C40.5%5D%2C%5B-95%2C40.5%5D%2C%5B-95%2C39.5%5D%2C%5B-96%2C39.5%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelContains&f=json', JSON.stringify(sampleQueryResponse));
 
     task.within(rawGeoJsonMultiPolygon).run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
@@ -378,7 +378,7 @@ describe('L.esri.Query', function () {
   });
 
   it('should query features within geojson feature', function (done) {
-    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSr=4326&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelContains&f=json', JSON.stringify(sampleQueryResponse));
+    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSR=4326&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelContains&f=json', JSON.stringify(sampleQueryResponse));
 
     task.within(rawGeoJsonFeature).run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
@@ -390,7 +390,7 @@ describe('L.esri.Query', function () {
   });
 
   it('should query features within leaflet geojson object', function (done) {
-    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSr=4326&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelContains&f=json', JSON.stringify(sampleQueryResponse));
+    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSR=4326&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelContains&f=json', JSON.stringify(sampleQueryResponse));
 
     task.within(geoJsonPolygon).run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
@@ -402,7 +402,7 @@ describe('L.esri.Query', function () {
   });
 
   it('should query features that intersect bounds', function (done) {
-    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.66%2C%22ymin%22%3A45.5%2C%22xmax%22%3A-122.65%2C%22ymax%22%3A45.51%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&f=json', JSON.stringify(sampleQueryResponse));
+    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSR=4326&geometry=%7B%22xmin%22%3A-122.66%2C%22ymin%22%3A45.5%2C%22xmax%22%3A-122.65%2C%22ymax%22%3A45.51%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&f=json', JSON.stringify(sampleQueryResponse));
 
     task.intersects(bounds).run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
@@ -414,7 +414,7 @@ describe('L.esri.Query', function () {
   });
 
   it('should query features that intersect geojson geometry', function (done) {
-    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSr=4326&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelIntersects&f=json', JSON.stringify(sampleQueryResponse));
+    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSR=4326&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelIntersects&f=json', JSON.stringify(sampleQueryResponse));
 
     task.intersects(rawGeoJsonPolygon).run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
@@ -426,7 +426,7 @@ describe('L.esri.Query', function () {
   });
 
   it('should query features that intersect geojson feature', function (done) {
-    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSr=4326&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelIntersects&f=json', JSON.stringify(sampleQueryResponse));
+    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSR=4326&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelIntersects&f=json', JSON.stringify(sampleQueryResponse));
 
     task.intersects(rawGeoJsonFeature).run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
@@ -438,7 +438,7 @@ describe('L.esri.Query', function () {
   });
 
   it('should query features that intersect leaflet geojson object', function (done) {
-    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSr=4326&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelIntersects&f=json', JSON.stringify(sampleQueryResponse));
+    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSR=4326&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelIntersects&f=json', JSON.stringify(sampleQueryResponse));
 
     task.intersects(geoJsonPolygon).run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
@@ -450,7 +450,7 @@ describe('L.esri.Query', function () {
   });
 
   it('should query features that contain bounds', function (done) {
-    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.66%2C%22ymin%22%3A45.5%2C%22xmax%22%3A-122.65%2C%22ymax%22%3A45.51%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelWithin&f=json', JSON.stringify(sampleQueryResponse));
+    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSR=4326&geometry=%7B%22xmin%22%3A-122.66%2C%22ymin%22%3A45.5%2C%22xmax%22%3A-122.65%2C%22ymax%22%3A45.51%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelWithin&f=json', JSON.stringify(sampleQueryResponse));
 
     task.contains(bounds).run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
@@ -462,7 +462,7 @@ describe('L.esri.Query', function () {
   });
 
   it('should query features that contain geojson geometry', function (done) {
-    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSr=4326&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelWithin&f=json', JSON.stringify(sampleQueryResponse));
+    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSR=4326&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelWithin&f=json', JSON.stringify(sampleQueryResponse));
 
     task.contains(rawGeoJsonPolygon).run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
@@ -474,7 +474,7 @@ describe('L.esri.Query', function () {
   });
 
   it('should query features that contain geojson feature', function (done) {
-    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSr=4326&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelWithin&f=json', JSON.stringify(sampleQueryResponse));
+    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSR=4326&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelWithin&f=json', JSON.stringify(sampleQueryResponse));
 
     task.contains(rawGeoJsonFeature).run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
@@ -486,8 +486,8 @@ describe('L.esri.Query', function () {
   });
 
   it('should query features that contain leaflet geojson object', function (done) {
-    //                                           query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSr=4326&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelWithin&f=json
-    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSr=4326&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelWithin&f=json', JSON.stringify(sampleQueryResponse));
+    //                                           query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSR=4326&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelWithin&f=json
+    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSR=4326&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelWithin&f=json', JSON.stringify(sampleQueryResponse));
 
     task.contains(geoJsonPolygon).run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
@@ -499,7 +499,7 @@ describe('L.esri.Query', function () {
   });
 
   it('should query features that overlap bounds', function (done) {
-    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.66%2C%22ymin%22%3A45.5%2C%22xmax%22%3A-122.65%2C%22ymax%22%3A45.51%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelOverlaps&f=json', JSON.stringify(sampleQueryResponse));
+    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSR=4326&geometry=%7B%22xmin%22%3A-122.66%2C%22ymin%22%3A45.5%2C%22xmax%22%3A-122.65%2C%22ymax%22%3A45.51%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelOverlaps&f=json', JSON.stringify(sampleQueryResponse));
 
     task.overlaps(bounds).run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
@@ -511,7 +511,7 @@ describe('L.esri.Query', function () {
   });
 
   it('should query features that overlap geojson geometry', function (done) {
-    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSr=4326&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelOverlaps&f=json', JSON.stringify(sampleQueryResponse));
+    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSR=4326&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelOverlaps&f=json', JSON.stringify(sampleQueryResponse));
 
     task.overlaps(rawGeoJsonPolygon).run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
@@ -523,7 +523,7 @@ describe('L.esri.Query', function () {
   });
 
   it('should query features that overlap geojson feature', function (done) {
-    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSr=4326&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelOverlaps&f=json', JSON.stringify(sampleQueryResponse));
+    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSR=4326&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelOverlaps&f=json', JSON.stringify(sampleQueryResponse));
 
     task.overlaps(rawGeoJsonFeature).run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
@@ -535,7 +535,7 @@ describe('L.esri.Query', function () {
   });
 
   it('should query features that overlap leaflet geojson object', function (done) {
-    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSr=4326&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelOverlaps&f=json', JSON.stringify(sampleQueryResponse));
+    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSR=4326&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelOverlaps&f=json', JSON.stringify(sampleQueryResponse));
 
     task.overlaps(geoJsonPolygon).run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
@@ -547,7 +547,7 @@ describe('L.esri.Query', function () {
   });
 
   it('should query features near a latlng', function (done) {
-    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&geometry=-122.66%2C45.51&geometryType=esriGeometryPoint&spatialRel=esriSpatialRelIntersects&units=esriSRUnit_Meter&distance=500&inSr=4326&f=json', JSON.stringify(sampleQueryResponse));
+    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&geometry=-122.66%2C45.51&geometryType=esriGeometryPoint&spatialRel=esriSpatialRelIntersects&units=esriSRUnit_Meter&distance=500&inSR=4326&f=json', JSON.stringify(sampleQueryResponse));
 
     task.nearby(latlng, 500).run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
@@ -559,7 +559,7 @@ describe('L.esri.Query', function () {
   });
 
   it('should query features that have intersecting envelopes', function (done) {
-    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSr=4326&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelEnvelopeIntersects&f=json', JSON.stringify(sampleQueryResponse));
+    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSR=4326&geometry=%7B%22rings%22%3A%5B%5B%5B-97%2C39%5D%2C%5B-97%2C41%5D%2C%5B-94%2C41%5D%2C%5B-94%2C39%5D%2C%5B-97%2C39%5D%5D%5D%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelEnvelopeIntersects&f=json', JSON.stringify(sampleQueryResponse));
 
     task.bboxIntersects(geoJsonPolygon).run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
