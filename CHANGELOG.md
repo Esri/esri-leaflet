@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+### Changed
+
+- REST calls will now use `inSR` instead of `inSr` ([#1251](https://github.com/Esri/esri-leaflet/pull/1251))
+
 ## [2.5.2] - 2020-12-29
 
 ### Fixed
