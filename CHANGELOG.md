@@ -5,6 +5,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+## [2.5.3] - 2021-01-06
+
 ### Fixed
 
 - Fix error (introduced in v2.5.2) that happens when the map attribution control is not present (🙏avinmathew🙏 [#1252](https://github.com/Esri/esri-leaflet/pull/1252))
@@ -762,7 +764,8 @@ None
 - Add DarkGray and DarkGrayLabels to BasemapLayer. #190
 - An attributionControl on maps is now required when using BasemapLayer. #159
 
-[unreleased]: https://github.com/esri/esri-leaflet/compare/v2.5.2..HEAD
+[unreleased]: https://github.com/esri/esri-leaflet/compare/v2.5.3..HEAD
+[2.5.3]: https://github.com/esri/esri-leaflet/compare/v2.5.2...v2.5.3
 [2.5.2]: https://github.com/esri/esri-leaflet/compare/v2.5.1...v2.5.2
 [2.5.1]: https://github.com/esri/esri-leaflet/compare/v2.5.0...v2.5.1
 [2.5.0]: https://github.com/esri/esri-leaflet/compare/v2.4.1...v2.5.0
