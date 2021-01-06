@@ -174,13 +174,17 @@ export function calcAttributionWidth (map) {
 }
 
 export function setEsriAttribution (map) {
+  if (!map.attributionControl) {
+    return;
+  }
+
   if (!map.attributionControl._esriAttributionLayerCount) {
     map.attributionControl._esriAttributionLayerCount = 0;
   }
 
-  if (map.attributionControl && map.attributionControl._esriAttributionLayerCount === 0) {
+  if (map.attributionControl._esriAttributionLayerCount === 0) {
     // Dynamically creating the CSS rules, only run this once per page load:
-    if (map.attributionControl && !map.attributionControl._esriAttributionAddedOnce) {
+    if (!map.attributionControl._esriAttributionAddedOnce) {
       var hoverAttributionStyle = document.createElement('style');
       hoverAttributionStyle.type = 'text/css';
       hoverAttributionStyle.innerHTML = '.esri-truncated-attribution:hover {' +
@@ -223,8 +227,12 @@ export function setEsriAttribution (map) {
 }
 
 export function removeEsriAttribution (map) {
+  if (!map.attributionControl) {
+    return;
+  }
+
   // Only remove the attribution if we're about to remove the LAST esri-leaflet layer (_esriAttributionLayerCount)
-  if (map.attributionControl && map.attributionControl._esriAttributionLayerCount && map.attributionControl._esriAttributionLayerCount === 1) {
+  if (map.attributionControl._esriAttributionLayerCount && map.attributionControl._esriAttributionLayerCount === 1) {
     map.attributionControl.setPrefix(BASE_LEAFLET_ATTRIBUTION_STRING);
     DomUtil.removeClass(map.attributionControl._container, 'esri-truncated-attribution:hover');
     DomUtil.removeClass(map.attributionControl._container, 'esri-truncated-attribution');
