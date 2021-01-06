@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+### Fixed
+
+- Fix error (introduced in v2.5.2) that happens when the map attribution control is not present (🙏avinmathew🙏 [#1252](https://github.com/Esri/esri-leaflet/pull/1252))
+
 ### Changed
 
 - REST calls will now use `inSR` instead of `inSr` ([#1251](https://github.com/Esri/esri-leaflet/pull/1251))
