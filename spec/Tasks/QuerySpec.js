@@ -717,6 +717,18 @@ describe('L.esri.Query', function () {
     server.respond();
   });
 
+  it('should be able to query apikey', function (done) {
+    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&token=foo&f=json', JSON.stringify(sampleQueryResponse));
+
+    task.apikey('foo').run(function (error, featureCollection, raw) {
+      expect(featureCollection).to.deep.equal(sampleFeatureCollection);
+      expect(raw).to.deep.equal(sampleQueryResponse);
+      done();
+    });
+
+    server.respond();
+  });
+
   it('should query bounds', function (done) {
     server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&returnExtentOnly=true&f=json', JSON.stringify(sampleExtentResponse));
 
