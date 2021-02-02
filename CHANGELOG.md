@@ -7,7 +7,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
-- Ensure that `TileMapLayer` will complete its `onRemove` prototype logic after removing its attribution. ([#1256](https://github.com/Esri/esri-leaflet/issues/1256))
+- Ensure that `TiledMapLayer` will complete its `onRemove` prototype logic after removing its attribution. ([#1256](https://github.com/Esri/esri-leaflet/issues/1256))
 
 ## [3.0.0] - 2021-01-25
 
