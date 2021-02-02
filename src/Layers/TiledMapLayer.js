@@ -155,6 +155,8 @@ export var TiledMapLayer = TileLayer.extend({
 
   onRemove: function (map) {
     removeEsriAttribution(map);
+
+    TileLayer.prototype.onRemove.call(this, map);
   },
 
   metadata: function (callback, context) {
