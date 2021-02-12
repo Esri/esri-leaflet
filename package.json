@@ -8,7 +8,9 @@
   },
   "contributors": [
     "Patrick Arlt <parlt@esri.com> (http://patrickarlt.com)",
-    "John Gravois <jgravois@esri.com> (http://johngravois.com)"
+    "John Gravois <jgravois@esri.com> (http://johngravois.com)",
+    "Gavin Rehkemper <grehkemper@esri.com>",
+    "Jacob Wasilkowski <jwasilkowski@esri.com> (https://jwasilgeo.github.io)"
   ],
   "dependencies": {
     "@terraformer/arcgis": "^2.0.7",
