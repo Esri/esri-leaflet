@@ -294,6 +294,14 @@
     <span class="tag">&lt;<span class="title">li</span> <span class="attribute">class</span>=<span class="value">"geocoder-control-suggestion"</span>&gt;</span>Another Result<span class="tag">&lt;/<span class="title">li</span>&gt;</span>
   <span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
 <span class="tag">&lt;/<span class="title">div</span>&gt;</span></code></pre>
+<p>By default, ellipses are shown when the text of suggestions is too long.  However, you may want to show the entire suggestions text.</p>
+<p>The following <code>CSS</code> rule will show the entire suggestions text, broken onto multiple lines.  You will need to add the rule in your own custom stylesheet associated with your project:</p>
+<pre><code class="language-css"><span class="class">.geocoder-control-suggestions</span> <span class="class">.geocoder-control-suggestion</span> <span class="rules">{
+  <span class="rule"><span class="attribute">overflow-wrap</span>:<span class="value"> break-word</span></span>;
+  <span class="rule"><span class="attribute">word-break</span>:<span class="value"> break-all</span></span>;
+  <span class="rule"><span class="attribute">overflow</span>:<span class="value"> visible</span></span>;
+  <span class="rule"><span class="attribute">white-space</span>:<span class="value"> break-spaces</span></span>;
+<span class="rule">}</span></span></code></pre>
 <h3 id="providers">Providers</h3>
 <p>The <code>Geosearch</code> control can also search for results from a variety of sources including Feature Layers and Map Services. This is done with plain text matching and is not &quot;real&quot; geocoding. But it allows you to mix custom results into a search box.</p>
 <pre><code class="language-xml"><span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"./esri-leaflet-geocoder.css"</span>&gt;</span>
