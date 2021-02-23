@@ -5,6 +5,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+## [3.0.1] - 2021-02-23
+
 ### Fixed
 
 - Ensure that `TiledMapLayer` will complete its `onRemove` prototype logic after removing its attribution. ([#1256](https://github.com/Esri/esri-leaflet/issues/1256))
@@ -774,7 +776,8 @@ None
 - Add DarkGray and DarkGrayLabels to BasemapLayer. #190
 - An attributionControl on maps is now required when using BasemapLayer. #159
 
-[unreleased]: https://github.com/esri/esri-leaflet/compare/v3.0.0..HEAD
+[unreleased]: https://github.com/esri/esri-leaflet/compare/v3.0.1..HEAD
+[3.0.1]: https://github.com/esri/esri-leaflet/compare/v3.0.0...v3.0.1
 [3.0.0]: https://github.com/esri/esri-leaflet/compare/v2.5.3...v3.0.0
 [2.5.3]: https://github.com/esri/esri-leaflet/compare/v2.5.2...v2.5.3
 [2.5.2]: https://github.com/esri/esri-leaflet/compare/v2.5.1...v2.5.2
