@@ -169,11 +169,7 @@ Esri welcomes contributions from anyone and everyone. Please see our [guidelines
 
 ### Terms
 
-For most public apps, a free [Developer Plan](https://developers.arcgis.com/pricing/) is sufficient. If you're going to generate revenue, you'll need to purchase either a paid [Developer Plan](https://developers.arcgis.com/pricing/) or one of the products below:
-
-* ArcGIS [Pro](https://www.esri.com/en-us/arcgis/products/arcgis-pro/overview)
-* ArcGIS [Online for Organizations](http://www.esri.com/software/arcgis/arcgisonline)
-* ArcGIS [Enterprise](https://www.esri.com/en-us/arcgis/products/arcgis-enterprise/overview)
+If you're using Esri [content and services](https://developers.arcgis.com/documentation/mapping-apis-and-location-services/services/), you'll need to license your usage with an API Key or an ArcGIS Identity. Full details can be found here: [License location services](https://developers.arcgis.com/documentation/mapping-apis-and-location-services/licensing/license-location-services/).
 
 If you display an ArcGIS Online service in **any** Leaflet application, we require that you include Esri attribution and recognize data providers. Using this plugin, it couldn't be easier to follow the terms.  Just select your basemap and the appropriate credits will be displayed dynamically in Leaflet's own [Attribution control](http://leafletjs.com/reference.html#control-attribution) as users pan/zoom.
 
@@ -183,11 +179,8 @@ L.esri.basemapLayer('Topographic').addTo(map);
 
 ![attribution](https://raw.github.com/Esri/esri-leaflet/master/attribution.png)
 
-If you need more than 1 million [map transactions](http://doc.arcgis.com/en/arcgis-online/reference/transaction-limits.htm) per month, please let us know.
-
-* [Esri Attribution Requirements](https://developers.arcgis.com/terms/attribution/)
-* [ArcGIS Online Terms of Use](https://developers.arcgis.com/terms/)
-* [Licensing & Attribution](https://developers.arcgis.com/documentation/mapping-apis-and-location-services/license-and-deploy/license-location-services/)
+* [Esri Attribution Requirements](https://developers.arcgis.com/documentation/mapping-apis-and-location-services/licensing/license-location-services/#attribution)
+* [Licensing & Attribution](https://developers.arcgis.com/documentation/mapping-apis-and-location-services/licensing/license-location-services/)
 
 ### Credit
 
