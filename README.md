@@ -179,7 +179,7 @@ L.esri.basemapLayer('Topographic').addTo(map);
 
 ![attribution](https://raw.github.com/Esri/esri-leaflet/master/attribution.png)
 
-* [Esri Attribution Requirements](https://developers.arcgis.com/documentation/mapping-apis-and-location-services/licensing/license-location-services/#attribution)
+* [Esri Attribution Requirements](https://developers.arcgis.com/documentation/mapping-apis-and-location-services/licensing/attribution/)
 * [Licensing & Attribution](https://developers.arcgis.com/documentation/mapping-apis-and-location-services/licensing/license-location-services/)
 
 ### Credit
