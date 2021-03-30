@@ -13,9 +13,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [3.0.0] - 2021-01-25
 
-### Changed
+#### Added
 
-- Update to support the [upcoming product launch](https://www.esri.com/en-us/lg/events/esri-launch-event). Full release notes will be made available after the event.
+- `apikey` method on L.esri.Task
+- `apikey` property on L.esri.FeatureLayer
 
 ## [2.5.3] - 2021-01-06
 
