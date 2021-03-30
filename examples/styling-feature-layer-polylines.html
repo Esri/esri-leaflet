@@ -39,8 +39,8 @@
     crossorigin=""></script>
 
   
-    <script src="https://unpkg.com/esri-leaflet@2.5.3/dist/esri-leaflet.js"
-      integrity="sha512-K0Vddb4QdnVOAuPJBHkgrua+/A9Moyv8AQEWi0xndQ+fqbRfAFd47z4A9u1AW/spLO0gEaiE1z98PK1gl5mC5Q=="
+    <script src="https://unpkg.com/esri-leaflet@3.0.1/dist/esri-leaflet.js"
+      integrity="sha512-JmpptMCcCg+Rd6x0Dbg6w+mmyzs1M7chHCd9W8HPovnImG2nLAQWn3yltwxXRM7WjKKFFHOAKjjF2SC4CgiFBg=="
       crossorigin=""></script>
   
 
@@ -50,19 +50,7 @@
 
   
 
-  <!-- Google Analytics -->
-  <script>
-    /* eslint-disable */
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-    ga('create', 'UA-44963317-3', 'auto');
-    ga('send', 'pageview');
-    /* eslint-enable */
-  </script>
-  <!-- End Google Analytics -->
+  
 </head>
 <body>
   <div class="page-content ">
@@ -71,9 +59,9 @@
       <a class="site-nav" href="../" class="left logo">Esri Leaflet</a>
       <nav id="site-nav-wrapper" class="site-nav-wrapper">
         <a class="site-nav" href="../tutorials/">Tutorials</a>
-        <a class="site-nav" href="../plugins/">Plugins</a>
         <a class="site-nav" href="../examples/">Examples</a>
         <a class="site-nav" href="../api-reference/">API Reference</a>
+        <a class="site-nav" href="../plugins/">Plugins</a>
         <a class="site-nav" href="../download/">Download</a>
         <a class="site-nav" href="https://github.com/Esri/esri-leaflet">View on GitHub</a>
       </nav>
@@ -206,6 +194,9 @@
   <p>Custom styles for line features with the <code>style</code> option. More information about Feature Layers can be found in the <a href="../api-reference/layers/feature-layer.html">L.esri.FeatureLayer</a> documentation.</p>
 </div>
 <div id="map-wrapper">
+  <script>
+    const apiKey = 'AAPKb10821df102a46a4b930958d7a6a06593sdla7i0cMWoosp7XXlYflDTAxsZMUq-oKvVOaom9B8CokPvJFd-sE88vOQ2B_rC'; // eslint-disable-line no-unused-vars, eol-last
+  </script>
   
 
 <style>
@@ -223,52 +214,34 @@
 <div id="info-pane" class="leaflet-bar">Hover to inspect</div>
 
 <script>
-  var map = L.map('map').setView([45.5275, -122.6717], 14);
+  var map = L.map('map').setView([37.81, -85.85], 7);
 
-  L.esri.basemapLayer('Streets').addTo(map);
+  L.esri.basemapLayer('Topographic').addTo(map);
 
   var bikePaths = L.esri.featureLayer({
-    url: 'https://services.arcgis.com/uCXeTVveQzP4IIcx/ArcGIS/rest/services/Bike_Routes/FeatureServer/0',
+    url: 'https://services2.arcgis.com/CcI36Pduqd0OR4W9/ArcGIS/rest/services/Bicycle_Routes_Public/FeatureServer/0',
     style: function (feature) {
       var c;
-      var o = 0.75;
-      switch (feature.properties.BIKEMODE) {
-        case 'Low traffic through street':
-          c = '#007D7D';
+      switch (feature.properties.D_BI_RT_NAME) {
+        case 'Bluegrass Bike Tour':
+          c = '#377EB8';
           break;
-        case 'Bike boulevard':
-          c = '#00FF3C';
+        case 'Cave Country Bike Tour':
+          c = '#E41A1C';
           break;
-        case 'Caution area':
-          c = '#FF0000';
+        case 'Kentucky\'s TransAmerica Bike Trail':
+          c = '#4DAF4A';
           break;
-        case 'Local multi-use path':
-          c = '#00BEFF';
+        case 'Ramblin\' River Tour':
+          c = '#984EA3';
           break;
-        case 'Regional multi-use path':
-          c = '#b1a9d0';
-          break;
-        case 'Moderate traffic through street':
-          c = '#FFEB00';
-          break;
-        case 'Planned multi-use path':
-          c = '#000000';
-          break;
-        case 'Bike lane':
-          c = '#328000';
-          o = '0.70';
-          break;
-        case 'High traffic through street':
-          c = '#FFA500';
-          break;
-        case 'Planned bike lane':
-          c = '#000000';
-          o = '1.0';
+        case 'Underground Railroad':
+          c = '#FF7F00';
           break;
         default:
           c = '#C0C0C0';
       }
-      return { color: c, opacity: o, weight: 5 };
+      return { color: c, opacity: 0.65, weight: 5 };
     }
   }).addTo(map);
 
@@ -277,7 +250,7 @@
   });
 
   bikePaths.on('mouseover', function (e) {
-    document.getElementById('info-pane').innerHTML = e.layer.feature.properties.BIKEMODE;
+    document.getElementById('info-pane').innerHTML = e.layer.feature.properties.D_BI_RT_NAME;
   });
 </script>
 
@@ -298,8 +271,8 @@
     <span class="attribute">crossorigin</span>=<span class="value">""</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
   <span class="comment">&lt;!-- Load Esri Leaflet from CDN --&gt;</span>
-  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/esri-leaflet@2.5.3/dist/esri-leaflet.js"</span>
-    <span class="attribute">integrity</span>=<span class="value">"sha512-K0Vddb4QdnVOAuPJBHkgrua+/A9Moyv8AQEWi0xndQ+fqbRfAFd47z4A9u1AW/spLO0gEaiE1z98PK1gl5mC5Q=="</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/esri-leaflet@3.0.1/dist/esri-leaflet.js"</span>
+    <span class="attribute">integrity</span>=<span class="value">"sha512-JmpptMCcCg+Rd6x0Dbg6w+mmyzs1M7chHCd9W8HPovnImG2nLAQWn3yltwxXRM7WjKKFFHOAKjjF2SC4CgiFBg=="</span>
     <span class="attribute">crossorigin</span>=<span class="value">""</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
   <span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css">
@@ -324,52 +297,34 @@
 <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"info-pane"</span> <span class="attribute">class</span>=<span class="value">"leaflet-bar"</span>&gt;</span>Hover to inspect<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
-  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">45.5275</span>, -<span class="number">122.6717</span>], <span class="number">14</span>);
+  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">37.81</span>, -<span class="number">85.85</span>], <span class="number">7</span>);
 
-  L.esri.basemapLayer(<span class="string">'Streets'</span>).addTo(map);
+  L.esri.basemapLayer(<span class="string">'Topographic'</span>).addTo(map);
 
   <span class="keyword">var</span> bikePaths = L.esri.featureLayer({
-    url: <span class="string">'https://services.arcgis.com/uCXeTVveQzP4IIcx/ArcGIS/rest/services/Bike_Routes/FeatureServer/0'</span>,
+    url: <span class="string">'https://services2.arcgis.com/CcI36Pduqd0OR4W9/ArcGIS/rest/services/Bicycle_Routes_Public/FeatureServer/0'</span>,
     style: <span class="function"><span class="keyword">function</span> <span class="params">(feature)</span> {</span>
       <span class="keyword">var</span> c;
-      <span class="keyword">var</span> o = <span class="number">0.75</span>;
-      <span class="keyword">switch</span> (feature.properties.BIKEMODE) {
-        <span class="keyword">case</span> <span class="string">'Low traffic through street'</span>:
-          c = <span class="string">'#007D7D'</span>;
+      <span class="keyword">switch</span> (feature.properties.D_BI_RT_NAME) {
+        <span class="keyword">case</span> <span class="string">'Bluegrass Bike Tour'</span>:
+          c = <span class="string">'#377EB8'</span>;
           <span class="keyword">break</span>;
-        <span class="keyword">case</span> <span class="string">'Bike boulevard'</span>:
-          c = <span class="string">'#00FF3C'</span>;
+        <span class="keyword">case</span> <span class="string">'Cave Country Bike Tour'</span>:
+          c = <span class="string">'#E41A1C'</span>;
           <span class="keyword">break</span>;
-        <span class="keyword">case</span> <span class="string">'Caution area'</span>:
-          c = <span class="string">'#FF0000'</span>;
+        <span class="keyword">case</span> <span class="string">'Kentucky\'s TransAmerica Bike Trail'</span>:
+          c = <span class="string">'#4DAF4A'</span>;
           <span class="keyword">break</span>;
-        <span class="keyword">case</span> <span class="string">'Local multi-use path'</span>:
-          c = <span class="string">'#00BEFF'</span>;
+        <span class="keyword">case</span> <span class="string">'Ramblin\' River Tour'</span>:
+          c = <span class="string">'#984EA3'</span>;
           <span class="keyword">break</span>;
-        <span class="keyword">case</span> <span class="string">'Regional multi-use path'</span>:
-          c = <span class="string">'#b1a9d0'</span>;
-          <span class="keyword">break</span>;
-        <span class="keyword">case</span> <span class="string">'Moderate traffic through street'</span>:
-          c = <span class="string">'#FFEB00'</span>;
-          <span class="keyword">break</span>;
-        <span class="keyword">case</span> <span class="string">'Planned multi-use path'</span>:
-          c = <span class="string">'#000000'</span>;
-          <span class="keyword">break</span>;
-        <span class="keyword">case</span> <span class="string">'Bike lane'</span>:
-          c = <span class="string">'#328000'</span>;
-          o = <span class="string">'0.70'</span>;
-          <span class="keyword">break</span>;
-        <span class="keyword">case</span> <span class="string">'High traffic through street'</span>:
-          c = <span class="string">'#FFA500'</span>;
-          <span class="keyword">break</span>;
-        <span class="keyword">case</span> <span class="string">'Planned bike lane'</span>:
-          c = <span class="string">'#000000'</span>;
-          o = <span class="string">'1.0'</span>;
+        <span class="keyword">case</span> <span class="string">'Underground Railroad'</span>:
+          c = <span class="string">'#FF7F00'</span>;
           <span class="keyword">break</span>;
         <span class="keyword">default</span>:
           c = <span class="string">'#C0C0C0'</span>;
       }
-      <span class="keyword">return</span> { color: c, opacity: o, weight: <span class="number">5</span> };
+      <span class="keyword">return</span> { color: c, opacity: <span class="number">0.65</span>, weight: <span class="number">5</span> };
     }
   }).addTo(map);
 
@@ -378,7 +333,7 @@
   });
 
   bikePaths.on(<span class="string">'mouseover'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(e)</span> {</span>
-    document.getElementById(<span class="string">'info-pane'</span>).innerHTML = e.layer.feature.properties.BIKEMODE;
+    document.getElementById(<span class="string">'info-pane'</span>).innerHTML = e.layer.feature.properties.D_BI_RT_NAME;
   });
 </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 

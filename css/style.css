@@ -735,24 +735,14 @@ td pre {
   #map a {
     padding-bottom: 0; }
 
-.plugins .panel {
-  width: 33.3%;
-  float: left; }
-  @media screen and (max-width: 960px) {
-    .plugins .panel {
-      width: 100%;
-      float: none; } }
+.plugins .section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(325px, 1fr));
+  grid-gap: 1rem; }
 
 .plugins .card {
-  margin: 1rem 1rem;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  padding: 1.5rem 1rem;
-  float: left;
-  position: relative;
   background-color: white;
-  z-index: 3; }
+  padding: 1rem; }
   .plugins .card h3 {
     margin: 0; }
 

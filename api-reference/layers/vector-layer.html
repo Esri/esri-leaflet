@@ -8,7 +8,7 @@
   <meta charset="utf-8">
 
   
-    <title>L.esri.Vector.Layer | Esri Leaflet</title>
+    <title>L.esri.Vector.vectorTileLayer | Esri Leaflet</title>
   
 
   
@@ -39,8 +39,8 @@
     crossorigin=""></script>
 
   
-    <script src="https://unpkg.com/esri-leaflet@2.5.3/dist/esri-leaflet.js"
-      integrity="sha512-K0Vddb4QdnVOAuPJBHkgrua+/A9Moyv8AQEWi0xndQ+fqbRfAFd47z4A9u1AW/spLO0gEaiE1z98PK1gl5mC5Q=="
+    <script src="https://unpkg.com/esri-leaflet@3.0.1/dist/esri-leaflet.js"
+      integrity="sha512-JmpptMCcCg+Rd6x0Dbg6w+mmyzs1M7chHCd9W8HPovnImG2nLAQWn3yltwxXRM7WjKKFFHOAKjjF2SC4CgiFBg=="
       crossorigin=""></script>
   
 
@@ -50,19 +50,7 @@
 
   
 
-  <!-- Google Analytics -->
-  <script>
-    /* eslint-disable */
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-    ga('create', 'UA-44963317-3', 'auto');
-    ga('send', 'pageview');
-    /* eslint-enable */
-  </script>
-  <!-- End Google Analytics -->
+  
 </head>
 <body>
   <div class="page-content ">
@@ -71,9 +59,9 @@
       <a class="site-nav" href="../../" class="left logo">Esri Leaflet</a>
       <nav id="site-nav-wrapper" class="site-nav-wrapper">
         <a class="site-nav" href="../../tutorials/">Tutorials</a>
-        <a class="site-nav" href="../../plugins/">Plugins</a>
         <a class="site-nav" href="../../examples/">Examples</a>
         <a class="site-nav" href="../../api-reference/">API Reference</a>
+        <a class="site-nav" href="../../plugins/">Plugins</a>
         <a class="site-nav" href="../../download/">Download</a>
         <a class="site-nav" href="https://github.com/Esri/esri-leaflet">View on GitHub</a>
       </nav>
@@ -89,14 +77,14 @@
   <h5>Layers</h5>
   <nav>
     <a href="../../api-reference/layers/basemap-layer.html">Basemap Layer</a>
-    <a href="../../api-reference/layers/feature-layer.html">Feature Layer</a>
-    <a href="../../api-reference/layers/tiled-map-layer.html">Tiled Map Layer</a>
-    <a href="../../api-reference/layers/dynamic-map-layer.html">Dynamic Map Layer</a>
-    <a href="../../api-reference/layers/image-map-layer.html">Image Map Layer</a>
-    <a class="experimental" href="../../api-reference/layers/vector-basemap.html">Vector Basemap</a>
-    <a class="plugin" href="../../api-reference/layers/heatmap-feature-layer.html">Heatmap Feature Layer</a>
     <a class="plugin" href="../../api-reference/layers/cluster-feature-layer.html">Cluster Feature Layer</a>
-    <a class="experimental" href="../../api-reference/layers/vector-layer.html">Vector Layer</a>
+    <a href="../../api-reference/layers/dynamic-map-layer.html">Dynamic Map Layer</a>
+    <a href="../../api-reference/layers/feature-layer.html">Feature Layer</a>
+    <a class="plugin" href="../../api-reference/layers/heatmap-feature-layer.html">Heatmap Feature Layer</a>
+    <a href="../../api-reference/layers/image-map-layer.html">Image Map Layer</a>
+    <a href="../../api-reference/layers/tiled-map-layer.html">Tiled Map Layer</a>
+    <a class="plugin" href="../../api-reference/layers/vector-basemap.html">Vector Basemap</a>
+    <a class="plugin" href="../../api-reference/layers/vector-layer.html">Vector Layer</a>
   </nav>
 
   <h5>Controls</h5>
@@ -106,44 +94,45 @@
 
   <h5>Tasks</h5>
   <nav>
-    <a href="../../api-reference/tasks/query.html">Query</a>
     <a href="../../api-reference/tasks/find.html">Find</a>
-    <a href="../../api-reference/tasks/identify-features.html">Identify Features</a>
-    <a href="../../api-reference/tasks/identify-image.html">Identify Image</a>
     <a class="plugin" href="../../api-reference/tasks/geocode.html">Geocode</a>
     <a class="plugin" href="../../api-reference/tasks/reverse-geocode.html">Reverse Geocode</a>
     <a class="plugin" href="../../api-reference/tasks/suggest.html">Suggest</a>
     <a class="plugin" href="../../api-reference/tasks/gp.html">Geoprocessing Task</a>
+    <a href="../../api-reference/tasks/identify-features.html">Identify Features</a>
+    <a href="../../api-reference/tasks/identify-image.html">Identify Image</a>
+    <a href="../../api-reference/tasks/query.html">Query</a>
     <a class="plugin" href="../../api-reference/tasks/query-related.html">Query Related</a>
-  </nav>
-
-  <h5>Base Classes</h5>
-  <nav>
-    <a href="../../api-reference/services/image-service.html">ImageService</a>
-    <a href="../../api-reference/services/feature-layer-service.html">FeatureLayerService</a>
-    <a href="../../api-reference/services/map-service.html">MapService</a>
-    <a class="plugin" href="../../api-reference/services/geocode-service.html">Geocode Service</a>
-    <a class="plugin" href="../../api-reference/services/gp-service.html">Geoprocessing Service</a>
-    <a href="../../api-reference/tasks/task.html">Task</a>
-    <a href="../../api-reference/services/service.html">Service</a>
-    <a href="../../api-reference/layers/raster-layer.html">Raster Layer</a>
   </nav>
 
   <h5>Misc.</h5>
   <nav>
-    <a href="../../api-reference/util.html">Util</a>
-    <a href="../../api-reference/request.html">request</a>
-    <a href="../../api-reference/options.html">options</a>
     <a href="../../api-reference/events.html">Events</a>
+    <a href="../../api-reference/options.html">options</a>
+    <a href="../../api-reference/request.html">request</a>
+    <a href="../../api-reference/util.html">Util</a>
+  </nav>
+
+  <h5>Base Classes</h5>
+  <nav>
+    <a href="../../api-reference/services/feature-layer-service.html">FeatureLayerService</a>
+    <a class="plugin" href="../../api-reference/services/geocode-service.html">Geocode Service</a>
+    <a class="plugin" href="../../api-reference/services/gp-service.html">Geoprocessing Service</a>
+    <a href="../../api-reference/services/image-service.html">ImageService</a>
+    <a href="../../api-reference/services/map-service.html">MapService</a>
+    <a href="../../api-reference/layers/raster-layer.html">Raster Layer</a>
+    <a href="../../api-reference/services/service.html">Service</a>
+    <a href="../../api-reference/tasks/task.html">Task</a>
   </nav>
 </aside>
 
 
 <div class="main-content">
-  <h1 id="l-esri-vector-layer">L.esri.Vector.Layer</h1>
-<p>Extends <a href="https://leafletjs.com/reference-1.7.1.html#layer"><code>L.Layer</code></a></p>
-<p><code>L.esri.Vector.Layer</code> uses an <a href="https://github.com/Esri/esri-leaflet-vector">experimental plugin</a> to display vector tile services and attribute data providers appropriately. The <a href="https://github.com/esri/esri-leaflet#terms">Terms of Use</a> for Esri hosted services apply to <em>all</em> Leaflet applications.</p>
+  <h1 id="l-esri-vector-vectortilelayer">L.esri.Vector.vectorTileLayer</h1>
+<p>Extends <a href="https://leafletjs.com/reference.html#layer"><code>L.Layer</code></a></p>
+<p><code>L.esri.Vector.vectorTileLayer</code> uses the <a href="https://github.com/Esri/esri-leaflet-vector"><code>esri-leaflet-vector</code> plugin</a> to display vector tile service layers and their styles published from user data.</p>
 <h3 id="constructor">Constructor</h3>
+<p><strong>Note:</strong> There are two ways to construct this layer with the required <code>key</code> parameter, either with an item ID or service URL of a hosted vector tile layer.</p>
 <table>
     <thead>
         <tr>
@@ -153,33 +142,62 @@
     </thead>
     <tbody>
         <tr>
-            <td><code class="nobr">L.esri.Vector.layer(<span>&lt;String&gt;</span> <code>id</code>, , <span>&lt;Object&gt;</span> <code>options</code>)</code></td>
-            <td><code>key</code> refers to the specific vector tile layer you&#39;d like to add.
+            <td><code>L.esri.Vector.vectorTileLayer(<span>&lt;String&gt;</span> <code>key</code>, <span>&lt;Object&gt;</span> <code>options</code>)</code></td>
+            <td><code>key</code> refers to the specific item ID or service URL of a hosted vector tile layer you&#39;d like to add.
         </tr>
     </tbody>
 </table>
 
-
-<h5 id="hosted-vector-basemaps">Hosted Vector Basemaps</h5>
-<p>Esri has designed and shared many vector basemaps in <a href="https://www.arcgis.com/home/group.html?id=30de8da907d240a0bccd5ad3ff25ef4a&amp;view=list&amp;start=1&amp;focus=layers#content">ArcGIS Online</a>. Basemaps with &quot;Local Language&quot; in the name provide support for local languages at large scales.</p>
-<blockquote>
-<p>Disclaimer: In Esri Leaflet, only <a href="https://github.com/esri/esri-leaflet-vector#disclaimer">one vector tile source</a> can be drawn at a time.</p>
-</blockquote>
-<h5 id="custom-vector-tiles">Custom Vector Tiles</h5>
-<p>The <a href="https://developers.arcgis.com/vector-tile-style-editor/">ArcGIS Vector Tile Style Editor</a> can be used to customize any of Esri&#39;s hosted vector basemaps without duplicating the data behind it. Whether you&#39;ve made a <a href="https://www.esri.com/arcgis-blog/products/developers/mapping/design-custom-basemaps-with-the-new-arcgis-vector-tile-style-editor/">small tweak</a> to a hosted vector basemap or used ArcGIS Pro to publish a vector tile service with your own data from scratch, you can draw the layer in Esri Leaflet by referencing the item&#39;s <a href="https://www.arcgis.com/home/item.html?id=bd505ce3efff479bb4e87b182f180159"><code>id</code></a>.</p>
 <h3 id="options">Options</h3>
-<p><code>L.esri.Vector.Layer</code> accepts all <a href="https://leafletjs.com/reference-1.0.0.html#layer"><code>L.Layer</code></a> options.</p>
+<p><code>L.esri.Vector.vectorTileLayer</code> accepts all <a href="https://leafletjs.com/reference.html#layer"><code>L.Layer</code></a> options.</p>
+<table>
+    <thead>
+        <tr>
+            <th>Option</th>
+            <th>Type</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>apiKey</code></td>
+            <td><code>String</code></td>
+            <td>If you pass an <code>apiKey</code> in your options it will be included in all requests to the service.</td>
+        </tr>
+        <tr>
+            <td><code>token</code></td>
+            <td><code>String</code></td>
+            <td>If you pass a <code>token</code> in your options it will be included in all requests to the service.</td>
+        </tr>
+        <tr>
+            <td><code>style</code></td>
+            <td><code>Function</code></td>
+            <td>Function that can be used to customize the style. It gets the default style from the service and returns the new style to be used.
+<pre>function (style) {
+  // make changes to the style object
+  // return your style overrides
+  return newStyleObj;
+}</pre>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
 <h3 id="methods">Methods</h3>
-<p><code>L.esri.Vector.Layer</code> inherits all methods from <a href="https://leafletjs.com/reference-1.0.0.html#layer"><code>L.Layer</code></a>.</p>
+<p><code>L.esri.Vector.vectorTileLayer</code> inherits all methods from <a href="https://leafletjs.com/reference.html#layer"><code>L.Layer</code></a>.</p>
 <h3 id="example">Example</h3>
+<p>Live sample <a href="https://developers.arcgis.com/esri-leaflet/layers/add-a-vector-tile-layer/">at an ArcGIS Developers tutorial page</a>.</p>
 <pre><code class="language-xml"><span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"./esri-leaflet-vector.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></code></pre>
-<pre><code class="language-js"><span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">37.75</span>, -<span class="number">122.45</span>], <span class="number">12</span>);
+<pre><code class="language-js"><span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">34.02</span>,-<span class="number">118.805</span>], <span class="number">13</span>);
 
-L.esri.Vector.layer(<span class="string">'bd505ce3efff479bb4e87b182f180159'</span>).addTo(map);
+<span class="comment">// using an item ID of an hosted ArcGIS Online content item</span>
+<span class="comment">// https://esri.maps.arcgis.com/home/item.html?id=f40326b0dea54330ae39584012807126</span>
+L.esri.Vector.vectorTileLayer(<span class="string">"f40326b0dea54330ae39584012807126"</span>).addTo(map);
 
-<span class="comment">// World Navigation Map (Local Language)</span>
-<span class="comment">// https://www.arcgis.com/home/item.html?id=72be31d1fa6a42fc895d9a3c0fd8aeef</span>
-L.esri.Vector.layer(<span class="string">'72be31d1fa6a42fc895d9a3c0fd8aeef'</span>).addTo(map);</code></pre>
+<span class="comment">// or, using a service URL instead</span>
+L.esri.Vector.vectorTileLayer(
+    <span class="string">"https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Microsoft_Building_Footprints/VectorTileServer"</span>
+).addTo(map);</code></pre>
 
   <p><a href="https://github.com/Esri/esri-leaflet-doc/edit/master/src/pages/api-reference/layers/vector-layer.md">Edit this page on GitHub</a></p>
 
@@ -188,14 +206,14 @@ L.esri.Vector.layer(<span class="string">'72be31d1fa6a42fc895d9a3c0fd8aeef'</spa
   <h5>Layers</h5>
   <nav>
     <a href="../../api-reference/layers/basemap-layer.html">Basemap Layer</a>
-    <a href="../../api-reference/layers/feature-layer.html">Feature Layer</a>
-    <a href="../../api-reference/layers/tiled-map-layer.html">Tiled Map Layer</a>
-    <a href="../../api-reference/layers/dynamic-map-layer.html">Dynamic Map Layer</a>
-    <a href="../../api-reference/layers/image-map-layer.html">Image Map Layer</a>
-    <a class="experimental" href="../../api-reference/layers/vector-basemap.html">Vector Basemap</a>
-    <a class="plugin" href="../../api-reference/layers/heatmap-feature-layer.html">Heatmap Feature Layer</a>
     <a class="plugin" href="../../api-reference/layers/cluster-feature-layer.html">Cluster Feature Layer</a>
-    <a class="experimental" href="../../api-reference/layers/vector-layer.html">Vector Layer</a>
+    <a href="../../api-reference/layers/dynamic-map-layer.html">Dynamic Map Layer</a>
+    <a href="../../api-reference/layers/feature-layer.html">Feature Layer</a>
+    <a class="plugin" href="../../api-reference/layers/heatmap-feature-layer.html">Heatmap Feature Layer</a>
+    <a href="../../api-reference/layers/image-map-layer.html">Image Map Layer</a>
+    <a href="../../api-reference/layers/tiled-map-layer.html">Tiled Map Layer</a>
+    <a class="plugin" href="../../api-reference/layers/vector-basemap.html">Vector Basemap</a>
+    <a class="plugin" href="../../api-reference/layers/vector-layer.html">Vector Layer</a>
   </nav>
 
   <h5>Controls</h5>
@@ -205,35 +223,35 @@ L.esri.Vector.layer(<span class="string">'72be31d1fa6a42fc895d9a3c0fd8aeef'</spa
 
   <h5>Tasks</h5>
   <nav>
-    <a href="../../api-reference/tasks/query.html">Query</a>
     <a href="../../api-reference/tasks/find.html">Find</a>
-    <a href="../../api-reference/tasks/identify-features.html">Identify Features</a>
-    <a href="../../api-reference/tasks/identify-image.html">Identify Image</a>
     <a class="plugin" href="../../api-reference/tasks/geocode.html">Geocode</a>
     <a class="plugin" href="../../api-reference/tasks/reverse-geocode.html">Reverse Geocode</a>
     <a class="plugin" href="../../api-reference/tasks/suggest.html">Suggest</a>
     <a class="plugin" href="../../api-reference/tasks/gp.html">Geoprocessing Task</a>
+    <a href="../../api-reference/tasks/identify-features.html">Identify Features</a>
+    <a href="../../api-reference/tasks/identify-image.html">Identify Image</a>
+    <a href="../../api-reference/tasks/query.html">Query</a>
     <a class="plugin" href="../../api-reference/tasks/query-related.html">Query Related</a>
-  </nav>
-
-  <h5>Base Classes</h5>
-  <nav>
-    <a href="../../api-reference/services/image-service.html">ImageService</a>
-    <a href="../../api-reference/services/feature-layer-service.html">FeatureLayerService</a>
-    <a href="../../api-reference/services/map-service.html">MapService</a>
-    <a class="plugin" href="../../api-reference/services/geocode-service.html">Geocode Service</a>
-    <a class="plugin" href="../../api-reference/services/gp-service.html">Geoprocessing Service</a>
-    <a href="../../api-reference/tasks/task.html">Task</a>
-    <a href="../../api-reference/services/service.html">Service</a>
-    <a href="../../api-reference/layers/raster-layer.html">Raster Layer</a>
   </nav>
 
   <h5>Misc.</h5>
   <nav>
-    <a href="../../api-reference/util.html">Util</a>
-    <a href="../../api-reference/request.html">request</a>
-    <a href="../../api-reference/options.html">options</a>
     <a href="../../api-reference/events.html">Events</a>
+    <a href="../../api-reference/options.html">options</a>
+    <a href="../../api-reference/request.html">request</a>
+    <a href="../../api-reference/util.html">Util</a>
+  </nav>
+
+  <h5>Base Classes</h5>
+  <nav>
+    <a href="../../api-reference/services/feature-layer-service.html">FeatureLayerService</a>
+    <a class="plugin" href="../../api-reference/services/geocode-service.html">Geocode Service</a>
+    <a class="plugin" href="../../api-reference/services/gp-service.html">Geoprocessing Service</a>
+    <a href="../../api-reference/services/image-service.html">ImageService</a>
+    <a href="../../api-reference/services/map-service.html">MapService</a>
+    <a href="../../api-reference/layers/raster-layer.html">Raster Layer</a>
+    <a href="../../api-reference/services/service.html">Service</a>
+    <a href="../../api-reference/tasks/task.html">Task</a>
   </nav>
 </aside>
 

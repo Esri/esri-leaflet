@@ -39,8 +39,8 @@
     crossorigin=""></script>
 
   
-    <script src="https://unpkg.com/esri-leaflet@2.5.3/dist/esri-leaflet.js"
-      integrity="sha512-K0Vddb4QdnVOAuPJBHkgrua+/A9Moyv8AQEWi0xndQ+fqbRfAFd47z4A9u1AW/spLO0gEaiE1z98PK1gl5mC5Q=="
+    <script src="https://unpkg.com/esri-leaflet@3.0.1/dist/esri-leaflet.js"
+      integrity="sha512-JmpptMCcCg+Rd6x0Dbg6w+mmyzs1M7chHCd9W8HPovnImG2nLAQWn3yltwxXRM7WjKKFFHOAKjjF2SC4CgiFBg=="
       crossorigin=""></script>
   
 
@@ -50,19 +50,7 @@
 
   
 
-  <!-- Google Analytics -->
-  <script>
-    /* eslint-disable */
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-    ga('create', 'UA-44963317-3', 'auto');
-    ga('send', 'pageview');
-    /* eslint-enable */
-  </script>
-  <!-- End Google Analytics -->
+  
 </head>
 <body>
   <div class="page-content ">
@@ -71,9 +59,9 @@
       <a class="site-nav" href="../../" class="left logo">Esri Leaflet</a>
       <nav id="site-nav-wrapper" class="site-nav-wrapper">
         <a class="site-nav" href="../../tutorials/">Tutorials</a>
-        <a class="site-nav" href="../../plugins/">Plugins</a>
         <a class="site-nav" href="../../examples/">Examples</a>
         <a class="site-nav" href="../../api-reference/">API Reference</a>
+        <a class="site-nav" href="../../plugins/">Plugins</a>
         <a class="site-nav" href="../../download/">Download</a>
         <a class="site-nav" href="https://github.com/Esri/esri-leaflet">View on GitHub</a>
       </nav>
@@ -89,14 +77,14 @@
   <h5>Layers</h5>
   <nav>
     <a href="../../api-reference/layers/basemap-layer.html">Basemap Layer</a>
-    <a href="../../api-reference/layers/feature-layer.html">Feature Layer</a>
-    <a href="../../api-reference/layers/tiled-map-layer.html">Tiled Map Layer</a>
-    <a href="../../api-reference/layers/dynamic-map-layer.html">Dynamic Map Layer</a>
-    <a href="../../api-reference/layers/image-map-layer.html">Image Map Layer</a>
-    <a class="experimental" href="../../api-reference/layers/vector-basemap.html">Vector Basemap</a>
-    <a class="plugin" href="../../api-reference/layers/heatmap-feature-layer.html">Heatmap Feature Layer</a>
     <a class="plugin" href="../../api-reference/layers/cluster-feature-layer.html">Cluster Feature Layer</a>
-    <a class="experimental" href="../../api-reference/layers/vector-layer.html">Vector Layer</a>
+    <a href="../../api-reference/layers/dynamic-map-layer.html">Dynamic Map Layer</a>
+    <a href="../../api-reference/layers/feature-layer.html">Feature Layer</a>
+    <a class="plugin" href="../../api-reference/layers/heatmap-feature-layer.html">Heatmap Feature Layer</a>
+    <a href="../../api-reference/layers/image-map-layer.html">Image Map Layer</a>
+    <a href="../../api-reference/layers/tiled-map-layer.html">Tiled Map Layer</a>
+    <a class="plugin" href="../../api-reference/layers/vector-basemap.html">Vector Basemap</a>
+    <a class="plugin" href="../../api-reference/layers/vector-layer.html">Vector Layer</a>
   </nav>
 
   <h5>Controls</h5>
@@ -106,35 +94,35 @@
 
   <h5>Tasks</h5>
   <nav>
-    <a href="../../api-reference/tasks/query.html">Query</a>
     <a href="../../api-reference/tasks/find.html">Find</a>
-    <a href="../../api-reference/tasks/identify-features.html">Identify Features</a>
-    <a href="../../api-reference/tasks/identify-image.html">Identify Image</a>
     <a class="plugin" href="../../api-reference/tasks/geocode.html">Geocode</a>
     <a class="plugin" href="../../api-reference/tasks/reverse-geocode.html">Reverse Geocode</a>
     <a class="plugin" href="../../api-reference/tasks/suggest.html">Suggest</a>
     <a class="plugin" href="../../api-reference/tasks/gp.html">Geoprocessing Task</a>
+    <a href="../../api-reference/tasks/identify-features.html">Identify Features</a>
+    <a href="../../api-reference/tasks/identify-image.html">Identify Image</a>
+    <a href="../../api-reference/tasks/query.html">Query</a>
     <a class="plugin" href="../../api-reference/tasks/query-related.html">Query Related</a>
-  </nav>
-
-  <h5>Base Classes</h5>
-  <nav>
-    <a href="../../api-reference/services/image-service.html">ImageService</a>
-    <a href="../../api-reference/services/feature-layer-service.html">FeatureLayerService</a>
-    <a href="../../api-reference/services/map-service.html">MapService</a>
-    <a class="plugin" href="../../api-reference/services/geocode-service.html">Geocode Service</a>
-    <a class="plugin" href="../../api-reference/services/gp-service.html">Geoprocessing Service</a>
-    <a href="../../api-reference/tasks/task.html">Task</a>
-    <a href="../../api-reference/services/service.html">Service</a>
-    <a href="../../api-reference/layers/raster-layer.html">Raster Layer</a>
   </nav>
 
   <h5>Misc.</h5>
   <nav>
-    <a href="../../api-reference/util.html">Util</a>
-    <a href="../../api-reference/request.html">request</a>
-    <a href="../../api-reference/options.html">options</a>
     <a href="../../api-reference/events.html">Events</a>
+    <a href="../../api-reference/options.html">options</a>
+    <a href="../../api-reference/request.html">request</a>
+    <a href="../../api-reference/util.html">Util</a>
+  </nav>
+
+  <h5>Base Classes</h5>
+  <nav>
+    <a href="../../api-reference/services/feature-layer-service.html">FeatureLayerService</a>
+    <a class="plugin" href="../../api-reference/services/geocode-service.html">Geocode Service</a>
+    <a class="plugin" href="../../api-reference/services/gp-service.html">Geoprocessing Service</a>
+    <a href="../../api-reference/services/image-service.html">ImageService</a>
+    <a href="../../api-reference/services/map-service.html">MapService</a>
+    <a href="../../api-reference/layers/raster-layer.html">Raster Layer</a>
+    <a href="../../api-reference/services/service.html">Service</a>
+    <a href="../../api-reference/tasks/task.html">Task</a>
   </nav>
 </aside>
 
@@ -436,14 +424,14 @@ query.where(<span class="string">"zone_id='B'"</span>).bounds(<span class="funct
   <h5>Layers</h5>
   <nav>
     <a href="../../api-reference/layers/basemap-layer.html">Basemap Layer</a>
-    <a href="../../api-reference/layers/feature-layer.html">Feature Layer</a>
-    <a href="../../api-reference/layers/tiled-map-layer.html">Tiled Map Layer</a>
-    <a href="../../api-reference/layers/dynamic-map-layer.html">Dynamic Map Layer</a>
-    <a href="../../api-reference/layers/image-map-layer.html">Image Map Layer</a>
-    <a class="experimental" href="../../api-reference/layers/vector-basemap.html">Vector Basemap</a>
-    <a class="plugin" href="../../api-reference/layers/heatmap-feature-layer.html">Heatmap Feature Layer</a>
     <a class="plugin" href="../../api-reference/layers/cluster-feature-layer.html">Cluster Feature Layer</a>
-    <a class="experimental" href="../../api-reference/layers/vector-layer.html">Vector Layer</a>
+    <a href="../../api-reference/layers/dynamic-map-layer.html">Dynamic Map Layer</a>
+    <a href="../../api-reference/layers/feature-layer.html">Feature Layer</a>
+    <a class="plugin" href="../../api-reference/layers/heatmap-feature-layer.html">Heatmap Feature Layer</a>
+    <a href="../../api-reference/layers/image-map-layer.html">Image Map Layer</a>
+    <a href="../../api-reference/layers/tiled-map-layer.html">Tiled Map Layer</a>
+    <a class="plugin" href="../../api-reference/layers/vector-basemap.html">Vector Basemap</a>
+    <a class="plugin" href="../../api-reference/layers/vector-layer.html">Vector Layer</a>
   </nav>
 
   <h5>Controls</h5>
@@ -453,35 +441,35 @@ query.where(<span class="string">"zone_id='B'"</span>).bounds(<span class="funct
 
   <h5>Tasks</h5>
   <nav>
-    <a href="../../api-reference/tasks/query.html">Query</a>
     <a href="../../api-reference/tasks/find.html">Find</a>
-    <a href="../../api-reference/tasks/identify-features.html">Identify Features</a>
-    <a href="../../api-reference/tasks/identify-image.html">Identify Image</a>
     <a class="plugin" href="../../api-reference/tasks/geocode.html">Geocode</a>
     <a class="plugin" href="../../api-reference/tasks/reverse-geocode.html">Reverse Geocode</a>
     <a class="plugin" href="../../api-reference/tasks/suggest.html">Suggest</a>
     <a class="plugin" href="../../api-reference/tasks/gp.html">Geoprocessing Task</a>
+    <a href="../../api-reference/tasks/identify-features.html">Identify Features</a>
+    <a href="../../api-reference/tasks/identify-image.html">Identify Image</a>
+    <a href="../../api-reference/tasks/query.html">Query</a>
     <a class="plugin" href="../../api-reference/tasks/query-related.html">Query Related</a>
-  </nav>
-
-  <h5>Base Classes</h5>
-  <nav>
-    <a href="../../api-reference/services/image-service.html">ImageService</a>
-    <a href="../../api-reference/services/feature-layer-service.html">FeatureLayerService</a>
-    <a href="../../api-reference/services/map-service.html">MapService</a>
-    <a class="plugin" href="../../api-reference/services/geocode-service.html">Geocode Service</a>
-    <a class="plugin" href="../../api-reference/services/gp-service.html">Geoprocessing Service</a>
-    <a href="../../api-reference/tasks/task.html">Task</a>
-    <a href="../../api-reference/services/service.html">Service</a>
-    <a href="../../api-reference/layers/raster-layer.html">Raster Layer</a>
   </nav>
 
   <h5>Misc.</h5>
   <nav>
-    <a href="../../api-reference/util.html">Util</a>
-    <a href="../../api-reference/request.html">request</a>
-    <a href="../../api-reference/options.html">options</a>
     <a href="../../api-reference/events.html">Events</a>
+    <a href="../../api-reference/options.html">options</a>
+    <a href="../../api-reference/request.html">request</a>
+    <a href="../../api-reference/util.html">Util</a>
+  </nav>
+
+  <h5>Base Classes</h5>
+  <nav>
+    <a href="../../api-reference/services/feature-layer-service.html">FeatureLayerService</a>
+    <a class="plugin" href="../../api-reference/services/geocode-service.html">Geocode Service</a>
+    <a class="plugin" href="../../api-reference/services/gp-service.html">Geoprocessing Service</a>
+    <a href="../../api-reference/services/image-service.html">ImageService</a>
+    <a href="../../api-reference/services/map-service.html">MapService</a>
+    <a href="../../api-reference/layers/raster-layer.html">Raster Layer</a>
+    <a href="../../api-reference/services/service.html">Service</a>
+    <a href="../../api-reference/tasks/task.html">Task</a>
   </nav>
 </aside>
 
