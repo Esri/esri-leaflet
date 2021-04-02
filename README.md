@@ -169,7 +169,7 @@ Esri welcomes contributions from anyone and everyone. Please see our [guidelines
 
 ### Terms
 
-If you're using Esri [content and services](https://developers.arcgis.com/documentation/mapping-apis-and-location-services/services/), you'll need to license your usage with an API Key or an ArcGIS Identity. Full details can be found here: [License location services](https://developers.arcgis.com/documentation/mapping-apis-and-location-services/licensing/license-location-services/).
+If you're using Esri [content and services](https://developers.arcgis.com/documentation/mapping-apis-and-services/services/), you'll need to license your usage with an API key or an ArcGIS identity. Full details can be found here: [License location services](https://developers.arcgis.com/documentation/mapping-apis-and-services/licensing/license-location-services/).
 
 If you display an ArcGIS Online service in **any** Leaflet application, we require that you include Esri attribution and recognize data providers. Using this plugin, it couldn't be easier to follow the terms.  Just select your basemap and the appropriate credits will be displayed dynamically in Leaflet's own [Attribution control](http://leafletjs.com/reference.html#control-attribution) as users pan/zoom.
 
@@ -179,8 +179,8 @@ L.esri.basemapLayer('Topographic').addTo(map);
 
 ![attribution](https://raw.github.com/Esri/esri-leaflet/master/attribution.png)
 
-* [Esri Attribution Requirements](https://developers.arcgis.com/documentation/mapping-apis-and-location-services/licensing/attribution/)
-* [Licensing & Attribution](https://developers.arcgis.com/documentation/mapping-apis-and-location-services/licensing/license-location-services/)
+* [Esri Attribution Requirements](https://developers.arcgis.com/documentation/mapping-apis-and-services/licensing/attribution/)
+* [Licensing & Attribution](https://developers.arcgis.com/documentation/mapping-apis-and-services/licensing/license-location-services/)
 
 ### Credit
 
