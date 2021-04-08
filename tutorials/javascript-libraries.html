@@ -8,11 +8,11 @@
   <meta charset="utf-8">
 
   
-    <title>Tutorials | Esri Leaflet</title>
+    <title>JavaScript Libraries | Esri Leaflet</title>
   
 
   
-    <meta name="description" content="How-to guides for using Esri Leaflet.">
+    <meta name="description" content="How to use Esri Leaflet with modern JavaScript libraries and frameworks.">
   
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -86,11 +86,22 @@
 
 
 <div class="main-content">
-  <h1 id="tutorials">Tutorials</h1>
-<p>Please start with <a href="create-your-first-app.html">Create your First App</a>. </p>
-<p>For using Esri Leaflet with the latest JavaScript frameworks, see <a href="javascript-libraries.html">JavaScript Libraries</a>.</p>
+  <h1 id="javascript-libraries">JavaScript Libraries</h1>
+<p>How to use Esri Leaflet with modern JavaScript libraries and frameworks.</p>
+<h4 id="introduction">Introduction</h4>
+<p>Leaflet and Esri Leaflet can be used with all the modern JavaScript libraries like React, Svelte, Vue, and Angular. In general, you&#39;ll use the functionality in your framework to get a reference to a DOM Node. For example, <a href="https://reactjs.org/docs/refs-and-the-dom.html"><code>refs</code> in React</a> or <a href="https://svelte.dev/docs#use_action">the <code>use:</code> directive in Svelte</a>. Then you can import Leaflet and Esri Leaflet using modern ES6 style imports:</p>
+<pre><code class="language-js">import { Map as LeafletMap, Icon, Marker } from <span class="string">"leaflet"</span>;
+import { FeatureLayer } from <span class="string">"esri-leaflet"</span>;</code></pre>
+<p>... and use these just as you normally would.</p>
+<h4 id="resources">Resources</h4>
+<p>There are a variety of helper libraries and examples helping you to use Esri Leaflet with the latest JavaScript libraries and frameworks:</p>
+<ul>
+<li><a href="https://github.com/slutske22/react-esri-leaflet">react-esri-leaflet</a></li>
+<li><a href="https://github.com/gavinr/esri-leaflet-react-demo">React Demo</a></li>
+<li><a href="https://github.com/gavinr/esri-leaflet-svelte-demo">Svelte Demo</a></li>
+</ul>
 
-  <p><a href="https://github.com/esri/esri-leaflet-doc/edit/master/src/pages/tutorials/index.md">Edit this page on GitHub</a></p>
+  <p><a href="https://github.com/esri/esri-leaflet-doc/edit/master/src/pages/tutorials/javascript-libraries.md">Edit this page on GitHub</a></p>
 
   <div class="mobile-menu">
     <aside class="sidebar">
