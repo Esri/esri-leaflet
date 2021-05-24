@@ -1,7 +1,7 @@
 // export version
 import packageInfo from '../package.json';
 var version = packageInfo.version;
-export {version as VERSION};
+export { version as VERSION };
 
 // import base
 export { Support } from './Support';
