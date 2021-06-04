@@ -46,8 +46,8 @@
 
   
   <!-- Load Esri Leaflet Vector from CDN -->
-  <script src="https://unpkg.com/esri-leaflet-vector@3.0.0/dist/esri-leaflet-vector.js"
-    integrity="sha512-i3LCZC/OnZR2VtZJ7ftXbZivyjPVBKeOqWuJ9SqaBnuiG18GyzTrHWYPgf1geE1LmI9yRENWSEI3jcpKx1dgqg=="
+  <script src="https://unpkg.com/esri-leaflet-vector@3.0.1/dist/esri-leaflet-vector.js"
+    integrity="sha512-LVmB6VacJLLi7W41loxaNwn594w6ZngRmTTzlbdcK7/uixTJlrhChUntBbciWFxAOxLGm1rniIBCV82F9/xD+A=="
     crossorigin=""></script>
   
 
@@ -200,7 +200,7 @@
 </div>
 <div id="map-wrapper">
   <script>
-    const apiKey = 'AAPKb10821df102a46a4b930958d7a6a06593sdla7i0cMWoosp7XXlYflDTAxsZMUq-oKvVOaom9B8CokPvJFd-sE88vOQ2B_rC'; // eslint-disable-line no-unused-vars, eol-last
+    const apiKey = 'AAPKc56d587fc6774b2fb4d866c50b227bdeHgve6W4_2bXsjC6IkMHLmB0P5uyhjnrPmA42Ce3qm2IQbqWz2aLlaFFUAvwcxpjt'; // eslint-disable-line no-unused-vars, eol-last
   </script>
   
 
@@ -210,7 +210,7 @@
   var map = L.map('map').setView([40, -4], 6);
 
   L.esri.Vector.vectorBasemapLayer('ArcGIS:Streets', {
-    apiKey: apiKey // replace with your api key - https://developers.arcgis.com
+    apikey: apiKey // replace with your api key - https://developers.arcgis.com
   }).addTo(map);
 </script>
 
@@ -236,8 +236,8 @@
     <span class="attribute">crossorigin</span>=<span class="value">""</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
   <span class="comment">&lt;!-- Load Esri Leaflet Vector from CDN --&gt;</span>
-  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/esri-leaflet-vector@3.0.0/dist/esri-leaflet-vector.js"</span>
-    <span class="attribute">integrity</span>=<span class="value">"sha512-i3LCZC/OnZR2VtZJ7ftXbZivyjPVBKeOqWuJ9SqaBnuiG18GyzTrHWYPgf1geE1LmI9yRENWSEI3jcpKx1dgqg=="</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/esri-leaflet-vector@3.0.1/dist/esri-leaflet-vector.js"</span>
+    <span class="attribute">integrity</span>=<span class="value">"sha512-LVmB6VacJLLi7W41loxaNwn594w6ZngRmTTzlbdcK7/uixTJlrhChUntBbciWFxAOxLGm1rniIBCV82F9/xD+A=="</span>
     <span class="attribute">crossorigin</span>=<span class="value">""</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
   <span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css">
@@ -253,7 +253,7 @@
   <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">40</span>, -<span class="number">4</span>], <span class="number">6</span>);
 
   L.esri.Vector.vectorBasemapLayer(<span class="string">'ArcGIS:Streets'</span>, {
-    apiKey: apiKey <span class="comment">// replace with your api key - https://developers.arcgis.com</span>
+    apikey: apiKey <span class="comment">// replace with your api key - https://developers.arcgis.com</span>
   }).addTo(map);
 </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 

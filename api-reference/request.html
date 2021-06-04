@@ -135,7 +135,7 @@
 <pre><code class="language-js">L.esri.Support.cors = <span class="literal">false</span>;</code></pre>
 <h3 id="l-esri-request-url-params-callback-">L.esri.request(url, params, callback);</h3>
 <p>Executes a GET or POST via <code>XMLHttpRequest</code> or JSONP request depending on the capabilities of the browser and the length of the request. GET is used when the browser supports CORS and the request url is less then 2000 characters. POST is used when the browser supports CORS and the request exceeds 2000 characters. JSONP is used when the request is less then 2000 characters and the browser does not support CORS.</p>
-<h4 id="params">Params</h4>
+<h4 id="params-l-esri-request-">Params (L.esri.request)</h4>
 <table>
 <thead>
 <tr>
@@ -167,7 +167,7 @@
 </tr>
 </tbody>
 </table>
-<h4 id="example">Example</h4>
+<h4 id="example-l-esri-request-">Example (L.esri.request)</h4>
 <pre><code class="language-js">L.esri.request(<span class="string">'https://www.portlandmaps.com/arcgis/rest/services/Public/Parks_Misc/MapServer/21/'</span>, {}, <span class="function"><span class="keyword">function</span> <span class="params">(error, response)</span> {</span>
   <span class="keyword">if</span> (error) {
     console.log(error);
@@ -178,7 +178,7 @@
 <h3 id="l-esri-get-url-params-callback-">L.esri.get(url, params, callback)</h3>
 <p>Execute a GET request via `XMLHttpRequest&#39; (via CORS) or JSON depending on what is available in the browser.</p>
 <p><strong>Note</strong>: ArcGIS Server before 10.1 does not have CORS support enabled by default. You can either enable CORS on your server or tell Esri Leaflet to always make JSONP requests with <code>L.esri.get = L.esri.Request.get.JSONP;</code> After you load Esri leaflet, but before calling your own scripts.</p>
-<h4 id="params">Params</h4>
+<h4 id="params-l-esri-get-">Params (L.esri.get)</h4>
 <table>
 <thead>
 <tr>
@@ -210,7 +210,7 @@
 </tr>
 </tbody>
 </table>
-<h4 id="example">Example</h4>
+<h4 id="example-l-esri-get-">Example (L.esri.get)</h4>
 <pre><code class="language-js">L.esri.get(<span class="string">'https://www.portlandmaps.com/arcgis/rest/services/Public/Parks_Misc/MapServer/21/'</span>, {}, <span class="function"><span class="keyword">function</span> <span class="params">(error, response)</span> {</span>
   <span class="keyword">if</span> (error) {
     console.log(error);
@@ -221,6 +221,7 @@
 <h3 id="l-esri-post-url-params-callback-">L.esri.post(url, params, callback)</h3>
 <p>Execute a POST request via `XMLHttpRequest&#39; (via CORS).</p>
 <p>This request is made via <code>XMLHttpRequest</code> which cannot make cross domain requests in IE 8 and 9. Esri Leaflet supports both the <a href="https://developers.arcgis.com/javascript/jshelp/ags_proxy.html">ArcGIS API for JavaScript proxy</a> and the <a href="https://github.com/Esri/resource-proxy">ArcGIS Resource Proxy</a> which can be hosted on your server and used with the <a href="../api-reference/services/service.html"><code>L.esri.Service</code></a> classes to work around this issue.</p>
+<h4 id="params-l-esri-post-">Params (L.esri.post)</h4>
 <table>
 <thead>
 <tr>
@@ -252,7 +253,7 @@
 </tr>
 </tbody>
 </table>
-<h4 id="example">Example</h4>
+<h4 id="example-l-esri-post-">Example (L.esri.post)</h4>
 <pre><code class="language-js">L.esri.post(<span class="string">'https://www.portlandmaps.com/arcgis/rest/services/Public/Parks_Misc/MapServer/21/'</span>, {}, <span class="function"><span class="keyword">function</span> <span class="params">(error, response)</span> {</span>
   <span class="keyword">if</span> (error) {
     console.log(error);

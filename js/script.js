@@ -20,8 +20,8 @@ function accidentalScroll () {
   map.scrollWheelZoom.enable();
 }
 
-// Automatically generate links on the heading elements on a page
-var pageHeadings = document.querySelectorAll('h2, h3, h4, h5, h6');
+// Automatically generate links on the heading elements on a page (if they have an `id` node attribute)
+var pageHeadings = document.querySelectorAll('h2[id], h3[id], h4[id], h5[id], h6[id]');
 for (var i = 0; i < pageHeadings.length; ++i) {
   pageHeadings[i].addEventListener('click', function () {
     window.location.hash = this.id;

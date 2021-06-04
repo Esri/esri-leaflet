@@ -107,7 +107,7 @@ L.esri.featureLayer({
   url: <span class="string">'.../ArcGIS/rest/services/Demographics/ESRI_Population_World/MapServer/0'</span>
 });</code></pre>
 <p>If you want to edit data in the browser then you will need to consume a <code>FeatureServer</code> service.</p>
-<h3 id="what-does-the-data-look-like-">What does the data look like?</h3>
+<h3 id="what-does-the-feature-layer-data-look-like-">What does the Feature Layer data look like?</h3>
 <p>When you request a feature layer from an ArcGIS Server the response will look something like </p>
 <pre><code class="language-json">{"<span class="attribute">type</span>":<span class="value"><span class="string">"FeatureCollection"</span></span>,"<span class="attribute">crs</span>":<span class="value">{"<span class="attribute">type</span>":<span class="value"><span class="string">"name"</span></span>,"<span class="attribute">properties</span>":<span class="value">{"<span class="attribute">name</span>":<span class="value"><span class="string">"EPSG:4326"</span></span>}</span>}</span>,
  "<span class="attribute">features</span>":<span class="value">[
@@ -129,7 +129,7 @@ L.esri.featureLayer({
 L.esri.dynamicMapLayer({
   url: <span class="string">'https://services.arcgisonline.com/arcgis/rest/services/Specialty/Soil_Survey_Map/MapServer'</span>
 });</code></pre>
-<h3 id="what-does-the-data-look-like-">What does the data look like?</h3>
+<h3 id="what-does-the-dynamic-map-layer-data-look-like-">What does the Dynamic Map Layer data look like?</h3>
 <p>When you request a Dynamic Map Layer from an ArcGIS Server the response might look something like the following:</p>
 <p><img src="https://services.arcgisonline.com/arcgis/rest/services/Specialty/Soil_Survey_Map/MapServer/export?bbox=-15214026.109881485,1868732.467515991,-7337954.715376922,8365268.375529694&amp;size=600,200&amp;dpi=96&amp;format=png24&amp;transparent=true&amp;bboxSR=3857&amp;imageSR=3857&amp;f=image" alt="Map tile"></p>
 <p>As you can see, it is simply an image!</p>
@@ -143,7 +143,7 @@ L.esri.dynamicMapLayer({
 L.esri.tiledMapLayer({
   url: <span class="string">'https://services.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer'</span>
 });</code></pre>
-<h3 id="what-does-the-data-look-like-">What does the data look like?</h3>
+<h3 id="what-does-the-tiled-map-layer-data-look-like-">What does the Tiled Map Layer data look like?</h3>
 <p>You can see an example Tiled Map Layer response from ArcGIS Server below. It is simply an image!</p>
 <p><img src="https://sampleserver1.arcgisonline.com/ArcGIS/rest/services/PublicSafety/PublicSafetyBasemap/MapServer/tile/6/146/267" alt="Map tile"></p>
 
