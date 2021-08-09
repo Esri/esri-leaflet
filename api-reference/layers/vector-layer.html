@@ -131,6 +131,9 @@
   <h1 id="l-esri-vector-vectortilelayer">L.esri.Vector.vectorTileLayer</h1>
 <p>Extends <a href="https://leafletjs.com/reference.html#layer"><code>L.Layer</code></a></p>
 <p><code>L.esri.Vector.vectorTileLayer</code> uses the <a href="https://github.com/Esri/esri-leaflet-vector"><code>esri-leaflet-vector</code> plugin</a> to display vector tile service layers and their styles published from user data.</p>
+<blockquote>
+<p>Your vector tile service must be published using the <a href="https://epsg.io/3857">Web Mercator Auxiliary Sphere tiling scheme (WKID 102100/3857)</a> and the default scale options used by Google Maps, Bing Maps and <a href="https://services.arcgisonline.com/arcgis/rest/services">ArcGIS Online</a>. The <code>esri-leaflet-vector</code> plugin will not support any other spatial reference for vector tile layers because it relies directly upon mapbox-gl-js v1.</p>
+</blockquote>
 <h3 id="constructor">Constructor</h3>
 <p><strong>Note:</strong> There are two ways to construct this layer with the required <code>key</code> parameter, either with an item ID or service URL of a hosted vector tile layer.</p>
 <table>
@@ -155,6 +158,7 @@
         <tr>
             <th>Option</th>
             <th>Type</th>
+            <th>Default</th>
             <th>Description</th>
         </tr>
     </thead>
@@ -162,16 +166,25 @@
         <tr>
             <td><code>apikey</code></td>
             <td><code>String</code></td>
+            <td></td>
             <td>If you pass an <code>apikey</code> in your options it will be included in all requests to the service.</td>
         </tr>
         <tr>
             <td><code>token</code></td>
             <td><code>String</code></td>
+            <td></td>
             <td>If you pass a <code>token</code> in your options it will be included in all requests to the service.</td>
+        </tr>
+        <tr>
+            <td><code>portalUrl</code></td>
+            <td><code>String</code></td>
+            <td><code>&#39;<a href="https://www.arcgis.com">https://www.arcgis.com</a>&#39;</code></td>
+            <td>Specify the ArcGIS Enterprise base URL if your layer is not hosted on ArcGIS Online.</td>
         </tr>
         <tr>
             <td><code>style</code></td>
             <td><code>Function</code></td>
+            <td></td>
             <td>Function that can be used to customize the style. It gets the default style from the service and returns the new style to be used.
 <pre>function (style) {
   // make changes to the style object
