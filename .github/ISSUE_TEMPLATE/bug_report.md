@@ -29,7 +29,7 @@ Please share the steps to reproduce the behavior.
 
 **THIS IS REQUIRED** - If you do not provide the steps for others to reproduce the issue you're seeing, it is impossible for them to assist you. Please create a [jsbin](https://jsbin.com/yewimat/edit?html,output) that demonstrates the problem and include the steps to see the issue:
 
-[Example](https://jsbin.com/zzzzzzz/edit?html,output)
+[Example](https://LINK_TO_YOUR_JS_BIN)
 
 1. Go to '...'
 2. Click on '....'
