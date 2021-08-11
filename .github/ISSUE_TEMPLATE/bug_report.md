@@ -21,11 +21,15 @@ A clear and concise description of what the bug is.
 - Describe what occurs in your code.
 - Specifically, what seems to work differently than you intended?
 - Provide any error messages you see in the console.
-- If possible, create a [jsbin](http://jsbin.com/dagilag/edit?html,output) that demonstrates the problem.
+- Please create a [jsbin](https://jsbin.com/yewimat/edit?html,output) that demonstrates the problem.
 
 ## To Reproduce
 
 Please share the steps to reproduce the behavior.
+
+**THIS IS REQUIRED** - If you do not provide the steps for others to reproduce the issue you're seeing, it is impossible for them to assist you. Please create a [jsbin](https://jsbin.com/yewimat/edit?html,output) that demonstrates the problem and include the steps to see the issue:
+
+[Example](https://jsbin.com/zzzzzzz/edit?html,output)
 
 1. Go to '...'
 2. Click on '....'
