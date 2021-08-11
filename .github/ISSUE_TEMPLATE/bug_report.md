@@ -25,7 +25,7 @@ A clear and concise description of what the bug is.
 
 ## To Reproduce
 
-Please share the steps to reproduce the behavior.
+Please share and fill in the steps below to reproduce the behavior.
 
 **THIS IS REQUIRED** - If you do not provide the steps for others to reproduce the issue you're seeing, it is impossible for them to assist you. Please create a [jsbin](https://jsbin.com/yewimat/edit?html,output) that demonstrates the problem and include the steps to see the issue:
 
