@@ -70,17 +70,18 @@ The easiest way to get started is to load Esri Leaflet via [CDN](https://unpkg.c
   <body>
     <div id="map"></div>
     <script>
-      var map = L.map('map').setView([45.528, -122.680], 13);
+      const map = L.map('map').setView([34.39, -117.189], 6);
       L.esri.basemapLayer("Gray").addTo(map);
 
-      var parks = L.esri.featureLayer({
-        url: "https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Portland_Parks/FeatureServer/0",
+      // https://www.arcgis.com/home/item.html?id=8b98df1300b749eabc3142864bb9a119
+      const parks = L.esri.featureLayer({
+        url: "https://services2.arcgis.com/FiaPA4ga0iQKduv3/arcgis/rest/services/NPS_Park_Unit_Boundaries/FeatureServer/0",
         style: function () {
           return { color: "#70ca49", weight: 2 };
         }
       }).addTo(map);
 
-      var popupTemplate = "<h3>{NAME}</h3>{ACRES} Acres<br><small>Property ID: {PROPERTYID}<small>";
+      const popupTemplate = "<h3>{UNIT_NAME}</h3><p>Type: {UNIT_TYPE}</p><p>Region: {REGION}</p>";
 
       parks.bindPopup(function(e){
         return L.Util.template(popupTemplate, e.feature.properties)
