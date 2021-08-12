@@ -73,9 +73,9 @@ The easiest way to get started is to load Esri Leaflet via [CDN](https://unpkg.c
       const map = L.map('map').setView([34.39, -117.189], 6);
       L.esri.basemapLayer("Gray").addTo(map);
 
-      // https://www.arcgis.com/home/item.html?id=8b98df1300b749eabc3142864bb9a119
+      // https://www.arcgis.com/home/item.html?id=c8d60ffcbf5c4030a17762fe10e81c6a
       const parks = L.esri.featureLayer({
-        url: "https://services2.arcgis.com/FiaPA4ga0iQKduv3/arcgis/rest/services/NPS_Park_Unit_Boundaries/FeatureServer/0",
+        url: "https://services1.arcgis.com/fBc8EJBxQRMcHlei/ArcGIS/rest/services/NPS_Land_Resources_Division_Boundary_and_Tract_Data_Service/FeatureServer/2",
         style: function () {
           return { color: "#70ca49", weight: 2 };
         }
