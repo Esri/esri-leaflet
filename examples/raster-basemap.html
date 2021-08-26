@@ -8,11 +8,11 @@
   <meta charset="utf-8">
 
   
-    <title>Vector Basemaps | Esri Leaflet</title>
+    <title>Raster Basemaps | Esri Leaflet</title>
   
 
   
-    <meta name="description" content="Display ArcGIS Online vector basemaps using &lt;code&gt;L.esri.Vector.vectorBasemapLayer&lt;/code&gt;, available from the &lt;a href=&quot;https://github.com/Esri/esri-leaflet-vector&quot;&gt;Esri Leaflet Vector&lt;/a&gt; plugin. In addition to vector basemaps, custom vector tile layers (&lt;code&gt;L.esri.Vector.vectorTileLayer&lt;/code&gt;) can also be added to the map. Learn more at this &lt;a href=&quot;https://developers.arcgis.com/esri-leaflet/layers/add-a-vector-tile-layer/&quot;&gt;ArcGIS for Developers tutorial&lt;/a&gt;.">
+    <meta name="description" content="Display classic raster tiled basemaps.">
   
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -44,11 +44,6 @@
       crossorigin=""></script>
   
 
-  
-  <!-- Load Esri Leaflet Vector from CDN -->
-  <script src="https://unpkg.com/esri-leaflet-vector@3.1.0/dist/esri-leaflet-vector.js"
-    integrity="sha512-AAcPGWoYOQ7VoaC13L/rv6GwvzEzyknHQlrtdJSGD6cSzuKXDYILZqUhugbJFZhM+bEXH2Ah7mA1OxPFElQmNQ=="
-    crossorigin=""></script>
   
 
   
@@ -87,9 +82,9 @@
   <nav>
     <a href="../examples/showing-a-basemap.html">Showing an ArcGIS Basemap</a>
     <a href="../examples/basemap-with-labels.html">Basemap with Labels</a>
+    <a href="../examples/composing-basemaps.html">Composing Basemaps</a>
     <a href="../examples/switching-basemaps.html">Switching Basemaps</a>
-    <a href="../examples/retina-basemap.html">Retina Basemap</a>
-    <a href="../examples/vector-basemap.html">Vector Basemaps</a>
+    <a href="../examples/raster-basemap.html">Raster Basemaps (Classic)</a>
   </nav>
 
   <h5>Feature Layers</h5>
@@ -195,8 +190,8 @@
 
 <div class="example-content">
 <div class="wrap">
-  <h1>Vector Basemaps</h1>
-  <p>Display ArcGIS Online vector basemaps using <code>L.esri.Vector.vectorBasemapLayer</code>, available from the <a href="https://github.com/Esri/esri-leaflet-vector">Esri Leaflet Vector</a> plugin. In addition to vector basemaps, custom vector tile layers (<code>L.esri.Vector.vectorTileLayer</code>) can also be added to the map. Learn more at this <a href="https://developers.arcgis.com/esri-leaflet/layers/add-a-vector-tile-layer/">ArcGIS for Developers tutorial</a>.</p>
+  <h1>Raster Basemaps</h1>
+  <p>Display classic raster tiled basemaps.</p>
 </div>
 <div id="map-wrapper">
   <script>
@@ -209,9 +204,7 @@
 <script>
   var map = L.map('map').setView([40, -4], 6);
 
-  L.esri.Vector.vectorBasemapLayer('ArcGIS:Streets', {
-    apikey: apiKey // replace with your api key - https://developers.arcgis.com
-  }).addTo(map);
+  L.esri.basemapLayer('Topographic').addTo(map);
 </script>
 
 </div>
@@ -219,7 +212,7 @@
 <span class="tag">&lt;<span class="title">html</span>&gt;</span>
 <span class="tag">&lt;<span class="title">head</span>&gt;</span>
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">"utf-8"</span> /&gt;</span>
-  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Vector Basemaps<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Raster Basemaps<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
   <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">name</span>=<span class="value">"viewport"</span> <span class="attribute">content</span>=<span class="value">"initial-scale=1,maximum-scale=1,user-scalable=no"</span> /&gt;</span>
 
   <span class="comment">&lt;!-- Load Leaflet from CDN --&gt;</span>
@@ -235,11 +228,6 @@
     <span class="attribute">integrity</span>=<span class="value">"sha512-myckXhaJsP7Q7MZva03Tfme/MSF5a6HC2xryjAM4FxPLHGqlh5VALCbywHnzs2uPoF/4G/QVXyYDDSkp5nPfig=="</span>
     <span class="attribute">crossorigin</span>=<span class="value">""</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
-  <span class="comment">&lt;!-- Load Esri Leaflet Vector from CDN --&gt;</span>
-  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/esri-leaflet-vector@3.1.0/dist/esri-leaflet-vector.js"</span>
-    <span class="attribute">integrity</span>=<span class="value">"sha512-AAcPGWoYOQ7VoaC13L/rv6GwvzEzyknHQlrtdJSGD6cSzuKXDYILZqUhugbJFZhM+bEXH2Ah7mA1OxPFElQmNQ=="</span>
-    <span class="attribute">crossorigin</span>=<span class="value">""</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
-
   <span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css">
     <span class="tag">body</span> <span class="rules">{ <span class="rule"><span class="attribute">margin</span>:<span class="value"><span class="number">0</span></span></span>; <span class="rule"><span class="attribute">padding</span>:<span class="value"><span class="number">0</span></span></span>; <span class="rule">}</span></span>
     <span class="id">#map</span> <span class="rules">{ <span class="rule"><span class="attribute">position</span>:<span class="value"> absolute</span></span>; <span class="rule"><span class="attribute">top</span>:<span class="value"><span class="number">0</span></span></span>; <span class="rule"><span class="attribute">bottom</span>:<span class="value"><span class="number">0</span></span></span>; <span class="rule"><span class="attribute">right</span>:<span class="value"><span class="number">0</span></span></span>; <span class="rule"><span class="attribute">left</span>:<span class="value"><span class="number">0</span></span></span>; <span class="rule">}</span></span>
@@ -252,16 +240,14 @@
 <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
   <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">40</span>, -<span class="number">4</span>], <span class="number">6</span>);
 
-  L.esri.Vector.vectorBasemapLayer(<span class="string">'ArcGIS:Streets'</span>, {
-    apikey: apiKey <span class="comment">// replace with your api key - https://developers.arcgis.com</span>
-  }).addTo(map);
+  L.esri.basemapLayer(<span class="string">'Topographic'</span>).addTo(map);
 </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 <span class="tag">&lt;/<span class="title">body</span>&gt;</span>
 <span class="tag">&lt;/<span class="title">html</span>&gt;</span></code></pre>
 
 <div class="wrap">
-  <p><a href="https://github.com/Esri/esri-leaflet-doc/edit/master/src/pages/examples/vector-basemap.hbs">Edit this sample on GitHub</a></p>
+  <p><a href="https://github.com/Esri/esri-leaflet-doc/edit/master/src/pages/examples/raster-basemap.hbs">Edit this sample on GitHub</a></p>
 </div>
 
 <div class="mobile-menu">
@@ -274,9 +260,9 @@
   <nav>
     <a href="../examples/showing-a-basemap.html">Showing an ArcGIS Basemap</a>
     <a href="../examples/basemap-with-labels.html">Basemap with Labels</a>
+    <a href="../examples/composing-basemaps.html">Composing Basemaps</a>
     <a href="../examples/switching-basemaps.html">Switching Basemaps</a>
-    <a href="../examples/retina-basemap.html">Retina Basemap</a>
-    <a href="../examples/vector-basemap.html">Vector Basemaps</a>
+    <a href="../examples/raster-basemap.html">Raster Basemaps (Classic)</a>
   </nav>
 
   <h5>Feature Layers</h5>

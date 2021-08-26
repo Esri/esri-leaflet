@@ -12,7 +12,7 @@
   
 
   
-    <meta name="description" content="Display an ArcGIS Online basemap.  Notice that the map attribution updates automatically as users pan and zoom in accordance with Esri&#x27;s &lt;a href=&#x27;https://github.com/esri/esri-leaflet#terms&#x27;&gt;Terms of Use&lt;/a&gt;.">
+    <meta name="description" content="Display an ArcGIS Online basemap using the &lt;a href=&quot;../../api-reference/layers/vector-basemap.html&quot;&gt;Esri Leaflet Vector plugin&lt;/a&gt;. Notice that the map attribution updates automatically as users pan and zoom in accordance with Esri&#x27;s &lt;a href=&#x27;https://github.com/esri/esri-leaflet#terms&#x27;&gt;Terms of Use&lt;/a&gt;.">
   
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -44,6 +44,11 @@
       crossorigin=""></script>
   
 
+  
+  <!-- Load Esri Leaflet Vector from CDN -->
+  <script src="https://unpkg.com/esri-leaflet-vector@3.1.0/dist/esri-leaflet-vector.js"
+    integrity="sha512-AAcPGWoYOQ7VoaC13L/rv6GwvzEzyknHQlrtdJSGD6cSzuKXDYILZqUhugbJFZhM+bEXH2Ah7mA1OxPFElQmNQ=="
+    crossorigin=""></script>
   
 
   
@@ -82,9 +87,9 @@
   <nav>
     <a href="../examples/showing-a-basemap.html">Showing an ArcGIS Basemap</a>
     <a href="../examples/basemap-with-labels.html">Basemap with Labels</a>
+    <a href="../examples/composing-basemaps.html">Composing Basemaps</a>
     <a href="../examples/switching-basemaps.html">Switching Basemaps</a>
-    <a href="../examples/retina-basemap.html">Retina Basemap</a>
-    <a href="../examples/vector-basemap.html">Vector Basemaps</a>
+    <a href="../examples/raster-basemap.html">Raster Basemaps (Classic)</a>
   </nav>
 
   <h5>Feature Layers</h5>
@@ -191,7 +196,7 @@
 <div class="example-content">
 <div class="wrap">
   <h1>Showing an ArcGIS basemap</h1>
-  <p>Display an ArcGIS Online basemap.  Notice that the map attribution updates automatically as users pan and zoom in accordance with Esri's <a href='https://github.com/esri/esri-leaflet#terms'>Terms of Use</a>.</p>
+  <p>Display an ArcGIS Online basemap using the <a href="../../api-reference/layers/vector-basemap.html">Esri Leaflet Vector plugin</a>. Notice that the map attribution updates automatically as users pan and zoom in accordance with Esri's <a href='https://github.com/esri/esri-leaflet#terms'>Terms of Use</a>.</p>
 </div>
 <div id="map-wrapper">
   <script>
@@ -202,9 +207,13 @@
 <div id="map"></div>
 
 <script>
-  var map = L.map('map').setView([39, -97.5], 4);
+  var map = L.map('map').setView([48.865195, 2.321033], 16);
 
-  L.esri.basemapLayer('Streets').addTo(map);
+  // See here for basemap options:
+  // http://esri.github.io/esri-leaflet/api-reference/layers/vector-basemap.html#vector-basemaps
+  L.esri.Vector.vectorBasemapLayer('ArcGIS:Streets', {
+    apikey: apiKey // Replace with your API key - https://developers.arcgis.com
+  }).addTo(map);
 </script>
 
 </div>
@@ -228,6 +237,11 @@
     <span class="attribute">integrity</span>=<span class="value">"sha512-myckXhaJsP7Q7MZva03Tfme/MSF5a6HC2xryjAM4FxPLHGqlh5VALCbywHnzs2uPoF/4G/QVXyYDDSkp5nPfig=="</span>
     <span class="attribute">crossorigin</span>=<span class="value">""</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
+  <span class="comment">&lt;!-- Load Esri Leaflet Vector from CDN --&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/esri-leaflet-vector@3.1.0/dist/esri-leaflet-vector.js"</span>
+    <span class="attribute">integrity</span>=<span class="value">"sha512-AAcPGWoYOQ7VoaC13L/rv6GwvzEzyknHQlrtdJSGD6cSzuKXDYILZqUhugbJFZhM+bEXH2Ah7mA1OxPFElQmNQ=="</span>
+    <span class="attribute">crossorigin</span>=<span class="value">""</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+
   <span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css">
     <span class="tag">body</span> <span class="rules">{ <span class="rule"><span class="attribute">margin</span>:<span class="value"><span class="number">0</span></span></span>; <span class="rule"><span class="attribute">padding</span>:<span class="value"><span class="number">0</span></span></span>; <span class="rule">}</span></span>
     <span class="id">#map</span> <span class="rules">{ <span class="rule"><span class="attribute">position</span>:<span class="value"> absolute</span></span>; <span class="rule"><span class="attribute">top</span>:<span class="value"><span class="number">0</span></span></span>; <span class="rule"><span class="attribute">bottom</span>:<span class="value"><span class="number">0</span></span></span>; <span class="rule"><span class="attribute">right</span>:<span class="value"><span class="number">0</span></span></span>; <span class="rule"><span class="attribute">left</span>:<span class="value"><span class="number">0</span></span></span>; <span class="rule">}</span></span>
@@ -238,9 +252,13 @@
 <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
-  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">39</span>, -<span class="number">97.5</span>], <span class="number">4</span>);
+  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">48.865195</span>, <span class="number">2.321033</span>], <span class="number">16</span>);
 
-  L.esri.basemapLayer(<span class="string">'Streets'</span>).addTo(map);
+  <span class="comment">// See here for basemap options:</span>
+  <span class="comment">// http://esri.github.io/esri-leaflet/api-reference/layers/vector-basemap.html#vector-basemaps</span>
+  L.esri.Vector.vectorBasemapLayer(<span class="string">'ArcGIS:Streets'</span>, {
+    apikey: apiKey <span class="comment">// Replace with your API key - https://developers.arcgis.com</span>
+  }).addTo(map);
 </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 <span class="tag">&lt;/<span class="title">body</span>&gt;</span>
@@ -260,9 +278,9 @@
   <nav>
     <a href="../examples/showing-a-basemap.html">Showing an ArcGIS Basemap</a>
     <a href="../examples/basemap-with-labels.html">Basemap with Labels</a>
+    <a href="../examples/composing-basemaps.html">Composing Basemaps</a>
     <a href="../examples/switching-basemaps.html">Switching Basemaps</a>
-    <a href="../examples/retina-basemap.html">Retina Basemap</a>
-    <a href="../examples/vector-basemap.html">Vector Basemaps</a>
+    <a href="../examples/raster-basemap.html">Raster Basemaps (Classic)</a>
   </nav>
 
   <h5>Feature Layers</h5>

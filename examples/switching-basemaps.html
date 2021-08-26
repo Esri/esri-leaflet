@@ -12,7 +12,7 @@
   
 
   
-    <meta name="description" content="Switching between all available basemaps packaged with Esri Leaflet.">
+    <meta name="description" content="Switching between all available basemaps packaged with Esri Leaflet. For additional explanation, see &lt;a href=&quot;https://developers.arcgis.com/esri-leaflet/maps/change-the-basemap-layer/&quot;&gt;the tutorial&lt;/a&gt;.">
   
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -44,6 +44,11 @@
       crossorigin=""></script>
   
 
+  
+  <!-- Load Esri Leaflet Vector from CDN -->
+  <script src="https://unpkg.com/esri-leaflet-vector@3.1.0/dist/esri-leaflet-vector.js"
+    integrity="sha512-AAcPGWoYOQ7VoaC13L/rv6GwvzEzyknHQlrtdJSGD6cSzuKXDYILZqUhugbJFZhM+bEXH2Ah7mA1OxPFElQmNQ=="
+    crossorigin=""></script>
   
 
   
@@ -82,9 +87,9 @@
   <nav>
     <a href="../examples/showing-a-basemap.html">Showing an ArcGIS Basemap</a>
     <a href="../examples/basemap-with-labels.html">Basemap with Labels</a>
+    <a href="../examples/composing-basemaps.html">Composing Basemaps</a>
     <a href="../examples/switching-basemaps.html">Switching Basemaps</a>
-    <a href="../examples/retina-basemap.html">Retina Basemap</a>
-    <a href="../examples/vector-basemap.html">Vector Basemaps</a>
+    <a href="../examples/raster-basemap.html">Raster Basemaps (Classic)</a>
   </nav>
 
   <h5>Feature Layers</h5>
@@ -191,7 +196,7 @@
 <div class="example-content">
 <div class="wrap">
   <h1>Switching basemaps</h1>
-  <p>Switching between all available basemaps packaged with Esri Leaflet.</p>
+  <p>Switching between all available basemaps packaged with Esri Leaflet. For additional explanation, see <a href="https://developers.arcgis.com/esri-leaflet/maps/change-the-basemap-layer/">the tutorial</a>.</p>
 </div>
 <div id="map-wrapper">
   <script>
@@ -215,61 +220,78 @@
 
 <div id="map"></div>
 
-<div id="basemaps-wrapper" class="leaflet-bar">
-  <select id="basemaps">
-    <option value="Topographic">Topographic</option>
-    <option value="Streets">Streets</option>
-    <option value="NationalGeographic">National Geographic</option>
-    <option value="Oceans">Oceans</option>
-    <option value="Gray">Gray</option>
-    <option value="DarkGray">Dark Gray</option>
-    <option value="Imagery">Imagery</option>
-    <option value="ImageryClarity">Imagery (Clarity)</option>
-    <option value="ImageryFirefly">Imagery (Firefly)</option>
-    <option value="ShadedRelief">Shaded Relief</option>
-    <option value="Physical">Physical</option>
-  </select>
-</div>
-
 <script>
-  var map = L.map('map').setView([-33.87, 150.77], 10);
-  var layer = L.esri.basemapLayer('Topographic').addTo(map);
-  var layerLabels;
+  var map = L.map('map').setView([-33.87, 151.2], 10);
 
-  function setBasemap (basemap) {
-    if (layer) {
-      map.removeLayer(layer);
-    }
+  var vectorTiles = {};
+  var allEnums = [
+    'ArcGIS:Imagery',
+    'ArcGIS:Imagery:Standard',
+    'ArcGIS:Imagery:Labels',
+    'ArcGIS:LightGray',
+    'ArcGIS:LightGray:Base',
+    'ArcGIS:LightGray:Labels',
+    'ArcGIS:DarkGray',
+    'ArcGIS:DarkGray:Base',
+    'ArcGIS:DarkGray:Labels',
+    'ArcGIS:Navigation',
+    'ArcGIS:NavigationNight',
+    'ArcGIS:Streets',
+    'ArcGIS:StreetsNight',
+    'ArcGIS:StreetsRelief',
+    'ArcGIS:StreetsRelief:Base',
+    'ArcGIS:Topographic',
+    'ArcGIS:Topographic:Base',
+    'ArcGIS:Oceans',
+    'ArcGIS:Oceans:Base',
+    'ArcGIS:Oceans:Labels',
+    'OSM:Standard',
+    'OSM:StandardRelief',
+    'OSM:StandardRelief:Base',
+    'OSM:Streets',
+    'OSM:StreetsRelief',
+    'OSM:StreetsRelief:Base',
+    'OSM:LightGray',
+    'OSM:LightGray:Base',
+    'OSM:LightGray:Labels',
+    'OSM:DarkGray',
+    'OSM-DarkGray:Base',
+    'OSM-DarkGray:Labels',
+    'ArcGIS:Terrain',
+    'ArcGIS:Terrain:Base',
+    'ArcGIS:Terrain:Detail',
+    'ArcGIS:Community',
+    'ArcGIS:ChartedTerritory',
+    'ArcGIS:ChartedTerritory:Base',
+    'ArcGIS:ColoredPencil',
+    'ArcGIS:Nova',
+    'ArcGIS:ModernAntique',
+    'ArcGIS:ModernAntique:Base',
+    'ArcGIS:Midcentury',
+    'ArcGIS:Newspaper',
+    'ArcGIS:Hillshade:Light',
+    'ArcGIS:Hillshade:Dark'
+  ];
 
-    layer = L.esri.basemapLayer(basemap);
-
-    map.addLayer(layer);
-
-    if (layerLabels) {
-      map.removeLayer(layerLabels);
-    }
-
-    if (
-      basemap === 'ShadedRelief' ||
-      basemap === 'Oceans' ||
-      basemap === 'Gray' ||
-      basemap === 'DarkGray' ||
-      basemap === 'Terrain'
-    ) {
-      layerLabels = L.esri.basemapLayer(basemap + 'Labels');
-      map.addLayer(layerLabels);
-    } else if (basemap.includes('Imagery')) {
-      layerLabels = L.esri.basemapLayer('ImageryLabels');
-      map.addLayer(layerLabels);
-    }
-  }
-
-  document
-    .querySelector('#basemaps')
-    .addEventListener('change', function (e) {
-      var basemap = e.target.value;
-      setBasemap(basemap);
+  // the L.esri.Vector.vectorBasemapLayer basemap enum defaults to 'ArcGIS:Streets' if omitted
+  vectorTiles.Default = L.esri.Vector.vectorBasemapLayer(null, {
+    apiKey
+  });
+  allEnums.forEach((enumString) => {
+    vectorTiles[
+      enumString
+    ] = L.esri.Vector.vectorBasemapLayer(enumString, {
+      apiKey
     });
+  });
+
+  L.control
+    .layers(vectorTiles, null, {
+      collapsed: false
+    })
+    .addTo(map);
+
+  vectorTiles.Default.addTo(map);
 </script>
 
 </div>
@@ -291,6 +313,11 @@
   <span class="comment">&lt;!-- Load Esri Leaflet from CDN --&gt;</span>
   <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/esri-leaflet@3.0.2/dist/esri-leaflet.js"</span>
     <span class="attribute">integrity</span>=<span class="value">"sha512-myckXhaJsP7Q7MZva03Tfme/MSF5a6HC2xryjAM4FxPLHGqlh5VALCbywHnzs2uPoF/4G/QVXyYDDSkp5nPfig=="</span>
+    <span class="attribute">crossorigin</span>=<span class="value">""</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+
+  <span class="comment">&lt;!-- Load Esri Leaflet Vector from CDN --&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/esri-leaflet-vector@3.1.0/dist/esri-leaflet-vector.js"</span>
+    <span class="attribute">integrity</span>=<span class="value">"sha512-AAcPGWoYOQ7VoaC13L/rv6GwvzEzyknHQlrtdJSGD6cSzuKXDYILZqUhugbJFZhM+bEXH2Ah7mA1OxPFElQmNQ=="</span>
     <span class="attribute">crossorigin</span>=<span class="value">""</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
   <span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css">
@@ -316,61 +343,78 @@
 
 <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 
-<span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"basemaps-wrapper"</span> <span class="attribute">class</span>=<span class="value">"leaflet-bar"</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">select</span> <span class="attribute">id</span>=<span class="value">"basemaps"</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"Topographic"</span>&gt;</span>Topographic<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"Streets"</span>&gt;</span>Streets<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"NationalGeographic"</span>&gt;</span>National Geographic<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"Oceans"</span>&gt;</span>Oceans<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"Gray"</span>&gt;</span>Gray<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"DarkGray"</span>&gt;</span>Dark Gray<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"Imagery"</span>&gt;</span>Imagery<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"ImageryClarity"</span>&gt;</span>Imagery (Clarity)<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"ImageryFirefly"</span>&gt;</span>Imagery (Firefly)<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"ShadedRelief"</span>&gt;</span>Shaded Relief<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"Physical"</span>&gt;</span>Physical<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
-  <span class="tag">&lt;/<span class="title">select</span>&gt;</span>
-<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
-
 <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
-  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([-<span class="number">33.87</span>, <span class="number">150.77</span>], <span class="number">10</span>);
-  <span class="keyword">var</span> layer = L.esri.basemapLayer(<span class="string">'Topographic'</span>).addTo(map);
-  <span class="keyword">var</span> layerLabels;
+  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([-<span class="number">33.87</span>, <span class="number">151.2</span>], <span class="number">10</span>);
 
-  <span class="function"><span class="keyword">function</span> <span class="title">setBasemap</span> <span class="params">(basemap)</span> {</span>
-    <span class="keyword">if</span> (layer) {
-      map.removeLayer(layer);
-    }
+  <span class="keyword">var</span> vectorTiles = {};
+  <span class="keyword">var</span> allEnums = [
+    <span class="string">'ArcGIS:Imagery'</span>,
+    <span class="string">'ArcGIS:Imagery:Standard'</span>,
+    <span class="string">'ArcGIS:Imagery:Labels'</span>,
+    <span class="string">'ArcGIS:LightGray'</span>,
+    <span class="string">'ArcGIS:LightGray:Base'</span>,
+    <span class="string">'ArcGIS:LightGray:Labels'</span>,
+    <span class="string">'ArcGIS:DarkGray'</span>,
+    <span class="string">'ArcGIS:DarkGray:Base'</span>,
+    <span class="string">'ArcGIS:DarkGray:Labels'</span>,
+    <span class="string">'ArcGIS:Navigation'</span>,
+    <span class="string">'ArcGIS:NavigationNight'</span>,
+    <span class="string">'ArcGIS:Streets'</span>,
+    <span class="string">'ArcGIS:StreetsNight'</span>,
+    <span class="string">'ArcGIS:StreetsRelief'</span>,
+    <span class="string">'ArcGIS:StreetsRelief:Base'</span>,
+    <span class="string">'ArcGIS:Topographic'</span>,
+    <span class="string">'ArcGIS:Topographic:Base'</span>,
+    <span class="string">'ArcGIS:Oceans'</span>,
+    <span class="string">'ArcGIS:Oceans:Base'</span>,
+    <span class="string">'ArcGIS:Oceans:Labels'</span>,
+    <span class="string">'OSM:Standard'</span>,
+    <span class="string">'OSM:StandardRelief'</span>,
+    <span class="string">'OSM:StandardRelief:Base'</span>,
+    <span class="string">'OSM:Streets'</span>,
+    <span class="string">'OSM:StreetsRelief'</span>,
+    <span class="string">'OSM:StreetsRelief:Base'</span>,
+    <span class="string">'OSM:LightGray'</span>,
+    <span class="string">'OSM:LightGray:Base'</span>,
+    <span class="string">'OSM:LightGray:Labels'</span>,
+    <span class="string">'OSM:DarkGray'</span>,
+    <span class="string">'OSM-DarkGray:Base'</span>,
+    <span class="string">'OSM-DarkGray:Labels'</span>,
+    <span class="string">'ArcGIS:Terrain'</span>,
+    <span class="string">'ArcGIS:Terrain:Base'</span>,
+    <span class="string">'ArcGIS:Terrain:Detail'</span>,
+    <span class="string">'ArcGIS:Community'</span>,
+    <span class="string">'ArcGIS:ChartedTerritory'</span>,
+    <span class="string">'ArcGIS:ChartedTerritory:Base'</span>,
+    <span class="string">'ArcGIS:ColoredPencil'</span>,
+    <span class="string">'ArcGIS:Nova'</span>,
+    <span class="string">'ArcGIS:ModernAntique'</span>,
+    <span class="string">'ArcGIS:ModernAntique:Base'</span>,
+    <span class="string">'ArcGIS:Midcentury'</span>,
+    <span class="string">'ArcGIS:Newspaper'</span>,
+    <span class="string">'ArcGIS:Hillshade:Light'</span>,
+    <span class="string">'ArcGIS:Hillshade:Dark'</span>
+  ];
 
-    layer = L.esri.basemapLayer(basemap);
-
-    map.addLayer(layer);
-
-    <span class="keyword">if</span> (layerLabels) {
-      map.removeLayer(layerLabels);
-    }
-
-    <span class="keyword">if</span> (
-      basemap === <span class="string">'ShadedRelief'</span> ||
-      basemap === <span class="string">'Oceans'</span> ||
-      basemap === <span class="string">'Gray'</span> ||
-      basemap === <span class="string">'DarkGray'</span> ||
-      basemap === <span class="string">'Terrain'</span>
-    ) {
-      layerLabels = L.esri.basemapLayer(basemap + <span class="string">'Labels'</span>);
-      map.addLayer(layerLabels);
-    } <span class="keyword">else</span> <span class="keyword">if</span> (basemap.includes(<span class="string">'Imagery'</span>)) {
-      layerLabels = L.esri.basemapLayer(<span class="string">'ImageryLabels'</span>);
-      map.addLayer(layerLabels);
-    }
-  }
-
-  document
-    .querySelector(<span class="string">'#basemaps'</span>)
-    .addEventListener(<span class="string">'change'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(e)</span> {</span>
-      <span class="keyword">var</span> basemap = e.target.value;
-      setBasemap(basemap);
+  <span class="comment">// the L.esri.Vector.vectorBasemapLayer basemap enum defaults to 'ArcGIS:Streets' if omitted</span>
+  vectorTiles.Default = L.esri.Vector.vectorBasemapLayer(<span class="literal">null</span>, {
+    apiKey
+  });
+  allEnums.forEach((enumString) =&gt; {
+    vectorTiles[
+      enumString
+    ] = L.esri.Vector.vectorBasemapLayer(enumString, {
+      apiKey
     });
+  });
+
+  L.control
+    .layers(vectorTiles, <span class="literal">null</span>, {
+      collapsed: <span class="literal">false</span>
+    })
+    .addTo(map);
+
+  vectorTiles.Default.addTo(map);
 </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 <span class="tag">&lt;/<span class="title">body</span>&gt;</span>
@@ -390,9 +434,9 @@
   <nav>
     <a href="../examples/showing-a-basemap.html">Showing an ArcGIS Basemap</a>
     <a href="../examples/basemap-with-labels.html">Basemap with Labels</a>
+    <a href="../examples/composing-basemaps.html">Composing Basemaps</a>
     <a href="../examples/switching-basemaps.html">Switching Basemaps</a>
-    <a href="../examples/retina-basemap.html">Retina Basemap</a>
-    <a href="../examples/vector-basemap.html">Vector Basemaps</a>
+    <a href="../examples/raster-basemap.html">Raster Basemaps (Classic)</a>
   </nav>
 
   <h5>Feature Layers</h5>
