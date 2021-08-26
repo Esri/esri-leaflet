@@ -43,16 +43,32 @@ document.addEventListener(touchEvent, function (e) {
 var pathnameParts = window.location.pathname.split('/');
 var pathnameEnd = pathnameParts[pathnameParts.length - 1];
 
+var activeBorderBottom = '2px solid #79BD8F';
+var activeFontWeight = 'bold';
 // attempt to style the active page's corresponding sidebar link
 var sidebarActiveLinkElement = document.querySelector(`.sidebar a[href$="${pathnameEnd}"]`);
 if (sidebarActiveLinkElement) {
-  sidebarActiveLinkElement.style.borderBottom = '2px solid #79BD8F';
-  sidebarActiveLinkElement.style.fontWeight = 'bold';
+  sidebarActiveLinkElement.style.borderBottom = activeBorderBottom;
+  sidebarActiveLinkElement.style.fontWeight = activeFontWeight;
+} else if (pathnameParts.indexOf('examples') > -1 && pathnameEnd === '') {
+  // attempt to style the "Quickstart" 1st menu link which has a different href structure
+  var quickstartSidebarActiveLinkElement = document.querySelector('.sidebar a');
+  if (quickstartSidebarActiveLinkElement) {
+    quickstartSidebarActiveLinkElement.style.borderBottom = activeBorderBottom;
+    quickstartSidebarActiveLinkElement.style.fontWeight = activeFontWeight;
+  }
 }
 
 // attempt to style the active page's corresponding sidebar link in the mobile menu
 var mobileMenuActiveLinkElement = document.querySelector(`.mobile-menu .sidebar a[href$="${pathnameEnd}"]`);
 if (mobileMenuActiveLinkElement) {
-  mobileMenuActiveLinkElement.style.borderBottom = '2px solid #79BD8F';
-  mobileMenuActiveLinkElement.style.fontWeight = 'bold';
+  mobileMenuActiveLinkElement.style.borderBottom = activeBorderBottom;
+  mobileMenuActiveLinkElement.style.fontWeight = activeFontWeight;
+} else if (pathnameParts.indexOf('examples') > -1 && pathnameEnd === '') {
+  // attempt to style the "Quickstart" 1st menu link which has a different href structure
+  var quickstartMobileActiveLinkElement = document.querySelector('.mobile-menu .sidebar a');
+  if (quickstartMobileActiveLinkElement) {
+    quickstartMobileActiveLinkElement.style.borderBottom = activeBorderBottom;
+    quickstartMobileActiveLinkElement.style.fontWeight = activeFontWeight;
+  }
 }
