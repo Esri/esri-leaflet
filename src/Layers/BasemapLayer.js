@@ -225,7 +225,7 @@ export var BasemapLayer = TileLayer.extend({
 
     // Deprecation notice:
     if(!this.options.ignoreDeprecationWarning) {
-      console.warn('WARNING: L.esri.BasemapLayer uses data services that are in mature support and are not being updated. Please use L.esri.Vector.vectorBasemapLayer instead. More info: https://esriurl.com/TODO');
+      console.warn('WARNING: L.esri.BasemapLayer uses data services that are in mature support and are not being updated. Please use L.esri.Vector.vectorBasemapLayer instead. More info: https://esriurl.com/esri-leaflet-basemap');
     }
 
     if (this.options.token && config.urlTemplate.indexOf('token=') === -1) {
