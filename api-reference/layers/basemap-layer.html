@@ -8,7 +8,7 @@
   <meta charset="utf-8">
 
   
-    <title>L.esri.BasemapLayer | Esri Leaflet</title>
+    <title>L.esri.BasemapLayer (Deprecated) | Esri Leaflet</title>
   
 
   
@@ -76,14 +76,13 @@
 <aside class="sidebar">
   <h5>Layers</h5>
   <nav>
-    <a href="../../api-reference/layers/basemap-layer.html">Basemap Layer</a>
+    <a class="plugin" href="../../api-reference/layers/vector-basemap.html">Vector Basemap Layer</a>
     <a class="plugin" href="../../api-reference/layers/cluster-feature-layer.html">Cluster Feature Layer</a>
     <a href="../../api-reference/layers/dynamic-map-layer.html">Dynamic Map Layer</a>
     <a href="../../api-reference/layers/feature-layer.html">Feature Layer</a>
     <a class="plugin" href="../../api-reference/layers/heatmap-feature-layer.html">Heatmap Feature Layer</a>
     <a href="../../api-reference/layers/image-map-layer.html">Image Map Layer</a>
     <a href="../../api-reference/layers/tiled-map-layer.html">Tiled Map Layer</a>
-    <a class="plugin" href="../../api-reference/layers/vector-basemap.html">Vector Basemap</a>
     <a class="plugin" href="../../api-reference/layers/vector-layer.html">Vector Layer</a>
   </nav>
 
@@ -124,14 +123,20 @@
     <a href="../../api-reference/services/service.html">Service</a>
     <a href="../../api-reference/tasks/task.html">Task</a>
   </nav>
+
+  <h5>Deprecated</h5>
+  <nav>
+    <a class="deprecated" href="../../api-reference/layers/basemap-layer.html">Basemap Layer</a>
+  </nav>
+
 </aside>
 
 
 <div class="main-content">
-  <h1 id="l-esri-basemaplayer">L.esri.BasemapLayer</h1>
+  <h1 id="l-esri-basemaplayer-deprecated-">L.esri.BasemapLayer (Deprecated)</h1>
 <p>Extends <a href="https://leafletjs.com/reference-1.7.1.html#tilelayer"><code>L.TileLayer</code></a></p>
 <p><code>L.esri.basemapLayer</code> is used to display classic raster tiled Esri hosted basemaps and attributes data providers appropriately. The <a href="https://github.com/esri/esri-leaflet#terms">Terms of Use</a> for Esri hosted services apply to <em>all</em> Leaflet applications.</p>
-<p><strong>Important note</strong>: This module uses <a href="https://www.esri.com/arcgis-blog/products/arcgis-online/announcements/lifecycle-for-esris-hosted-raster-basemap-services/">tiled basemap services that are now in mature support</a>. Please see the <a href="../layers/vector-basemap.html">Vector Basemap API documentation</a> and <a href="../../examples/showing-a-basemap.html">example</a> for the primary way to add a basemap. </p>
+<p><strong>DEPRECIATION NOTICE</strong>: This class references the old <a href="https://www.esri.com/arcgis-blog/products/arcgis-online/announcements/lifecycle-for-esris-hosted-raster-basemap-services/">ArcGIS tiled basemap services</a> that are no longer updated and could be deactivated without notice. Please update your application to use the <a href="../layers/vector-basemap.html">Vector Basemap Layer Plugin</a> that references the new <a href="https://developers.arcgis.com/documentation/mapping-apis-and-services/maps/services/basemap-layer-service/">ArcGIS Platform basemap layer service</a>. To do so, you will need an <a href="https://developers.arcgis.com/sign-up">ArcGIS account</a> and an API key. See the following <a href="../../examples/showing-a-basemap.html">example</a>.</p>
 <h3 id="constructor">Constructor</h3>
 <table>
     <thead>
@@ -212,14 +217,13 @@ L.esri.basemapLayer(<span class="string">'Topographic'</span>).addTo(map);</code
     <aside class="sidebar">
   <h5>Layers</h5>
   <nav>
-    <a href="../../api-reference/layers/basemap-layer.html">Basemap Layer</a>
+    <a class="plugin" href="../../api-reference/layers/vector-basemap.html">Vector Basemap Layer</a>
     <a class="plugin" href="../../api-reference/layers/cluster-feature-layer.html">Cluster Feature Layer</a>
     <a href="../../api-reference/layers/dynamic-map-layer.html">Dynamic Map Layer</a>
     <a href="../../api-reference/layers/feature-layer.html">Feature Layer</a>
     <a class="plugin" href="../../api-reference/layers/heatmap-feature-layer.html">Heatmap Feature Layer</a>
     <a href="../../api-reference/layers/image-map-layer.html">Image Map Layer</a>
     <a href="../../api-reference/layers/tiled-map-layer.html">Tiled Map Layer</a>
-    <a class="plugin" href="../../api-reference/layers/vector-basemap.html">Vector Basemap</a>
     <a class="plugin" href="../../api-reference/layers/vector-layer.html">Vector Layer</a>
   </nav>
 
@@ -260,6 +264,12 @@ L.esri.basemapLayer(<span class="string">'Topographic'</span>).addTo(map);</code
     <a href="../../api-reference/services/service.html">Service</a>
     <a href="../../api-reference/tasks/task.html">Task</a>
   </nav>
+
+  <h5>Deprecated</h5>
+  <nav>
+    <a class="deprecated" href="../../api-reference/layers/basemap-layer.html">Basemap Layer</a>
+  </nav>
+
 </aside>
 
   </div>
