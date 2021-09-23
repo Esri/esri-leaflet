@@ -45,6 +45,11 @@
   
 
   
+  <!-- Load Esri Leaflet Vector from CDN -->
+  <script src="https://unpkg.com/esri-leaflet-vector@3.1.0/dist/esri-leaflet-vector.js"
+    integrity="sha512-AAcPGWoYOQ7VoaC13L/rv6GwvzEzyknHQlrtdJSGD6cSzuKXDYILZqUhugbJFZhM+bEXH2Ah7mA1OxPFElQmNQ=="
+    crossorigin=""></script>
+  
 
   
 
@@ -248,9 +253,10 @@
   var endTimeInput = document.getElementById('to');
 
   var map = L.map('map').setView([45.48, -122.80], 12);
-
-  L.esri.basemapLayer('Gray').addTo(map);
-  L.esri.basemapLayer('GrayLabels').addTo(map);
+  
+  L.esri.Vector.vectorBasemapLayer('ArcGIS:LightGray', {
+    apikey: apiKey // Replace with your API key - https://developers.arcgis.com
+  }).addTo(map);
 
   var emergencyCalls = L.esri.featureLayer({
     url: 'https://sampleserver6.arcgisonline.com/arcgis/rest/services/911CallsHotspot/MapServer/1',
@@ -284,6 +290,11 @@
   <span class="comment">&lt;!-- Load Esri Leaflet from CDN --&gt;</span>
   <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/esri-leaflet@3.0.2/dist/esri-leaflet.js"</span>
     <span class="attribute">integrity</span>=<span class="value">"sha512-myckXhaJsP7Q7MZva03Tfme/MSF5a6HC2xryjAM4FxPLHGqlh5VALCbywHnzs2uPoF/4G/QVXyYDDSkp5nPfig=="</span>
+    <span class="attribute">crossorigin</span>=<span class="value">""</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+
+  <span class="comment">&lt;!-- Load Esri Leaflet Vector from CDN --&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/esri-leaflet-vector@3.1.0/dist/esri-leaflet-vector.js"</span>
+    <span class="attribute">integrity</span>=<span class="value">"sha512-AAcPGWoYOQ7VoaC13L/rv6GwvzEzyknHQlrtdJSGD6cSzuKXDYILZqUhugbJFZhM+bEXH2Ah7mA1OxPFElQmNQ=="</span>
     <span class="attribute">crossorigin</span>=<span class="value">""</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
   <span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css">
@@ -343,8 +354,9 @@
 
   <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">45.48</span>, -<span class="number">122.80</span>], <span class="number">12</span>);
 
-  L.esri.basemapLayer(<span class="string">'Gray'</span>).addTo(map);
-  L.esri.basemapLayer(<span class="string">'GrayLabels'</span>).addTo(map);
+  L.esri.Vector.vectorBasemapLayer(<span class="string">'ArcGIS:LightGray'</span>, {
+    apikey: apiKey <span class="comment">// Replace with your API key - https://developers.arcgis.com</span>
+  }).addTo(map);
 
   <span class="keyword">var</span> emergencyCalls = L.esri.featureLayer({
     url: <span class="string">'https://sampleserver6.arcgisonline.com/arcgis/rest/services/911CallsHotspot/MapServer/1'</span>,

@@ -45,6 +45,11 @@
   
 
   
+  <!-- Load Esri Leaflet Vector from CDN -->
+  <script src="https://unpkg.com/esri-leaflet-vector@3.1.0/dist/esri-leaflet-vector.js"
+    integrity="sha512-AAcPGWoYOQ7VoaC13L/rv6GwvzEzyknHQlrtdJSGD6cSzuKXDYILZqUhugbJFZhM+bEXH2Ah7mA1OxPFElQmNQ=="
+    crossorigin=""></script>
+  
 
   
 
@@ -204,8 +209,9 @@
 <script>
   var map = L.map('map').setView([33.836, -118.22], 8);
 
-  L.esri.basemapLayer('Gray').addTo(map);
-  L.esri.basemapLayer('GrayLabels').addTo(map);
+  L.esri.Vector.vectorBasemapLayer('ArcGIS:LightGray', {
+    apikey: apiKey // Replace with your API key - https://developers.arcgis.com
+  }).addTo(map);
 
   L.esri.featureLayer({
     url: 'https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_Congressional_Districts/FeatureServer/0',
@@ -244,6 +250,11 @@
     <span class="attribute">integrity</span>=<span class="value">"sha512-myckXhaJsP7Q7MZva03Tfme/MSF5a6HC2xryjAM4FxPLHGqlh5VALCbywHnzs2uPoF/4G/QVXyYDDSkp5nPfig=="</span>
     <span class="attribute">crossorigin</span>=<span class="value">""</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
+  <span class="comment">&lt;!-- Load Esri Leaflet Vector from CDN --&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/esri-leaflet-vector@3.1.0/dist/esri-leaflet-vector.js"</span>
+    <span class="attribute">integrity</span>=<span class="value">"sha512-AAcPGWoYOQ7VoaC13L/rv6GwvzEzyknHQlrtdJSGD6cSzuKXDYILZqUhugbJFZhM+bEXH2Ah7mA1OxPFElQmNQ=="</span>
+    <span class="attribute">crossorigin</span>=<span class="value">""</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+
   <span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css">
     <span class="tag">body</span> <span class="rules">{ <span class="rule"><span class="attribute">margin</span>:<span class="value"><span class="number">0</span></span></span>; <span class="rule"><span class="attribute">padding</span>:<span class="value"><span class="number">0</span></span></span>; <span class="rule">}</span></span>
     <span class="id">#map</span> <span class="rules">{ <span class="rule"><span class="attribute">position</span>:<span class="value"> absolute</span></span>; <span class="rule"><span class="attribute">top</span>:<span class="value"><span class="number">0</span></span></span>; <span class="rule"><span class="attribute">bottom</span>:<span class="value"><span class="number">0</span></span></span>; <span class="rule"><span class="attribute">right</span>:<span class="value"><span class="number">0</span></span></span>; <span class="rule"><span class="attribute">left</span>:<span class="value"><span class="number">0</span></span></span>; <span class="rule">}</span></span>
@@ -256,8 +267,9 @@
 <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
   <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">33.836</span>, -<span class="number">118.22</span>], <span class="number">8</span>);
 
-  L.esri.basemapLayer(<span class="string">'Gray'</span>).addTo(map);
-  L.esri.basemapLayer(<span class="string">'GrayLabels'</span>).addTo(map);
+  L.esri.Vector.vectorBasemapLayer(<span class="string">'ArcGIS:LightGray'</span>, {
+    apikey: apiKey <span class="comment">// Replace with your API key - https://developers.arcgis.com</span>
+  }).addTo(map);
 
   L.esri.featureLayer({
     url: <span class="string">'https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_Congressional_Districts/FeatureServer/0'</span>,

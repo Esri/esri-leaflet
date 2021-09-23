@@ -45,6 +45,11 @@
   
 
   
+  <!-- Load Esri Leaflet Vector from CDN -->
+  <script src="https://unpkg.com/esri-leaflet-vector@3.1.0/dist/esri-leaflet-vector.js"
+    integrity="sha512-AAcPGWoYOQ7VoaC13L/rv6GwvzEzyknHQlrtdJSGD6cSzuKXDYILZqUhugbJFZhM+bEXH2Ah7mA1OxPFElQmNQ=="
+    crossorigin=""></script>
+  
 
   
 
@@ -204,7 +209,9 @@
 <script>
   var map = L.map('map').setView([45.5384, -122.6695], 16);
 
-  L.esri.basemapLayer('Topographic').addTo(map);
+  L.esri.Vector.vectorBasemapLayer('OSM:Standard', {
+    apikey: apiKey // Replace with your API key - https://developers.arcgis.com
+  }).addTo(map);
 
   var neighborhoodsUrl = 'https://www.portlandmaps.com/arcgis/rest/services/Public/Zoning/MapServer/32';
   var buildingFootprintsUrl = 'https://www.portlandmaps.com/arcgis/rest/services/Public/Basemap_Color_Buildings/MapServer/0';
@@ -265,6 +272,11 @@
     <span class="attribute">integrity</span>=<span class="value">"sha512-myckXhaJsP7Q7MZva03Tfme/MSF5a6HC2xryjAM4FxPLHGqlh5VALCbywHnzs2uPoF/4G/QVXyYDDSkp5nPfig=="</span>
     <span class="attribute">crossorigin</span>=<span class="value">""</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
+  <span class="comment">&lt;!-- Load Esri Leaflet Vector from CDN --&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/esri-leaflet-vector@3.1.0/dist/esri-leaflet-vector.js"</span>
+    <span class="attribute">integrity</span>=<span class="value">"sha512-AAcPGWoYOQ7VoaC13L/rv6GwvzEzyknHQlrtdJSGD6cSzuKXDYILZqUhugbJFZhM+bEXH2Ah7mA1OxPFElQmNQ=="</span>
+    <span class="attribute">crossorigin</span>=<span class="value">""</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+
   <span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css">
     <span class="tag">body</span> <span class="rules">{ <span class="rule"><span class="attribute">margin</span>:<span class="value"><span class="number">0</span></span></span>; <span class="rule"><span class="attribute">padding</span>:<span class="value"><span class="number">0</span></span></span>; <span class="rule">}</span></span>
     <span class="id">#map</span> <span class="rules">{ <span class="rule"><span class="attribute">position</span>:<span class="value"> absolute</span></span>; <span class="rule"><span class="attribute">top</span>:<span class="value"><span class="number">0</span></span></span>; <span class="rule"><span class="attribute">bottom</span>:<span class="value"><span class="number">0</span></span></span>; <span class="rule"><span class="attribute">right</span>:<span class="value"><span class="number">0</span></span></span>; <span class="rule"><span class="attribute">left</span>:<span class="value"><span class="number">0</span></span></span>; <span class="rule">}</span></span>
@@ -277,7 +289,9 @@
 <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
   <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">45.5384</span>, -<span class="number">122.6695</span>], <span class="number">16</span>);
 
-  L.esri.basemapLayer(<span class="string">'Topographic'</span>).addTo(map);
+  L.esri.Vector.vectorBasemapLayer(<span class="string">'OSM:Standard'</span>, {
+    apikey: apiKey <span class="comment">// Replace with your API key - https://developers.arcgis.com</span>
+  }).addTo(map);
 
   <span class="keyword">var</span> neighborhoodsUrl = <span class="string">'https://www.portlandmaps.com/arcgis/rest/services/Public/Zoning/MapServer/32'</span>;
   <span class="keyword">var</span> buildingFootprintsUrl = <span class="string">'https://www.portlandmaps.com/arcgis/rest/services/Public/Basemap_Color_Buildings/MapServer/0'</span>;

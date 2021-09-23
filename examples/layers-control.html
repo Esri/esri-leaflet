@@ -12,7 +12,7 @@
   
 
   
-    <meta name="description" content="This sample demonstrates how to pass ArcGIS Services to Leaflet&#x27;s native &lt;a href=&quot;https://leafletjs.com/reference.html#control-layers&quot;&gt;Control.Layers&lt;/a&gt; which allows users to switch between different base layers and switch overlays on/off">
+    <meta name="description" content="This sample demonstrates how to pass ArcGIS Services to Leaflet&#x27;s native &lt;a href=&quot;https://leafletjs.com/reference.html#control-layers&quot;&gt;Control.Layers&lt;/a&gt; which allows users to switch between different base layers and switch overlays on/off.">
   
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -44,6 +44,11 @@
       crossorigin=""></script>
   
 
+  
+  <!-- Load Esri Leaflet Vector from CDN -->
+  <script src="https://unpkg.com/esri-leaflet-vector@3.1.0/dist/esri-leaflet-vector.js"
+    integrity="sha512-AAcPGWoYOQ7VoaC13L/rv6GwvzEzyknHQlrtdJSGD6cSzuKXDYILZqUhugbJFZhM+bEXH2Ah7mA1OxPFElQmNQ=="
+    crossorigin=""></script>
   
 
   
@@ -191,7 +196,7 @@
 <div class="example-content">
 <div class="wrap">
   <h1>Leaflet Control.Layers</h1>
-  <p>This sample demonstrates how to pass ArcGIS Services to Leaflet's native <a href="https://leafletjs.com/reference.html#control-layers">Control.Layers</a> which allows users to switch between different base layers and switch overlays on/off</p>
+  <p>This sample demonstrates how to pass ArcGIS Services to Leaflet's native <a href="https://leafletjs.com/reference.html#control-layers">Control.Layers</a> which allows users to switch between different base layers and switch overlays on/off.</p>
 </div>
 <div id="map-wrapper">
   <script>
@@ -202,11 +207,9 @@
 <div id="map"></div>
 
 <script>
-  var gray = L.layerGroup();
-
-  // more than one service can be grouped together and passed to the control together
-  L.esri.basemapLayer('DarkGray').addTo(gray);
-  L.esri.basemapLayer('GrayLabels').addTo(gray);
+  var gray = L.esri.Vector.vectorBasemapLayer('ArcGIS:LightGray', {
+    apikey: apiKey // Replace with your API key - https://developers.arcgis.com
+  });
 
   var states = L.esri.featureLayer({
     url: 'https://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer/3',
@@ -223,7 +226,9 @@
 
   var baseLayers = {
     Grayscale: gray,
-    Streetmap: L.esri.basemapLayer('Streets')
+    Newspaper: L.esri.Vector.vectorBasemapLayer('ArcGIS:Newspaper', {
+      apikey: apiKey // Replace with your API key - https://developers.arcgis.com
+    })
   };
 
   var overlays = {
@@ -255,6 +260,11 @@
     <span class="attribute">integrity</span>=<span class="value">"sha512-myckXhaJsP7Q7MZva03Tfme/MSF5a6HC2xryjAM4FxPLHGqlh5VALCbywHnzs2uPoF/4G/QVXyYDDSkp5nPfig=="</span>
     <span class="attribute">crossorigin</span>=<span class="value">""</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
+  <span class="comment">&lt;!-- Load Esri Leaflet Vector from CDN --&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/esri-leaflet-vector@3.1.0/dist/esri-leaflet-vector.js"</span>
+    <span class="attribute">integrity</span>=<span class="value">"sha512-AAcPGWoYOQ7VoaC13L/rv6GwvzEzyknHQlrtdJSGD6cSzuKXDYILZqUhugbJFZhM+bEXH2Ah7mA1OxPFElQmNQ=="</span>
+    <span class="attribute">crossorigin</span>=<span class="value">""</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+
   <span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css">
     <span class="tag">body</span> <span class="rules">{ <span class="rule"><span class="attribute">margin</span>:<span class="value"><span class="number">0</span></span></span>; <span class="rule"><span class="attribute">padding</span>:<span class="value"><span class="number">0</span></span></span>; <span class="rule">}</span></span>
     <span class="id">#map</span> <span class="rules">{ <span class="rule"><span class="attribute">position</span>:<span class="value"> absolute</span></span>; <span class="rule"><span class="attribute">top</span>:<span class="value"><span class="number">0</span></span></span>; <span class="rule"><span class="attribute">bottom</span>:<span class="value"><span class="number">0</span></span></span>; <span class="rule"><span class="attribute">right</span>:<span class="value"><span class="number">0</span></span></span>; <span class="rule"><span class="attribute">left</span>:<span class="value"><span class="number">0</span></span></span>; <span class="rule">}</span></span>
@@ -265,11 +275,9 @@
 <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
-  <span class="keyword">var</span> gray = L.layerGroup();
-
-  <span class="comment">// more than one service can be grouped together and passed to the control together</span>
-  L.esri.basemapLayer(<span class="string">'DarkGray'</span>).addTo(gray);
-  L.esri.basemapLayer(<span class="string">'GrayLabels'</span>).addTo(gray);
+  <span class="keyword">var</span> gray = L.esri.Vector.vectorBasemapLayer(<span class="string">'ArcGIS:LightGray'</span>, {
+    apikey: apiKey <span class="comment">// Replace with your API key - https://developers.arcgis.com</span>
+  });
 
   <span class="keyword">var</span> states = L.esri.featureLayer({
     url: <span class="string">'https://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer/3'</span>,
@@ -286,7 +294,9 @@
 
   <span class="keyword">var</span> baseLayers = {
     Grayscale: gray,
-    Streetmap: L.esri.basemapLayer(<span class="string">'Streets'</span>)
+    Newspaper: L.esri.Vector.vectorBasemapLayer(<span class="string">'ArcGIS:Newspaper'</span>, {
+      apikey: apiKey <span class="comment">// Replace with your API key - https://developers.arcgis.com</span>
+    })
   };
 
   <span class="keyword">var</span> overlays = {

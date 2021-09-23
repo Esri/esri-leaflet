@@ -202,8 +202,9 @@
 <div id="map"></div>
 
 <script>
-  var map = L.map('map').setView([38.5, -96.8], 4);
-  L.esri.basemapLayer('Gray').addTo(map);
+  var map = L.map('map', {
+    minZoom: 3
+  }).setView([38.5, -96.8], 4);
 
   var wildfireRisk = L.esri.dynamicMapLayer({
     url: 'https://maps7.arcgisonline.com/arcgis/rest/services/USDA_USFS_2014_Wildfire_Hazard_Potential/MapServer',
@@ -251,8 +252,9 @@
 <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
-  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">38.5</span>, -<span class="number">96.8</span>], <span class="number">4</span>);
-  L.esri.basemapLayer(<span class="string">'Gray'</span>).addTo(map);
+  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>, {
+    minZoom: <span class="number">3</span>
+  }).setView([<span class="number">38.5</span>, -<span class="number">96.8</span>], <span class="number">4</span>);
 
   <span class="keyword">var</span> wildfireRisk = L.esri.dynamicMapLayer({
     url: <span class="string">'https://maps7.arcgisonline.com/arcgis/rest/services/USDA_USFS_2014_Wildfire_Hazard_Potential/MapServer'</span>,

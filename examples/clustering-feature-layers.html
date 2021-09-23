@@ -45,6 +45,11 @@
   
 
   
+  <!-- Load Esri Leaflet Vector from CDN -->
+  <script src="https://unpkg.com/esri-leaflet-vector@3.1.0/dist/esri-leaflet-vector.js"
+    integrity="sha512-AAcPGWoYOQ7VoaC13L/rv6GwvzEzyknHQlrtdJSGD6cSzuKXDYILZqUhugbJFZhM+bEXH2Ah7mA1OxPFElQmNQ=="
+    crossorigin=""></script>
+  
 
   
 
@@ -217,9 +222,13 @@
 <div id="map"></div>
 
 <script>
-  var map = L.map('map').setView([0, 0], 2);
+  var map = L.map('map', {
+    maxZoom: 18 // the clustering plugin needs some help understanding the map's maxZoom
+  }).setView([0, 0], 2);
 
-  L.esri.basemapLayer('Streets').addTo(map);
+  L.esri.Vector.vectorBasemapLayer('ArcGIS:Community', {
+    apikey: apiKey // Replace with your API key - https://developers.arcgis.com
+  }).addTo(map);
 
   //  (new constructor syntax at 2.0.0)
   L.esri.Cluster.featureLayer({
@@ -248,6 +257,11 @@
     <span class="attribute">integrity</span>=<span class="value">"sha512-myckXhaJsP7Q7MZva03Tfme/MSF5a6HC2xryjAM4FxPLHGqlh5VALCbywHnzs2uPoF/4G/QVXyYDDSkp5nPfig=="</span>
     <span class="attribute">crossorigin</span>=<span class="value">""</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
+  <span class="comment">&lt;!-- Load Esri Leaflet Vector from CDN --&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://unpkg.com/esri-leaflet-vector@3.1.0/dist/esri-leaflet-vector.js"</span>
+    <span class="attribute">integrity</span>=<span class="value">"sha512-AAcPGWoYOQ7VoaC13L/rv6GwvzEzyknHQlrtdJSGD6cSzuKXDYILZqUhugbJFZhM+bEXH2Ah7mA1OxPFElQmNQ=="</span>
+    <span class="attribute">crossorigin</span>=<span class="value">""</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+
   <span class="comment">&lt;!-- Load Leaflet MarkerCluster and Esri Leaflet Cluster from CDN --&gt;</span>
   <span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">type</span>=<span class="value">"text/css"</span>
     <span class="attribute">href</span>=<span class="value">"https://unpkg.com/leaflet.markercluster@1.5.0/dist/MarkerCluster.Default.css"</span>
@@ -273,9 +287,13 @@
 <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
-  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">0</span>, <span class="number">0</span>], <span class="number">2</span>);
+  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>, {
+    maxZoom: <span class="number">18</span> <span class="comment">// the clustering plugin needs some help understanding the map's maxZoom</span>
+  }).setView([<span class="number">0</span>, <span class="number">0</span>], <span class="number">2</span>);
 
-  L.esri.basemapLayer(<span class="string">'Streets'</span>).addTo(map);
+  L.esri.Vector.vectorBasemapLayer(<span class="string">'ArcGIS:Community'</span>, {
+    apikey: apiKey <span class="comment">// Replace with your API key - https://developers.arcgis.com</span>
+  }).addTo(map);
 
   <span class="comment">//  (new constructor syntax at 2.0.0)</span>
   L.esri.Cluster.featureLayer({

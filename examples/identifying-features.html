@@ -216,18 +216,17 @@
 
 <div id="map"></div>
 <div id="selectedFeatures" class="leaflet-bar map-text">
-  Click on the map for Soil <a href="https://services.arcgisonline.com/arcgis/rest/services/Specialty/Soil_Survey_Map/MapServer">Order/ Sub-Order</a>
+  Click on the map for <a href="https://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer">county info (sublayer 3)</a>
 </div>
 
 <script>
   var map = L.map('map', {
     minZoom: 5
   }).setView([38.5, -96.8], 6);
-  L.esri.basemapLayer('Gray').addTo(map);
 
-  var soil = L.esri.dynamicMapLayer({
-    url: 'https://services.arcgisonline.com/arcgis/rest/services/Specialty/Soil_Survey_Map/MapServer',
-    opacity: 0.7
+  var usaDynamicLayer = L.esri.dynamicMapLayer({
+    url: 'https://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer',
+    opacity: 1
   }).addTo(map);
 
   var identifiedFeature;
@@ -238,23 +237,28 @@
     if (identifiedFeature) {
       map.removeLayer(identifiedFeature);
     }
-    soil.identify().on(map).at(e.latlng).run(function (error, featureCollection) {
-      if (error) {
-        return;
-      }
+    usaDynamicLayer
+      .identify()
+      .layers('visible:3') // just the counties sublayer
+      .on(map)
+      .at(e.latlng)
+      .run(function (error, featureCollection) {
+        if (error) {
+          return;
+        }
 
-      // make sure at least one feature was identified.
-      if (featureCollection.features.length > 0) {
-        identifiedFeature = L.geoJSON(featureCollection.features[0]).addTo(map);
-        var soilDescription =
-          featureCollection.features[0].properties['Dominant Order'] +
-          ' - ' +
-          featureCollection.features[0].properties['Dominant Sub-Order'];
-        pane.innerHTML = soilDescription;
-      } else {
-        pane.innerHTML = 'No features identified.';
-      }
-    });
+        // make sure at least one feature was identified.
+        if (featureCollection.features.length > 0) {
+          identifiedFeature = L.geoJSON(featureCollection.features[0]).addTo(map);
+          var soilDescription =
+            featureCollection.features[0].properties.NAME +
+            ' County, ' +
+            featureCollection.features[0].properties.STATE_NAME;
+          pane.innerHTML = soilDescription;
+        } else {
+          pane.innerHTML = 'No features identified.';
+        }
+      });
   });
 </script>
 
@@ -303,18 +307,17 @@
 
 <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"selectedFeatures"</span> <span class="attribute">class</span>=<span class="value">"leaflet-bar map-text"</span>&gt;</span>
-  Click on the map for Soil <span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"https://services.arcgisonline.com/arcgis/rest/services/Specialty/Soil_Survey_Map/MapServer"</span>&gt;</span>Order/ Sub-Order<span class="tag">&lt;/<span class="title">a</span>&gt;</span>
+  Click on the map for <span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"https://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer"</span>&gt;</span>county info (sublayer 3)<span class="tag">&lt;/<span class="title">a</span>&gt;</span>
 <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
   <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>, {
     minZoom: <span class="number">5</span>
   }).setView([<span class="number">38.5</span>, -<span class="number">96.8</span>], <span class="number">6</span>);
-  L.esri.basemapLayer(<span class="string">'Gray'</span>).addTo(map);
 
-  <span class="keyword">var</span> soil = L.esri.dynamicMapLayer({
-    url: <span class="string">'https://services.arcgisonline.com/arcgis/rest/services/Specialty/Soil_Survey_Map/MapServer'</span>,
-    opacity: <span class="number">0.7</span>
+  <span class="keyword">var</span> usaDynamicLayer = L.esri.dynamicMapLayer({
+    url: <span class="string">'https://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer'</span>,
+    opacity: <span class="number">1</span>
   }).addTo(map);
 
   <span class="keyword">var</span> identifiedFeature;
@@ -325,23 +328,28 @@
     <span class="keyword">if</span> (identifiedFeature) {
       map.removeLayer(identifiedFeature);
     }
-    soil.identify().on(map).at(e.latlng).run(<span class="function"><span class="keyword">function</span> <span class="params">(error, featureCollection)</span> {</span>
-      <span class="keyword">if</span> (error) {
-        <span class="keyword">return</span>;
-      }
+    usaDynamicLayer
+      .identify()
+      .layers(<span class="string">'visible:3'</span>) <span class="comment">// just the counties sublayer</span>
+      .on(map)
+      .at(e.latlng)
+      .run(<span class="function"><span class="keyword">function</span> <span class="params">(error, featureCollection)</span> {</span>
+        <span class="keyword">if</span> (error) {
+          <span class="keyword">return</span>;
+        }
 
-      <span class="comment">// make sure at least one feature was identified.</span>
-      <span class="keyword">if</span> (featureCollection.features.length &gt; <span class="number">0</span>) {
-        identifiedFeature = L.geoJSON(featureCollection.features[<span class="number">0</span>]).addTo(map);
-        <span class="keyword">var</span> soilDescription =
-          featureCollection.features[<span class="number">0</span>].properties[<span class="string">'Dominant Order'</span>] +
-          <span class="string">' - '</span> +
-          featureCollection.features[<span class="number">0</span>].properties[<span class="string">'Dominant Sub-Order'</span>];
-        pane.innerHTML = soilDescription;
-      } <span class="keyword">else</span> {
-        pane.innerHTML = <span class="string">'No features identified.'</span>;
-      }
-    });
+        <span class="comment">// make sure at least one feature was identified.</span>
+        <span class="keyword">if</span> (featureCollection.features.length &gt; <span class="number">0</span>) {
+          identifiedFeature = L.geoJSON(featureCollection.features[<span class="number">0</span>]).addTo(map);
+          <span class="keyword">var</span> soilDescription =
+            featureCollection.features[<span class="number">0</span>].properties.NAME +
+            <span class="string">' County, '</span> +
+            featureCollection.features[<span class="number">0</span>].properties.STATE_NAME;
+          pane.innerHTML = soilDescription;
+        } <span class="keyword">else</span> {
+          pane.innerHTML = <span class="string">'No features identified.'</span>;
+        }
+      });
   });
 </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
