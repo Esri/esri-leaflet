@@ -1,15 +1,15 @@
 {
   "name": "esri-leaflet",
   "description": "Leaflet plugins for consuming ArcGIS Online and ArcGIS Server services.",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "author": "Patrick Arlt <parlt@esri.com> (http://patrickarlt.com)",
   "bugs": {
     "url": "https://github.com/esri/esri-leaflet/issues"
   },
   "contributors": [
     "Patrick Arlt <parlt@esri.com> (http://patrickarlt.com)",
-    "John Gravois <jgravois@esri.com> (http://johngravois.com)",
-    "Gavin Rehkemper <grehkemper@esri.com>",
+    "John Gravois <jgravois@esri.com> (https://johngravois.com)",
+    "Gavin Rehkemper <grehkemper@esri.com> (https://gavinr.com)",
     "Jacob Wasilkowski <jwasilkowski@esri.com> (https://jwasilgeo.github.io)"
   ],
   "dependencies": {

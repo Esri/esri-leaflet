@@ -5,6 +5,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+## [3.0.3] - 2021-09-24
+
+### Changed
+
+- Added a deprecation warning when using `L.esri.BasemapLayer` ([info](https://esri.github.io/esri-leaflet/api-reference/layers/basemap-layer.html)). This warning can be disabled by setting the `ignoreDeprecationWarning` option to `true`. ([#1293](https://github.com/Esri/esri-leaflet/pull/1293)).
+- Updated dependencies ([#1276](https://github.com/Esri/esri-leaflet/pull/1276))
+
 ## [3.0.2] - 2021-05-24
 
 ### Fixed
@@ -783,7 +790,8 @@ None
 - Add DarkGray and DarkGrayLabels to BasemapLayer. #190
 - An attributionControl on maps is now required when using BasemapLayer. #159
 
-[unreleased]: https://github.com/esri/esri-leaflet/compare/v3.0.2..HEAD
+[unreleased]: https://github.com/esri/esri-leaflet/compare/v3.0.3..HEAD
+[3.0.3]: https://github.com/esri/esri-leaflet/compare/v3.0.2...v3.0.3
 [3.0.2]: https://github.com/esri/esri-leaflet/compare/v3.0.1...v3.0.2
 [3.0.1]: https://github.com/esri/esri-leaflet/compare/v3.0.0...v3.0.1
 [3.0.0]: https://github.com/esri/esri-leaflet/compare/v2.5.3...v3.0.0
