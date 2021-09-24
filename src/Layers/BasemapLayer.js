@@ -224,7 +224,7 @@ export var BasemapLayer = TileLayer.extend({
     Util.setOptions(this, tileOptions);
 
     // Deprecation notice:
-    if(!this.options.ignoreDeprecationWarning) {
+    if (!this.options.ignoreDeprecationWarning) {
       console.warn('WARNING: L.esri.BasemapLayer uses data services that are in mature support and are not being updated. Please use L.esri.Vector.vectorBasemapLayer instead. More info: https://esriurl.com/esri-leaflet-basemap');
     }
 
