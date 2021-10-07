@@ -9,6 +9,7 @@ If you're just looking for help, you'll probably attract the most eyes if you po
 If you think you're encountering a new bug, please feel free to log an [issue](https://github.com/Esri/esri-leaflet/issues/new) and include the steps to reproduce the problem (and preferably a running sample).
 
 **Please include the following in your issue:**
+
 * Browser
 * Browser version
 * Leaflet version `L.version`
@@ -21,11 +22,11 @@ There is a lot of room for contributions to Esri Leaflet. Make sure you check ou
 
 ##### More examples
 
-The Esri Leaflet website is written using http://assemble.io/ and can be found at https://github.com/Esri/esri-leaflet-doc/tree/master/src. You can use the existing examples as a reference.
+The Esri Leaflet website is written using [Assemble](https://assemble.io/) and can be found at [esri-leaflet-doc](https://github.com/Esri/esri-leaflet-doc/tree/master/src). You can use the existing examples as a reference.
 
 ##### More tests
 
-Esri Leaflet has a fairly comprehensive test suite built with [Mocha](http://mochajs.org/), [Chai](http://chaijs.com/), [Sinon](http://sinonjs.org), and [Karma](http://karma-runner.github.io/0.12/index.html). The tests can be found at https://github.com/Esri/esri-leaflet/tree/master/spec.
+Esri Leaflet has a fairly comprehensive test suite built with [Mocha](http://mochajs.org/), [Chai](http://chaijs.com/), [Sinon](http://sinonjs.org), and [Karma](http://karma-runner.github.io/0.12/index.html). The tests can be found in the [`master/spec` folder](https://github.com/Esri/esri-leaflet/tree/master/spec).
 
 You can run the tests with `npm test`.
 
@@ -35,7 +36,7 @@ Support for new layer types and services are always needed.  The [plugin candida
 
 ### Can I publish my own Esri Leaflet plugins?
 
-Of course! If you develop reusuable components for use with Esri Leaflet that you think would be helpful to share with other developers, please [file an issue](https://github.com/Esri/esri-leaflet/issues?state=open) so we can discuss it.
+Of course! If you develop reusable components for use with Esri Leaflet that you think would be helpful to share with other developers, please [file an issue](https://github.com/Esri/esri-leaflet/issues?state=open) so we can discuss it.
 
 ### Setting up a dev environment
 
