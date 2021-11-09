@@ -33,9 +33,7 @@ body:
       label: System Info
       description: Please include which version of Leaflet you are using, which version of Esri Leaflet you are using, and output of `npx envinfo --system --binaries --browsers --npmPackages "{leaflet,esri-leaflet}"`
       render: shell
-      placeholder: |
-      - Leaflet version: `v_._._`
-      - Esri Leaflet version: `v_._._`
+      placeholder: Leaflet version: `v_._._`. Esri Leaflet version: `v_._._`. ...
     validations:
       required: true
   - type: textarea
