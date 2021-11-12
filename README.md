@@ -26,7 +26,7 @@ Support for [Geocoding](https://github.com/Esri/esri-leaflet-geocoder) services 
 
 - [Getting Started](#getting-started)
   - [Demos](#demos)
-  - [Example](#example)
+  - [Quick Start](#quick-start)
   - [API Reference](#api-reference)
   - [Additional Plugins](#additional-plugins)
   - [Frequently Asked Questions](#frequently-asked-questions)
@@ -45,51 +45,11 @@ We've shared lots of sample code showing off many of the features of Esri Leafle
 
 http://esri.github.io/esri-leaflet/examples/
 
-## Example
-The easiest way to get started is to load Esri Leaflet via [CDN](https://unpkg.com/esri-leaflet). Here is an example you can copy/paste into your own `.html` file.
+## Quick Start
+The easiest way to get started is to load Esri Leaflet via [CDN](https://unpkg.com/esri-leaflet). Here is an example you can copy/paste into your own `.html` file: [Esri Leaflet Quick Start](https://esri.github.io/esri-leaflet/examples/)
 
-![App](https://raw.github.com/Esri/esri-leaflet/master/example.png)
+[![App](https://raw.github.com/Esri/esri-leaflet/master/example.png)](https://esri.github.io/esri-leaflet/examples/)
 
-```html
-<!DOCTYPE html>
-<html>
-  <head>
-    <!-- Load Leaflet from CDN -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-
-    <!-- Load Esri Leaflet from CDN -->
-    <script src="https://unpkg.com/esri-leaflet/dist/esri-leaflet.js"></script>
-
-    <style>
-      html, body, #map {
-        margin:0; padding:0;  width : 100%; height : 100%;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="map"></div>
-    <script>
-      const map = L.map('map').setView([34.39, -117.189], 6);
-      L.esri.basemapLayer("Gray").addTo(map);
-
-      // https://www.arcgis.com/home/item.html?id=c8d60ffcbf5c4030a17762fe10e81c6a
-      const parks = L.esri.featureLayer({
-        url: "https://services1.arcgis.com/fBc8EJBxQRMcHlei/ArcGIS/rest/services/NPS_Land_Resources_Division_Boundary_and_Tract_Data_Service/FeatureServer/2",
-        style: function () {
-          return { color: "#70ca49", weight: 2 };
-        }
-      }).addTo(map);
-
-      const popupTemplate = "<h3>{UNIT_NAME}</h3><p>Type: {UNIT_TYPE}</p><p>Region: {REGION}</p>";
-
-      parks.bindPopup(function(e){
-        return L.Util.template(popupTemplate, e.feature.properties)
-      });
-    </script>
-  </body>
-</html>
-```
 
 ## [API Reference](http://esri.github.io/esri-leaflet/api-reference/)
 
