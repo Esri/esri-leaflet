@@ -1,6 +1,11 @@
 import { Util } from 'leaflet';
 import featureLayerService from '../../Services/FeatureLayerService';
-import { getUrlParams, warn, setEsriAttribution, removeEsriAttribution } from '../../Util';
+import {
+  getUrlParams,
+  warn,
+  setEsriAttribution,
+  removeEsriAttribution
+} from '../../Util';
 import { FeatureGrid } from './FeatureGrid';
 import BinarySearchIndex from 'tiny-binary-search';
 
@@ -76,7 +81,10 @@ export var FeatureManager = FeatureGrid.extend({
 
         // Check if someone has requested that we don't use geoJSON, even if it's available
         var forceJsonFormat = false;
-        if (this.service.options.isModern === false || this.options.fetchAllFeatures) {
+        if (
+          this.service.options.isModern === false ||
+          this.options.fetchAllFeatures
+        ) {
           forceJsonFormat = true;
         }
 
@@ -188,11 +196,21 @@ export var FeatureManager = FeatureGrid.extend({
       if (callback) {
         callback.call(this, error, featureCollection);
       }
-      if (response && (response.exceededTransferLimit || (response.properties && response.properties.exceededTransferLimit)) && this.options.fetchAllFeatures) {
-        this._requestFeatures(bounds, coords, callback, offset + featureCollection.features.length);
+      if (
+        response &&
+        (response.exceededTransferLimit ||
+          (response.properties && response.properties.exceededTransferLimit)) &&
+        this.options.fetchAllFeatures
+      ) {
+        this._requestFeatures(
+          bounds,
+          coords,
+          callback,
+          offset + featureCollection.features.length
+        );
       }
     },
-      this);
+    this);
   },
 
   _postProcessFeatures: function (bounds) {
@@ -500,7 +518,9 @@ export var FeatureManager = FeatureGrid.extend({
 
   _handleZoomChange: function () {
     if (!this._visibleZoom()) {
+      // if we have moved outside the visible zoom range clear the current snapshot, no layers should be active
       this.removeLayers(this._currentSnapshot);
+      this._currentSnapshot = [];
     } else {
       /*
       for every cell in this._cells
