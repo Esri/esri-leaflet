@@ -209,6 +209,11 @@ export var RasterLayer = Layer.extend({
         interactive: this.options.interactive
       }).addTo(this._map);
 
+      // See issue 1228 (https://github.com/Esri/esri-leaflet/issues/1228)
+      // Safari sometimes only partially renders imgs with decoding = sync (safari default)
+      // To enforce full rendering of img use decoding = async
+      image._image.decoding = 'async';
+
       var onOverlayError = function () {
         this._map.removeLayer(image);
         this.fire('error');
