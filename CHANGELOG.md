@@ -5,6 +5,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+## [3.0.4] - 2021-12-06
+
+### Fixed
+
+- Feature Layer fixes: `addFeature` event fixed and `eachActiveFeature` should now respect minZoom/maxZoom ([#1301](https://github.com/Esri/esri-leaflet/pull/1301))
+
 ## [3.0.3] - 2021-09-24
 
 ### Changed
@@ -790,7 +796,8 @@ None
 - Add DarkGray and DarkGrayLabels to BasemapLayer. #190
 - An attributionControl on maps is now required when using BasemapLayer. #159
 
-[unreleased]: https://github.com/esri/esri-leaflet/compare/v3.0.3..HEAD
+[unreleased]: https://github.com/esri/esri-leaflet/compare/v3.0.4..HEAD
+[3.0.4]: https://github.com/esri/esri-leaflet/compare/v3.0.3...v3.0.4
 [3.0.3]: https://github.com/esri/esri-leaflet/compare/v3.0.2...v3.0.3
 [3.0.2]: https://github.com/esri/esri-leaflet/compare/v3.0.1...v3.0.2
 [3.0.1]: https://github.com/esri/esri-leaflet/compare/v3.0.0...v3.0.1
