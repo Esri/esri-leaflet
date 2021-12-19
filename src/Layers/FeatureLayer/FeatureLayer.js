@@ -98,6 +98,9 @@ export var FeatureLayer = FeatureManager.extend({
         layer.setLatLngs(latlngs);
         break;
     }
+
+    // update symbol/style
+    this.redraw(layer.feature.id);
   },
 
   /**
