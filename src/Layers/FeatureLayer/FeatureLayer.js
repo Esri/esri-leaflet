@@ -133,7 +133,6 @@ export var FeatureLayer = FeatureManager.extend({
       // update geometry if the layer already existed.
       if (layer && (layer.setLatLngs || layer.setLatLng)) {
         this._updateLayer(layer, geojson);
-        this.redraw(geojson.id);
       }
 
       if (!layer) {
