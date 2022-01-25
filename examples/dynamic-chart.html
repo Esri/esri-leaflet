@@ -204,7 +204,7 @@
   </script>
   
 <!-- Load Chart.js from CDN -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
 
 <style>
   .chart-container {
@@ -257,34 +257,32 @@
 
   var chartOptions = {
     scales: {
-      xAxes: [{
-        scaleLabel: {
+      x: {
+        title: {
           display: true,
-          labelString: 'tree diameter'
+          text: 'tree diameter'
         },
+        beginAtZero: true,
+        max: 250,
         ticks: {
-          beginAtZero: true,
-          max: 250,
           stepSize: 50
         }
-      }],
-      yAxes: [{
-        scaleLabel: {
+      },
+      y: {
+        title: {
           display: true,
-          labelString: 'tree height'
+          text: 'tree height'
         },
+        beginAtZero: true,
+        max: 250,
         ticks: {
-          beginAtZero: true,
-          max: 250,
           stepSize: 50
         }
-      }]
+      }
     },
     maintainAspectRatio: false,
     // turn off animations during chart data updates
-    animation: {
-      duration: 0
-    },
+    animation: false,
     // see STEP 4 below
     onHover: handleChartHover
   };
@@ -333,10 +331,8 @@
   // STEP 4 (OPTIONAL): ESTABLISH CHART-TO-MAP COMMUNICATION
   // up until now the map and feature layer inform the chart what to render,
   // but interactions with the chart can also influence the map contents
-  function handleChartHover (e) {
-    var chartHoverData = chart.getElementsAtEvent(e);
-
-    if (!chartHoverData.length) {
+  function handleChartHover (event, elements, chart) {
+    if (!elements.length) {
       // if there were no data elements found when hovering over the chart,
       // reset any previous styling overrides and return
       treesFeatureLayer.eachFeature(function (e) {
@@ -349,8 +345,8 @@
 
     // otherwise, bring attention to the features on the map
     // that are currently being hovered over in the chart
-    var hoverFeatureIds = chartHoverData.map(function (datum) {
-      return chart.data.datasets[0].data[datum._index].featureId;
+    var hoverFeatureIds = elements.map(function (datum) {
+      return chart.data.datasets[datum.datasetIndex].data[datum.index].featureId;
     });
 
     treesFeatureLayer.eachFeature(function (e, idx) {
@@ -400,7 +396,7 @@
 <span class="tag">&lt;<span class="title">body</span>&gt;</span>
 
 <span class="comment">&lt;!-- Load Chart.js from CDN --&gt;</span>
-<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css">
   <span class="class">.chart-container</span> <span class="rules">{
@@ -453,34 +449,32 @@
 
   <span class="keyword">var</span> chartOptions = {
     scales: {
-      xAxes: [{
-        scaleLabel: {
+      x: {
+        title: {
           display: <span class="literal">true</span>,
-          labelString: <span class="string">'tree diameter'</span>
+          text: <span class="string">'tree diameter'</span>
         },
+        beginAtZero: <span class="literal">true</span>,
+        max: <span class="number">250</span>,
         ticks: {
-          beginAtZero: <span class="literal">true</span>,
-          max: <span class="number">250</span>,
           stepSize: <span class="number">50</span>
         }
-      }],
-      yAxes: [{
-        scaleLabel: {
+      },
+      y: {
+        title: {
           display: <span class="literal">true</span>,
-          labelString: <span class="string">'tree height'</span>
+          text: <span class="string">'tree height'</span>
         },
+        beginAtZero: <span class="literal">true</span>,
+        max: <span class="number">250</span>,
         ticks: {
-          beginAtZero: <span class="literal">true</span>,
-          max: <span class="number">250</span>,
           stepSize: <span class="number">50</span>
         }
-      }]
+      }
     },
     maintainAspectRatio: <span class="literal">false</span>,
     <span class="comment">// turn off animations during chart data updates</span>
-    animation: {
-      duration: <span class="number">0</span>
-    },
+    animation: <span class="literal">false</span>,
     <span class="comment">// see STEP 4 below</span>
     onHover: handleChartHover
   };
@@ -529,10 +523,8 @@
   <span class="comment">// STEP 4 (OPTIONAL): ESTABLISH CHART-TO-MAP COMMUNICATION</span>
   <span class="comment">// up until now the map and feature layer inform the chart what to render,</span>
   <span class="comment">// but interactions with the chart can also influence the map contents</span>
-  <span class="function"><span class="keyword">function</span> <span class="title">handleChartHover</span> <span class="params">(e)</span> {</span>
-    <span class="keyword">var</span> chartHoverData = chart.getElementsAtEvent(e);
-
-    <span class="keyword">if</span> (!chartHoverData.length) {
+  <span class="function"><span class="keyword">function</span> <span class="title">handleChartHover</span> <span class="params">(event, elements, chart)</span> {</span>
+    <span class="keyword">if</span> (!elements.length) {
       <span class="comment">// if there were no data elements found when hovering over the chart,</span>
       <span class="comment">// reset any previous styling overrides and return</span>
       treesFeatureLayer.eachFeature(<span class="function"><span class="keyword">function</span> <span class="params">(e)</span> {</span>
@@ -545,8 +537,8 @@
 
     <span class="comment">// otherwise, bring attention to the features on the map</span>
     <span class="comment">// that are currently being hovered over in the chart</span>
-    <span class="keyword">var</span> hoverFeatureIds = chartHoverData.map(<span class="function"><span class="keyword">function</span> <span class="params">(datum)</span> {</span>
-      <span class="keyword">return</span> chart.data.datasets[<span class="number">0</span>].data[datum._index].featureId;
+    <span class="keyword">var</span> hoverFeatureIds = elements.map(<span class="function"><span class="keyword">function</span> <span class="params">(datum)</span> {</span>
+      <span class="keyword">return</span> chart.data.datasets[datum.datasetIndex].data[datum.index].featureId;
     });
 
     treesFeatureLayer.eachFeature(<span class="function"><span class="keyword">function</span> <span class="params">(e, idx)</span> {</span>
