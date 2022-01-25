@@ -208,23 +208,18 @@
 
 <script>
   var renderingRule = {
-    rasterFunction: 'Hillshade',
-    rasterFunctionArguments: {
-      Azimuth: 215,
-      Altitude: 60,
-      ZFactor: 1
-    },
-    variableName: 'DEM'
+    rasterFunction: 'TorontoFalseColor',
+    variableName: 'Raster'
   };
 
-  var map = L.map('map').setView([33.741114, -116.184826], 17);
+  var map = L.map('map').setView([43.645262, -79.38], 14);
 
   L.esri.Vector.vectorBasemapLayer('ArcGIS:Imagery', {
     apikey: apiKey // Replace with your API key - https://developers.arcgis.com
   }).addTo(map);
 
   L.esri.imageMapLayer({
-    url: 'https://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Earthquakes/SanAndreasLidar/ImageServer',
+    url: 'https://sampleserver6.arcgisonline.com/arcgis/rest/services/Toronto/ImageServer',
     renderingRule: renderingRule,
     useCors: false
   }).addTo(map);
@@ -267,23 +262,18 @@
 
 <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
   <span class="keyword">var</span> renderingRule = {
-    rasterFunction: <span class="string">'Hillshade'</span>,
-    rasterFunctionArguments: {
-      Azimuth: <span class="number">215</span>,
-      Altitude: <span class="number">60</span>,
-      ZFactor: <span class="number">1</span>
-    },
-    variableName: <span class="string">'DEM'</span>
+    rasterFunction: <span class="string">'TorontoFalseColor'</span>,
+    variableName: <span class="string">'Raster'</span>
   };
 
-  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">33.741114</span>, -<span class="number">116.184826</span>], <span class="number">17</span>);
+  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">43.645262</span>, -<span class="number">79.38</span>], <span class="number">14</span>);
 
   L.esri.Vector.vectorBasemapLayer(<span class="string">'ArcGIS:Imagery'</span>, {
     apikey: apiKey <span class="comment">// Replace with your API key - https://developers.arcgis.com</span>
   }).addTo(map);
 
   L.esri.imageMapLayer({
-    url: <span class="string">'https://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Earthquakes/SanAndreasLidar/ImageServer'</span>,
+    url: <span class="string">'https://sampleserver6.arcgisonline.com/arcgis/rest/services/Toronto/ImageServer'</span>,
     renderingRule: renderingRule,
     useCors: <span class="literal">false</span>
   }).addTo(map);

@@ -12,7 +12,7 @@
   
 
   
-    <meta name="description" content="Display an Image Service from ArcGIS Online or ArcGIS Server and apply a mosaic rule to dynamically control how the service combines rasters into a mosaic. This sample shows world temperature using the 8th raster only (August of 1950). More information about Image Services can be found in the &lt;a href=&quot;/esri-leaflet/api-reference/layers/image-map-layer.html&quot;&gt;L.esri.ImageMapLayer&lt;/a&gt; documentation.">
+    <meta name="description" content="Display an Image Service from ArcGIS Online or ArcGIS Server and apply a mosaic rule to dynamically control how the service combines rasters into a mosaic. This sample shows sea temperature at the surface for the week of April 7, 2014. More information about Image Services can be found in the &lt;a href=&quot;/esri-leaflet/api-reference/layers/image-map-layer.html&quot;&gt;L.esri.ImageMapLayer&lt;/a&gt; documentation.">
   
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -191,7 +191,7 @@
 <div class="example-content">
 <div class="wrap">
   <h1>ImageMapLayer MosaicRule</h1>
-  <p>Display an Image Service from ArcGIS Online or ArcGIS Server and apply a mosaic rule to dynamically control how the service combines rasters into a mosaic. This sample shows world temperature using the 8th raster only (August of 1950). More information about Image Services can be found in the <a href="/esri-leaflet/api-reference/layers/image-map-layer.html">L.esri.ImageMapLayer</a> documentation.</p>
+  <p>Display an Image Service from ArcGIS Online or ArcGIS Server and apply a mosaic rule to dynamically control how the service combines rasters into a mosaic. This sample shows sea temperature at the surface for the week of April 7, 2014. More information about Image Services can be found in the <a href="/esri-leaflet/api-reference/layers/image-map-layer.html">L.esri.ImageMapLayer</a> documentation.</p>
 </div>
 <div id="map-wrapper">
   <script>
@@ -203,19 +203,30 @@
 
 <script>
   var mosaicRule = {
-    mosaicMethod: 'esriMosaicLockRaster',
-    lockRasterIds: [8]
+    multidimensionalDefinition: [
+      {
+        // DEPTH: show only temperatures at sea surface
+        dimensionName: 'StdZ', // water depth
+        values: [0], // sea surface or 0ft
+        isSlice: true
+      },
+      {
+        // TIME: only show temperatures for the week of April 7, 2014
+        dimensionName: 'StdTime', // time temp was recorded
+        values: [1396828800000], // week of April 7, 2014
+        isSlice: true
+      }
+    ]
   };
 
   var map = L.map('map').setView([30, 0], 2);
 
   L.esri.imageMapLayer({
-    url: 'https://sampleserver3.arcgisonline.com/ArcGIS/rest/services/World/Temperature/ImageServer',
+    url: 'https://sampleserver6.arcgisonline.com/arcgis/rest/services/ScientificData/SeaTemperature/ImageServer',
     mosaicRule: mosaicRule,
     useCors: false
   }).addTo(map);
 </script>
-
 </div>
 <pre><code class="language-xml"><span class="doctype">&lt;!DOCTYPE html&gt;</span>
 <span class="tag">&lt;<span class="title">html</span>&gt;</span>
@@ -248,14 +259,26 @@
 
 <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
   <span class="keyword">var</span> mosaicRule = {
-    mosaicMethod: <span class="string">'esriMosaicLockRaster'</span>,
-    lockRasterIds: [<span class="number">8</span>]
+    multidimensionalDefinition: [
+      {
+        <span class="comment">// DEPTH: show only temperatures at sea surface</span>
+        dimensionName: <span class="string">'StdZ'</span>, <span class="comment">// water depth</span>
+        values: [<span class="number">0</span>], <span class="comment">// sea surface or 0ft</span>
+        isSlice: <span class="literal">true</span>
+      },
+      {
+        <span class="comment">// TIME: only show temperatures for the week of April 7, 2014</span>
+        dimensionName: <span class="string">'StdTime'</span>, <span class="comment">// time temp was recorded</span>
+        values: [<span class="number">1396828800000</span>], <span class="comment">// week of April 7, 2014</span>
+        isSlice: <span class="literal">true</span>
+      }
+    ]
   };
 
   <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">30</span>, <span class="number">0</span>], <span class="number">2</span>);
 
   L.esri.imageMapLayer({
-    url: <span class="string">'https://sampleserver3.arcgisonline.com/ArcGIS/rest/services/World/Temperature/ImageServer'</span>,
+    url: <span class="string">'https://sampleserver6.arcgisonline.com/arcgis/rest/services/ScientificData/SeaTemperature/ImageServer'</span>,
     mosaicRule: mosaicRule,
     useCors: <span class="literal">false</span>
   }).addTo(map);

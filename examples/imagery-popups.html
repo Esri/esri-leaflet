@@ -207,14 +207,14 @@
 <div id="map"></div>
 
 <script>
-  var map = L.map('map').setView([45.358651, -121.691067], 9);
+  var map = L.map('map').setView([43.645262, -79.38], 14);
 
   L.esri.Vector.vectorBasemapLayer('ArcGIS:LightGray', {
     apikey: apiKey // Replace with your API key - https://developers.arcgis.com
   }).addTo(map);
 
   var landsatImagery = L.esri.imageMapLayer({
-    url: 'https://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Portland/CascadeLandsat/ImageServer',
+    url: 'https://sampleserver6.arcgisonline.com/arcgis/rest/services/Toronto/ImageServer',
     useCors: false
   }).addTo(map);
 
@@ -263,14 +263,14 @@
 <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 
 <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
-  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">45.358651</span>, -<span class="number">121.691067</span>], <span class="number">9</span>);
+  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">43.645262</span>, -<span class="number">79.38</span>], <span class="number">14</span>);
 
   L.esri.Vector.vectorBasemapLayer(<span class="string">'ArcGIS:LightGray'</span>, {
     apikey: apiKey <span class="comment">// Replace with your API key - https://developers.arcgis.com</span>
   }).addTo(map);
 
   <span class="keyword">var</span> landsatImagery = L.esri.imageMapLayer({
-    url: <span class="string">'https://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Portland/CascadeLandsat/ImageServer'</span>,
+    url: <span class="string">'https://sampleserver6.arcgisonline.com/arcgis/rest/services/Toronto/ImageServer'</span>,
     useCors: <span class="literal">false</span>
   }).addTo(map);
 

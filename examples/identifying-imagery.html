@@ -227,10 +227,10 @@
   // sample server in this example is not CORS enabled, so use JSONP
   L.esri.get = L.esri.get.JSONP;
 
-  var map = L.map('map').setView([36.230577, -118.253147], 10);
+  var map = L.map('map').setView([34.314417, -117.461712], 12);
 
   var hillshade = L.esri.imageMapLayer({
-    url: 'https://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Earthquakes/CaliforniaDEM/ImageServer',
+    url: 'https://sampleserver6.arcgisonline.com/arcgis/rest/services/Elevation/MtBaldy_Elevation/ImageServer',
     renderingRule: renderingRule,
     useCors: false
   }).addTo(map);
@@ -309,10 +309,10 @@
   <span class="comment">// sample server in this example is not CORS enabled, so use JSONP</span>
   L.esri.get = L.esri.get.JSONP;
 
-  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">36.230577</span>, -<span class="number">118.253147</span>], <span class="number">10</span>);
+  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">34.314417</span>, -<span class="number">117.461712</span>], <span class="number">12</span>);
 
   <span class="keyword">var</span> hillshade = L.esri.imageMapLayer({
-    url: <span class="string">'https://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Earthquakes/CaliforniaDEM/ImageServer'</span>,
+    url: <span class="string">'https://sampleserver6.arcgisonline.com/arcgis/rest/services/Elevation/MtBaldy_Elevation/ImageServer'</span>,
     renderingRule: renderingRule,
     useCors: <span class="literal">false</span>
   }).addTo(map);
