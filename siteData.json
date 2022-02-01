@@ -1,0 +1,96 @@
+[
+  {
+    "name": "leaflet",
+    "version": "1.7.1",
+    "lib": {
+      "url": "https://unpkg.com/leaflet@1.7.1/dist/leaflet.js",
+      "integrity": "sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    },
+    "css": [
+      {
+        "url": "https://unpkg.com/leaflet@1.7.1/dist/leaflet.css",
+        "integrity": "sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+      }
+    ]
+  },
+  {
+    "name": "esri-leaflet",
+    "version": "3.0.4",
+    "lib": {
+      "url": "https://unpkg.com/esri-leaflet@3.0.4/dist/esri-leaflet.js",
+      "integrity": "sha512-oUArlxr7VpoY7f/dd3ZdUL7FGOvS79nXVVQhxlg6ij4Fhdc4QID43LUFRs7abwHNJ0EYWijiN5LP2ZRR2PY4hQ=="
+    }
+  },
+  {
+    "name": "esri-leaflet-geocoder",
+    "version": "3.1.1",
+    "lib": {
+      "url": "https://unpkg.com/esri-leaflet-geocoder@3.1.1/dist/esri-leaflet-geocoder.js",
+      "integrity": "sha512-enHceDibjfw6LYtgWU03hke20nVTm+X5CRi9ity06lGQNtC9GkBNl/6LoER6XzSudGiXy++avi1EbIg9Ip4L1w=="
+    },
+    "css": [
+      {
+        "url": "https://unpkg.com/esri-leaflet-geocoder@3.1.1/dist/esri-leaflet-geocoder.css",
+        "integrity": "sha512-IM3Hs+feyi40yZhDH6kV8vQMg4Fh20s9OzInIIAc4nx7aMYMfo+IenRUekoYsHZqGkREUgx0VvlEsgm7nCDW9g=="
+      }
+    ]
+  },
+  {
+    "name": "esri-leaflet-vector",
+    "version": "3.1.1",
+    "lib": {
+      "url": "https://unpkg.com/esri-leaflet-vector@3.1.1/dist/esri-leaflet-vector.js",
+      "integrity": "sha512-7rLAors9em7cR3/583gZSvu1mxwPBUjWjdFJ000pc4Wpu+fq84lXF1l4dbG4ShiPQ4pSBUTb4e9xaO6xtMZIlA=="
+    }
+  },
+  {
+    "name": "esri-leaflet-gp",
+    "version": "3.0.0",
+    "lib": {
+      "url": "https://unpkg.com/esri-leaflet-gp@3.0.0/dist/esri-leaflet-gp.js",
+      "integrity": "sha512-eCye7787EK8BVBNsj7Azq0fSpj3TaUc++phMoSySv+qoJ+F8+uOQr97GKg/76R1kgdlbBIRst5Sd2/xxeuN+Xg=="
+    }
+  },
+  {
+    "name": "esri-leaflet-renderers",
+    "version": "2.1.2",
+    "lib": {
+      "url": "https://unpkg.com/esri-leaflet-renderers@2.1.2/dist/esri-leaflet-renderers.js",
+      "integrity": "sha512-/McnqdlwYvfeOEWqoniEagFRQnLi/TNbkHe4EJypmZI02LBT7vBU/+PZ5W3FSsFFlRbnMCsJvnbp5MX8XOBrnQ=="
+    }
+  },
+  {
+    "name": "leaflet.markercluster",
+    "version": "1.5.3",
+    "lib": {
+      "url": "https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js",
+      "integrity": "sha512-OFs3W4DIZ5ZkrDhBFtsCP6JXtMEDGmhl0QPlmWYBJay40TT1n3gt2Xuw8Pf/iezgW9CdabjkNChRqozl/YADmg=="
+    },
+    "css": [
+      {
+        "url": "https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css",
+        "integrity": "sha512-mQ77VzAakzdpWdgfL/lM1ksNy89uFgibRQANsNneSTMD/bj0Y/8+94XMwYhnbzx8eki2hrbPpDm0vD0CiT2lcg=="
+      },
+      {
+        "url": "https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css",
+        "integrity": "sha512-6ZCLMiYwTeli2rVh3XAPxy3YoR5fVxGdH/pz+KMCzRY2M65Emgkw00Yqmhh8qLGeYQ3LbVZGdmOX9KUjSKr0TA=="
+      }
+    ]
+  },
+  {
+    "name": "esri-leaflet-cluster",
+    "version": "2.1.0",
+    "lib": {
+      "url": "https://unpkg.com/esri-leaflet-cluster@2.1.0/dist/esri-leaflet-cluster.js",
+      "integrity": "sha512-fEdNFHisleVtEYdLhW4Z2RsR7TN6hLutE/+O4D+skfTNY2rlHm8HOZARPWkdrFFy/+i2KjFxcZAKTUWaVfbV0g=="
+    }
+  },
+  {
+    "name": "esri-leaflet-heatmap",
+    "version": "2.0.0",
+    "lib": {
+      "url": "https://unpkg.com/esri-leaflet-heatmap@2.0.0/dist/esri-leaflet-heatmap.js",
+      "integrity": "sha512-fSJJRfO4PK90PN9jKKBzBZmzlNRsR12QA/CqTTWgfUTfLMF1Nrx5ouOqlpzC8LQIP+Qz0/G4BlHSgxHrCLHuMA=="
+    }
+  }
+]

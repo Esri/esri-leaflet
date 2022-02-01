@@ -34,6 +34,7 @@
     "leaflet": "^1.6.0",
     "mkdirp": "^1.0.4",
     "mocha": "^8.4.0",
+    "node-fetch": "^2.6.7",
     "npm-run-all": "^4.1.5",
     "rollup": "^2.49.0",
     "rollup-plugin-uglify": "^6.0.4",
@@ -41,6 +42,7 @@
     "sinon": "^6.3.5",
     "sinon-chai": "3.2.0",
     "snazzy": "^8.0.0",
+    "ssri": "^8.0.1",
     "uglify-js": "^2.8.29",
     "watch": "^1.0.2"
   },
@@ -90,7 +92,8 @@
     "start": "run-p start-watch serve",
     "serve": "http-server -p 5000 -c-1 -o",
     "test": "npm run lint && karma start",
-    "test:ci": "npm run lint && karma start --browsers Chrome_travis_ci"
+    "test:ci": "npm run lint && karma start --browsers Chrome_travis_ci",
+    "integrity": "node scripts/integrity.js"
   },
   "semistandard": {
     "globals": [

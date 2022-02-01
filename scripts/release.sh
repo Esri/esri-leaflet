@@ -7,6 +7,9 @@ NAME=$(node --eval "console.log(require('./package.json').name);")
 # build and test
 npm test || exit 1
 
+# update integrity
+npm run integrity
+
 # checkout temp branch for release
 git checkout -b gh-release
 
