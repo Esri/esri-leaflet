@@ -98,6 +98,9 @@ export var FeatureLayer = FeatureManager.extend({
         layer.setLatLngs(latlngs);
         break;
     }
+
+    // update symbol/style
+    this.redraw(layer.feature.id);
   },
 
   /**
@@ -127,12 +130,8 @@ export var FeatureLayer = FeatureManager.extend({
         );
       }
 
-      // update geometry if necessary
-      if (
-        layer &&
-        this.options.simplifyFactor > 0 &&
-        (layer.setLatLngs || layer.setLatLng)
-      ) {
+      // update geometry if the layer already existed.
+      if (layer && (layer.setLatLngs || layer.setLatLng)) {
         this._updateLayer(layer, geojson);
       }
 
