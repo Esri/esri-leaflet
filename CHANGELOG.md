@@ -5,6 +5,20 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+## [3.0.5] - 2022-02-23
+
+### Added
+
+- `siteInfo.json` generation as part of the release ([#1313](https://github.com/Esri/esri-leaflet/pull/1313))
+
+### Fixed
+
+- `FeatureLayer.refresh()` fixed for layers where `simplifyFactor` is not set ([#1304](https://github.com/Esri/esri-leaflet/pull/1304))
+
+### Changed
+
+- Updated dependencies ([#1314](https://github.com/Esri/esri-leaflet/pull/1314))
+
 ## [3.0.4] - 2021-12-06
 
 ### Fixed
@@ -32,7 +46,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [3.0.0] - 2021-01-25
 
-#### Added
+### Added
 
 - `apikey` method on L.esri.Task
 - `apikey` property on L.esri.FeatureLayer
@@ -796,7 +810,8 @@ None
 - Add DarkGray and DarkGrayLabels to BasemapLayer. #190
 - An attributionControl on maps is now required when using BasemapLayer. #159
 
-[unreleased]: https://github.com/esri/esri-leaflet/compare/v3.0.4..HEAD
+[unreleased]: https://github.com/esri/esri-leaflet/compare/v3.0.5..HEAD
+[3.0.5]: https://github.com/esri/esri-leaflet/compare/v3.0.4...v3.0.5
 [3.0.4]: https://github.com/esri/esri-leaflet/compare/v3.0.3...v3.0.4
 [3.0.3]: https://github.com/esri/esri-leaflet/compare/v3.0.2...v3.0.3
 [3.0.2]: https://github.com/esri/esri-leaflet/compare/v3.0.1...v3.0.2
