@@ -82,7 +82,6 @@
     "build": "rollup -c profiles/debug.js & rollup -c profiles/production.js",
     "lint": "semistandard | snazzy",
     "prebuild": "mkdirp dist",
-    "prepare": "npm run build",
     "pretest": "npm run build",
     "precommit": "npm run lint",
     "fix": "semistandard --fix",
