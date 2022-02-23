@@ -49,6 +49,7 @@
     "dist/esri-leaflet.js",
     "dist/esri-leaflet.js.map",
     "dist/esri-leaflet-debug.js.map",
+    "dist/siteData.json",
     "profiles/*.js"
   ],
   "homepage": "http://esri.github.io/esri-leaflet",
