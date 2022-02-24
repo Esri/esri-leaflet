@@ -1,4 +1,5 @@
 /* eslint-env mocha */
+/* eslint-disable no-unused-expressions */
 describe('L.esri.FeatureLayer', function () {
   function createMap () {
     // create container

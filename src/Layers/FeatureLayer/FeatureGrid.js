@@ -107,19 +107,19 @@ export var FeatureGrid = Layer.extend({
   },
 
   removeCell: function () {
-    return;
+
   },
 
   reuseCell: function () {
-    return;
+
   },
 
   cellLeave: function () {
-    return;
+
   },
 
   cellEnter: function () {
-    return;
+
   },
   // @section
   // @method getCellSize: Point

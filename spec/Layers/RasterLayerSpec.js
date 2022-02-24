@@ -1,5 +1,6 @@
 /* eslint-env mocha */
 /* eslint-disable handle-callback-err */
+/* eslint-disable no-unused-expressions */
 describe('L.esri.RasterLayer', function () {
   it('should not error when calling setOpacity when _currentImage is null', function () {
     var layer = new L.esri.RasterLayer();

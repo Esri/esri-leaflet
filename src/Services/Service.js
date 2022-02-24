@@ -67,7 +67,6 @@ export var Service = Evented.extend({
     }
     if (this._authenticating) {
       this._requestQueue.push([method, path, params, callback, context]);
-      return;
     } else {
       var url = (this.options.proxy) ? this.options.proxy + '?' + this.options.url + path : this.options.url + path;
 

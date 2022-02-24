@@ -1,5 +1,6 @@
 /* eslint-env mocha */
 /* eslint-disable handle-callback-err */
+/* eslint-disable no-unused-expressions */
 describe('L.esri.FeatureManager', function () {
   function createMap () {
     // create container
@@ -1222,7 +1223,7 @@ describe('L.esri.FeatureManager', function () {
     );
 
     layer._requestFeatures(bounds, point, function () {
-      return;
+
     });
 
     server.respondWith(
@@ -1234,7 +1235,7 @@ describe('L.esri.FeatureManager', function () {
     );
 
     layer._requestFeatures(bounds, point, function () {
-      return;
+
     });
 
     expect(layer._activeRequests).to.equal(2);
@@ -1245,7 +1246,7 @@ describe('L.esri.FeatureManager', function () {
       ''
     ]);
     layer._requestFeatures(bounds, point, function () {
-      return;
+
     });
 
     server.respond();

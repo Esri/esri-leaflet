@@ -91,7 +91,9 @@ export var DynamicMapLayer = RasterLayer.extend({
     }
 
     // remove extraneous vertices from response features if it has not already been done
-    identifyRequest.params.maxAllowableOffset ? true : identifyRequest.simplify(this._map, 0.5);
+    if (!identifyRequest.params.maxAllowableOffset) {
+      identifyRequest.simplify(this._map, 0.5);
+    }
 
     if (!(this.options.popup && this.options.popup.params && this.options.popup.params.layers)) {
       if (this.options.layers) {
