@@ -5,6 +5,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+## [3.0.7] - 2022-02-24
+
+### Fixed
+
+- Include `siteData.json` in NPM release ([#1317](https://github.com/Esri/esri-leaflet/pull/1317)).
+
 ## [3.0.6] - 2022-02-23
 
 ### Fixed
@@ -816,7 +822,8 @@ None
 - Add DarkGray and DarkGrayLabels to BasemapLayer. #190
 - An attributionControl on maps is now required when using BasemapLayer. #159
 
-[unreleased]: https://github.com/esri/esri-leaflet/compare/v3.0.6..HEAD
+[unreleased]: https://github.com/esri/esri-leaflet/compare/v3.0.7..HEAD
+[3.0.7]: https://github.com/esri/esri-leaflet/compare/v3.0.6...v3.0.7
 [3.0.6]: https://github.com/esri/esri-leaflet/compare/v3.0.5...v3.0.6
 [3.0.5]: https://github.com/esri/esri-leaflet/compare/v3.0.4...v3.0.5
 [3.0.4]: https://github.com/esri/esri-leaflet/compare/v3.0.3...v3.0.4
