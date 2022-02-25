@@ -81,7 +81,7 @@ describe('L.esri.IdentifyFeatures', function () {
 
   beforeEach(function () {
     server = sinon.fakeServer.create();
-    task = L.esri.identifyFeatures({url: mapServiceUrl}).on(map).at(latlng);
+    task = L.esri.identifyFeatures({ url: mapServiceUrl }).on(map).at(latlng);
   });
 
   afterEach(function () {
@@ -218,7 +218,7 @@ describe('L.esri.IdentifyFeatures', function () {
   });
 
   it('should use a service to execute the request', function (done) {
-    var service = L.esri.mapService({url: mapServiceUrl});
+    var service = L.esri.mapService({ url: mapServiceUrl });
 
     var request = service.identify().on(map).at(latlng).run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
@@ -240,7 +240,7 @@ describe('L.esri.IdentifyFeatures', function () {
   });
 
   it('should use a service to execute the request with simple LatLng', function (done) {
-    var service = L.esri.mapService({url: mapServiceUrl});
+    var service = L.esri.mapService({ url: mapServiceUrl });
 
     var request = service.identify().on(map).at(rawLatlng).run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
@@ -262,7 +262,7 @@ describe('L.esri.IdentifyFeatures', function () {
   });
 
   it('should return layerId of features in response', function (done) {
-    var service = L.esri.mapService({url: mapServiceUrl});
+    var service = L.esri.mapService({ url: mapServiceUrl });
 
     var request = service.identify().on(map).at(rawLatlng).run(function (error, featureCollection, raw) {
       expect(featureCollection.features[0].layerId).to.deep.equal(0);
@@ -274,7 +274,7 @@ describe('L.esri.IdentifyFeatures', function () {
   });
 
   it('should identify features with an input extent', function (done) {
-    var extentTask = L.esri.identifyFeatures({url: mapServiceUrl}).on(map).at(bounds);
+    var extentTask = L.esri.identifyFeatures({ url: mapServiceUrl }).on(map).at(bounds);
 
     var request = extentTask.run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
@@ -290,7 +290,7 @@ describe('L.esri.IdentifyFeatures', function () {
   });
 
   it('should identify features with raw geojson input', function (done) {
-    var rawTask = L.esri.identifyFeatures({url: mapServiceUrl}).on(map).at(rawGeoJsonPolygon);
+    var rawTask = L.esri.identifyFeatures({ url: mapServiceUrl }).on(map).at(rawGeoJsonPolygon);
 
     var request = rawTask.run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
@@ -306,7 +306,7 @@ describe('L.esri.IdentifyFeatures', function () {
   });
 
   it('should identify features with geojson input', function (done) {
-    var polygonTask = L.esri.identifyFeatures({url: mapServiceUrl}).on(map).at(geoJsonPolygon);
+    var polygonTask = L.esri.identifyFeatures({ url: mapServiceUrl }).on(map).at(geoJsonPolygon);
 
     var request = polygonTask.run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);

@@ -124,7 +124,7 @@ describe('L.esri request helpers', function () {
 
   it('should serialize arrays of objects as JSON', function (done) {
     L.esri.get.CORS('http://services.arcgisonline.com/ArcGIS/rest/info', {
-      object: [{foo: 'bar'}]
+      object: [{ foo: 'bar' }]
     }, function (error, response) {
       expect(response).to.deep.equal(sampleResponse);
       done();

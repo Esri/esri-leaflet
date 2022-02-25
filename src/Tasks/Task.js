@@ -1,5 +1,5 @@
 import { Class, Util } from 'leaflet';
-import {cors} from '../Support';
+import { cors } from '../Support';
 import { cleanUrl, getUrlParams } from '../Util';
 import Request from '../Request';
 

@@ -88,14 +88,14 @@ describe('L.esri.BasemapLayer', function () {
   });
 
   it('will append tokens when fetching tiles if necessary', function () {
-    var baseLayer = L.esri.basemapLayer('Streets', {token: 'bogus'});
+    var baseLayer = L.esri.basemapLayer('Streets', { token: 'bogus' });
     map.addLayer(baseLayer);
     expect(baseLayer._url).to.contain('token=bogus');
   });
 
   it('will prepend proxy when fetching tiles if necessary', function () {
     var proxyURL = 'http://example.proxy';
-    var baseLayer = L.esri.basemapLayer('Streets', {proxy: proxyURL});
+    var baseLayer = L.esri.basemapLayer('Streets', { proxy: proxyURL });
     map.addLayer(baseLayer);
     expect(baseLayer._url).to.contain(proxyURL);
   });

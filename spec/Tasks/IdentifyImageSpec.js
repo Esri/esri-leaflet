@@ -297,7 +297,7 @@ describe('L.esri.IdentifyImage', function () {
 
   beforeEach(function () {
     server = sinon.fakeServer.create();
-    task = L.esri.identifyImage({url: imageServiceUrl}).at(latlng);
+    task = L.esri.identifyImage({ url: imageServiceUrl }).at(latlng);
   });
 
   afterEach(function () {
@@ -333,7 +333,7 @@ describe('L.esri.IdentifyImage', function () {
   });
 
   it('should identify a pixel value with mosaic rule', function (done) {
-    var mosaicRule = {mosaicMethod: 'esriMosaicLockRaster', 'lockRasterIds': [8]};
+    var mosaicRule = { mosaicMethod: 'esriMosaicLockRaster', 'lockRasterIds': [8] };
     server.respondWith('GET', imageServiceUrl + 'identify?returnGeometry=false&geometry=%7B%22x%22%3A-122.66%2C%22y%22%3A45.51%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A%22esriMosaicLockRaster%22%2C%22lockRasterIds%22%3A%5B8%5D%7D&f=json', JSON.stringify(sampleResponse));
 
     task.setMosaicRule(mosaicRule);
@@ -349,7 +349,7 @@ describe('L.esri.IdentifyImage', function () {
   });
 
   it('should identify a pixel value with rendering rule', function (done) {
-    var renderingRule = {rasterFunction: 'RFTAspectColor'};
+    var renderingRule = { rasterFunction: 'RFTAspectColor' };
     server.respondWith('GET', imageServiceUrl + 'identify?returnGeometry=false&geometry=%7B%22x%22%3A-122.66%2C%22y%22%3A45.51%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryPoint&renderingRule=%7B%22rasterFunction%22%3A%22RFTAspectColor%22%7D&f=json', JSON.stringify(sampleResponse));
 
     task.setRenderingRule(renderingRule);

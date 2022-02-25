@@ -95,7 +95,7 @@ describe('L.esri.RasterLayer', function () {
       });
 
       it('should send credentials', function () {
-        var layer = new TestRasterLayer({withCredentials: true});
+        var layer = new TestRasterLayer({ withCredentials: true });
         layer.addTo(map);
         var imageOverlay = map.addLayer.getCall(1).args[0];
         expect(imageOverlay._image.crossOrigin).to.be.equal('use-credentials');

@@ -236,7 +236,7 @@ describe('L.esri.ImageMapLayer', function () {
     });
 
     layer.addTo(map);
-    layer.setMosaicRule({mosaicMethod: 'esriMosaicLockRaster', 'lockRasterIds': [8]});
+    layer.setMosaicRule({ mosaicMethod: 'esriMosaicLockRaster', 'lockRasterIds': [8] });
 
     map.fire('click', {
       latlng: map.getCenter()
@@ -318,8 +318,8 @@ describe('L.esri.ImageMapLayer', function () {
       done();
     });
 
-    layer.setRenderingRule({rasterFunction: 'RFTAspectColor'});
-    expect(layer.getRenderingRule()).to.deep.equal({'rasterFunction': 'RFTAspectColor'});
+    layer.setRenderingRule({ rasterFunction: 'RFTAspectColor' });
+    expect(layer.getRenderingRule()).to.deep.equal({ 'rasterFunction': 'RFTAspectColor' });
     layer.addTo(map);
     server.respond();
   });
@@ -334,8 +334,8 @@ describe('L.esri.ImageMapLayer', function () {
       done();
     });
 
-    layer.setMosaicRule({mosaicMethod: 'esriMosaicLockRaster', 'lockRasterIds': [8]});
-    expect(layer.getMosaicRule()).to.deep.equal({mosaicMethod: 'esriMosaicLockRaster', 'lockRasterIds': [8]});
+    layer.setMosaicRule({ mosaicMethod: 'esriMosaicLockRaster', 'lockRasterIds': [8] });
+    expect(layer.getMosaicRule()).to.deep.equal({ mosaicMethod: 'esriMosaicLockRaster', 'lockRasterIds': [8] });
     layer.addTo(map);
     server.respond();
   });

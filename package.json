@@ -37,7 +37,7 @@
     "npm-run-all": "^4.1.5",
     "rollup": "^2.67.2",
     "rollup-plugin-terser": "^7.0.2",
-    "semistandard": "^12.0.1",
+    "semistandard": "^13.0.1",
     "sinon": "^13.0.1",
     "sinon-chai": "3.7.0",
     "snazzy": "^9.0.0",
