@@ -1,4 +1,5 @@
 /* eslint-env mocha */
+/* eslint-disable no-unused-expressions */
 describe('L.esri.Util', function () {
   var sampleExtent = {
     xmin: -122.70,

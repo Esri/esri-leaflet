@@ -56,7 +56,6 @@ export var IdentifyFeatures = Identify.extend({
       // immediately invoke with an error
       if (error) {
         callback.call(context, error, undefined, response);
-        return;
 
       // ok no error lets just assume we have features...
       } else {
