@@ -110,7 +110,7 @@ export function responseToFeatureCollection (response, idAttribute) {
   return featureCollection;
 }
 
-  // trim url whitespace and add a trailing slash if needed
+// trim url whitespace and add a trailing slash if needed
 export function cleanUrl (url) {
   // trim leading and trailing spaces, but not spaces inside the url
   url = Util.trim(url);
