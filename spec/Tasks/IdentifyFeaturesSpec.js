@@ -26,8 +26,8 @@ describe('L.esri.IdentifyFeatures', function () {
   var bounds = L.latLngBounds([[45.5, -122.66], [45.51, -122.65]]);
 
   var rawGeoJsonPolygon = {
-    'type': 'Polygon',
-    'coordinates': [[
+    type: 'Polygon',
+    coordinates: [[
       [-97, 39], [-97, 41], [-94, 41], [-94, 39], [-97, 39]
     ]]
   };
@@ -37,22 +37,22 @@ describe('L.esri.IdentifyFeatures', function () {
   var mapServiceUrl = 'http://services.arcgis.com/mock/arcgis/rest/services/MockMapService/MapServer/';
 
   var sampleResponse = {
-    'results': [
+    results: [
       {
-        'layerId': 0,
-        'layerName': 'Features',
-        'displayFieldName': 'Name',
-        'value': '0',
-        'attributes': {
-          'objectid': 1,
-          'Name': 'Site'
+        layerId: 0,
+        layerName: 'Features',
+        displayFieldName: 'Name',
+        value: '0',
+        attributes: {
+          objectid: 1,
+          Name: 'Site'
         },
-        'geometryType': 'esriGeometryPoint',
-        'geometry': {
-          'x': -122.81,
-          'y': 45.48,
-          'spatialReference': {
-            'wkid': 4326
+        geometryType: 'esriGeometryPoint',
+        geometry: {
+          x: -122.81,
+          y: 45.48,
+          spatialReference: {
+            wkid: 4326
           }
         }
       }
@@ -61,20 +61,20 @@ describe('L.esri.IdentifyFeatures', function () {
 
   // use 'objectid' instead of 'OBJECTID' to trap irregular casing
   var sampleFeatureCollection = {
-    'type': 'FeatureCollection',
-    'features': [
+    type: 'FeatureCollection',
+    features: [
       {
-        'type': 'Feature',
-        'geometry': {
-          'type': 'Point',
-          'coordinates': [-122.81, 45.48]
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: [-122.81, 45.48]
         },
-        'properties': {
-          'objectid': 1,
-          'Name': 'Site'
+        properties: {
+          objectid: 1,
+          Name: 'Site'
         },
-        'id': 1,
-        'layerId': 0
+        id: 1,
+        layerId: 0
       }
     ]
   };

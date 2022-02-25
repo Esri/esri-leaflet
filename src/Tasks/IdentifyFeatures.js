@@ -7,12 +7,12 @@ import { responseToFeatureCollection,
 
 export var IdentifyFeatures = Identify.extend({
   setters: {
-    'layers': 'layers',
-    'precision': 'geometryPrecision',
-    'tolerance': 'tolerance',
+    layers: 'layers',
+    precision: 'geometryPrecision',
+    tolerance: 'tolerance',
     // skipped implementing this (for now) because the REST service implementation isnt consistent between operations.
     // 'transform': 'datumTransformations'
-    'returnGeometry': 'returnGeometry'
+    returnGeometry: 'returnGeometry'
   },
 
   params: {

@@ -10,15 +10,15 @@ import {
 
 export var Query = Task.extend({
   setters: {
-    'offset': 'resultOffset',
-    'limit': 'resultRecordCount',
-    'fields': 'outFields',
-    'precision': 'geometryPrecision',
-    'featureIds': 'objectIds',
-    'returnGeometry': 'returnGeometry',
-    'returnM': 'returnM',
-    'transform': 'datumTransformation',
-    'token': 'token'
+    offset: 'resultOffset',
+    limit: 'resultRecordCount',
+    fields: 'outFields',
+    precision: 'geometryPrecision',
+    featureIds: 'objectIds',
+    returnGeometry: 'returnGeometry',
+    returnM: 'returnM',
+    transform: 'datumTransformation',
+    token: 'token'
   },
 
   path: 'query',

@@ -9,7 +9,7 @@ function serialize (params) {
   params.f = params.f || 'json';
 
   for (var key in params) {
-    if (params.hasOwnProperty(key)) {
+    if (Object.prototype.hasOwnProperty.call(params, key)) {
       var param = params[key];
       var type = Object.prototype.toString.call(param);
       var value;

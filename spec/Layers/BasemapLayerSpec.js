@@ -17,26 +17,26 @@ describe('L.esri.BasemapLayer', function () {
   var server;
   var clock;
   var mockAttributions = {
-    'contributors': [
+    contributors: [
       {
-        'attribution': 'SkyNet',
-        'coverageAreas': [
+        attribution: 'SkyNet',
+        coverageAreas: [
           {
-            'zoomMax': 19,
-            'zoomMin': 0,
-            'score': 50,
-            'bbox': [-84.94, -179.66, 84.94, 179.66]
+            zoomMax: 19,
+            zoomMin: 0,
+            score: 50,
+            bbox: [-84.94, -179.66, 84.94, 179.66]
           }
         ]
       },
       {
-        'attribution': 'City & County of San Francisco',
-        'coverageAreas': [
+        attribution: 'City & County of San Francisco',
+        coverageAreas: [
           {
-            'zoomMax': 19,
-            'zoomMin': 16,
-            'score': 100,
-            'bbox': [37.71, -122.51, 37.83, -122.36]
+            zoomMax: 19,
+            zoomMin: 16,
+            score: 100,
+            bbox: [37.71, -122.51, 37.83, -122.36]
           }
         ]
       }

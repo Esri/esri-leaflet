@@ -35,12 +35,12 @@ export function extentToBounds (extent) {
 export function boundsToExtent (bounds) {
   bounds = latLngBounds(bounds);
   return {
-    'xmin': bounds.getSouthWest().lng,
-    'ymin': bounds.getSouthWest().lat,
-    'xmax': bounds.getNorthEast().lng,
-    'ymax': bounds.getNorthEast().lat,
-    'spatialReference': {
-      'wkid': 4326
+    xmin: bounds.getSouthWest().lng,
+    ymin: bounds.getSouthWest().lat,
+    xmax: bounds.getNorthEast().lng,
+    ymax: bounds.getNorthEast().lat,
+    spatialReference: {
+      wkid: 4326
     }
   };
 }

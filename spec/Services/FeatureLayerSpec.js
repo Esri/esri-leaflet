@@ -35,9 +35,9 @@ describe('L.esri.FeatureLayer', function () {
     }, callback);
 
     requests[0].respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, JSON.stringify({
-      'addResults': [{
-        'objectId': 1,
-        'success': true
+      addResults: [{
+        objectId: 1,
+        success: true
       }]
     }));
 
@@ -46,8 +46,8 @@ describe('L.esri.FeatureLayer', function () {
     expect(requestBody).to.equal('features=[{"geometry":{"x":45,"y":-121,"spatialReference":{"wkid":4326}},"attributes":{"foo":"bar"}}]&f=json');
 
     callback.should.have.been.calledWith(undefined, {
-      'objectId': 1,
-      'success': true
+      objectId: 1,
+      success: true
     });
   });
 
@@ -66,9 +66,9 @@ describe('L.esri.FeatureLayer', function () {
     }).to.not.throw(Error);
 
     requests[0].respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, JSON.stringify({
-      'addResults': [{
-        'objectId': 1,
-        'success': true
+      addResults: [{
+        objectId: 1,
+        success: true
       }]
     }));
   });
@@ -89,9 +89,9 @@ describe('L.esri.FeatureLayer', function () {
     }, callback);
 
     requests[0].respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, JSON.stringify({
-      'updateResults': [{
-        'objectId': 1,
-        'success': true
+      updateResults: [{
+        objectId: 1,
+        success: true
       }]
     }));
 
@@ -100,8 +100,8 @@ describe('L.esri.FeatureLayer', function () {
     expect(requestBody).to.equal('features=[{"geometry":{"x":45,"y":-121,"spatialReference":{"wkid":4326}},"attributes":{"foo":"bar","OBJECTID":1}}]&f=json');
 
     callback.should.have.been.calledWith(undefined, {
-      'objectId': 1,
-      'success': true
+      objectId: 1,
+      success: true
     });
   });
 
@@ -121,9 +121,9 @@ describe('L.esri.FeatureLayer', function () {
     }).to.not.throw(Error);
 
     requests[0].respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, JSON.stringify({
-      'updateResults': [{
-        'objectId': 1,
-        'success': true
+      updateResults: [{
+        objectId: 1,
+        success: true
       }]
     }));
   });
@@ -134,9 +134,9 @@ describe('L.esri.FeatureLayer', function () {
     service.deleteFeature(1, callback);
 
     requests[0].respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, JSON.stringify({
-      'deleteResults': [{
-        'objectId': 1,
-        'success': true
+      deleteResults: [{
+        objectId: 1,
+        success: true
       }]
     }));
 
@@ -145,8 +145,8 @@ describe('L.esri.FeatureLayer', function () {
     expect(requestBody).to.equal('objectIds=1&f=json');
 
     callback.should.have.been.calledWith(undefined, {
-      'objectId': 1,
-      'success': true
+      objectId: 1,
+      success: true
     });
   });
 
@@ -156,9 +156,9 @@ describe('L.esri.FeatureLayer', function () {
     }).to.not.throw(Error);
 
     requests[0].respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, JSON.stringify({
-      'deleteResults': [{
-        'objectId': 1,
-        'success': true
+      deleteResults: [{
+        objectId: 1,
+        success: true
       }]
     }));
   });
@@ -169,12 +169,12 @@ describe('L.esri.FeatureLayer', function () {
     service.deleteFeatures([1, 2], callback);
 
     requests[0].respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, JSON.stringify({
-      'deleteResults': [{
-        'objectId': 1,
-        'success': true
+      deleteResults: [{
+        objectId: 1,
+        success: true
       }, {
-        'objectId': 2,
-        'success': true
+        objectId: 2,
+        success: true
       }]
     }));
 
@@ -183,11 +183,11 @@ describe('L.esri.FeatureLayer', function () {
     expect(requestBody).to.equal('objectIds=1,2&f=json');
 
     callback.should.have.been.calledWith(undefined, [{
-      'objectId': 1,
-      'success': true
+      objectId: 1,
+      success: true
     }, {
-      'objectId': 2,
-      'success': true
+      objectId: 2,
+      success: true
     }]);
   });
 });

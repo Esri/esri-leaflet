@@ -33,19 +33,19 @@ describe('L.esri.ImageMapLayer', function () {
   var clock;
 
   var sampleResponse = {
-    'objectId': 0,
-    'name': 'Pixel',
-    'value': '-17.5575',
-    'location': {
-      'x': -122.81,
-      'y': 45.48,
-      'spatialReference': {
-        'wkid': 4326
+    objectId: 0,
+    name: 'Pixel',
+    value: '-17.5575',
+    location: {
+      x: -122.81,
+      y: 45.48,
+      spatialReference: {
+        wkid: 4326
       }
     },
-    'properties': null,
-    'catalogItems': null,
-    'catalogItemVisibilities': []
+    properties: null,
+    catalogItems: null,
+    catalogItemVisibilities: []
   };
 
   beforeEach(function () {
@@ -236,7 +236,7 @@ describe('L.esri.ImageMapLayer', function () {
     });
 
     layer.addTo(map);
-    layer.setMosaicRule({ mosaicMethod: 'esriMosaicLockRaster', 'lockRasterIds': [8] });
+    layer.setMosaicRule({ mosaicMethod: 'esriMosaicLockRaster', lockRasterIds: [8] });
 
     map.fire('click', {
       latlng: map.getCenter()
@@ -319,7 +319,7 @@ describe('L.esri.ImageMapLayer', function () {
     });
 
     layer.setRenderingRule({ rasterFunction: 'RFTAspectColor' });
-    expect(layer.getRenderingRule()).to.deep.equal({ 'rasterFunction': 'RFTAspectColor' });
+    expect(layer.getRenderingRule()).to.deep.equal({ rasterFunction: 'RFTAspectColor' });
     layer.addTo(map);
     server.respond();
   });
@@ -334,8 +334,8 @@ describe('L.esri.ImageMapLayer', function () {
       done();
     });
 
-    layer.setMosaicRule({ mosaicMethod: 'esriMosaicLockRaster', 'lockRasterIds': [8] });
-    expect(layer.getMosaicRule()).to.deep.equal({ mosaicMethod: 'esriMosaicLockRaster', 'lockRasterIds': [8] });
+    layer.setMosaicRule({ mosaicMethod: 'esriMosaicLockRaster', lockRasterIds: [8] });
+    expect(layer.getMosaicRule()).to.deep.equal({ mosaicMethod: 'esriMosaicLockRaster', lockRasterIds: [8] });
     layer.addTo(map);
     server.respond();
   });

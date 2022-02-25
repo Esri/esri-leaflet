@@ -77,10 +77,10 @@ describe('L.esri.Util', function () {
       it('should return the correct key when a item has ' + testCase + ' attribute', function () {
         var feature = {
           attributes: {
-            'someAttribute': 123,
-            'aTestAttribute': 345,
-            'aTestAttributeId': 412,
-            'ourAttributeGetsAdded': 'hello'
+            someAttribute: 123,
+            aTestAttribute: 345,
+            aTestAttributeId: 412,
+            ourAttributeGetsAdded: 'hello'
           }
         };
         feature.attributes[testCase] = 'set up our id field amongst others here';
