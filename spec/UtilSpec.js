@@ -106,9 +106,9 @@ describe('L.esri.Util', function () {
     it('should return the name from the field which has the type of esriFieldTypeOID', function () {
       var response = {
         fields: [
-          {name: 'a field', type: 'something'},
-          {name: 'another field', type: 'something else'},
-          {name: 'theIdField', type: 'esriFieldTypeOID'}
+          { name: 'a field', type: 'something' },
+          { name: 'another field', type: 'something else' },
+          { name: 'theIdField', type: 'esriFieldTypeOID' }
         ]
       };
 
@@ -123,12 +123,12 @@ describe('L.esri.Util', function () {
       it('should return ' + testCase + ' if found in fields', function () {
         var response = {
           fields: [
-            {name: 'a field', type: 'something'},
-            {name: 'another field', type: 'something else'},
-            {name: 'yetanotherfield', type: 'yetanotherfield'}
+            { name: 'a field', type: 'something' },
+            { name: 'another field', type: 'something else' },
+            { name: 'yetanotherfield', type: 'yetanotherfield' }
           ]
         };
-        response.fields.push({name: testCase, type: 'somethingunimportant'});
+        response.fields.push({ name: testCase, type: 'somethingunimportant' });
 
         var result = L.esri.Util._findIdAttributeFromResponse(response);
 

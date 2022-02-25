@@ -7,7 +7,7 @@ describe('L.esri.Service', function () {
 
   beforeEach(function () {
     server = sinon.fakeServer.create();
-    service = L.esri.service({url: serviceUrl});
+    service = L.esri.service({ url: serviceUrl });
   });
 
   afterEach(function () {
@@ -20,7 +20,7 @@ describe('L.esri.Service', function () {
     }));
 
     service.get('route', {}, function (error, response) {
-      expect(response).to.deep.equal({foo: 'bar'});
+      expect(response).to.deep.equal({ foo: 'bar' });
       done();
     });
 
@@ -31,11 +31,11 @@ describe('L.esri.Service', function () {
     service.options.useCors = false;
 
     var request = service.get('route', {}, function (error, response) {
-      expect(response).to.deep.equal({foo: 'bar'});
+      expect(response).to.deep.equal({ foo: 'bar' });
       done();
     });
 
-    window._EsriLeafletCallbacks[request.id]({foo: 'bar'});
+    window._EsriLeafletCallbacks[request.id]({ foo: 'bar' });
   });
 
   it('should make POST requests', function (done) {
@@ -44,7 +44,7 @@ describe('L.esri.Service', function () {
     }));
 
     service.post('route', {}, function (error, response) {
-      expect(response).to.deep.equal({foo: 'bar'});
+      expect(response).to.deep.equal({ foo: 'bar' });
       done();
     });
 
@@ -57,7 +57,7 @@ describe('L.esri.Service', function () {
     }));
 
     service.metadata(function (error, response) {
-      expect(response).to.deep.equal({foo: 'bar'});
+      expect(response).to.deep.equal({ foo: 'bar' });
       done();
     });
 
@@ -72,7 +72,7 @@ describe('L.esri.Service', function () {
     service.on('requeststart', function (e) {
       expect(e.type).to.equal('requeststart');
       expect(e.url).to.equal('http://services.arcgis.com/mock/arcgis/rest/services/MockService/route');
-      expect(e.params).to.deep.equal({foo: 'bar'});
+      expect(e.params).to.deep.equal({ foo: 'bar' });
       done();
     });
 
@@ -116,7 +116,7 @@ describe('L.esri.Service', function () {
         foo: 'bar',
         f: 'json'
       });
-      expect(e.response).to.deep.equal({foo: 'bar'});
+      expect(e.response).to.deep.equal({ foo: 'bar' });
       done();
     });
 
@@ -162,7 +162,7 @@ describe('L.esri.Service', function () {
     }));
 
     service.get('route', {}, function (error, response) {
-      expect(response).to.deep.equal({foo: 'bar'});
+      expect(response).to.deep.equal({ foo: 'bar' });
       done();
     });
 
@@ -187,7 +187,7 @@ describe('L.esri.Service', function () {
     });
 
     service.get('route', {}, function (error, response) {
-      expect(response).to.deep.equal({foo: 'bar'});
+      expect(response).to.deep.equal({ foo: 'bar' });
       done();
     });
 
@@ -212,7 +212,7 @@ describe('L.esri.Service', function () {
         server.respond(); // authenticate will trigger another request we should respond to
         return;
       }
-      expect(response).to.deep.equal({foo: 'bar'});
+      expect(response).to.deep.equal({ foo: 'bar' });
       done();
     });
 
@@ -237,7 +237,7 @@ describe('L.esri.Service', function () {
 
     service.on('authenticationrequired', function (e) {
       service.get('other/route', {}, function (error, response) {
-        expect(response).to.deep.equal({foo: 'bar'});
+        expect(response).to.deep.equal({ foo: 'bar' });
         done();
       });
 

@@ -1,6 +1,6 @@
 import { Util, Evented } from 'leaflet';
-import {cors} from '../Support';
-import {cleanUrl, getUrlParams} from '../Util';
+import { cors } from '../Support';
+import { cleanUrl, getUrlParams } from '../Util';
 import Request from '../Request';
 
 export var Service = Evented.extend({

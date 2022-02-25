@@ -271,14 +271,14 @@ export var FeatureGrid = Layer.extend({
 
     this._wrapX = crs.wrapLng &&
       !this.options.noWrap && [
-        Math.floor(map.project([0, crs.wrapLng[0]], cellZoom).x / cellSize.x),
-        Math.ceil(map.project([0, crs.wrapLng[1]], cellZoom).x / cellSize.y)
-      ];
+      Math.floor(map.project([0, crs.wrapLng[0]], cellZoom).x / cellSize.x),
+      Math.ceil(map.project([0, crs.wrapLng[1]], cellZoom).x / cellSize.y)
+    ];
     this._wrapY = crs.wrapLat &&
       !this.options.noWrap && [
-        Math.floor(map.project([crs.wrapLat[0], 0], cellZoom).y / cellSize.x),
-        Math.ceil(map.project([crs.wrapLat[1], 0], cellZoom).y / cellSize.y)
-      ];
+      Math.floor(map.project([crs.wrapLat[0], 0], cellZoom).y / cellSize.x),
+      Math.ceil(map.project([crs.wrapLat[1], 0], cellZoom).y / cellSize.y)
+    ];
   },
 
   _onMoveEnd: function (e) {
