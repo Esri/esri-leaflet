@@ -523,10 +523,10 @@ describe('L.esri.DynamicMapLayer', function () {
     });
 
     var customIdentify = L.esri.identifyFeatures({ url: url })
-                          .layers('all:0')
-                          .layerDef(0, 'foo="bar"')
-                          .tolerance(5)
-                          .returnGeometry(false);
+      .layers('all:0')
+      .layerDef(0, 'foo="bar"')
+      .tolerance(5)
+      .returnGeometry(false);
 
     layer.options.popup = customIdentify;
     layer.addTo(map);
