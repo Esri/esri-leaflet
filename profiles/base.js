@@ -15,7 +15,7 @@ export default {
       jsnext: true,
       main: false,
       browser: false,
-      extensions: [ '.js', '.json' ]
+      extensions: ['.js', '.json']
     }),
     json()
   ],
@@ -25,7 +25,7 @@ export default {
     format: 'umd',
     name: 'L.esri',
     globals: {
-      'leaflet': 'L',
+      leaflet: 'L',
       'esri-leaflet': 'L.esri',
       '@terraformer/arcgis': 'Terraformer'
     },

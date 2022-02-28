@@ -32,22 +32,22 @@ describe('L.esri.DynamicMapLayer', function () {
   var clock;
 
   var sampleResponse = {
-    'results': [
+    results: [
       {
-        'layerId': 0,
-        'layerName': 'Features',
-        'displayFieldName': 'Name',
-        'value': '0',
-        'attributes': {
-          'OBJECTID': 1,
-          'Name': 'Site'
+        layerId: 0,
+        layerName: 'Features',
+        displayFieldName: 'Name',
+        value: '0',
+        attributes: {
+          OBJECTID: 1,
+          Name: 'Site'
         },
-        'geometryType': 'esriGeometryPoint',
-        'geometry': {
-          'x': -122.81,
-          'y': 45.48,
-          'spatialReference': {
-            'wkid': 4326
+        geometryType: 'esriGeometryPoint',
+        geometry: {
+          x: -122.81,
+          y: 45.48,
+          spatialReference: {
+            wkid: 4326
           }
         }
       }

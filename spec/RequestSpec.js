@@ -23,7 +23,7 @@ describe('L.esri request helpers', function () {
     soapUrl: 'http://services.arcgisonline.com/arcgis/services',
     secureSoapUrl: 'https://services.arcgisonline.com/arcgis/services',
     authInfo: {
-      'isTokenBasedSecurity': 'false'
+      isTokenBasedSecurity: 'false'
     }
   };
 

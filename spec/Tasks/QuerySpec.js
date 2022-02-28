@@ -23,21 +23,21 @@ describe('L.esri.Query', function () {
   var latlng = L.latLng(45.51, -122.66);
 
   var rawGeoJsonPolygon = {
-    'type': 'Polygon',
-    'coordinates': [[
+    type: 'Polygon',
+    coordinates: [[
       [-97, 39], [-97, 41], [-94, 41], [-94, 39], [-97, 39]
     ]]
   };
 
   var rawGeoJsonMultiPolygon = {
-    'type': 'MultiPolygon',
-    'coordinates': [
+    type: 'MultiPolygon',
+    coordinates: [
       [[[-97, 39], [-97, 41], [-94, 41], [-94, 39], [-97, 39]]],
       [[[-96, 39.5], [-96, 40.5], [-95, 40.5], [-95, 39.5], [-96, 39.5]]]
     ]
   };
 
-  var rawGeoJsonFeature = { 'type': 'Feature' };
+  var rawGeoJsonFeature = { type: 'Feature' };
   rawGeoJsonFeature.geometry = rawGeoJsonPolygon;
 
   var geoJsonPolygon = L.geoJSON(rawGeoJsonPolygon);
@@ -47,34 +47,34 @@ describe('L.esri.Query', function () {
   var imageServiceUrl = 'http://gis.example.com/mock/arcgis/rest/services/MockImageService/ImageServer/';
 
   var sampleImageServiceQueryResponse = {
-    'fieldAliases': {
-      'IMAGEID': 'IMAGEID',
-      'OWNER': 'OWNER'
+    fieldAliases: {
+      IMAGEID: 'IMAGEID',
+      OWNER: 'OWNER'
     },
-    'fields': [
+    fields: [
       {
-        'name': 'IMAGEID',
-        'type': 'esriFieldTypeOID',
-        'alias': 'IMAGEID'
+        name: 'IMAGEID',
+        type: 'esriFieldTypeOID',
+        alias: 'IMAGEID'
       },
       {
-        'name': 'OWNER',
-        'type': 'esriFieldTypeString',
-        'alias': 'OWNER'
+        name: 'OWNER',
+        type: 'esriFieldTypeString',
+        alias: 'OWNER'
       }
     ],
-    'features': [
+    features: [
       {
-        'attributes': {
-          'IMAGEID': 1,
-          'OWNER': 'Joe Smith'
+        attributes: {
+          IMAGEID: 1,
+          OWNER: 'Joe Smith'
         },
-        'geometry': {
-          'rings': [
-            [ [-97.06138, 32.837], [-97.06133, 32.836], [-97.06124, 32.834], [-97.06127, 32.832], [-97.06138, 32.837] ]
+        geometry: {
+          rings: [
+            [[-97.06138, 32.837], [-97.06133, 32.836], [-97.06124, 32.834], [-97.06127, 32.832], [-97.06138, 32.837]]
           ],
-          'spatialReference': {
-            'wkid': 4326
+          spatialReference: {
+            wkid: 4326
           }
         }
       }
@@ -82,12 +82,12 @@ describe('L.esri.Query', function () {
   };
 
   var sampleImageServiceCollection = {
-    'type': 'FeatureCollection',
-    'features': [{
-      'type': 'Feature',
-      'geometry': {
-        'type': 'Polygon',
-        'coordinates': [
+    type: 'FeatureCollection',
+    features: [{
+      type: 'Feature',
+      geometry: {
+        type: 'Polygon',
+        coordinates: [
           [
             [-97.06138, 32.837],
             [-97.06127, 32.832],
@@ -97,42 +97,42 @@ describe('L.esri.Query', function () {
           ]
         ]
       },
-      'properties': {
-        'IMAGEID': 1,
-        'OWNER': 'Joe Smith'
+      properties: {
+        IMAGEID: 1,
+        OWNER: 'Joe Smith'
       },
-      'id': 1
+      id: 1
     }]
   };
 
   var sampleMapServiceQueryResponse = {
-    'fieldAliases': {
-      'ObjectID': 'ObjectID',
-      'Name': 'Name'
+    fieldAliases: {
+      ObjectID: 'ObjectID',
+      Name: 'Name'
     },
-    'fields': [
+    fields: [
       {
-        'name': 'ObjectID',
-        'type': 'esriFieldTypeOID',
-        'alias': 'ObjectID'
+        name: 'ObjectID',
+        type: 'esriFieldTypeOID',
+        alias: 'ObjectID'
       },
       {
-        'name': 'Name',
-        'type': 'esriFieldTypeString',
-        'alias': 'Name'
+        name: 'Name',
+        type: 'esriFieldTypeString',
+        alias: 'Name'
       }
     ],
-    'features': [
+    features: [
       {
-        'attributes': {
-          'ObjectID': 1,
-          'Name': 'Site'
+        attributes: {
+          ObjectID: 1,
+          Name: 'Site'
         },
-        'geometry': {
-          'x': -122.81,
-          'y': 45.48,
-          'spatialReference': {
-            'wkid': 4326
+        geometry: {
+          x: -122.81,
+          y: 45.48,
+          spatialReference: {
+            wkid: 4326
           }
         }
       }
@@ -140,50 +140,50 @@ describe('L.esri.Query', function () {
   };
 
   var sampleMapServiceCollection = {
-    'type': 'FeatureCollection',
-    'features': [{
-      'type': 'Feature',
-      'geometry': {
-        'type': 'Point',
-        'coordinates': [-122.81, 45.48]
+    type: 'FeatureCollection',
+    features: [{
+      type: 'Feature',
+      geometry: {
+        type: 'Point',
+        coordinates: [-122.81, 45.48]
       },
-      'properties': {
-        'ObjectID': 1,
-        'Name': 'Site'
+      properties: {
+        ObjectID: 1,
+        Name: 'Site'
       },
-      'id': 1
+      id: 1
     }]
   };
 
   var sampleQueryResponse = {
-    'objectIdFieldName': 'FID',
-    'fields': [{
-      'name': 'stop_desc',
-      'type': 'esriFieldTypeString',
-      'alias': 'stop_desc',
-      'sqlType': 'sqlTypeNVarchar',
-      'length': 256,
-      'domain': null,
-      'defaultValue': null
+    objectIdFieldName: 'FID',
+    fields: [{
+      name: 'stop_desc',
+      type: 'esriFieldTypeString',
+      alias: 'stop_desc',
+      sqlType: 'sqlTypeNVarchar',
+      length: 256,
+      domain: null,
+      defaultValue: null
     }, {
-      'name': 'FID',
-      'type': 'esriFieldTypeInteger',
-      'alias': 'FID',
-      'sqlType': 'sqlTypeInteger',
-      'domain': null,
-      'defaultValue': null
+      name: 'FID',
+      type: 'esriFieldTypeInteger',
+      alias: 'FID',
+      sqlType: 'sqlTypeInteger',
+      domain: null,
+      defaultValue: null
     }],
-    'features': [
+    features: [
       {
-        'attributes': {
-          'FID': 1,
-          'Name': 'Site'
+        attributes: {
+          FID: 1,
+          Name: 'Site'
         },
-        'geometry': {
-          'x': -122.81,
-          'y': 45.48,
-          'spatialReference': {
-            'wkid': 4326
+        geometry: {
+          x: -122.81,
+          y: 45.48,
+          spatialReference: {
+            wkid: 4326
           }
         }
       }
@@ -191,87 +191,87 @@ describe('L.esri.Query', function () {
   };
 
   var sampleExtentResponse = {
-    'extent': {
-      'xmin': -122.66,
-      'ymin': 45.5,
-      'xmax': -122.65,
-      'ymax': 45.51
+    extent: {
+      xmin: -122.66,
+      ymin: 45.5,
+      xmax: -122.65,
+      ymax: 45.51
     }
   };
 
   // this is how ArcGIS Server returns a null extent (for now)
   var sampleNaNExtentResponse = {
-    'extent': {
-      'xmin': 'NaN',
-      'ymin': 'NaN',
-      'xmax': 'NaN',
-      'ymax': 'NaN'
+    extent: {
+      xmin: 'NaN',
+      ymin: 'NaN',
+      xmax: 'NaN',
+      ymax: 'NaN'
     }
   };
 
   var sampleCountResponse = {
-    'count': 1
+    count: 1
   };
 
   var sampleFeatureCollection = {
-    'type': 'FeatureCollection',
-    'features': [{
-      'type': 'Feature',
-      'geometry': {
-        'type': 'Point',
-        'coordinates': [-122.81, 45.48]
+    type: 'FeatureCollection',
+    features: [{
+      type: 'Feature',
+      geometry: {
+        type: 'Point',
+        coordinates: [-122.81, 45.48]
       },
-      'properties': {
-        'FID': 1,
-        'Name': 'Site'
+      properties: {
+        FID: 1,
+        Name: 'Site'
       },
-      'id': 1
+      id: 1
     }]
   };
 
   var sampleDistinctFeatureCollection = {
-    'type': 'FeatureCollection',
-    'features': [{
-      'type': 'Feature',
-      'geometry': null,
-      'properties': {
-        'FID': 1,
-        'Name': 'Site'
+    type: 'FeatureCollection',
+    features: [{
+      type: 'Feature',
+      geometry: null,
+      properties: {
+        FID: 1,
+        Name: 'Site'
       },
-      'id': 1
+      id: 1
     }]
   };
 
   var sampleIdsResponse = {
-    'objectIdFieldName': 'FID',
-    'objectIds': [1, 2]
+    objectIdFieldName: 'FID',
+    objectIds: [1, 2]
   };
 
   var sampleDistinctQueryResponse = {
-    'objectIdFieldName': 'FID',
-    'fields': [{
-      'name': 'stop_desc',
-      'type': 'esriFieldTypeString',
-      'alias': 'stop_desc',
-      'sqlType': 'sqlTypeNVarchar',
-      'length': 256,
-      'domain': null,
-      'defaultValue': null
+    objectIdFieldName: 'FID',
+    fields: [{
+      name: 'stop_desc',
+      type: 'esriFieldTypeString',
+      alias: 'stop_desc',
+      sqlType: 'sqlTypeNVarchar',
+      length: 256,
+      domain: null,
+      defaultValue: null
     }, {
-      'name': 'FID',
-      'type': 'esriFieldTypeInteger',
-      'alias': 'FID',
-      'sqlType': 'sqlTypeInteger',
-      'domain': null,
-      'defaultValue': null
+      name: 'FID',
+      type: 'esriFieldTypeInteger',
+      alias: 'FID',
+      sqlType: 'sqlTypeInteger',
+      domain: null,
+      defaultValue: null
     }],
-    'features': [
+    features: [
       {
-        'attributes': {
-          'FID': 1,
-          'Name': 'Site'
+        attributes: {
+          FID: 1,
+          Name: 'Site'
         },
-        'geometry': null
+        geometry: null
       }
     ]
   };
@@ -851,7 +851,7 @@ describe('L.esri.Query', function () {
 
     var service = new L.esri.MapService({ url: mapServiceUrl });
 
-    service.query().layer(0).transform({ 'wkid': 1234 }).run(function (error, featureCollection, raw) {
+    service.query().layer(0).transform({ wkid: 1234 }).run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleMapServiceCollection);
       expect(raw).to.deep.equal(sampleMapServiceQueryResponse);
       done();
