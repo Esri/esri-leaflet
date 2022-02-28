@@ -20,6 +20,7 @@
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^13.1.3",
     "chai": "4.3.6",
+    "chokidar-cli": "^3.0.0",
     "gh-release": "^6.0.1",
     "highlight.js": "^11.4.0",
     "http-server": "^14.1.0",
@@ -41,8 +42,7 @@
     "sinon": "^13.0.1",
     "sinon-chai": "3.7.0",
     "snazzy": "^9.0.0",
-    "uglify-js": "^3.15.1",
-    "watch": "^1.0.2"
+    "uglify-js": "^3.15.1"
   },
   "files": [
     "src/**/*.js",
@@ -86,7 +86,7 @@
     "precommit": "npm run lint",
     "fix": "semistandard --fix",
     "release": "./scripts/release.sh",
-    "start-watch": "watch \"npm run build\" src",
+    "start-watch": "chokidar src -c \"npm run build\"",
     "start": "run-p start-watch serve",
     "serve": "http-server -p 5000 -c-1 -o",
     "test": "npm run lint && karma start",
