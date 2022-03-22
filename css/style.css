@@ -636,6 +636,14 @@ pre .xml .cdata {
     .main-content table td {
       word-wrap: break-word; }
 
+.alertArea {
+  margin: 0 auto 20px;
+  max-width: 700px;
+  text-align: center;
+  border: 1px solid darkred;
+  background-color: rgba(255, 255, 255, 0.75);
+  padding: 10px; }
+
 .no-sidebar .container.white {
   background: white;
   width: 100%; }
