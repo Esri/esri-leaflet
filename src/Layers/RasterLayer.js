@@ -216,7 +216,7 @@ export var RasterLayer = Layer.extend({
       };
 
       var onOverlayLoad = function (e) {
-        image.off('error', onOverlayLoad, this);
+        image.off('error', onOverlayError, this);
         if (this._map) {
           var newImage = e.target;
           var oldImage = this._currentImage;
