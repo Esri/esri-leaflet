@@ -26,8 +26,8 @@ describe('L.esri.IdentifyFeatures', function () {
   var bounds = L.latLngBounds([[45.5, -122.66], [45.51, -122.65]]);
 
   var rawGeoJsonPolygon = {
-    'type': 'Polygon',
-    'coordinates': [[
+    type: 'Polygon',
+    coordinates: [[
       [-97, 39], [-97, 41], [-94, 41], [-94, 39], [-97, 39]
     ]]
   };
@@ -37,22 +37,22 @@ describe('L.esri.IdentifyFeatures', function () {
   var mapServiceUrl = 'http://services.arcgis.com/mock/arcgis/rest/services/MockMapService/MapServer/';
 
   var sampleResponse = {
-    'results': [
+    results: [
       {
-        'layerId': 0,
-        'layerName': 'Features',
-        'displayFieldName': 'Name',
-        'value': '0',
-        'attributes': {
-          'objectid': 1,
-          'Name': 'Site'
+        layerId: 0,
+        layerName: 'Features',
+        displayFieldName: 'Name',
+        value: '0',
+        attributes: {
+          objectid: 1,
+          Name: 'Site'
         },
-        'geometryType': 'esriGeometryPoint',
-        'geometry': {
-          'x': -122.81,
-          'y': 45.48,
-          'spatialReference': {
-            'wkid': 4326
+        geometryType: 'esriGeometryPoint',
+        geometry: {
+          x: -122.81,
+          y: 45.48,
+          spatialReference: {
+            wkid: 4326
           }
         }
       }
@@ -61,27 +61,27 @@ describe('L.esri.IdentifyFeatures', function () {
 
   // use 'objectid' instead of 'OBJECTID' to trap irregular casing
   var sampleFeatureCollection = {
-    'type': 'FeatureCollection',
-    'features': [
+    type: 'FeatureCollection',
+    features: [
       {
-        'type': 'Feature',
-        'geometry': {
-          'type': 'Point',
-          'coordinates': [-122.81, 45.48]
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: [-122.81, 45.48]
         },
-        'properties': {
-          'objectid': 1,
-          'Name': 'Site'
+        properties: {
+          objectid: 1,
+          Name: 'Site'
         },
-        'id': 1,
-        'layerId': 0
+        id: 1,
+        layerId: 0
       }
     ]
   };
 
   beforeEach(function () {
     server = sinon.fakeServer.create();
-    task = L.esri.identifyFeatures({url: mapServiceUrl}).on(map).at(latlng);
+    task = L.esri.identifyFeatures({ url: mapServiceUrl }).on(map).at(latlng);
   });
 
   afterEach(function () {
@@ -218,7 +218,7 @@ describe('L.esri.IdentifyFeatures', function () {
   });
 
   it('should use a service to execute the request', function (done) {
-    var service = L.esri.mapService({url: mapServiceUrl});
+    var service = L.esri.mapService({ url: mapServiceUrl });
 
     var request = service.identify().on(map).at(latlng).run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
@@ -240,7 +240,7 @@ describe('L.esri.IdentifyFeatures', function () {
   });
 
   it('should use a service to execute the request with simple LatLng', function (done) {
-    var service = L.esri.mapService({url: mapServiceUrl});
+    var service = L.esri.mapService({ url: mapServiceUrl });
 
     var request = service.identify().on(map).at(rawLatlng).run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
@@ -262,7 +262,7 @@ describe('L.esri.IdentifyFeatures', function () {
   });
 
   it('should return layerId of features in response', function (done) {
-    var service = L.esri.mapService({url: mapServiceUrl});
+    var service = L.esri.mapService({ url: mapServiceUrl });
 
     var request = service.identify().on(map).at(rawLatlng).run(function (error, featureCollection, raw) {
       expect(featureCollection.features[0].layerId).to.deep.equal(0);
@@ -274,7 +274,7 @@ describe('L.esri.IdentifyFeatures', function () {
   });
 
   it('should identify features with an input extent', function (done) {
-    var extentTask = L.esri.identifyFeatures({url: mapServiceUrl}).on(map).at(bounds);
+    var extentTask = L.esri.identifyFeatures({ url: mapServiceUrl }).on(map).at(bounds);
 
     var request = extentTask.run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
@@ -290,7 +290,7 @@ describe('L.esri.IdentifyFeatures', function () {
   });
 
   it('should identify features with raw geojson input', function (done) {
-    var rawTask = L.esri.identifyFeatures({url: mapServiceUrl}).on(map).at(rawGeoJsonPolygon);
+    var rawTask = L.esri.identifyFeatures({ url: mapServiceUrl }).on(map).at(rawGeoJsonPolygon);
 
     var request = rawTask.run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);
@@ -306,7 +306,7 @@ describe('L.esri.IdentifyFeatures', function () {
   });
 
   it('should identify features with geojson input', function (done) {
-    var polygonTask = L.esri.identifyFeatures({url: mapServiceUrl}).on(map).at(geoJsonPolygon);
+    var polygonTask = L.esri.identifyFeatures({ url: mapServiceUrl }).on(map).at(geoJsonPolygon);
 
     var request = polygonTask.run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);

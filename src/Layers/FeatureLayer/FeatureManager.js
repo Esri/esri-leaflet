@@ -1,6 +1,11 @@
 import { Util } from 'leaflet';
 import featureLayerService from '../../Services/FeatureLayerService';
-import { getUrlParams, warn, setEsriAttribution } from '../../Util';
+import {
+  getUrlParams,
+  warn,
+  setEsriAttribution,
+  removeEsriAttribution
+} from '../../Util';
 import { FeatureGrid } from './FeatureGrid';
 import BinarySearchIndex from 'tiny-binary-search';
 
@@ -76,7 +81,10 @@ export var FeatureManager = FeatureGrid.extend({
 
         // Check if someone has requested that we don't use geoJSON, even if it's available
         var forceJsonFormat = false;
-        if (this.service.options.isModern === false || this.options.fetchAllFeatures) {
+        if (
+          this.service.options.isModern === false ||
+          this.options.fetchAllFeatures
+        ) {
           forceJsonFormat = true;
         }
 
@@ -111,6 +119,7 @@ export var FeatureManager = FeatureGrid.extend({
   },
 
   onRemove: function (map) {
+    removeEsriAttribution(map);
     map.off('zoomend', this._handleZoomChange, this);
 
     return FeatureGrid.prototype.onRemove.call(this, map);
@@ -133,8 +142,12 @@ export var FeatureManager = FeatureGrid.extend({
 
   _requestFeatures: function (bounds, coords, callback, offset) {
     this._activeRequests++;
+
     // default param
     offset = offset || 0;
+
+    var originalWhere = this.options.where;
+
     // our first active request fires loading
     if (this._activeRequests === 1) {
       this.fire(
@@ -153,6 +166,11 @@ export var FeatureManager = FeatureGrid.extend({
     ) {
       if (response && response.exceededTransferLimit) {
         this.fire('drawlimitexceeded');
+      }
+
+      // the where changed while this request was being run so don't it.
+      if (this.options.where !== originalWhere) {
+        return;
       }
 
       // no error, features
@@ -178,8 +196,18 @@ export var FeatureManager = FeatureGrid.extend({
       if (callback) {
         callback.call(this, error, featureCollection);
       }
-      if (response && response.exceededTransferLimit && this.options.fetchAllFeatures) {
-        this._requestFeatures(bounds, coords, callback, offset + featureCollection.features.length);
+      if (
+        response &&
+        (response.exceededTransferLimit ||
+          (response.properties && response.properties.exceededTransferLimit)) &&
+        this.options.fetchAllFeatures
+      ) {
+        this._requestFeatures(
+          bounds,
+          coords,
+          callback,
+          offset + featureCollection.features.length
+        );
       }
     },
       this);
@@ -202,8 +230,11 @@ export var FeatureManager = FeatureGrid.extend({
   },
 
   _addFeatures: function (features, coords) {
-    var key = this._cacheKey(coords);
-    this._cache[key] = this._cache[key] || [];
+    // coords is optional - will be false if coming from addFeatures() function
+    if (coords) {
+      var key = this._cacheKey(coords);
+      this._cache[key] = this._cache[key] || [];
+    }
 
     for (var i = features.length - 1; i >= 0; i--) {
       var id = features[i].id;
@@ -211,7 +242,7 @@ export var FeatureManager = FeatureGrid.extend({
       if (this._currentSnapshot.indexOf(id) === -1) {
         this._currentSnapshot.push(id);
       }
-      if (this._cache[key].indexOf(id) === -1) {
+      if (typeof key !== 'undefined' && this._cache[key].indexOf(id) === -1) {
         this._cache[key].push(id);
       }
     }
@@ -280,7 +311,11 @@ export var FeatureManager = FeatureGrid.extend({
 
       pendingRequests--;
 
-      if (pendingRequests <= 0 && this._visibleZoom()) {
+      if (
+        pendingRequests <= 0 &&
+        this._visibleZoom() &&
+        where === this.options.where // the where is still the same so use this one
+      ) {
         this._currentSnapshot = newSnapshot;
         // schedule adding features for the next animation frame
         Util.requestAnimFrame(
@@ -298,11 +333,14 @@ export var FeatureManager = FeatureGrid.extend({
     for (var i = this._currentSnapshot.length - 1; i >= 0; i--) {
       oldSnapshot.push(this._currentSnapshot[i]);
     }
+
+    this._cache = {};
+
     for (var key in this._cells) {
       pendingRequests++;
       var coords = this._keyToCellCoords(key);
       var bounds = this._cellCoordsToBounds(coords);
-      this._requestFeatures(bounds, key, requestCallback);
+      this._requestFeatures(bounds, coords, requestCallback);
     }
 
     return this;
@@ -348,7 +386,7 @@ export var FeatureManager = FeatureGrid.extend({
         pendingRequests++;
         var coords = this._keyToCellCoords(key);
         var bounds = this._cellCoordsToBounds(coords);
-        this._requestFeatures(bounds, key, requestCallback);
+        this._requestFeatures(bounds, coords, requestCallback);
       }
     }
 
@@ -356,23 +394,7 @@ export var FeatureManager = FeatureGrid.extend({
   },
 
   refresh: function () {
-    for (var key in this._cells) {
-      var coords = this._keyToCellCoords(key);
-      var bounds = this._cellCoordsToBounds(coords);
-      this._requestFeatures(bounds, key);
-    }
-
-    if (this.redraw) {
-      this.once(
-        'load',
-        function () {
-          this.eachFeature(function (layer) {
-            this._redraw(layer.feature.id);
-          }, this);
-        },
-        this
-      );
-    }
+    this.setWhere(this.options.where);
   },
 
   _filterExistingFeatures: function (oldFrom, oldTo, newFrom, newTo) {
@@ -496,6 +518,7 @@ export var FeatureManager = FeatureGrid.extend({
 
   _handleZoomChange: function () {
     if (!this._visibleZoom()) {
+      // if we have moved outside the visible zoom range clear the current snapshot, no layers should be active
       this.removeLayers(this._currentSnapshot);
       this._currentSnapshot = [];
     } else {
@@ -579,7 +602,7 @@ export var FeatureManager = FeatureGrid.extend({
                     ? response[i].objectId
                     : response.objectId;
               }
-              this.createLayers(featuresArray);
+              this._addFeatures(featuresArray);
             }
 
             if (callback) {
@@ -605,7 +628,7 @@ export var FeatureManager = FeatureGrid.extend({
           for (var i = featuresArray.length - 1; i >= 0; i--) {
             this.removeLayers([featuresArray[i].id], true);
           }
-          this.createLayers(featuresArray);
+          this._addFeatures(featuresArray);
         }
 
         if (callback) {

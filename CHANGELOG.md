@@ -5,9 +5,103 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+## [3.0.7] - 2022-02-24
+
+### Fixed
+
+- Include `siteData.json` in NPM release ([#1317](https://github.com/Esri/esri-leaflet/pull/1317)).
+
+## [3.0.6] - 2022-02-23
+
+### Fixed
+
+- Include `siteData.json` in NPM release (414e060d44bf2be30baaa4fe2e94021c7a1c99a1).
+
+## [3.0.5] - 2022-02-23
+
+### Added
+
+- `siteInfo.json` generation as part of the release ([#1313](https://github.com/Esri/esri-leaflet/pull/1313))
+
+### Fixed
+
+- `FeatureLayer.refresh()` fixed for layers where `simplifyFactor` is not set ([#1304](https://github.com/Esri/esri-leaflet/pull/1304))
+
+### Changed
+
+- Updated dependencies ([#1314](https://github.com/Esri/esri-leaflet/pull/1314))
+
+## [3.0.4] - 2021-12-06
+
+### Fixed
+
+- Feature Layer fixes: `addFeature` event fixed and `eachActiveFeature` should now respect minZoom/maxZoom ([#1301](https://github.com/Esri/esri-leaflet/pull/1301))
+
+## [3.0.3] - 2021-09-24
+
+### Changed
+
+- Added a deprecation warning when using `L.esri.BasemapLayer` ([info](https://esri.github.io/esri-leaflet/api-reference/layers/basemap-layer.html)). This warning can be disabled by setting the `ignoreDeprecationWarning` option to `true`. ([#1293](https://github.com/Esri/esri-leaflet/pull/1293)).
+- Updated dependencies ([#1276](https://github.com/Esri/esri-leaflet/pull/1276))
+
+## [3.0.2] - 2021-05-24
+
+### Fixed
+
+- Do not use named exports from JSON ([info](https://webpack.js.org/migrate/5/#cleanup-the-code)) (🙏destus90🙏 [#1273](https://github.com/Esri/esri-leaflet/pull/1273))
+
+## [3.0.1] - 2021-02-23
+
+### Fixed
+
+- Ensure that `TiledMapLayer` will complete its `onRemove` prototype logic after removing its attribution. ([#1256](https://github.com/Esri/esri-leaflet/issues/1256))
+
+## [3.0.0] - 2021-01-25
+
+### Added
+
+- `apikey` method on L.esri.Task
+- `apikey` property on L.esri.FeatureLayer
+
+## [2.5.3] - 2021-01-06
+
+### Fixed
+
+- Fix error (introduced in v2.5.2) that happens when the map attribution control is not present (🙏avinmathew🙏 [#1252](https://github.com/Esri/esri-leaflet/pull/1252))
+
+### Changed
+
+- REST calls will now use `inSR` instead of `inSr` ([#1251](https://github.com/Esri/esri-leaflet/pull/1251))
+
+## [2.5.2] - 2020-12-29
+
+### Fixed
+
+- When esri-leaflet layers are removed from the map, the attribution will be removed ([#1248](https://github.com/Esri/esri-leaflet/pull/1248))
+
+## [2.5.1] - 2020-10-04
+
+### Added
+
+- Support 'withCredentials' option (🙏luiscamachopt🙏 [#1233](https://github.com/Esri/esri-leaflet/pull/1233))
+- Support 'fetchAllFeatures' option (🙏francharbo🙏 [#1229](https://github.com/Esri/esri-leaflet/pull/1229))
+
+## [2.5.0] - 2020-08-06
+
+### Fixed
+
+- Fix Error on cellEnter (🙏francharbo🙏 [#1204](https://github.com/Esri/esri-leaflet/pull/1204))
+- Fix bugs with feature layer setWhere ([#1211](https://github.com/Esri/esri-leaflet/pull/1211))
+- MinZoom issue - do not clear _currentSnapshot when hiding the layer ([#1212](https://github.com/Esri/esri-leaflet/pull/1212))
+- ImageMapLayer - proxy support now works when `f:image` ([#1221](https://github.com/Esri/esri-leaflet/pull/1221))
+- DynamicMapLayer - proxy support now works when `f:image` ([#1220](https://github.com/Esri/esri-leaflet/pull/1220))
+- FeatureLayer issues when `refresh()` was called ([#1224](https://github.com/Esri/esri-leaflet/pull/1224))
+- Issues when `addFeatures()` (or `updateFeatures()`) then `setWhere()` was called ([#1226](https://github.com/Esri/esri-leaflet/pull/1226))
+
 ### Changed
 
 - `DynamicMapLayer` now defaults to using `format: 'png32'` instead of `'png24'`. (🙏pmacMaps🙏 [#1202](https://github.com/Esri/esri-leaflet/pull/1202), [#1187](https://github.com/Esri/esri-leaflet/issues/1187))
+- Reverted the functionality that allowed over-zooming with the Imagery basemap in certain areas of the world due to bugs that were caused by that change ([#1223](https://github.com/Esri/esri-leaflet/pull/1223))
 
 ## [2.4.1] - 2020-05-19
 
@@ -728,7 +822,19 @@ None
 - Add DarkGray and DarkGrayLabels to BasemapLayer. #190
 - An attributionControl on maps is now required when using BasemapLayer. #159
 
-[unreleased]: https://github.com/esri/esri-leaflet/compare/v2.4.1..HEAD
+[unreleased]: https://github.com/esri/esri-leaflet/compare/v3.0.7..HEAD
+[3.0.7]: https://github.com/esri/esri-leaflet/compare/v3.0.6...v3.0.7
+[3.0.6]: https://github.com/esri/esri-leaflet/compare/v3.0.5...v3.0.6
+[3.0.5]: https://github.com/esri/esri-leaflet/compare/v3.0.4...v3.0.5
+[3.0.4]: https://github.com/esri/esri-leaflet/compare/v3.0.3...v3.0.4
+[3.0.3]: https://github.com/esri/esri-leaflet/compare/v3.0.2...v3.0.3
+[3.0.2]: https://github.com/esri/esri-leaflet/compare/v3.0.1...v3.0.2
+[3.0.1]: https://github.com/esri/esri-leaflet/compare/v3.0.0...v3.0.1
+[3.0.0]: https://github.com/esri/esri-leaflet/compare/v2.5.3...v3.0.0
+[2.5.3]: https://github.com/esri/esri-leaflet/compare/v2.5.2...v2.5.3
+[2.5.2]: https://github.com/esri/esri-leaflet/compare/v2.5.1...v2.5.2
+[2.5.1]: https://github.com/esri/esri-leaflet/compare/v2.5.0...v2.5.1
+[2.5.0]: https://github.com/esri/esri-leaflet/compare/v2.4.1...v2.5.0
 [2.4.1]: https://github.com/esri/esri-leaflet/compare/v2.4.0...v2.4.1
 [2.4.0]: https://github.com/esri/esri-leaflet/compare/v2.3.3...v2.4.0
 [2.3.3]: https://github.com/esri/esri-leaflet/compare/v2.3.2...v2.3.3

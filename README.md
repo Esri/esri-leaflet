@@ -26,7 +26,7 @@ Support for [Geocoding](https://github.com/Esri/esri-leaflet-geocoder) services 
 
 - [Getting Started](#getting-started)
   - [Demos](#demos)
-  - [Example](#example)
+  - [Quick Start](#quick-start)
   - [API Reference](#api-reference)
   - [Additional Plugins](#additional-plugins)
   - [Frequently Asked Questions](#frequently-asked-questions)
@@ -45,50 +45,11 @@ We've shared lots of sample code showing off many of the features of Esri Leafle
 
 http://esri.github.io/esri-leaflet/examples/
 
-## Example
-The easiest way to get started is to load Esri Leaflet via [CDN](https://unpkg.com/esri-leaflet). Here is an example you can copy/paste into your own `.html` file.
+## Quick Start
+The easiest way to get started is to load Esri Leaflet via [CDN](https://unpkg.com/esri-leaflet). Here is an example you can copy/paste into your own `.html` file: [Esri Leaflet Quick Start](https://esri.github.io/esri-leaflet/examples/)
 
-![App](https://raw.github.com/Esri/esri-leaflet/master/example.png)
+[![App](https://raw.github.com/Esri/esri-leaflet/master/example.png)](https://esri.github.io/esri-leaflet/examples/)
 
-```html
-<!DOCTYPE html>
-<html>
-  <head>
-    <!-- Load Leaflet from CDN -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-
-    <!-- Load Esri Leaflet from CDN -->
-    <script src="https://unpkg.com/esri-leaflet/dist/esri-leaflet.js"></script>
-
-    <style>
-      html, body, #map {
-        margin:0; padding:0;  width : 100%; height : 100%;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="map"></div>
-    <script>
-      var map = L.map('map').setView([45.528, -122.680], 13);
-      L.esri.basemapLayer("Gray").addTo(map);
-
-      var parks = L.esri.featureLayer({
-        url: "https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Portland_Parks/FeatureServer/0",
-        style: function () {
-          return { color: "#70ca49", weight: 2 };
-        }
-      }).addTo(map);
-
-      var popupTemplate = "<h3>{NAME}</h3>{ACRES} Acres<br><small>Property ID: {PROPERTYID}<small>";
-
-      parks.bindPopup(function(e){
-        return L.Util.template(popupTemplate, e.feature.properties)
-      });
-    </script>
-  </body>
-</html>
-```
 
 ## [API Reference](http://esri.github.io/esri-leaflet/api-reference/)
 
@@ -169,11 +130,7 @@ Esri welcomes contributions from anyone and everyone. Please see our [guidelines
 
 ### Terms
 
-For most public apps, a free [Developer Plan](https://developers.arcgis.com/pricing/) is sufficient. If you're going to generate revenue, you'll need to purchase either a paid [Developer Plan](https://developers.arcgis.com/pricing/) or one of the products below:
-
-* ArcGIS [Pro](https://www.esri.com/en-us/arcgis/products/arcgis-pro/overview)
-* ArcGIS [Online for Organizations](http://www.esri.com/software/arcgis/arcgisonline)
-* ArcGIS [Enterprise](https://www.esri.com/en-us/arcgis/products/arcgis-enterprise/overview)
+If you're using Esri [content and services](https://developers.arcgis.com/documentation/mapping-apis-and-services/services/), you'll need to license your usage with an API key or an ArcGIS identity. Full details can be found here: [Deployment guidelines](https://developers.arcgis.com/documentation/mapping-apis-and-services/deployment/).
 
 If you display an ArcGIS Online service in **any** Leaflet application, we require that you include Esri attribution and recognize data providers. Using this plugin, it couldn't be easier to follow the terms.  Just select your basemap and the appropriate credits will be displayed dynamically in Leaflet's own [Attribution control](http://leafletjs.com/reference.html#control-attribution) as users pan/zoom.
 
@@ -183,11 +140,8 @@ L.esri.basemapLayer('Topographic').addTo(map);
 
 ![attribution](https://raw.github.com/Esri/esri-leaflet/master/attribution.png)
 
-If you need more than 1 million [map transactions](http://doc.arcgis.com/en/arcgis-online/reference/transaction-limits.htm) per month, please let us know.
-
-* [Esri Attribution Requirements](https://developers.arcgis.com/terms/attribution/)
-* [ArcGIS Online Terms of Use](https://developers.arcgis.com/terms/)
-* [Licensing & Attribution](https://developers.arcgis.com/javascript/latest/guide/licensing/index.html)
+* [Esri Attribution Requirements](https://developers.arcgis.com/documentation/mapping-apis-and-services/deployment/basemap-attribution/)
+* [Licensing & Attribution](https://developers.arcgis.com/documentation/mapping-apis-and-services/deployment/)
 
 ### Credit
 

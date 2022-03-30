@@ -1,6 +1,6 @@
 import { ImageOverlay, CRS, DomUtil, Util, Layer, popup, latLng, bounds } from 'leaflet';
 import { cors } from '../Support';
-import { setEsriAttribution } from '../Util';
+import { setEsriAttribution, removeEsriAttribution } from '../Util';
 
 var Overlay = ImageOverlay.extend({
   onAdd: function (map) {
@@ -65,6 +65,8 @@ export var RasterLayer = Layer.extend({
   },
 
   onRemove: function (map) {
+    removeEsriAttribution(map);
+
     if (this._currentImage) {
       this._map.removeLayer(this._currentImage);
     }
@@ -201,7 +203,7 @@ export var RasterLayer = Layer.extend({
       // opacity is 0 while the image is loading
       var image = new Overlay(url, bounds, {
         opacity: 0,
-        crossOrigin: this.options.useCors,
+        crossOrigin: this.options.withCredentials ? 'use-credentials' : this.options.useCors,
         alt: this.options.alt,
         pane: this.options.pane || this.getPane(),
         interactive: this.options.interactive
@@ -214,7 +216,7 @@ export var RasterLayer = Layer.extend({
       };
 
       var onOverlayLoad = function (e) {
-        image.off('error', onOverlayLoad, this);
+        image.off('error', onOverlayError, this);
         if (this._map) {
           var newImage = e.target;
           var oldImage = this._currentImage;

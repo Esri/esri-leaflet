@@ -1,5 +1,5 @@
 import { Class, Util } from 'leaflet';
-import {cors} from '../Support';
+import { cors } from '../Support';
 import { cleanUrl, getUrlParams } from '../Util';
 import Request from '../Request';
 
@@ -47,6 +47,10 @@ export var Task = Class.extend({
       this.params.token = token;
     }
     return this;
+  },
+
+  apikey: function (apikey) {
+    return this.token(apikey);
   },
 
   // ArcGIS Server Find/Identify 10.5+

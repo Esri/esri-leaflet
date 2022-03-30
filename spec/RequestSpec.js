@@ -23,7 +23,7 @@ describe('L.esri request helpers', function () {
     soapUrl: 'http://services.arcgisonline.com/arcgis/services',
     secureSoapUrl: 'https://services.arcgisonline.com/arcgis/services',
     authInfo: {
-      'isTokenBasedSecurity': 'false'
+      isTokenBasedSecurity: 'false'
     }
   };
 
@@ -45,6 +45,24 @@ describe('L.esri request helpers', function () {
 
     expect(requests[0].url).to.equal('http://services.arcgisonline.com/ArcGIS/rest/info?f=json');
     expect(requests[0].method).to.equal('GET');
+    requests[0].respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, JSON.stringify(sampleResponse));
+  });
+
+  it('should be able to make a GET request with CORS and credentials', function (done) {
+    L.esri.get.CORS('http://services.arcgisonline.com/ArcGIS/rest/info', {}, function (error, response) {
+      expect(this.foo).to.equal('bar');
+      expect(response).to.deep.equal(sampleResponse);
+      done();
+    }, {
+      foo: 'bar',
+      options: {
+        withCredentials: true
+      }
+    });
+
+    expect(requests[0].url).to.equal('http://services.arcgisonline.com/ArcGIS/rest/info?f=json');
+    expect(requests[0].method).to.equal('GET');
+    expect(requests[0].withCredentials).to.equal(true);
     requests[0].respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, JSON.stringify(sampleResponse));
   });
 
@@ -106,7 +124,7 @@ describe('L.esri request helpers', function () {
 
   it('should serialize arrays of objects as JSON', function (done) {
     L.esri.get.CORS('http://services.arcgisonline.com/ArcGIS/rest/info', {
-      object: [{foo: 'bar'}]
+      object: [{ foo: 'bar' }]
     }, function (error, response) {
       expect(response).to.deep.equal(sampleResponse);
       done();

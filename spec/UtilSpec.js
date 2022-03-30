@@ -1,4 +1,5 @@
 /* eslint-env mocha */
+/* eslint-disable no-unused-expressions */
 describe('L.esri.Util', function () {
   var sampleExtent = {
     xmin: -122.70,
@@ -76,10 +77,10 @@ describe('L.esri.Util', function () {
       it('should return the correct key when a item has ' + testCase + ' attribute', function () {
         var feature = {
           attributes: {
-            'someAttribute': 123,
-            'aTestAttribute': 345,
-            'aTestAttributeId': 412,
-            'ourAttributeGetsAdded': 'hello'
+            someAttribute: 123,
+            aTestAttribute: 345,
+            aTestAttributeId: 412,
+            ourAttributeGetsAdded: 'hello'
           }
         };
         feature.attributes[testCase] = 'set up our id field amongst others here';
@@ -105,9 +106,9 @@ describe('L.esri.Util', function () {
     it('should return the name from the field which has the type of esriFieldTypeOID', function () {
       var response = {
         fields: [
-          {name: 'a field', type: 'something'},
-          {name: 'another field', type: 'something else'},
-          {name: 'theIdField', type: 'esriFieldTypeOID'}
+          { name: 'a field', type: 'something' },
+          { name: 'another field', type: 'something else' },
+          { name: 'theIdField', type: 'esriFieldTypeOID' }
         ]
       };
 
@@ -122,12 +123,12 @@ describe('L.esri.Util', function () {
       it('should return ' + testCase + ' if found in fields', function () {
         var response = {
           fields: [
-            {name: 'a field', type: 'something'},
-            {name: 'another field', type: 'something else'},
-            {name: 'yetanotherfield', type: 'yetanotherfield'}
+            { name: 'a field', type: 'something' },
+            { name: 'another field', type: 'something else' },
+            { name: 'yetanotherfield', type: 'yetanotherfield' }
           ]
         };
-        response.fields.push({name: testCase, type: 'somethingunimportant'});
+        response.fields.push({ name: testCase, type: 'somethingunimportant' });
 
         var result = L.esri.Util._findIdAttributeFromResponse(response);
 

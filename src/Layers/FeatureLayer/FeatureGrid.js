@@ -44,7 +44,7 @@ export var FeatureGrid = Layer.extend({
     Util.setOptions(this, options);
   },
 
-  onAdd: function () {
+  onAdd: function (map) {
     this._cells = {};
     this._activeCells = {};
     this._resetView();
@@ -107,19 +107,18 @@ export var FeatureGrid = Layer.extend({
   },
 
   removeCell: function () {
-    return;
+
   },
 
   reuseCell: function () {
-    return;
+
   },
 
   cellLeave: function () {
-    return;
+
   },
 
   cellEnter: function () {
-    return;
   },
   // @section
   // @method getCellSize: Point
@@ -271,14 +270,14 @@ export var FeatureGrid = Layer.extend({
 
     this._wrapX = crs.wrapLng &&
       !this.options.noWrap && [
-        Math.floor(map.project([0, crs.wrapLng[0]], cellZoom).x / cellSize.x),
-        Math.ceil(map.project([0, crs.wrapLng[1]], cellZoom).x / cellSize.y)
-      ];
+      Math.floor(map.project([0, crs.wrapLng[0]], cellZoom).x / cellSize.x),
+      Math.ceil(map.project([0, crs.wrapLng[1]], cellZoom).x / cellSize.y)
+    ];
     this._wrapY = crs.wrapLat &&
       !this.options.noWrap && [
-        Math.floor(map.project([crs.wrapLat[0], 0], cellZoom).y / cellSize.x),
-        Math.ceil(map.project([crs.wrapLat[1], 0], cellZoom).y / cellSize.y)
-      ];
+      Math.floor(map.project([crs.wrapLat[0], 0], cellZoom).y / cellSize.x),
+      Math.ceil(map.project([crs.wrapLat[1], 0], cellZoom).y / cellSize.y)
+    ];
   },
 
   _onMoveEnd: function (e) {
@@ -388,7 +387,9 @@ export var FeatureGrid = Layer.extend({
       }
 
       for (i = 0; i < queue.length; i++) {
-        if (this._activeCells[this._cellCoordsToKey(queue[i])]) {
+        var _key = this._cellCoordsToKey(queue[i]);
+        var _coords = this._keyToCellCoords(_key);
+        if (this._activeCells[_coords]) {
           this._reuseCell(queue[i]);
         } else {
           this._createCell(queue[i]);

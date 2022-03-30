@@ -20,10 +20,6 @@ export var DynamicMapLayer = RasterLayer.extend({
     this.service = mapService(options);
     this.service.addEventParent(this);
 
-    if (options.proxy && options.f !== 'json') {
-      options.f = 'json';
-    }
-
     Util.setOptions(this, options);
   },
 
@@ -95,7 +91,9 @@ export var DynamicMapLayer = RasterLayer.extend({
     }
 
     // remove extraneous vertices from response features if it has not already been done
-    identifyRequest.params.maxAllowableOffset ? true : identifyRequest.simplify(this._map, 0.5);
+    if (!identifyRequest.params.maxAllowableOffset) {
+      identifyRequest.simplify(this._map, 0.5);
+    }
 
     if (!(this.options.popup && this.options.popup.params && this.options.popup.params.layers)) {
       if (this.options.layers) {
@@ -108,7 +106,7 @@ export var DynamicMapLayer = RasterLayer.extend({
     // if present, pass layer ids and sql filters through to the identify task
     if (this.options.layerDefs && typeof this.options.layerDefs !== 'string' && !identifyRequest.params.layerDefs) {
       for (var id in this.options.layerDefs) {
-        if (this.options.layerDefs.hasOwnProperty(id)) {
+        if (Object.prototype.hasOwnProperty.call(this.options.layerDefs, id)) {
           identifyRequest.layerDef(id, this.options.layerDefs[id]);
         }
       }
@@ -193,7 +191,11 @@ export var DynamicMapLayer = RasterLayer.extend({
       }, this);
     } else {
       params.f = 'image';
-      this._renderImage(this.options.url + 'export' + Util.getParamString(params), bounds);
+      var fullUrl = this.options.url + 'export' + Util.getParamString(params);
+      if (this.options.proxy) {
+        fullUrl = this.options.proxy + '?' + fullUrl;
+      }
+      this._renderImage(fullUrl, bounds);
     }
   }
 });

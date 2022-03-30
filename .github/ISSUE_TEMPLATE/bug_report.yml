@@ -1,0 +1,43 @@
+name: "Bug report"
+description: Report an issue with Esri Leaflet
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
+  - type: textarea
+    id: bug-description
+    attributes:
+      label: Describe the bug
+      description: Please include a clear and concise description of the bug. If you intend to submit a PR for this issue, tell us in the description. Thanks!
+      placeholder: Bug description
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction
+      description: A link to a public repository or jsbin (you can start with https://jsbin.com/yewimat/edit) that reproduces the issue, along with a step by step explanation of how to see the issue. If no reproduction case is provided within a reasonable time-frame, the issue will be closed.
+      placeholder: Reproduction
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs
+      description: "Please include browser console around the time this bug occurred. Please try not to insert an image but copy paste the log text."
+      render: shell
+  - type: textarea
+    id: system-info
+    attributes:
+      label: System Info
+      description: Please include which version of Leaflet you are using, which version of Esri Leaflet you are using, and output of `npx envinfo --system --binaries --browsers --npmPackages "{leaflet,esri-leaflet}"`
+      render: shell
+      placeholder: "Leaflet version: `v_._._`. Esri Leaflet version: `v_._._`. ..."
+    validations:
+      required: true
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Information
+      description: Add any other context about the problem here. If you're are *not* using the CDN, please note what loading/bundling library you are using (webpack, rollup, vite, etc)?

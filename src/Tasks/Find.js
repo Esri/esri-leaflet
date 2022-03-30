@@ -4,22 +4,22 @@ import { responseToFeatureCollection } from '../Util';
 export var Find = Task.extend({
   setters: {
     // method name > param name
-    'contains': 'contains',
-    'text': 'searchText',
-    'fields': 'searchFields', // denote an array or single string
-    'spatialReference': 'sr',
-    'sr': 'sr',
-    'layers': 'layers',
-    'returnGeometry': 'returnGeometry',
-    'maxAllowableOffset': 'maxAllowableOffset',
-    'precision': 'geometryPrecision',
-    'dynamicLayers': 'dynamicLayers',
-    'returnZ': 'returnZ',
-    'returnM': 'returnM',
-    'gdbVersion': 'gdbVersion',
+    contains: 'contains',
+    text: 'searchText',
+    fields: 'searchFields', // denote an array or single string
+    spatialReference: 'sr',
+    sr: 'sr',
+    layers: 'layers',
+    returnGeometry: 'returnGeometry',
+    maxAllowableOffset: 'maxAllowableOffset',
+    precision: 'geometryPrecision',
+    dynamicLayers: 'dynamicLayers',
+    returnZ: 'returnZ',
+    returnM: 'returnM',
+    gdbVersion: 'gdbVersion',
     // skipped implementing this (for now) because the REST service implementation isnt consistent between operations
     // 'transform': 'datumTransformations',
-    'token': 'token'
+    token: 'token'
   },
 
   path: 'find',

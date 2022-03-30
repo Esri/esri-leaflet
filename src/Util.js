@@ -8,6 +8,9 @@ import {
   arcgisToGeoJSON as a2g
 } from '@terraformer/arcgis';
 
+var BASE_LEAFLET_ATTRIBUTION_STRING = '<a href="http://leafletjs.com" title="A JS library for interactive maps">Leaflet</a>';
+var POWERED_BY_ESRI_ATTRIBUTION_STRING = 'Powered by <a href="https://www.esri.com">Esri</a>';
+
 export function geojsonToArcGIS (geojson, idAttr) {
   return g2a(geojson, idAttr);
 }
@@ -32,12 +35,12 @@ export function extentToBounds (extent) {
 export function boundsToExtent (bounds) {
   bounds = latLngBounds(bounds);
   return {
-    'xmin': bounds.getSouthWest().lng,
-    'ymin': bounds.getSouthWest().lat,
-    'xmax': bounds.getNorthEast().lng,
-    'ymax': bounds.getNorthEast().lat,
-    'spatialReference': {
-      'wkid': 4326
+    xmin: bounds.getSouthWest().lng,
+    ymin: bounds.getSouthWest().lat,
+    xmax: bounds.getNorthEast().lng,
+    ymax: bounds.getNorthEast().lat,
+    spatialReference: {
+      wkid: 4326
     }
   };
 }
@@ -84,7 +87,7 @@ export function _findIdAttributeFromFeature (feature) {
 export function responseToFeatureCollection (response, idAttribute) {
   var objectIdField;
   var features = response.features || response.results;
-  var count = features.length;
+  var count = features && features.length;
 
   if (idAttribute) {
     objectIdField = idAttribute;
@@ -107,7 +110,7 @@ export function responseToFeatureCollection (response, idAttribute) {
   return featureCollection;
 }
 
-  // trim url whitespace and add a trailing slash if needed
+// trim url whitespace and add a trailing slash if needed
 export function cleanUrl (url) {
   // trim leading and trailing spaces, but not spaces inside the url
   url = Util.trim(url);
@@ -171,42 +174,70 @@ export function calcAttributionWidth (map) {
 }
 
 export function setEsriAttribution (map) {
-  if (map.attributionControl && !map.attributionControl._esriAttributionAdded) {
-    map.attributionControl.setPrefix('<a href="http://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> | Powered by <a href="https://www.esri.com">Esri</a>');
-
-    var hoverAttributionStyle = document.createElement('style');
-    hoverAttributionStyle.type = 'text/css';
-    hoverAttributionStyle.innerHTML = '.esri-truncated-attribution:hover {' +
-      'white-space: normal;' +
-    '}';
-
-    document.getElementsByTagName('head')[0].appendChild(hoverAttributionStyle);
-    DomUtil.addClass(map.attributionControl._container, 'esri-truncated-attribution:hover');
-
-    // define a new css class in JS to trim attribution into a single line
-    var attributionStyle = document.createElement('style');
-    attributionStyle.type = 'text/css';
-    attributionStyle.innerHTML = '.esri-truncated-attribution {' +
-      'vertical-align: -3px;' +
-      'white-space: nowrap;' +
-      'overflow: hidden;' +
-      'text-overflow: ellipsis;' +
-      'display: inline-block;' +
-      'transition: 0s white-space;' +
-      'transition-delay: 1s;' +
-      'max-width: ' + calcAttributionWidth(map) + ';' +
-    '}';
-
-    document.getElementsByTagName('head')[0].appendChild(attributionStyle);
-    DomUtil.addClass(map.attributionControl._container, 'esri-truncated-attribution');
-
-    // update the width used to truncate when the map itself is resized
-    map.on('resize', function (e) {
-      map.attributionControl._container.style.maxWidth = calcAttributionWidth(e.target);
-    });
-
-    map.attributionControl._esriAttributionAdded = true;
+  if (!map.attributionControl) {
+    return;
   }
+
+  if (!map.attributionControl._esriAttributionLayerCount) {
+    map.attributionControl._esriAttributionLayerCount = 0;
+  }
+
+  if (map.attributionControl._esriAttributionLayerCount === 0) {
+    // Dynamically creating the CSS rules, only run this once per page load:
+    if (!map.attributionControl._esriAttributionAddedOnce) {
+      var hoverAttributionStyle = document.createElement('style');
+      hoverAttributionStyle.type = 'text/css';
+      hoverAttributionStyle.innerHTML = '.esri-truncated-attribution:hover {' +
+        'white-space: normal;' +
+      '}';
+      document.getElementsByTagName('head')[0].appendChild(hoverAttributionStyle);
+
+      // define a new css class in JS to trim attribution into a single line
+      var attributionStyle = document.createElement('style');
+      attributionStyle.type = 'text/css';
+      attributionStyle.innerHTML = '.esri-truncated-attribution {' +
+        'vertical-align: -3px;' +
+        'white-space: nowrap;' +
+        'overflow: hidden;' +
+        'text-overflow: ellipsis;' +
+        'display: inline-block;' +
+        'transition: 0s white-space;' +
+        'transition-delay: 1s;' +
+        'max-width: ' + calcAttributionWidth(map) + ';' +
+      '}';
+      document.getElementsByTagName('head')[0].appendChild(attributionStyle);
+
+      // update the width used to truncate when the map itself is resized
+      map.on('resize', function (e) {
+        if (map.attributionControl) {
+          map.attributionControl._container.style.maxWidth = calcAttributionWidth(e.target);
+        }
+      });
+
+      map.attributionControl._esriAttributionAddedOnce = true;
+    }
+
+    map.attributionControl.setPrefix(BASE_LEAFLET_ATTRIBUTION_STRING + ' | ' + POWERED_BY_ESRI_ATTRIBUTION_STRING);
+    DomUtil.addClass(map.attributionControl._container, 'esri-truncated-attribution:hover');
+    DomUtil.addClass(map.attributionControl._container, 'esri-truncated-attribution');
+  }
+
+  // Track the number of esri-leaflet layers that are on the map so we can know when we can remove the attribution (below in removeEsriAttribution)
+  map.attributionControl._esriAttributionLayerCount = map.attributionControl._esriAttributionLayerCount + 1;
+}
+
+export function removeEsriAttribution (map) {
+  if (!map.attributionControl) {
+    return;
+  }
+
+  // Only remove the attribution if we're about to remove the LAST esri-leaflet layer (_esriAttributionLayerCount)
+  if (map.attributionControl._esriAttributionLayerCount && map.attributionControl._esriAttributionLayerCount === 1) {
+    map.attributionControl.setPrefix(BASE_LEAFLET_ATTRIBUTION_STRING);
+    DomUtil.removeClass(map.attributionControl._container, 'esri-truncated-attribution:hover');
+    DomUtil.removeClass(map.attributionControl._container, 'esri-truncated-attribution');
+  }
+  map.attributionControl._esriAttributionLayerCount = map.attributionControl._esriAttributionLayerCount - 1;
 }
 
 export function _setGeometry (geometry) {
@@ -264,8 +295,6 @@ export function _setGeometry (geometry) {
 
   // warn the user if we havn't found an appropriate object
   warn('invalid geometry passed to spatial query. Should be L.LatLng, L.LatLngBounds, L.Marker or a GeoJSON Point, Line, Polygon or MultiPolygon object');
-
-  return;
 }
 
 export function _getAttributionData (url, map) {

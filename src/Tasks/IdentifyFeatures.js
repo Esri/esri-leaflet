@@ -7,12 +7,12 @@ import { responseToFeatureCollection,
 
 export var IdentifyFeatures = Identify.extend({
   setters: {
-    'layers': 'layers',
-    'precision': 'geometryPrecision',
-    'tolerance': 'tolerance',
+    layers: 'layers',
+    precision: 'geometryPrecision',
+    tolerance: 'tolerance',
     // skipped implementing this (for now) because the REST service implementation isnt consistent between operations.
     // 'transform': 'datumTransformations'
-    'returnGeometry': 'returnGeometry'
+    returnGeometry: 'returnGeometry'
   },
 
   params: {
@@ -56,7 +56,6 @@ export var IdentifyFeatures = Identify.extend({
       // immediately invoke with an error
       if (error) {
         callback.call(context, error, undefined, response);
-        return;
 
       // ok no error lets just assume we have features...
       } else {

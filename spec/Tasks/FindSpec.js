@@ -8,22 +8,22 @@ describe('L.esri.Find', function () {
   var mapServiceUrl = 'http://services.arcgis.com/mock/arcgis/rest/services/MockMapService/MapServer/';
 
   var sampleResponse = {
-    'results': [
+    results: [
       {
-        'layerId': 0,
-        'layerName': 'Features',
-        'displayFieldName': 'Name',
-        'value': '0',
-        'attributes': {
-          'OBJECTID': 1,
-          'Name': 'Site'
+        layerId: 0,
+        layerName: 'Features',
+        displayFieldName: 'Name',
+        value: '0',
+        attributes: {
+          OBJECTID: 1,
+          Name: 'Site'
         },
-        'geometryType': 'esriGeometryPoint',
-        'geometry': {
-          'x': -122.81,
-          'y': 45.48,
-          'spatialReference': {
-            'wkid': 4326
+        geometryType: 'esriGeometryPoint',
+        geometry: {
+          x: -122.81,
+          y: 45.48,
+          spatialReference: {
+            wkid: 4326
           }
         }
       }
@@ -31,23 +31,23 @@ describe('L.esri.Find', function () {
   };
 
   var sampleResponseWithSearchFields = {
-    'results': [
+    results: [
       {
-        'layerId': 0,
-        'layerName': 'Features',
-        'displayFieldName': 'Name',
-        'foundFieldName': 'Field',
-        'value': '0',
-        'attributes': {
-          'OBJECTID': 1,
-          'Name': 'Site'
+        layerId: 0,
+        layerName: 'Features',
+        displayFieldName: 'Name',
+        foundFieldName: 'Field',
+        value: '0',
+        attributes: {
+          OBJECTID: 1,
+          Name: 'Site'
         },
-        'geometryType': 'esriGeometryPoint',
-        'geometry': {
-          'x': -122.81,
-          'y': 45.48,
-          'spatialReference': {
-            'wkid': 4326
+        geometryType: 'esriGeometryPoint',
+        geometry: {
+          x: -122.81,
+          y: 45.48,
+          spatialReference: {
+            wkid: 4326
           }
         }
       }
@@ -55,52 +55,52 @@ describe('L.esri.Find', function () {
   };
 
   var sampleResponseWithoutGeometry = {
-    'results': [
+    results: [
       {
-        'layerId': 0,
-        'layerName': 'Features',
-        'displayFieldName': 'Name',
-        'value': '0',
-        'attributes': {
-          'OBJECTID': 1,
-          'Name': 'Site'
+        layerId: 0,
+        layerName: 'Features',
+        displayFieldName: 'Name',
+        value: '0',
+        attributes: {
+          OBJECTID: 1,
+          Name: 'Site'
         }
       }
     ]
   };
 
   var sampleFeatureCollectionWithoutGeometry = {
-    'type': 'FeatureCollection',
-    'features': [{
-      'type': 'Feature',
-      'geometry': null,
-      'properties': {
-        'OBJECTID': 1,
-        'Name': 'Site'
+    type: 'FeatureCollection',
+    features: [{
+      type: 'Feature',
+      geometry: null,
+      properties: {
+        OBJECTID: 1,
+        Name: 'Site'
       },
-      'id': 1
+      id: 1
     }]
   };
 
   var sampleFeatureCollection = {
-    'type': 'FeatureCollection',
-    'features': [{
-      'type': 'Feature',
-      'geometry': {
-        'type': 'Point',
-        'coordinates': [-122.81, 45.48]
+    type: 'FeatureCollection',
+    features: [{
+      type: 'Feature',
+      geometry: {
+        type: 'Point',
+        coordinates: [-122.81, 45.48]
       },
-      'properties': {
-        'OBJECTID': 1,
-        'Name': 'Site'
+      properties: {
+        OBJECTID: 1,
+        Name: 'Site'
       },
-      'id': 1
+      id: 1
     }]
   };
 
   beforeEach(function () {
     server = sinon.fakeServer.create();
-    task = L.esri.find({url: mapServiceUrl});
+    task = L.esri.find({ url: mapServiceUrl });
   });
 
   afterEach(function () {
@@ -194,7 +194,7 @@ describe('L.esri.Find', function () {
   });
 
   it('should use a service to execute the find task', function (done) {
-    var service = L.esri.mapService({url: mapServiceUrl});
+    var service = L.esri.mapService({ url: mapServiceUrl });
 
     server.respondWith('GET', mapServiceUrl + 'find?sr=4326&contains=true&returnGeometry=true&returnZ=true&returnM=false&layers=0&searchText=Site&f=json', JSON.stringify(sampleResponse));
 

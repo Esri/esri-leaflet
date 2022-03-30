@@ -17,26 +17,26 @@ describe('L.esri.BasemapLayer', function () {
   var server;
   var clock;
   var mockAttributions = {
-    'contributors': [
+    contributors: [
       {
-        'attribution': 'SkyNet',
-        'coverageAreas': [
+        attribution: 'SkyNet',
+        coverageAreas: [
           {
-            'zoomMax': 19,
-            'zoomMin': 0,
-            'score': 50,
-            'bbox': [-84.94, -179.66, 84.94, 179.66]
+            zoomMax: 19,
+            zoomMin: 0,
+            score: 50,
+            bbox: [-84.94, -179.66, 84.94, 179.66]
           }
         ]
       },
       {
-        'attribution': 'City & County of San Francisco',
-        'coverageAreas': [
+        attribution: 'City & County of San Francisco',
+        coverageAreas: [
           {
-            'zoomMax': 19,
-            'zoomMin': 16,
-            'score': 100,
-            'bbox': [37.71, -122.51, 37.83, -122.36]
+            zoomMax: 19,
+            zoomMin: 16,
+            score: 100,
+            bbox: [37.71, -122.51, 37.83, -122.36]
           }
         ]
       }
@@ -88,14 +88,14 @@ describe('L.esri.BasemapLayer', function () {
   });
 
   it('will append tokens when fetching tiles if necessary', function () {
-    var baseLayer = L.esri.basemapLayer('Streets', {token: 'bogus'});
+    var baseLayer = L.esri.basemapLayer('Streets', { token: 'bogus' });
     map.addLayer(baseLayer);
     expect(baseLayer._url).to.contain('token=bogus');
   });
 
   it('will prepend proxy when fetching tiles if necessary', function () {
     var proxyURL = 'http://example.proxy';
-    var baseLayer = L.esri.basemapLayer('Streets', {proxy: proxyURL});
+    var baseLayer = L.esri.basemapLayer('Streets', { proxy: proxyURL });
     map.addLayer(baseLayer);
     expect(baseLayer._url).to.contain(proxyURL);
   });

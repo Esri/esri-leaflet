@@ -4,11 +4,11 @@ import { responseToFeatureCollection } from '../Util';
 
 export var IdentifyImage = Identify.extend({
   setters: {
-    'setMosaicRule': 'mosaicRule',
-    'setRenderingRule': 'renderingRule',
-    'setPixelSize': 'pixelSize',
-    'returnCatalogItems': 'returnCatalogItems',
-    'returnGeometry': 'returnGeometry'
+    setMosaicRule: 'mosaicRule',
+    setRenderingRule: 'renderingRule',
+    setPixelSize: 'pixelSize',
+    returnCatalogItems: 'returnCatalogItems',
+    returnGeometry: 'returnGeometry'
   },
 
   params: {
@@ -54,24 +54,24 @@ export var IdentifyImage = Identify.extend({
     var catalogItems = response.catalogItems;
     var catalogItemVisibilities = response.catalogItemVisibilities;
     var geoJSON = {
-      'pixel': {
-        'type': 'Feature',
-        'geometry': {
-          'type': 'Point',
-          'coordinates': [location.x, location.y]
+      pixel: {
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: [location.x, location.y]
         },
-        'crs': {
-          'type': 'EPSG',
-          'properties': {
-            'code': location.spatialReference.wkid
+        crs: {
+          type: 'EPSG',
+          properties: {
+            code: location.spatialReference.wkid
           }
         },
-        'properties': {
-          'OBJECTID': response.objectId,
-          'name': response.name,
-          'value': response.value
+        properties: {
+          OBJECTID: response.objectId,
+          name: response.name,
+          value: response.value
         },
-        'id': response.objectId
+        id: response.objectId
       }
     };
 

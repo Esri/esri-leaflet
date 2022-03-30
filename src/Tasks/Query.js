@@ -10,15 +10,15 @@ import {
 
 export var Query = Task.extend({
   setters: {
-    'offset': 'resultOffset',
-    'limit': 'resultRecordCount',
-    'fields': 'outFields',
-    'precision': 'geometryPrecision',
-    'featureIds': 'objectIds',
-    'returnGeometry': 'returnGeometry',
-    'returnM': 'returnM',
-    'transform': 'datumTransformation',
-    'token': 'token'
+    offset: 'resultOffset',
+    limit: 'resultRecordCount',
+    fields: 'outFields',
+    precision: 'geometryPrecision',
+    featureIds: 'objectIds',
+    returnGeometry: 'returnGeometry',
+    returnM: 'returnM',
+    transform: 'datumTransformation',
+    token: 'token'
   },
 
   path: 'query',
@@ -94,7 +94,7 @@ export var Query = Task.extend({
     this.params.spatialRel = 'esriSpatialRelIntersects';
     this.params.units = 'esriSRUnit_Meter';
     this.params.distance = radius;
-    this.params.inSr = 4326;
+    this.params.inSR = 4326;
     return this;
   },
 
@@ -210,7 +210,7 @@ export var Query = Task.extend({
   },
 
   _setGeometryParams: function (geometry) {
-    this.params.inSr = 4326;
+    this.params.inSR = 4326;
     var converted = _setGeometry(geometry);
     this.params.geometry = converted.geometry;
     this.params.geometryType = converted.geometryType;

@@ -1,5 +1,37 @@
+Skip to content
+Search or jump to…
+Pull requests
+Issues
+Marketplace
+Explore
+ 
+@francharbo 
+Esri
+/
+esri-leaflet
+Public
+Code
+Issues
+21
+Pull requests
+5
+Actions
+Projects
+Wiki
+Security
+Insights
+esri-leaflet/spec/Layers/FeatureLayer/FeatureManagerSpec.js /
+@gavinr
+gavinr updated to semistandard 14
+Latest commit e4d3d98 on 25 Feb
+ History
+ 7 contributors
+@patrickarlt@gavinr@nathanhilbert@MandarinConLaBarba@francharbo@pjbiogit@agbq
+1504 lines (1332 sloc)  45.1 KB
+   
 /* eslint-env mocha */
 /* eslint-disable handle-callback-err */
+/* eslint-disable no-unused-expressions */
 describe('L.esri.FeatureManager', function () {
   function createMap () {
     // create container
@@ -213,6 +245,46 @@ describe('L.esri.FeatureManager', function () {
     }
   };
 
+  // geojson:
+  var feature7 = {
+    type: 'Feature',
+    geometry:
+    {
+      type: 'Polygon',
+      coordinates:
+      [
+        [
+          [-90.3038149502124, 38.6539545785218],
+          [-90.3038498654697, 38.6539303067945],
+          [-90.3038737094094, 38.6539138632284],
+          [-90.3039181787535, 38.6538794680055],
+          [-90.3042877084603, 38.6542092694323],
+          [-90.3042196068492, 38.6542595646522],
+          [-90.3041648638806, 38.6542969769789],
+          [-90.3038149502124, 38.6539545785218]
+        ]
+      ]
+    },
+    properties: null
+  };
+
+  var feature8 = {
+    type: 'Feature',
+    geometry:
+    {
+      type: 'Polygon',
+      coordinates:
+      [
+        [
+          [-90.3038149502124, 38.6539545785218],
+          [-90.3038498654697, 38.6539303067945],
+          [-90.3038737094094, 38.6539138632284]
+        ]
+      ]
+    },
+    properties: null
+  };
+
   it('should be able to add itself to a map', function () {
     layer.addTo(map);
     expect(map.hasLayer(layer)).to.equal(true);
@@ -235,7 +307,7 @@ describe('L.esri.FeatureManager', function () {
   it('should use additional params passed in options', function () {
     server.respondWith(
       'GET',
-      'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.6953125%2C%22ymin%22%3A45.49094569262732%2C%22xmax%22%3A-122.6513671875%2C%22ymax%22%3A45.521743896993634%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&resultType=tile&foo=bar&f=json',
+      'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSR=4326&geometry=%7B%22xmin%22%3A-122.6953125%2C%22ymin%22%3A45.49094569262732%2C%22xmax%22%3A-122.6513671875%2C%22ymax%22%3A45.521743896993634%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&resultType=tile&foo=bar&f=json',
       JSON.stringify({
         fields: fields,
         features: [feature2],
@@ -281,7 +353,7 @@ describe('L.esri.FeatureManager', function () {
   it('should create features based on the current view of the map', function () {
     server.respondWith(
       'GET',
-      'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.6953125%2C%22ymin%22%3A45.521743896993634%2C%22xmax%22%3A-122.6513671875%2C%22ymax%22%3A45.55252525134013%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&resultType=tile&f=json',
+      'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSR=4326&geometry=%7B%22xmin%22%3A-122.6953125%2C%22ymin%22%3A45.521743896993634%2C%22xmax%22%3A-122.6513671875%2C%22ymax%22%3A45.55252525134013%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&resultType=tile&f=json',
       JSON.stringify({
         fields: fields,
         features: [feature1, feature2],
@@ -328,7 +400,7 @@ describe('L.esri.FeatureManager', function () {
   it('should fire a drawlimitexceeded event when there are more features then can be requested', function (done) {
     server.respondWith(
       'GET',
-      'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.6953125%2C%22ymin%22%3A45.521743896993634%2C%22xmax%22%3A-122.6513671875%2C%22ymax%22%3A45.55252525134013%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&resultType=tile&f=json',
+      'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSR=4326&geometry=%7B%22xmin%22%3A-122.6953125%2C%22ymin%22%3A45.521743896993634%2C%22xmax%22%3A-122.6513671875%2C%22ymax%22%3A45.55252525134013%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&resultType=tile&f=json',
       JSON.stringify({
         fields: fields,
         features: [],
@@ -350,7 +422,7 @@ describe('L.esri.FeatureManager', function () {
   it('should filter existing features with a single time field', function () {
     server.respondWith(
       'GET',
-      'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.6953125%2C%22ymin%22%3A45.521743896993634%2C%22xmax%22%3A-122.6513671875%2C%22ymax%22%3A45.55252525134013%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&resultType=tile&f=json',
+      'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSR=4326&geometry=%7B%22xmin%22%3A-122.6953125%2C%22ymin%22%3A45.521743896993634%2C%22xmax%22%3A-122.6513671875%2C%22ymax%22%3A45.55252525134013%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&resultType=tile&f=json',
       JSON.stringify({
         fields: fields,
         features: [feature2, feature3],
@@ -388,7 +460,7 @@ describe('L.esri.FeatureManager', function () {
 
     server.respondWith(
       'GET',
-      'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.6953125%2C%22ymin%22%3A45.521743896993634%2C%22xmax%22%3A-122.6513671875%2C%22ymax%22%3A45.55252525134013%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&resultType=tile&f=json',
+      'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSR=4326&geometry=%7B%22xmin%22%3A-122.6953125%2C%22ymin%22%3A45.521743896993634%2C%22xmax%22%3A-122.6513671875%2C%22ymax%22%3A45.55252525134013%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&resultType=tile&f=json',
       JSON.stringify({
         fields: fields,
         features: [feature2, feature3],
@@ -412,7 +484,7 @@ describe('L.esri.FeatureManager', function () {
   it('should load more features with a single time field', function () {
     server.respondWith(
       'GET',
-      'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.6513671875%2C%22ymin%22%3A45.49094569262732%2C%22xmax%22%3A-122.607421875%2C%22ymax%22%3A45.521743896993634%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&resultType=tile&time=1385884800000%2C1389340800000&f=json',
+      'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSR=4326&geometry=%7B%22xmin%22%3A-122.6513671875%2C%22ymin%22%3A45.49094569262732%2C%22xmax%22%3A-122.607421875%2C%22ymax%22%3A45.521743896993634%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&resultType=tile&time=1385884800000%2C1389340800000&f=json',
       JSON.stringify({
         fields: fields,
         features: [feature1],
@@ -428,7 +500,7 @@ describe('L.esri.FeatureManager', function () {
     layer.addTo(map);
 
     server.respond();
-    console.log(1, server.lastRequest.url);
+    // console.log(1, server.lastRequest.url);
 
     expect(layer.createLayers).to.have.been.calledWith([
       {
@@ -449,7 +521,7 @@ describe('L.esri.FeatureManager', function () {
 
     server.respondWith(
       'GET',
-      'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.6513671875%2C%22ymin%22%3A45.49094569262732%2C%22xmax%22%3A-122.607421875%2C%22ymax%22%3A45.521743896993634%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&resultType=tile&time=1389686400000%2C1389859200000&f=json',
+      'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSR=4326&geometry=%7B%22xmin%22%3A-122.6513671875%2C%22ymin%22%3A45.49094569262732%2C%22xmax%22%3A-122.607421875%2C%22ymax%22%3A45.521743896993634%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&resultType=tile&time=1389686400000%2C1389859200000&f=json',
       JSON.stringify({
         fields: fields,
         features: [feature2],
@@ -463,7 +535,7 @@ describe('L.esri.FeatureManager', function () {
     );
 
     server.respond();
-    console.log(2, server.lastRequest.url);
+    // console.log(2, server.lastRequest.url);
     expect(layer.removeLayers).to.have.been.calledWith([1]);
 
     expect(layer.createLayers).to.have.been.calledWith([
@@ -495,7 +567,7 @@ describe('L.esri.FeatureManager', function () {
 
     server.respondWith(
       'GET',
-      'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.6953125%2C%22ymin%22%3A45.521743896993634%2C%22xmax%22%3A-122.6513671875%2C%22ymax%22%3A45.55252525134013%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&resultType=tile&f=json',
+      'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSR=4326&geometry=%7B%22xmin%22%3A-122.6953125%2C%22ymin%22%3A45.521743896993634%2C%22xmax%22%3A-122.6513671875%2C%22ymax%22%3A45.55252525134013%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&resultType=tile&f=json',
       JSON.stringify({
         fields: fields,
         features: [feature4, feature5],
@@ -535,7 +607,7 @@ describe('L.esri.FeatureManager', function () {
 
     server.respondWith(
       'GET',
-      'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.6513671875%2C%22ymin%22%3A45.49094569262732%2C%22xmax%22%3A-122.607421875%2C%22ymax%22%3A45.521743896993634%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&resultType=tile&time=1389254400000%2C1389513600000&f=json',
+      'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSR=4326&geometry=%7B%22xmin%22%3A-122.6513671875%2C%22ymin%22%3A45.49094569262732%2C%22xmax%22%3A-122.607421875%2C%22ymax%22%3A45.521743896993634%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&resultType=tile&time=1389254400000%2C1389513600000&f=json',
       JSON.stringify({
         fields: fields,
         features: [feature4],
@@ -570,7 +642,7 @@ describe('L.esri.FeatureManager', function () {
 
     server.respondWith(
       'GET',
-      'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.6513671875%2C%22ymin%22%3A45.49094569262732%2C%22xmax%22%3A-122.607421875%2C%22ymax%22%3A45.521743896993634%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&resultType=tile&time=1389600000000%2C1389859200000&f=json',
+      'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSR=4326&geometry=%7B%22xmin%22%3A-122.6513671875%2C%22ymin%22%3A45.49094569262732%2C%22xmax%22%3A-122.607421875%2C%22ymax%22%3A45.521743896993634%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&resultType=tile&time=1389600000000%2C1389859200000&f=json',
       JSON.stringify({
         fields: fields,
         features: [feature5],
@@ -1040,7 +1112,7 @@ describe('L.esri.FeatureManager', function () {
   it('should support generalizing geometries', function () {
     server.respondWith(
       'GET',
-      'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.6953125%2C%22ymin%22%3A45.521743896993634%2C%22xmax%22%3A-122.6513671875%2C%22ymax%22%3A45.55252525134013%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&resultType=tile&maxAllowableOffset=0.00004291534423826704&f=json',
+      'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSR=4326&geometry=%7B%22xmin%22%3A-122.6953125%2C%22ymin%22%3A45.521743896993634%2C%22xmax%22%3A-122.6513671875%2C%22ymax%22%3A45.55252525134013%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&resultType=tile&maxAllowableOffset=0.00004291534423826704&f=json',
       JSON.stringify({
         fields: fields,
         features: [feature6],
@@ -1115,7 +1187,7 @@ describe('L.esri.FeatureManager', function () {
   // it('should NOT draw layers when the zoom level is outside allowed range', function (done) {
   //   map.setZoom(14);
 
-  //   server.respondWith('GET', 'http://services.arcgis.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.6953125%2C%22ymin%22%3A45.521743896993634%2C%22xmax%22%3A-122.6513671875%2C%22ymax%22%3A45.55252525134013%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&f=json', JSON.stringify({
+  //   server.respondWith('GET', 'http://services.arcgis.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSR=4326&geometry=%7B%22xmin%22%3A-122.6953125%2C%22ymin%22%3A45.521743896993634%2C%22xmax%22%3A-122.6513671875%2C%22ymax%22%3A45.55252525134013%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&f=json', JSON.stringify({
   //     fields: fields,
   //     features: [feature1, feature2],
   //     objectIdFieldName: 'OBJECTID'
@@ -1139,7 +1211,7 @@ describe('L.esri.FeatureManager', function () {
   // it('should create layers when the zoom level is inside allowed range', function (done) {
   //   map.setZoom(14);
 
-  //   server.respondWith('GET', 'http://services.arcgis.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.6953125%2C%22ymin%22%3A45.521743896993634%2C%22xmax%22%3A-122.6513671875%2C%22ymax%22%3A45.55252525134013%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&f=json', JSON.stringify({
+  //   server.respondWith('GET', 'http://services.arcgis.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSR=4326&geometry=%7B%22xmin%22%3A-122.6953125%2C%22ymin%22%3A45.521743896993634%2C%22xmax%22%3A-122.6513671875%2C%22ymax%22%3A45.55252525134013%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&f=json', JSON.stringify({
   //     fields: fields,
   //     features: [feature1, feature2],
   //     objectIdFieldName: 'OBJECTID'
@@ -1182,7 +1254,7 @@ describe('L.esri.FeatureManager', function () {
     );
 
     layer._requestFeatures(bounds, point, function () {
-      return;
+
     });
 
     server.respondWith(
@@ -1194,7 +1266,7 @@ describe('L.esri.FeatureManager', function () {
     );
 
     layer._requestFeatures(bounds, point, function () {
-      return;
+
     });
 
     expect(layer._activeRequests).to.equal(2);
@@ -1205,7 +1277,7 @@ describe('L.esri.FeatureManager', function () {
       ''
     ]);
     layer._requestFeatures(bounds, point, function () {
-      return;
+
     });
 
     server.respond();
@@ -1216,10 +1288,31 @@ describe('L.esri.FeatureManager', function () {
     expect(triggered).to.be.true;
   });
 
+  it('should fetch as geojson if "isModern" is true', function () {
+    server.respondWith(
+      'GET',
+      'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSR=4326&geometry=%7B%22xmin%22%3A-122.6513671875%2C%22ymin%22%3A45.49094569262732%2C%22xmax%22%3A-122.607421875%2C%22ymax%22%3A45.521743896993634%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&resultOffset=0&resultType=tile&f=geojson',
+      JSON.stringify({
+        type: 'FeatureCollection',
+        features: [feature7] })
+    );
+
+    var layer = new MockLayer({
+      url:
+        'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/',
+      fetchAllFeatures: true,
+      isModern: true
+    });
+
+    layer.addTo(map);
+    server.respond();
+    expect(layer.createLayers).to.have.been.calledWith([feature7]);
+  });
+
   it('should fetch another request if limit exceeded', function () {
     server.respondWith(
       'GET',
-      'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.6513671875%2C%22ymin%22%3A45.49094569262732%2C%22xmax%22%3A-122.607421875%2C%22ymax%22%3A45.521743896993634%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&resultOffset=0&resultType=tile&f=json',
+      'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSR=4326&geometry=%7B%22xmin%22%3A-122.6513671875%2C%22ymin%22%3A45.49094569262732%2C%22xmax%22%3A-122.607421875%2C%22ymax%22%3A45.521743896993634%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&resultOffset=0&resultType=tile&f=json',
       JSON.stringify({
         fields: fields,
         features: [feature6],
@@ -1265,7 +1358,7 @@ describe('L.esri.FeatureManager', function () {
     // second call due to fetchAllFeatures
     server.respondWith(
       'GET',
-      'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.6513671875%2C%22ymin%22%3A45.49094569262732%2C%22xmax%22%3A-122.607421875%2C%22ymax%22%3A45.521743896993634%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&resultOffset=1&resultType=tile&f=json',
+      'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSR=4326&geometry=%7B%22xmin%22%3A-122.6513671875%2C%22ymin%22%3A45.49094569262732%2C%22xmax%22%3A-122.607421875%2C%22ymax%22%3A45.521743896993634%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&resultOffset=1&resultType=tile&f=json',
       JSON.stringify({
         fields: fields,
         features: [feature5],
@@ -1292,10 +1385,82 @@ describe('L.esri.FeatureManager', function () {
     ]);
   });
 
-  it('should not fetch another request even if limit exceeded', function () {
+  it('should fetch another request if limit exceeded - geojson exceededTransferLimit', function () {
     server.respondWith(
       'GET',
-      'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.6513671875%2C%22ymin%22%3A45.49094569262732%2C%22xmax%22%3A-122.607421875%2C%22ymax%22%3A45.521743896993634%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&resultType=tile&f=json',
+      'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSR=4326&geometry=%7B%22xmin%22%3A-122.6513671875%2C%22ymin%22%3A45.49094569262732%2C%22xmax%22%3A-122.607421875%2C%22ymax%22%3A45.521743896993634%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&resultOffset=0&resultType=tile&f=geojson',
+      JSON.stringify({
+        type: 'FeatureCollection',
+        features: [feature7],
+        exceededTransferLimit: true
+      })
+    );
+
+    var layer = new MockLayer({
+      url:
+        'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/',
+      fetchAllFeatures: true,
+      isModern: true
+    });
+
+    layer.addTo(map);
+    server.respond();
+    expect(layer.createLayers).to.have.been.calledWith([feature7]);
+
+    // second call due to fetchAllFeatures
+    server.respondWith(
+      'GET',
+      'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSR=4326&geometry=%7B%22xmin%22%3A-122.6513671875%2C%22ymin%22%3A45.49094569262732%2C%22xmax%22%3A-122.607421875%2C%22ymax%22%3A45.521743896993634%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&resultOffset=1&resultType=tile&f=geojson',
+      JSON.stringify({
+        type: 'FeatureCollection',
+        features: [feature8]
+      })
+    );
+    server.respond();
+    expect(layer.createLayers).to.have.been.calledWith([feature8]);
+  });
+
+  it('should fetch another request if limit exceeded - geojson properties.exceededTransferLimit', function () {
+    server.respondWith(
+      'GET',
+      'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSR=4326&geometry=%7B%22xmin%22%3A-122.6513671875%2C%22ymin%22%3A45.49094569262732%2C%22xmax%22%3A-122.607421875%2C%22ymax%22%3A45.521743896993634%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&resultOffset=0&resultType=tile&f=geojson',
+      JSON.stringify({
+        type: 'FeatureCollection',
+        features: [feature7],
+        properties: {
+          exceededTransferLimit: true
+        }
+      })
+    );
+
+    var layer = new MockLayer({
+      url:
+        'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/',
+      fetchAllFeatures: true,
+      isModern: true
+    });
+
+    layer.addTo(map);
+    server.respond();
+    expect(layer.createLayers).to.have.been.calledWith([feature7]);
+
+    // second call due to fetchAllFeatures
+    server.respondWith(
+      'GET',
+      'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSR=4326&geometry=%7B%22xmin%22%3A-122.6513671875%2C%22ymin%22%3A45.49094569262732%2C%22xmax%22%3A-122.607421875%2C%22ymax%22%3A45.521743896993634%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&resultOffset=1&resultType=tile&f=geojson',
+      JSON.stringify({
+        type: 'FeatureCollection',
+        features: [feature8]
+      })
+    );
+    server.respond();
+    expect(layer.createLayers).to.have.been.calledWith([feature8]);
+  });
+
+  it('should not fetch another request even if limit exceeded when no "fetchAllFeatures"', function () {
+    server.respondWith(
+      'GET',
+      'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSR=4326&geometry=%7B%22xmin%22%3A-122.6513671875%2C%22ymin%22%3A45.49094569262732%2C%22xmax%22%3A-122.607421875%2C%22ymax%22%3A45.521743896993634%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&resultType=tile&f=json',
       JSON.stringify({
         fields: fields,
         features: [feature6],
@@ -1340,7 +1505,7 @@ describe('L.esri.FeatureManager', function () {
     // unexpected second call
     server.respondWith(
       'GET',
-      'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSr=4326&geometry=%7B%22xmin%22%3A-122.6513671875%2C%22ymin%22%3A45.49094569262732%2C%22xmax%22%3A-122.607421875%2C%22ymax%22%3A45.521743896993634%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&resultOffset=1&resultType=tile&f=json',
+      'http://gis.example.com/mock/arcgis/rest/services/MockService/MockFeatureServer/0/query?returnGeometry=true&where=1%3D1&outSR=4326&outFields=*&inSR=4326&geometry=%7B%22xmin%22%3A-122.6513671875%2C%22ymin%22%3A45.49094569262732%2C%22xmax%22%3A-122.607421875%2C%22ymax%22%3A45.521743896993634%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&resultOffset=1&resultType=tile&f=json',
       JSON.stringify({
         fields: fields,
         features: [feature5],
@@ -1368,3 +1533,16 @@ describe('L.esri.FeatureManager', function () {
   });
 });
 /* eslint-enable handle-callback-err */
+© 2022 GitHub, Inc.
+Terms
+Privacy
+Security
+Status
+Docs
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About
+Loading complete

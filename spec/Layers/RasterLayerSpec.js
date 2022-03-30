@@ -1,5 +1,6 @@
 /* eslint-env mocha */
 /* eslint-disable handle-callback-err */
+/* eslint-disable no-unused-expressions */
 describe('L.esri.RasterLayer', function () {
   it('should not error when calling setOpacity when _currentImage is null', function () {
     var layer = new L.esri.RasterLayer();
@@ -10,6 +11,7 @@ describe('L.esri.RasterLayer', function () {
   // Extend 'abstract' RasterLayer object and implement functionality required for tests
   var TestRasterLayer = L.esri.RasterLayer.extend({
     initialize: function (options) {
+      L.setOptions(this, options);
       this.service = {
         metadata: function () {}
       };
@@ -36,9 +38,9 @@ describe('L.esri.RasterLayer', function () {
 
       document.body.appendChild(div);
       map = new L.Map(div);
-      map.setView([0, 0], 1);  // view needs to be set so when layer is added it is initilized
+      map.setView([0, 0], 1); // view needs to be set so when layer is added it is initilized
 
-      map.addLayer = sinon.spy(map.addLayer);         // we want to spy layers being added and removed from the map
+      map.addLayer = sinon.spy(map.addLayer); // we want to spy layers being added and removed from the map
       map.removeLayer = sinon.spy(map.removeLayer);
 
       layer = new TestRasterLayer();
@@ -57,7 +59,7 @@ describe('L.esri.RasterLayer', function () {
         layer.addTo(map);
 
         var imageOverlay = map.addLayer.getCall(1).args[0]; // Get the ImageOverlay which is being added to the map
-        imageOverlay.fire('error');                         // And fire the error event on the layer
+        imageOverlay.fire('error'); // And fire the error event on the layer
 
         expect(errorCallback.called).to.be.true;
       });
@@ -90,6 +92,13 @@ describe('L.esri.RasterLayer', function () {
         imageOverlay.fire('load');
 
         expect(imageOverlay.off.calledWith('error', sinon.match.func, layer)).to.be.true;
+      });
+
+      it('should send credentials', function () {
+        var layer = new TestRasterLayer({ withCredentials: true });
+        layer.addTo(map);
+        var imageOverlay = map.addLayer.getCall(1).args[0];
+        expect(imageOverlay._image.crossOrigin).to.be.equal('use-credentials');
       });
     });
   });
