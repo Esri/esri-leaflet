@@ -10,7 +10,7 @@
 [travis-img]: https://img.shields.io/travis/Esri/esri-leaflet/master.svg?style=flat-square
 [travis-url]: https://travis-ci.org/Esri/esri-leaflet
 
-[Leaflet](http://leafletjs.com/) plugins for working with a handful of the most popular [ArcGIS Service](http://developers.arcgis.com) types. This includes Esri [basemaps](http://esri.github.io/esri-leaflet/examples/switching-basemaps.html) and [feature services](http://esri.github.io/esri-leaflet/examples/simple-feature-layer.html), as well as [tiled](http://esri.github.io/esri-leaflet/examples/tile-layer-2.html) map, [dynamic](http://esri.github.io/esri-leaflet/examples/simple-dynamic-map-layer.html) map and [image](http://esri.github.io/esri-leaflet/examples/simple-image-map-layer.html)  services.
+[Leaflet](http://leafletjs.com/) plugins for working with a handful of the most popular [ArcGIS Service](http://developers.arcgis.com) types. This includes Esri [basemaps](https://developers.arcgis.com/esri-leaflet/samples/showing-a-basemap/) and [feature services](https://developers.arcgis.com/esri-leaflet/samples/simple-feature-layer/), as well as [tiled](https://developers.arcgis.com/esri-leaflet/samples/tile-layer-1/) map, [dynamic](https://developers.arcgis.com/esri-leaflet/samples/simple-dynamic-map-layer/) map and [image](https://developers.arcgis.com/esri-leaflet/samples/simple-image-map-layer/) services.
 
 > This project is maintained with :heart: by folks on multiple teams at Esri, but we provide no guarantee of individual features, nor a traditional product lifecycle to support planning.
 
@@ -43,15 +43,15 @@ Support for [Geocoding](https://github.com/Esri/esri-leaflet-geocoder) services 
 ## Demos
 We've shared lots of sample code showing off many of the features of Esri Leaflet.
 
-http://esri.github.io/esri-leaflet/examples/
+https://developers.arcgis.com/esri-leaflet/samples/
 
 ## Quick Start
-The easiest way to get started is to load Esri Leaflet via [CDN](https://unpkg.com/esri-leaflet). Here is an example you can copy/paste into your own `.html` file: [Esri Leaflet Quick Start](https://esri.github.io/esri-leaflet/examples/)
+The easiest way to get started is to load Esri Leaflet via [CDN](https://unpkg.com/esri-leaflet). Here is an example you can copy/paste into your own `.html` file: [Esri Leaflet Quick Start](https://developers.arcgis.com/esri-leaflet/get-started/)
 
-[![App](https://raw.github.com/Esri/esri-leaflet/master/example.png)](https://esri.github.io/esri-leaflet/examples/)
+[![App](https://raw.github.com/Esri/esri-leaflet/master/example.png)](https://developers.arcgis.com/esri-leaflet/samples/)
 
 
-## [API Reference](http://esri.github.io/esri-leaflet/api-reference/)
+## [API Reference](https://developers.arcgis.com/esri-leaflet/api-reference/)
 
 The source code for our documentation site can be found [here](https://github.com/Esri/esri-leaflet-doc). If you notice a typo or other problem, _please_ [let us know](https://github.com/Esri/esri-leaflet-doc/issues)!
 
@@ -63,7 +63,7 @@ http://leafletjs.com/plugins.html
 
 You can also pick and choose additional Esri Leaflet plugins.
 
-http://esri.github.io/esri-leaflet/plugins/
+https://developers.arcgis.com/esri-leaflet/plugins/
 
 ## Frequently Asked Questions
 
