@@ -5,6 +5,19 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+## [3.0.8] - 2022-04-08
+
+### Fixed
+
+- Fixed warning in Leaflet v1.8.0 ([#1325](https://github.com/Esri/esri-leaflet/pull/1325))
+
+### Changed
+
+- Updated development tooling:
+  - updated Semistandard ([#1319](https://github.com/Esri/esri-leaflet/pull/1319), [#1320](https://github.com/Esri/esri-leaflet/pull/1320), [#1321](https://github.com/Esri/esri-leaflet/pull/1321), [#1322](https://github.com/Esri/esri-leaflet/pull/1322))
+  - switched from `watch` to `chokidar` ([#1324](https://github.com/Esri/esri-leaflet/pull/1324))
+  - switched to rollup-plugin-terser ([#1316](https://github.com/Esri/esri-leaflet/pull/1316)).
+
 ## [3.0.7] - 2022-02-24
 
 ### Fixed
@@ -822,7 +835,8 @@ None
 - Add DarkGray and DarkGrayLabels to BasemapLayer. #190
 - An attributionControl on maps is now required when using BasemapLayer. #159
 
-[unreleased]: https://github.com/esri/esri-leaflet/compare/v3.0.7..HEAD
+[unreleased]: https://github.com/esri/esri-leaflet/compare/v3.0.8..HEAD
+[3.0.8]: https://github.com/esri/esri-leaflet/compare/v3.0.7...v3.0.8
 [3.0.7]: https://github.com/esri/esri-leaflet/compare/v3.0.6...v3.0.7
 [3.0.6]: https://github.com/esri/esri-leaflet/compare/v3.0.5...v3.0.6
 [3.0.5]: https://github.com/esri/esri-leaflet/compare/v3.0.4...v3.0.5
