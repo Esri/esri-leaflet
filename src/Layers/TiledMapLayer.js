@@ -144,7 +144,7 @@ export var TiledMapLayer = TileLayer.extend({
             // if the projection is WGS84, or the developer is using Proj4 to define a custom CRS, no action is required
           } else {
             // if the service was cached in a custom projection and an appropriate LOD hasn't been defined in the map, guide the developer to our Proj4 sample
-            warn('L.esri.TiledMapLayer is using a non-mercator spatial reference. Support may be available through Proj4Leaflet http://esri.github.io/esri-leaflet/examples/non-mercator-projection.html');
+            warn('L.esri.TiledMapLayer is using a non-mercator spatial reference. Support may be available through Proj4Leaflet https://developers.arcgis.com/esri-leaflet/samples/non-mercator-projection/');
           }
         }
       }, this);

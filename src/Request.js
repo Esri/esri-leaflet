@@ -151,7 +151,7 @@ export function request (url, params, callback, context) {
 
   // request is longer then 2000 characters and the browser does not support CORS, log a warning
   } else {
-    warn('a request to ' + url + ' was longer then 2000 characters and this browser cannot make a cross-domain post request. Please use a proxy http://esri.github.io/esri-leaflet/api-reference/request.html');
+    warn('a request to ' + url + ' was longer then 2000 characters and this browser cannot make a cross-domain post request. Please use a proxy https://developers.arcgis.com/esri-leaflet/api-reference/request/');
     return;
   }
 

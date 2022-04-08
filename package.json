@@ -52,7 +52,7 @@
     "dist/siteData.json",
     "profiles/*.js"
   ],
-  "homepage": "http://esri.github.io/esri-leaflet",
+  "homepage": "https://developers.arcgis.com/esri-leaflet/",
   "module": "src/EsriLeaflet.js",
   "jsnext:main": "src/EsriLeaflet.js",
   "jspm": {
