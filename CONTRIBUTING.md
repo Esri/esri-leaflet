@@ -20,9 +20,9 @@ If you think you're encountering a new bug, please feel free to log an [issue](h
 
 There is a lot of room for contributions to Esri Leaflet. Make sure you check out the [development instructions](https://github.com/Esri/esri-leaflet#development-instructions) in the readme to help you get started.
 
-##### More examples
+##### More samples
 
-The Esri Leaflet website is written using [Assemble](https://assemble.io/) and can be found at [esri-leaflet-doc](https://github.com/Esri/esri-leaflet-doc/tree/master/src). You can use the existing examples as a reference.
+If you'd like to add an additional sample to the Esri Leaflet documentation, [let us know by creating an issue in this repository](https://github.com/Esri/esri-leaflet/issues/new?assignees=&labels=Documentation&template=documentation.yml).
 
 ##### More tests
 
