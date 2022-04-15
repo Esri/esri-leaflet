@@ -4,7 +4,7 @@ Esri welcomes contributions from anyone and everyone. Please see our [guidelines
 
 Please take a look at [previous issues](https://github.com/Esri/esri-leaflet/issues?labels=FAQ&milestone=&page=1&state=closed) that resolve common problems.
 
-If you're just looking for help, you'll probably attract the most eyes if you post in [GIS Stackexchange](http://gis.stackexchange.com/questions/ask?tags=esri-leaflet,leaflet) or the [Esri Leaflet place](https://geonet.esri.com/discussion/create.jspa?sr=pmenu&containerID=1841&containerType=700&tags=esri-leaflet,leaflet) on GeoNet.
+If you're just looking for help, you'll probably attract the most eyes if you post in [GIS Stackexchange](http://gis.stackexchange.com/questions/ask?tags=esri-leaflet,leaflet) or the [Esri Leaflet Community](https://community.esri.com/t5/esri-leaflet/ct-p/esri-leaflet) on GeoNet.
 
 If you think you're encountering a new bug, please feel free to log an [issue](https://github.com/Esri/esri-leaflet/issues/new) and include the steps to reproduce the problem (and preferably a running sample).
 
@@ -26,7 +26,7 @@ The Esri Leaflet website is written using [Assemble](https://assemble.io/) and c
 
 ##### More tests
 
-Esri Leaflet has a fairly comprehensive test suite built with [Mocha](http://mochajs.org/), [Chai](http://chaijs.com/), [Sinon](http://sinonjs.org), and [Karma](http://karma-runner.github.io/0.12/index.html). The tests can be found in the [`master/spec` folder](https://github.com/Esri/esri-leaflet/tree/master/spec).
+Esri Leaflet has a fairly comprehensive test suite built with [Mocha](https://mochajs.org/), [Chai](https://www.chaijs.com/), [Sinon](https://sinonjs.org/), and [Karma](https://karma-runner.github.io/). The tests can be found in the [`spec` folder](https://github.com/Esri/esri-leaflet/tree/master/spec).
 
 You can run the tests with `npm test`.
 
