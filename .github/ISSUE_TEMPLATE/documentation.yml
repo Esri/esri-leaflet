@@ -1,5 +1,6 @@
 name: "Documentation"
 description: Suggest an idea or report an issue with the documentation site, https://developers.arcgis.com/esri-leaflet
+labels: [Documentation]
 body:
   - type: markdown
     attributes:
