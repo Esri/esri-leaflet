@@ -310,55 +310,8 @@ table {
     .copyright a:last-of-type {
       margin-right: 0; }
 
-.background-map {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 2; }
-  .background-map .leaflet-map-pane {
-    opacity: .35; }
-  .background-map.leaflet-container {
-    background-color: rgba(36, 132, 210, 0.35);
-    -webkit-animation-iteration-count: infinite;
-    -webkit-animation-duration: 30s;
-    -webkit-animation-name: colorshift;
-    -moz-animation-iteration-count: infinite;
-    -moz-animation-duration: 30s;
-    -moz-animation-name: colorshift;
-    animation-iteration-count: infinite;
-    animation-duration: 30s;
-    animation-name: colorshift; }
-
-.not-ie .background-map img {
-  -webkit-filter: grayscale(50%);
-  -moz-filter: grayscale(50%);
-  filter: grayscale(50%); }
-
-@keyframes colorshift {
-  0% {
-    background-color: rgba(36, 132, 210, 0.25); }
-  33% {
-    background-color: rgba(121, 189, 143, 0.25); }
-  66% {
-    background-color: rgba(157, 120, 210, 0.25); } }
-
-@-webkit-keyframes colorshift {
-  0% {
-    background-color: rgba(36, 132, 210, 0.25); }
-  33% {
-    background-color: rgba(121, 189, 143, 0.25); }
-  66% {
-    background-color: rgba(157, 120, 210, 0.25); } }
-
-@-moz-keyframes colorshift {
-  0% {
-    background-color: rgba(36, 132, 210, 0.25); }
-  33% {
-    background-color: rgba(121, 189, 143, 0.25); }
-  66% {
-    background-color: rgba(157, 120, 210, 0.25); } }
+body {
+  background-color: rgba(121, 189, 143, 0.25); }
 
 .btn {
   display: inline-block;
