@@ -25,9 +25,8 @@ Support for [Geocoding](https://github.com/Esri/esri-leaflet-geocoder) services 
 ## Table of Contents
 
 - [Getting Started](#getting-started)
-  - [Demos](#demos)
   - [Quick Start](#quick-start)
-  - [API Reference](#api-reference)
+  - [Samples, Tutorials, and API Reference](#samples-tutorials-and-api-reference)
   - [Additional Plugins](#additional-plugins)
   - [Frequently Asked Questions](#frequently-asked-questions)
   - [Issues](#issues)
@@ -40,20 +39,17 @@ Support for [Geocoding](https://github.com/Esri/esri-leaflet-geocoder) services 
 - [Credit](#credit)
 - [License](#license)
 
-## Demos
-We've shared lots of sample code showing off many of the features of Esri Leaflet.
-
-https://developers.arcgis.com/esri-leaflet/samples/
-
 ## Quick Start
 The easiest way to get started is to load Esri Leaflet via [CDN](https://unpkg.com/esri-leaflet). Here is an example you can copy/paste into your own `.html` file: [Esri Leaflet Quick Start](https://developers.arcgis.com/esri-leaflet/get-started/)
 
 [![App](https://raw.github.com/Esri/esri-leaflet/master/example.png)](https://developers.arcgis.com/esri-leaflet/samples/)
 
 
-## [API Reference](https://developers.arcgis.com/esri-leaflet/api-reference/)
+## [Samples, Tutorials, and API Reference](https://developers.arcgis.com/esri-leaflet/)
 
-The source code for our documentation site can be found [here](https://github.com/Esri/esri-leaflet-doc). If you notice a typo or other problem, _please_ [let us know](https://github.com/Esri/esri-leaflet-doc/issues)!
+[Samples](https://developers.arcgis.com/esri-leaflet/samples/), [tutorials](https://developers.arcgis.com/esri-leaflet/tutorials/), and the [API reference](https://developers.arcgis.com/esri-leaflet/api-reference/) can be found at [developers.arcgis.com/esri-leaflet](https://developers.arcgis.com/esri-leaflet/).
+
+If you notice any issues or would like to propose a change to the documentation, _please_ [let us know by creating an issue in this repository](https://github.com/Esri/esri-leaflet/issues/new?assignees=&labels=Documentation&template=documentation.yml).
 
 ## Additional Plugins
 
