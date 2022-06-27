@@ -33,7 +33,6 @@
     "karma-firefox-launcher": "^2.1.2",
     "karma-mocha": "^2.0.1",
     "karma-mocha-reporter": "^2.2.5",
-    "karma-rollup-preprocessor": "^7.0.8",
     "karma-safari-launcher": "~1.0.0",
     "karma-sourcemap-loader": "^0.3.8",
     "leaflet": "^1.6.0",
