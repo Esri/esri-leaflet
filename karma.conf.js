@@ -1,6 +1,4 @@
 // Karma configuration
-// Generated on Fri May 30 2014 15:44:45 GMT-0400 (EDT)
-
 module.exports = function (config) {
   var configuration = {
 
@@ -39,36 +37,63 @@ module.exports = function (config) {
     // web server port
     port: 9876,
 
-    // enable / disable colors in the output (reporters and logs)
-    colors: true,
-
     // level of logging
     // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
     logLevel: config.LOG_WARN,
 
+    // enable / disable colors in the output (reporters and logs)
+    colors: true,
+
     // enable / disable watching file and executing tests whenever any file changes
-    autoWatch: true,
+    autoWatch: false,
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: [
-      'Chrome'
-      // 'ChromeCanary',
-      // 'Firefox',
-      // 'Safari',
-      // 'PhantomJS'
-    ],
+    browsers: ['Chrome1280x1024'],
 
     customLaunchers: {
-      Chrome_travis_ci: {
+      Chrome1280x1024: {
         base: 'ChromeHeadless',
-        flags: ['--no-sandbox']
+        // increased viewport is required for some tests (TODO fix tests)
+        // https://github.com/Leaflet/Leaflet/issues/7113#issuecomment-619528577
+        flags: ['--window-size=1280,1024']
+      },
+      FirefoxTouch: {
+        base: 'FirefoxHeadless',
+        prefs: {
+          'dom.w3c_touch_events.enabled': 1
+        }
+      },
+      FirefoxNoTouch: {
+        base: 'FirefoxHeadless',
+        prefs: {
+          'dom.w3c_touch_events.enabled': 0
+        }
+      },
+      IE10: {
+        base: 'IE',
+        'x-ua-compatible': 'IE=EmulateIE10'
       }
     },
+
+    concurrency: 1,
+
+    // If browser does not capture in given timeout [ms], kill it
+    captureTimeout: 60000,
+
+    // Timeout for the client socket connection [ms].
+    browserSocketTimeout: 30000,
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
     singleRun: true,
+
+    client: {
+      mocha: {
+        // eslint-disable-next-line no-undef
+        forbidOnly: process.env.CI || false
+      }
+    },
 
     // Configure the coverage reporters
     coverageReporter: {
@@ -82,10 +107,6 @@ module.exports = function (config) {
       ]
     }
   };
-
-  if (process.env.TRAVIS) {
-    configuration.browsers = ['Chrome_travis_ci'];
-  }
 
   config.set(configuration);
 };
