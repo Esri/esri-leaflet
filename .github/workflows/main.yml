@@ -7,7 +7,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-2019]
+        os: [ubuntu-latest, windows-latest]
     steps:
       - name: Check out repository
         uses: actions/checkout@v2
@@ -41,7 +41,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-2019]
+        os: [ubuntu-latest, windows-latest]
     steps:
       - name: Restore setup
         uses: actions/cache@v3
@@ -91,10 +91,8 @@ jobs:
           - browser: Chrome1280x1024
           - browser: FirefoxTouch
           - browser: FirefoxNoTouch
-          - browser: IE
-            os: windows-2019
-          - browser: IE10
-            os: windows-2019
+          - browser: Edge
+            os: windows-latest
     steps:
       - name: Restore build
         uses: actions/cache@v3
