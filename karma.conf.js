@@ -69,10 +69,6 @@ module.exports = function (config) {
         prefs: {
           'dom.w3c_touch_events.enabled': 0
         }
-      },
-      IE10: {
-        base: 'IE',
-        'x-ua-compatible': 'IE=EmulateIE10'
       }
     },
 
