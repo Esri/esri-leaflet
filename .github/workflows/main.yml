@@ -1,0 +1,109 @@
+name: CI
+on: [push, pull_request]
+env:
+  NODE_VERSION: 16
+jobs:
+  setup:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          check-latest: true
+          cache: npm
+
+      - name: Cache dependencies
+        id: cache-dependencies
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Install dependencies
+        if: steps.cache-dependencies.outputs.cache-hit != 'true'
+        run: npm ci
+
+      - name: Cache setup
+        uses: actions/cache@v3
+        with:
+          path: ./*
+          key: ${{ runner.os }}-${{ github.sha }}-setup
+
+  build:
+    needs: setup
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    steps:
+      - name: Restore setup
+        uses: actions/cache@v3
+        with:
+          path: ./*
+          key: ${{ runner.os }}-${{ github.sha }}-setup
+
+      - name: Set up Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Build project
+        run: npm run build
+
+      - name: Cache build
+        uses: actions/cache@v3
+        with:
+          path: ./*
+          key: ${{ runner.os }}-${{ github.sha }}-build
+
+  lint:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: Restore setup
+        uses: actions/cache@v3
+        with:
+          path: ./*
+          key: ${{ runner.os }}-${{ github.sha }}-setup
+
+      - name: Set up Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Run lint task
+        run: npm run lint
+
+  test:
+    needs: build
+    runs-on: ${{ matrix.os || 'ubuntu-latest' }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - browser: Chrome1280x1024
+          - browser: FirefoxTouch
+          - browser: FirefoxNoTouch
+          - browser: Edge
+            os: windows-latest
+    steps:
+      - name: Restore build
+        uses: actions/cache@v3
+        with:
+          path: ./*
+          key: ${{ runner.os }}-${{ github.sha }}-build
+
+      - name: Set up Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Run tests on ${{ matrix.browser }}
+        run: npm test -- --browsers ${{ matrix.browser }}

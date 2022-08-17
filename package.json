@@ -25,12 +25,15 @@
     "highlight.js": "^11.4.0",
     "http-server": "^14.1.0",
     "husky": "^1.1.1",
-    "karma": "^6.3.16",
-    "karma-chai-sinon": "^0.1.5",
-    "karma-chrome-launcher": "^3.1.0",
+    "karma": "^6.3.18",
+    "karma-chrome-launcher": "^3.1.1",
     "karma-coverage": "^2.2.0",
+    "karma-edgium-launcher": "github:matracey/karma-edgium-launcher",
+    "karma-firefox-launcher": "^2.1.2",
     "karma-mocha": "^2.0.1",
     "karma-mocha-reporter": "^2.2.5",
+    "karma-safari-launcher": "~1.0.0",
+    "karma-sinon-chai": "^2.0.2",
     "karma-sourcemap-loader": "^0.3.8",
     "leaflet": "^1.6.0",
     "mkdirp": "^1.0.4",
@@ -89,8 +92,7 @@
     "start-watch": "chokidar src -c \"npm run build\"",
     "start": "run-p start-watch serve",
     "serve": "http-server -p 5000 -c-1 -o",
-    "test": "npm run lint && karma start",
-    "test:ci": "npm run lint && karma start --browsers Chrome_travis_ci"
+    "test": "npm run lint && karma start"
   },
   "semistandard": {
     "globals": [
