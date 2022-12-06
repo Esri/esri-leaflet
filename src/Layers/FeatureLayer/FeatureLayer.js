@@ -407,7 +407,7 @@ export var FeatureLayer = FeatureManager.extend({
 
     // looks like a path (polygon/polyline)
     if (layer && layer.setStyle && this.options.style) {
-      this.resetStyle(geojson.id);
+      this.resetFeatureStyle(geojson.id);
     }
   }
 });
