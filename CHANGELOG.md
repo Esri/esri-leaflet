@@ -5,6 +5,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+## [3.0.9] - 2022-12-09
+
+### Fixed
+
+- Fixed performance issue with refreshing features ([#1346](https://github.com/Esri/esri-leaflet/pull/1346))
+
 ## [3.0.8] - 2022-04-08
 
 ### Fixed
@@ -105,7 +111,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 - Fix Error on cellEnter (🙏francharbo🙏 [#1204](https://github.com/Esri/esri-leaflet/pull/1204))
 - Fix bugs with feature layer setWhere ([#1211](https://github.com/Esri/esri-leaflet/pull/1211))
-- MinZoom issue - do not clear _currentSnapshot when hiding the layer ([#1212](https://github.com/Esri/esri-leaflet/pull/1212))
+- MinZoom issue - do not clear \_currentSnapshot when hiding the layer ([#1212](https://github.com/Esri/esri-leaflet/pull/1212))
 - ImageMapLayer - proxy support now works when `f:image` ([#1221](https://github.com/Esri/esri-leaflet/pull/1221))
 - DynamicMapLayer - proxy support now works when `f:image` ([#1220](https://github.com/Esri/esri-leaflet/pull/1220))
 - FeatureLayer issues when `refresh()` was called ([#1224](https://github.com/Esri/esri-leaflet/pull/1224))
@@ -557,15 +563,15 @@ L.esri.featureLayer({
   url: "http://...",
 
   // define how to convert your point into a layer
-  pointToLayer: function(latlng, feature) {
+  pointToLayer: function (latlng, feature) {
     return L.circleMarker(latlng);
   },
 
   // style that vector layer
   style: {
     radius: 10,
-    color: "red"
-  }
+    color: "red",
+  },
 });
 ```
 
@@ -590,10 +596,9 @@ Also see the [Esri Leaflet 1.0 announcement](https://github.com/Esri/esri-leafle
 
 ```js
 L.esri.Services.service({
-  url:
-    "http://logistics.arcgis.com/arcgis/rest/services/World/ServiceAreas/GPServer/GenerateServiceAreas",
-  token: "badtoken"
-}).metadata(function(error, response) {
+  url: "http://logistics.arcgis.com/arcgis/rest/services/World/ServiceAreas/GPServer/GenerateServiceAreas",
+  token: "badtoken",
+}).metadata(function (error, response) {
   if (error && error.authenticate) {
     // handle an authentication error, returning to stop execution of the rest of the function
     error.authenticate("good token");
@@ -835,7 +840,8 @@ None
 - Add DarkGray and DarkGrayLabels to BasemapLayer. #190
 - An attributionControl on maps is now required when using BasemapLayer. #159
 
-[unreleased]: https://github.com/esri/esri-leaflet/compare/v3.0.8..HEAD
+[unreleased]: https://github.com/esri/esri-leaflet/compare/v3.0.9..HEAD
+[3.0.9]: https://github.com/esri/esri-leaflet/compare/v3.0.8...v3.0.9
 [3.0.8]: https://github.com/esri/esri-leaflet/compare/v3.0.7...v3.0.8
 [3.0.7]: https://github.com/esri/esri-leaflet/compare/v3.0.6...v3.0.7
 [3.0.6]: https://github.com/esri/esri-leaflet/compare/v3.0.5...v3.0.6
