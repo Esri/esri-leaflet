@@ -409,6 +409,36 @@ export var FeatureLayer = FeatureManager.extend({
     if (layer && layer.setStyle && this.options.style) {
       this.resetFeatureStyle(geojson.id);
     }
+  },
+
+  // This is the same as the Layer.openPopup method except it excludes the `FeatureGroup`
+  // logic to work around https://github.com/Leaflet/Leaflet/issues/8761
+  openPopup (latlng) {
+    if (this._popup) {
+      if (this._popup._prepareOpen(latlng || this._latlng)) {
+        // open the popup on the map
+        this._popup.openOn(this._map);
+      }
+    }
+    return this;
+  },
+
+  // This is the same as the `Layer.openTooltip` method except it excludes the `FeatureGroup`
+  // logic to work around https://github.com/Leaflet/Leaflet/issues/8761
+  openTooltip (latlng) {
+    if (this._tooltip) {
+      if (this._tooltip._prepareOpen(latlng)) {
+        // open the tooltip on the map
+        this._tooltip.openOn(this._map);
+
+        if (this.getElement) {
+          this._setAriaDescribedByOnLayer(this);
+        } else if (this.eachLayer) {
+          this.eachLayer(this._setAriaDescribedByOnLayer, this);
+        }
+      }
+    }
+    return this;
   }
 });
 
