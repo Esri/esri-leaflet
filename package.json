@@ -44,8 +44,7 @@
     "semistandard": "^14.2.3",
     "sinon": "^15.0.1",
     "sinon-chai": "3.7.0",
-    "snazzy": "^9.0.0",
-    "uglify-js": "^3.17.4"
+    "snazzy": "^9.0.0"
   },
   "files": [
     "src/**/*.js",
