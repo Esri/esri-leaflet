@@ -1,4 +1,4 @@
-import { terser } from 'rollup-plugin-terser';
+import terser from '@rollup/plugin-terser';
 import config from './base.js';
 
 config.output.file = 'dist/esri-leaflet.js';
