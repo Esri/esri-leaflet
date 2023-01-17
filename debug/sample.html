@@ -53,9 +53,7 @@
   <body>
     <div id="map"></div>
     <div id="info-pane" class="leaflet-bar">
-      <label>
-        sample application for debugging
-      </label>
+      <label> sample application for debugging </label>
     </div>
 
     <script>
@@ -68,15 +66,16 @@
 
       var fl = L.esri
         .featureLayer({
-          url:
-            "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/flash_flood_warnings_2002_2012/FeatureServer/0"
+          url: "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/flash_flood_warnings_2002_2012/FeatureServer/0",
         })
         .addTo(map);
 
-      L.esri.dynamicMapLayer({
-        url: 'https://services.arcgisonline.com/arcgis/rest/services/Specialty/Soil_Survey_Map/MapServer',
-        opacity: 0.7
-      }).addTo(map);
+      L.esri
+        .dynamicMapLayer({
+          url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Elevation/WorldElevations/MapServer",
+          opacity: 0.4,
+        })
+        .addTo(map);
     </script>
   </body>
 </html>
