@@ -1,14 +1,11 @@
 # Esri Leaflet
 
 [![npm version][npm-img]][npm-url]
-[![build status][travis-img]][travis-url]
 [![apache licensed](https://img.shields.io/badge/license-Apache%202.0-orange.svg?style=flat-square)](https://raw.githubusercontent.com/Esri/esri-leaflet/master/LICENSE)
 [![jsDelivr Hits](https://data.jsdelivr.com/v1/package/npm/esri-leaflet/badge)](https://www.jsdelivr.com/package/npm/esri-leaflet)
 
 [npm-img]: https://img.shields.io/npm/v/esri-leaflet.svg?style=flat-square
 [npm-url]: https://www.npmjs.com/package/esri-leaflet
-[travis-img]: https://img.shields.io/travis/Esri/esri-leaflet/master.svg?style=flat-square
-[travis-url]: https://travis-ci.org/Esri/esri-leaflet
 
 [Leaflet](http://leafletjs.com/) plugins for working with a handful of the most popular [ArcGIS Service](http://developers.arcgis.com) types. This includes Esri [basemaps](https://developers.arcgis.com/esri-leaflet/samples/showing-a-basemap/) and [feature services](https://developers.arcgis.com/esri-leaflet/samples/simple-feature-layer/), as well as [tiled](https://developers.arcgis.com/esri-leaflet/samples/tile-layer-1/) map, [dynamic](https://developers.arcgis.com/esri-leaflet/samples/simple-dynamic-map-layer/) map and [image](https://developers.arcgis.com/esri-leaflet/samples/simple-image-map-layer/) services.
 
