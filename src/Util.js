@@ -173,6 +173,26 @@ export function calcAttributionWidth (map) {
   return (map.getSize().x - options.attributionWidthOffset) + 'px';
 }
 
+export function _getLeafletAttribution (map) {
+  if (!map.attributionControl.options._originalPrefix) {
+    _setLeafletAttribution(map);
+  }
+
+  return map.attributionControl.options._originalPrefix;
+}
+
+export function _setLeafletAttribution (map) {
+  if (!map.attributionControl.options.prefix) {
+    if (!Object.getPrototypeOf(map.attributionControl).options.prefix) {
+      map.attributionControl.options._originalPrefix = BASE_LEAFLET_ATTRIBUTION_STRING;
+    } else {
+      map.attributionControl.options._originalPrefix = Object.getPrototypeOf(map.attributionControl).options.prefix;
+    }
+  } else {
+    map.attributionControl.options._originalPrefix = map.attributionControl.options.prefix;
+  }
+}
+
 export function setEsriAttribution (map) {
   if (!map.attributionControl) {
     return;
@@ -217,7 +237,7 @@ export function setEsriAttribution (map) {
       map.attributionControl._esriAttributionAddedOnce = true;
     }
 
-    map.attributionControl.setPrefix(BASE_LEAFLET_ATTRIBUTION_STRING + ' | ' + POWERED_BY_ESRI_ATTRIBUTION_STRING);
+    map.attributionControl.setPrefix(_getLeafletAttribution(map) + ' | ' + POWERED_BY_ESRI_ATTRIBUTION_STRING);
     DomUtil.addClass(map.attributionControl._container, 'esri-truncated-attribution:hover');
     DomUtil.addClass(map.attributionControl._container, 'esri-truncated-attribution');
   }
@@ -233,7 +253,8 @@ export function removeEsriAttribution (map) {
 
   // Only remove the attribution if we're about to remove the LAST esri-leaflet layer (_esriAttributionLayerCount)
   if (map.attributionControl._esriAttributionLayerCount && map.attributionControl._esriAttributionLayerCount === 1) {
-    map.attributionControl.setPrefix(BASE_LEAFLET_ATTRIBUTION_STRING);
+    map.attributionControl.setPrefix(_getLeafletAttribution(map));
+    map.attributionControl.options._originalPrefix = undefined;
     DomUtil.removeClass(map.attributionControl._container, 'esri-truncated-attribution:hover');
     DomUtil.removeClass(map.attributionControl._container, 'esri-truncated-attribution');
   }
@@ -386,7 +407,9 @@ export var EsriUtil = {
   _getAttributionData: _getAttributionData,
   _updateMapAttribution: _updateMapAttribution,
   _findIdAttributeFromFeature: _findIdAttributeFromFeature,
-  _findIdAttributeFromResponse: _findIdAttributeFromResponse
+  _findIdAttributeFromResponse: _findIdAttributeFromResponse,
+  _getLeafletAttribution: _getLeafletAttribution,
+  _setLeafletAttribution: _setLeafletAttribution
 };
 
 export default EsriUtil;
