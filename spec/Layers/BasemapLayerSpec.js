@@ -1,4 +1,6 @@
 /* eslint-env mocha */
+var POWERED_BY_ESRI_ATTRIBUTION_STRING = 'Powered by <a href="https://www.esri.com">Esri</a>';
+
 describe('L.esri.BasemapLayer', function () {
   function createMap () {
     // create container
@@ -114,21 +116,21 @@ describe('L.esri.BasemapLayer', function () {
     map.attributionControl.setPrefix('aaa');
     const layer = L.esri.basemapLayer('Topographic');
     layer.addTo(map);
-    expect(map.attributionControl.options.prefix).to.equal('aaa | Powered by <a href="https://www.esri.com">Esri</a>');
+    expect(map.attributionControl.options.prefix).to.equal('aaa | ' + POWERED_BY_ESRI_ATTRIBUTION_STRING);
   });
 
   it('should have correct attribution when attribution is set AFTER adding the layer to the map', function () {
     const layer = L.esri.basemapLayer('Topographic');
     layer.addTo(map);
     map.attributionControl.setPrefix('bbb');
-    expect(map.attributionControl.options.prefix).to.equal('bbb | Powered by <a href="https://www.esri.com">Esri</a>');
+    expect(map.attributionControl.options.prefix).to.equal('bbb | ' + POWERED_BY_ESRI_ATTRIBUTION_STRING);
   });
 
   it('should remove the attribution when the layer is removed from the map', function () {
     map.attributionControl.setPrefix('ccc');
     const layer = L.esri.basemapLayer('Topographic');
     layer.addTo(map);
-    expect(map.attributionControl.options.prefix).to.equal('ccc | Powered by <a href="https://www.esri.com">Esri</a>');
+    expect(map.attributionControl.options.prefix).to.equal('ccc | ' + POWERED_BY_ESRI_ATTRIBUTION_STRING);
     map.removeLayer(layer);
     expect(map.attributionControl.options.prefix).to.equal('ccc');
   });
@@ -137,7 +139,7 @@ describe('L.esri.BasemapLayer', function () {
     const layer = L.esri.basemapLayer('Topographic');
     layer.addTo(map);
     map.attributionControl.setPrefix('ddd');
-    expect(map.attributionControl.options.prefix).to.equal('ddd | Powered by <a href="https://www.esri.com">Esri</a>');
+    expect(map.attributionControl.options.prefix).to.equal('ddd | ' + POWERED_BY_ESRI_ATTRIBUTION_STRING);
     map.removeLayer(layer);
     expect(map.attributionControl.options.prefix).to.equal('ddd');
   });
@@ -146,7 +148,7 @@ describe('L.esri.BasemapLayer', function () {
     map.attributionControl.setPrefix('');
     const layer = L.esri.basemapLayer('Topographic');
     layer.addTo(map);
-    expect(map.attributionControl.options.prefix).to.equal('Powered by <a href="https://www.esri.com">Esri</a>');
+    expect(map.attributionControl.options.prefix).to.equal(POWERED_BY_ESRI_ATTRIBUTION_STRING);
     map.removeLayer(layer);
     expect(map.attributionControl.options.prefix).to.equal('');
   });
