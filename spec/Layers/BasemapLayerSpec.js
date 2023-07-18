@@ -111,22 +111,22 @@ describe('L.esri.BasemapLayer', function () {
   });
 
   it('should have correct attribution when attribution is set BEFORE adding the layer to the map', function () {
-    map.attributionControl.setPrefix("ccc");
-    const layer = L.esri.basemapLayer("Topographic");
+    map.attributionControl.setPrefix('ccc');
+    const layer = L.esri.basemapLayer('Topographic');
     layer.addTo(map);
-      expect(map.attributionControl.options.prefix).to.equal('ccc | Powered by <a href="https://www.esri.com">Esri</a>');
+    expect(map.attributionControl.options.prefix).to.equal('ccc | Powered by <a href="https://www.esri.com">Esri</a>');
   });
 
   it('should have correct attribution when attribution is set AFTER adding the layer to the map', function () {
-    const layer = L.esri.basemapLayer("Topographic");
+    const layer = L.esri.basemapLayer('Topographic');
     layer.addTo(map);
-      map.attributionControl.setPrefix("ddd");
-      expect(map.attributionControl.options.prefix).to.equal('ddd | Powered by <a href="https://www.esri.com">Esri</a>');
+    map.attributionControl.setPrefix('ddd');
+    expect(map.attributionControl.options.prefix).to.equal('ddd | Powered by <a href="https://www.esri.com">Esri</a>');
   });
 
   it('should remove the attribution when the layer is removed from the map', function () {
-    map.attributionControl.setPrefix("aaa");
-    const layer = L.esri.basemapLayer("Topographic");
+    map.attributionControl.setPrefix('aaa');
+    const layer = L.esri.basemapLayer('Topographic');
     layer.addTo(map);
     expect(map.attributionControl.options.prefix).to.equal('aaa | Powered by <a href="https://www.esri.com">Esri</a>');
     map.removeLayer(layer);
