@@ -10,6 +10,7 @@ import {
 
 var BASE_LEAFLET_ATTRIBUTION_STRING = '<a href="http://leafletjs.com" title="A JS library for interactive maps">Leaflet</a>';
 var POWERED_BY_ESRI_ATTRIBUTION_STRING = 'Powered by <a href="https://www.esri.com">Esri</a>';
+var ORIGINAL_PREFIX_CUSTOM_ATTRIBUTE = '_esriLeafletOriginalPrefix';
 
 export function geojsonToArcGIS (geojson, idAttr) {
   return g2a(geojson, idAttr);
@@ -174,22 +175,22 @@ export function calcAttributionWidth (map) {
 }
 
 export function _getLeafletAttribution (map) {
-  if (!map.attributionControl.options._originalPrefix) {
+  if (!map.attributionControl.options[ORIGINAL_PREFIX_CUSTOM_ATTRIBUTE]) {
     _setLeafletAttribution(map);
   }
 
-  return map.attributionControl.options._originalPrefix;
+  return map.attributionControl.options[ORIGINAL_PREFIX_CUSTOM_ATTRIBUTE];
 }
 
 export function _setLeafletAttribution (map) {
   if (!map.attributionControl.options.prefix) {
     if (!Object.getPrototypeOf(map.attributionControl).options.prefix) {
-      map.attributionControl.options._originalPrefix = BASE_LEAFLET_ATTRIBUTION_STRING;
+      map.attributionControl.options[ORIGINAL_PREFIX_CUSTOM_ATTRIBUTE] = BASE_LEAFLET_ATTRIBUTION_STRING;
     } else {
-      map.attributionControl.options._originalPrefix = Object.getPrototypeOf(map.attributionControl).options.prefix;
+      map.attributionControl.options[ORIGINAL_PREFIX_CUSTOM_ATTRIBUTE] = Object.getPrototypeOf(map.attributionControl).options.prefix;
     }
   } else {
-    map.attributionControl.options._originalPrefix = map.attributionControl.options.prefix;
+    map.attributionControl.options[ORIGINAL_PREFIX_CUSTOM_ATTRIBUTE] = map.attributionControl.options.prefix;
   }
 }
 
@@ -254,7 +255,7 @@ export function removeEsriAttribution (map) {
   // Only remove the attribution if we're about to remove the LAST esri-leaflet layer (_esriAttributionLayerCount)
   if (map.attributionControl._esriAttributionLayerCount && map.attributionControl._esriAttributionLayerCount === 1) {
     map.attributionControl.setPrefix(_getLeafletAttribution(map));
-    map.attributionControl.options._originalPrefix = undefined;
+    map.attributionControl.options[ORIGINAL_PREFIX_CUSTOM_ATTRIBUTE] = undefined;
     DomUtil.removeClass(map.attributionControl._container, 'esri-truncated-attribution:hover');
     DomUtil.removeClass(map.attributionControl._container, 'esri-truncated-attribution');
   }
