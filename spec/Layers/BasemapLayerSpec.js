@@ -142,6 +142,15 @@ describe('L.esri.BasemapLayer', function () {
     expect(map.attributionControl.options.prefix).to.equal('ddd');
   });
 
+  it('should handle empty attribution prefix similar to tile layer', function () {
+    map.attributionControl.setPrefix('');
+    const layer = L.esri.basemapLayer('Topographic');
+    layer.addTo(map);
+    expect(map.attributionControl.options.prefix).to.equal('Powered by <a href="https://www.esri.com">Esri</a>');
+    map.removeLayer(layer);
+    expect(map.attributionControl.options.prefix).to.equal('');
+  });
+
   // /*
   // need to figure out how to wire up the mockAttributions to
   // test display when map is panned beyond the dateline
