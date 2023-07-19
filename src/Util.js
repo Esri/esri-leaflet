@@ -174,16 +174,20 @@ export function calcAttributionWidth (map) {
   return (map.getSize().x - options.attributionWidthOffset) + 'px';
 }
 
-export function _getLeafletAttribution (map) {
-  if (!map.attributionControl.options[ORIGINAL_PREFIX_CUSTOM_ATTRIBUTE]) {
+export function _getLeafletAttribution (map, suffix = '') {
+  if (typeof map.attributionControl.options[ORIGINAL_PREFIX_CUSTOM_ATTRIBUTE] === 'undefined') {
     _setLeafletAttribution(map);
   }
 
-  return map.attributionControl.options[ORIGINAL_PREFIX_CUSTOM_ATTRIBUTE];
+  var attributionText = map.attributionControl.options[ORIGINAL_PREFIX_CUSTOM_ATTRIBUTE];
+  if (attributionText.length) {
+    attributionText += suffix;
+  }
+  return attributionText;
 }
 
 export function _setLeafletAttribution (map) {
-  if (!map.attributionControl.options.prefix) {
+  if (typeof map.attributionControl.options.prefix === 'undefined') {
     if (!Object.getPrototypeOf(map.attributionControl).options.prefix) {
       map.attributionControl.options[ORIGINAL_PREFIX_CUSTOM_ATTRIBUTE] = BASE_LEAFLET_ATTRIBUTION_STRING;
     } else {
@@ -238,7 +242,7 @@ export function setEsriAttribution (map) {
       map.attributionControl._esriAttributionAddedOnce = true;
     }
 
-    map.attributionControl.setPrefix(_getLeafletAttribution(map) + ' | ' + POWERED_BY_ESRI_ATTRIBUTION_STRING);
+    map.attributionControl.setPrefix(_getLeafletAttribution(map, ' | ') + POWERED_BY_ESRI_ATTRIBUTION_STRING);
     DomUtil.addClass(map.attributionControl._container, 'esri-truncated-attribution:hover');
     DomUtil.addClass(map.attributionControl._container, 'esri-truncated-attribution');
   }
