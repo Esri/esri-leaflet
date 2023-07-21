@@ -8,7 +8,6 @@ import {
   arcgisToGeoJSON as a2g
 } from '@terraformer/arcgis';
 
-var BASE_LEAFLET_ATTRIBUTION_STRING = '<a href="http://leafletjs.com" title="A JS library for interactive maps">Leaflet</a>';
 var POWERED_BY_ESRI_ATTRIBUTION_STRING = 'Powered by <a href="https://www.esri.com">Esri</a>';
 
 export function geojsonToArcGIS (geojson, idAttr) {
@@ -217,7 +216,6 @@ export function setEsriAttribution (map) {
       map.attributionControl._esriAttributionAddedOnce = true;
     }
 
-    map.attributionControl.setPrefix(BASE_LEAFLET_ATTRIBUTION_STRING + ' | ' + POWERED_BY_ESRI_ATTRIBUTION_STRING);
     DomUtil.addClass(map.attributionControl._container, 'esri-truncated-attribution:hover');
     DomUtil.addClass(map.attributionControl._container, 'esri-truncated-attribution');
   }
@@ -233,7 +231,6 @@ export function removeEsriAttribution (map) {
 
   // Only remove the attribution if we're about to remove the LAST esri-leaflet layer (_esriAttributionLayerCount)
   if (map.attributionControl._esriAttributionLayerCount && map.attributionControl._esriAttributionLayerCount === 1) {
-    map.attributionControl.setPrefix(BASE_LEAFLET_ATTRIBUTION_STRING);
     DomUtil.removeClass(map.attributionControl._container, 'esri-truncated-attribution:hover');
     DomUtil.removeClass(map.attributionControl._container, 'esri-truncated-attribution');
   }
@@ -356,7 +353,7 @@ export function _updateMapAttribution (evt) {
       }
     }
 
-    newAttributions = newAttributions.substr(2);
+    newAttributions = POWERED_BY_ESRI_ATTRIBUTION_STRING + ' | ' + newAttributions.substr(2);
     attributionElement.innerHTML = newAttributions;
     attributionElement.style.maxWidth = calcAttributionWidth(map);
 

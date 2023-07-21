@@ -110,6 +110,20 @@ describe('L.esri.BasemapLayer', function () {
     expect(L.esri.basemapLayer('Topographic')).to.be.instanceof(L.esri.BasemapLayer);
   });
 
+  it('should not affect the attribution control prefix', function () {
+    map.attributionControl.setPrefix('aaa');
+    const layer = L.esri.basemapLayer('Topographic');
+    layer.addTo(map);
+    expect(map.attributionControl.options.prefix).to.equal('aaa');
+  });
+
+  it('should handle empty attribution prefix similar to tile layer', function () {
+    map.attributionControl.setPrefix('');
+    const layer = L.esri.basemapLayer('Topographic');
+    layer.addTo(map);
+    expect(map.attributionControl.options.prefix).to.equal('');
+  });
+
   // /*
   // need to figure out how to wire up the mockAttributions to
   // test display when map is panned beyond the dateline
