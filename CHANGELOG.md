@@ -5,6 +5,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+## [3.0.11] - 2023-08-07
+
+### Fixed
+
+- Fixed issue with attribution prefix consistency ([#1366](https://github.com/Esri/esri-leaflet/pull/1366))
+
 ## [3.0.10] - 2023-01-17
 
 ### Fixed
@@ -850,7 +856,8 @@ None
 - Add DarkGray and DarkGrayLabels to BasemapLayer. #190
 - An attributionControl on maps is now required when using BasemapLayer. #159
 
-[unreleased]: https://github.com/esri/esri-leaflet/compare/v3.0.10..HEAD
+[unreleased]: https://github.com/esri/esri-leaflet/compare/v3.0.11..HEAD
+[3.0.11]: https://github.com/esri/esri-leaflet/compare/v3.0.10...v3.0.11
 [3.0.10]: https://github.com/esri/esri-leaflet/compare/v3.0.9...v3.0.10
 [3.0.9]: https://github.com/esri/esri-leaflet/compare/v3.0.8...v3.0.9
 [3.0.8]: https://github.com/esri/esri-leaflet/compare/v3.0.7...v3.0.8

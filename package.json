@@ -1,7 +1,7 @@
 {
   "name": "esri-leaflet",
   "description": "Leaflet plugins for consuming ArcGIS Online and ArcGIS Server services.",
-  "version": "3.0.10",
+  "version": "3.0.11",
   "author": "Patrick Arlt <parlt@esri.com> (http://patrickarlt.com)",
   "bugs": {
     "url": "https://github.com/esri/esri-leaflet/issues"
