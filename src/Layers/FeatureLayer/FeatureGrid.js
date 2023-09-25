@@ -48,7 +48,6 @@ export var FeatureGrid = Layer.extend({
     this._cells = {};
     this._activeCells = {};
     this._resetView();
-    this._update();
   },
 
   onRemove: function (map) {
