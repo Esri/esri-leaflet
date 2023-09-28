@@ -85,7 +85,6 @@
     "lint": "semistandard | snazzy",
     "prebuild": "mkdirp dist",
     "pretest": "npm run build",
-    "precommit": "npm run lint",
     "fix": "semistandard --fix",
     "release": "./scripts/release.sh",
     "start-watch": "chokidar src -c \"npm run build\"",
@@ -103,5 +102,10 @@
       "proj4"
     ]
   },
-  "unpkg": "dist/esri-leaflet-debug.js"
+  "unpkg": "dist/esri-leaflet-debug.js",
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint"
+    }
+  }
 }
