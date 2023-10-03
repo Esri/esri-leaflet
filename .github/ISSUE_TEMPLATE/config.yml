@@ -1,4 +1,4 @@
-blank_issues_enabled: false
+blank_issues_enabled: true
 contact_links:
   - name: Esri Community
     url: https://community.esri.com/t5/esri-leaflet/ct-p/esri-leaflet
