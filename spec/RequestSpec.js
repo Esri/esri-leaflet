@@ -214,5 +214,19 @@ describe('L.esri request helpers', function () {
   it('should setup an alias for L.esri.post', function () {
     expect(L.esri.post).to.be.a('function');
   });
+
+  it('should encode params for a request with params with apostrophes', function (done) {
+    const quotedString = "'id123'";
+
+    L.esri.request('http://services.arcgisonline.com/ArcGIS/rest/info',
+      { id: quotedString }, function (error, response) {
+        expect(response).to.deep.equal(sampleResponse);
+        done();
+      });
+
+    const quotedStringEncoded = quotedString.replaceAll("'", '%27');
+    expect(requests[0].url).to.contain(quotedStringEncoded);
+    requests[0].respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, JSON.stringify(sampleResponse));
+  });
 });
 /* eslint-enable handle-callback-err */
