@@ -48,6 +48,38 @@ describe('L.esri request helpers', function () {
     requests[0].respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, JSON.stringify(sampleResponse));
   });
 
+  it('should not switch from a GET request if hideToken option is on, but no token is present', function (done) {
+    L.esri.get.CORS('http://services.arcgisonline.com/ArcGIS/rest/info', {}, function (error, response) {
+      expect(this.foo).to.equal('bar');
+      expect(response).to.deep.equal(sampleResponse);
+      done();
+    }, {
+      foo: 'bar',
+      options: { hideToken: true }
+    });
+
+    expect(requests[0].url).to.equal('http://services.arcgisonline.com/ArcGIS/rest/info?f=json');
+    expect(requests[0].method).to.equal('GET');
+    requests[0].respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, JSON.stringify(sampleResponse));
+  });
+
+  it('should be able to switch from a GET request to POST if token is present and hideToken option is on', function (done) {
+    L.esri.get.CORS('http://services.arcgisonline.com/ArcGIS/rest/info', { token: 'foo' }, function (error, response) {
+      expect(this.foo).to.equal('bar');
+      expect(response).to.deep.equal(sampleResponse);
+      done();
+    }, {
+      foo: 'bar',
+      options: { hideToken: true }
+    });
+
+    expect(requests[0].url).to.equal('http://services.arcgisonline.com/ArcGIS/rest/info');
+    expect(requests[0].method).to.equal('POST');
+    expect(requests[0].requestBody).to.contain('f=json');
+    expect(requests[0].requestBody).to.contain('token=foo');
+    requests[0].respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, JSON.stringify(sampleResponse));
+  });
+
   it('should be able to make a GET request with CORS and credentials', function (done) {
     L.esri.get.CORS('http://services.arcgisonline.com/ArcGIS/rest/info', {}, function (error, response) {
       expect(this.foo).to.equal('bar');
@@ -119,6 +151,19 @@ describe('L.esri request helpers', function () {
 
     expect(requests[0].url).to.contain('token=foo');
     expect(requests[0].withCredentials).to.equal(false);
+    expect(requests[0].method).to.be.equal('GET');
+    requests[0].respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, JSON.stringify(sampleResponse));
+  });
+
+  it('should make a POST request with a token if hideToken option is on', function (done) {
+    L.esri.request('http://services.arcgisonline.com/ArcGIS/rest/info', { token: 'foo' }, function (error, response) {
+      expect(response).to.deep.equal(sampleResponse);
+      done();
+    }, { options: { hideToken: true } });
+
+    expect(requests[0].requestBody).to.contain('token=foo');
+    expect(requests[0].withCredentials).to.equal(false);
+    expect(requests[0].method).to.be.equal('POST');
     requests[0].respond(200, { 'Content-Type': 'text/plain; charset=utf-8' }, JSON.stringify(sampleResponse));
   });
 

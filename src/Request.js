@@ -98,6 +98,10 @@ function xmlHttpPost (url, params, callback, context) {
 }
 
 function xmlHttpGet (url, params, callback, context) {
+  if (hideTokenNeeded(params, context)) {
+    return xmlHttpPost(url, params, callback, context);
+  }
+
   var httpRequest = createRequest(callback, context);
   httpRequest.open('GET', url + '?' + serialize(params), true);
 
@@ -114,6 +118,10 @@ function xmlHttpGet (url, params, callback, context) {
   return httpRequest;
 }
 
+function hideTokenNeeded (params, context) {
+  return context?.options?.hideToken && params?.token;
+}
+
 // AJAX handlers for CORS (modern browsers) or JSONP (older browsers)
 export function request (url, params, callback, context) {
   var paramString = serialize(params);
@@ -121,9 +129,9 @@ export function request (url, params, callback, context) {
   var requestLength = (url + '?' + paramString).length;
 
   // ie10/11 require the request be opened before a timeout is applied
-  if (requestLength <= 2000 && Support.cors) {
+  if (requestLength <= 2000 && Support.cors && !hideTokenNeeded(params, context)) {
     httpRequest.open('GET', url + '?' + paramString);
-  } else if (requestLength > 2000 && Support.cors) {
+  } else if ((requestLength > 2000 || hideTokenNeeded(params, context)) && Support.cors) {
     httpRequest.open('POST', url);
     httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
   }
@@ -138,11 +146,11 @@ export function request (url, params, callback, context) {
   }
 
   // request is less than 2000 characters and the browser supports CORS, make GET request with XMLHttpRequest
-  if (requestLength <= 2000 && Support.cors) {
+  if (requestLength <= 2000 && Support.cors && !hideTokenNeeded(params, context)) {
     httpRequest.send(null);
 
   // request is more than 2000 characters and the browser supports CORS, make POST request with XMLHttpRequest
-  } else if (requestLength > 2000 && Support.cors) {
+  } else if ((requestLength > 2000 || hideTokenNeeded(params, context)) && Support.cors) {
     httpRequest.send(paramString);
 
   // request is less  than 2000 characters and the browser does not support CORS, make a JSONP request
