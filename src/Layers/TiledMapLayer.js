@@ -73,7 +73,7 @@ export var TiledMapLayer = TileLayer.extend({
       x: tilePoint.x,
       y: tilePoint.y,
       // try lod map first, then just default to zoom level
-      z: (this._lodMap && this._lodMap[zoom]) ? this._lodMap[zoom] : zoom
+      z: (this._lodMap && this._lodMap[zoom] !== undefined) ? this._lodMap[zoom] : zoom
     }, this.options));
   },
 
@@ -95,7 +95,7 @@ export var TiledMapLayer = TileLayer.extend({
 
     // if there is no lod map or an lod map with a proper zoom load the tile
     // otherwise wait for the lod map to become available
-    if (!this._lodMap || (this._lodMap && this._lodMap[this._getZoomForUrl()])) {
+    if (!this._lodMap || (this._lodMap && this._lodMap[this._getZoomForUrl()] !== undefined)) {
       tile.src = this.getTileUrl(coords);
     } else {
       this.once('lodmap', function () {
