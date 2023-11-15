@@ -379,6 +379,7 @@ export var EsriUtil = {
   extentToBounds: extentToBounds,
   calcAttributionWidth: calcAttributionWidth,
   setEsriAttribution: setEsriAttribution,
+  removeEsriAttribution: removeEsriAttribution,
   _setGeometry: _setGeometry,
   _getAttributionData: _getAttributionData,
   _updateMapAttribution: _updateMapAttribution,
