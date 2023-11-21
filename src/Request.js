@@ -32,7 +32,8 @@ function serialize (params) {
     }
   }
 
-  return data;
+  const APOSTROPHE_URL_ENCODE = '%27';
+  return data.replaceAll("'", APOSTROPHE_URL_ENCODE);
 }
 
 function createRequest (callback, context) {

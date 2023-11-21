@@ -571,7 +571,7 @@ describe('L.esri.Query', function () {
   });
 
   it('should query features with a where option', function (done) {
-    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=NAME%3D\'Site\'&outSR=4326&outFields=*&f=json', JSON.stringify(sampleQueryResponse));
+    server.respondWith('GET', featureLayerUrl + 'query?returnGeometry=true&where=NAME%3D%27Site%27&outSR=4326&outFields=*&f=json', JSON.stringify(sampleQueryResponse));
 
     task.where('NAME=\'Site\'').run(function (error, featureCollection, raw) {
       expect(featureCollection).to.deep.equal(sampleFeatureCollection);

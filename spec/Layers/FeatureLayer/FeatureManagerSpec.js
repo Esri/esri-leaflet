@@ -652,7 +652,7 @@ describe('L.esri.FeatureManager', function () {
   it('should filter features with a where parameter', function () {
     server.respondWith(
       'GET',
-      /Type%3D'Active'/g,
+      /Type%3D%27Active%27/g,
       JSON.stringify({
         fields: fields,
         features: [feature1],
@@ -662,7 +662,7 @@ describe('L.esri.FeatureManager', function () {
 
     server.respondWith(
       'GET',
-      /Type%3D'Inactive'/g,
+      /Type%3D%27Inactive%27/g,
       JSON.stringify({
         fields: fields,
         features: [feature2],
