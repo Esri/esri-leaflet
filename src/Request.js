@@ -123,9 +123,9 @@ export function request (url, params, callback, context) {
 
   // ie10/11 require the request be opened before a timeout is applied
   if (requestLength <= 2000 && Support.cors) {
-    httpRequest.open('GET', url + '?' + paramString);
+    httpRequest.open('GET', url + '?' + paramString, true);
   } else if (requestLength > 2000 && Support.cors) {
-    httpRequest.open('POST', url);
+    httpRequest.open('POST', url, true);
     httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
   }
 
