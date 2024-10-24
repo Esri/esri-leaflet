@@ -1,6 +1,6 @@
 import {
   LatLngBounds,
-  toLatLngBounds as latLngBounds,
+  latLngBounds,
   Layer,
   Browser,
   Util,
