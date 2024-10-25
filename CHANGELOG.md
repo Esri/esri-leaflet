@@ -5,6 +5,16 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+## [3.0.13] - 2024-10-25
+
+### Fixed
+
+- Removed usage of `toLatLngBounds` to improve usage of Esri Leaflet with ESM CDNs. ([#1394](https://github.com/Esri/esri-leaflet/pull/1394))
+
+### Changed
+
+- Updated dependencies ([#1382](https://github.com/Esri/esri-leaflet/pull/1382))
+
 ## [3.0.12] - 2023-11-27
 
 ### Fixed
@@ -864,7 +874,8 @@ None
 - Add DarkGray and DarkGrayLabels to BasemapLayer. #190
 - An attributionControl on maps is now required when using BasemapLayer. #159
 
-[unreleased]: https://github.com/esri/esri-leaflet/compare/v3.0.12..HEAD
+[unreleased]: https://github.com/esri/esri-leaflet/compare/v3.0.13..HEAD
+[3.0.13]: https://github.com/esri/esri-leaflet/compare/v3.0.12..v3.0.13
 [3.0.12]: https://github.com/esri/esri-leaflet/compare/v3.0.11..v3.0.12
 [3.0.11]: https://github.com/esri/esri-leaflet/compare/v3.0.10...v3.0.11
 [3.0.10]: https://github.com/esri/esri-leaflet/compare/v3.0.9...v3.0.10
