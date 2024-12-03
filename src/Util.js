@@ -224,6 +224,10 @@ export function setEsriAttribution (map) {
   map.attributionControl._esriAttributionLayerCount = map.attributionControl._esriAttributionLayerCount + 1;
 }
 
+export function getEsriAttributionHtmlString () {
+  return POWERED_BY_ESRI_ATTRIBUTION_STRING;
+}
+
 export function removeEsriAttribution (map) {
   if (!map.attributionControl) {
     return;
@@ -353,7 +357,7 @@ export function _updateMapAttribution (evt) {
       }
     }
 
-    newAttributions = POWERED_BY_ESRI_ATTRIBUTION_STRING + ' | ' + newAttributions.substr(2);
+    newAttributions = getEsriAttributionHtmlString() + ' | ' + newAttributions.substr(2);
     attributionElement.innerHTML = newAttributions;
     attributionElement.style.maxWidth = calcAttributionWidth(map);
 
@@ -379,6 +383,7 @@ export var EsriUtil = {
   extentToBounds: extentToBounds,
   calcAttributionWidth: calcAttributionWidth,
   setEsriAttribution: setEsriAttribution,
+  getEsriAttributionHtmlString: getEsriAttributionHtmlString,
   removeEsriAttribution: removeEsriAttribution,
   _setGeometry: _setGeometry,
   _getAttributionData: _getAttributionData,
