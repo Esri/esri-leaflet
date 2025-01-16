@@ -175,6 +175,8 @@ export var DynamicMapLayer = RasterLayer.extend({
   _requestExport: function (params, bounds) {
     if (this.options.f === 'json') {
       this.service.request('export', params, function (error, response) {
+        if(this.latestRequestParams !== params) { return; }
+
         if (error) { return; } // we really can't do anything here but authenticate or requesterror will fire
 
         if (this.options.token && response.href) {
