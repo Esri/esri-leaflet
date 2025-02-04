@@ -95,7 +95,7 @@ export var TiledMapLayer = TileLayer.extend({
 
     // if there is no lod map or an lod map with a proper zoom load the tile
     // otherwise wait for the lod map to become available
-    if (!this._lodMap || (this._lodMap && this._lodMap[this._getZoomForUrl()] !== undefined)) {
+    if (this._lodMap && this._lodMap[this._getZoomForUrl()] !== undefined) {
       tile.src = this.getTileUrl(coords);
     } else {
       this.once('lodmap', function () {
