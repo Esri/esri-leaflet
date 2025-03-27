@@ -5,7 +5,8 @@ import mapService from '../Services/MapService';
 export var TiledMapLayer = TileLayer.extend({
   options: {
     zoomOffsetAllowance: 0.1,
-    errorTileUrl: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEABAMAAACuXLVVAAAAA1BMVEUzNDVszlHHAAAAAXRSTlMAQObYZgAAAAlwSFlzAAAAAAAAAAAB6mUWpAAAADZJREFUeJztwQEBAAAAgiD/r25IQAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA7waBAAABw08RwAAAAABJRU5ErkJggg=='
+    errorTileUrl:
+      'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEABAMAAACuXLVVAAAAA1BMVEUzNDVszlHHAAAAAXRSTlMAQObYZgAAAAlwSFlzAAAAAAAAAAAB6mUWpAAAADZJREFUeJztwQEBAAAAgiD/r25IQAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA7waBAAABw08RwAAAAABJRU5ErkJggg=='
   },
 
   statics: {
@@ -42,7 +43,11 @@ export var TiledMapLayer = TileLayer.extend({
 
     // set the urls
     options = getUrlParams(options);
-    this.tileUrl = (options.proxy ? options.proxy + '?' : '') + options.url + 'tile/{z}/{y}/{x}' + (options.requestParams && Object.keys(options.requestParams).length > 0 ? Util.getParamString(options.requestParams) : '');
+    this.tileUrl =
+      (options.proxy ? options.proxy + '?' : '') +
+      options.url +
+      'tile/{z}/{y}/{x}' +
+      (options.requestParams && Object.keys(options.requestParams).length > 0 ? Util.getParamString(options.requestParams) : '');
     // Remove subdomain in url
     // https://github.com/Esri/esri-leaflet/issues/991
     if (options.url.indexOf('{s}') !== -1 && options.subdomains) {
@@ -57,8 +62,9 @@ export var TiledMapLayer = TileLayer.extend({
       options.subdomains = ['1', '2', '3', '4'];
     }
 
-    if (this.options.token) {
-      this.tileUrl += ('?token=' + this.options.token);
+    if (options.token || options.apikey) {
+      var tkn = options.token ? options.token : options.apikey;
+      this.tileUrl += '?token=' + tkn;
     }
 
     // init layer by calling TileLayers initialize method
@@ -68,13 +74,19 @@ export var TiledMapLayer = TileLayer.extend({
   getTileUrl: function (tilePoint) {
     var zoom = this._getZoomForUrl();
 
-    return Util.template(this.tileUrl, Util.extend({
-      s: this._getSubdomain(tilePoint),
-      x: tilePoint.x,
-      y: tilePoint.y,
-      // try lod map first, then just default to zoom level
-      z: (this._lodMap && this._lodMap[zoom] !== undefined) ? this._lodMap[zoom] : zoom
-    }, this.options));
+    return Util.template(
+      this.tileUrl,
+      Util.extend(
+        {
+          s: this._getSubdomain(tilePoint),
+          x: tilePoint.x,
+          y: tilePoint.y,
+          // try lod map first, then just default to zoom level
+          z: this._lodMap && this._lodMap[zoom] !== undefined ? this._lodMap[zoom] : zoom
+        },
+        this.options
+      )
+    );
   },
 
   createTile: function (coords, done) {
@@ -98,9 +110,13 @@ export var TiledMapLayer = TileLayer.extend({
     if (!this._lodMap || (this._lodMap && this._lodMap[this._getZoomForUrl()] !== undefined)) {
       tile.src = this.getTileUrl(coords);
     } else {
-      this.once('lodmap', function () {
-        tile.src = this.getTileUrl(coords);
-      }, this);
+      this.once(
+        'lodmap',
+        function () {
+          tile.src = this.getTileUrl(coords);
+        },
+        this
+      );
     }
 
     return tile;
@@ -140,11 +156,13 @@ export var TiledMapLayer = TileLayer.extend({
             }
 
             this.fire('lodmap');
-          } else if (map.options.crs && map.options.crs.code && (map.options.crs.code.indexOf(sr) > -1)) {
+          } else if (map.options.crs && map.options.crs.code && map.options.crs.code.indexOf(sr) > -1) {
             // if the projection is WGS84, or the developer is using Proj4 to define a custom CRS, no action is required
           } else {
             // if the service was cached in a custom projection and an appropriate LOD hasn't been defined in the map, guide the developer to our Proj4 sample
-            warn('L.esri.TiledMapLayer is using a non-mercator spatial reference. Support may be available through Proj4Leaflet https://developers.arcgis.com/esri-leaflet/samples/non-mercator-projection/');
+            warn(
+              'L.esri.TiledMapLayer is using a non-mercator spatial reference. Support may be available through Proj4Leaflet https://developers.arcgis.com/esri-leaflet/samples/non-mercator-projection/'
+            );
           }
         }
       }, this);
@@ -178,14 +196,14 @@ export var TiledMapLayer = TileLayer.extend({
 
   authenticate: function (token) {
     var tokenQs = '?token=' + token;
-    this.tileUrl = (this.options.token) ? this.tileUrl.replace(/\?token=(.+)/g, tokenQs) : this.tileUrl + tokenQs;
+    this.tileUrl = this.options.token ? this.tileUrl.replace(/\?token=(.+)/g, tokenQs) : this.tileUrl + tokenQs;
     this.options.token = token;
     this.service.authenticate(token);
     return this;
   },
 
   _withinPercentage: function (a, b, percentage) {
-    var diff = Math.abs((a / b) - 1);
+    var diff = Math.abs(a / b - 1);
     return diff < percentage;
   }
 });
