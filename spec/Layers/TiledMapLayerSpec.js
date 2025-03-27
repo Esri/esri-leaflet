@@ -111,6 +111,15 @@ describe('L.esri.TiledMapLayer', function () {
     expect(layer.tileUrl).to.equal('http://services.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer/tile/{z}/{y}/{x}?token=foo');
   });
 
+  it('should use an apikey passed in options', function () {
+    layer = L.esri.tiledMapLayer({
+      url: url,
+      apikey: 'abc123'
+    });
+
+    expect(layer.tileUrl).to.equal('http://services.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer/tile/{z}/{y}/{x}?token=abc123');
+  });
+
   it('should store additional params passed in url', function () {
     layer = L.esri.tiledMapLayer({
       url: urlWithParams
