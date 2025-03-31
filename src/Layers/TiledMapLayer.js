@@ -41,6 +41,10 @@ export var TiledMapLayer = TileLayer.extend({
   initialize: function (options) {
     options = Util.setOptions(this, options);
 
+    if (options.apikey) {
+      options.token = options.apikey;
+    }
+
     // set the urls
     options = getUrlParams(options);
     this.tileUrl =
@@ -62,9 +66,8 @@ export var TiledMapLayer = TileLayer.extend({
       options.subdomains = ['1', '2', '3', '4'];
     }
 
-    if (options.token || options.apikey) {
-      var tkn = options.token ? options.token : options.apikey;
-      this.tileUrl += '?token=' + tkn;
+    if (this.options.token) {
+      this.tileUrl += ('?token=' + this.options.token);
     }
 
     // init layer by calling TileLayers initialize method
