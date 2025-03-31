@@ -126,14 +126,18 @@ export var Query = Task.extend({
     this._cleanParams();
 
     // services hosted on ArcGIS Online and ArcGIS Server 10.3.1+ support requesting geojson directly
-    if (this.options.isModern || (isArcgisOnline(this.options.url) && this.options.isModern === undefined)) {
+    if (this.options.isModern === undefined) {
+      this.options.isModern = true; // Default to modern
+    }
+
+    if (this.options.isModern || isArcgisOnline(this.options.url)) {
       this.params.f = 'geojson';
 
       return this.request(function (error, response) {
         this._trapSQLerrors(error);
         callback.call(context, error, response, response);
       }, this);
-
+    
       // otherwise convert it in the callback then pass it on
     } else {
       return this.request(function (error, response) {
