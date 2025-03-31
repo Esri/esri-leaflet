@@ -40,6 +40,11 @@ export var TiledMapLayer = TileLayer.extend({
   initialize: function (options) {
     options = Util.setOptions(this, options);
 
+    // support apikey property being passed in
+    if (options.apikey) {
+      options.token = options.apikey;
+    }
+
     // set the urls
     options = getUrlParams(options);
     this.tileUrl = (options.proxy ? options.proxy + '?' : '') + options.url + 'tile/{z}/{y}/{x}' + (options.requestParams && Object.keys(options.requestParams).length > 0 ? Util.getParamString(options.requestParams) : '');
