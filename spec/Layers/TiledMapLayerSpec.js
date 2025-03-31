@@ -139,7 +139,7 @@ describe('L.esri.TiledMapLayer', function () {
 
     expect(layer.tileUrl).to.equal('http://services.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer/tile/{z}/{y}/{x}?token=abc123');
   });
-  
+
   it('should use a token passed with authenticate()', function () {
     layer = L.esri.tiledMapLayer({
       url: url
