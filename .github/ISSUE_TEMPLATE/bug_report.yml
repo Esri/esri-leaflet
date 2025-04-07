@@ -17,7 +17,7 @@ body:
     id: reproduction
     attributes:
       label: Reproduction
-      description: A link to a public repository or jsbin (you can start with https://jsbin.com/yewimat/edit) that reproduces the issue, along with a step by step explanation of how to see the issue. If no reproduction case is provided within a reasonable time-frame, the issue will be closed.
+      description: A link to a public repository or jsbin (you can start with https://jsbin.com/moterub/edit) that reproduces the issue, along with a step by step explanation of how to see the issue. If no reproduction case is provided within a reasonable time-frame, the issue will be closed.
       placeholder: Reproduction
     validations:
       required: true
