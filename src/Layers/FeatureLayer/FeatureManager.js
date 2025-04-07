@@ -80,26 +80,29 @@ export var FeatureManager = FeatureGrid.extend({
         var supportedFormats = metadata.supportedQueryFormats;
 
         // Check if someone has requested that we don't use geoJSON, even if it's available
+       // Check if someone has requested that we don't use geoJSON, even if it's available
         var forceJsonFormat = false;
         if (
-          this.service.options.isModern === false ||
+          this.service.options.isModern === false || // Explicitly disabled
           this.options.fetchAllFeatures
         ) {
           forceJsonFormat = true;
+        } else if (this.service.options.isModern === undefined) {
+          this.service.options.isModern = true; // Default to modern
         }
 
-        // Unless we've been told otherwise, check to see whether service can emit GeoJSON natively
+
+       // Unless we've been told otherwise, check to see whether service can emit GeoJSON natively
         if (
           !forceJsonFormat &&
           supportedFormats &&
           supportedFormats.indexOf('geoJSON') !== -1
         ) {
-          this.service.options.isModern = true;
+          this.service.options.isModern = true; // Confirm GeoJSON support
+        } else if (this.service.options.isModern === undefined) {
+          this.service.options.isModern = true; // Default assumption
         }
 
-        if (metadata.objectIdField) {
-          this.service.options.idAttribute = metadata.objectIdField;
-        }
 
         // add copyright text listed in service metadata
         if (
