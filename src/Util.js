@@ -205,7 +205,7 @@ export function setEsriAttribution(map) {
       const hoverAttributionStyle = document.createElement("style");
       hoverAttributionStyle.type = "text/css";
       hoverAttributionStyle.innerHTML =
-        ".esri-truncated-attribution:hover {" + "white-space: normal;" + "}";
+        ".esri-truncated-attribution:hover {white-space: normal;}";
       document
         .getElementsByTagName("head")[0]
         .appendChild(hoverAttributionStyle);
