@@ -6,12 +6,5 @@
   "dependencies": {
     "leaflet": "^1.0.0"
   },
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "components",
-    "examples",
-    "spec",
-    "site"
-  ]
+  "ignore": ["**/.*", "node_modules", "components", "examples", "spec", "site"]
 }

@@ -1,20 +1,19 @@
-import {Service} from './Service';
-import identifyImage from '../Tasks/IdentifyImage';
-import query from '../Tasks/Query';
+import { Service } from "./Service";
+import identifyImage from "../Tasks/IdentifyImage";
+import query from "../Tasks/Query";
 
 export var ImageService = Service.extend({
+  query() {
+    return query(this);
+  },
 
-	query() {
-		return query(this);
-	},
-
-	identify() {
-		return identifyImage(this);
-	}
+  identify() {
+    return identifyImage(this);
+  },
 });
 
 export function imageService(options) {
-	return new ImageService(options);
+  return new ImageService(options);
 }
 
 export default imageService;
