@@ -3,7 +3,7 @@ import { cors } from "../Support";
 import { cleanUrl, getUrlParams } from "../Util";
 import Request from "../Request";
 
-export var Service = Evented.extend({
+export const Service = Evented.extend({
   options: {
     proxy: false,
     useCors: cors,

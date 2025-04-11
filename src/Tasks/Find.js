@@ -1,7 +1,7 @@
 import { Task } from "./Task";
 import { responseToFeatureCollection } from "../Util";
 
-export var Find = Task.extend({
+export const Find = Task.extend({
   setters: {
     // method name > param name
     contains: "contains",

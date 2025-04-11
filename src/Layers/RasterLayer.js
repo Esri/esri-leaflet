@@ -28,7 +28,7 @@ const Overlay = ImageOverlay.extend({
   },
 });
 
-export var RasterLayer = Layer.extend({
+export const RasterLayer = Layer.extend({
   options: {
     opacity: 1,
     position: "front",
@@ -158,7 +158,7 @@ export var RasterLayer = Layer.extend({
     }
     const layers = this._currentImage.getPane().children;
     let edgeZIndex = -compare(-Infinity, Infinity); // -Infinity for max, Infinity for min
-    for (var i = 0, len = layers.length, zIndex; i < len; i++) {
+    for (let i = 0, len = layers.length, zIndex; i < len; i++) {
       zIndex = layers[i].style.zIndex;
       if (layers[i] !== this._currentImage._image && zIndex) {
         edgeZIndex = compare(edgeZIndex, +zIndex);
@@ -243,7 +243,7 @@ export var RasterLayer = Layer.extend({
         image.off("load", onOverlayLoad, this);
       };
 
-      var onOverlayLoad = function (e) {
+      const onOverlayLoad = function (e) {
         image.off("error", onOverlayError, this);
         if (this._map) {
           const newImage = e.target;

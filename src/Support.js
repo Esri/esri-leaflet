@@ -1,8 +1,9 @@
-export var cors =
+export const cors =
   window.XMLHttpRequest && "withCredentials" in new window.XMLHttpRequest();
-export var pointerEvents = document.documentElement.style.pointerEvents === "";
+export const pointerEvents =
+  document.documentElement.style.pointerEvents === "";
 
-export var Support = {
+export const Support = {
   cors,
   pointerEvents,
 };

@@ -3,7 +3,7 @@ import { cors } from "../Support";
 import { cleanUrl, getUrlParams } from "../Util";
 import Request from "../Request";
 
-export var Task = Class.extend({
+export const Task = Class.extend({
   options: {
     proxy: false,
     useCors: cors,

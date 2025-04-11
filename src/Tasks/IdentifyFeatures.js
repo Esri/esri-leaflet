@@ -6,7 +6,7 @@ import {
   _setGeometry,
 } from "../Util";
 
-export var IdentifyFeatures = Identify.extend({
+export const IdentifyFeatures = Identify.extend({
   setters: {
     layers: "layers",
     precision: "geometryPrecision",

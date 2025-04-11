@@ -7,7 +7,7 @@ import {
 } from "../Util";
 import mapService from "../Services/MapService";
 
-export var TiledMapLayer = TileLayer.extend({
+export const TiledMapLayer = TileLayer.extend({
   options: {
     zoomOffsetAllowance: 0.1,
     errorTileUrl:

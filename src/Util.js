@@ -68,7 +68,7 @@ export function _findIdAttributeFromResponse(response) {
     result = response.objectIdFieldName;
   } else if (response.fields) {
     // Find ID Field based on field type
-    for (var j = 0; j <= response.fields.length - 1; j++) {
+    for (let j = 0; j <= response.fields.length - 1; j++) {
       if (response.fields[j].type === "esriFieldTypeOID") {
         result = response.fields[j].name;
         break;
@@ -76,7 +76,7 @@ export function _findIdAttributeFromResponse(response) {
     }
     if (!result) {
       // If no field was marked as being the esriFieldTypeOID try well known field names
-      for (j = 0; j <= response.fields.length - 1; j++) {
+      for (let j = 0; j <= response.fields.length - 1; j++) {
         if (response.fields[j].name.match(knownFieldNames)) {
           result = response.fields[j].name;
           break;
@@ -434,7 +434,7 @@ export function _updateMapAttribution(evt) {
 // for backwards compatibility
 export { warn };
 
-export var EsriUtil = {
+export const EsriUtil = {
   warn,
   cleanUrl,
   getUrlParams,

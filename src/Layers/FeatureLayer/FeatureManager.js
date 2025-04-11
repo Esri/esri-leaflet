@@ -9,7 +9,7 @@ import {
 import { FeatureGrid } from "./FeatureGrid";
 import BinarySearchIndex from "tiny-binary-search";
 
-export var FeatureManager = FeatureGrid.extend({
+export const FeatureManager = FeatureGrid.extend({
   /**
    * Options
    */
@@ -230,8 +230,9 @@ export var FeatureManager = FeatureGrid.extend({
 
   _addFeatures(features, coords) {
     // coords is optional - will be false if coming from addFeatures() function
+    let key;
     if (coords) {
-      var key = this._cacheKey(coords);
+      key = this._cacheKey(coords);
       this._cache[key] = this._cache[key] || [];
     }
 

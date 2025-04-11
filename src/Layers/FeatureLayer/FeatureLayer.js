@@ -2,7 +2,7 @@ import { Path, Util, GeoJSON, latLng } from "leaflet";
 import { FeatureManager } from "./FeatureManager";
 import { warn } from "../../Util";
 
-export var FeatureLayer = FeatureManager.extend({
+export const FeatureLayer = FeatureManager.extend({
   options: {
     cacheLayers: true,
   },
@@ -113,7 +113,7 @@ export var FeatureLayer = FeatureManager.extend({
       const geojson = features[i];
 
       const layer = this._layers[geojson.id];
-      var newLayer;
+      let newLayer;
 
       if (
         this._visibleZoom() &&

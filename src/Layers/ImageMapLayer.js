@@ -3,7 +3,7 @@ import { RasterLayer } from "./RasterLayer";
 import { getUrlParams } from "../Util";
 import imageService from "../Services/ImageService";
 
-export var ImageMapLayer = RasterLayer.extend({
+export const ImageMapLayer = RasterLayer.extend({
   options: {
     updateInterval: 150,
     format: "jpgpng",

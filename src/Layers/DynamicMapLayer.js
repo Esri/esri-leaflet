@@ -3,7 +3,7 @@ import { RasterLayer } from "./RasterLayer";
 import { getUrlParams } from "../Util";
 import mapService from "../Services/MapService";
 
-export var DynamicMapLayer = RasterLayer.extend({
+export const DynamicMapLayer = RasterLayer.extend({
   options: {
     updateInterval: 150,
     layers: false,

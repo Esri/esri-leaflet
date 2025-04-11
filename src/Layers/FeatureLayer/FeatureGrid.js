@@ -8,7 +8,7 @@ import {
   Bounds,
 } from "leaflet";
 
-export var FeatureGrid = Layer.extend({
+export const FeatureGrid = Layer.extend({
   // @section
   // @aka GridLayer options
   options: {
@@ -351,7 +351,7 @@ export var FeatureGrid = Layer.extend({
 
     // create a queue of coordinates to load cells from
     for (let j = cellRange.min.y; j <= cellRange.max.y; j++) {
-      for (var i = cellRange.min.x; i <= cellRange.max.x; i++) {
+      for (let i = cellRange.min.x; i <= cellRange.max.x; i++) {
         const coords = new Point(i, j);
         coords.z = this._cellZoom;
 

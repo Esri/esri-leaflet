@@ -2,7 +2,7 @@ import { Service } from "./Service";
 import query from "../Tasks/Query";
 import { geojsonToArcGIS } from "../Util";
 
-export var FeatureLayerService = Service.extend({
+export const FeatureLayerService = Service.extend({
   options: {
     idAttribute: "OBJECTID",
   },

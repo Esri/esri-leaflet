@@ -2,7 +2,7 @@ import { Service } from "./Service";
 import identifyImage from "../Tasks/IdentifyImage";
 import query from "../Tasks/Query";
 
-export var ImageService = Service.extend({
+export const ImageService = Service.extend({
   query() {
     return query(this);
   },

@@ -12,7 +12,7 @@ function serialize(params) {
     if (Object.hasOwn(params, key)) {
       const param = params[key];
       const type = Object.prototype.toString.call(param);
-      var value;
+      let value;
 
       if (data.length) {
         data += "&";
@@ -261,7 +261,7 @@ export { get };
 export { xmlHttpPost as post };
 
 // export the Request object to call the different handlers for debugging
-export var Request = {
+export const Request = {
   request,
   get,
   post: xmlHttpPost,

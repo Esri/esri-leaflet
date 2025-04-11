@@ -8,7 +8,7 @@ import {
   _setGeometry,
 } from "../Util";
 
-export var Query = Task.extend({
+export const Query = Task.extend({
   setters: {
     offset: "resultOffset",
     limit: "resultRecordCount",

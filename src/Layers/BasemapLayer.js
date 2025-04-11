@@ -9,7 +9,7 @@ import {
 
 const tileProtocol = window.location.protocol !== "https:" ? "http:" : "https:";
 
-export var BasemapLayer = TileLayer.extend({
+export const BasemapLayer = TileLayer.extend({
   statics: {
     TILES: {
       Streets: {
@@ -288,8 +288,9 @@ export var BasemapLayer = TileLayer.extend({
   },
 
   getAttribution() {
+    let attribution;
     if (this.options.attribution) {
-      var attribution = `<span class="esri-dynamic-attribution">${this.options.attribution}</span>`;
+      attribution = `<span class="esri-dynamic-attribution">${this.options.attribution}</span>`;
     }
     return attribution;
   },

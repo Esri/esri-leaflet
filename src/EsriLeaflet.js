@@ -22,8 +22,8 @@ export { Service, service } from "./Services/Service";
 export { MapService, mapService } from "./Services/MapService";
 export { ImageService, imageService } from "./Services/ImageService";
 export {
-	FeatureLayerService,
-	featureLayerService,
+  FeatureLayerService,
+  featureLayerService,
 } from "./Services/FeatureLayerService";
 
 // export layers

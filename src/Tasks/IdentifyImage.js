@@ -2,7 +2,7 @@ import { latLng } from "leaflet";
 import { Identify } from "./Identify";
 import { responseToFeatureCollection } from "../Util";
 
-export var IdentifyImage = Identify.extend({
+export const IdentifyImage = Identify.extend({
   setters: {
     setMosaicRule: "mosaicRule",
     setRenderingRule: "renderingRule",

@@ -88,7 +88,7 @@ describe("L.esri.Util", () => {
 
   describe("_findIdAttributeFromFeature", () => {
     for (let caseId = 0; caseId < knownIdFieldTestCases.length; caseId++) {
-      var testCase = knownIdFieldTestCases[caseId];
+      const testCase = knownIdFieldTestCases[caseId];
 
       it(`should return the correct key when a item has ${testCase} attribute`, () => {
         const feature = {
@@ -135,7 +135,7 @@ describe("L.esri.Util", () => {
     });
 
     for (let caseId = 0; caseId < knownIdFieldTestCases.length; caseId++) {
-      var testCase = knownIdFieldTestCases[caseId];
+      const testCase = knownIdFieldTestCases[caseId];
 
       it(`should return ${testCase} if found in fields`, () => {
         const response = {

@@ -1,6 +1,6 @@
 import { Task } from "./Task";
 
-export var Identify = Task.extend({
+export const Identify = Task.extend({
   path: "identify",
 
   between(start, end) {
