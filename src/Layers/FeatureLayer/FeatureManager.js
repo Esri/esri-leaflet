@@ -1,12 +1,12 @@
 import { Util } from "leaflet";
-import featureLayerService from "../../Services/FeatureLayerService";
+import featureLayerService from "../../Services/FeatureLayerService.js";
 import {
   getUrlParams,
   warn,
   setEsriAttribution,
   removeEsriAttribution,
-} from "../../Util";
-import { FeatureGrid } from "./FeatureGrid";
+} from "../../Util.js";
+import { FeatureGrid } from "./FeatureGrid.js";
 import BinarySearchIndex from "tiny-binary-search";
 
 export const FeatureManager = FeatureGrid.extend({

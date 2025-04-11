@@ -1,7 +1,7 @@
 import { Util } from "leaflet";
-import { RasterLayer } from "./RasterLayer";
-import { getUrlParams } from "../Util";
-import imageService from "../Services/ImageService";
+import { RasterLayer } from "./RasterLayer.js";
+import { getUrlParams } from "../Util.js";
+import imageService from "../Services/ImageService.js";
 
 export const ImageMapLayer = RasterLayer.extend({
   options: {

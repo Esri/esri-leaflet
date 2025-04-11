@@ -1,12 +1,12 @@
 import { point, latLng } from "leaflet";
-import { Task } from "./Task";
+import { Task } from "./Task.js";
 import {
   warn,
   responseToFeatureCollection,
   isArcgisOnline,
   extentToBounds,
   _setGeometry,
-} from "../Util";
+} from "../Util.js";
 
 export const Query = Task.extend({
   setters: {

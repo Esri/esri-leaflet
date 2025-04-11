@@ -1,6 +1,6 @@
 import { Path, Util, GeoJSON, latLng } from "leaflet";
-import { FeatureManager } from "./FeatureManager";
-import { warn } from "../../Util";
+import { FeatureManager } from "./FeatureManager.js";
+import { warn } from "../../Util.js";
 
 export const FeatureLayer = FeatureManager.extend({
   options: {

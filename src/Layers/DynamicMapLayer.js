@@ -1,7 +1,7 @@
 import { Util } from "leaflet";
-import { RasterLayer } from "./RasterLayer";
-import { getUrlParams } from "../Util";
-import mapService from "../Services/MapService";
+import { RasterLayer } from "./RasterLayer.js";
+import { getUrlParams } from "../Util.js";
+import mapService from "../Services/MapService.js";
 
 export const DynamicMapLayer = RasterLayer.extend({
   options: {

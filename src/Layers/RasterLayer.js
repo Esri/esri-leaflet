@@ -7,9 +7,9 @@ import {
   popup,
   latLng,
   bounds,
-} from "leaflet";
-import { cors } from "../Support";
-import { setEsriAttribution, removeEsriAttribution } from "../Util";
+} from "leaflet.js";
+import { cors } from "../Support.js";
+import { setEsriAttribution, removeEsriAttribution } from "../Util.js";
 
 const Overlay = ImageOverlay.extend({
   onAdd(map) {

@@ -1,6 +1,6 @@
 import { latLng } from "leaflet";
-import { Identify } from "./Identify";
-import { responseToFeatureCollection } from "../Util";
+import { Identify } from "./Identify.js";
+import { responseToFeatureCollection } from "../Util.js";
 
 export const IdentifyImage = Identify.extend({
   setters: {

@@ -1,11 +1,11 @@
 import { TileLayer, Util } from "leaflet";
-import { pointerEvents } from "../Support";
+import { pointerEvents } from "../Support.js";
 import {
   setEsriAttribution,
   removeEsriAttribution,
   _getAttributionData,
   _updateMapAttribution,
-} from "../Util";
+} from "../Util.js";
 
 const tileProtocol = window.location.protocol !== "https:" ? "http:" : "https:";
 

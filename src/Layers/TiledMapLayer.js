@@ -4,8 +4,8 @@ import {
   getUrlParams,
   setEsriAttribution,
   removeEsriAttribution,
-} from "../Util";
-import mapService from "../Services/MapService";
+} from "../Util.js";
+import mapService from "../Services/MapService.js";
 
 export const TiledMapLayer = TileLayer.extend({
   options: {

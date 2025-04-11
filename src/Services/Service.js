@@ -1,7 +1,7 @@
 import { Util, Evented } from "leaflet";
-import { cors } from "../Support";
-import { cleanUrl, getUrlParams } from "../Util";
-import Request from "../Request";
+import { cors } from "../Support.js";
+import { cleanUrl, getUrlParams } from "../Util.js";
+import Request from "../Request.js";
 
 export const Service = Evented.extend({
   options: {

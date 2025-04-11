@@ -1,5 +1,5 @@
-import { Task } from "./Task";
-import { responseToFeatureCollection } from "../Util";
+import { Task } from "./Task.js";
+import { responseToFeatureCollection } from "../Util.js";
 
 export const Find = Task.extend({
   setters: {

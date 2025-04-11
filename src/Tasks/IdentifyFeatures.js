@@ -1,10 +1,10 @@
 import { latLng } from "leaflet";
-import { Identify } from "./Identify";
+import { Identify } from "./Identify.js";
 import {
   responseToFeatureCollection,
   boundsToExtent,
   _setGeometry,
-} from "../Util";
+} from "../Util.js";
 
 export const IdentifyFeatures = Identify.extend({
   setters: {
