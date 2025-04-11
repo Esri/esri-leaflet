@@ -1,99 +1,99 @@
-import { latLng } from 'leaflet';
-import { Identify } from './Identify';
-import { responseToFeatureCollection } from '../Util';
+import {latLng} from 'leaflet';
+import {Identify} from './Identify';
+import {responseToFeatureCollection} from '../Util';
 
 export var IdentifyImage = Identify.extend({
-  setters: {
-    setMosaicRule: 'mosaicRule',
-    setRenderingRule: 'renderingRule',
-    setPixelSize: 'pixelSize',
-    returnCatalogItems: 'returnCatalogItems',
-    returnGeometry: 'returnGeometry'
-  },
+	setters: {
+		setMosaicRule: 'mosaicRule',
+		setRenderingRule: 'renderingRule',
+		setPixelSize: 'pixelSize',
+		returnCatalogItems: 'returnCatalogItems',
+		returnGeometry: 'returnGeometry'
+	},
 
-  params: {
-    returnGeometry: false
-  },
+	params: {
+		returnGeometry: false
+	},
 
-  at: function (latlng) {
-    latlng = latLng(latlng);
-    this.params.geometry = JSON.stringify({
-      x: latlng.lng,
-      y: latlng.lat,
-      spatialReference: {
-        wkid: 4326
-      }
-    });
-    this.params.geometryType = 'esriGeometryPoint';
-    return this;
-  },
+	at(latlng) {
+		latlng = latLng(latlng);
+		this.params.geometry = JSON.stringify({
+			x: latlng.lng,
+			y: latlng.lat,
+			spatialReference: {
+				wkid: 4326
+			}
+		});
+		this.params.geometryType = 'esriGeometryPoint';
+		return this;
+	},
 
-  getMosaicRule: function () {
-    return this.params.mosaicRule;
-  },
+	getMosaicRule() {
+		return this.params.mosaicRule;
+	},
 
-  getRenderingRule: function () {
-    return this.params.renderingRule;
-  },
+	getRenderingRule() {
+		return this.params.renderingRule;
+	},
 
-  getPixelSize: function () {
-    return this.params.pixelSize;
-  },
+	getPixelSize() {
+		return this.params.pixelSize;
+	},
 
-  run: function (callback, context) {
-    return this.request(function (error, response) {
-      callback.call(context, error, (response && this._responseToGeoJSON(response)), response);
-    }, this);
-  },
+	run(callback, context) {
+		return this.request(function (error, response) {
+			callback.call(context, error, (response && this._responseToGeoJSON(response)), response);
+		}, this);
+	},
 
-  // get pixel data and return as geoJSON point
-  // populate catalog items (if any)
-  // merging in any catalogItemVisibilities as a propery of each feature
-  _responseToGeoJSON: function (response) {
-    var location = response.location;
-    var catalogItems = response.catalogItems;
-    var catalogItemVisibilities = response.catalogItemVisibilities;
-    var geoJSON = {
-      pixel: {
-        type: 'Feature',
-        geometry: {
-          type: 'Point',
-          coordinates: [location.x, location.y]
-        },
-        crs: {
-          type: 'EPSG',
-          properties: {
-            code: location.spatialReference.wkid
-          }
-        },
-        properties: {
-          OBJECTID: response.objectId,
-          name: response.name,
-          value: response.value
-        },
-        id: response.objectId
-      }
-    };
+	// get pixel data and return as geoJSON point
+	// populate catalog items (if any)
+	// merging in any catalogItemVisibilities as a propery of each feature
+	_responseToGeoJSON(response) {
+		const location = response.location;
+		const catalogItems = response.catalogItems;
+		const catalogItemVisibilities = response.catalogItemVisibilities;
+		const geoJSON = {
+			pixel: {
+				type: 'Feature',
+				geometry: {
+					type: 'Point',
+					coordinates: [location.x, location.y]
+				},
+				crs: {
+					type: 'EPSG',
+					properties: {
+						code: location.spatialReference.wkid
+					}
+				},
+				properties: {
+					OBJECTID: response.objectId,
+					name: response.name,
+					value: response.value
+				},
+				id: response.objectId
+			}
+		};
 
-    if (response.properties && response.properties.Values) {
-      geoJSON.pixel.properties.values = response.properties.Values;
-    }
+		if (response.properties && response.properties.Values) {
+			geoJSON.pixel.properties.values = response.properties.Values;
+		}
 
-    if (catalogItems && catalogItems.features) {
-      geoJSON.catalogItems = responseToFeatureCollection(catalogItems);
-      if (catalogItemVisibilities && catalogItemVisibilities.length === geoJSON.catalogItems.features.length) {
-        for (var i = catalogItemVisibilities.length - 1; i >= 0; i--) {
-          geoJSON.catalogItems.features[i].properties.catalogItemVisibility = catalogItemVisibilities[i];
-        }
-      }
-    }
-    return geoJSON;
-  }
+		if (catalogItems && catalogItems.features) {
+			geoJSON.catalogItems = responseToFeatureCollection(catalogItems);
+			if (catalogItemVisibilities && catalogItemVisibilities.length === geoJSON.catalogItems.features.length) {
+				for (let i = catalogItemVisibilities.length - 1; i >= 0; i--) {
+					geoJSON.catalogItems.features[i].properties.catalogItemVisibility = catalogItemVisibilities[i];
+				}
+			}
+		}
+		return geoJSON;
+	}
 
 });
 
-export function identifyImage (params) {
-  return new IdentifyImage(params);
+export function identifyImage(params) {
+	return new IdentifyImage(params);
 }
 
 export default identifyImage;

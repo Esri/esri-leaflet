@@ -2,8 +2,8 @@ export var cors = ((window.XMLHttpRequest && 'withCredentials' in new window.XML
 export var pointerEvents = document.documentElement.style.pointerEvents === '';
 
 export var Support = {
-  cors: cors,
-  pointerEvents: pointerEvents
+	cors,
+	pointerEvents
 };
 
 export default Support;

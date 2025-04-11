@@ -1,254 +1,254 @@
 /* eslint-env mocha */
-/* eslint-disable handle-callback-err */
-describe('L.esri.Service', function () {
-  var serviceUrl = 'http://services.arcgis.com/mock/arcgis/rest/services/MockService';
-  var service;
-  var server;
 
-  beforeEach(function () {
-    server = sinon.fakeServer.create();
-    service = L.esri.service({ url: serviceUrl });
-  });
+describe('L.esri.Service', () => {
+	const serviceUrl = 'http://services.arcgis.com/mock/arcgis/rest/services/MockService';
+	let service;
+	let server;
 
-  afterEach(function () {
-    server.restore();
-  });
+	beforeEach(() => {
+		server = sinon.fakeServer.create();
+		service = L.esri.service({url: serviceUrl});
+	});
 
-  it('should make GET requests', function (done) {
-    server.respondWith('GET', 'http://services.arcgis.com/mock/arcgis/rest/services/MockService/route?f=json', JSON.stringify({
-      foo: 'bar'
-    }));
+	afterEach(() => {
+		server.restore();
+	});
 
-    service.get('route', {}, function (error, response) {
-      expect(response).to.deep.equal({ foo: 'bar' });
-      done();
-    });
+	it('should make GET requests', (done) => {
+		server.respondWith('GET', 'http://services.arcgis.com/mock/arcgis/rest/services/MockService/route?f=json', JSON.stringify({
+			foo: 'bar'
+		}));
 
-    server.respond();
-  });
+		service.get('route', {}, (error, response) => {
+			expect(response).to.deep.equal({foo: 'bar'});
+			done();
+		});
 
-  it('should make GET requests w/ JSONP', function (done) {
-    service.options.useCors = false;
+		server.respond();
+	});
 
-    var request = service.get('route', {}, function (error, response) {
-      expect(response).to.deep.equal({ foo: 'bar' });
-      done();
-    });
+	it('should make GET requests w/ JSONP', (done) => {
+		service.options.useCors = false;
 
-    window._EsriLeafletCallbacks[request.id]({ foo: 'bar' });
-  });
+		const request = service.get('route', {}, (error, response) => {
+			expect(response).to.deep.equal({foo: 'bar'});
+			done();
+		});
 
-  it('should make POST requests', function (done) {
-    server.respondWith('POST', 'http://services.arcgis.com/mock/arcgis/rest/services/MockService/route', JSON.stringify({
-      foo: 'bar'
-    }));
+		window._EsriLeafletCallbacks[request.id]({foo: 'bar'});
+	});
 
-    service.post('route', {}, function (error, response) {
-      expect(response).to.deep.equal({ foo: 'bar' });
-      done();
-    });
+	it('should make POST requests', (done) => {
+		server.respondWith('POST', 'http://services.arcgis.com/mock/arcgis/rest/services/MockService/route', JSON.stringify({
+			foo: 'bar'
+		}));
 
-    server.respond();
-  });
+		service.post('route', {}, (error, response) => {
+			expect(response).to.deep.equal({foo: 'bar'});
+			done();
+		});
 
-  it('should get service metadata', function (done) {
-    server.respondWith('GET', 'http://services.arcgis.com/mock/arcgis/rest/services/MockService/?f=json', JSON.stringify({
-      foo: 'bar'
-    }));
+		server.respond();
+	});
 
-    service.metadata(function (error, response) {
-      expect(response).to.deep.equal({ foo: 'bar' });
-      done();
-    });
+	it('should get service metadata', (done) => {
+		server.respondWith('GET', 'http://services.arcgis.com/mock/arcgis/rest/services/MockService/?f=json', JSON.stringify({
+			foo: 'bar'
+		}));
 
-    server.respond();
-  });
+		service.metadata((error, response) => {
+			expect(response).to.deep.equal({foo: 'bar'});
+			done();
+		});
 
-  it('should fire a requeststart event', function (done) {
-    server.respondWith('GET', 'http://services.arcgis.com/mock/arcgis/rest/services/MockService/route?foo=bar&f=json', JSON.stringify({
-      foo: 'bar'
-    }));
+		server.respond();
+	});
 
-    service.on('requeststart', function (e) {
-      expect(e.type).to.equal('requeststart');
-      expect(e.url).to.equal('http://services.arcgis.com/mock/arcgis/rest/services/MockService/route');
-      expect(e.params).to.deep.equal({ foo: 'bar' });
-      done();
-    });
+	it('should fire a requeststart event', (done) => {
+		server.respondWith('GET', 'http://services.arcgis.com/mock/arcgis/rest/services/MockService/route?foo=bar&f=json', JSON.stringify({
+			foo: 'bar'
+		}));
 
-    service.get('route', {
-      foo: 'bar'
-    }, function () {});
+		service.on('requeststart', (e) => {
+			expect(e.type).to.equal('requeststart');
+			expect(e.url).to.equal('http://services.arcgis.com/mock/arcgis/rest/services/MockService/route');
+			expect(e.params).to.deep.equal({foo: 'bar'});
+			done();
+		});
 
-    server.respond();
-  });
+		service.get('route', {
+			foo: 'bar'
+		}, () => {});
 
-  it('should fire a requestend event', function (done) {
-    server.respondWith('GET', 'http://services.arcgis.com/mock/arcgis/rest/services/MockService/route?foo=bar&f=json', JSON.stringify({ foo: 'bar'
-    }));
+		server.respond();
+	});
 
-    service.on('requestend', function (e) {
-      expect(e.type).to.equal('requestend');
-      expect(e.url).to.equal('http://services.arcgis.com/mock/arcgis/rest/services/MockService/route');
-      expect(e.params).to.deep.equal({
-        foo: 'bar',
-        f: 'json'
-      });
-      done();
-    });
+	it('should fire a requestend event', (done) => {
+		server.respondWith('GET', 'http://services.arcgis.com/mock/arcgis/rest/services/MockService/route?foo=bar&f=json', JSON.stringify({foo: 'bar'
+		}));
 
-    service.get('route', {
-      foo: 'bar'
-    }, function () {});
+		service.on('requestend', (e) => {
+			expect(e.type).to.equal('requestend');
+			expect(e.url).to.equal('http://services.arcgis.com/mock/arcgis/rest/services/MockService/route');
+			expect(e.params).to.deep.equal({
+				foo: 'bar',
+				f: 'json'
+			});
+			done();
+		});
 
-    server.respond();
-  });
+		service.get('route', {
+			foo: 'bar'
+		}, () => {});
 
-  it('should fire a requestsuccess event', function (done) {
-    server.respondWith('GET', 'http://services.arcgis.com/mock/arcgis/rest/services/MockService/route?foo=bar&f=json', JSON.stringify({
-      foo: 'bar'
-    }));
+		server.respond();
+	});
 
-    service.on('requestsuccess', function (e) {
-      expect(e.type).to.equal('requestsuccess');
-      expect(e.url).to.equal('http://services.arcgis.com/mock/arcgis/rest/services/MockService/route');
-      expect(e.params).to.deep.equal({
-        foo: 'bar',
-        f: 'json'
-      });
-      expect(e.response).to.deep.equal({ foo: 'bar' });
-      done();
-    });
+	it('should fire a requestsuccess event', (done) => {
+		server.respondWith('GET', 'http://services.arcgis.com/mock/arcgis/rest/services/MockService/route?foo=bar&f=json', JSON.stringify({
+			foo: 'bar'
+		}));
 
-    service.get('route', {
-      foo: 'bar'
-    }, function () {});
+		service.on('requestsuccess', (e) => {
+			expect(e.type).to.equal('requestsuccess');
+			expect(e.url).to.equal('http://services.arcgis.com/mock/arcgis/rest/services/MockService/route');
+			expect(e.params).to.deep.equal({
+				foo: 'bar',
+				f: 'json'
+			});
+			expect(e.response).to.deep.equal({foo: 'bar'});
+			done();
+		});
 
-    server.respond();
-  });
+		service.get('route', {
+			foo: 'bar'
+		}, () => {});
 
-  it('should fire a requesterror event', function (done) {
-    server.respondWith('GET', 'http://services.arcgis.com/mock/arcgis/rest/services/MockService/route?foo=bar&f=json', JSON.stringify({
-      error: {
-        code: 500,
-        message: 'Error'
-      }
-    }));
+		server.respond();
+	});
 
-    service.on('requesterror', function (e) {
-      expect(e.type).to.equal('requesterror');
-      expect(e.url).to.equal('http://services.arcgis.com/mock/arcgis/rest/services/MockService/route');
-      expect(e.code).to.equal(500);
-      expect(e.message).to.equal('Error');
-      expect(e.params).to.deep.equal({
-        foo: 'bar',
-        f: 'json'
-      });
-      done();
-    });
+	it('should fire a requesterror event', (done) => {
+		server.respondWith('GET', 'http://services.arcgis.com/mock/arcgis/rest/services/MockService/route?foo=bar&f=json', JSON.stringify({
+			error: {
+				code: 500,
+				message: 'Error'
+			}
+		}));
 
-    service.get('route', {
-      foo: 'bar'
-    }, function () {});
+		service.on('requesterror', (e) => {
+			expect(e.type).to.equal('requesterror');
+			expect(e.url).to.equal('http://services.arcgis.com/mock/arcgis/rest/services/MockService/route');
+			expect(e.code).to.equal(500);
+			expect(e.message).to.equal('Error');
+			expect(e.params).to.deep.equal({
+				foo: 'bar',
+				f: 'json'
+			});
+			done();
+		});
 
-    server.respond();
-  });
+		service.get('route', {
+			foo: 'bar'
+		}, () => {});
 
-  it('should use a proxy', function (done) {
-    service.options.proxy = '/proxy';
+		server.respond();
+	});
 
-    server.respondWith('GET', '/proxy?http://services.arcgis.com/mock/arcgis/rest/services/MockService/route?f=json', JSON.stringify({
-      foo: 'bar'
-    }));
+	it('should use a proxy', (done) => {
+		service.options.proxy = '/proxy';
 
-    service.get('route', {}, function (error, response) {
-      expect(response).to.deep.equal({ foo: 'bar' });
-      done();
-    });
+		server.respondWith('GET', '/proxy?http://services.arcgis.com/mock/arcgis/rest/services/MockService/route?f=json', JSON.stringify({
+			foo: 'bar'
+		}));
 
-    server.respond();
-  });
+		service.get('route', {}, (error, response) => {
+			expect(response).to.deep.equal({foo: 'bar'});
+			done();
+		});
 
-  it('should fire an authenticationrequired event and reauthenticate', function (done) {
-    server.respondWith('GET', 'http://services.arcgis.com/mock/arcgis/rest/services/MockService/route?f=json', JSON.stringify({
-      error: {
-        code: 499,
-        message: 'Auth'
-      }
-    }));
+		server.respond();
+	});
 
-    server.respondWith('GET', 'http://services.arcgis.com/mock/arcgis/rest/services/MockService/route?f=json&token=foo', JSON.stringify({
-      foo: 'bar'
-    }));
+	it('should fire an authenticationrequired event and reauthenticate', (done) => {
+		server.respondWith('GET', 'http://services.arcgis.com/mock/arcgis/rest/services/MockService/route?f=json', JSON.stringify({
+			error: {
+				code: 499,
+				message: 'Auth'
+			}
+		}));
 
-    service.on('authenticationrequired', function (e) {
-      e.authenticate('foo');
-      server.respond();
-    });
+		server.respondWith('GET', 'http://services.arcgis.com/mock/arcgis/rest/services/MockService/route?f=json&token=foo', JSON.stringify({
+			foo: 'bar'
+		}));
 
-    service.get('route', {}, function (error, response) {
-      expect(response).to.deep.equal({ foo: 'bar' });
-      done();
-    });
+		service.on('authenticationrequired', (e) => {
+			e.authenticate('foo');
+			server.respond();
+		});
 
-    server.respond();
-  });
+		service.get('route', {}, (error, response) => {
+			expect(response).to.deep.equal({foo: 'bar'});
+			done();
+		});
 
-  it('should allow users to authenticate on an authentication error', function (done) {
-    server.respondWith('GET', 'http://services.arcgis.com/mock/arcgis/rest/services/MockService/route?f=json', JSON.stringify({
-      error: {
-        code: 499,
-        message: 'Auth'
-      }
-    }));
+		server.respond();
+	});
 
-    server.respondWith('GET', 'http://services.arcgis.com/mock/arcgis/rest/services/MockService/route?f=json&token=foo', JSON.stringify({
-      foo: 'bar'
-    }));
+	it('should allow users to authenticate on an authentication error', (done) => {
+		server.respondWith('GET', 'http://services.arcgis.com/mock/arcgis/rest/services/MockService/route?f=json', JSON.stringify({
+			error: {
+				code: 499,
+				message: 'Auth'
+			}
+		}));
 
-    service.get('route', {}, function (error, response) {
-      if (error && error.authenticate) {
-        error.authenticate('foo');
-        server.respond(); // authenticate will trigger another request we should respond to
-        return;
-      }
-      expect(response).to.deep.equal({ foo: 'bar' });
-      done();
-    });
+		server.respondWith('GET', 'http://services.arcgis.com/mock/arcgis/rest/services/MockService/route?f=json&token=foo', JSON.stringify({
+			foo: 'bar'
+		}));
 
-    server.respond();
-  });
+		service.get('route', {}, (error, response) => {
+			if (error && error.authenticate) {
+				error.authenticate('foo');
+				server.respond(); // authenticate will trigger another request we should respond to
+				return;
+			}
+			expect(response).to.deep.equal({foo: 'bar'});
+			done();
+		});
 
-  it('should queue requests and run them when authenticated', function (done) {
-    server.respondWith('GET', 'http://services.arcgis.com/mock/arcgis/rest/services/MockService/route?f=json', JSON.stringify({
-      error: {
-        code: 499,
-        message: 'Auth'
-      }
-    }));
+		server.respond();
+	});
 
-    server.respondWith('GET', 'http://services.arcgis.com/mock/arcgis/rest/services/MockService/route?f=json&token=foo', JSON.stringify({
-      foo: 'bar'
-    }));
+	it('should queue requests and run them when authenticated', (done) => {
+		server.respondWith('GET', 'http://services.arcgis.com/mock/arcgis/rest/services/MockService/route?f=json', JSON.stringify({
+			error: {
+				code: 499,
+				message: 'Auth'
+			}
+		}));
 
-    server.respondWith('GET', 'http://services.arcgis.com/mock/arcgis/rest/services/MockService/other/route?token=foo&f=json', JSON.stringify({
-      foo: 'bar'
-    }));
+		server.respondWith('GET', 'http://services.arcgis.com/mock/arcgis/rest/services/MockService/route?f=json&token=foo', JSON.stringify({
+			foo: 'bar'
+		}));
 
-    service.on('authenticationrequired', function (e) {
-      service.get('other/route', {}, function (error, response) {
-        expect(response).to.deep.equal({ foo: 'bar' });
-        done();
-      });
+		server.respondWith('GET', 'http://services.arcgis.com/mock/arcgis/rest/services/MockService/other/route?token=foo&f=json', JSON.stringify({
+			foo: 'bar'
+		}));
 
-      e.authenticate('foo');
+		service.on('authenticationrequired', (e) => {
+			service.get('other/route', {}, (error, response) => {
+				expect(response).to.deep.equal({foo: 'bar'});
+				done();
+			});
 
-      server.respond();
-    });
+			e.authenticate('foo');
 
-    service.get('route', {}, function () {});
+			server.respond();
+		});
 
-    server.respond();
-  });
+		service.get('route', {}, () => {});
+
+		server.respond();
+	});
 });
-/* eslint-enable handle-callback-err */
+

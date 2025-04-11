@@ -1,55 +1,55 @@
 /* eslint-env mocha */
-/* eslint-disable handle-callback-err */
-describe('L.esri.options', function () {
-  function createMap () {
-    // create container
-    var container = document.createElement('div');
 
-    // give container a width/height
-    container.setAttribute('style', 'width:500px; height: 500px;');
+describe('L.esri.options', () => {
+	function createMap() {
+		// create container
+		const container = document.createElement('div');
 
-    // add container to body
-    document.body.appendChild(container);
+		// give container a width/height
+		container.setAttribute('style', 'width:500px; height: 500px;');
 
-    return L.map(container).setView([37.75, -122.45], 5);
-  }
+		// add container to body
+		document.body.appendChild(container);
 
-  var map;
+		return L.map(container).setView([37.75, -122.45], 5);
+	}
 
-  beforeEach(function () {
-    // remove all the stylesheets that have already been added to the document
-    Array.prototype.forEach.call(document.querySelectorAll('style,[rel="stylesheet"],[type="text/css"]'), function (element) {
-      try {
-        element.parentNode.removeChild(element);
-        // console.log('this gets called many times');
-      } catch (err) {}
-    });
+	let map;
 
-    map = createMap();
-  });
+	beforeEach(() => {
+		// remove all the stylesheets that have already been added to the document
+		Array.prototype.forEach.call(document.querySelectorAll('style,[rel="stylesheet"],[type="text/css"]'), (element) => {
+			try {
+				element.parentNode.removeChild(element);
+				// console.log('this gets called many times');
+			} catch (err) {}
+		});
 
-  afterEach(function () {
-    map.remove();
-  });
+		map = createMap();
+	});
 
-  it('should set a default attribution width constraint', function () {
-    map = createMap();
-    L.esri.basemapLayer('Gray').addTo(map);
+	afterEach(() => {
+		map.remove();
+	});
 
-    // hacky way to inspect the css rule itself
-    expect(document.styleSheets[1].rules[0].style.maxWidth).to.equal('445px');
-    expect(document.styleSheets[1].rules[0].selectorText).to.equal('.esri-truncated-attribution');
-  });
+	it('should set a default attribution width constraint', () => {
+		map = createMap();
+		L.esri.basemapLayer('Gray').addTo(map);
 
-  it('should allow for controlling attribution width', function () {
-    L.esri.options.attributionWidthOffset = 200;
-    map = createMap();
+		// hacky way to inspect the css rule itself
+		expect(document.styleSheets[1].rules[0].style.maxWidth).to.equal('445px');
+		expect(document.styleSheets[1].rules[0].selectorText).to.equal('.esri-truncated-attribution');
+	});
 
-    L.esri.basemapLayer('Gray').addTo(map);
+	it('should allow for controlling attribution width', () => {
+		L.esri.options.attributionWidthOffset = 200;
+		map = createMap();
 
-    // hacky way to inspect the css rule itself
-    expect(document.styleSheets[1].rules[0].style.maxWidth).to.equal('300px');
-    expect(document.styleSheets[1].rules[0].selectorText).to.equal('.esri-truncated-attribution');
-  });
+		L.esri.basemapLayer('Gray').addTo(map);
+
+		// hacky way to inspect the css rule itself
+		expect(document.styleSheets[1].rules[0].style.maxWidth).to.equal('300px');
+		expect(document.styleSheets[1].rules[0].selectorText).to.equal('.esri-truncated-attribution');
+	});
 });
-/* eslint-enable handle-callback-err */
+
