@@ -42,7 +42,7 @@ function serialize(params) {
 function createRequest(callback, context) {
   const httpRequest = new window.XMLHttpRequest();
 
-  httpRequest.onerror = function (e) {
+  httpRequest.onerror = function () {
     httpRequest.onreadystatechange = Util.falseFn;
 
     callback.call(

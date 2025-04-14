@@ -1199,7 +1199,7 @@ describe("L.esri.FeatureManager", () => {
   it("should keep an accurate count of active requests even when they error", () => {
     let triggered = false;
 
-    layer.on("load", (ev) => {
+    layer.on("load", () => {
       triggered = true;
     });
 

@@ -44,14 +44,14 @@ export const FeatureGrid = Layer.extend({
     Util.setOptions(this, options);
   },
 
-  onAdd(map) {
+  onAdd() {
     this._cells = {};
     this._activeCells = {};
     this._resetView();
     this._update();
   },
 
-  onRemove(map) {
+  onRemove() {
     this._removeAllCells();
     this._cellZoom = undefined;
   },
