@@ -85,8 +85,11 @@
   },
   "scripts": {
     "build": "rollup -c profiles/debug.js & rollup -c profiles/production.js",
-    "lint": "eslint .",
-    "lintfix": "npm run lint -- --fix",
+    "lint": "npm run eslint && npm run prettier",
+    "eslint": "eslint .",
+    "eslintfix": "npm run eslint -- --fix",
+    "prettier": "npx prettier . --check",
+    "prettierfix": "npx prettier . --write",
     "prebuild": "mkdirp dist",
     "pretest": "npm run build",
     "release": "./scripts/release.sh",

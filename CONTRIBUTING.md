@@ -50,9 +50,15 @@ Of course! If you develop reusable components for use with Esri Leaflet that you
 
 If you'd like to build the Esri Leaflet website locally, make sure you have the [Grunt CLI](http://gruntjs.com/getting-started) installed.
 
-### Linting
+### Linting and Code Formatting
 
-Please make sure your changes pass JS Hint. This will help make sure code is consistent throughout Esri Leaflet. After installing the node dependencies for this project you can run `npm run lint` so that `semistandard` can make sure all is well.
+Please make sure your changes pass ESLint and Prettier. This will help make sure code is consistent throughout Esri Leaflet. To check this, run `npm run lint` which will check both. Other helpful commands:
+
+- `npm run lint` - tests code for ESLint and Prettier
+- `npm run eslint` - tests code for ESLint
+- `npm run eslintfix` - fixes ESLint errors
+- `npm run prettier` - tests code for Prettier
+- `npm run prettierfix` - fixes Prettier errors
 
 ### Testing
 
