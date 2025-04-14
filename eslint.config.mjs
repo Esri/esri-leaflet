@@ -43,7 +43,7 @@ export default defineConfig([
       "@stylistic/js/spaced-comment": "error",
 
       // esri-leaflet cusomizations:
-      "new-cap": ["error", { "capIsNewExceptions": ["JSONP"] }],
+      "new-cap": ["error", { "capIsNewExceptions": ["JSONP", "CORS"] }],
       "camelcase": ["error", {allow: ["Shape_Length", "Shape_Area"]}],
 
       // TODO: Re-enable the rules below and fix the linting issues.
