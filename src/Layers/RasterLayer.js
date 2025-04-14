@@ -237,13 +237,16 @@ export const RasterLayer = Layer.extend({
         interactive: this.options.interactive,
       }).addTo(this._map);
 
+      // eslint-disable-next-line prefer-const
+      let onOverlayLoad;
+
       const onOverlayError = function () {
         this._map.removeLayer(image);
         this.fire("error");
         image.off("load", onOverlayLoad, this);
       };
 
-      const onOverlayLoad = function (e) {
+      onOverlayLoad = function (e) {
         image.off("error", onOverlayError, this);
         if (this._map) {
           const newImage = e.target;
