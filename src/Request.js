@@ -248,9 +248,9 @@ const get = Support.cors ? xmlHttpGet : jsonp;
 get.CORS = xmlHttpGet;
 get.JSONP = jsonp;
 
-export function warn() {
+export function warn(...args) {
   if (console && console.warn) {
-    console.warn.apply(console, arguments);
+    console.warn.apply(console, args);
   }
 }
 
