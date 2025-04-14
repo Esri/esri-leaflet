@@ -1,24 +1,23 @@
-import { Class, Util } from 'leaflet';
-import { cors } from '../Support';
-import { cleanUrl, getUrlParams } from '../Util';
-import Request from '../Request';
+import { Class, Util } from "leaflet";
+import { cors } from "../Support.js";
+import { cleanUrl, getUrlParams } from "../Util.js";
+import Request from "../Request.js";
 
-export var Task = Class.extend({
-
+export const Task = Class.extend({
   options: {
     proxy: false,
-    useCors: cors
+    useCors: cors,
   },
 
   // Generate a method for each methodName:paramName in the setters for this task.
-  generateSetter: function (param, context) {
+  generateSetter(param, context) {
     return Util.bind(function (value) {
       this.params[param] = value;
       return this;
     }, context);
   },
 
-  initialize: function (endpoint) {
+  initialize(endpoint) {
     // endpoint can be either a url (and options) for an ArcGIS Rest Service or an instance of EsriLeaflet.Service
     if (endpoint.request && endpoint.options) {
       this._service = endpoint;
@@ -33,14 +32,14 @@ export var Task = Class.extend({
 
     // generate setter methods based on the setters object implimented a child class
     if (this.setters) {
-      for (var setter in this.setters) {
-        var param = this.setters[setter];
+      for (const setter in this.setters) {
+        const param = this.setters[setter];
         this[setter] = this.generateSetter(param, this);
       }
     }
   },
 
-  token: function (token) {
+  token(token) {
     if (this._service) {
       this._service.authenticate(token);
     } else {
@@ -49,18 +48,18 @@ export var Task = Class.extend({
     return this;
   },
 
-  apikey: function (apikey) {
+  apikey(apikey) {
     return this.token(apikey);
   },
 
   // ArcGIS Server Find/Identify 10.5+
-  format: function (boolean) {
+  format(boolean) {
     // use double negative to expose a more intuitive positive method name
     this.params.returnUnformattedValues = !boolean;
     return this;
   },
 
-  request: function (callback, context) {
+  request(callback, context) {
     if (this.options.requestParams) {
       Util.extend(this.params, this.options.requestParams);
     }
@@ -68,21 +67,23 @@ export var Task = Class.extend({
       return this._service.request(this.path, this.params, callback, context);
     }
 
-    return this._request('request', this.path, this.params, callback, context);
+    return this._request("request", this.path, this.params, callback, context);
   },
 
-  _request: function (method, path, params, callback, context) {
-    var url = (this.options.proxy) ? this.options.proxy + '?' + this.options.url + path : this.options.url + path;
+  _request(method, path, params, callback, context) {
+    const url = this.options.proxy
+      ? `${this.options.proxy}?${this.options.url}${path}`
+      : this.options.url + path;
 
-    if ((method === 'get' || method === 'request') && !this.options.useCors) {
+    if ((method === "get" || method === "request") && !this.options.useCors) {
       return Request.get.JSONP(url, params, callback, context);
     }
 
     return Request[method](url, params, callback, context);
-  }
+  },
 });
 
-export function task (options) {
+export function task(options) {
   options = getUrlParams(options);
   return new Task(options);
 }

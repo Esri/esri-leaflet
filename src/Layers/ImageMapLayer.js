@@ -1,26 +1,25 @@
-import { Util } from 'leaflet';
-import { RasterLayer } from './RasterLayer';
-import { getUrlParams } from '../Util';
-import imageService from '../Services/ImageService';
+import { Util } from "leaflet";
+import { RasterLayer } from "./RasterLayer.js";
+import { getUrlParams } from "../Util.js";
+import imageService from "../Services/ImageService.js";
 
-export var ImageMapLayer = RasterLayer.extend({
-
+export const ImageMapLayer = RasterLayer.extend({
   options: {
     updateInterval: 150,
-    format: 'jpgpng',
+    format: "jpgpng",
     transparent: true,
-    f: 'image'
+    f: "image",
   },
 
-  query: function () {
+  query() {
     return this.service.query();
   },
 
-  identify: function () {
+  identify() {
     return this.service.identify();
   },
 
-  initialize: function (options) {
+  initialize(options) {
     options = getUrlParams(options);
     this.service = imageService(options);
     this.service.addEventParent(this);
@@ -28,19 +27,19 @@ export var ImageMapLayer = RasterLayer.extend({
     Util.setOptions(this, options);
   },
 
-  setPixelType: function (pixelType) {
+  setPixelType(pixelType) {
     this.options.pixelType = pixelType;
     this._update();
     return this;
   },
 
-  getPixelType: function () {
+  getPixelType() {
     return this.options.pixelType;
   },
 
-  setBandIds: function (bandIds) {
+  setBandIds(bandIds) {
     if (Util.isArray(bandIds)) {
-      this.options.bandIds = bandIds.join(',');
+      this.options.bandIds = bandIds.join(",");
     } else {
       this.options.bandIds = bandIds.toString();
     }
@@ -48,13 +47,13 @@ export var ImageMapLayer = RasterLayer.extend({
     return this;
   },
 
-  getBandIds: function () {
+  getBandIds() {
     return this.options.bandIds;
   },
 
-  setNoData: function (noData, noDataInterpretation) {
+  setNoData(noData, noDataInterpretation) {
     if (Util.isArray(noData)) {
-      this.options.noData = noData.join(',');
+      this.options.noData = noData.join(",");
     } else {
       this.options.noData = noData.toString();
     }
@@ -65,41 +64,46 @@ export var ImageMapLayer = RasterLayer.extend({
     return this;
   },
 
-  getNoData: function () {
+  getNoData() {
     return this.options.noData;
   },
 
-  getNoDataInterpretation: function () {
+  getNoDataInterpretation() {
     return this.options.noDataInterpretation;
   },
 
-  setRenderingRule: function (renderingRule) {
+  setRenderingRule(renderingRule) {
     this.options.renderingRule = renderingRule;
     this._update();
   },
 
-  getRenderingRule: function () {
+  getRenderingRule() {
     return this.options.renderingRule;
   },
 
-  setMosaicRule: function (mosaicRule) {
+  setMosaicRule(mosaicRule) {
     this.options.mosaicRule = mosaicRule;
     this._update();
   },
 
-  getMosaicRule: function () {
+  getMosaicRule() {
     return this.options.mosaicRule;
   },
 
-  _getPopupData: function (e) {
-    var callback = Util.bind(function (error, results, response) {
-      if (error) { return; } // we really can't do anything here but authenticate or requesterror will fire
-      setTimeout(Util.bind(function () {
-        this._renderPopup(e.latlng, error, results, response);
-      }, this), 300);
+  _getPopupData(e) {
+    const callback = Util.bind(function (error, results, response) {
+      if (error) {
+        return;
+      } // we really can't do anything here but authenticate or requesterror will fire
+      setTimeout(
+        Util.bind(function () {
+          this._renderPopup(e.latlng, error, results, response);
+        }, this),
+        300,
+      );
     }, this);
 
-    var identifyRequest = this.identify().at(e.latlng);
+    const identifyRequest = this.identify().at(e.latlng);
 
     // set mosaic rule for identify task if it is set for layer
     if (this.options.mosaicRule) {
@@ -120,20 +124,20 @@ export var ImageMapLayer = RasterLayer.extend({
     this._lastClick = e.latlng;
   },
 
-  _buildExportParams: function () {
-    var sr = parseInt(this._map.options.crs.code.split(':')[1], 10);
+  _buildExportParams() {
+    const sr = parseInt(this._map.options.crs.code.split(":")[1], 10);
 
-    var params = {
+    const params = {
       bbox: this._calculateBbox(),
       size: this._calculateImageSize(),
       format: this.options.format,
       transparent: this.options.transparent,
       bboxSR: sr,
-      imageSR: sr
+      imageSR: sr,
     };
 
     if (this.options.from && this.options.to) {
-      params.time = this.options.from.valueOf() + ',' + this.options.to.valueOf();
+      params.time = `${this.options.from.valueOf()},${this.options.to.valueOf()}`;
     }
 
     if (this.options.pixelType) {
@@ -176,30 +180,37 @@ export var ImageMapLayer = RasterLayer.extend({
     return params;
   },
 
-  _requestExport: function (params, bounds) {
-    if (this.options.f === 'json') {
-      this.service.request('exportImage', params, function (error, response) {
-        if (error) { return; } // we really can't do anything here but authenticate or requesterror will fire
-        if (this.options.token) {
-          response.href += ('?token=' + this.options.token);
-        }
-        if (this.options.proxy) {
-          response.href = this.options.proxy + '?' + response.href;
-        }
-        this._renderImage(response.href, bounds);
-      }, this);
+  _requestExport(params, bounds) {
+    if (this.options.f === "json") {
+      this.service.request(
+        "exportImage",
+        params,
+        function (error, response) {
+          if (error) {
+            return;
+          } // we really can't do anything here but authenticate or requesterror will fire
+          if (this.options.token) {
+            response.href += `?token=${this.options.token}`;
+          }
+          if (this.options.proxy) {
+            response.href = `${this.options.proxy}?${response.href}`;
+          }
+          this._renderImage(response.href, bounds);
+        },
+        this,
+      );
     } else {
-      params.f = 'image';
-      var fullUrl = this.options.url + 'exportImage' + Util.getParamString(params);
+      params.f = "image";
+      let fullUrl = `${this.options.url}exportImage${Util.getParamString(params)}`;
       if (this.options.proxy) {
-        fullUrl = this.options.proxy + '?' + fullUrl;
+        fullUrl = `${this.options.proxy}?${fullUrl}`;
       }
       this._renderImage(fullUrl, bounds);
     }
-  }
+  },
 });
 
-export function imageMapLayer (url, options) {
+export function imageMapLayer(url, options) {
   return new ImageMapLayer(url, options);
 }
 

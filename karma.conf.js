@@ -1,23 +1,22 @@
 // Karma configuration
 module.exports = function (config) {
-  var configuration = {
-
+  const configuration = {
     // base path that will be used to resolve all patterns (eg. files, exclude)
-    basePath: '',
+    basePath: "",
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['mocha', 'sinon-chai'],
+    frameworks: ["mocha", "sinon-chai"],
 
     // list of files / patterns to load in the browser
     // not sure why tests are failing when files are loaded in bulk
     files: [
-      'node_modules/leaflet/dist/leaflet.css',
-      'node_modules/leaflet/dist/leaflet-src.js',
-      'dist/esri-leaflet-debug.js',
-      'spec/Layers/DynamicMapLayerSpec.js',
-      'spec/Layers/ImageMapLayerSpec.js',
-      'spec/**/!(ImageMapLayer|DynamicMapLayer)*Spec.js'
+      "node_modules/leaflet/dist/leaflet.css",
+      "node_modules/leaflet/dist/leaflet-src.js",
+      "dist/esri-leaflet-debug.js",
+      "spec/Layers/DynamicMapLayerSpec.js",
+      "spec/Layers/ImageMapLayerSpec.js",
+      "spec/**/!(ImageMapLayer|DynamicMapLayer)*Spec.js",
     ],
 
     // list of files to exclude
@@ -26,13 +25,13 @@ module.exports = function (config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      'dist/**/*.js': ['sourcemap', 'coverage']
+      "dist/**/*.js": ["sourcemap", "coverage"],
     },
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['mocha', 'coverage'],
+    reporters: ["mocha", "coverage"],
 
     // web server port
     port: 9876,
@@ -49,27 +48,27 @@ module.exports = function (config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Chrome1280x1024'],
+    browsers: ["Chrome1280x1024"],
 
     customLaunchers: {
       Chrome1280x1024: {
-        base: 'ChromeHeadless',
+        base: "ChromeHeadless",
         // increased viewport is required for some tests (TODO fix tests)
         // https://github.com/Leaflet/Leaflet/issues/7113#issuecomment-619528577
-        flags: ['--window-size=1280,1024']
+        flags: ["--window-size=1280,1024"],
       },
       FirefoxTouch: {
-        base: 'FirefoxHeadless',
+        base: "FirefoxHeadless",
         prefs: {
-          'dom.w3c_touch_events.enabled': 1
-        }
+          "dom.w3c_touch_events.enabled": 1,
+        },
       },
       FirefoxNoTouch: {
-        base: 'FirefoxHeadless',
+        base: "FirefoxHeadless",
         prefs: {
-          'dom.w3c_touch_events.enabled': 0
-        }
-      }
+          "dom.w3c_touch_events.enabled": 0,
+        },
+      },
     },
 
     concurrency: 1,
@@ -86,22 +85,22 @@ module.exports = function (config) {
 
     client: {
       mocha: {
-        // eslint-disable-next-line no-undef
-        forbidOnly: process.env.CI || false
-      }
+        forbidOnly: process.env.CI || false,
+      },
     },
 
     // Configure the coverage reporters
     coverageReporter: {
       reporters: [
         {
-          type: 'html',
-          dir: 'coverage/'
-        }, {
-          type: 'text'
-        }
-      ]
-    }
+          type: "html",
+          dir: "coverage/",
+        },
+        {
+          type: "text",
+        },
+      ],
+    },
   };
 
   config.set(configuration);

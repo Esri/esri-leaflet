@@ -10,11 +10,11 @@ If you think you're encountering a new bug, please feel free to log an [issue](h
 
 **Please include the following in your issue:**
 
-* Browser
-* Browser version
-* Leaflet version `L.version`
-* Esri Leaflet version `L.esri.VERSION`
-* Bundling tool (webpack, browserify, Require JS) if any
+- Browser
+- Browser version
+- Leaflet version `L.version`
+- Esri Leaflet version `L.esri.VERSION`
+- Bundling tool (webpack, browserify, Require JS) if any
 
 ### I want to contribute, what should I work on?
 
@@ -32,7 +32,7 @@ You can run the tests with `npm test`.
 
 ##### Support for new services and layer types
 
-Support for new layer types and services are always needed.  The [plugin candidates](https://github.com/Esri/esri-leaflet/issues?labels=Plugin+Candidate&page=1&state=open) list is a good place to start.
+Support for new layer types and services are always needed. The [plugin candidates](https://github.com/Esri/esri-leaflet/issues?labels=Plugin+Candidate&page=1&state=open) list is a good place to start.
 
 ### Can I publish my own Esri Leaflet plugins?
 
@@ -50,9 +50,15 @@ Of course! If you develop reusable components for use with Esri Leaflet that you
 
 If you'd like to build the Esri Leaflet website locally, make sure you have the [Grunt CLI](http://gruntjs.com/getting-started) installed.
 
-### Linting
+### Linting and Code Formatting
 
-Please make sure your changes pass JS Hint. This will help make sure code is consistent throughout Esri Leaflet. After installing the node dependencies for this project you can run `npm run lint` so that `semistandard` can make sure all is well.
+Please make sure your changes pass ESLint and Prettier. This will help make sure code is consistent throughout Esri Leaflet. To check this, run `npm run lint` which will check both. Other helpful commands:
+
+- `npm run lint` - tests code for ESLint and Prettier
+- `npm run eslint` - tests code for ESLint
+- `npm run eslintfix` - fixes ESLint errors
+- `npm run prettier` - tests code for Prettier
+- `npm run prettierfix` - fixes Prettier errors
 
 ### Testing
 

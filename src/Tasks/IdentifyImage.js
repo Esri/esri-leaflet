@@ -1,78 +1,83 @@
-import { latLng } from 'leaflet';
-import { Identify } from './Identify';
-import { responseToFeatureCollection } from '../Util';
+import { latLng } from "leaflet";
+import { Identify } from "./Identify.js";
+import { responseToFeatureCollection } from "../Util.js";
 
-export var IdentifyImage = Identify.extend({
+export const IdentifyImage = Identify.extend({
   setters: {
-    setMosaicRule: 'mosaicRule',
-    setRenderingRule: 'renderingRule',
-    setPixelSize: 'pixelSize',
-    returnCatalogItems: 'returnCatalogItems',
-    returnGeometry: 'returnGeometry'
+    setMosaicRule: "mosaicRule",
+    setRenderingRule: "renderingRule",
+    setPixelSize: "pixelSize",
+    returnCatalogItems: "returnCatalogItems",
+    returnGeometry: "returnGeometry",
   },
 
   params: {
-    returnGeometry: false
+    returnGeometry: false,
   },
 
-  at: function (latlng) {
+  at(latlng) {
     latlng = latLng(latlng);
     this.params.geometry = JSON.stringify({
       x: latlng.lng,
       y: latlng.lat,
       spatialReference: {
-        wkid: 4326
-      }
+        wkid: 4326,
+      },
     });
-    this.params.geometryType = 'esriGeometryPoint';
+    this.params.geometryType = "esriGeometryPoint";
     return this;
   },
 
-  getMosaicRule: function () {
+  getMosaicRule() {
     return this.params.mosaicRule;
   },
 
-  getRenderingRule: function () {
+  getRenderingRule() {
     return this.params.renderingRule;
   },
 
-  getPixelSize: function () {
+  getPixelSize() {
     return this.params.pixelSize;
   },
 
-  run: function (callback, context) {
+  run(callback, context) {
     return this.request(function (error, response) {
-      callback.call(context, error, (response && this._responseToGeoJSON(response)), response);
+      callback.call(
+        context,
+        error,
+        response && this._responseToGeoJSON(response),
+        response,
+      );
     }, this);
   },
 
   // get pixel data and return as geoJSON point
   // populate catalog items (if any)
   // merging in any catalogItemVisibilities as a propery of each feature
-  _responseToGeoJSON: function (response) {
-    var location = response.location;
-    var catalogItems = response.catalogItems;
-    var catalogItemVisibilities = response.catalogItemVisibilities;
-    var geoJSON = {
+  _responseToGeoJSON(response) {
+    const location = response.location;
+    const catalogItems = response.catalogItems;
+    const catalogItemVisibilities = response.catalogItemVisibilities;
+    const geoJSON = {
       pixel: {
-        type: 'Feature',
+        type: "Feature",
         geometry: {
-          type: 'Point',
-          coordinates: [location.x, location.y]
+          type: "Point",
+          coordinates: [location.x, location.y],
         },
         crs: {
-          type: 'EPSG',
+          type: "EPSG",
           properties: {
-            code: location.spatialReference.wkid
-          }
+            code: location.spatialReference.wkid,
+          },
         },
         properties: {
           OBJECTID: response.objectId,
           name: response.name,
-          value: response.value
+          value: response.value,
         },
-        id: response.objectId
-      }
+        id: response.objectId,
+      },
     };
 
     if (response.properties && response.properties.Values) {
@@ -81,18 +86,21 @@ export var IdentifyImage = Identify.extend({
 
     if (catalogItems && catalogItems.features) {
       geoJSON.catalogItems = responseToFeatureCollection(catalogItems);
-      if (catalogItemVisibilities && catalogItemVisibilities.length === geoJSON.catalogItems.features.length) {
-        for (var i = catalogItemVisibilities.length - 1; i >= 0; i--) {
-          geoJSON.catalogItems.features[i].properties.catalogItemVisibility = catalogItemVisibilities[i];
+      if (
+        catalogItemVisibilities &&
+        catalogItemVisibilities.length === geoJSON.catalogItems.features.length
+      ) {
+        for (let i = catalogItemVisibilities.length - 1; i >= 0; i--) {
+          geoJSON.catalogItems.features[i].properties.catalogItemVisibility =
+            catalogItemVisibilities[i];
         }
       }
     }
     return geoJSON;
-  }
-
+  },
 });
 
-export function identifyImage (params) {
+export function identifyImage(params) {
   return new IdentifyImage(params);
 }
 
