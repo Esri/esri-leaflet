@@ -42,11 +42,15 @@ export default defineConfig([
       "@stylistic/js/linebreak-style": ["off", "unix"],
       "@stylistic/js/spaced-comment": "error",
 
+      // esri-leaflet cusomizations:
+      "new-cap": ["error", { "capIsNewExceptions": ["JSONP"] }],
+
       // TODO: Re-enable the rules below and fix the linting issues.
       "no-invalid-this": "off",
       "prefer-object-has-own": "error",
       "prefer-spread": "off",
       "no-new": "off",
+      
     },
   },
   {
