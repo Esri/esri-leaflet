@@ -44,6 +44,7 @@ export default defineConfig([
 
       // esri-leaflet cusomizations:
       "new-cap": ["error", { "capIsNewExceptions": ["JSONP"] }],
+      "camelcase": ["error", {allow: ["Shape_Length", "Shape_Area"]}],
 
       // TODO: Re-enable the rules below and fix the linting issues.
       "no-invalid-this": "off",
