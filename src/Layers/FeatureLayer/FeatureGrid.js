@@ -377,7 +377,7 @@ export const FeatureGrid = Layer.extend({
         this._loading = true;
       }
 
-      for (i = 0; i < queue.length; i++) {
+      for (let i = 0; i < queue.length; i++) {
         const _key = this._cellCoordsToKey(queue[i]);
         const _coords = this._keyToCellCoords(_key);
         if (this._activeCells[_coords]) {
