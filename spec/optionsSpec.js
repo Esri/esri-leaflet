@@ -24,7 +24,9 @@ describe("L.esri.options", () => {
         try {
           element.parentNode.removeChild(element);
           // console.log('this gets called many times');
-        } catch (err) {}
+        } catch (err) {
+          // intentionally empty
+        }
       },
     );
 
