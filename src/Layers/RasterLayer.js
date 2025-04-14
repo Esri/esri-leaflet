@@ -7,7 +7,7 @@ import {
   popup,
   latLng,
   bounds,
-} from "leaflet.js";
+} from "leaflet";
 import { cors } from "../Support.js";
 import { setEsriAttribution, removeEsriAttribution } from "../Util.js";
 
