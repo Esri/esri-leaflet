@@ -291,7 +291,7 @@ describe("L.esri request helpers", () => {
     const request = L.esri.post(
       "http://services.arcgisonline.com/ArcGIS/rest/info",
       {},
-      (error, response) => {
+      (error) => {
         expect(error).to.deep.equal({
           error: {
             message: "XMLHttpRequest error",
