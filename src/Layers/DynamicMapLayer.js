@@ -1,21 +1,20 @@
-import { Util } from 'leaflet';
-import { RasterLayer } from './RasterLayer';
-import { getUrlParams } from '../Util';
-import mapService from '../Services/MapService';
+import { Util } from "leaflet";
+import { RasterLayer } from "./RasterLayer.js";
+import { getUrlParams } from "../Util.js";
+import mapService from "../Services/MapService.js";
 
-export var DynamicMapLayer = RasterLayer.extend({
-
+export const DynamicMapLayer = RasterLayer.extend({
   options: {
     updateInterval: 150,
     layers: false,
     layerDefs: false,
     timeOptions: false,
-    format: 'png32',
+    format: "png32",
     transparent: true,
-    f: 'json'
+    f: "json",
   },
 
-  initialize: function (options) {
+  initialize(options) {
     options = getUrlParams(options);
     this.service = mapService(options);
     this.service.addEventParent(this);
@@ -23,67 +22,72 @@ export var DynamicMapLayer = RasterLayer.extend({
     Util.setOptions(this, options);
   },
 
-  getDynamicLayers: function () {
+  getDynamicLayers() {
     return this.options.dynamicLayers;
   },
 
-  setDynamicLayers: function (dynamicLayers) {
+  setDynamicLayers(dynamicLayers) {
     this.options.dynamicLayers = dynamicLayers;
     this._update();
     return this;
   },
 
-  getLayers: function () {
+  getLayers() {
     return this.options.layers;
   },
 
-  setLayers: function (layers) {
+  setLayers(layers) {
     this.options.layers = layers;
     this._update();
     return this;
   },
 
-  getLayerDefs: function () {
+  getLayerDefs() {
     return this.options.layerDefs;
   },
 
-  setLayerDefs: function (layerDefs) {
+  setLayerDefs(layerDefs) {
     this.options.layerDefs = layerDefs;
     this._update();
     return this;
   },
 
-  getTimeOptions: function () {
+  getTimeOptions() {
     return this.options.timeOptions;
   },
 
-  setTimeOptions: function (timeOptions) {
+  setTimeOptions(timeOptions) {
     this.options.timeOptions = timeOptions;
     this._update();
     return this;
   },
 
-  query: function () {
+  query() {
     return this.service.query();
   },
 
-  identify: function () {
+  identify() {
     return this.service.identify();
   },
 
-  find: function () {
+  find() {
     return this.service.find();
   },
 
-  _getPopupData: function (e) {
-    var callback = Util.bind(function (error, featureCollection, response) {
-      if (error) { return; } // we really can't do anything here but authenticate or requesterror will fire
-      setTimeout(Util.bind(function () {
-        this._renderPopup(e.latlng, error, featureCollection, response);
-      }, this), 300);
+  _getPopupData(e) {
+    const callback = Util.bind(function (error, featureCollection, response) {
+      if (error) {
+        return;
+      } // we really can't do anything here but authenticate or requesterror will fire
+      setTimeout(
+        Util.bind(function () {
+          this._renderPopup(e.latlng, error, featureCollection, response);
+        }, this),
+        300,
+      );
     }, this);
 
-    var identifyRequest;
+    let identifyRequest;
     if (this.options.popup) {
       identifyRequest = this.options.popup.on(this._map).at(e.latlng);
     } else {
@@ -95,18 +99,28 @@ export var DynamicMapLayer = RasterLayer.extend({
       identifyRequest.simplify(this._map, 0.5);
     }
 
-    if (!(this.options.popup && this.options.popup.params && this.options.popup.params.layers)) {
+    if (
+      !(
+        this.options.popup &&
+        this.options.popup.params &&
+        this.options.popup.params.layers
+      )
+    ) {
       if (this.options.layers) {
-        identifyRequest.layers('visible:' + this.options.layers.join(','));
+        identifyRequest.layers(`visible:${this.options.layers.join(",")}`);
       } else {
-        identifyRequest.layers('visible');
+        identifyRequest.layers("visible");
       }
     }
 
     // if present, pass layer ids and sql filters through to the identify task
-    if (this.options.layerDefs && typeof this.options.layerDefs !== 'string' && !identifyRequest.params.layerDefs) {
-      for (var id in this.options.layerDefs) {
-        if (Object.prototype.hasOwnProperty.call(this.options.layerDefs, id)) {
+    if (
+      this.options.layerDefs &&
+      typeof this.options.layerDefs !== "string" &&
+      !identifyRequest.params.layerDefs
+    ) {
+      for (const id in this.options.layerDefs) {
+        if (Object.hasOwn(this.options.layerDefs, id)) {
           identifyRequest.layerDef(id, this.options.layerDefs[id]);
         }
       }
@@ -119,17 +133,17 @@ export var DynamicMapLayer = RasterLayer.extend({
     this._lastClick = e.latlng;
   },
 
-  _buildExportParams: function () {
-    var sr = parseInt(this._map.options.crs.code.split(':')[1], 10);
+  _buildExportParams() {
+    const sr = parseInt(this._map.options.crs.code.split(":")[1], 10);
 
-    var params = {
+    const params = {
       bbox: this._calculateBbox(),
       size: this._calculateImageSize(),
       dpi: 96,
       format: this.options.format,
       transparent: this.options.transparent,
       bboxSR: sr,
-      imageSR: sr
+      imageSR: sr,
     };
 
     if (this.options.dynamicLayers) {
@@ -139,13 +153,15 @@ export var DynamicMapLayer = RasterLayer.extend({
     if (this.options.layers) {
       if (this.options.layers.length === 0) {
         return;
-      } else {
-        params.layers = 'show:' + this.options.layers.join(',');
       }
+      params.layers = `show:${this.options.layers.join(",")}`;
     }
 
     if (this.options.layerDefs) {
-      params.layerDefs = typeof this.options.layerDefs === 'string' ? this.options.layerDefs : JSON.stringify(this.options.layerDefs);
+      params.layerDefs =
+        typeof this.options.layerDefs === "string"
+          ? this.options.layerDefs
+          : JSON.stringify(this.options.layerDefs);
     }
 
     if (this.options.timeOptions) {
@@ -153,7 +169,7 @@ export var DynamicMapLayer = RasterLayer.extend({
     }
 
     if (this.options.from && this.options.to) {
-      params.time = this.options.from.valueOf() + ',' + this.options.to.valueOf();
+      params.time = `${this.options.from.valueOf()},${this.options.to.valueOf()}`;
     }
 
     if (this.service.options.token) {
@@ -172,35 +188,42 @@ export var DynamicMapLayer = RasterLayer.extend({
     return params;
   },
 
-  _requestExport: function (params, bounds) {
-    if (this.options.f === 'json') {
-      this.service.request('export', params, function (error, response) {
-        if (error) { return; } // we really can't do anything here but authenticate or requesterror will fire
+  _requestExport(params, bounds) {
+    if (this.options.f === "json") {
+      this.service.request(
+        "export",
+        params,
+        function (error, response) {
+          if (error) {
+            return;
+          } // we really can't do anything here but authenticate or requesterror will fire
 
-        if (this.options.token && response.href) {
-          response.href += ('?token=' + this.options.token);
-        }
-        if (this.options.proxy && response.href) {
-          response.href = this.options.proxy + '?' + response.href;
-        }
-        if (response.href) {
-          this._renderImage(response.href, bounds);
-        } else {
-          this._renderImage(response.imageData, bounds, response.contentType);
-        }
-      }, this);
+          if (this.options.token && response.href) {
+            response.href += `?token=${this.options.token}`;
+          }
+          if (this.options.proxy && response.href) {
+            response.href = `${this.options.proxy}?${response.href}`;
+          }
+          if (response.href) {
+            this._renderImage(response.href, bounds);
+          } else {
+            this._renderImage(response.imageData, bounds, response.contentType);
+          }
+        },
+        this,
+      );
     } else {
-      params.f = 'image';
-      var fullUrl = this.options.url + 'export' + Util.getParamString(params);
+      params.f = "image";
+      let fullUrl = `${this.options.url}export${Util.getParamString(params)}`;
       if (this.options.proxy) {
-        fullUrl = this.options.proxy + '?' + fullUrl;
+        fullUrl = `${this.options.proxy}?${fullUrl}`;
       }
       this._renderImage(fullUrl, bounds);
     }
-  }
+  },
 });
 
-export function dynamicMapLayer (url, options) {
+export function dynamicMapLayer(url, options) {
   return new DynamicMapLayer(url, options);
 }
 

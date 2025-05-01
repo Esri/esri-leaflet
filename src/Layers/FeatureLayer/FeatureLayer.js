@@ -1,16 +1,16 @@
-import { Path, Util, GeoJSON, latLng } from 'leaflet';
-import { FeatureManager } from './FeatureManager';
-import { warn } from '../../Util';
+import { Path, Util, GeoJSON, latLng } from "leaflet";
+import { FeatureManager } from "./FeatureManager.js";
+import { warn } from "../../Util.js";
 
-export var FeatureLayer = FeatureManager.extend({
+export const FeatureLayer = FeatureManager.extend({
   options: {
-    cacheLayers: true
+    cacheLayers: true,
   },
 
   /**
    * Constructor
    */
-  initialize: function (options) {
+  initialize(options) {
     if (options.apikey) {
       options.token = options.apikey;
     }
@@ -23,25 +23,25 @@ export var FeatureLayer = FeatureManager.extend({
    * Layer Interface
    */
 
-  onRemove: function (map) {
-    for (var i in this._layers) {
+  onRemove(map) {
+    for (const i in this._layers) {
       map.removeLayer(this._layers[i]);
       // trigger the event when the entire featureLayer is removed from the map
       this.fire(
-        'removefeature',
+        "removefeature",
         {
           feature: this._layers[i].feature,
-          permanent: false
+          permanent: false,
         },
-        true
+        true,
       );
     }
 
     return FeatureManager.prototype.onRemove.call(this, map);
   },
 
-  createNewLayer: function (geojson) {
-    var layer = GeoJSON.geometryToLayer(geojson, this.options);
+  createNewLayer(geojson) {
+    const layer = GeoJSON.geometryToLayer(geojson, this.options);
     // trap for GeoJSON without geometry
     if (layer) {
       layer.defaultOptions = layer.options;
@@ -49,11 +49,12 @@ export var FeatureLayer = FeatureManager.extend({
     return layer;
   },
 
-  _updateLayer: function (layer, geojson) {
+  _updateLayer(layer, geojson) {
     // convert the geojson coordinates into a Leaflet LatLng array/nested arrays
     // pass it to setLatLngs to update layer geometries
-    var latlngs = [];
-    var coordsToLatLng = this.options.coordsToLatLng || GeoJSON.coordsToLatLng;
+    let latlngs = [];
+    const coordsToLatLng =
+      this.options.coordsToLatLng || GeoJSON.coordsToLatLng;
 
     // copy new attributes, if present
     if (geojson.properties) {
@@ -61,39 +62,39 @@ export var FeatureLayer = FeatureManager.extend({
     }
 
     switch (geojson.geometry.type) {
-      case 'Point':
+      case "Point":
         latlngs = GeoJSON.coordsToLatLng(geojson.geometry.coordinates);
         layer.setLatLng(latlngs);
         break;
-      case 'LineString':
+      case "LineString":
         latlngs = GeoJSON.coordsToLatLngs(
           geojson.geometry.coordinates,
           0,
-          coordsToLatLng
+          coordsToLatLng,
         );
         layer.setLatLngs(latlngs);
         break;
-      case 'MultiLineString':
+      case "MultiLineString":
         latlngs = GeoJSON.coordsToLatLngs(
           geojson.geometry.coordinates,
           1,
-          coordsToLatLng
+          coordsToLatLng,
         );
         layer.setLatLngs(latlngs);
         break;
-      case 'Polygon':
+      case "Polygon":
         latlngs = GeoJSON.coordsToLatLngs(
           geojson.geometry.coordinates,
           1,
-          coordsToLatLng
+          coordsToLatLng,
         );
         layer.setLatLngs(latlngs);
         break;
-      case 'MultiPolygon':
+      case "MultiPolygon":
         latlngs = GeoJSON.coordsToLatLngs(
           geojson.geometry.coordinates,
           2,
-          coordsToLatLng
+          coordsToLatLng,
         );
         layer.setLatLngs(latlngs);
         break;
@@ -107,12 +108,12 @@ export var FeatureLayer = FeatureManager.extend({
    * Feature Management Methods
    */
 
-  createLayers: function (features) {
-    for (var i = features.length - 1; i >= 0; i--) {
-      var geojson = features[i];
+  createLayers(features) {
+    for (let i = features.length - 1; i >= 0; i--) {
+      const geojson = features[i];
 
-      var layer = this._layers[geojson.id];
-      var newLayer;
+      const layer = this._layers[geojson.id];
+      let newLayer;
 
       if (
         this._visibleZoom() &&
@@ -122,11 +123,11 @@ export var FeatureLayer = FeatureManager.extend({
       ) {
         this._map.addLayer(layer);
         this.fire(
-          'addfeature',
+          "addfeature",
           {
-            feature: layer.feature
+            feature: layer.feature,
           },
-          true
+          true,
         );
       }
 
@@ -139,7 +140,7 @@ export var FeatureLayer = FeatureManager.extend({
         newLayer = this.createNewLayer(geojson);
 
         if (!newLayer) {
-          warn('invalid GeoJSON encountered');
+          warn("invalid GeoJSON encountered");
         } else {
           newLayer.feature = geojson;
 
@@ -157,11 +158,11 @@ export var FeatureLayer = FeatureManager.extend({
           this.setFeatureStyle(newLayer.feature.id, this.options.style);
 
           this.fire(
-            'createfeature',
+            "createfeature",
             {
-              feature: newLayer.feature
+              feature: newLayer.feature,
             },
-            true
+            true,
           );
 
           // add the layer if the current zoom level is inside the range defined for the layer, it is within the current time bounds or our layer is not time enabled
@@ -177,37 +178,37 @@ export var FeatureLayer = FeatureManager.extend({
     }
   },
 
-  addLayers: function (ids) {
-    for (var i = ids.length - 1; i >= 0; i--) {
-      var layer = this._layers[ids[i]];
+  addLayers(ids) {
+    for (let i = ids.length - 1; i >= 0; i--) {
+      const layer = this._layers[ids[i]];
       if (
         layer &&
         (!this.options.timeField || this._featureWithinTimeRange(layer.feature))
       ) {
         this._map.addLayer(layer);
         this.fire(
-          'addfeature',
+          "addfeature",
           {
-            feature: layer.feature
+            feature: layer.feature,
           },
-          true
+          true,
         );
       }
     }
   },
 
-  removeLayers: function (ids, permanent) {
-    for (var i = ids.length - 1; i >= 0; i--) {
-      var id = ids[i];
-      var layer = this._layers[id];
+  removeLayers(ids, permanent) {
+    for (let i = ids.length - 1; i >= 0; i--) {
+      const id = ids[i];
+      const layer = this._layers[id];
       if (layer) {
         this.fire(
-          'removefeature',
+          "removefeature",
           {
             feature: layer.feature,
-            permanent: permanent
+            permanent,
           },
-          true
+          true,
         );
         this._map.removeLayer(layer);
       }
@@ -217,35 +218,35 @@ export var FeatureLayer = FeatureManager.extend({
     }
   },
 
-  cellEnter: function (bounds, coords) {
+  cellEnter(bounds, coords) {
     if (this._visibleZoom() && !this._zooming && this._map) {
       Util.requestAnimFrame(
         Util.bind(function () {
-          var cacheKey = this._cacheKey(coords);
-          var cellKey = this._cellCoordsToKey(coords);
-          var layers = this._cache[cacheKey];
+          const cacheKey = this._cacheKey(coords);
+          const cellKey = this._cellCoordsToKey(coords);
+          const layers = this._cache[cacheKey];
           if (this._activeCells[cellKey] && layers) {
             this.addLayers(layers);
           }
-        }, this)
+        }, this),
       );
     }
   },
 
-  cellLeave: function (bounds, coords) {
+  cellLeave(bounds, coords) {
     if (!this._zooming) {
       Util.requestAnimFrame(
         Util.bind(function () {
           if (this._map) {
-            var cacheKey = this._cacheKey(coords);
-            var cellKey = this._cellCoordsToKey(coords);
-            var layers = this._cache[cacheKey];
-            var mapBounds = this._map.getBounds();
+            const cacheKey = this._cacheKey(coords);
+            const cellKey = this._cellCoordsToKey(coords);
+            const layers = this._cache[cacheKey];
+            const mapBounds = this._map.getBounds();
             if (!this._activeCells[cellKey] && layers) {
-              var removable = true;
+              let removable = true;
 
-              for (var i = 0; i < layers.length; i++) {
-                var layer = this._layers[layers[i]];
+              for (let i = 0; i < layers.length; i++) {
+                const layer = this._layers[layers[i]];
                 if (
                   layer &&
                   layer.getBounds &&
@@ -266,7 +267,7 @@ export var FeatureLayer = FeatureManager.extend({
               }
             }
           }
-        }, this)
+        }, this),
       );
     }
   },
@@ -275,7 +276,7 @@ export var FeatureLayer = FeatureManager.extend({
    * Styling Methods
    */
 
-  resetStyle: function () {
+  resetStyle() {
     this.options.style = this._originalStyle;
     this.eachFeature(function (layer) {
       this.resetFeatureStyle(layer.feature.id);
@@ -283,7 +284,7 @@ export var FeatureLayer = FeatureManager.extend({
     return this;
   },
 
-  setStyle: function (style) {
+  setStyle(style) {
     this.options.style = style;
     this.eachFeature(function (layer) {
       this.setFeatureStyle(layer.feature.id, style);
@@ -291,9 +292,9 @@ export var FeatureLayer = FeatureManager.extend({
     return this;
   },
 
-  resetFeatureStyle: function (id) {
-    var layer = this._layers[id];
-    var style = this._originalStyle || Path.prototype.options;
+  resetFeatureStyle(id) {
+    const layer = this._layers[id];
+    const style = this._originalStyle || Path.prototype.options;
     if (layer) {
       Util.extend(layer.options, layer.defaultOptions);
       this.setFeatureStyle(id, style);
@@ -301,9 +302,9 @@ export var FeatureLayer = FeatureManager.extend({
     return this;
   },
 
-  setFeatureStyle: function (id, style) {
-    var layer = this._layers[id];
-    if (typeof style === 'function') {
+  setFeatureStyle(id, style) {
+    const layer = this._layers[id];
+    if (typeof style === "function") {
       style = style(layer.feature);
     }
     if (layer.setStyle) {
@@ -316,20 +317,20 @@ export var FeatureLayer = FeatureManager.extend({
    * Utility Methods
    */
 
-  eachActiveFeature: function (fn, context) {
+  eachActiveFeature(fn, context) {
     // figure out (roughly) which layers are in view
     if (this._map) {
-      var activeBounds = this._map.getBounds();
-      for (var i in this._layers) {
+      const activeBounds = this._map.getBounds();
+      for (const i in this._layers) {
         if (this._currentSnapshot.indexOf(this._layers[i].feature.id) !== -1) {
           // a simple point in poly test for point geometries
           if (
-            typeof this._layers[i].getLatLng === 'function' &&
+            typeof this._layers[i].getLatLng === "function" &&
             activeBounds.contains(this._layers[i].getLatLng())
           ) {
             fn.call(context, this._layers[i]);
           } else if (
-            typeof this._layers[i].getBounds === 'function' &&
+            typeof this._layers[i].getBounds === "function" &&
             activeBounds.intersects(this._layers[i].getBounds())
           ) {
             // intersecting bounds check for polyline and polygon geometries
@@ -341,67 +342,70 @@ export var FeatureLayer = FeatureManager.extend({
     return this;
   },
 
-  eachFeature: function (fn, context) {
-    for (var i in this._layers) {
+  eachFeature(fn, context) {
+    for (const i in this._layers) {
       fn.call(context, this._layers[i]);
     }
     return this;
   },
 
-  getFeature: function (id) {
+  getFeature(id) {
     return this._layers[id];
   },
 
-  bringToBack: function () {
-    this.eachFeature(function (layer) {
+  bringToBack() {
+    this.eachFeature((layer) => {
       if (layer.bringToBack) {
         layer.bringToBack();
       }
     });
   },
 
-  bringToFront: function () {
-    this.eachFeature(function (layer) {
+  bringToFront() {
+    this.eachFeature((layer) => {
       if (layer.bringToFront) {
         layer.bringToFront();
       }
     });
   },
 
-  redraw: function (id) {
+  redraw(id) {
     if (id) {
       this._redraw(id);
     }
     return this;
   },
 
-  _redraw: function (id) {
-    var layer = this._layers[id];
-    var geojson = layer.feature;
+  _redraw(id) {
+    const layer = this._layers[id];
+    const geojson = layer.feature;
 
     // if this looks like a marker
     if (layer && layer.setIcon && this.options.pointToLayer) {
       // update custom symbology, if necessary
       if (this.options.pointToLayer) {
-        var getIcon = this.options.pointToLayer(
+        const getIcon = this.options.pointToLayer(
           geojson,
           latLng(
             geojson.geometry.coordinates[1],
-            geojson.geometry.coordinates[0]
-          )
+            geojson.geometry.coordinates[0],
+          ),
         );
-        var updatedIcon = getIcon.options.icon;
+        const updatedIcon = getIcon.options.icon;
         layer.setIcon(updatedIcon);
       }
     }
 
     // looks like a vector marker (circleMarker)
     if (layer && layer.setStyle && this.options.pointToLayer) {
-      var getStyle = this.options.pointToLayer(
+      const getStyle = this.options.pointToLayer(
         geojson,
-        latLng(geojson.geometry.coordinates[1], geojson.geometry.coordinates[0])
+        latLng(
+          geojson.geometry.coordinates[1],
+          geojson.geometry.coordinates[0],
+        ),
       );
-      var updatedStyle = getStyle.options;
+      const updatedStyle = getStyle.options;
       this.setFeatureStyle(geojson.id, updatedStyle);
     }
 
@@ -413,7 +417,7 @@ export var FeatureLayer = FeatureManager.extend({
 
   // This is the same as the Layer.openPopup method except it excludes the `FeatureGroup`
   // logic to work around https://github.com/Leaflet/Leaflet/issues/8761
-  openPopup (latlng) {
+  openPopup(latlng) {
     if (this._popup) {
       if (this._popup._prepareOpen(latlng || this._latlng)) {
         // open the popup on the map
@@ -425,7 +429,7 @@ export var FeatureLayer = FeatureManager.extend({
 
   // This is the same as the `Layer.openTooltip` method except it excludes the `FeatureGroup`
   // logic to work around https://github.com/Leaflet/Leaflet/issues/8761
-  openTooltip (latlng) {
+  openTooltip(latlng) {
     if (this._tooltip) {
       if (this._tooltip._prepareOpen(latlng)) {
         // open the tooltip on the map
@@ -439,10 +443,10 @@ export var FeatureLayer = FeatureManager.extend({
       }
     }
     return this;
-  }
+  },
 });
 
-export function featureLayer (options) {
+export function featureLayer(options) {
   return new FeatureLayer(options);
 }
 
