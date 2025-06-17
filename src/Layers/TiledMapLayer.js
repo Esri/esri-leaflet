@@ -98,8 +98,8 @@ export const TiledMapLayer = TileLayer.extend({
               ? this._lodMap[zoom]
               : zoom,
         },
-        this.options
-      )
+        this.options,
+      ),
     );
   },
 
@@ -129,7 +129,7 @@ export const TiledMapLayer = TileLayer.extend({
         function () {
           tile.src = this.getTileUrl(coords);
         },
-        this
+        this,
       );
     }
 
@@ -175,7 +175,7 @@ export const TiledMapLayer = TileLayer.extend({
                   this._withinPercentage(
                     arcgisLOD.resolution,
                     correctRes,
-                    this.options.zoomOffsetAllowance
+                    this.options.zoomOffsetAllowance,
                   )
                 ) {
                   this._lodMap[ci] = arcgisLOD.level;
@@ -194,7 +194,7 @@ export const TiledMapLayer = TileLayer.extend({
           } else {
             // if the service was cached in a custom projection and an appropriate LOD hasn't been defined in the map, guide the developer to our Proj4 sample
             warn(
-              "L.esri.TiledMapLayer is using a non-mercator spatial reference. Support may be available through Proj4Leaflet https://developers.arcgis.com/esri-leaflet/samples/non-mercator-projection/"
+              "L.esri.TiledMapLayer is using a non-mercator spatial reference. Support may be available through Proj4Leaflet https://developers.arcgis.com/esri-leaflet/samples/non-mercator-projection/",
             );
           }
         }
