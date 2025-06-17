@@ -1,15 +1,15 @@
-import { Task } from './Task';
+import { Task } from "./Task.js";
 
-export var Identify = Task.extend({
-  path: 'identify',
+export const Identify = Task.extend({
+  path: "identify",
 
-  between: function (start, end) {
+  between(start, end) {
     this.params.time = [start.valueOf(), end.valueOf()];
     return this;
-  }
+  },
 });
 
-export function identify (options) {
+export function identify(options) {
   return new Identify(options);
 }
 

@@ -1,7 +1,7 @@
 {
   "name": "esri-leaflet",
   "description": "Leaflet plugins for consuming ArcGIS Online and ArcGIS Server services.",
-  "version": "3.0.14",
+  "version": "3.0.16",
   "author": "Patrick Arlt <parlt@esri.com> (http://patrickarlt.com)",
   "bugs": {
     "url": "https://github.com/esri/esri-leaflet/issues"
@@ -22,6 +22,10 @@
     "@rollup/plugin-terser": "^0.3.0",
     "chai": "4.3.7",
     "chokidar-cli": "^3.0.0",
+    "eslint": "^9.24.0",
+    "eslint-config-mourner": "^4.0.2",
+    "eslint-config-prettier": "^10.1.2",
+    "eslint-plugin-import-x": "^4.10.2",
     "gh-release": "^7.0.1",
     "highlight.js": "^11.7.0",
     "http-server": "^14.1.1",
@@ -40,11 +44,10 @@
     "mkdirp": "^1.0.4",
     "mocha": "^10.2.0",
     "npm-run-all": "^4.1.5",
+    "prettier": "3.5.3",
     "rollup": "^2.79.1",
-    "semistandard": "^14.2.3",
     "sinon": "^15.0.1",
-    "sinon-chai": "3.7.0",
-    "snazzy": "^9.0.0"
+    "sinon-chai": "3.7.0"
   },
   "files": [
     "src/**/*.js",
@@ -82,25 +85,18 @@
   },
   "scripts": {
     "build": "rollup -c profiles/debug.js & rollup -c profiles/production.js",
-    "lint": "semistandard | snazzy",
+    "lint": "npm run eslint && npm run prettier",
+    "eslint": "eslint .",
+    "eslintfix": "npm run eslint -- --fix",
+    "prettier": "npx prettier . --check",
+    "prettierfix": "npx prettier . --write",
     "prebuild": "mkdirp dist",
     "pretest": "npm run build",
-    "fix": "semistandard --fix",
     "release": "./scripts/release.sh",
     "start-watch": "chokidar src -c \"npm run build\"",
     "start": "run-p start-watch serve",
     "serve": "http-server -p 5000 -c-1 -o",
     "test": "npm run lint && karma start"
-  },
-  "semistandard": {
-    "globals": [
-      "expect",
-      "L",
-      "XMLHttpRequest",
-      "sinon",
-      "xhr",
-      "proj4"
-    ]
   },
   "unpkg": "dist/esri-leaflet-debug.js",
   "husky": {

@@ -5,6 +5,17 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+## [3.0.16] - 2025-05-01
+
+### Changed
+
+- Changed code formatting from Semistandard to Prettier and ESLint ([#1408](https://github.com/Esri/esri-leaflet/pull/1408))
+
+## [3.0.15] - 2025-04-07
+
+### Fixed
+
+- `apikey` property on TiledMapLayer ([#1407](https://github.com/Esri/esri-leaflet/pull/1407))
 
 ## [3.0.14] - 2024-12-17
 
@@ -881,7 +892,9 @@ None
 - Add DarkGray and DarkGrayLabels to BasemapLayer. #190
 - An attributionControl on maps is now required when using BasemapLayer. #159
 
-[unreleased]: https://github.com/esri/esri-leaflet/compare/v3.0.14..HEAD
+[unreleased]: https://github.com/esri/esri-leaflet/compare/v3.0.16..HEAD
+[3.0.16]: https://github.com/esri/esri-leaflet/compare/v3.0.15..v3.0.16
+[3.0.15]: https://github.com/esri/esri-leaflet/compare/v3.0.14..v3.0.15
 [3.0.14]: https://github.com/esri/esri-leaflet/compare/v3.0.13..v3.0.14
 [3.0.13]: https://github.com/esri/esri-leaflet/compare/v3.0.12..v3.0.13
 [3.0.12]: https://github.com/esri/esri-leaflet/compare/v3.0.11..v3.0.12

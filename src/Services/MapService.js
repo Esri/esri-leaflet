@@ -1,25 +1,23 @@
-import { Service } from './Service';
-import identifyFeatures from '../Tasks/IdentifyFeatures';
-import query from '../Tasks/Query';
-import find from '../Tasks/Find';
+import { Service } from "./Service.js";
+import identifyFeatures from "../Tasks/IdentifyFeatures.js";
+import query from "../Tasks/Query.js";
+import find from "../Tasks/Find.js";
 
-export var MapService = Service.extend({
-
-  identify: function () {
+export const MapService = Service.extend({
+  identify() {
     return identifyFeatures(this);
   },
 
-  find: function () {
+  find() {
     return find(this);
   },
 
-  query: function () {
+  query() {
     return query(this);
-  }
-
+  },
 });
 
-export function mapService (options) {
+export function mapService(options) {
   return new MapService(options);
 }
 

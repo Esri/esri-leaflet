@@ -1,5 +1,5 @@
-export var options = {
-  attributionWidthOffset: 55
+export const options = {
+  attributionWidthOffset: 55,
 };
 
 export default options;

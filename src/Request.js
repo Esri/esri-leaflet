@@ -1,58 +1,65 @@
-import { Util, DomUtil } from 'leaflet';
-import { Support } from './Support';
+import { Util, DomUtil } from "leaflet";
+import { Support } from "./Support.js";
 
-var callbacks = 0;
+let callbacks = 0;
 
-function serialize (params) {
-  var data = '';
+function serialize(params) {
+  let data = "";
 
-  params.f = params.f || 'json';
+  params.f = params.f || "json";
 
-  for (var key in params) {
-    if (Object.prototype.hasOwnProperty.call(params, key)) {
-      var param = params[key];
-      var type = Object.prototype.toString.call(param);
-      var value;
+  for (const key in params) {
+    if (Object.hasOwn(params, key)) {
+      const param = params[key];
+      const type = Object.prototype.toString.call(param);
+      let value;
 
       if (data.length) {
-        data += '&';
+        data += "&";
       }
 
-      if (type === '[object Array]') {
-        value = (Object.prototype.toString.call(param[0]) === '[object Object]') ? JSON.stringify(param) : param.join(',');
-      } else if (type === '[object Object]') {
+      if (type === "[object Array]") {
+        value =
+          Object.prototype.toString.call(param[0]) === "[object Object]"
+            ? JSON.stringify(param)
+            : param.join(",");
+      } else if (type === "[object Object]") {
         value = JSON.stringify(param);
-      } else if (type === '[object Date]') {
+      } else if (type === "[object Date]") {
         value = param.valueOf();
       } else {
         value = param;
       }
 
-      data += encodeURIComponent(key) + '=' + encodeURIComponent(value);
+      data += `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
     }
   }
 
-  const APOSTROPHE_URL_ENCODE = '%27';
+  const APOSTROPHE_URL_ENCODE = "%27";
   return data.replaceAll("'", APOSTROPHE_URL_ENCODE);
 }
 
-function createRequest (callback, context) {
-  var httpRequest = new window.XMLHttpRequest();
+function createRequest(callback, context) {
+  const httpRequest = new window.XMLHttpRequest();
 
-  httpRequest.onerror = function (e) {
+  httpRequest.onerror = function () {
     httpRequest.onreadystatechange = Util.falseFn;
 
-    callback.call(context, {
-      error: {
-        code: 500,
-        message: 'XMLHttpRequest error'
-      }
-    }, null);
+    callback.call(
+      context,
+      {
+        error: {
+          code: 500,
+          message: "XMLHttpRequest error",
+        },
+      },
+      null,
+    );
   };
 
   httpRequest.onreadystatechange = function () {
-    var response;
-    var error;
+    let response;
+    let error;
 
     if (httpRequest.readyState === 4) {
       try {
@@ -61,7 +68,8 @@ function createRequest (callback, context) {
         response = null;
         error = {
           code: 500,
-          message: 'Could not parse response as JSON. This could also be caused by a CORS or XMLHttpRequest error.'
+          message:
+            "Could not parse response as JSON. This could also be caused by a CORS or XMLHttpRequest error.",
         };
       }
 
@@ -83,27 +91,30 @@ function createRequest (callback, context) {
   return httpRequest;
 }
 
-function xmlHttpPost (url, params, callback, context) {
-  var httpRequest = createRequest(callback, context);
-  httpRequest.open('POST', url);
+function xmlHttpPost(url, params, callback, context) {
+  const httpRequest = createRequest(callback, context);
+  httpRequest.open("POST", url);
 
-  if (typeof context !== 'undefined' && context !== null) {
-    if (typeof context.options !== 'undefined') {
+  if (typeof context !== "undefined" && context !== null) {
+    if (typeof context.options !== "undefined") {
       httpRequest.timeout = context.options.timeout;
     }
   }
-  httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+  httpRequest.setRequestHeader(
+    "Content-Type",
+    "application/x-www-form-urlencoded; charset=UTF-8",
+  );
   httpRequest.send(serialize(params));
 
   return httpRequest;
 }
 
-function xmlHttpGet (url, params, callback, context) {
-  var httpRequest = createRequest(callback, context);
-  httpRequest.open('GET', url + '?' + serialize(params), true);
+function xmlHttpGet(url, params, callback, context) {
+  const httpRequest = createRequest(callback, context);
+  httpRequest.open("GET", `${url}?${serialize(params)}`, true);
 
-  if (typeof context !== 'undefined' && context !== null) {
-    if (typeof context.options !== 'undefined') {
+  if (typeof context !== "undefined" && context !== null) {
+    if (typeof context.options !== "undefined") {
       httpRequest.timeout = context.options.timeout;
       if (context.options.withCredentials) {
         httpRequest.withCredentials = true;
@@ -116,21 +127,24 @@ function xmlHttpGet (url, params, callback, context) {
 }
 
 // AJAX handlers for CORS (modern browsers) or JSONP (older browsers)
-export function request (url, params, callback, context) {
-  var paramString = serialize(params);
-  var httpRequest = createRequest(callback, context);
-  var requestLength = (url + '?' + paramString).length;
+export function request(url, params, callback, context) {
+  const paramString = serialize(params);
+  const httpRequest = createRequest(callback, context);
+  const requestLength = `${url}?${paramString}`.length;
 
   // ie10/11 require the request be opened before a timeout is applied
   if (requestLength <= 2000 && Support.cors) {
-    httpRequest.open('GET', url + '?' + paramString);
+    httpRequest.open("GET", `${url}?${paramString}`);
   } else if (requestLength > 2000 && Support.cors) {
-    httpRequest.open('POST', url);
-    httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+    httpRequest.open("POST", url);
+    httpRequest.setRequestHeader(
+      "Content-Type",
+      "application/x-www-form-urlencoded; charset=UTF-8",
+    );
   }
 
-  if (typeof context !== 'undefined' && context !== null) {
-    if (typeof context.options !== 'undefined') {
+  if (typeof context !== "undefined" && context !== null) {
+    if (typeof context.options !== "undefined") {
       httpRequest.timeout = context.options.timeout;
       if (context.options.withCredentials) {
         httpRequest.withCredentials = true;
@@ -142,39 +156,46 @@ export function request (url, params, callback, context) {
   if (requestLength <= 2000 && Support.cors) {
     httpRequest.send(null);
 
-  // request is more than 2000 characters and the browser supports CORS, make POST request with XMLHttpRequest
+    // request is more than 2000 characters and the browser supports CORS, make POST request with XMLHttpRequest
   } else if (requestLength > 2000 && Support.cors) {
     httpRequest.send(paramString);
 
-  // request is less  than 2000 characters and the browser does not support CORS, make a JSONP request
+    // request is less  than 2000 characters and the browser does not support CORS, make a JSONP request
   } else if (requestLength <= 2000 && !Support.cors) {
     return jsonp(url, params, callback, context);
 
-  // request is longer then 2000 characters and the browser does not support CORS, log a warning
+    // request is longer then 2000 characters and the browser does not support CORS, log a warning
   } else {
-    warn('a request to ' + url + ' was longer then 2000 characters and this browser cannot make a cross-domain post request. Please use a proxy https://developers.arcgis.com/esri-leaflet/api-reference/request/');
+    warn(
+      `a request to ${url} was longer then 2000 characters and this browser cannot make a cross-domain post request. Please use a proxy https://developers.arcgis.com/esri-leaflet/api-reference/request/`,
+    );
     return;
   }
 
   return httpRequest;
 }
 
-export function jsonp (url, params, callback, context) {
+export function jsonp(url, params, callback, context) {
   window._EsriLeafletCallbacks = window._EsriLeafletCallbacks || {};
-  var callbackId = 'c' + callbacks;
-  params.callback = 'window._EsriLeafletCallbacks.' + callbackId;
+  const callbackId = `c${callbacks}`;
+  params.callback = `window._EsriLeafletCallbacks.${callbackId}`;
 
   window._EsriLeafletCallbacks[callbackId] = function (response) {
     if (window._EsriLeafletCallbacks[callbackId] !== true) {
-      var error;
-      var responseType = Object.prototype.toString.call(response);
+      let error;
+      const responseType = Object.prototype.toString.call(response);
 
-      if (!(responseType === '[object Object]' || responseType === '[object Array]')) {
+      if (
+        !(
+          responseType === "[object Object]" ||
+          responseType === "[object Array]"
+        )
+      ) {
         error = {
           error: {
             code: 500,
-            message: 'Expected array or object as JSONP response'
-          }
+            message: "Expected array or object as JSONP response",
+          },
         };
         response = null;
       }
@@ -189,47 +210,47 @@ export function jsonp (url, params, callback, context) {
     }
   };
 
-  var script = DomUtil.create('script', null, document.body);
-  script.type = 'text/javascript';
-  script.src = url + '?' + serialize(params);
+  const script = DomUtil.create("script", null, document.body);
+  script.type = "text/javascript";
+  script.src = `${url}?${serialize(params)}`;
   script.id = callbackId;
   script.onerror = function (error) {
     if (error && window._EsriLeafletCallbacks[callbackId] !== true) {
       // Can't get true error code: it can be 404, or 401, or 500
-      var err = {
+      const err = {
         error: {
           code: 500,
-          message: 'An unknown error occurred'
-        }
+          message: "An unknown error occurred",
+        },
       };
 
       callback.call(context, err);
       window._EsriLeafletCallbacks[callbackId] = true;
     }
   };
-  DomUtil.addClass(script, 'esri-leaflet-jsonp');
+  DomUtil.addClass(script, "esri-leaflet-jsonp");
 
   callbacks++;
 
   return {
     id: callbackId,
     url: script.src,
-    abort: function () {
+    abort() {
       window._EsriLeafletCallbacks._callback[callbackId]({
         code: 0,
-        message: 'Request aborted.'
+        message: "Request aborted.",
       });
-    }
+    },
   };
 }
 
-var get = ((Support.cors) ? xmlHttpGet : jsonp);
+const get = Support.cors ? xmlHttpGet : jsonp;
 get.CORS = xmlHttpGet;
 get.JSONP = jsonp;
 
-export function warn () {
+export function warn(...args) {
   if (console && console.warn) {
-    console.warn.apply(console, arguments);
+    console.warn.apply(console, args);
   }
 }
 
@@ -240,10 +261,10 @@ export { get };
 export { xmlHttpPost as post };
 
 // export the Request object to call the different handlers for debugging
-export var Request = {
-  request: request,
-  get: get,
-  post: xmlHttpPost
+export const Request = {
+  request,
+  get,
+  post: xmlHttpPost,
 };
 
 export default Request;
