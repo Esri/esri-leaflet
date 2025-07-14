@@ -11,7 +11,7 @@
 
 > This project is maintained with :heart: by folks on multiple teams at Esri, but we provide no guarantee of individual features, nor a traditional product lifecycle to support planning.
 
-The goal of this project is **not** to replace the [ArcGIS API for JavaScript](https://developers.arcgis.com/en/javascript/) but rather to provide small components for _only some_ aspects of the ArcGIS platform for developers who prefer to build mapping applications with [Leaflet](http://leafletjs.com/).
+The goal of this project is **not** to replace the [ArcGIS Maps SDK for JavaScript](https://developers.arcgis.com/en/javascript/) but rather to provide small components for _only some_ aspects of the ArcGIS platform for developers who prefer to build mapping applications with [Leaflet](http://leafletjs.com/).
 
 We are proud to facilitate a project which requires participation from our diverse user community in order to thrive and we welcome contributions from those [just getting their feet wet](https://github.com/Esri/esri-leaflet/issues/647) in open-source.
 
@@ -62,7 +62,7 @@ https://developers.arcgis.com/esri-leaflet/plugins/
 
 - [What are the terms of use for ArcGIS Online services?](#terms)
 - [What exactly is Esri Leaflet? Is it a replacement for Leaflet?](https://github.com/Esri/esri-leaflet/wiki/FAQ#what-is-esri-leaflet)
-- [Will Esri Leaflet replace the ArcGIS API for JavaScript?](https://github.com//Esri/esri-leaflet/wiki/FAQ#will-esri-leaflet-replace-the-arcgis-api-for-javascript)
+- [Will Esri Leaflet replace the ArcGIS Maps SDK for JavaScript?](https://github.com//Esri/esri-leaflet/wiki/FAQ#will-esri-leaflet-replace-the-arcgis-maps-sdk-for-javascript)
 - [What is the benefit of using Esri Leaflet over using Leaflet all by itself?](https://github.com//Esri/esri-leaflet/wiki/FAQ#why-use-esri-leaflet)
 - [What are the goals of Esri Leaflet?](https://github.com//Esri/esri-leaflet/wiki/FAQ#what-are-the-goals-of-esri-leaflet)
 - [Can I use Esri Leaflet with Leaflet Version 1.0.x?](https://github.com/Esri/esri-leaflet/wiki/FAQ#can-i-use-esri-leaflet-with-leaflet-version-10x)
