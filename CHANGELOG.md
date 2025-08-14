@@ -5,6 +5,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+## [3.0.18] - 2025-08-14
+
+### Changed
+
+- Reverted "fix LODmap issue" (#1400) since it caused a regression ([#1413](https://github.com/Esri/esri-leaflet/pull/1413))
+
 ## [3.0.17] - 2025-06-25
 
 ### Fixed
@@ -898,7 +904,8 @@ None
 - Add DarkGray and DarkGrayLabels to BasemapLayer. #190
 - An attributionControl on maps is now required when using BasemapLayer. #159
 
-[unreleased]: https://github.com/esri/esri-leaflet/compare/v3.0.17..HEAD
+[unreleased]: https://github.com/esri/esri-leaflet/compare/v3.0.18..HEAD
+[3.0.18]: https://github.com/esri/esri-leaflet/compare/v3.0.17..v3.0.18
 [3.0.17]: https://github.com/esri/esri-leaflet/compare/v3.0.16..v3.0.17
 [3.0.16]: https://github.com/esri/esri-leaflet/compare/v3.0.15..v3.0.16
 [3.0.15]: https://github.com/esri/esri-leaflet/compare/v3.0.14..v3.0.15
