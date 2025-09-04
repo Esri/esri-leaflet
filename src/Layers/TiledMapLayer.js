@@ -113,10 +113,10 @@ export const TiledMapLayer = TileLayer.extend({
     */
     tile.alt = "";
 
-    // if there is no lod map or an lod map with a proper zoom load the tile
+    // if this is a map with a custom CRS or an lod map with a proper zoom load the tile
     // otherwise wait for the lod map to become available
     if (
-      !this._lodMap ||
+      this._lodMap === "crs" ||
       (this._lodMap && this._lodMap[this._getZoomForUrl()] !== undefined)
     ) {
       tile.src = this.getTileUrl(coords);
@@ -188,6 +188,8 @@ export const TiledMapLayer = TileLayer.extend({
             map.options.crs.code.indexOf(sr) > -1
           ) {
             // if the projection is WGS84, or the developer is using Proj4 to define a custom CRS, no action is required
+            this._lodMap = "crs";
+            this.fire("lodmap");
           } else {
             // if the service was cached in a custom projection and an appropriate LOD hasn't been defined in the map, guide the developer to our Proj4 sample
             warn(
